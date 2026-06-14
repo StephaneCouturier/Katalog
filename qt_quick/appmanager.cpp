@@ -3222,7 +3222,12 @@ QString AppManager::importDevice(int srcDeviceId)
         return tr("No source collection is open.");
 
     m_importIsRunning  = true;
-    m_importStatusText = tr("Collection Import") + " | " + tr("In Progress");
+    m_importReportText.clear();
+    emit importReportTextChanged();
+    m_importStatusText = StatusBarMessageBuilder()
+                             .setOperation(tr("Collection Import"))
+                             .setStatus(tr("In Progress"))
+                             .build();
     emit importIsRunningChanged();
     emit importStatusTextChanged();
 
@@ -3230,12 +3235,12 @@ QString AppManager::importDevice(int srcDeviceId)
         m_importer, &CollectionImporter::fileImportProgress,
         this, [this](int catalogIndex, int totalCatalogs, const QString &catalogName,
                      qint64 done, qint64 total) {
-            m_importStatusText =
-                tr("Collection Import") + " | "
-                + QString("%1/%2: %3 | ").arg(catalogIndex).arg(totalCatalogs).arg(catalogName)
-                + tr("Files") + QString(": %1 / %2")
-                    .arg(QLocale().toString(done))
-                    .arg(QLocale().toString(total));
+            m_importStatusText = StatusBarMessageBuilder()
+                                     .setOperation(tr("Collection Import"))
+                                     .setStatus(tr("In Progress"))
+                                     .setDeviceContext(catalogIndex, totalCatalogs, catalogName)
+                                     .setProcess(tr("Files"), done, total)
+                                     .build();
             emit importStatusTextChanged();
             QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
         },
@@ -3252,7 +3257,11 @@ QString AppManager::importDevice(int srcDeviceId)
     emit importIsRunningChanged();
 
     if (!ok) {
-        m_importStatusText = tr("Collection Import") + " | " + tr("Error") + ": " + m_importer->lastError();
+        m_importStatusText = StatusBarMessageBuilder()
+                                 .setOperation(tr("Collection Import"))
+                                 .setStatus(tr("Error"))
+                                 .setCurrentItem(m_importer->lastError())
+                                 .build();
         emit importStatusTextChanged();
         return m_importer->lastError();
     }
@@ -3267,7 +3276,10 @@ QString AppManager::importDevice(int srcDeviceId)
         collection->saveStatiticsTableToFile();
     }
 
-    m_importStatusText = tr("Collection Import") + " | " + tr("Completed");
+    m_importStatusText = StatusBarMessageBuilder()
+                             .setOperation(tr("Collection Import"))
+                             .setStatus(tr("Completed"))
+                             .build();
     emit importStatusTextChanged();
 
     refreshAllUI();
@@ -3281,7 +3293,12 @@ QString AppManager::updateAllImportsFromSource(const QString &path)
         m_importer = new CollectionImporter(collection, this);
 
     m_importIsRunning  = true;
-    m_importStatusText = tr("Collection Update") + " | " + tr("In Progress");
+    m_importReportText.clear();
+    emit importReportTextChanged();
+    m_importStatusText = StatusBarMessageBuilder()
+                             .setOperation(tr("Collection Update"))
+                             .setStatus(tr("In Progress"))
+                             .build();
     emit importIsRunningChanged();
     emit importStatusTextChanged();
     QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
@@ -3292,7 +3309,11 @@ QString AppManager::updateAllImportsFromSource(const QString &path)
     emit importIsRunningChanged();
 
     if (!ok) {
-        m_importStatusText = tr("Collection Update") + " | " + tr("Error") + ": " + m_importer->lastError();
+        m_importStatusText = StatusBarMessageBuilder()
+                                 .setOperation(tr("Collection Update"))
+                                 .setStatus(tr("Error"))
+                                 .setCurrentItem(m_importer->lastError())
+                                 .build();
         emit importStatusTextChanged();
         return m_importer->lastError();
     }
@@ -3307,8 +3328,32 @@ QString AppManager::updateAllImportsFromSource(const QString &path)
         collection->saveStatiticsTableToFile();
     }
 
-    m_importStatusText = tr("Collection Update") + " | " + tr("Completed");
+    m_importStatusText = StatusBarMessageBuilder()
+                             .setOperation(tr("Collection Update"))
+                             .setStatus(tr("Completed"))
+                             .build();
     emit importStatusTextChanged();
+
+    // Build the change report (file-count and size deltas) from the importer's
+    // aggregate stats. Reuses existing translatable labels (Catalogs / Files / Size);
+    // arrows, dots, signs and numbers are non-translatable.
+    const CollectionImporter::ImportUpdateStats st = m_importer->lastUpdateStats();
+    if (st.catalogsUpdated > 0) {
+        QLocale loc;
+        const qint64 dFiles = st.filesAfter - st.filesBefore;
+        const qint64 dSize  = st.sizeAfter  - st.sizeBefore;
+        const QString dFilesStr = (dFiles >= 0 ? QStringLiteral("+") : QStringLiteral("-"))
+                                  + loc.toString(qAbs(dFiles));
+        const QString dSizeStr  = (dSize  >= 0 ? QStringLiteral("+") : QStringLiteral("-"))
+                                  + loc.formattedDataSize(qAbs(dSize));
+        m_importReportText =
+              tr("Catalogs") + ": " + loc.toString(st.catalogsUpdated)
+            + "   ·   " + tr("Files") + ": " + loc.toString(st.filesBefore)
+                + " → " + loc.toString(st.filesAfter) + " (" + dFilesStr + ")"
+            + "   ·   " + tr("Size")  + ": " + loc.formattedDataSize(st.sizeBefore)
+                + " → " + loc.formattedDataSize(st.sizeAfter) + " (" + dSizeStr + ")";
+        emit importReportTextChanged();
+    }
 
     refreshAllUI();
     return QString();

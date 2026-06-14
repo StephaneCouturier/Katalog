@@ -1095,6 +1095,25 @@ bool CollectionImporter::updateDeviceFromExternalCollection(int targetDeviceId)
         const QString deviceType = srcDevQ.value(1).toString();
         const int     srcCatalogId = srcDevQ.value(11).toInt();
 
+        // Capture before/after file totals for the update report. Only Catalog rows
+        // are measured, to avoid double-counting container totals. The source row is
+        // authoritative for the "after" values; the target row still holds the
+        // "before" values until the UPDATE below overwrites them.
+        const qint64 newFileSize  = srcDevQ.value(3).toLongLong();
+        const qint64 newFileCount = srcDevQ.value(4).toLongLong();
+        qint64 oldFileSize = 0, oldFileCount = 0;
+        if (deviceType == QLatin1String("Catalog")) {
+            QSqlQuery oldQ(QSqlDatabase::database(tgtConn));
+            oldQ.prepare("SELECT device_total_file_size, device_total_file_count "
+                         "FROM device WHERE device_id = :id");
+            oldQ.bindValue(":id", mapping.tgtDeviceId);
+            oldQ.exec();
+            if (oldQ.next()) {
+                oldFileSize  = oldQ.value(0).toLongLong();
+                oldFileCount = oldQ.value(1).toLongLong();
+            }
+        }
+
         // Update target device row — source is authoritative for all metadata
         {
             QSqlQuery upd(QSqlDatabase::database(tgtConn));
@@ -1204,6 +1223,13 @@ bool CollectionImporter::updateDeviceFromExternalCollection(int targetDeviceId)
                 upd.exec();
             }
         }
+
+        // Catalog successfully replaced — accumulate its before/after totals.
+        m_lastUpdateStats.catalogsUpdated++;
+        m_lastUpdateStats.filesBefore += oldFileCount;
+        m_lastUpdateStats.filesAfter  += newFileCount;
+        m_lastUpdateStats.sizeBefore  += oldFileSize;
+        m_lastUpdateStats.sizeAfter   += newFileSize;
 
         updatedCount++;
         emit importProgress(updatedCount, total, deviceName);
@@ -1632,6 +1658,10 @@ QStandardItemModel *CollectionImporter::buildSourceDeviceModel()
 
 bool CollectionImporter::updateAllImportsFromSource(const QString &sourcePath)
 {
+    // Reset the aggregate report; updateDeviceFromExternalCollection() accumulates
+    // into it for every Catalog touched across all root devices below.
+    m_lastUpdateStats = ImportUpdateStats();
+
     // Ensure the source is open on the given path.
     if (!isSourceOpen() || m_sourcePath != sourcePath) {
         QSqlError err = openSource(sourcePath);

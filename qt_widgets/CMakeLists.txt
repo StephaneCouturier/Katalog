@@ -76,6 +76,11 @@ set(UI_FILES
 # via QCoreApplication::translate("Main", …) that lupdate must capture into the Main context.
 set(K3_QML_FILES
     ${CMAKE_SOURCE_DIR}/qt_quick/main.cpp
+    # K3 C++ sources that build user-visible strings with tr() (status/progress
+    # messages, error dialogs). Scanned so those strings land in the shared .ts
+    # files under their class context (AppManager, DeviceListModel).
+    ${CMAKE_SOURCE_DIR}/qt_quick/appmanager.cpp
+    ${CMAKE_SOURCE_DIR}/qt_quick/adapters/devicelistmodel.cpp
     ${CMAKE_SOURCE_DIR}/qt_quick/Main.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/PageSearchForm.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/PageSearchResultsForm.qml

@@ -2,6 +2,525 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="sr_RS">
 <context>
+    <name>AppManager</name>
+    <message>
+        <location filename="../qt_quick/appmanager.cpp" line="+119"/>
+        <location line="+87"/>
+        <location line="+14"/>
+        <source>Search</source>
+        <translation>Pretraga</translation>
+    </message>
+    <message>
+        <location line="-97"/>
+        <source>Stopped</source>
+        <translation>Заустављено</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location line="+24"/>
+        <location line="+73"/>
+        <source>Evaluated</source>
+        <translation>Евалуирано</translation>
+    </message>
+    <message>
+        <location line="-95"/>
+        <location line="+16"/>
+        <location line="+8"/>
+        <location line="+72"/>
+        <source>Folders found</source>
+        <translation>Pronađene fascikle</translation>
+    </message>
+    <message>
+        <location line="-96"/>
+        <location line="+16"/>
+        <location line="+8"/>
+        <location line="+72"/>
+        <source>Files found</source>
+        <translation>Pronađene datoteke</translation>
+    </message>
+    <message>
+        <location line="-93"/>
+        <location line="+9"/>
+        <location line="+7"/>
+        <location line="+58"/>
+        <location line="+1548"/>
+        <location line="+1475"/>
+        <location line="+11"/>
+        <location line="+60"/>
+        <source>In Progress</source>
+        <translation>У току</translation>
+    </message>
+    <message>
+        <location line="-3080"/>
+        <location line="+3061"/>
+        <location line="+52"/>
+        <source>Completed</source>
+        <translation>Завршено</translation>
+    </message>
+    <message>
+        <location line="-2744"/>
+        <source>Could not create file: %1</source>
+        <translation>Датотеку није могуће направити: %1</translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source> Physical Group</source>
+        <translation> Fizička grupa</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Virtual device</source>
+        <translation>Virtuelni uređaj</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Local disk</source>
+        <translation>Lokalni disk</translation>
+    </message>
+    <message>
+        <location line="+279"/>
+        <source>search_results</source>
+        <translation>rezultati_pretrage</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Search Results</source>
+        <translation>Rezultati pretrage</translation>
+    </message>
+    <message>
+        <location line="+352"/>
+        <source>Case sensitive</source>
+        <translation>Разликуј велика и мала слова</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Exclude: %1</source>
+        <translation>Искључи: %1</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Type: %1</source>
+        <translation>Врста: %1</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Size: %1 %2 – %3 %4</source>
+        <translation>Величина: %1 %2 – %3 %4</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Date: %1 – %2</source>
+        <translation>Датум: %1 – %2</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Metadata</source>
+        <translation>Метаподаци</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Name</source>
+        <translation>Ime</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+2074"/>
+        <source>Size</source>
+        <translation>Veličina</translation>
+    </message>
+    <message>
+        <location line="-2073"/>
+        <source>Date</source>
+        <translation>Datum</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Checksum</source>
+        <translation>Контролна сума</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Duplicates: %1</source>
+        <translation>Дупликати: %1</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Differences</source>
+        <translation>Разлике</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Folders only</source>
+        <translation>Само фасцикле</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Tag</source>
+        <translation>Oznaka</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Tag: %1</source>
+        <translation>Ознака: %1</translation>
+    </message>
+    <message>
+        <location line="+392"/>
+        <source>Provide a name for this new catalog.</source>
+        <translation>Наведите назив за овај нови каталог.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Provide a path for this new catalog.</source>
+        <translation>Наведите путању за овај нови каталог.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Select a Storage for this new catalog.
+(Selection panel on the left and dropdown list)</source>
+        <translation>Изаберите складиште за овај нови каталог.
+(Табла за избор лево и падајућа листа)</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The source directory does not exist.</source>
+        <translation>Изворни директоријум не постоји.</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>There is already a catalog with this name:
+%1
+
+Choose a different name and try again.</source>
+        <translation>Већ постоји каталог са овим називом:
+%1
+
+Изаберите други назив и покушајте поново.</translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <source>A device operation is already running.</source>
+        <translation>Операција уређаја се већ извршава.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Create</source>
+        <translation>Kreiraj</translation>
+    </message>
+    <message>
+        <location line="+64"/>
+        <source>Catalog creation was stopped.</source>
+        <translation>Прављење каталога је заустављено.</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <location line="+19"/>
+        <source>The selected device cannot be deleted as long as it has sub-devices.</source>
+        <translation>Изабрани уређај није могуће избрисати док има подуређаје.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Deletion cancelled.</source>
+        <translation>Брисање отказано.</translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Deletion failed</source>
+        <translation>Brisanje neuspešno</translation>
+    </message>
+    <message>
+        <location line="+63"/>
+        <source>Virtual</source>
+        <translation>Virtuelni</translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>Storage</source>
+        <translation>Skladište</translation>
+    </message>
+    <message>
+        <location line="+42"/>
+        <source>Error: %1</source>
+        <translation>Грешка: %1</translation>
+    </message>
+    <message>
+        <location line="+275"/>
+        <source>The selected device is not a catalog.</source>
+        <translation>Изабрани уређај није каталог.</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>The catalog is already assigned to this Virtual device.</source>
+        <translation>Katalog je već dodeljen ovom virtuelnom uređaju.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Failed to assign catalog to device.</source>
+        <translation>Додела каталога уређају није успела.</translation>
+    </message>
+    <message>
+        <location line="+82"/>
+        <location line="+16"/>
+        <source>Split failed: no catalogs were created.</source>
+        <translation>Deljenje neuspešno: nije kreiran nijedan katalog.</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Verifying MIME types for %1…</source>
+        <translation>Провера MIME врста за %1…</translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <source>Device has no catalog.</source>
+        <translation>Уређај нема каталог.</translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Verifying checksums: %1 / %2</source>
+        <translation>Провера контролних збирова: %1 / %2</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>Failed to unassign device.</source>
+        <translation>Поништавање доделе уређаја није успело.</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Could not open file.</source>
+        <translation>Nije moguće otvoriti datoteku.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>File format not recognized (expected VVV CSV).</source>
+        <translation>Формат датотеке није препознат (очекује се VVV CSV).</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>No catalog data found in file.</source>
+        <translation>У датотеци нису пронађени подаци каталога.</translation>
+    </message>
+    <message>
+        <location line="+54"/>
+        <source>Could not open file: %1</source>
+        <translation>Датотеку није могуће отворити: %1</translation>
+    </message>
+    <message>
+        <location line="+147"/>
+        <source>There is already a catalog with this name: %1
+Choose a different name.</source>
+        <translation>Већ постоји каталог са овим називом: %1
+Изаберите други назив.</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>A Catalog in the Physical group can only be set under a Storage device.</source>
+        <translation>Каталог из групе Физички може се поставити само испод уређаја за складиштење.</translation>
+    </message>
+    <message>
+        <location line="+40"/>
+        <source>File type: %1 → %2</source>
+        <translation>Врста датотеке: %1 → %2</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Include hidden: %1 → %2</source>
+        <translation>Укључи скривене: %1 → %2</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+1"/>
+        <source>All</source>
+        <translation>Sve</translation>
+    </message>
+    <message>
+        <location line="-1"/>
+        <location line="+1"/>
+        <source>None</source>
+        <translation>Ниједан</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Include metadata: %1 → %2</source>
+        <translation>Укључи метаподатке: %1 → %2</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Include checksum: %1 → %2</source>
+        <translation>Укључи контролни збир: %1 → %2</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Is full device: %1 → %2</source>
+        <translation>Цео уређај: %1 → %2</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+1"/>
+        <source>yes</source>
+        <translation>да</translation>
+    </message>
+    <message>
+        <location line="-1"/>
+        <location line="+1"/>
+        <source>no</source>
+        <translation>не</translation>
+    </message>
+    <message>
+        <location line="+51"/>
+        <source>There is already a Storage with this ID. Choose a different ID.</source>
+        <translation>Већ постоји складиште са овим ИД-ом. Изаберите други ИД.</translation>
+    </message>
+    <message>
+        <location line="+128"/>
+        <source>Selected device is not a catalog</source>
+        <translation>Изабрани уређај није каталог</translation>
+    </message>
+    <message>
+        <location line="+205"/>
+        <source>Error: could not open collection</source>
+        <translation>Грешка: збирку није могуће отворити</translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>No source collection is open.</source>
+        <translation>Ниједна изворна колекција није отворена.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location line="+11"/>
+        <location line="+22"/>
+        <location line="+19"/>
+        <source>Collection Import</source>
+        <translation>Увоз колекције</translation>
+    </message>
+    <message>
+        <location line="-38"/>
+        <location line="+109"/>
+        <source>Files</source>
+        <translation>Datoteke</translation>
+    </message>
+    <message>
+        <location line="-89"/>
+        <location line="+52"/>
+        <source>Error</source>
+        <translation>Greška</translation>
+    </message>
+    <message>
+        <location line="-15"/>
+        <location line="+14"/>
+        <location line="+19"/>
+        <source>Collection Update</source>
+        <translation>Ажурирање колекције</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Catalogs</source>
+        <translation>Katalozi</translation>
+    </message>
+    <message>
+        <location line="+32"/>
+        <source>Not a Storage device.</source>
+        <translation>Није уређај за складиштење.</translation>
+    </message>
+    <message>
+        <location line="+158"/>
+        <source>Provide a link name.</source>
+        <translation>Наведите назив везе.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Select a source catalog first.</source>
+        <translation>Najpre odaberite izvorni katalog.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Select a target catalog first.</source>
+        <translation>Najpre odaberite ciljni katalog.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Select a different source or target (a device shall not be mapped to itself).</source>
+        <translation>Izaberi različit izvor ili cilj (uređaj ne sme biti mapiran sam na sebe).</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Failed to create link.</source>
+        <translation>Прављење везе није успело.</translation>
+    </message>
+    <message>
+        <location line="+83"/>
+        <location line="+239"/>
+        <source>Link not found.</source>
+        <translation>Веза није пронађена.</translation>
+    </message>
+    <message>
+        <location line="-227"/>
+        <location line="+107"/>
+        <location line="+132"/>
+        <source>Both source and target must be Catalog devices.</source>
+        <translation>Izvor i odredište moraju biti kataloški uređaji.</translation>
+    </message>
+    <message>
+        <location line="-206"/>
+        <location line="+7"/>
+        <source>Move</source>
+        <translation>Premesti</translation>
+    </message>
+    <message>
+        <location line="-7"/>
+        <location line="+7"/>
+        <source>Copy</source>
+        <translation>Kopiraj</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <location line="+7"/>
+        <source>Conflict</source>
+        <translation>Konflikt</translation>
+    </message>
+    <message>
+        <location line="+58"/>
+        <location line="+131"/>
+        <source>Source not available: %1</source>
+        <translation>Извор није доступан: %1</translation>
+    </message>
+    <message>
+        <location line="-127"/>
+        <location line="+131"/>
+        <source>Target not available: %1</source>
+        <translation>Одредиште није доступно: %1</translation>
+    </message>
+    <message>
+        <location line="+24"/>
+        <source>No preview data to export.</source>
+        <translation>Нема података прегледа за извоз.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Export failed.</source>
+        <translation>Извоз није успео.</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Failed to generate Backup profile</source>
+        <translation>Прављење профила резервне копије није успело</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Backup profile created.</source>
+        <translation>Профил резервне копије креиран.</translation>
+    </message>
+    <message>
+        <location line="+36"/>
+        <source>A catalog update is already in progress. Please wait and try again.</source>
+        <translation>Ažuriranje kataloga je već u toku. Sačekajte i pokušajte ponovo.</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Mapping not found.</source>
+        <translation>Мапирање није пронађено.</translation>
+    </message>
+</context>
+<context>
     <name>Catalog</name>
     <message>
         <source>Name</source>
@@ -37,6 +556,14 @@
     <message>
         <source>This folder contains user data and is not suitable for a collection.&lt;br/&gt;Collections should be stored in dedicated folders to avoid mixing with personal files.</source>
         <translation type="vanished">Овај фолдер садржи корисничке податке и није погодан за колекцију.&lt;br/&gt;Колекције треба чувати у посвећеним фолдерима да би се избегло мешање са личним фајловима.</translation>
+    </message>
+</context>
+<context>
+    <name>DeviceListModel</name>
+    <message>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+219"/>
+        <source>Collection</source>
+        <translation>Збирка</translation>
     </message>
 </context>
 <context>
@@ -602,12 +1129,20 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+541"/>
         <location line="+15"/>
         <location line="+22"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-578"/>
+        <location line="+541"/>
+        <location line="+15"/>
+        <location line="+22"/>
         <source>Verify Checksums</source>
         <translation>Провери контролне суме</translation>
     </message>
     <message>
         <location line="-45"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+76"/>
+        <location line="+7"/>
+        <location line="-7"/>
         <location line="+7"/>
         <source>Loading</source>
         <translation>Учитавање</translation>
@@ -635,6 +1170,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+27"/>
         <location line="+5"/>
+        <location line="+0"/>
         <source>Verified:</source>
         <translation>Проверено:</translation>
     </message>
@@ -672,18 +1208,22 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+251"/>
         <location line="+18"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-861"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Copy Checksum</source>
         <translation>Копирај контролну суму</translation>
     </message>
     <message>
         <location line="-8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-8"/>
+        <location line="+0"/>
         <source>Calculate Checksum</source>
         <translation>Израчунај контролну суму</translation>
     </message>
     <message>
         <location line="+13"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+13"/>
+        <location line="+0"/>
         <source>Verify Checksum</source>
         <translation>Провери контролну суму</translation>
     </message>
@@ -696,6 +1236,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+43"/>
         <location line="+58"/>
         <location line="+68"/>
+        <location line="-68"/>
+        <location line="+68"/>
         <source>Checksum saved to database.</source>
         <translation>Контролна сума сачувана у бази података.</translation>
     </message>
@@ -707,6 +1249,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+5"/>
         <location line="+122"/>
+        <location line="+0"/>
         <source>Copy to Clipboard</source>
         <translation>Копирај у оставу</translation>
     </message>
@@ -777,6 +1320,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2173"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+1"/>
+        <location line="+0"/>
         <source>Continue?</source>
         <translation>Настави?</translation>
     </message>
@@ -797,6 +1341,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow.ui" line="-5542"/>
         <location line="+737"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1383"/>
+        <location line="+0"/>
         <source>Checksum</source>
         <translation>Контролна сума</translation>
     </message>
@@ -852,6 +1397,13 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+19"/>
         <location line="+41"/>
         <location line="+68"/>
+        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-4"/>
+        <location line="+4"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-128"/>
+        <location line="+19"/>
+        <location line="+41"/>
+        <location line="+68"/>
         <source>Archive</source>
         <translation>Arhiva</translation>
     </message>
@@ -872,6 +1424,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+285"/>
         <location line="+29"/>
+        <location line="+0"/>
         <source>No backup links found.</source>
         <translation>Нису пронађене резервне копије везе.</translation>
     </message>
@@ -913,6 +1466,15 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+23"/>
         <location line="+23"/>
         <location line="+21"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-113"/>
+        <location line="+30"/>
+        <location line="+54"/>
+        <location line="+25"/>
+        <location line="+4"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-67"/>
+        <location line="+23"/>
+        <location line="+23"/>
+        <location line="+21"/>
         <source>Evaluated</source>
         <translation>Евалуирано</translation>
     </message>
@@ -927,6 +1489,15 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+285"/>
         <location line="+36"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-354"/>
+        <location line="+128"/>
+        <location line="+87"/>
+        <location line="+139"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-44"/>
+        <location line="+44"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-36"/>
+        <location line="+36"/>
         <source>Completed</source>
         <translation>Завршено</translation>
     </message>
@@ -939,12 +1510,15 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-335"/>
         <location line="+109"/>
         <location line="+87"/>
+        <location line="-87"/>
+        <location line="+87"/>
         <source>Cancelled</source>
         <translation>Отказано</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-19"/>
         <location line="+21"/>
+        <location line="+0"/>
         <source>Loaded</source>
         <translation>Учитано</translation>
     </message>
@@ -956,12 +1530,19 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-89"/>
         <location line="+15"/>
         <location line="+64"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-54"/>
+        <location line="+54"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-79"/>
+        <location line="+15"/>
+        <location line="+64"/>
         <source>In Progress</source>
         <translation>У току</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+72"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-127"/>
+        <location line="+0"/>
         <source>Stopped</source>
         <translation>Заустављено</translation>
     </message>
@@ -993,18 +1574,21 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+279"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+274"/>
+        <location line="+0"/>
         <source>Height</source>
         <translation>Висина</translation>
     </message>
     <message>
         <location line="+169"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-1"/>
+        <location line="+0"/>
         <source>Width</source>
         <translation>Ширина</translation>
     </message>
     <message>
         <location line="+223"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+2"/>
+        <location line="+0"/>
         <source>Duration</source>
         <translation>Трајање</translation>
     </message>
@@ -1034,6 +1618,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+503"/>
         <location line="+19"/>
         <location line="+11"/>
+        <location line="-11"/>
+        <location line="+11"/>
         <source>Other</source>
         <translation>Остало</translation>
     </message>
@@ -1049,12 +1635,23 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+9"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+697"/>
         <location line="+1"/>
+        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-104"/>
+        <location line="+11"/>
+        <location line="+15"/>
+        <location line="+12"/>
+        <location line="+34"/>
+        <location line="+8"/>
+        <location line="+15"/>
+        <location line="+9"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1"/>
+        <location line="+1"/>
         <source>None</source>
         <translation>Ниједан</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-658"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-950"/>
+        <location line="+0"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Прикажи проширене метаподатке (JSON)</translation>
     </message>
@@ -1096,6 +1693,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-250"/>
         <location line="+8"/>
+        <location line="+0"/>
         <source>Copy JSON</source>
         <translation>Копирај JSON</translation>
     </message>
@@ -1105,6 +1703,10 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+32"/>
         <location line="+1"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-3"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-33"/>
+        <location line="+32"/>
+        <location line="+1"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>Copied</source>
         <translation>Копирано</translation>
     </message>
@@ -1146,12 +1748,14 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+1"/>
         <location line="+9"/>
+        <location line="+0"/>
         <source>Select Different Folder</source>
         <translation>Изабери Другу Фасциклу</translation>
     </message>
     <message>
         <location line="-6"/>
         <location line="+9"/>
+        <location line="+0"/>
         <source>Use Application Folder</source>
         <translation>Користи Фасциклу Апликације</translation>
     </message>
@@ -1162,6 +1766,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-77"/>
         <location line="+12"/>
+        <location line="+0"/>
         <source>Media Basic</source>
         <translation>Медија Основно</translation>
     </message>
@@ -1176,12 +1781,14 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="-11"/>
         <location line="+12"/>
+        <location line="+0"/>
         <source>Media Extended</source>
         <translation>Медија Проширено</translation>
     </message>
     <message>
         <location line="-11"/>
         <location line="+12"/>
+        <location line="+0"/>
         <source>Full Extended</source>
         <translation>Потпуно Проширено</translation>
     </message>
@@ -1192,6 +1799,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+848"/>
         <location line="+38"/>
+        <location line="+0"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
         <translation>Каталози ажурирани:&lt;b&gt; %1 &lt;/b&gt;(%2 прескочено)</translation>
     </message>
@@ -1213,6 +1821,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location filename="../qt_widgets/mainwindow_ui_wrapper_catalog.cpp" line="+77"/>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+6"/>
+        <location line="+0"/>
         <source>The source folder does not contain any file.&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Изворна фасцикла не садржи ниједан фајл.&lt;br/&gt;То може значити да је извор празан или уређај није монтиран у ову фасциклу.&lt;br/&gt;Да ли желите да га ипак сачувате (каталог би био празан)?</translation>
     </message>
@@ -1225,6 +1834,14 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+136"/>
         <location line="+123"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+246"/>
+        <location line="+40"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-448"/>
+        <location line="+117"/>
+        <location line="+72"/>
+        <location line="+136"/>
+        <location line="+123"/>
+        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-40"/>
         <location line="+40"/>
         <source>A device operation is already running.</source>
         <translation>Операција уређаја се већ извршава.</translation>
@@ -1242,6 +1859,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow.ui" line="-5498"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+926"/>
         <location line="+6"/>
+        <location line="-6"/>
+        <location line="+6"/>
         <source>Katalog</source>
         <translation>Katalog</translation>
     </message>
@@ -1252,6 +1871,16 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+37"/>
         <location line="+39"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-434"/>
+        <location line="+20"/>
+        <location line="+30"/>
+        <location line="+150"/>
+        <location line="+53"/>
+        <location line="+316"/>
+        <location line="+4"/>
+        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-76"/>
+        <location line="+37"/>
+        <location line="+39"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-573"/>
         <location line="+20"/>
         <location line="+30"/>
         <location line="+150"/>
@@ -1269,6 +1898,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+3110"/>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+84"/>
+        <location line="+19"/>
+        <location line="+11"/>
+        <location line="-30"/>
         <location line="+19"/>
         <location line="+11"/>
         <source>Text</source>
@@ -1298,6 +1930,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+32"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+368"/>
+        <location line="+0"/>
         <source>All Words</source>
         <translation>Sve reči</translation>
     </message>
@@ -1324,6 +1957,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+34"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1013"/>
+        <location line="+0"/>
         <source>File names or Folder paths</source>
         <translation>Imena datoteka ili putanje fascikli</translation>
     </message>
@@ -1332,12 +1966,16 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-5"/>
         <location line="+4"/>
         <location line="+1015"/>
+        <location line="-1019"/>
+        <location line="+4"/>
+        <location line="+1015"/>
         <source>File names only</source>
         <translation>Samo imena datoteka</translation>
     </message>
     <message>
         <location line="+10"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1013"/>
+        <location line="+0"/>
         <source>Folder path only</source>
         <translation>Samo putanja fascikle</translation>
     </message>
@@ -1384,6 +2022,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+743"/>
         <location filename="../qt_widgets/mainwindow.cpp" line="+307"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-266"/>
+        <location filename="../qt_widgets/mainwindow.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>File</source>
         <translation>Datoteka</translation>
     </message>
@@ -1397,6 +2037,11 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+388"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-31"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-244"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-531"/>
+        <location line="+143"/>
+        <location line="+388"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>Size</source>
         <translation>Veličina</translation>
     </message>
@@ -1446,6 +2091,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-95"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1587"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+4"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <source>Type</source>
         <translation>Tip</translation>
     </message>
@@ -1501,12 +2149,39 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+1"/>
         <location line="+4"/>
         <location line="+1"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-166"/>
+        <location line="+158"/>
+        <location line="+8"/>
+        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-130"/>
+        <location line="+19"/>
+        <location line="+11"/>
+        <location line="+91"/>
+        <location line="+9"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1"/>
+        <location line="+1"/>
+        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-93"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+9"/>
+        <location line="+1"/>
+        <location line="+62"/>
+        <location line="+2"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+4"/>
+        <location line="+1"/>
+        <location line="+4"/>
+        <location line="+1"/>
+        <location line="+4"/>
+        <location line="+1"/>
         <source>All</source>
         <translation>Sve</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-129"/>
         <location line="+19"/>
+        <location line="+11"/>
+        <location line="-11"/>
         <location line="+11"/>
         <source>Audio</source>
         <translation>Audio</translation>
@@ -1515,12 +2190,16 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="-29"/>
         <location line="+19"/>
         <location line="+11"/>
+        <location line="-11"/>
+        <location line="+11"/>
         <source>Image</source>
         <translation>Slika</translation>
     </message>
     <message>
         <location line="-28"/>
         <location line="+19"/>
+        <location line="+11"/>
+        <location line="-11"/>
         <location line="+11"/>
         <source>Video</source>
         <translation>Video</translation>
@@ -1539,6 +2218,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+9"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1408"/>
+        <location line="+0"/>
         <source>Export Results</source>
         <translation>Izvezi rezultate</translation>
     </message>
@@ -1550,6 +2230,14 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+101"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+473"/>
+        <location line="+50"/>
+        <location line="+24"/>
+        <location line="+24"/>
+        <location line="+33"/>
+        <location line="+21"/>
+        <location line="+25"/>
+        <location line="+4"/>
+        <location line="-181"/>
         <location line="+50"/>
         <location line="+24"/>
         <location line="+24"/>
@@ -1594,6 +2282,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="-3120"/>
         <location line="+347"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-16"/>
+        <location line="+0"/>
         <source>Catalogs</source>
         <translation>Katalozi</translation>
     </message>
@@ -1601,6 +2290,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="-312"/>
         <location line="+2154"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-30"/>
+        <location line="+0"/>
         <source>Total File Size</source>
         <translation>Ukupna veličina datoteka</translation>
     </message>
@@ -1631,6 +2321,13 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+18"/>
         <location line="+14"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-166"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-71"/>
+        <location line="+21"/>
+        <location line="+18"/>
+        <location line="+18"/>
+        <location line="+14"/>
+        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+0"/>
         <source>Explore</source>
         <translation>Istražuj</translation>
     </message>
@@ -1646,12 +2343,22 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-102"/>
         <location line="+36"/>
         <location line="+40"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-191"/>
+        <location line="+119"/>
+        <location line="+72"/>
+        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-76"/>
+        <location line="+36"/>
+        <location line="+40"/>
         <source>Update</source>
         <translation>Ažuriraj</translation>
     </message>
     <message>
         <location line="-1197"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-149"/>
+        <location line="+103"/>
+        <location line="+71"/>
+        <location line="-174"/>
         <location line="+103"/>
         <location line="+71"/>
         <source>Edit</source>
@@ -1662,6 +2369,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1138"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+68"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Delete</source>
         <translation>Obriši</translation>
     </message>
@@ -1675,6 +2385,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+7387"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+6"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+255"/>
+        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <source>Catalog</source>
         <translation>Katalog</translation>
     </message>
@@ -1689,6 +2401,14 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+240"/>
         <location line="+253"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+3"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-451"/>
+        <location line="+143"/>
+        <location line="+301"/>
+        <location line="+7"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-493"/>
+        <location line="+240"/>
+        <location line="+253"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <source>Path</source>
         <translation>Putanja</translation>
     </message>
@@ -1706,6 +2426,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="-11687"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1252"/>
+        <location line="+0"/>
         <source>Virtual</source>
         <translation>Virtuelni</translation>
     </message>
@@ -1737,18 +2458,22 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+3799"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-74"/>
+        <location line="+0"/>
         <source>Select...</source>
         <translation>Izaberi...</translation>
     </message>
     <message>
         <location line="+13"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+29"/>
+        <location line="+0"/>
         <source>Rename (KRename)</source>
         <translation>Preimenuj (KRename)</translation>
     </message>
     <message>
         <location line="+8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-726"/>
+        <location line="+732"/>
+        <location line="-732"/>
         <location line="+732"/>
         <source>Move to Trash</source>
         <translation>Premesti u korpu</translation>
@@ -1761,6 +2486,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+223"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1327"/>
+        <location line="+0"/>
         <source>Keep last 10</source>
         <translation>Zadrži poslednjih 10</translation>
     </message>
@@ -1797,30 +2523,35 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="-2326"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1008"/>
+        <location line="+0"/>
         <source>Comment 1</source>
         <translation>Komentar 1</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
+        <location line="+0"/>
         <source>Comment 2</source>
         <translation>Komentar 2</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
+        <location line="+0"/>
         <source>Comment 3</source>
         <translation>Komentar 3</translation>
     </message>
     <message>
         <location line="+141"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-6"/>
+        <location line="+0"/>
         <source>Brand</source>
         <translation>Brend</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
+        <location line="+0"/>
         <source>Model</source>
         <translation>Model</translation>
     </message>
@@ -1866,6 +2597,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-101"/>
         <location line="+94"/>
         <location line="+38"/>
+        <location line="-132"/>
+        <location line="+94"/>
+        <location line="+38"/>
         <source>Number of Files</source>
         <translation>Broj datoteka</translation>
     </message>
@@ -1877,6 +2611,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+209"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-116"/>
+        <location line="+243"/>
+        <location line="-243"/>
         <location line="+243"/>
         <source>Create</source>
         <translation>Kreiraj</translation>
@@ -2078,6 +2814,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+366"/>
         <location filename="../qt_widgets/mainwindow.cpp" line="+1"/>
+        <location line="+0"/>
         <source>Hosted</source>
         <translation>Hostovan</translation>
     </message>
@@ -2109,6 +2846,10 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-334"/>
         <location line="+214"/>
         <location line="+5"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-219"/>
+        <location line="+214"/>
+        <location line="+5"/>
         <source>Select</source>
         <translation>Izaberi</translation>
     </message>
@@ -2118,6 +2859,10 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-977"/>
         <location line="+2831"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+15"/>
+        <location line="+2"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2831"/>
+        <location line="+2831"/>
+        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-2"/>
         <location line="+2"/>
         <source>Storage</source>
         <translation>Skladište</translation>
@@ -2138,6 +2883,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+722"/>
         <location line="+28"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
+        <location line="+0"/>
         <source>Total Space</source>
         <translation>Ukupan prostor</translation>
     </message>
@@ -2196,6 +2942,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="-4007"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+80"/>
+        <location line="+0"/>
         <source>Device Name</source>
         <translation>Ime uređaja</translation>
     </message>
@@ -2208,6 +2955,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="-26"/>
         <location line="+13"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1"/>
+        <location line="+0"/>
         <source>Device ID</source>
         <translation>ID uređaja</translation>
     </message>
@@ -2260,6 +3008,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+20"/>
         <location line="+24"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-144"/>
+        <location line="+0"/>
         <source>Select a folder</source>
         <translation>Izaberi fasciklu</translation>
     </message>
@@ -2310,6 +3059,15 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+10"/>
         <location line="+7"/>
         <location line="+5"/>
+        <location line="-78"/>
+        <location line="+8"/>
+        <location line="+7"/>
+        <location line="+3"/>
+        <location line="+31"/>
+        <location line="+7"/>
+        <location line="+10"/>
+        <location line="+7"/>
+        <location line="+5"/>
         <source>Export</source>
         <translation>Izvezi</translation>
     </message>
@@ -2321,6 +3079,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1263"/>
+        <location line="+0"/>
         <source>Replicate directories</source>
         <translation>Repliciraj mape</translation>
     </message>
@@ -2329,12 +3088,19 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-6"/>
         <location line="+1244"/>
         <location line="+16"/>
+        <location line="-1260"/>
+        <location line="+1244"/>
+        <location line="+16"/>
         <source>Preview Backup</source>
         <translation>Pregled rezervne kopije</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1265"/>
+        <location line="+280"/>
+        <location line="+968"/>
+        <location line="+14"/>
+        <location line="-1262"/>
         <location line="+280"/>
         <location line="+968"/>
         <location line="+14"/>
@@ -2366,6 +3132,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+10"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-78"/>
+        <location line="+0"/>
         <source>On conflict</source>
         <translation>Kod konflikta</translation>
     </message>
@@ -2375,6 +3142,10 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-153"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2591"/>
         <location line="+1771"/>
+        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1771"/>
+        <location line="+1771"/>
         <source>Skip</source>
         <translation>Preskoči</translation>
     </message>
@@ -2382,6 +3153,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+5"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+2"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+1"/>
+        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+0"/>
         <source>Rename oldest</source>
         <translation>Preimenuj najstariji</translation>
     </message>
@@ -2389,6 +3162,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+40"/>
         <location line="+486"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-310"/>
+        <location line="+0"/>
         <source>Settings</source>
         <translation>Podešavanja</translation>
     </message>
@@ -2485,6 +3259,16 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+297"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-919"/>
+        <location line="+170"/>
+        <location line="+145"/>
+        <location line="+19"/>
+        <location line="+41"/>
+        <location line="+38"/>
+        <location line="+30"/>
+        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-4"/>
+        <location line="+4"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-443"/>
         <location line="+170"/>
         <location line="+145"/>
         <location line="+19"/>
@@ -2647,6 +3431,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="-1242"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-677"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+480"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Open file</source>
         <translation>Otvori datoteku</translation>
     </message>
@@ -2659,6 +3445,13 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+109"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+42"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-174"/>
+        <location line="+103"/>
+        <location line="+71"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-109"/>
+        <location line="+109"/>
+        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Open folder</source>
         <translation>Otvori fasciklu</translation>
     </message>
@@ -2666,24 +3459,29 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-62"/>
         <location line="+68"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+64"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Copy folder path</source>
         <translation>Kopiraj putanju fascikle</translation>
     </message>
     <message>
         <location line="-64"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
+        <location line="+0"/>
         <source>Copy file absolute path</source>
         <translation>Kopiraj apsolutnu putanju datoteke</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
+        <location line="+0"/>
         <source>Copy file name with extension</source>
         <translation>Kopiraj ime datoteke sa ekstenzijom</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
+        <location line="+0"/>
         <source>Copy file name without extension</source>
         <translation>Kopiraj ime datoteke bez ekstenzije</translation>
     </message>
@@ -2696,6 +3494,12 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+607"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-654"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2298"/>
+        <location line="+240"/>
+        <location line="+253"/>
+        <location line="+1805"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>Name</source>
         <translation>Ime</translation>
     </message>
@@ -2707,6 +3511,10 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1360"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+20"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
@@ -2715,12 +3523,16 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+77"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+34"/>
         <location filename="../qt_widgets/mainwindow_tab_tags.cpp" line="+44"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_tags.cpp" line="+0"/>
         <source>Select the directory to be cataloged in this new catalog</source>
         <translation>Izaberi direktorijum koji će biti katalogizovan u ovom novom katalogu</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-281"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-19"/>
+        <location line="+0"/>
         <source>Select the directory for this collection</source>
         <translation>Izaberi direktorijum za ovu kolekciju</translation>
     </message>
@@ -2730,6 +3542,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2291"/>
         <location line="+240"/>
         <location line="+253"/>
+        <location line="-493"/>
+        <location line="+240"/>
+        <location line="+253"/>
         <source>Total Size</source>
         <translation>Ukupna veličina</translation>
     </message>
@@ -2737,6 +3552,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="-1440"/>
         <location line="+1610"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+742"/>
+        <location line="+0"/>
         <source>Source Path</source>
         <translation>Izvorna putanja</translation>
     </message>
@@ -2746,6 +3562,10 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+694"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+20"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+9"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-694"/>
+        <location line="+694"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>File Type</source>
         <translation>Tip datoteke</translation>
     </message>
@@ -2753,24 +3573,29 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+3612"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+481"/>
         <location line="+7"/>
+        <location line="-7"/>
+        <location line="+7"/>
         <source>File Size</source>
         <translation>Veličina datoteke</translation>
     </message>
     <message>
         <location line="-3065"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-956"/>
+        <location line="+0"/>
         <source>Label</source>
         <translation>Labela</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
+        <location line="+0"/>
         <source>FileSystem</source>
         <translation>Sistem datoteka</translation>
     </message>
     <message>
         <location line="+2741"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+4"/>
+        <location line="+0"/>
         <source>Total</source>
         <translation>Ukupno</translation>
     </message>
@@ -2782,12 +3607,14 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+804"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+3"/>
+        <location line="+0"/>
         <source>Serial Number</source>
         <translation>Serijski broj</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
+        <location line="+0"/>
         <source>Build Date</source>
         <translation>Datum izgradnje</translation>
     </message>
@@ -2825,6 +3652,7 @@ Ova operacija se ne može poništiti.</translation>
     <message>
         <location line="+12"/>
         <location line="+41"/>
+        <location line="+0"/>
         <source>Split failed: no catalogs were created.</source>
         <translation>Deljenje neuspešno: nije kreiran nijedan katalog.</translation>
     </message>
@@ -2893,24 +3721,28 @@ Deljenje nije izvršeno.</translation>
     <message>
         <location line="+2"/>
         <location line="+1771"/>
+        <location line="+0"/>
         <source>Old path:</source>
         <translation>Stara putanja:</translation>
     </message>
     <message>
         <location line="-1770"/>
         <location line="+1771"/>
+        <location line="+0"/>
         <source>New path:</source>
         <translation>Nova putanja:</translation>
     </message>
     <message>
         <location line="-1769"/>
         <location line="+1771"/>
+        <location line="+0"/>
         <source>How should the catalog indexes be updated?</source>
         <translation>Kako treba ažurirati indekse kataloga?</translation>
     </message>
     <message>
         <location line="-1769"/>
         <location line="+1771"/>
+        <location line="+0"/>
         <source>Replace path root</source>
         <translation>Zameni koren putanje</translation>
     </message>
@@ -2922,6 +3754,9 @@ Deljenje nije izvršeno.</translation>
     <message>
         <location line="+484"/>
         <location line="+240"/>
+        <location line="+253"/>
+        <location line="+1805"/>
+        <location line="-2058"/>
         <location line="+253"/>
         <location line="+1805"/>
         <source>Parent ID</source>
@@ -2936,12 +3771,16 @@ Deljenje nije izvršeno.</translation>
         <location line="+1"/>
         <location line="+240"/>
         <location line="+253"/>
+        <location line="-253"/>
+        <location line="+253"/>
         <source>Number of files</source>
         <translation>Broj datoteka</translation>
     </message>
     <message>
         <location line="-490"/>
         <location line="+240"/>
+        <location line="+253"/>
+        <location line="-253"/>
         <location line="+253"/>
         <source>Free space</source>
         <translation>Slobodan prostor</translation>
@@ -2950,12 +3789,16 @@ Deljenje nije izvršeno.</translation>
         <location line="-492"/>
         <location line="+240"/>
         <location line="+253"/>
+        <location line="-253"/>
+        <location line="+253"/>
         <source>Total space</source>
         <translation>Ukupan prostor</translation>
     </message>
     <message>
         <location line="-492"/>
         <location line="+240"/>
+        <location line="+253"/>
+        <location line="-253"/>
         <location line="+253"/>
         <source>Date updated</source>
         <translation>Datum ažuriranja</translation>
@@ -2964,12 +3807,15 @@ Deljenje nije izvršeno.</translation>
         <location line="-491"/>
         <location line="+240"/>
         <location line="+253"/>
+        <location line="-253"/>
+        <location line="+253"/>
         <source>Group ID</source>
         <translation>ID grupe</translation>
     </message>
     <message>
         <location line="-8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
+        <location line="+0"/>
         <source>Catalog ID</source>
         <translation>ID kataloga</translation>
     </message>
@@ -3063,6 +3909,7 @@ Deljenje nije izvršeno.</translation>
     <message>
         <location line="+17"/>
         <location line="+143"/>
+        <location line="+0"/>
         <source>No catalog found.</source>
         <translation>Katalog nije pronađen.</translation>
     </message>
@@ -3083,12 +3930,18 @@ Deljenje nije izvršeno.</translation>
         <location line="+17"/>
         <location line="+24"/>
         <location line="+23"/>
+        <location line="-86"/>
+        <location line="+22"/>
+        <location line="+17"/>
+        <location line="+24"/>
+        <location line="+23"/>
         <source>Path: </source>
         <translation>Putanja: </translation>
     </message>
     <message>
         <location line="-100"/>
         <location line="+39"/>
+        <location line="+0"/>
         <source>Number of files: </source>
         <translation>Broj datoteka: </translation>
     </message>
@@ -3110,12 +3963,29 @@ Deljenje nije izvršeno.</translation>
         <location line="+64"/>
         <location line="+1"/>
         <location line="+1"/>
+        <location line="-171"/>
+        <location line="+17"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+37"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+24"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+19"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+64"/>
+        <location line="+1"/>
+        <location line="+1"/>
         <source>(added: </source>
         <translation>(dodano: </translation>
     </message>
     <message>
         <location line="-171"/>
         <location line="+39"/>
+        <location line="+0"/>
         <source>Total file size: </source>
         <translation>Ukupna veličina datoteka: </translation>
     </message>
@@ -3124,12 +3994,19 @@ Deljenje nije izvršeno.</translation>
         <location line="+39"/>
         <location line="+24"/>
         <location line="+23"/>
+        <location line="-47"/>
+        <location line="+24"/>
+        <location line="+23"/>
         <source>Storage updated: </source>
         <translation>Skladište ažurirano: </translation>
     </message>
     <message>
         <location line="-81"/>
         <location line="+39"/>
+        <location line="+26"/>
+        <location line="+21"/>
+        <location line="+66"/>
+        <location line="-113"/>
         <location line="+26"/>
         <location line="+21"/>
         <location line="+66"/>
@@ -3142,12 +4019,20 @@ Deljenje nije izvršeno.</translation>
         <location line="+26"/>
         <location line="+21"/>
         <location line="+66"/>
+        <location line="-113"/>
+        <location line="+26"/>
+        <location line="+21"/>
+        <location line="+66"/>
         <source>Free Space: </source>
         <translation>Slobodan prostor: </translation>
     </message>
     <message>
         <location line="-151"/>
         <location line="+39"/>
+        <location line="+26"/>
+        <location line="+21"/>
+        <location line="+66"/>
+        <location line="-113"/>
         <location line="+26"/>
         <location line="+21"/>
         <location line="+66"/>
@@ -3180,6 +4065,8 @@ Deljenje nije izvršeno.</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2047"/>
         <location line="+240"/>
+        <location line="+253"/>
+        <location line="-253"/>
         <location line="+253"/>
         <source>Used space</source>
         <translation>Korišćen prostor</translation>
@@ -3250,6 +4137,9 @@ Deljenje nije izvršeno.</translation>
         <location line="+11"/>
         <location line="+35"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-115"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-35"/>
+        <location line="+35"/>
+        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>GiB</source>
         <translation>GiB</translation>
     </message>
@@ -3257,6 +4147,8 @@ Deljenje nije izvršeno.</translation>
         <location line="-44"/>
         <location line="+11"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+8"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>KiB</source>
         <translation>KiB</translation>
     </message>
@@ -3264,6 +4156,8 @@ Deljenje nije izvršeno.</translation>
         <location line="-12"/>
         <location line="+11"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-4"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>MiB</source>
         <translation>MiB</translation>
     </message>
@@ -3275,6 +4169,7 @@ Deljenje nije izvršeno.</translation>
     <message>
         <location line="+250"/>
         <location line="+597"/>
+        <location line="+0"/>
         <source>MOVE</source>
         <translation>PREMESTI</translation>
     </message>
@@ -3286,6 +4181,7 @@ Deljenje nije izvršeno.</translation>
     <message>
         <location line="+7"/>
         <location line="+64"/>
+        <location line="+0"/>
         <source>Information</source>
         <translation>Informacija</translation>
     </message>
@@ -3297,6 +4193,9 @@ Deljenje nije izvršeno.</translation>
     <message>
         <location line="-770"/>
         <location line="+13"/>
+        <location line="+803"/>
+        <location line="+572"/>
+        <location line="-1375"/>
         <location line="+803"/>
         <location line="+572"/>
         <source>DELETE</source>
@@ -3316,12 +4215,16 @@ Deljenje nije izvršeno.</translation>
         <location line="+46"/>
         <location line="+11"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-8"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>TiB</source>
         <translation>TiB</translation>
     </message>
     <message>
         <location line="-7"/>
         <location line="+11"/>
+        <location line="+30"/>
+        <location line="-30"/>
         <location line="+30"/>
         <source>Bytes</source>
         <translation>Bajtovi</translation>
@@ -3334,6 +4237,7 @@ Deljenje nije izvršeno.</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-952"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+15"/>
+        <location line="+0"/>
         <source>Results exported to the collection folder:</source>
         <translation>Rezultati izvezeni u fasciklu kolekcije:</translation>
     </message>
@@ -3585,6 +4489,8 @@ Deljenje nije izvršeno.</translation>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+18"/>
         <location line="+145"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-515"/>
+        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
         <source>Select the directory to exclude</source>
         <translation>Odaberi mapu za isključivanje</translation>
     </message>
@@ -3592,6 +4498,8 @@ Deljenje nije izvršeno.</translation>
         <location line="-77"/>
         <location line="+103"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+35"/>
+        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
         <source>Remove</source>
         <translation>Ukloni</translation>
     </message>
@@ -3618,6 +4526,7 @@ Deljenje nije izvršeno.</translation>
     <message>
         <location line="+2"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1057"/>
+        <location line="+0"/>
         <source>Choose a different name and try again.</source>
         <translation>Izaberi drugo ime i pokušaj ponovo.</translation>
     </message>
@@ -3650,6 +4559,9 @@ Deljenje nije izvršeno.</translation>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-141"/>
         <location line="+338"/>
         <location line="+745"/>
+        <location line="-1083"/>
+        <location line="+338"/>
+        <location line="+745"/>
         <source>Source</source>
         <translation>Izvor</translation>
     </message>
@@ -3676,6 +4588,16 @@ Deljenje nije izvršeno.</translation>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-96"/>
         <location line="+18"/>
         <location line="+49"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-117"/>
+        <location line="+117"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-243"/>
+        <location line="+107"/>
+        <location line="+9"/>
+        <location line="+127"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-67"/>
+        <location line="+18"/>
+        <location line="+49"/>
         <source>Cancel</source>
         <translation>Otkaži</translation>
     </message>
@@ -3687,6 +4609,7 @@ Deljenje nije izvršeno.</translation>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-3664"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1272"/>
+        <location line="+0"/>
         <source>Storage ID</source>
         <translation>ID skladišta</translation>
     </message>
@@ -3700,6 +4623,7 @@ Deljenje nije izvršeno.</translation>
         <location line="+1133"/>
         <location line="+964"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-19"/>
+        <location line="+0"/>
         <source>Directory</source>
         <translation>Direktorijum</translation>
     </message>
@@ -3737,6 +4661,7 @@ Deljenje nije izvršeno.</translation>
     <message>
         <location line="+4008"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-183"/>
+        <location line="+0"/>
         <source>Tag</source>
         <translation>Oznaka</translation>
     </message>
@@ -3748,6 +4673,8 @@ Deljenje nije izvršeno.</translation>
     <message>
         <location line="+359"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1963"/>
+        <location line="+13"/>
+        <location line="-13"/>
         <location line="+13"/>
         <source>Search history</source>
         <translation>Istorija pretrage</translation>
@@ -3769,12 +4696,14 @@ Deljenje nije izvršeno.</translation>
     <message>
         <location line="+85"/>
         <location line="+6"/>
+        <location line="+0"/>
         <source>Select or create a database file for this collection</source>
         <translation>Izaberite ili kreirajte datoteku baze podataka za ovu kolekciju</translation>
     </message>
     <message>
         <location line="-4"/>
         <location line="+6"/>
+        <location line="+0"/>
         <source>Database files (*.db)</source>
         <translation>Datoteke baze podataka (*.db)</translation>
     </message>
@@ -3863,6 +4792,12 @@ Deljenje nije izvršeno.</translation>
         <location line="+64"/>
         <location line="+533"/>
         <location line="+39"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1375"/>
+        <location line="+739"/>
+        <location line="+64"/>
+        <location line="+533"/>
+        <location line="+39"/>
         <source>Confirmation</source>
         <translation>Potvrda</translation>
     </message>
@@ -3873,36 +4808,46 @@ Deljenje nije izvršeno.</translation>
         <location line="+3"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-624"/>
         <location line="+64"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-38"/>
+        <location line="+35"/>
+        <location line="+3"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-64"/>
+        <location line="+64"/>
         <source>Warning</source>
         <translation>Upozorenje</translation>
     </message>
     <message>
         <location line="-41"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-67"/>
+        <location line="+0"/>
         <source>Moved to trash:&lt;br/&gt;</source>
         <translation>Premešteno u korpu:&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+3"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+3"/>
+        <location line="+0"/>
         <source>Move to trash failed.</source>
         <translation>Premeštanje u korpu neuspešno.</translation>
     </message>
     <message>
         <location line="+35"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+61"/>
+        <location line="+0"/>
         <source>Deleted.</source>
         <translation>Obrisano.</translation>
     </message>
     <message>
         <location line="+3"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+3"/>
+        <location line="+0"/>
         <source>Failed to delete.</source>
         <translation>Brisanje neuspešno.</translation>
     </message>
     <message>
         <location line="-182"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-214"/>
+        <location line="+0"/>
         <source>Delete file</source>
         <translation>Obriši datoteku</translation>
     </message>
@@ -3937,12 +4882,14 @@ Deljenje nije izvršeno.</translation>
     <message>
         <location line="+5"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+36"/>
+        <location line="+0"/>
         <source>updates only</source>
         <translation>samo ažuriranja</translation>
     </message>
     <message>
         <location line="+5"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-4"/>
+        <location line="+0"/>
         <source>snapshots only</source>
         <translation>samo snimci</translation>
     </message>
@@ -4051,6 +4998,10 @@ u smeće?</translation>
         <location line="+240"/>
         <location line="+253"/>
         <location line="+1805"/>
+        <location line="-2298"/>
+        <location line="+240"/>
+        <location line="+253"/>
+        <location line="+1805"/>
         <source>Device Type</source>
         <translation>Tip uređaja</translation>
     </message>
@@ -4063,6 +5014,7 @@ u smeće?</translation>
         <location filename="../qt_widgets/mainwindow.ui" line="+4956"/>
         <location line="+753"/>
         <location filename="../qt_widgets/mainwindow.cpp" line="-2"/>
+        <location line="+0"/>
         <source>Memory</source>
         <translation>Memorija</translation>
     </message>
@@ -4086,6 +5038,7 @@ u smeće?</translation>
     <message>
         <location line="-2236"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-443"/>
+        <location line="+0"/>
         <source>File name</source>
         <translation>Ime datoteke</translation>
     </message>
@@ -4112,6 +5065,10 @@ u smeće?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1076"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+263"/>
+        <location line="+587"/>
+        <location line="+14"/>
+        <location line="+20"/>
+        <location line="-621"/>
         <location line="+587"/>
         <location line="+14"/>
         <location line="+20"/>
@@ -4217,12 +5174,20 @@ u smeće?</translation>
         <location line="+399"/>
         <location line="+7"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+512"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-406"/>
+        <location line="+399"/>
+        <location line="+7"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Catalog with results</source>
         <translation>Katalog sa rezultatima</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+436"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1220"/>
+        <location line="+240"/>
+        <location line="+253"/>
+        <location line="+1805"/>
+        <location line="-2298"/>
         <location line="+240"/>
         <location line="+253"/>
         <location line="+1805"/>
@@ -4246,6 +5211,11 @@ u smeće?</translation>
         <location line="+240"/>
         <location line="+253"/>
         <location line="+1805"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2298"/>
+        <location line="+240"/>
+        <location line="+253"/>
+        <location line="+1805"/>
         <source>Active</source>
         <translation>Aktivan</translation>
     </message>
@@ -4253,12 +5223,15 @@ u smeće?</translation>
         <location line="-4"/>
         <location line="+7"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+189"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+0"/>
         <source>Files</source>
         <translation>Datoteke</translation>
     </message>
     <message>
         <location line="-6"/>
         <location line="+7"/>
+        <location line="+0"/>
         <source>Date Updated</source>
         <translation>Datum ažuriranja</translation>
     </message>
@@ -4271,18 +5244,22 @@ u smeće?</translation>
         <location line="-1088"/>
         <location line="+338"/>
         <location line="+751"/>
+        <location line="-751"/>
+        <location line="+751"/>
         <source>Target</source>
         <translation>Cilj</translation>
     </message>
     <message>
         <location line="-1193"/>
         <location line="+1262"/>
+        <location line="+0"/>
         <source>Run Archive</source>
         <translation>Pokreni arhiviranje</translation>
     </message>
     <message>
         <location line="-1257"/>
         <location line="+1260"/>
+        <location line="+0"/>
         <source>Preview Archive</source>
         <translation>Pregled arhive</translation>
     </message>
@@ -4296,6 +5273,9 @@ u smeće?</translation>
         <location line="+111"/>
         <location line="+230"/>
         <location line="+444"/>
+        <location line="-674"/>
+        <location line="+230"/>
+        <location line="+444"/>
         <source>Select a mapping first.</source>
         <translation>Najpre odaberite vezu.</translation>
     </message>
@@ -4303,24 +5283,30 @@ u smeće?</translation>
         <location line="-763"/>
         <location line="+108"/>
         <location line="+230"/>
+        <location line="-230"/>
+        <location line="+230"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>Izvor i odredište moraju biti kataloški uređaji.</translation>
     </message>
     <message>
         <location line="-326"/>
         <location line="+62"/>
+        <location line="+0"/>
         <source>Replicate</source>
         <translation>Repliciraj</translation>
     </message>
     <message>
         <location line="-61"/>
         <location line="+338"/>
+        <location line="+0"/>
         <source>%1 not available</source>
         <translation>%1 nije dostupan</translation>
     </message>
     <message>
         <location line="-327"/>
         <location line="+90"/>
+        <location line="+249"/>
+        <location line="-249"/>
         <location line="+249"/>
         <source>A catalog update is already in progress. Please wait and try again.</source>
         <translation>Ažuriranje kataloga je već u toku. Sačekajte i pokušajte ponovo.</translation>
@@ -4338,12 +5324,15 @@ u smeće?</translation>
     <message>
         <location line="+1"/>
         <location line="+637"/>
+        <location line="+0"/>
         <source>Errors</source>
         <translation>Greške</translation>
     </message>
     <message>
         <location line="-218"/>
         <location line="+239"/>
+        <location line="+74"/>
+        <location line="-74"/>
         <location line="+74"/>
         <source>Move</source>
         <translation>Premesti</translation>
@@ -4352,12 +5341,15 @@ u smeće?</translation>
         <location line="-313"/>
         <location line="+239"/>
         <location line="+74"/>
+        <location line="-74"/>
+        <location line="+74"/>
         <source>Copy</source>
         <translation>Kopiraj</translation>
     </message>
     <message>
         <location line="-312"/>
         <location line="+240"/>
+        <location line="+0"/>
         <source>Already in target</source>
         <translation>Već na odredištu</translation>
     </message>
@@ -4365,6 +5357,8 @@ u smeće?</translation>
         <location line="-154"/>
         <location line="+32"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+8"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+0"/>
         <source>%1s</source>
         <translation>%1s</translation>
     </message>
@@ -4372,6 +5366,8 @@ u smeće?</translation>
         <location line="-30"/>
         <location line="+32"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+2"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+0"/>
         <source>%1m %2s</source>
         <translation>%1m %2s</translation>
     </message>
@@ -4379,6 +5375,8 @@ u smeće?</translation>
         <location line="-30"/>
         <location line="+32"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+2"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+0"/>
         <source>%1h %2m</source>
         <translation>%1h %2m</translation>
     </message>
@@ -4395,12 +5393,14 @@ u smeće?</translation>
     <message>
         <location line="+3"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+1"/>
+        <location line="+0"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
         <location line="+60"/>
         <location line="+143"/>
+        <location line="+0"/>
         <source>Status</source>
         <translation>Status</translation>
     </message>
@@ -4412,18 +5412,26 @@ u smeće?</translation>
     <message>
         <location line="+8"/>
         <location line="+33"/>
+        <location line="+0"/>
         <source>Archived</source>
         <translation>Arhivirano</translation>
     </message>
     <message>
         <location line="-25"/>
         <location line="+135"/>
+        <location line="+0"/>
         <source>Conflict</source>
         <translation>Konflikt</translation>
     </message>
     <message>
         <location line="-127"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-173"/>
+        <location line="+64"/>
+        <location line="+10"/>
+        <location line="+58"/>
+        <location line="+73"/>
+        <location line="+35"/>
+        <location line="-240"/>
         <location line="+64"/>
         <location line="+10"/>
         <location line="+58"/>
@@ -4440,6 +5448,7 @@ u smeće?</translation>
     <message>
         <location line="+4"/>
         <location line="+23"/>
+        <location line="+0"/>
         <source>Conflicts</source>
         <translation>Konflikti</translation>
     </message>
@@ -4571,6 +5580,7 @@ u smeće?</translation>
     <message>
         <location line="+271"/>
         <location line="+90"/>
+        <location line="+0"/>
         <source>Filelight</source>
         <translation>Filelight</translation>
     </message>
@@ -4642,6 +5652,7 @@ u smeće?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-646"/>
         <location line="+324"/>
+        <location line="+0"/>
         <source>Search Error</source>
         <translation>Greška pretrage</translation>
     </message>
@@ -4660,6 +5671,9 @@ u smeće?</translation>
         <location line="+974"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+150"/>
         <location line="+42"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-42"/>
+        <location line="+42"/>
         <source>Pause</source>
         <translation>Pauza</translation>
     </message>
@@ -4667,6 +5681,9 @@ u smeće?</translation>
         <location line="-967"/>
         <location line="+967"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-28"/>
+        <location line="+30"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-30"/>
         <location line="+30"/>
         <source>Resume</source>
         <translation>Nastavi</translation>
@@ -4739,6 +5756,7 @@ u smeće?</translation>
     <message>
         <location line="+3"/>
         <location line="+11"/>
+        <location line="+0"/>
         <source>&lt;tr&gt;&lt;td&gt;Files processed: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</source>
         <translation>&lt;tr&gt;&lt;td&gt;Obrađene datoteke: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
@@ -4808,6 +5826,7 @@ u smeće?</translation>
     <message>
         <location line="+15"/>
         <location line="+53"/>
+        <location line="+0"/>
         <source>Select a catalog first (some info is missing).&lt;br/&gt; currentCatalogFilePath: %1 &lt;br/&gt;currentCatalogName: %2 &lt;br/&gt; currentCatalogSourcePath: %3</source>
         <translation>Prvo izaberite katalog (neki podaci nedostaju).&lt;br/&gt; trenutna putanjaDatotekeKataloga: %1 &lt;br/&gt;trenutniNazivKataloga: %2 &lt;br/&gt; trenutna putanjaIzvoraKataloga: %3</translation>
     </message>
@@ -4819,6 +5838,7 @@ u smeće?</translation>
     <message>
         <location line="+14"/>
         <location line="+87"/>
+        <location line="+0"/>
         <source>Could not open file.</source>
         <translation>Nije moguće otvoriti datoteku.</translation>
     </message>
@@ -4835,24 +5855,33 @@ u smeće?</translation>
     <message>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+4"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+169"/>
+        <location line="+0"/>
         <source>Strict</source>
         <translation>Strogo</translation>
     </message>
     <message>
         <location line="+2"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+1"/>
+        <location line="+0"/>
         <source>Unique</source>
         <translation>Jedinstveno</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+1"/>
+        <location line="+0"/>
         <source>Drive</source>
         <translation>Disk</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-177"/>
         <location line="+10"/>
+        <location line="+58"/>
+        <location line="+11"/>
+        <location line="+15"/>
+        <location line="+38"/>
+        <location line="+9"/>
+        <location line="-131"/>
         <location line="+58"/>
         <location line="+11"/>
         <location line="+15"/>
@@ -4874,6 +5903,8 @@ u smeće?</translation>
     <message>
         <location line="+88"/>
         <location line="+10"/>
+        <location line="+8"/>
+        <location line="-8"/>
         <location line="+8"/>
         <source>Collection Update</source>
         <translation>Ажурирање колекције</translation>
@@ -6865,12 +7896,12 @@ Errors: %3</source>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+361"/>
+        <location line="+377"/>
         <source>(none)</source>
         <translation>(ниједна)</translation>
     </message>
     <message>
-        <location line="-353"/>
+        <location line="-369"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -7005,7 +8036,7 @@ Errors: %3</source>
         <translation>Uređaj</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+15"/>
         <source>Import</source>
         <translation>Uvezi</translation>
     </message>
@@ -7016,7 +8047,7 @@ Errors: %3</source>
         <translation>Ažuriraj</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+32"/>
         <source>Application</source>
         <translation>Апликација</translation>
     </message>

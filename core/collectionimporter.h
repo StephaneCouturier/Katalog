@@ -132,6 +132,21 @@ public:
     QString sourceMode() const           { return m_sourceMode; }  // "File" or "Memory"
     QString lastError() const            { return m_lastError; }
 
+    /**
+     * Aggregate before/after totals for the catalogs touched by the most recent
+     * updateAllImportsFromSource() call. Captured from device-level totals the
+     * update already reads/overwrites, so there is no extra scan. Used by the UI
+     * to show an update report (file-count and size changes).
+     */
+    struct ImportUpdateStats {
+        int    catalogsUpdated = 0;
+        qint64 filesBefore     = 0;
+        qint64 filesAfter      = 0;
+        qint64 sizeBefore      = 0;   // bytes
+        qint64 sizeAfter       = 0;   // bytes
+    };
+    ImportUpdateStats lastUpdateStats() const { return m_lastUpdateStats; }
+
 signals:
     void importProgress(int current, int total, const QString &itemName);
     // Emitted periodically during file-row insertion for a single catalog.
@@ -188,6 +203,8 @@ private:
     QString             m_sourcePath;
     QString             m_sourceMode;   // "File" or "Memory"
     QString             m_lastError;
+
+    ImportUpdateStats   m_lastUpdateStats;   // populated by updateAllImportsFromSource()
 
     int  m_deviceIdOffset  = 0;
     int  m_catalogIdOffset = 0;

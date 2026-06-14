@@ -105,6 +105,7 @@ class AppManager : public QObject
     Q_PROPERTY(QString catalogStatusText READ getCatalogStatusText NOTIFY catalogStatusTextChanged)
     Q_PROPERTY(bool    importIsRunning   READ getImportIsRunning   NOTIFY importIsRunningChanged)
     Q_PROPERTY(QString importStatusText  READ getImportStatusText  NOTIFY importStatusTextChanged)
+    Q_PROPERTY(QString importReportText  READ getImportReportText  NOTIFY importReportTextChanged)
     Q_PROPERTY(DeviceListModel* importSourceDeviceModel READ getImportSourceDeviceModel NOTIFY importSourceChanged)
     Q_PROPERTY(bool updateBeforeBackup READ updateBeforeBackup WRITE setUpdateBeforeBackup NOTIFY updateBeforeBackupChanged)
     Q_PROPERTY(bool catalogUpdateForBackupRunning READ catalogUpdateForBackupRunning NOTIFY catalogUpdateForBackupRunningChanged)
@@ -257,6 +258,7 @@ public slots:
     // Import progress
     bool    getImportIsRunning()  const { return m_importIsRunning; }
     QString getImportStatusText() const { return m_importStatusText; }
+    QString getImportReportText() const { return m_importReportText; }
 
     // Catalog creation
     Q_INVOKABLE QString      createCatalog(const QString &name, const QString &path,
@@ -443,6 +445,7 @@ signals:
     void importSourceChanged();
     void importIsRunningChanged();
     void importStatusTextChanged();
+    void importReportTextChanged();
     void tagsChanged();
     void backupMappingsChanged();
     void backupProgress(int filesDone, int totalFiles, qint64 bytesCopied, qint64 totalBytes, const QString &currentFile);
@@ -474,6 +477,7 @@ private:
     CollectionImporter     *m_importer               = nullptr;
     bool    m_importIsRunning  = false;
     QString m_importStatusText;
+    QString m_importReportText;
     DeviceListModel        *m_importSourceDeviceModel = nullptr;
 
     void setupDeviceUpdateManager();

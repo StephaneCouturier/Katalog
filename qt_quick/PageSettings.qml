@@ -329,7 +329,11 @@ Kirigami.ScrollablePage {
                 id: importDeviceCombo
                 Layout.fillWidth: true
                 sourceModel: appManager1.importSourceDeviceModel
-                enabled: importModeCombo.currentIndex < 2 && selectedDeviceName.length > 0 && !appManager1.importIsRunning
+                // The import source picker must not track the app-selected device:
+                // source-collection IDs are independent, so following the app
+                // selection could auto-select the wrong source device by ID collision.
+                followAppSelection: false
+                enabled: importModeCombo.currentIndex < 2 && !appManager1.importIsRunning
             }
             Controls.Button {
                 text: qsTr("Import")
@@ -375,6 +379,18 @@ Kirigami.ScrollablePage {
             Layout.fillWidth: true
             type: Kirigami.MessageType.Error
             visible: false
+            showCloseButton: true
+        }
+
+        // Update report — file-count and size changes after a Collection Update.
+        Controls.Label { visible: importReportMessage.visible }
+        Kirigami.InlineMessage {
+            id: importReportMessage
+            Layout.fillWidth: true
+            Layout.columnSpan: 1
+            type: Kirigami.MessageType.Positive
+            text: appManager1.importReportText
+            visible: appManager1.importReportText.length > 0
             showCloseButton: true
         }
 
