@@ -128,6 +128,16 @@ Les appareils, leurs catalogues, les index de fichiers des catalogues, les stati
 *Mettre à jour l'appareil sélectionné* n'est actif que lorsque l'appareil sélectionné (ou l'un de ses enfants) a été précédemment importé et possède encore un lien valide vers une collection source.
 :::
 
+**Rapport de mise à jour**
+
+À la fin d'une mise à jour, Katalog affiche un résumé des changements :
+
+* le nombre de catalogues mis à jour,
+* le nombre total de fichiers avant et après, avec la variation nette,
+* la taille totale des fichiers avant et après, avec la variation nette.
+
+L'état de l'opération (en cours, terminée ou en erreur) est également affiché dans la barre d'état, de manière cohérente avec les autres opérations de Katalog.
+
 **Format de la collection source**
 
 | Format source | Comment ouvrir |

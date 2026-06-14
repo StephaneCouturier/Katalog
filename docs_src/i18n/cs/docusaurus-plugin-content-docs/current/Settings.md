@@ -128,6 +128,16 @@ Jsou přenesena zařízení, jejich katalogy, indexy souborů katalogů, statist
 *Aktualizovat vybrané zařízení* je aktivní pouze tehdy, když vybrané zařízení (nebo některý z jeho potomků) bylo dříve importováno a stále má platný odkaz na zdrojovou kolekci.
 :::
 
+**Zpráva o aktualizaci**
+
+Po dokončení aktualizace zobrazí Katalog souhrn změn:
+
+* počet aktualizovaných katalogů,
+* celkový počet souborů před a po, s čistou změnou,
+* celkovou velikost souborů před a po, s čistou změnou.
+
+Stav operace (probíhá, dokončeno nebo chyba) se rovněž zobrazuje ve stavovém řádku, v souladu s ostatními operacemi Katalogu.
+
 **Formát zdrojové kolekce**
 
 | Formát zdroje | Jak otevřít |

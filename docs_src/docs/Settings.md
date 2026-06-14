@@ -128,6 +128,16 @@ Devices, their catalogs, catalog file indexes, statistics, backup links, and exc
 *Update Selected Device* is only active when the selected device (or one of its children) was previously imported and still has a valid link to a source collection.
 :::
 
+**Update report**
+
+When an update finishes, Katalog shows a summary of what changed:
+
+* the number of catalogs updated,
+* the total file count before and after, with the net change,
+* the total file size before and after, with the net change.
+
+The operation status (in progress, completed, or error) is also shown in the status bar, consistent with other Katalog operations.
+
 **Source collection format**
 
 | Source format | How to open |
