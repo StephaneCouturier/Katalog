@@ -78,7 +78,7 @@
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+640"/>
+        <location filename="../qt_quick/Main.qml" line="+650"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -120,13 +120,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-228"/>
-        <location line="+229"/>
+        <location line="-224"/>
+        <location line="+225"/>
         <source>Settings</source>
         <translation>Налаштування</translation>
     </message>
     <message>
-        <location line="-353"/>
+        <location line="-349"/>
         <source>Open...</source>
         <translation>Відкрити...</translation>
     </message>
@@ -137,36 +137,36 @@
     </message>
     <message>
         <location line="+17"/>
-        <location line="+755"/>
+        <location line="+751"/>
         <source>Selection</source>
         <translation>Вибір</translation>
     </message>
     <message>
-        <location line="-745"/>
-        <location line="+979"/>
+        <location line="-741"/>
+        <location line="+975"/>
         <source>Devices</source>
         <translation>Пристрої</translation>
     </message>
     <message>
-        <location line="-974"/>
-        <location line="+1082"/>
+        <location line="-970"/>
+        <location line="+1078"/>
         <source>Explore</source>
         <translation>Переглянути</translation>
     </message>
     <message>
-        <location line="-1067"/>
-        <location line="+1270"/>
+        <location line="-1063"/>
+        <location line="+1266"/>
         <source>Statistics</source>
         <translation>Статистика</translation>
     </message>
     <message>
-        <location line="-1265"/>
-        <location line="+1285"/>
+        <location line="-1261"/>
+        <location line="+1281"/>
         <source>Tags</source>
         <translation>Теги</translation>
     </message>
     <message>
-        <location line="-1272"/>
+        <location line="-1268"/>
         <source>Documentation</source>
         <translation>Документація</translation>
     </message>
@@ -181,7 +181,7 @@
         <translation>Вийти</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+25"/>
         <source>Drawer pinned</source>
         <translation>Панель закріплено</translation>
     </message>
@@ -191,7 +191,7 @@
         <translation>Панель рухома</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+23"/>
         <source>Selection shown</source>
         <translation>Вибір показано</translation>
     </message>
@@ -424,8 +424,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-717"/>
-        <location line="+820"/>
+        <location line="-713"/>
+        <location line="+816"/>
         <location line="+3"/>
         <source>Search</source>
         <translation>Пошук</translation>
@@ -520,8 +520,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1133"/>
-        <location line="+1127"/>
+        <location line="-1129"/>
+        <location line="+1123"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Створити</translation>
@@ -551,8 +551,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Видалити</translation>
     </message>
     <message>
-        <location line="-1236"/>
-        <location line="+1311"/>
+        <location line="-1232"/>
+        <location line="+1307"/>
         <source>BackUp</source>
         <translation>Резервне копіювання</translation>
     </message>
@@ -575,6 +575,16 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+60"/>
         <source>Select the database to create and open:</source>
         <translation>Виберіть базу даних для створення та відкриття:</translation>
+    </message>
+    <message>
+        <location filename="../qt_quick/main.cpp" line="+107"/>
+        <source>Catalog your devices to search, analyze, and backup your files.</source>
+        <translation>Каталогізуйте свої пристрої, щоб шукати, аналізувати та створювати резервні копії файлів.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Founder &amp; Main Developer</source>
+        <translation>Засновник і головний розробник</translation>
     </message>
 </context>
 <context>

@@ -78,7 +78,7 @@
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+640"/>
+        <location filename="../qt_quick/Main.qml" line="+650"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -120,13 +120,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-228"/>
-        <location line="+229"/>
+        <location line="-224"/>
+        <location line="+225"/>
         <source>Settings</source>
         <translation>Nastavitve</translation>
     </message>
     <message>
-        <location line="-353"/>
+        <location line="-349"/>
         <source>Open...</source>
         <translation>Odpri...</translation>
     </message>
@@ -137,36 +137,36 @@
     </message>
     <message>
         <location line="+17"/>
-        <location line="+755"/>
+        <location line="+751"/>
         <source>Selection</source>
         <translation>Izbira</translation>
     </message>
     <message>
-        <location line="-745"/>
-        <location line="+979"/>
+        <location line="-741"/>
+        <location line="+975"/>
         <source>Devices</source>
         <translation>Naprave</translation>
     </message>
     <message>
-        <location line="-974"/>
-        <location line="+1082"/>
+        <location line="-970"/>
+        <location line="+1078"/>
         <source>Explore</source>
         <translation>Razišči</translation>
     </message>
     <message>
-        <location line="-1067"/>
-        <location line="+1270"/>
+        <location line="-1063"/>
+        <location line="+1266"/>
         <source>Statistics</source>
         <translation>Statistike</translation>
     </message>
     <message>
-        <location line="-1265"/>
-        <location line="+1285"/>
+        <location line="-1261"/>
+        <location line="+1281"/>
         <source>Tags</source>
         <translation>Oznake</translation>
     </message>
     <message>
-        <location line="-1272"/>
+        <location line="-1268"/>
         <source>Documentation</source>
         <translation>Dokumentacija</translation>
     </message>
@@ -181,7 +181,7 @@
         <translation>Izhod</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+25"/>
         <source>Drawer pinned</source>
         <translation>Predal pripet</translation>
     </message>
@@ -191,7 +191,7 @@
         <translation>Predal lebdeč</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+23"/>
         <source>Selection shown</source>
         <translation>Izbira prikazana</translation>
     </message>
@@ -424,8 +424,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-717"/>
-        <location line="+820"/>
+        <location line="-713"/>
+        <location line="+816"/>
         <location line="+3"/>
         <source>Search</source>
         <translation>Iskanje</translation>
@@ -520,8 +520,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1133"/>
-        <location line="+1127"/>
+        <location line="-1129"/>
+        <location line="+1123"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Ustvari</translation>
@@ -551,8 +551,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Izbriši</translation>
     </message>
     <message>
-        <location line="-1236"/>
-        <location line="+1311"/>
+        <location line="-1232"/>
+        <location line="+1307"/>
         <source>BackUp</source>
         <translation>Varnostna kopija</translation>
     </message>
@@ -575,6 +575,16 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+60"/>
         <source>Select the database to create and open:</source>
         <translation>Izberi podatkovno bazo za ustvarjanje in odpiranje:</translation>
+    </message>
+    <message>
+        <location filename="../qt_quick/main.cpp" line="+107"/>
+        <source>Catalog your devices to search, analyze, and backup your files.</source>
+        <translation>ඔබගේ ගොනු සෙවීමට, විශ්ලේෂණය කිරීමට සහ උපස්ථ කිරීමට ඔබගේ උපාංග නාමාවලිගත කරන්න.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Founder &amp; Main Developer</source>
+        <translation>නිර්මාතෘ සහ ප්‍රධාන සංවර්ධක</translation>
     </message>
 </context>
 <context>

@@ -71,8 +71,11 @@ set(UI_FILES
     mainwindow.ui
 )
 
-# K3 QML files — included in lupdate scan so qsTr() strings land in the shared .ts files
+# K3 QML files — included in lupdate scan so qsTr() strings land in the shared .ts files.
+# qt_quick/main.cpp is also scanned: it builds KAboutData with translatable strings
+# via QCoreApplication::translate("Main", …) that lupdate must capture into the Main context.
 set(K3_QML_FILES
+    ${CMAKE_SOURCE_DIR}/qt_quick/main.cpp
     ${CMAKE_SOURCE_DIR}/qt_quick/Main.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/PageSearchForm.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/PageSearchResultsForm.qml

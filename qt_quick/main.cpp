@@ -56,24 +56,6 @@ int main(int argc, char *argv[])
     // K3 Settings page use), and re-loaded at runtime on language change.
     QTranslator *translator = new QTranslator(&app);
 
-    KAboutData aboutData(
-        QStringLiteral("Katalog"),
-        "Katalog",
-        QStringLiteral(KATALOG_VERSION_STRING),
-        "Catalog your devices to search, analyze, and backup your files.",
-        KAboutLicense::GPL_V3,
-        "(c) 2020-2026");
-
-    aboutData.setDesktopFileName(QStringLiteral("io.github.stephanecouturier.Katalog")); //Temporary, to hide the KDE GetInvolved Donation links
-    aboutData.setBugAddress(""); //Temporary, to hide the KDE Bug link
-    aboutData.addAuthor(
-        "Stéphane Couturier",
-        "Founder & Main Developer",
-        QStringLiteral("katalog@stephanecouturier.com"),
-        QStringLiteral("https://stephanecouturier.github.io/Katalog/"));
-
-    KAboutData::setApplicationData(aboutData);
-
     //Katalog objects
     AppManager *appManager = new AppManager;
     appManager->initiateApp();
@@ -112,6 +94,29 @@ int main(int argc, char *argv[])
         if (translator->load("Katalog_" + userLanguage, ":translations"))
             app.installTranslator(translator);
     }
+
+    // Build KAboutData AFTER the translator is installed so its translatable
+    // strings (short description, author role) resolve in the user's language.
+    // The strings use QCoreApplication::translate("Main", …) — Qt's tr()
+    // mechanism (QTranslator/.qm), the same one the whole K3 UI uses. They are
+    // K3-only (K2 has no KAboutData), so they live in the "Main" context.
+    KAboutData aboutData(
+        QStringLiteral("Katalog"),
+        "Katalog",
+        QStringLiteral(KATALOG_VERSION_STRING),
+        QCoreApplication::translate("Main", "Catalog your devices to search, analyze, and backup your files."),
+        KAboutLicense::GPL_V3,
+        "(c) 2020-2026");
+
+    aboutData.setDesktopFileName(QStringLiteral("io.github.stephanecouturier.Katalog")); //Temporary, to hide the KDE GetInvolved Donation links
+    aboutData.setBugAddress(""); //Temporary, to hide the KDE Bug link
+    aboutData.addAuthor(
+        "Stéphane Couturier",
+        QCoreApplication::translate("Main", "Founder & Main Developer"),
+        QStringLiteral("katalog@stephanecouturier.com"),
+        QStringLiteral("https://stephanecouturier.github.io/Katalog/"));
+
+    KAboutData::setApplicationData(aboutData);
 
     SearchSync *newSearch = new SearchSync;
     PageSearch pageSearch;

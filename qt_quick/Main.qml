@@ -67,8 +67,22 @@ Kirigami.ApplicationWindow {
         let shouldShow = appManager1.showSelectionPage || !featureOpen
         let inStack = selectionInStack()
         if (shouldShow && !inStack) {
+            // Selection must occupy column 0, before the feature page(s). Inserting
+            // at index 0 with insertPage() drops the pages after it on this Kirigami
+            // build (the feature page would vanish), so rebuild the stack from the
+            // existing page objects — they are static/reused, so state is preserved.
+            let pages = []
+            for (var i = 0; i < pageStack.depth; i++)
+                pages.push(pageStack.get(i))
+            for (var j = pages.length - 1; j >= 0; j--)
+                pageStack.removePage(pages[j])
             pageSelection.visible = true
-            pageStack.insertPage(0, pageSelection)
+            pageStack.push(pageSelection)
+            for (var k = 0; k < pages.length; k++) {
+                pages[k].visible = true
+                pageStack.push(pages[k])
+            }
+            pageStack.currentIndex = pageStack.depth - 1
         } else if (!shouldShow && inStack) {
             pageStack.removePage(pageSelection)
             pageSelection.visible = false
