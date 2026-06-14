@@ -6584,7 +6584,24 @@ Errors: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
+        <location line="+174"/>
+        <source>Memory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-173"/>
+        <location line="+173"/>
+        <source>File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-172"/>
+        <source>Hosted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Collection</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6620,27 +6637,27 @@ Errors: %3</source>
     </message>
     <message>
         <location line="-121"/>
-        <source>Host name</source>
+        <source>Host Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>Database name:</source>
+        <source>Database Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+11"/>
-        <source>Port:</source>
+        <source>Port</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>User name:</source>
+        <source>User Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+11"/>
-        <source>Password:</source>
+        <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6675,17 +6692,7 @@ Errors: %3</source>
     </message>
     <message>
         <location line="+3"/>
-        <source>Katalog File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>Katalog Memory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>VVV Tab Separated Values</source>
+        <source>Tab Separated Values</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

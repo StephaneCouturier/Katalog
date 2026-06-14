@@ -6834,24 +6834,41 @@ Errors: %3</source>
     <message>
         <location line="+38"/>
         <source>Collection &amp; Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Zbirka in podatkovna baza</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Database Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Način podatkovne baze</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
+        <location line="+174"/>
+        <source>Memory</source>
+        <translation>Pomnilnik</translation>
+    </message>
+    <message>
+        <location line="-173"/>
+        <location line="+173"/>
+        <source>File</source>
+        <translation>Datoteka</translation>
+    </message>
+    <message>
+        <location line="-172"/>
+        <source>Hosted</source>
+        <translation>Gostovano</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Collection</source>
-        <translation type="unfinished"></translation>
+        <translation>Zbirka</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+1"/>
         <location line="+361"/>
         <source>(none)</source>
-        <translation type="unfinished"></translation>
+        <translation>(brez)</translation>
     </message>
     <message>
         <location line="-353"/>
@@ -6863,7 +6880,7 @@ Errors: %3</source>
     <message>
         <location line="+8"/>
         <source>Database Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Različica podatkovne baze</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -6877,54 +6894,74 @@ Errors: %3</source>
         <translation>Izberi</translation>
     </message>
     <message>
-        <location line="-121"/>
         <source>Host name</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Ime gostitelja</translation>
+    </message>
+    <message>
+        <source>Database name:</source>
+        <translation type="vanished">Ime podatkovne baze:</translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <translation type="vanished">Vrata:</translation>
+    </message>
+    <message>
+        <source>User name:</source>
+        <translation type="vanished">Uporabniško ime:</translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation type="vanished">Geslo:</translation>
+    </message>
+    <message>
+        <location line="-121"/>
+        <source>Host Name</source>
+        <translation>Ime gostitelja</translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>Database name:</source>
-        <translation type="unfinished"></translation>
+        <source>Database Name</source>
+        <translation>Ime podatkovne baze</translation>
     </message>
     <message>
         <location line="+11"/>
-        <source>Port:</source>
-        <translation type="unfinished"></translation>
+        <source>Port</source>
+        <translation>Vrata</translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>User name:</source>
-        <translation type="unfinished"></translation>
+        <source>User Name</source>
+        <translation>Uporabniško ime</translation>
     </message>
     <message>
         <location line="+11"/>
-        <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <source>Password</source>
+        <translation>Geslo</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Startup:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zagon:</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Connect automatically on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Samodejno poveži ob zagonu</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>phpMyAdmin URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL phpMyAdmin</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Poveži</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Collection Import &amp; Synchronization</source>
-        <translation type="unfinished"></translation>
+        <translation>Uvoz in sinhronizacija zbirke</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -6932,19 +6969,21 @@ Errors: %3</source>
         <translation>Način podatkov</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>Katalog File</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Datoteka Katalog</translation>
     </message>
     <message>
-        <location line="+0"/>
         <source>Katalog Memory</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Pomnilnik Katalog</translation>
     </message>
     <message>
-        <location line="+0"/>
         <source>VVV Tab Separated Values</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Z tabulatorji ločene vrednosti VVV</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Tab Separated Values</source>
+        <translation>ටැබ් මගින් වෙන් කළ අගයන්</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6954,7 +6993,7 @@ Errors: %3</source>
     <message>
         <location line="+6"/>
         <source>VVV export file (.tsv)</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvozna datoteka VVV (.tsv)</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -6980,7 +7019,7 @@ Errors: %3</source>
     <message>
         <location line="+20"/>
         <source>Application</source>
-        <translation type="unfinished"></translation>
+        <translation>Program</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -6995,7 +7034,7 @@ Errors: %3</source>
     <message>
         <location line="+7"/>
         <source>Check for a new version on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Preveri novo različico ob zagonu</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7015,7 +7054,7 @@ Errors: %3</source>
     <message>
         <location line="+70"/>
         <source>Settings file</source>
-        <translation type="unfinished"></translation>
+        <translation>Datoteka nastavitev</translation>
     </message>
     <message>
         <location line="+11"/>

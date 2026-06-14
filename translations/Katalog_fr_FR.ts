@@ -1480,7 +1480,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+87"/>
         <location line="+5743"/>
         <source>Device</source>
-        <translation>Appareil</translation>
+        <translation>Périphérique</translation>
     </message>
     <message>
         <source>Delete selected</source>
@@ -3916,7 +3916,7 @@ La division n&apos;a pas été effectuée.</translation>
     <message>
         <location line="+1"/>
         <source>Fulldevice</source>
-        <translation>Appareil complet</translation>
+        <translation>Périphérique complet</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -4807,7 +4807,7 @@ to the trash?</source>
     <message>
         <location line="+7"/>
         <source>Virtual device</source>
-        <translation>Appareil virtuel</translation>
+        <translation>Périphérique virtuel</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_ui_wrapper_catalog.cpp" line="+124"/>
@@ -5492,7 +5492,7 @@ to the trash?</source>
     <message>
         <location line="+83"/>
         <source>Device</source>
-        <translation>Appareil</translation>
+        <translation>Périphérique</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6834,24 +6834,41 @@ Errors: %3</source>
     <message>
         <location line="+38"/>
         <source>Collection &amp; Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Collection et base de données</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Database Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mode de base de données</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
+        <location line="+174"/>
+        <source>Memory</source>
+        <translation>Mémoire</translation>
+    </message>
+    <message>
+        <location line="-173"/>
+        <location line="+173"/>
+        <source>File</source>
+        <translation>Fichier</translation>
+    </message>
+    <message>
+        <location line="-172"/>
+        <source>Hosted</source>
+        <translation>Hébergé</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Collection</source>
-        <translation type="unfinished"></translation>
+        <translation>Collection</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+1"/>
         <location line="+361"/>
         <source>(none)</source>
-        <translation type="unfinished"></translation>
+        <translation>(aucun)</translation>
     </message>
     <message>
         <location line="-353"/>
@@ -6863,7 +6880,7 @@ Errors: %3</source>
     <message>
         <location line="+8"/>
         <source>Database Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Version de la base de données</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -6877,54 +6894,74 @@ Errors: %3</source>
         <translation>Sélectionner</translation>
     </message>
     <message>
-        <location line="-121"/>
         <source>Host name</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Nom d&apos;hôte</translation>
+    </message>
+    <message>
+        <source>Database name:</source>
+        <translation type="vanished">Nom de la base de données :</translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <translation type="vanished">Port :</translation>
+    </message>
+    <message>
+        <source>User name:</source>
+        <translation type="vanished">Nom d&apos;utilisateur :</translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation type="vanished">Mot de passe :</translation>
+    </message>
+    <message>
+        <location line="-121"/>
+        <source>Host Name</source>
+        <translation>Nom d&apos;hôte</translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>Database name:</source>
-        <translation type="unfinished"></translation>
+        <source>Database Name</source>
+        <translation>Nom de la base de données</translation>
     </message>
     <message>
         <location line="+11"/>
-        <source>Port:</source>
-        <translation type="unfinished"></translation>
+        <source>Port</source>
+        <translation>Port</translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>User name:</source>
-        <translation type="unfinished"></translation>
+        <source>User Name</source>
+        <translation>Nom d&apos;utilisateur</translation>
     </message>
     <message>
         <location line="+11"/>
-        <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <source>Password</source>
+        <translation>Mot de passe</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Startup:</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarrage :</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Connect automatically on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Se connecter automatiquement au démarrage</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>phpMyAdmin URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL phpMyAdmin</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Se connecter</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Collection Import &amp; Synchronization</source>
-        <translation type="unfinished"></translation>
+        <translation>Importation et synchronisation de la collection</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -6932,19 +6969,21 @@ Errors: %3</source>
         <translation>Mode de données</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>Katalog File</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Fichier Katalog</translation>
     </message>
     <message>
-        <location line="+0"/>
         <source>Katalog Memory</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Mémoire Katalog</translation>
     </message>
     <message>
-        <location line="+0"/>
         <source>VVV Tab Separated Values</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Valeurs séparées par des tabulations VVV</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Tab Separated Values</source>
+        <translation>Valeurs séparées par des tabulations</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6954,7 +6993,7 @@ Errors: %3</source>
     <message>
         <location line="+6"/>
         <source>VVV export file (.tsv)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier d&apos;exportation VVV (.tsv)</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -6964,7 +7003,7 @@ Errors: %3</source>
     <message>
         <location line="+22"/>
         <source>Device</source>
-        <translation>Appareil</translation>
+        <translation>Périphérique</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -6980,7 +7019,7 @@ Errors: %3</source>
     <message>
         <location line="+20"/>
         <source>Application</source>
-        <translation type="unfinished"></translation>
+        <translation>Application</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -6995,7 +7034,7 @@ Errors: %3</source>
     <message>
         <location line="+7"/>
         <source>Check for a new version on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérifier les nouvelles versions au démarrage</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7015,7 +7054,7 @@ Errors: %3</source>
     <message>
         <location line="+70"/>
         <source>Settings file</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier de configuration</translation>
     </message>
     <message>
         <location line="+11"/>

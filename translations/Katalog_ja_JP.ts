@@ -6832,24 +6832,41 @@ Errors: %3</source>
     <message>
         <location line="+38"/>
         <source>Collection &amp; Database</source>
-        <translation type="unfinished"></translation>
+        <translation>コレクションとデータベース</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Database Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>データベースモード</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
+        <location line="+174"/>
+        <source>Memory</source>
+        <translation>メモリ</translation>
+    </message>
+    <message>
+        <location line="-173"/>
+        <location line="+173"/>
+        <source>File</source>
+        <translation>ファイル</translation>
+    </message>
+    <message>
+        <location line="-172"/>
+        <source>Hosted</source>
+        <translation>ホスト型</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Collection</source>
-        <translation type="unfinished"></translation>
+        <translation>コレクション</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+1"/>
         <location line="+361"/>
         <source>(none)</source>
-        <translation type="unfinished"></translation>
+        <translation>(なし)</translation>
     </message>
     <message>
         <location line="-353"/>
@@ -6861,7 +6878,7 @@ Errors: %3</source>
     <message>
         <location line="+8"/>
         <source>Database Version</source>
-        <translation type="unfinished"></translation>
+        <translation>データベースのバージョン</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -6875,54 +6892,74 @@ Errors: %3</source>
         <translation>選択</translation>
     </message>
     <message>
-        <location line="-121"/>
         <source>Host name</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">ホスト名</translation>
+    </message>
+    <message>
+        <source>Database name:</source>
+        <translation type="vanished">データベース名:</translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <translation type="vanished">ポート:</translation>
+    </message>
+    <message>
+        <source>User name:</source>
+        <translation type="vanished">ユーザー名:</translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation type="vanished">パスワード:</translation>
+    </message>
+    <message>
+        <location line="-121"/>
+        <source>Host Name</source>
+        <translation>ホスト名</translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>Database name:</source>
-        <translation type="unfinished"></translation>
+        <source>Database Name</source>
+        <translation>データベース名</translation>
     </message>
     <message>
         <location line="+11"/>
-        <source>Port:</source>
-        <translation type="unfinished"></translation>
+        <source>Port</source>
+        <translation>ポート</translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>User name:</source>
-        <translation type="unfinished"></translation>
+        <source>User Name</source>
+        <translation>ユーザー名</translation>
     </message>
     <message>
         <location line="+11"/>
-        <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <source>Password</source>
+        <translation>パスワード</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Startup:</source>
-        <translation type="unfinished"></translation>
+        <translation>起動:</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Connect automatically on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>起動時に自動的に接続する</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>phpMyAdmin URL</source>
-        <translation type="unfinished"></translation>
+        <translation>phpMyAdmin の URL</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>接続</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Collection Import &amp; Synchronization</source>
-        <translation type="unfinished"></translation>
+        <translation>コレクションのインポートと同期</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -6930,19 +6967,21 @@ Errors: %3</source>
         <translation>データモード</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>Katalog File</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Katalog ファイル</translation>
     </message>
     <message>
-        <location line="+0"/>
         <source>Katalog Memory</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Katalog メモリ</translation>
     </message>
     <message>
-        <location line="+0"/>
         <source>VVV Tab Separated Values</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">VVV タブ区切り値</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Tab Separated Values</source>
+        <translation>タブ区切り値</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6952,7 +6991,7 @@ Errors: %3</source>
     <message>
         <location line="+6"/>
         <source>VVV export file (.tsv)</source>
-        <translation type="unfinished"></translation>
+        <translation>VVV エクスポートファイル (.tsv)</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -6978,7 +7017,7 @@ Errors: %3</source>
     <message>
         <location line="+20"/>
         <source>Application</source>
-        <translation type="unfinished"></translation>
+        <translation>アプリケーション</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -6993,7 +7032,7 @@ Errors: %3</source>
     <message>
         <location line="+7"/>
         <source>Check for a new version on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>起動時に新しいバージョンを確認する</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7013,7 +7052,7 @@ Errors: %3</source>
     <message>
         <location line="+70"/>
         <source>Settings file</source>
-        <translation type="unfinished"></translation>
+        <translation>設定ファイル</translation>
     </message>
     <message>
         <location line="+11"/>

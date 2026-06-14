@@ -6833,24 +6833,41 @@ Errors: %3</source>
     <message>
         <location line="+38"/>
         <source>Collection &amp; Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Coleção e base de dados</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Database Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo da base de dados</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
+        <location line="+174"/>
+        <source>Memory</source>
+        <translation>Memória</translation>
+    </message>
+    <message>
+        <location line="-173"/>
+        <location line="+173"/>
+        <source>File</source>
+        <translation>Ficheiro</translation>
+    </message>
+    <message>
+        <location line="-172"/>
+        <source>Hosted</source>
+        <translation>Hospedado</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Collection</source>
-        <translation type="unfinished"></translation>
+        <translation>Coleção</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+1"/>
         <location line="+361"/>
         <source>(none)</source>
-        <translation type="unfinished"></translation>
+        <translation>(nenhum)</translation>
     </message>
     <message>
         <location line="-353"/>
@@ -6862,7 +6879,7 @@ Errors: %3</source>
     <message>
         <location line="+8"/>
         <source>Database Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Versão da base de dados</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -6876,54 +6893,74 @@ Errors: %3</source>
         <translation>Seleccionar</translation>
     </message>
     <message>
-        <location line="-121"/>
         <source>Host name</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Nome do anfitrião</translation>
+    </message>
+    <message>
+        <source>Database name:</source>
+        <translation type="vanished">Nome da base de dados:</translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <translation type="vanished">Porta:</translation>
+    </message>
+    <message>
+        <source>User name:</source>
+        <translation type="vanished">Nome de utilizador:</translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation type="vanished">Palavra-passe:</translation>
+    </message>
+    <message>
+        <location line="-121"/>
+        <source>Host Name</source>
+        <translation>Nome do host</translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>Database name:</source>
-        <translation type="unfinished"></translation>
+        <source>Database Name</source>
+        <translation>Nome da base de dados</translation>
     </message>
     <message>
         <location line="+11"/>
-        <source>Port:</source>
-        <translation type="unfinished"></translation>
+        <source>Port</source>
+        <translation>Porta</translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>User name:</source>
-        <translation type="unfinished"></translation>
+        <source>User Name</source>
+        <translation>Nome do utilizador</translation>
     </message>
     <message>
         <location line="+11"/>
-        <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <source>Password</source>
+        <translation>Palavra-passe</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Startup:</source>
-        <translation type="unfinished"></translation>
+        <translation>Arranque:</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Connect automatically on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligar automaticamente no arranque</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>phpMyAdmin URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL do phpMyAdmin</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligar</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Collection Import &amp; Synchronization</source>
-        <translation type="unfinished"></translation>
+        <translation>Importação e sincronização da coleção</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -6931,19 +6968,21 @@ Errors: %3</source>
         <translation>Modo de dados</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>Katalog File</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Ficheiro Katalog</translation>
     </message>
     <message>
-        <location line="+0"/>
         <source>Katalog Memory</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Memória Katalog</translation>
     </message>
     <message>
-        <location line="+0"/>
         <source>VVV Tab Separated Values</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Valores separados por tabulações VVV</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Tab Separated Values</source>
+        <translation>Valores separados por tabulações</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6953,7 +6992,7 @@ Errors: %3</source>
     <message>
         <location line="+6"/>
         <source>VVV export file (.tsv)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ficheiro de exportação VVV (.tsv)</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -6979,7 +7018,7 @@ Errors: %3</source>
     <message>
         <location line="+20"/>
         <source>Application</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplicação</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -6994,7 +7033,7 @@ Errors: %3</source>
     <message>
         <location line="+7"/>
         <source>Check for a new version on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Verificar uma nova versão no arranque</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7014,7 +7053,7 @@ Errors: %3</source>
     <message>
         <location line="+70"/>
         <source>Settings file</source>
-        <translation type="unfinished"></translation>
+        <translation>Ficheiro de definições</translation>
     </message>
     <message>
         <location line="+11"/>

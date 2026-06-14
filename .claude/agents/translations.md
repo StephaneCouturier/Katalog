@@ -65,6 +65,18 @@ titles + body, status/progress messages, field labels.
 - **Framework strings** (e.g. `Quit` from KDE `KStandardAction`) have **no** K2
   `.ts` entry — they become new K3 strings needing their own translation.
 
+## Terminology glossary (enforce on AI-fill — never deviate)
+
+When AI-filling a translation (no exact K2 bridge available), these terms are
+**mandatory** for consistency. Do not substitute synonyms.
+
+| Term (EN) | French (fr_FR) | Notes |
+|---|---|---|
+| Device / Devices | **Périphérique / Périphériques** | NEVER "Appareil"/"Appareils". Match the K2 translation already used for `Device`. |
+
+Before AI-filling any string containing a glossary term, check the existing K2
+`.ts` translation for that term and reuse it verbatim so K3 stays consistent.
+
 ## Why matching matters (the context model)
 
 - **K2** files every `tr()` under one context: `MainWindow`.

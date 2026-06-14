@@ -6832,24 +6832,41 @@ Errors: %3</source>
     <message>
         <location line="+38"/>
         <source>Collection &amp; Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Verzameling en database</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Database Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Databasemodus</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
+        <location line="+174"/>
+        <source>Memory</source>
+        <translation>Geheugen</translation>
+    </message>
+    <message>
+        <location line="-173"/>
+        <location line="+173"/>
+        <source>File</source>
+        <translation>Bestand</translation>
+    </message>
+    <message>
+        <location line="-172"/>
+        <source>Hosted</source>
+        <translation>Gehost</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Collection</source>
-        <translation type="unfinished"></translation>
+        <translation>Verzameling</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+1"/>
         <location line="+361"/>
         <source>(none)</source>
-        <translation type="unfinished"></translation>
+        <translation>(geen)</translation>
     </message>
     <message>
         <location line="-353"/>
@@ -6861,7 +6878,7 @@ Errors: %3</source>
     <message>
         <location line="+8"/>
         <source>Database Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Databaseversie</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -6875,54 +6892,74 @@ Errors: %3</source>
         <translation>Selecteren</translation>
     </message>
     <message>
-        <location line="-121"/>
         <source>Host name</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Hostnaam</translation>
+    </message>
+    <message>
+        <source>Database name:</source>
+        <translation type="vanished">Databasenaam:</translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <translation type="vanished">Poort:</translation>
+    </message>
+    <message>
+        <source>User name:</source>
+        <translation type="vanished">Gebruikersnaam:</translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation type="vanished">Wachtwoord:</translation>
+    </message>
+    <message>
+        <location line="-121"/>
+        <source>Host Name</source>
+        <translation>Hostnaam</translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>Database name:</source>
-        <translation type="unfinished"></translation>
+        <source>Database Name</source>
+        <translation>Databasenaam</translation>
     </message>
     <message>
         <location line="+11"/>
-        <source>Port:</source>
-        <translation type="unfinished"></translation>
+        <source>Port</source>
+        <translation>Poort</translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>User name:</source>
-        <translation type="unfinished"></translation>
+        <source>User Name</source>
+        <translation>Gebruikersnaam</translation>
     </message>
     <message>
         <location line="+11"/>
-        <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <source>Password</source>
+        <translation>Wachtwoord</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Startup:</source>
-        <translation type="unfinished"></translation>
+        <translation>Opstarten:</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Connect automatically on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatisch verbinden bij opstarten</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>phpMyAdmin URL</source>
-        <translation type="unfinished"></translation>
+        <translation>phpMyAdmin-URL</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbinden</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Collection Import &amp; Synchronization</source>
-        <translation type="unfinished"></translation>
+        <translation>Verzameling importeren en synchroniseren</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -6930,19 +6967,21 @@ Errors: %3</source>
         <translation>Gegevensmodus</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>Katalog File</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Katalog-bestand</translation>
     </message>
     <message>
-        <location line="+0"/>
         <source>Katalog Memory</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Katalog-geheugen</translation>
     </message>
     <message>
-        <location line="+0"/>
         <source>VVV Tab Separated Values</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">VVV met tabs gescheiden waarden</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Tab Separated Values</source>
+        <translation>Door tabs gescheiden waarden</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6952,7 +6991,7 @@ Errors: %3</source>
     <message>
         <location line="+6"/>
         <source>VVV export file (.tsv)</source>
-        <translation type="unfinished"></translation>
+        <translation>VVV-exportbestand (.tsv)</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -6978,7 +7017,7 @@ Errors: %3</source>
     <message>
         <location line="+20"/>
         <source>Application</source>
-        <translation type="unfinished"></translation>
+        <translation>Toepassing</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -6993,7 +7032,7 @@ Errors: %3</source>
     <message>
         <location line="+7"/>
         <source>Check for a new version on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Bij opstarten op een nieuwe versie controleren</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7013,7 +7052,7 @@ Errors: %3</source>
     <message>
         <location line="+70"/>
         <source>Settings file</source>
-        <translation type="unfinished"></translation>
+        <translation>Instellingenbestand</translation>
     </message>
     <message>
         <location line="+11"/>

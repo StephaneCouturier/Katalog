@@ -6832,24 +6832,41 @@ Errors: %3</source>
     <message>
         <location line="+38"/>
         <source>Collection &amp; Database</source>
-        <translation type="unfinished"></translation>
+        <translation>संग्रह और डेटाबेस</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Database Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>डेटाबेस मोड</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
+        <location line="+174"/>
+        <source>Memory</source>
+        <translation>मेमोरी</translation>
+    </message>
+    <message>
+        <location line="-173"/>
+        <location line="+173"/>
+        <source>File</source>
+        <translation>फ़ाइल</translation>
+    </message>
+    <message>
+        <location line="-172"/>
+        <source>Hosted</source>
+        <translation>होस्ट किया गया</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Collection</source>
-        <translation type="unfinished"></translation>
+        <translation>संग्रह</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+1"/>
         <location line="+361"/>
         <source>(none)</source>
-        <translation type="unfinished"></translation>
+        <translation>(कोई नहीं)</translation>
     </message>
     <message>
         <location line="-353"/>
@@ -6861,7 +6878,7 @@ Errors: %3</source>
     <message>
         <location line="+8"/>
         <source>Database Version</source>
-        <translation type="unfinished"></translation>
+        <translation>डेटाबेस संस्करण</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -6875,54 +6892,74 @@ Errors: %3</source>
         <translation>चुनें</translation>
     </message>
     <message>
-        <location line="-121"/>
         <source>Host name</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">होस्ट नाम</translation>
+    </message>
+    <message>
+        <source>Database name:</source>
+        <translation type="vanished">डेटाबेस नाम:</translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <translation type="vanished">पोर्ट:</translation>
+    </message>
+    <message>
+        <source>User name:</source>
+        <translation type="vanished">उपयोगकर्ता नाम:</translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation type="vanished">पासवर्ड:</translation>
+    </message>
+    <message>
+        <location line="-121"/>
+        <source>Host Name</source>
+        <translation>होस्ट नाम</translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>Database name:</source>
-        <translation type="unfinished"></translation>
+        <source>Database Name</source>
+        <translation>डेटाबेस नाम</translation>
     </message>
     <message>
         <location line="+11"/>
-        <source>Port:</source>
-        <translation type="unfinished"></translation>
+        <source>Port</source>
+        <translation>पोर्ट</translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>User name:</source>
-        <translation type="unfinished"></translation>
+        <source>User Name</source>
+        <translation>उपयोगकर्ता नाम</translation>
     </message>
     <message>
         <location line="+11"/>
-        <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <source>Password</source>
+        <translation>पासवर्ड</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Startup:</source>
-        <translation type="unfinished"></translation>
+        <translation>स्टार्टअप:</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Connect automatically on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>स्टार्टअप पर स्वचालित रूप से कनेक्ट करें</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>phpMyAdmin URL</source>
-        <translation type="unfinished"></translation>
+        <translation>phpMyAdmin URL</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>कनेक्ट करें</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Collection Import &amp; Synchronization</source>
-        <translation type="unfinished"></translation>
+        <translation>संग्रह आयात और समन्वयन</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -6930,19 +6967,21 @@ Errors: %3</source>
         <translation>डेटा मोड</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>Katalog File</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Katalog फ़ाइल</translation>
     </message>
     <message>
-        <location line="+0"/>
         <source>Katalog Memory</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Katalog मेमोरी</translation>
     </message>
     <message>
-        <location line="+0"/>
         <source>VVV Tab Separated Values</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">VVV टैब पृथक मान</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Tab Separated Values</source>
+        <translation>टैब द्वारा अलग किए गए मान</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6952,7 +6991,7 @@ Errors: %3</source>
     <message>
         <location line="+6"/>
         <source>VVV export file (.tsv)</source>
-        <translation type="unfinished"></translation>
+        <translation>VVV निर्यात फ़ाइल (.tsv)</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -6978,7 +7017,7 @@ Errors: %3</source>
     <message>
         <location line="+20"/>
         <source>Application</source>
-        <translation type="unfinished"></translation>
+        <translation>अनुप्रयोग</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -6993,7 +7032,7 @@ Errors: %3</source>
     <message>
         <location line="+7"/>
         <source>Check for a new version on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>स्टार्टअप पर नए संस्करण की जाँच करें</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7013,7 +7052,7 @@ Errors: %3</source>
     <message>
         <location line="+70"/>
         <source>Settings file</source>
-        <translation type="unfinished"></translation>
+        <translation>सेटिंग्स फ़ाइल</translation>
     </message>
     <message>
         <location line="+11"/>

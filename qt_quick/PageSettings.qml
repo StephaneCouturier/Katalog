@@ -110,7 +110,16 @@ Kirigami.ScrollablePage {
         }
 
         Controls.Label { text: qsTr("Database Mode"); opacity: 0.7; Layout.topMargin: Kirigami.Units.largeSpacing }
-        Controls.Label { text: appManager1.databaseMode || "—"; font.bold: true ; Layout.topMargin: Kirigami.Units.largeSpacing }
+        Controls.Label {
+            text: {
+                var m = appManager1.databaseMode
+                if (m === "Memory") return qsTr("Memory")
+                if (m === "File")   return qsTr("File")
+                if (m === "Hosted") return qsTr("Hosted")
+                return "—"
+            }
+            font.bold: true ; Layout.topMargin: Kirigami.Units.largeSpacing
+        }
 
         Controls.Label { text: qsTr("Collection"); opacity: 0.7 }
         RowLayout {
@@ -174,7 +183,7 @@ Kirigami.ScrollablePage {
 
         // ── Hosted database fields (only when Hosted mode) ─────────────
         Controls.Label {
-            text: qsTr("Host name"); opacity: 0.7
+            text: qsTr("Host Name"); opacity: 0.7
             visible: appManager1.databaseMode === "Hosted" || showHostedForm
             Layout.topMargin: Kirigami.Units.largeSpacing * 2
         }
@@ -187,7 +196,7 @@ Kirigami.ScrollablePage {
         }
 
         Controls.Label {
-            text: qsTr("Database name:"); opacity: 0.7
+            text: qsTr("Database Name"); opacity: 0.7
             visible: appManager1.databaseMode === "Hosted" || showHostedForm
         }
         Controls.TextField {
@@ -198,7 +207,7 @@ Kirigami.ScrollablePage {
         }
 
         Controls.Label {
-            text: qsTr("Port:"); opacity: 0.7
+            text: qsTr("Port"); opacity: 0.7
             visible: appManager1.databaseMode === "Hosted" || showHostedForm
         }
         Controls.SpinBox {
@@ -208,7 +217,7 @@ Kirigami.ScrollablePage {
         }
 
         Controls.Label {
-            text: qsTr("User name:"); opacity: 0.7
+            text: qsTr("User Name"); opacity: 0.7
             visible: appManager1.databaseMode === "Hosted" || showHostedForm
         }
         Controls.TextField {
@@ -219,7 +228,7 @@ Kirigami.ScrollablePage {
         }
 
         Controls.Label {
-            text: qsTr("Password:"); opacity: 0.7
+            text: qsTr("Password"); opacity: 0.7
             visible: appManager1.databaseMode === "Hosted" || showHostedForm
         }
         Controls.TextField {
@@ -278,7 +287,7 @@ Kirigami.ScrollablePage {
         Controls.Label { text: qsTr("Data mode"); opacity: 0.7; Layout.alignment: Qt.AlignVCenter; Layout.topMargin: Kirigami.Units.largeSpacing }
         Controls.ComboBox {
             id: importModeCombo
-            model: [qsTr("Katalog File"), qsTr("Katalog Memory"), qsTr("VVV Tab Separated Values")]
+            model: ["Katalog / " + qsTr("File"), "Katalog / " + qsTr("Memory"), "VVV / " + qsTr("Tab Separated Values")]
             Layout.fillWidth: true
             onCurrentIndexChanged: importPathField.text = ""
             Layout.topMargin: Kirigami.Units.largeSpacing
