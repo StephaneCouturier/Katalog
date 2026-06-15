@@ -6380,17 +6380,17 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+101"/>
         <source>Catalog definition</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalógus meghatározása</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Source path</source>
-        <translation type="unfinished"></translation>
+        <translation>Forrás útvonala</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Path to index</source>
-        <translation type="unfinished"></translation>
+        <translation>Indexelendő útvonal</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -6400,27 +6400,27 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+8"/>
         <source>Catalog name</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalógus neve</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>New catalog name</source>
-        <translation type="unfinished"></translation>
+        <translation>Új katalógus neve</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Generate name from path</source>
-        <translation type="unfinished"></translation>
+        <translation>Név létrehozása az útvonalból</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Content options</source>
-        <translation type="unfinished"></translation>
+        <translation>Tartalombeállítások</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>File type</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájltípus</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -6448,17 +6448,17 @@ lomtárba helyezése?</translation>
     <message>
         <location line="-36"/>
         <source>Include subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Alkönyvtárak belefoglalása</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Include hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>Rejtett fájlok belefoglalása</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Include metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Metaadatok belefoglalása</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -6478,17 +6478,17 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+5"/>
         <source>Include checksum</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellenőrzőösszeg belefoglalása</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Folder to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>Kizárandó mappa</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Path to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>Kizárandó útvonal</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -6504,12 +6504,12 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+13"/>
         <source>Global exclude directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Globális kizárási könyvtár</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Path to exclude globally</source>
-        <translation type="unfinished"></translation>
+        <translation>Globálisan kizárandó útvonal</translation>
     </message>
 </context>
 <context>
@@ -6553,17 +6553,17 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+7"/>
         <source>Source path</source>
-        <translation type="unfinished"></translation>
+        <translation>Forrás útvonala</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>Content options</source>
-        <translation type="unfinished"></translation>
+        <translation>Tartalombeállítások</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>File type</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájltípus</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6607,12 +6607,12 @@ lomtárba helyezése?</translation>
     <message>
         <location line="-33"/>
         <source>Include hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>Rejtett fájlok belefoglalása</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Include metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Metaadatok belefoglalása</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6632,7 +6632,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+5"/>
         <source>Include checksum</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellenőrzőösszeg belefoglalása</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -6642,12 +6642,12 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+7"/>
         <source>Folder to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>Kizárandó mappa</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Path to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>Kizárandó útvonal</translation>
     </message>
     <message>
         <location line="+12"/>

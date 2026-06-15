@@ -6381,17 +6381,17 @@ a la papelera?</translation>
     <message>
         <location line="+101"/>
         <source>Catalog definition</source>
-        <translation type="unfinished"></translation>
+        <translation>Definición del catálogo</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Source path</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruta de origen</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Path to index</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruta a indexar</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -6401,27 +6401,27 @@ a la papelera?</translation>
     <message>
         <location line="+8"/>
         <source>Catalog name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre del catálogo</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>New catalog name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre del nuevo catálogo</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Generate name from path</source>
-        <translation type="unfinished"></translation>
+        <translation>Generar nombre a partir de la ruta</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Content options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opciones de contenido</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>File type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de archivo</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -6449,17 +6449,17 @@ a la papelera?</translation>
     <message>
         <location line="-36"/>
         <source>Include subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Incluir subdirectorios</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Include hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>Incluir archivos ocultos</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Include metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Incluir metadatos</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -6479,17 +6479,17 @@ a la papelera?</translation>
     <message>
         <location line="+5"/>
         <source>Include checksum</source>
-        <translation type="unfinished"></translation>
+        <translation>Incluir suma de verificación</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Folder to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>Carpeta a excluir</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Path to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruta a excluir</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -6505,12 +6505,12 @@ a la papelera?</translation>
     <message>
         <location line="+13"/>
         <source>Global exclude directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Directorio de exclusión global</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Path to exclude globally</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruta a excluir globalmente</translation>
     </message>
 </context>
 <context>
@@ -6554,17 +6554,17 @@ a la papelera?</translation>
     <message>
         <location line="+7"/>
         <source>Source path</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruta de origen</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>Content options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opciones de contenido</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>File type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de archivo</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6608,12 +6608,12 @@ a la papelera?</translation>
     <message>
         <location line="-33"/>
         <source>Include hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>Incluir archivos ocultos</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Include metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Incluir metadatos</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6633,7 +6633,7 @@ a la papelera?</translation>
     <message>
         <location line="+5"/>
         <source>Include checksum</source>
-        <translation type="unfinished"></translation>
+        <translation>Incluir suma de verificación</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -6643,12 +6643,12 @@ a la papelera?</translation>
     <message>
         <location line="+7"/>
         <source>Folder to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>Carpeta a excluir</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Path to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruta a excluir</translation>
     </message>
     <message>
         <location line="+12"/>

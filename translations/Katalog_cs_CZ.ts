@@ -6381,17 +6381,17 @@ Rozdělení nebylo provedeno.</translation>
     <message>
         <location line="+101"/>
         <source>Catalog definition</source>
-        <translation type="unfinished"></translation>
+        <translation>Definice katalogu</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Source path</source>
-        <translation type="unfinished"></translation>
+        <translation>Zdrojová cesta</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Path to index</source>
-        <translation type="unfinished"></translation>
+        <translation>Cesta k indexování</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -6401,27 +6401,27 @@ Rozdělení nebylo provedeno.</translation>
     <message>
         <location line="+8"/>
         <source>Catalog name</source>
-        <translation type="unfinished"></translation>
+        <translation>Název katalogu</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>New catalog name</source>
-        <translation type="unfinished"></translation>
+        <translation>Název nového katalogu</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Generate name from path</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit název z cesty</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Content options</source>
-        <translation type="unfinished"></translation>
+        <translation>Možnosti obsahu</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>File type</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ souboru</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -6449,17 +6449,17 @@ Rozdělení nebylo provedeno.</translation>
     <message>
         <location line="-36"/>
         <source>Include subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahrnout podadresáře</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Include hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahrnout skryté soubory</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Include metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahrnout metadata</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -6479,17 +6479,17 @@ Rozdělení nebylo provedeno.</translation>
     <message>
         <location line="+5"/>
         <source>Include checksum</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahrnout kontrolní součet</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Folder to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>Složka k vyloučení</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Path to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>Cesta k vyloučení</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -6505,12 +6505,12 @@ Rozdělení nebylo provedeno.</translation>
     <message>
         <location line="+13"/>
         <source>Global exclude directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Globální adresář vyloučení</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Path to exclude globally</source>
-        <translation type="unfinished"></translation>
+        <translation>Cesta ke globálnímu vyloučení</translation>
     </message>
 </context>
 <context>
@@ -6554,17 +6554,17 @@ Rozdělení nebylo provedeno.</translation>
     <message>
         <location line="+7"/>
         <source>Source path</source>
-        <translation type="unfinished"></translation>
+        <translation>Zdrojová cesta</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>Content options</source>
-        <translation type="unfinished"></translation>
+        <translation>Možnosti obsahu</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>File type</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ souboru</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6608,12 +6608,12 @@ Rozdělení nebylo provedeno.</translation>
     <message>
         <location line="-33"/>
         <source>Include hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahrnout skryté soubory</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Include metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahrnout metadata</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6633,7 +6633,7 @@ Rozdělení nebylo provedeno.</translation>
     <message>
         <location line="+5"/>
         <source>Include checksum</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahrnout kontrolní součet</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -6643,12 +6643,12 @@ Rozdělení nebylo provedeno.</translation>
     <message>
         <location line="+7"/>
         <source>Folder to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>Složka k vyloučení</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Path to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>Cesta k vyloučení</translation>
     </message>
     <message>
         <location line="+12"/>

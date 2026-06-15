@@ -6381,17 +6381,17 @@ para o lixo?</translation>
     <message>
         <location line="+101"/>
         <source>Catalog definition</source>
-        <translation type="unfinished"></translation>
+        <translation>Definição do catálogo</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Source path</source>
-        <translation type="unfinished"></translation>
+        <translation>Caminho de origem</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Path to index</source>
-        <translation type="unfinished"></translation>
+        <translation>Caminho a indexar</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -6401,27 +6401,27 @@ para o lixo?</translation>
     <message>
         <location line="+8"/>
         <source>Catalog name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome do catálogo</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>New catalog name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome do novo catálogo</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Generate name from path</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerar nome a partir do caminho</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Content options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opções de conteúdo</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>File type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de ficheiro</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -6449,17 +6449,17 @@ para o lixo?</translation>
     <message>
         <location line="-36"/>
         <source>Include subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Incluir subdiretórios</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Include hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>Incluir ficheiros ocultos</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Include metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Incluir metadados</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -6479,17 +6479,17 @@ para o lixo?</translation>
     <message>
         <location line="+5"/>
         <source>Include checksum</source>
-        <translation type="unfinished"></translation>
+        <translation>Incluir soma de verificação</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Folder to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasta a excluir</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Path to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>Caminho a excluir</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -6505,12 +6505,12 @@ para o lixo?</translation>
     <message>
         <location line="+13"/>
         <source>Global exclude directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Diretório de exclusão global</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Path to exclude globally</source>
-        <translation type="unfinished"></translation>
+        <translation>Caminho a excluir globalmente</translation>
     </message>
 </context>
 <context>
@@ -6554,17 +6554,17 @@ para o lixo?</translation>
     <message>
         <location line="+7"/>
         <source>Source path</source>
-        <translation type="unfinished"></translation>
+        <translation>Caminho de origem</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>Content options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opções de conteúdo</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>File type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de ficheiro</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6608,12 +6608,12 @@ para o lixo?</translation>
     <message>
         <location line="-33"/>
         <source>Include hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>Incluir ficheiros ocultos</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Include metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Incluir metadados</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6633,7 +6633,7 @@ para o lixo?</translation>
     <message>
         <location line="+5"/>
         <source>Include checksum</source>
-        <translation type="unfinished"></translation>
+        <translation>Incluir soma de verificação</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -6643,12 +6643,12 @@ para o lixo?</translation>
     <message>
         <location line="+7"/>
         <source>Folder to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasta a excluir</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Path to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>Caminho a excluir</translation>
     </message>
     <message>
         <location line="+12"/>

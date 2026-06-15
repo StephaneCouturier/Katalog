@@ -6380,17 +6380,17 @@ to the trash?</source>
     <message>
         <location line="+101"/>
         <source>Catalog definition</source>
-        <translation type="unfinished"></translation>
+        <translation>カタログの定義</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Source path</source>
-        <translation type="unfinished"></translation>
+        <translation>ソースパス</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Path to index</source>
-        <translation type="unfinished"></translation>
+        <translation>インデックスを作成するパス</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -6400,27 +6400,27 @@ to the trash?</source>
     <message>
         <location line="+8"/>
         <source>Catalog name</source>
-        <translation type="unfinished"></translation>
+        <translation>カタログ名</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>New catalog name</source>
-        <translation type="unfinished"></translation>
+        <translation>新しいカタログ名</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Generate name from path</source>
-        <translation type="unfinished"></translation>
+        <translation>パスから名前を生成</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Content options</source>
-        <translation type="unfinished"></translation>
+        <translation>コンテンツオプション</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>File type</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルタイプ</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -6448,17 +6448,17 @@ to the trash?</source>
     <message>
         <location line="-36"/>
         <source>Include subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>サブディレクトリを含める</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Include hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>隠しファイルを含める</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Include metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>メタデータを含める</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -6478,17 +6478,17 @@ to the trash?</source>
     <message>
         <location line="+5"/>
         <source>Include checksum</source>
-        <translation type="unfinished"></translation>
+        <translation>チェックサムを含める</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Folder to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>除外するフォルダー</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Path to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>除外するパス</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -6504,12 +6504,12 @@ to the trash?</source>
     <message>
         <location line="+13"/>
         <source>Global exclude directory</source>
-        <translation type="unfinished"></translation>
+        <translation>グローバル除外ディレクトリ</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Path to exclude globally</source>
-        <translation type="unfinished"></translation>
+        <translation>グローバルに除外するパス</translation>
     </message>
 </context>
 <context>
@@ -6553,17 +6553,17 @@ to the trash?</source>
     <message>
         <location line="+7"/>
         <source>Source path</source>
-        <translation type="unfinished"></translation>
+        <translation>ソースパス</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>Content options</source>
-        <translation type="unfinished"></translation>
+        <translation>コンテンツオプション</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>File type</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルタイプ</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6607,12 +6607,12 @@ to the trash?</source>
     <message>
         <location line="-33"/>
         <source>Include hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>隠しファイルを含める</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Include metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>メタデータを含める</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6632,7 +6632,7 @@ to the trash?</source>
     <message>
         <location line="+5"/>
         <source>Include checksum</source>
-        <translation type="unfinished"></translation>
+        <translation>チェックサムを含める</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -6642,12 +6642,12 @@ to the trash?</source>
     <message>
         <location line="+7"/>
         <source>Folder to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>除外するフォルダー</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Path to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>除外するパス</translation>
     </message>
     <message>
         <location line="+12"/>

@@ -6381,17 +6381,17 @@ to the trash?</source>
     <message>
         <location line="+101"/>
         <source>Catalog definition</source>
-        <translation type="unfinished"></translation>
+        <translation>Визначення каталогу</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Source path</source>
-        <translation type="unfinished"></translation>
+        <translation>Шлях до джерела</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Path to index</source>
-        <translation type="unfinished"></translation>
+        <translation>Шлях для індексування</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -6401,27 +6401,27 @@ to the trash?</source>
     <message>
         <location line="+8"/>
         <source>Catalog name</source>
-        <translation type="unfinished"></translation>
+        <translation>Назва каталогу</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>New catalog name</source>
-        <translation type="unfinished"></translation>
+        <translation>Назва нового каталогу</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Generate name from path</source>
-        <translation type="unfinished"></translation>
+        <translation>Згенерувати назву зі шляху</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Content options</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметри вмісту</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>File type</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип файлу</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -6449,17 +6449,17 @@ to the trash?</source>
     <message>
         <location line="-36"/>
         <source>Include subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Включати підкаталоги</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Include hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>Включати приховані файли</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Include metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Включати метадані</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -6479,17 +6479,17 @@ to the trash?</source>
     <message>
         <location line="+5"/>
         <source>Include checksum</source>
-        <translation type="unfinished"></translation>
+        <translation>Включати контрольну суму</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Folder to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>Папка для виключення</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Path to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>Шлях для виключення</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -6505,12 +6505,12 @@ to the trash?</source>
     <message>
         <location line="+13"/>
         <source>Global exclude directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Глобальний каталог виключень</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Path to exclude globally</source>
-        <translation type="unfinished"></translation>
+        <translation>Шлях для глобального виключення</translation>
     </message>
 </context>
 <context>
@@ -6554,17 +6554,17 @@ to the trash?</source>
     <message>
         <location line="+7"/>
         <source>Source path</source>
-        <translation type="unfinished"></translation>
+        <translation>Шлях до джерела</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>Content options</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметри вмісту</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>File type</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип файлу</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6608,12 +6608,12 @@ to the trash?</source>
     <message>
         <location line="-33"/>
         <source>Include hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>Включати приховані файли</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Include metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Включати метадані</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6633,7 +6633,7 @@ to the trash?</source>
     <message>
         <location line="+5"/>
         <source>Include checksum</source>
-        <translation type="unfinished"></translation>
+        <translation>Включати контрольну суму</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -6643,12 +6643,12 @@ to the trash?</source>
     <message>
         <location line="+7"/>
         <source>Folder to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>Папка для виключення</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Path to exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>Шлях для виключення</translation>
     </message>
     <message>
         <location line="+12"/>
