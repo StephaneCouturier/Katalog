@@ -2749,6 +2749,10 @@ QString AppManager::saveDeviceBasicFields(int deviceId, const QString &name, int
     dev.ID = deviceId;
     dev.loadDevice(conn);
 
+    // Remember the parent the device had before this edit, so a re-parent can
+    // refresh the chain it was moved away from (see end of method).
+    const int previousParentId = dev.parentID;
+
     // Device id 1 is the reserved " Physical Group" root: its parent is fixed at
     // root (which keeps it in the Physical group, id 0). Force it here so no UI
     // path — including a stale parent picker — can ever re-parent it.
@@ -2803,6 +2807,29 @@ QString AppManager::saveDeviceBasicFields(int deviceId, const QString &name, int
     dev.parentID = parentId;
     dev.groupID  = newGroupId;
     dev.saveDevice();
+
+    // On a re-parent, recompute the file count / size / space of the parent the
+    // device left and the parent it joined, then propagate up to their Virtual
+    // ancestors — otherwise Storage and upper Virtual devices keep stale totals.
+    // Mirrors K2 saveDeviceForm, which updates both the previous and new parent
+    // chains (updateNumbersFromChildren + updateParentsNumbers on each).
+    if (previousParentId != parentId) {
+        if (previousParentId > 0) {
+            Device oldParent;
+            oldParent.ID = previousParentId;
+            oldParent.loadDevice(conn);
+            oldParent.updateNumbersFromChildren();
+            oldParent.updateParentsNumbers();
+        }
+        if (parentId > 0) {
+            Device newParentChain;
+            newParentChain.ID = parentId;
+            newParentChain.loadDevice(conn);
+            newParentChain.updateNumbersFromChildren();
+            newParentChain.updateParentsNumbers();
+        }
+    }
+
     collection->saveDeviceTableToFile();
     return {};
 }
