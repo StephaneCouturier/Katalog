@@ -6360,18 +6360,19 @@ to the trash?</source>
     <message>
         <location line="-170"/>
         <source>Provide a name for this new catalog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Indiquez un nom pour ce nouveau catalogue.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Provide a path for this new catalog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Indiquez un chemin pour ce nouveau catalogue.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Select a Storage for this new catalog.
 (Selection panel on the left and dropdown list)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionnez un stockage pour ce nouveau catalogue.
+(Panneau de sélection à gauche et liste déroulante)</translation>
     </message>
     <message>
         <location line="+90"/>
@@ -7456,7 +7457,7 @@ to the trash?</source>
     <message>
         <location line="+13"/>
         <source>Differences</source>
-        <translation type="unfinished"></translation>
+        <translation>Différences</translation>
     </message>
     <message>
         <location line="+83"/>
@@ -8232,7 +8233,7 @@ Errors: %3</source>
     <message>
         <location filename="../qt_quick/PageTagsForm.qml" line="+42"/>
         <source>Add a tag</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter une étiquette</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -8243,7 +8244,7 @@ Errors: %3</source>
     <message>
         <location line="-70"/>
         <source>Folder path</source>
-        <translation type="unfinished"></translation>
+        <translation>Chemin du dossier</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -8259,7 +8260,7 @@ Errors: %3</source>
     <message>
         <location line="+4"/>
         <source>Please enter a tag name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez saisir un nom d'étiquette.</translation>
     </message>
     <message>
         <location line="+27"/>
@@ -8274,7 +8275,7 @@ Errors: %3</source>
     <message>
         <location line="+51"/>
         <source>No tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucune étiquette</translation>
     </message>
 </context>
 <context>

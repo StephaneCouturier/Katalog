@@ -6359,18 +6359,19 @@ la coșul de gunoi?</translation>
     <message>
         <location line="-170"/>
         <source>Provide a name for this new catalog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Indicați un nume pentru acest catalog nou.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Provide a path for this new catalog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Indicați o cale pentru acest catalog nou.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Select a Storage for this new catalog.
 (Selection panel on the left and dropdown list)</source>
-        <translation type="unfinished"></translation>
+        <translation>Selectați un dispozitiv de stocare pentru acest catalog nou.
+(Panoul de selecție din stânga și lista derulantă)</translation>
     </message>
     <message>
         <location line="+90"/>
@@ -7455,7 +7456,7 @@ la coșul de gunoi?</translation>
     <message>
         <location line="+13"/>
         <source>Differences</source>
-        <translation type="unfinished"></translation>
+        <translation>Diferențe</translation>
     </message>
     <message>
         <location line="+83"/>
@@ -8231,7 +8232,7 @@ Errors: %3</source>
     <message>
         <location filename="../qt_quick/PageTagsForm.qml" line="+42"/>
         <source>Add a tag</source>
-        <translation type="unfinished"></translation>
+        <translation>Adaugă o etichetă</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -8242,7 +8243,7 @@ Errors: %3</source>
     <message>
         <location line="-70"/>
         <source>Folder path</source>
-        <translation type="unfinished"></translation>
+        <translation>Calea dosarului</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -8258,7 +8259,7 @@ Errors: %3</source>
     <message>
         <location line="+4"/>
         <source>Please enter a tag name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vă rugăm să introduceți un nume de etichetă.</translation>
     </message>
     <message>
         <location line="+27"/>
@@ -8273,7 +8274,7 @@ Errors: %3</source>
     <message>
         <location line="+51"/>
         <source>No tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicio etichetă</translation>
     </message>
 </context>
 <context>

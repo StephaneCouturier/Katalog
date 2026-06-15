@@ -6359,18 +6359,19 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="-170"/>
         <source>Provide a name for this new catalog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geben Sie einen Namen für diesen neuen Katalog an.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Provide a path for this new catalog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geben Sie einen Pfad für diesen neuen Katalog an.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Select a Storage for this new catalog.
 (Selection panel on the left and dropdown list)</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie ein Speichergerät für diesen neuen Katalog.
+(Auswahlbereich links und Auswahlliste)</translation>
     </message>
     <message>
         <location line="+90"/>
@@ -7455,7 +7456,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+13"/>
         <source>Differences</source>
-        <translation type="unfinished"></translation>
+        <translation>Unterschiede</translation>
     </message>
     <message>
         <location line="+83"/>
@@ -8231,7 +8232,7 @@ Errors: %3</source>
     <message>
         <location filename="../qt_quick/PageTagsForm.qml" line="+42"/>
         <source>Add a tag</source>
-        <translation type="unfinished"></translation>
+        <translation>Etikett hinzufügen</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -8242,7 +8243,7 @@ Errors: %3</source>
     <message>
         <location line="-70"/>
         <source>Folder path</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordnerpfad</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -8258,7 +8259,7 @@ Errors: %3</source>
     <message>
         <location line="+4"/>
         <source>Please enter a tag name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte geben Sie einen Etikettnamen ein.</translation>
     </message>
     <message>
         <location line="+27"/>
@@ -8273,7 +8274,7 @@ Errors: %3</source>
     <message>
         <location line="+51"/>
         <source>No tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Etiketten</translation>
     </message>
 </context>
 <context>

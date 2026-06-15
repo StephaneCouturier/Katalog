@@ -6360,18 +6360,19 @@ Split was not performed.</source>
     <message>
         <location line="-170"/>
         <source>Provide a name for this new catalog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Δώστε ένα όνομα για αυτόν τον νέο κατάλογο.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Provide a path for this new catalog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Δώστε μια διαδρομή για αυτόν τον νέο κατάλογο.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Select a Storage for this new catalog.
 (Selection panel on the left and dropdown list)</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλέξτε έναν χώρο αποθήκευσης για αυτόν τον νέο κατάλογο.
+(Πίνακας επιλογής αριστερά και αναπτυσσόμενη λίστα)</translation>
     </message>
     <message>
         <location line="+90"/>
@@ -7456,7 +7457,7 @@ Split was not performed.</source>
     <message>
         <location line="+13"/>
         <source>Differences</source>
-        <translation type="unfinished"></translation>
+        <translation>Διαφορές</translation>
     </message>
     <message>
         <location line="+83"/>
@@ -8232,7 +8233,7 @@ Errors: %3</source>
     <message>
         <location filename="../qt_quick/PageTagsForm.qml" line="+42"/>
         <source>Add a tag</source>
-        <translation type="unfinished"></translation>
+        <translation>Προσθήκη ετικέτας</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -8243,7 +8244,7 @@ Errors: %3</source>
     <message>
         <location line="-70"/>
         <source>Folder path</source>
-        <translation type="unfinished"></translation>
+        <translation>Διαδρομή φακέλου</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -8259,7 +8260,7 @@ Errors: %3</source>
     <message>
         <location line="+4"/>
         <source>Please enter a tag name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Παρακαλώ εισαγάγετε ένα όνομα ετικέτας.</translation>
     </message>
     <message>
         <location line="+27"/>
@@ -8274,7 +8275,7 @@ Errors: %3</source>
     <message>
         <location line="+51"/>
         <source>No tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Καμία ετικέτα</translation>
     </message>
 </context>
 <context>

@@ -29,6 +29,12 @@ separate spec.
 
 - **Byte-for-byte.** Changing one character of a `tr()`/`qsTr()` source string
   drops it to English in all 30 languages. Treat sources as immutable.
+- **No "Please" / no orders.** Katalog never commands the user. New copy states
+  the requirement in sentence case — `"Select or enter a tag name."`,
+  `"Provide a name for this new catalog."` — never `"Please …"` or a bare
+  imperative. When a K2 source uses "Please", flag it for the human and propose
+  the requirement-form rewording (the one sanctioned deviation from verbatim K2
+  copy); still get per-string approval before wrapping it.
 - **Never invent wording.** If a string has no exact K2 match and no agreed K3
   wording, **list it aside** for a human decision — do not coin a new label and
   wrap it as if it were settled. (Exception: obviously-new K3-only strings such

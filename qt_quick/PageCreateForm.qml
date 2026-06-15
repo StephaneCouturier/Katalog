@@ -8,22 +8,27 @@ ColumnLayout {
     id: pageCreateForm
     spacing: 0
 
-    // Signals - dialogs live in Main.qml to guarantee proper window overlay
-    signal validationError(string message)
+    // Empty-dir confirmation is a Yes/No decision → modal dialog lives in Main.qml
     signal emptyDirConfirmNeeded()
+
+    function showValidationMessage(message) {
+        createValidationMessage.text = message
+        createValidationMessage.visible = true
+    }
 
     // Called from Main.qml Create action
     function triggerCreate() {
+        createValidationMessage.visible = false
         if (create_lineEdit_NewCatalogName.text.trim() === "") {
-            validationError(qsTr("Provide a name for this new catalog."))
+            showValidationMessage(qsTr("Provide a name for this new catalog."))
             return
         }
         if (create_lineEdit_NewCatalogPath.text.trim() === "") {
-            validationError(qsTr("Provide a path for this new catalog."))
+            showValidationMessage(qsTr("Provide a path for this new catalog."))
             return
         }
         if (create_storageComboBox.selectedDeviceId <= 0) {
-            validationError(qsTr("Select a Storage for this new catalog.\n(Selection panel on the left and dropdown list)"))
+            showValidationMessage(qsTr("Select a Storage for this new catalog.\n(Selection panel on the left and dropdown list)"))
             return
         }
         if (appManager1.isDirectoryEmpty(create_lineEdit_NewCatalogPath.text.trim())) {
@@ -58,7 +63,7 @@ ColumnLayout {
             excludes
         )
         if (error !== "")
-            validationError(error)
+            showValidationMessage(error)
     }
 
     // ── Per-catalog pending exclude folders ────────────────────────────────────
@@ -100,6 +105,17 @@ ColumnLayout {
         onAccepted: create_lineEdit_FolderToExclude.text = appManager1.pathFromFileUrl(selectedFolder.toString())
     }
 
+    Kirigami.InlineMessage {
+        id: createValidationMessage
+        Layout.fillWidth: true
+        Layout.leftMargin:  Kirigami.Units.gridUnit
+        Layout.rightMargin: Kirigami.Units.gridUnit
+        Layout.topMargin:   Kirigami.Units.gridUnit
+        type: Kirigami.MessageType.Warning
+        showCloseButton: true
+        visible: false
+    }
+
     // ════════════════════════════════════════════════════════════════════════════
     // Master GridLayout - 2 columns shared across all sections
     // ════════════════════════════════════════════════════════════════════════════
@@ -126,6 +142,7 @@ ColumnLayout {
                 id: create_lineEdit_NewCatalogPath
                 Layout.fillWidth: true
                 placeholderText: qsTr("Path to index")
+                onTextChanged: createValidationMessage.visible = false
             }
             Controls.Button {
                 icon.name: "folder-open"
@@ -152,6 +169,7 @@ ColumnLayout {
                 id: create_lineEdit_NewCatalogName
                 Layout.fillWidth: true
                 placeholderText: qsTr("New catalog name")
+                onTextChanged: createValidationMessage.visible = false
             }
             Controls.Button {
                 icon.name: "tools-wizard"

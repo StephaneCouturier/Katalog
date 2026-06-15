@@ -1004,28 +1004,7 @@ Kirigami.ApplicationWindow {
         }
     }
 
-    // Create validation dialogs
-    Controls.Dialog {
-        id: createValidationDialog
-        property alias message: createValidationLabel.text
-        title: "Katalog"
-        modal: true
-        anchors.centerIn: parent
-        width: Math.min(460, root.width - Kirigami.Units.largeSpacing * 4)
-        contentItem: Controls.Label {
-            id: createValidationLabel
-            width: createValidationDialog.availableWidth
-            wrapMode: Text.WordWrap
-        }
-        footer: Controls.DialogButtonBox {
-            Controls.Button {
-                text: qsTr("OK")
-                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.AcceptRole
-            }
-            onAccepted: createValidationDialog.close()
-        }
-    }
-
+    // Create empty-source confirmation (Yes/No decision → modal)
     Controls.Dialog {
         id: createEmptyDirDialog
         title: "Katalog"
@@ -1477,10 +1456,6 @@ Kirigami.ApplicationWindow {
 
         Connections {
             target: pageCreate_formLayout_Create
-            function onValidationError(message) {
-                createValidationDialog.message = message
-                createValidationDialog.open()
-            }
             function onEmptyDirConfirmNeeded() {
                 createEmptyDirDialog.open()
             }

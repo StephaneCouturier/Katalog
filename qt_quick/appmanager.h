@@ -167,6 +167,9 @@ public slots:
                                           int port, const QString &userName, const QString &password);
     Q_INVOKABLE void    createNewSQLiteCollection(const QString &path);
     Q_INVOKABLE QString getNewCollectionDefaultPath() const;
+    // Default folder for folder pickers: .db folder (File), collection folder
+    // (Memory), or user home (Hosted). Reusable across pages.
+    Q_INVOKABLE QString getCollectionBrowsePath() const;
 
     //Useful functions
     void executeSearch();

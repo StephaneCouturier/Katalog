@@ -29,6 +29,17 @@ ColumnLayout {
         onAccepted: folderPathField.text = appManager1.pathFromFileUrl(selectedFolder.toString())
     }
 
+    Kirigami.InlineMessage {
+        id: tagValidationMessage
+        Layout.fillWidth: true
+        Layout.leftMargin:  Kirigami.Units.gridUnit
+        Layout.rightMargin: Kirigami.Units.gridUnit
+        Layout.topMargin:   Kirigami.Units.gridUnit
+        type: Kirigami.MessageType.Warning
+        showCloseButton: true
+        visible: false
+    }
+
     // ═══ Add a tag ════════════════════════════════════════════════════════════
     GridLayout {
         Layout.fillWidth: true
@@ -52,12 +63,14 @@ ColumnLayout {
                 id: folderPathField
                 Layout.fillWidth: true
                 placeholderText: qsTr("Folder path")
+                onTextChanged: tagValidationMessage.visible = false
             }
             Controls.Button {
                 icon.name: "folder-open"
                 onClicked: {
                     var p = folderPathField.text.trim()
-                    if (p !== "") tagFolderDialog.currentFolder = appManager1.pathToFileUrl(p)
+                    tagFolderDialog.currentFolder = appManager1.pathToFileUrl(
+                        p !== "" ? p : appManager1.getCollectionBrowsePath())
                     tagFolderDialog.open()
                 }
             }
@@ -71,17 +84,25 @@ ColumnLayout {
                 Layout.fillWidth: true
                 editable: true
                 model: root.tagNames
+                onEditTextChanged: tagValidationMessage.visible = false
             }
             Controls.Button {
                 icon.name: "tag"
                 text: qsTr("Tag the folder")
                 onClicked: {
-                    var name = tagNameCombo.editText.trim()
-                    if (name === "") {
-                        showPassiveNotification(qsTr("Please enter a tag name."))
+                    var folder = folderPathField.text.trim()
+                    var name   = tagNameCombo.editText.trim()
+                    if (folder === "") {
+                        tagValidationMessage.text = qsTr("Select or enter a folder to tag.")
+                        tagValidationMessage.visible = true
                         return
                     }
-                    appManager1.createTag(name, folderPathField.text.trim())
+                    if (name === "") {
+                        tagValidationMessage.text = qsTr("Select or enter a tag name.")
+                        tagValidationMessage.visible = true
+                        return
+                    }
+                    appManager1.createTag(name, folder)
                     folderPathField.text = ""
                     tagNameCombo.currentIndex = -1
                 }

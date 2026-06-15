@@ -6358,18 +6358,19 @@ to the trash?</source>
     <message>
         <location line="-170"/>
         <source>Provide a name for this new catalog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nurodykite šio naujo katalogo pavadinimą.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Provide a path for this new catalog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nurodykite šio naujo katalogo kelią.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Select a Storage for this new catalog.
 (Selection panel on the left and dropdown list)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasirinkite šio naujo katalogo saugyklą.
+(Pasirinkimo skydelis kairėje ir išskleidžiamasis sąrašas)</translation>
     </message>
     <message>
         <location line="+90"/>
@@ -7454,7 +7455,7 @@ to the trash?</source>
     <message>
         <location line="+13"/>
         <source>Differences</source>
-        <translation type="unfinished"></translation>
+        <translation>Skirtumai</translation>
     </message>
     <message>
         <location line="+83"/>
@@ -8230,7 +8231,7 @@ Errors: %3</source>
     <message>
         <location filename="../qt_quick/PageTagsForm.qml" line="+42"/>
         <source>Add a tag</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridėti žymą</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -8241,7 +8242,7 @@ Errors: %3</source>
     <message>
         <location line="-70"/>
         <source>Folder path</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplanko kelias</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -8257,7 +8258,7 @@ Errors: %3</source>
     <message>
         <location line="+4"/>
         <source>Please enter a tag name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Įveskite žymos pavadinimą.</translation>
     </message>
     <message>
         <location line="+27"/>
@@ -8272,7 +8273,7 @@ Errors: %3</source>
     <message>
         <location line="+51"/>
         <source>No tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Žymų nėra</translation>
     </message>
 </context>
 <context>

@@ -41,6 +41,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 > - K3 labels must stay in sync with K2 unless the user explicitly requests a change in both.
 > - **Before writing any K3 user-visible text** (labels, status messages, progress reports, dialog text, tooltips, notifications) **always read the K2 equivalent first** and reuse its exact `tr()` string. Creating a new string when K2 already has one wastes a translation slot across 30 languages.
 > - **Progress/status messages in K3 MUST follow `SpecProgressReport.md`** (`docs_src/docs/SpecProgressReport.md`). Every status bar message must use `StatusBarMessageBuilder`. NEVER write a raw string where the builder is the specification. Read the spec before implementing any progress or status message.
+> - **No "Please" / no imperative orders to the user.** State what is *needed*, do not give a command. Write requirement-style copy in sentence case, e.g. `"Select or enter a tag name."`, `"Provide a name for this new catalog."` — never `"Please enter a tag name."`. This applies to all user-visible text (validation, dialogs, tooltips, status). When porting a K2 string that uses "Please", reword to the requirement form (this is the one allowed deviation from verbatim K2 copy — still needs per-string approval).
+
+> **CRITICAL — Message presentation (K3 / Kirigami):** Pick the channel by whether the user must act, per Kirigami HIG and `docs_src/docs/SpecValidationRules.md`:
+> - **Blocking form-validation errors** (missing/invalid field stopping an action) → `Kirigami.InlineMessage` (`MessageType.Warning`) anchored at the top of the form, `showCloseButton: true`, hidden again when the offending field is edited. NEVER a modal dialog or passive notification for validation.
+> - **Transient success/info** ("Copied to clipboard", "Catalog created") → `showPassiveNotification`.
+> - **Decisions requiring a choice** (Yes/No, destructive confirmation) → modal `Controls.Dialog` / `Kirigami.PromptDialog`.
 
 > **CRITICAL — Version context:**
 > - Last **released** version: **2.11**

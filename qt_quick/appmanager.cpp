@@ -620,16 +620,21 @@ void AppManager::createNewSQLiteCollection(const QString &path)
     }
 }
 //----------------------------------------------------------------------
+QString AppManager::getCollectionBrowsePath() const
+{
+    // File mode   → folder containing the .db file
+    if (collection->databaseMode == "File" && !collection->databaseFilePath.isEmpty())
+        return QFileInfo(collection->databaseFilePath).absolutePath();
+    // Memory mode → the collection folder
+    if (collection->databaseMode == "Memory" && !collection->folder.isEmpty())
+        return collection->folder;
+    // Hosted mode (or anything unresolved) → user home folder
+    return QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+}
+//----------------------------------------------------------------------
 QString AppManager::getNewCollectionDefaultPath() const
 {
-    QString folder;
-    if (!collection->databaseFilePath.isEmpty())
-        folder = QFileInfo(collection->databaseFilePath).absolutePath();
-    else if (!collection->folder.isEmpty())
-        folder = collection->folder;
-    else
-        folder = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-    return folder + "/katalog.db";
+    return getCollectionBrowsePath() + "/katalog.db";
 }
 //----------------------------------------------------------------------
 void AppManager::refreshAllUI()
