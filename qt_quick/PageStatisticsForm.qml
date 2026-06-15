@@ -133,6 +133,17 @@ ColumnLayout {
         columnSpacing: Kirigami.Units.largeSpacing
         rowSpacing: Kirigami.Units.smallSpacing
 
+        Controls.Label { text: qsTr("Device"); opacity: 0.7 }
+        Controls.Label {
+            // Guard the selectedDeviceId so the untranslated "No device selected"
+            // fallback in getSelectedDeviceName() never reaches the UI.
+            text: appManager1.selectedDeviceId > 0 ? appManager1.selectedDeviceName : ""
+            font.bold: true
+            elide: Text.ElideRight
+            Layout.columnSpan: 3
+            Layout.fillWidth: true
+        }
+
         Controls.Label { text: qsTr("Source"); opacity: 0.7 }
         Controls.ComboBox {
             id: sourceCombo
@@ -291,6 +302,55 @@ ColumnLayout {
             pointsVisible: false
             axisX: axisX
             axisY: axisY
+        }
+
+        // Rubber-band zoom: drag a rectangle to zoom in (K2 RectangleRubberBand).
+        // Right-click or double-click resets the zoom.
+        Rectangle {
+            id: zoomSelection
+            visible: false
+            color:        "#3309c6f4"
+            border.color: "#09c6f4"
+            border.width: 1
+        }
+
+        MouseArea {
+            id: zoomArea
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            property real startX: 0
+            property real startY: 0
+
+            onPressed: (mouse) => {
+                if (mouse.button === Qt.LeftButton) {
+                    startX = mouse.x
+                    startY = mouse.y
+                    zoomSelection.x = mouse.x
+                    zoomSelection.y = mouse.y
+                    zoomSelection.width = 0
+                    zoomSelection.height = 0
+                    zoomSelection.visible = true
+                }
+            }
+            onPositionChanged: (mouse) => {
+                if (zoomSelection.visible) {
+                    zoomSelection.x = Math.min(startX, mouse.x)
+                    zoomSelection.y = Math.min(startY, mouse.y)
+                    zoomSelection.width  = Math.abs(mouse.x - startX)
+                    zoomSelection.height = Math.abs(mouse.y - startY)
+                }
+            }
+            onReleased: (mouse) => {
+                if (mouse.button === Qt.RightButton) {
+                    chart.zoomReset()
+                    return
+                }
+                zoomSelection.visible = false
+                if (zoomSelection.width > 5 && zoomSelection.height > 5)
+                    chart.zoomIn(Qt.rect(zoomSelection.x, zoomSelection.y,
+                                         zoomSelection.width, zoomSelection.height))
+            }
+            onDoubleClicked: chart.zoomReset()
         }
     }
 }

@@ -497,6 +497,21 @@ Kirigami.ScrollablePage {
                 onActivated: {
                     appManager1.setLanguage(currentValue)
                 }
+
+                // The 30-language list would otherwise span the full window
+                // height. The popup opens upward (bottom anchored above the
+                // field), so cap its height to the space above the field minus a
+                // header clearance — this keeps the top below the page header
+                // bar. The list scrolls when taller than the cap.
+                Binding {
+                    target: languageComboBox.popup
+                    property: "height"
+                    value: Math.min(languageComboBox.popup.contentItem.implicitHeight
+                                    + languageComboBox.popup.topPadding
+                                    + languageComboBox.popup.bottomPadding,
+                                    languageComboBox.mapToItem(null, 0, 0).y
+                                    - Kirigami.Units.gridUnit * 3)
+                }
             }
         }
 

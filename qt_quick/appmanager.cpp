@@ -641,16 +641,12 @@ void AppManager::refreshAllUI()
 {
     qDebug() << "AppManager::refreshAllUI() - Starting comprehensive UI refresh";
 
-    // Refresh device list model
-    refreshDeviceList();
-
-    // Clear and refresh search results if search object exists
-    refreshSearchResults();
-
-    // Refresh statistics if needed
-    refreshStatistics();
-
-    // Reload selected device to ensure it's still valid
+    // Re-validate the selected device against the (possibly new) connection FIRST,
+    // before refreshDeviceList() emits deviceListRefreshed. Pickers that react to
+    // that signal (e.g. the Create page Storage picker, whose default is derived
+    // from selectedDevice via getDefaultStorageId()) must read a device that
+    // actually exists in the current collection — otherwise they resolve against
+    // the previous collection's selection and never recompute.
     if (selectedDevice && selectedDevice->ID > 0) {
         selectedDevice->loadDevice(m_connectionName);
 
@@ -662,6 +658,19 @@ void AppManager::refreshAllUI()
         }
     }
 
+    // Refresh device list model (emits deviceListRefreshed → pickers re-resolve)
+    refreshDeviceList();
+
+    // Clear and refresh search results if search object exists
+    refreshSearchResults();
+
+    // Refresh statistics if needed
+    refreshStatistics();
+
+    // selectedDevice may have been reloaded/reset above without any other notice;
+    // notify so device-dependent UI (Storage picker, selection highlight, the
+    // Statistics device reminder, …) reflects the current collection's device.
+    emit selectedDeviceChanged(selectedDevice ? selectedDevice->ID : 0);
     emit tagsChanged();
     emit uiRefreshCompleted();
     qDebug() << "AppManager::refreshAllUI() - Completed";
@@ -717,6 +726,16 @@ bool AppManager::reconnectToDatabase()
     collection->setConnectionName(conn);
     collection->loadImageFolderPath();
     collection->insertPhysicalStorageGroup();
+
+    // Opening a different collection: reset the selection to the default root
+    // (Physical Group, guaranteed to exist by insertPhysicalStorageGroup above).
+    // Device IDs are not stable across collections, so keeping the previous
+    // selection would silently point at a different/nonexistent device — and the
+    // Create page's Storage picker would derive a wrong or invalid parent from it.
+    // refreshAllUI() below reloads this device for the new connection and notifies.
+    if (selectedDevice)
+        selectedDevice->ID = 1;
+
     refreshAllUI();
     emit databaseModeChanged();
     return true;
@@ -1459,12 +1478,16 @@ void AppManager::selectDeviceById(int deviceId)
         selectedDevice->ID = deviceId;
         if (selectedDevice->ID == 0) selectedDevice->type = "All";
 
-        emit selectedDeviceChanged(deviceId); // emit before DB query for immediate visual feedback
-
+        // Load the row first (single indexed query, synchronous) so that name/path/
+        // type are populated before the signal fires. Emitting earlier left bindings
+        // on selectedDeviceName/Path/Type reading the *previous* device's values with
+        // no later notification, i.e. always one selection behind.
         selectedDevice->loadDevice(m_connectionName);
 
         QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
         settings.setValue("Selection/SelectedDeviceID", deviceId);
+
+        emit selectedDeviceChanged(deviceId);
 
         qDebug() << "Selected device changed to ID:" << deviceId << "Name:" << selectedDevice->name;
     }

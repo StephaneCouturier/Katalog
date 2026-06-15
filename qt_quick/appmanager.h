@@ -81,6 +81,7 @@ class AppManager : public QObject
     Q_PROPERTY(QAbstractItemModel*    searchSortModel   READ getSearchSortModel    CONSTANT)
     Q_PROPERTY(QAbstractItemModel*    exploreSortModel  READ getExploreSortModel   CONSTANT)
     Q_PROPERTY(int     selectedDeviceId   READ getSelectedDeviceId   NOTIFY selectedDeviceChanged)
+    Q_PROPERTY(QString selectedDeviceName READ getSelectedDeviceName NOTIFY selectedDeviceChanged)
     Q_PROPERTY(QString selectedDeviceType READ getSelectedDeviceType NOTIFY selectedDeviceChanged)
     Q_PROPERTY(QString selectedDevicePath READ getSelectedDevicePath NOTIFY selectedDeviceChanged)
     Q_PROPERTY(QString databaseMode           READ getDatabaseMode           NOTIFY databaseModeChanged)

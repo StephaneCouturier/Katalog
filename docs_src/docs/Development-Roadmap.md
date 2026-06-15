@@ -56,7 +56,7 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 |-------|--------------------------------------------------------------------|--------|-------------------|
 | 1     | READ ONLY, Search features, English Only                           |   ✅   | Katalog 3.alpha1  |
 | 2     | Full Featured except Themes & Translations                         |   ✅   | Katalog 3.alpha2  |
-| 3     | Translations, Documentation, Tests                                 |   🔲   | Katalog 3.0       |
+| 3     | Translations, Documentation, Tests                                 |   🚧   | Katalog 3.0       |
 
 | Platform |  Status | Notes                           |
 |----------|---------|---------------------------------|
@@ -66,38 +66,38 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 
 ### Detailed status by Feature 
 
-| Screen / Feature      | K2 | K3 | Remaining | New feature vs K2 |
-|-----------------------|----|----|-----------|-----------|
-| **Screen/tabs**       | ✅ | ✅ | | - Access via a "Drawer" now, which can be hidden or pinned" |
-| **Open Collection**   | ✅ | ✅ | | - Clearer selection of mode and Collection. Open recent collections (last 5 entries). Create collection (File mode)|
-| **Selection**         | ✅ | ✅ | | - Card like entries with file & storage statistics<br/> - Filter option to limit the list of Devices
-| **Search**            | ✅ | ✅ | |
+| Screen / Feature    | K2 | K3 | Remaining | New feature vs K2 |
+|---------------------|----|----|-----------|-----------|
+| **Screen/tabs**     | ✅ | ✅ | | - Access via a "Drawer" now, which can be hidden or pinned" |
+| **Open Collection** | ✅ | ✅ | | - Clearer selection of mode and Collection. Open recent collections (last 5 entries). Create collection (File mode)|
+| **Selection**       | ✅ | ✅ | | - Card like entries with file & storage statistics<br/> - Filter option to limit the list of Devices
+| **Search**          | ✅ | ✅ | |
 | Search Criteria     | ✅ | ✅ | | - Paste/Clean buttons for all text input fields|
 | Search Results      | ✅ | ✅ | | - Select Device path is displayed
 | Search History      | ✅ | ✅ | |
 | Search in Connected | ✅ | ✅ | |
 | Search Progress     | ✅ | ✅ | result throttler| |
 | Search Pause/Stop   | ✅ | ✅ | Review thread mechanism compared to BackUp | |
-| **Create**            | ✅ | ✅ | Review thread mechanism compared to BackUp, Add Paste button, Add Paste from selected path & name | |
-| **Devices**           | ✅ | 🚧 | |
+| **Create**          | ✅ | ✅ | Review thread mechanism compared to BackUp, Add Paste button, Add Paste from selected path & name | |
+| **Devices**         | ✅ | 🚧 | |
 | View list           | ✅ | 🚧 | Storage and Catalog lists are card like display, to be reviewed and maybe transformed in actual tables |
 | Edit                | ✅ | ✅ | |
 | Update progress     | ✅ | ✅ | |
 | Update Stop         | ✅ | ✅ | |
-| **Explore**           | ✅ | 🚧 | Better folder browser |
-| **Statistics**        | ✅ | 🚧 | zoom in feature |
-| **Tags**              | ✅ | ✅ | |
-| **Backup**            | ✅ | ✅ | |
+| **Explore**         | ✅ | 🚧 | Better folder browser |
+| **Statistics**      | ✅ | ✅ | zoom in feature |
+| **Tags**            | ✅ | ✅ | |
+| **Backup**          | ✅ | ✅ | |
 | View                | ✅ | ✅ | |
 | Create              | ✅ | ✅ | |
 | Execute/progress    | ✅ | ✅ | |
-| **Settings**          | ✅ | 🚧 | |
+| **Settings**        | ✅ | 🚧 | |
 | SettingsFile        | ✅ | ✅ | |
 | Version             | ✅ | ✅ | |
 | Image folder        | ✅ | ✅ | |
 | New & Import        | ✅ | ✅ | |
-| Themes              | ✅ | 🔲 | |
-| Languages           | ✅ | 🔲 | |
+| Themes              | ✅ | 🔲 | optional |
+| Languages           | ✅ | 🚧 | limit height of the selector for estetics only|
 | **About**             | ✅ | ✅ | |
 
 
