@@ -392,11 +392,11 @@
             // Repopulate type comboboxes with translated display text; DB values stored as userData
             ui->BackUp_comboBox_MappingType->clear();
             ui->BackUp_comboBox_MappingType->addItem(tr("All"),     QStringLiteral("All"));
-            ui->BackUp_comboBox_MappingType->addItem(tr("BackUp"),  QStringLiteral("Backup"));
+            ui->BackUp_comboBox_MappingType->addItem(tr("Backup"),  QStringLiteral("Backup"));
             ui->BackUp_comboBox_MappingType->addItem(tr("Archive"), QStringLiteral("Archive"));
 
             ui->BackUp_comboBox_CreateMappingType->clear();
-            ui->BackUp_comboBox_CreateMappingType->addItem(tr("BackUp"),  QStringLiteral("Backup"));
+            ui->BackUp_comboBox_CreateMappingType->addItem(tr("Backup"),  QStringLiteral("Backup"));
             ui->BackUp_comboBox_CreateMappingType->addItem(tr("Archive"), QStringLiteral("Archive"));
 
             // Translation registrations for mapping table display values shown by DeviceMappingView.

@@ -403,7 +403,7 @@ void MainWindow::pauseCurrentBackup()
     m_backupJob->pauseBackup();
     setBackupButtonState(BackupButtonState::Paused);
     ui->BackUp_label_ProgressSummary->setText(
-        StatusBarMessageBuilder().setOperation(tr("BackUp")).setStatus(tr("Paused")).build());
+        StatusBarMessageBuilder().setOperation(tr("Backup")).setStatus(tr("Paused")).build());
 }
 
 void MainWindow::resumeCurrentBackup()
@@ -573,7 +573,7 @@ void MainWindow::runBackup()
         ui->BackUp_label_ProgressSummary->setVisible(true);
         ui->BackUp_label_ProgressSummary->setText(
             StatusBarMessageBuilder()
-                .setOperation(tr("BackUp"))
+                .setOperation(tr("Backup"))
                 .setStatus(tr("%1 not available").arg(role))
                 .setCatalogName(name)
                 .build());
@@ -718,7 +718,7 @@ void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, Mapping
         ui->BackUp_label_ProgressSummary->setVisible(true);
         ui->BackUp_label_ProgressSummary->setText(
             StatusBarMessageBuilder()
-                .setOperation(isArchiveEarly ? tr("Archive") : tr("BackUp"))
+                .setOperation(isArchiveEarly ? tr("Archive") : tr("Backup"))
                 .setStatus(tr("Completed"))
                 .addResult(isArchiveEarly ? tr("Move") : tr("Copy"), 0)
                 .addResult(tr("Already in target"), cmp.skippedCount)
@@ -737,7 +737,7 @@ void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, Mapping
             ui->BackUp_pushButton_RunBackup->setEnabled(true);
             ui->BackUp_label_ProgressSummary->setVisible(true);
             ui->BackUp_label_ProgressSummary->setText(
-                buildBackupSummaryHtml(isArchive ? tr("Archive") : tr("BackUp"),
+                buildBackupSummaryHtml(isArchive ? tr("Archive") : tr("Backup"),
                                        tr("Cancelled"), cmp, isArchive, spaceCheck));
             return;
         }
@@ -778,7 +778,7 @@ void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, Mapping
     ui->BackUp_progressBar->setValue(0);
     ui->BackUp_label_ProgressSummary->setText(
         StatusBarMessageBuilder()
-            .setOperation(m_currentBackupIsArchive ? tr("Archive") : tr("BackUp"))
+            .setOperation(m_currentBackupIsArchive ? tr("Archive") : tr("Backup"))
             .build());
     m_backupTimer.start();
     ui->BackUp_label_ProgressSummary->setVisible(true);
@@ -816,7 +816,7 @@ void MainWindow::onBackupProgress(int filesDone, int totalFiles,
     }
 
     const QString msg = StatusBarMessageBuilder()
-        .setOperation(tr("BackUp"))
+        .setOperation(tr("Backup"))
         .setProcess(m_currentBackupIsArchive ? tr("Moving") : tr("Copying"), filesDone + 1, totalFiles)
         .setSizeProgress(bytesCopied, totalBytes)
         .setSpeed(speedBps)
@@ -846,7 +846,7 @@ void MainWindow::onBackupFinished(const BackupReport &report)
         elapsedStr = tr("%1h %2m").arg(elapsedSec / 3600).arg((elapsedSec % 3600) / 60);
 
     const QString msg = StatusBarMessageBuilder()
-        .setOperation(m_currentBackupIsArchive ? tr("Archive") : tr("BackUp"))
+        .setOperation(m_currentBackupIsArchive ? tr("Archive") : tr("Backup"))
         .setStatus(report.wasCancelled ? tr("Cancelled") : tr("Completed"))
         .setSizeProgress(report.totalBytesCopied, report.totalBytesCopied)
         .setTimeToCompletion(elapsedStr)

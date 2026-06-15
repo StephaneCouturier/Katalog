@@ -66,8 +66,11 @@ titles + body, status/progress messages, field labels.
 
 - **"Selection"** everywhere (K2 mixes "Filters"/"Selection"; K3 standardises on
   "Selection"). The K3 Selection page corresponds to K2's `Filters_*` panel.
-- **"BackUp"** = the page/feature name. **"Backup"** = an action or a type (like
-  "Archive"). Both exist in K2; pick by role, never collapse them.
+- **"Backup"** everywhere — page/feature name, action, and type alike. The old
+  "BackUp" (cap U) form was retired in both K2 and K3 (one shared translation
+  slot). Never reintroduce "BackUp" in user-visible text. (Internal identifiers
+  and settings keys such as `"BackUp/..."` and object names are not user-visible
+  and are intentionally left untouched.)
 - **Framework strings** (e.g. `Quit` from KDE `KStandardAction`) have **no** K2
   `.ts` entry — they become new K3 strings needing their own translation.
 

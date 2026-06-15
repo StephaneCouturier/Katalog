@@ -133,7 +133,7 @@ ColumnLayout {
         Item { Layout.fillWidth: true }
 
         Controls.CheckBox {
-            text:    qsTr("Update catalogs before backup")
+            text:    qsTr("Update catalogs")
             checked: appManager1.updateBeforeBackup
             onToggled: appManager1.updateBeforeBackup = checked
         }
@@ -259,7 +259,7 @@ ColumnLayout {
                         Layout.fillWidth: true
                     }
                     Controls.Label {
-                        text:  modelData.mappingType
+                        text:  modelData.mappingType === "Archive" ? qsTr("Archive") : qsTr("Backup")
                         color: modelData.mappingType === "Archive"
                                ? Kirigami.Theme.neutralTextColor
                                : Kirigami.Theme.positiveTextColor
@@ -461,7 +461,7 @@ ColumnLayout {
                                 }
                             }
                             Controls.MenuItem {
-                                text: qsTr("Export last preview to CSV")
+                                text: qsTr("Export to CSV")
                                 icon.name: "document-export"
                                 onTriggered: {
                                     var path = appManager1.exportLastBackupPreviewToCsv()

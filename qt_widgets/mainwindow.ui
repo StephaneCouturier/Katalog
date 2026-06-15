@@ -9238,7 +9238,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
             <iconset theme="backup"/>
            </attribute>
            <attribute name="title">
-            <string>BackUp</string>
+            <string>Backup</string>
            </attribute>
            <layout class="QGridLayout" name="gridLayout_4">
             <item row="1" column="0">

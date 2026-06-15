@@ -92,7 +92,7 @@ QVariant DeviceMappingView::data(const QModelIndex &index, int role) const
         else if( index.column() >= 2 && index.column() <= 5 ){
             const QString val = QSortFilterProxyModel::data(index, role).toString();
             if (val == QLatin1String("Backup") || val == QLatin1String("BackUp"))
-                return QCoreApplication::translate("MainWindow", "BackUp");
+                return QCoreApplication::translate("MainWindow", "Backup");
             if (val == QLatin1String("Archive"))
                 return QCoreApplication::translate("MainWindow", "Archive");
             if (val == QLatin1String("Strict"))

@@ -342,8 +342,8 @@ Kirigami.ApplicationWindow {
             },
             Kirigami.Action {
                 icon.name: "backup"
-                text: qsTr("BackUp")
-                onTriggered: { appManager1.setLastPage("BackUp"); root.showPage(pageBackup) }
+                text: qsTr("Backup")
+                onTriggered: { appManager1.setLastPage("Backup"); root.showPage(pageBackup) }
             },
             Kirigami.Action {
                 icon.name: "view-statistics"
@@ -1624,7 +1624,7 @@ Kirigami.ApplicationWindow {
     Kirigami.ScrollablePage {
         id: pageBackup
         visible: false
-        title: qsTr("BackUp")
+        title: qsTr("Backup")
         onVisibleChanged: {
             if (visible)
                 Qt.callLater(function() { backupPageForm.refresh() })
