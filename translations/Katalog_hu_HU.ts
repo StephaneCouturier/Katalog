@@ -6101,7 +6101,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+8"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportálás CSV-be</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6242,7 +6242,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+24"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportálás CSV-be</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -6800,7 +6800,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+3"/>
         <source>Total: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Összesen: %1</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7094,22 +7094,22 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+13"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellenőrző összeg számítása (SHA-256)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>File not found or could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>A fájl nem található vagy nem olvasható</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellenőrző összeg ellenőrzése (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba: </translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7129,7 +7129,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+18"/>
         <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellenőrző összeg (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -7149,12 +7149,12 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+4"/>
         <source>Checksum copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Az ellenőrző összeg a vágólapra másolva</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Checksum Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellenőrző összeg eltérése</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7164,7 +7164,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+9"/>
         <source>Checksum saved to database</source>
-        <translation type="unfinished"></translation>
+        <translation>Az ellenőrző összeg az adatbázisba mentve</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7195,22 +7195,22 @@ lomtárba helyezése?</translation>
     <message>
         <location filename="../qt_quick/PageSearchForm.qml" line="+335"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 napja</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 week ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 hete</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 month ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 hónapja</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 year ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 éve</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7220,12 +7220,12 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+15"/>
         <source>Delete search history</source>
-        <translation type="unfinished"></translation>
+        <translation>Keresési előzmények törlése</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>This will delete all search history entries. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezzel az összes keresési előzménybejegyzés törlődik. Folytatja?</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -7235,22 +7235,22 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+1"/>
         <source>This will delete all but the last 10 search history entries. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezzel az utolsó 10 kivételével az összes keresési előzménybejegyzés törlődik. Folytatja?</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Search History</source>
-        <translation type="unfinished"></translation>
+        <translation>Keresési előzmények</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Keep Last 10</source>
-        <translation type="unfinished"></translation>
+        <translation>Utolsó 10 megtartása</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7260,7 +7260,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+23"/>
         <source>(no text filter)</source>
-        <translation type="unfinished"></translation>
+        <translation>(nincs szövegszűrő)</translation>
     </message>
     <message>
         <location line="+28"/>
@@ -7270,12 +7270,12 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+8"/>
         <source>Connected drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Csatlakoztatott meghajtó</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Path to connected drive or folder</source>
-        <translation type="unfinished"></translation>
+        <translation>A csatlakoztatott meghajtó vagy mappa útvonala</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7285,7 +7285,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+13"/>
         <source>text</source>
-        <translation type="unfinished"></translation>
+        <translation>szöveg</translation>
     </message>
     <message>
         <location line="+42"/>
@@ -7310,7 +7310,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+39"/>
         <source>File attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájlattribútumok</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7406,19 +7406,19 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+18"/>
         <source>Duplicates</source>
-        <translation type="unfinished"></translation>
+        <translation>Másodpéldányok</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+122"/>
         <source>Duplicates and Differences cannot be used at the same time</source>
-        <translation type="unfinished"></translation>
+        <translation>A másodpéldányok és a különbségek nem használhatók egyszerre</translation>
     </message>
     <message>
         <location line="-108"/>
         <location line="+122"/>
         <source>On</source>
-        <translation type="unfinished"></translation>
+        <translation>Itt</translation>
     </message>
     <message>
         <location line="-114"/>
@@ -7435,7 +7435,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="-108"/>
         <source>Scope</source>
-        <translation type="unfinished"></translation>
+        <translation>Hatókör</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7450,12 +7450,12 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+14"/>
         <source>Device 1</source>
-        <translation type="unfinished"></translation>
+        <translation>1. eszköz</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Device 2</source>
-        <translation type="unfinished"></translation>
+        <translation>2. eszköz</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7465,12 +7465,12 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+83"/>
         <source>Between</source>
-        <translation type="unfinished"></translation>
+        <translation>Között</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>And</source>
-        <translation type="unfinished"></translation>
+        <translation>És</translation>
     </message>
 </context>
 <context>
@@ -7478,42 +7478,42 @@ lomtárba helyezése?</translation>
     <message>
         <location filename="../qt_quick/PageSearchResultsForm.qml" line="+109"/>
         <source>%1 duplicate(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 másodpéldány található</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 difference(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 különbség található</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 folder(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 mappa található</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>%1 file(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 fájl található</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Total: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Összesen: %1</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Min: %1   Max: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Min: %1   Max: %2</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportálás CSV-be</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Export to Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportálás katalógusba</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7538,7 +7538,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="-775"/>
         <source>Extract Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Metaadatok kinyerése</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7549,27 +7549,27 @@ lomtárba helyezése?</translation>
     <message>
         <location line="-679"/>
         <source>Exported to: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportálva ide: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or write error</source>
-        <translation type="unfinished"></translation>
+        <translation>Az exportálás sikertelen — nincs eredmény vagy írási hiba</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Results exported to catalog: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Eredmények exportálva katalógusba: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or database error</source>
-        <translation type="unfinished"></translation>
+        <translation>Az exportálás sikertelen — nincs eredmény vagy adatbázishiba</translation>
     </message>
     <message>
         <location line="+257"/>
         <source>(no selection)</source>
-        <translation type="unfinished"></translation>
+        <translation>(nincs kijelölés)</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -7594,7 +7594,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+22"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished"></translation>
+        <translation>Nincs elérhető bővített metaadat</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7604,7 +7604,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+4"/>
         <source>Folder path copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>A mappa útvonala a vágólapra másolva</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7614,7 +7614,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+4"/>
         <source>Full path copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>A teljes útvonal a vágólapra másolva</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7625,7 +7625,7 @@ lomtárba helyezése?</translation>
         <location line="+4"/>
         <location line="+10"/>
         <source>File name copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>A fájlnév a vágólapra másolva</translation>
     </message>
     <message>
         <location line="-6"/>
@@ -7635,12 +7635,12 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+11"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellenőrző összeg számítása (SHA-256)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>File not found or could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>A fájl nem található vagy nem olvasható</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7651,27 +7651,27 @@ lomtárba helyezése?</translation>
         <location line="+6"/>
         <location line="+228"/>
         <source>Checksum copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Az ellenőrző összeg a vágólapra másolva</translation>
     </message>
     <message>
         <location line="-224"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellenőrző összeg ellenőrzése (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba: </translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File moved to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>A fájl a kukába helyezve</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not move file to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>A fájlt nem sikerült a kukába helyezni</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7681,7 +7681,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+16"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Bővített metaadatok</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7691,12 +7691,12 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>A metaadatok JSON-ja a vágólapra másolva</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished"></translation>
+        <translation>Mező</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7706,7 +7706,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+83"/>
         <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellenőrző összeg (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -7726,7 +7726,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+15"/>
         <source>Checksum Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellenőrző összeg eltérése</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7736,7 +7736,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+9"/>
         <source>Checksum saved to database</source>
-        <translation type="unfinished"></translation>
+        <translation>Az ellenőrző összeg az adatbázisba mentve</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7756,24 +7756,26 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+14"/>
         <source>Delete File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájl törlése</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájl törölve</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not delete file</source>
-        <translation type="unfinished"></translation>
+        <translation>A fájlt nem sikerült törölni</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Permanently delete this file? This cannot be undone.
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Véglegesen törli ezt a fájlt? Ezt nem lehet visszavonni.
+
+%1</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -7786,49 +7788,54 @@ lomtárba helyezése?</translation>
 Mismatched: %2
 New checksums calculated: %3
 Errors: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Egyezik: %1
+Nem egyezik: %2
+Új ellenőrző összegek kiszámítva: %3
+Hibák: %4</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Updated: %1
 Skipped: %2
 Errors: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Frissítve: %1
+Kihagyva: %2
+Hibák: %3</translation>
     </message>
     <message>
         <location line="-43"/>
         <source>Delete Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájlok törlése</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Move all %1 result(s) to trash?</source>
-        <translation type="unfinished"></translation>
+        <translation>Mind a(z) %1 találat áthelyezése a kukába?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Permanently delete all %1 result(s)? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Véglegesen törli mind a(z) %1 találatot? Ezt nem lehet visszavonni.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Calculate and verify checksums for all %1 result(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kiszámítja és ellenőrzi az ellenőrző összegeket mind a(z) %1 találathoz?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Include metadata for all %1 result(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Belefoglalja a metaadatokat mind a(z) %1 találathoz?</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>%1 file(s) moved to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 fájl áthelyezve a kukába</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>%1 file(s) deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 fájl törölve</translation>
     </message>
 </context>
 <context>
@@ -8197,22 +8204,22 @@ Errors: %3</source>
     <message>
         <location line="+17"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 napja</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 week ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 hete</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 month ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 hónapja</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 year ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 éve</translation>
     </message>
     <message>
         <location line="+19"/>

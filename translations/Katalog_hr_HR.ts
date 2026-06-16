@@ -6102,7 +6102,7 @@ u smeće?</translation>
     <message>
         <location line="+8"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvezi u CSV</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6243,7 +6243,7 @@ u smeće?</translation>
     <message>
         <location line="+24"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvezi u CSV</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -6801,7 +6801,7 @@ u smeće?</translation>
     <message>
         <location line="+3"/>
         <source>Total: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukupno: %1</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7095,22 +7095,22 @@ u smeće?</translation>
     <message>
         <location line="+13"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Izračunaj kontrolni zbroj (SHA-256)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>File not found or could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>Datoteka nije pronađena ili se ne može pročitati</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Provjeri kontrolni zbroj (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Pogreška: </translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7130,7 +7130,7 @@ u smeće?</translation>
     <message>
         <location line="+18"/>
         <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolni zbroj (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -7150,12 +7150,12 @@ u smeće?</translation>
     <message>
         <location line="+4"/>
         <source>Checksum copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolni zbroj kopiran u međuspremnik</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Checksum Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodudaranje kontrolnog zbroja</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7165,7 +7165,7 @@ u smeće?</translation>
     <message>
         <location line="+9"/>
         <source>Checksum saved to database</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolni zbroj spremljen u bazu podataka</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7196,22 +7196,22 @@ u smeće?</translation>
     <message>
         <location filename="../qt_quick/PageSearchForm.qml" line="+335"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Prije 1 dan</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 week ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Prije 1 tjedan</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 month ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Prije 1 mjesec</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 year ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Prije 1 godinu</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7221,12 +7221,12 @@ u smeće?</translation>
     <message>
         <location line="+15"/>
         <source>Delete search history</source>
-        <translation type="unfinished"></translation>
+        <translation>Izbriši povijest pretraživanja</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>This will delete all search history entries. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ovo će izbrisati sve unose povijesti pretraživanja. Nastaviti?</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -7236,22 +7236,22 @@ u smeće?</translation>
     <message>
         <location line="+1"/>
         <source>This will delete all but the last 10 search history entries. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ovo će izbrisati sve unose povijesti pretraživanja osim zadnjih 10. Nastaviti?</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Search History</source>
-        <translation type="unfinished"></translation>
+        <translation>Povijest pretraživanja</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Keep Last 10</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadrži zadnjih 10</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Očisti</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7261,7 +7261,7 @@ u smeće?</translation>
     <message>
         <location line="+23"/>
         <source>(no text filter)</source>
-        <translation type="unfinished"></translation>
+        <translation>(bez tekstnog filtra)</translation>
     </message>
     <message>
         <location line="+28"/>
@@ -7271,12 +7271,12 @@ u smeće?</translation>
     <message>
         <location line="+8"/>
         <source>Connected drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Povezani pogon</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Path to connected drive or folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Putanja do povezanog pogona ili mape</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7286,7 +7286,7 @@ u smeće?</translation>
     <message>
         <location line="+13"/>
         <source>text</source>
-        <translation type="unfinished"></translation>
+        <translation>tekst</translation>
     </message>
     <message>
         <location line="+42"/>
@@ -7311,7 +7311,7 @@ u smeće?</translation>
     <message>
         <location line="+39"/>
         <source>File attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Atributi datoteke</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7407,19 +7407,19 @@ u smeće?</translation>
     <message>
         <location line="+18"/>
         <source>Duplicates</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplikati</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+122"/>
         <source>Duplicates and Differences cannot be used at the same time</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplikati i razlike ne mogu se koristiti istovremeno</translation>
     </message>
     <message>
         <location line="-108"/>
         <location line="+122"/>
         <source>On</source>
-        <translation type="unfinished"></translation>
+        <translation>Na</translation>
     </message>
     <message>
         <location line="-114"/>
@@ -7436,7 +7436,7 @@ u smeće?</translation>
     <message>
         <location line="-108"/>
         <source>Scope</source>
-        <translation type="unfinished"></translation>
+        <translation>Opseg</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7451,12 +7451,12 @@ u smeće?</translation>
     <message>
         <location line="+14"/>
         <source>Device 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Uređaj 1</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Device 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Uređaj 2</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7466,12 +7466,12 @@ u smeće?</translation>
     <message>
         <location line="+83"/>
         <source>Between</source>
-        <translation type="unfinished"></translation>
+        <translation>Između</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>And</source>
-        <translation type="unfinished"></translation>
+        <translation>I</translation>
     </message>
 </context>
 <context>
@@ -7479,42 +7479,42 @@ u smeće?</translation>
     <message>
         <location filename="../qt_quick/PageSearchResultsForm.qml" line="+109"/>
         <source>%1 duplicate(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Pronađeno %1 duplikat(a)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 difference(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Pronađeno %1 razlika</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 folder(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Pronađeno %1 mapa</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>%1 file(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Pronađeno %1 datoteka</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Total: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukupno: %1</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Min: %1   Max: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Min: %1   Maks: %2</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvezi u CSV</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Export to Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvezi u katalog</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7539,7 +7539,7 @@ u smeće?</translation>
     <message>
         <location line="-775"/>
         <source>Extract Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Izdvoji metapodatke</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7550,27 +7550,27 @@ u smeće?</translation>
     <message>
         <location line="-679"/>
         <source>Exported to: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvezeno u: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or write error</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvoz nije uspio — nema rezultata ili pogreška pri pisanju</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Results exported to catalog: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezultati izvezeni u katalog: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or database error</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvoz nije uspio — nema rezultata ili pogreška baze podataka</translation>
     </message>
     <message>
         <location line="+257"/>
         <source>(no selection)</source>
-        <translation type="unfinished"></translation>
+        <translation>(nema odabira)</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -7595,7 +7595,7 @@ u smeće?</translation>
     <message>
         <location line="+22"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished"></translation>
+        <translation>Nema dostupnih proširenih metapodataka</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7605,7 +7605,7 @@ u smeće?</translation>
     <message>
         <location line="+4"/>
         <source>Folder path copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Putanja mape kopirana u međuspremnik</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7615,7 +7615,7 @@ u smeće?</translation>
     <message>
         <location line="+4"/>
         <source>Full path copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Puna putanja kopirana u međuspremnik</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7626,7 +7626,7 @@ u smeće?</translation>
         <location line="+4"/>
         <location line="+10"/>
         <source>File name copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Naziv datoteke kopiran u međuspremnik</translation>
     </message>
     <message>
         <location line="-6"/>
@@ -7636,12 +7636,12 @@ u smeće?</translation>
     <message>
         <location line="+11"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Izračunaj kontrolni zbroj (SHA-256)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>File not found or could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>Datoteka nije pronađena ili se ne može pročitati</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7652,27 +7652,27 @@ u smeće?</translation>
         <location line="+6"/>
         <location line="+228"/>
         <source>Checksum copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolni zbroj kopiran u međuspremnik</translation>
     </message>
     <message>
         <location line="-224"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Provjeri kontrolni zbroj (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Pogreška: </translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File moved to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Datoteka premještena u smeće</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not move file to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Datoteku nije moguće premjestiti u smeće</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7682,7 +7682,7 @@ u smeće?</translation>
     <message>
         <location line="+16"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Prošireni metapodaci</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7692,12 +7692,12 @@ u smeće?</translation>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>JSON metapodataka kopiran u međuspremnik</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished"></translation>
+        <translation>Polje</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7707,7 +7707,7 @@ u smeće?</translation>
     <message>
         <location line="+83"/>
         <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolni zbroj (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -7727,7 +7727,7 @@ u smeće?</translation>
     <message>
         <location line="+15"/>
         <source>Checksum Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodudaranje kontrolnog zbroja</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7737,7 +7737,7 @@ u smeće?</translation>
     <message>
         <location line="+9"/>
         <source>Checksum saved to database</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolni zbroj spremljen u bazu podataka</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7757,24 +7757,26 @@ u smeće?</translation>
     <message>
         <location line="+14"/>
         <source>Delete File</source>
-        <translation type="unfinished"></translation>
+        <translation>Izbriši datoteku</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>Datoteka izbrisana</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not delete file</source>
-        <translation type="unfinished"></translation>
+        <translation>Datoteku nije moguće izbrisati</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Permanently delete this file? This cannot be undone.
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Trajno izbrisati ovu datoteku? Ovo se ne može poništiti.
+
+%1</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -7787,49 +7789,54 @@ u smeće?</translation>
 Mismatched: %2
 New checksums calculated: %3
 Errors: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Podudara se: %1
+Ne podudara se: %2
+Novi kontrolni zbrojevi izračunati: %3
+Pogreške: %4</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Updated: %1
 Skipped: %2
 Errors: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Ažurirano: %1
+Preskočeno: %2
+Pogreške: %3</translation>
     </message>
     <message>
         <location line="-43"/>
         <source>Delete Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Izbriši datoteke</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Move all %1 result(s) to trash?</source>
-        <translation type="unfinished"></translation>
+        <translation>Premjestiti svih %1 rezultata u smeće?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Permanently delete all %1 result(s)? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Trajno izbrisati svih %1 rezultata? Ovo se ne može poništiti.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Calculate and verify checksums for all %1 result(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Izračunati i provjeriti kontrolne zbrojeve za svih %1 rezultata?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Include metadata for all %1 result(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Uključiti metapodatke za svih %1 rezultata?</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>%1 file(s) moved to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 datoteka premješteno u smeće</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>%1 file(s) deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 datoteka izbrisano</translation>
     </message>
 </context>
 <context>
@@ -8198,22 +8205,22 @@ Errors: %3</source>
     <message>
         <location line="+17"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Prije 1 dan</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 week ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Prije 1 tjedan</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 month ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Prije 1 mjesec</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 year ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Prije 1 godinu</translation>
     </message>
     <message>
         <location line="+19"/>

@@ -6103,7 +6103,7 @@ Split was not performed.</source>
     <message>
         <location line="+8"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Εξαγωγή σε CSV</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6244,7 +6244,7 @@ Split was not performed.</source>
     <message>
         <location line="+24"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Εξαγωγή σε CSV</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -6802,7 +6802,7 @@ Split was not performed.</source>
     <message>
         <location line="+3"/>
         <source>Total: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Σύνολο: %1</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7096,22 +7096,22 @@ Split was not performed.</source>
     <message>
         <location line="+13"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Υπολογισμός αθροίσματος ελέγχου (SHA-256)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>File not found or could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>Το αρχείο δεν βρέθηκε ή δεν ήταν δυνατή η ανάγνωσή του</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Επαλήθευση αθροίσματος ελέγχου (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Σφάλμα: </translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7131,7 +7131,7 @@ Split was not performed.</source>
     <message>
         <location line="+18"/>
         <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Άθροισμα ελέγχου (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -7151,12 +7151,12 @@ Split was not performed.</source>
     <message>
         <location line="+4"/>
         <source>Checksum copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Το άθροισμα ελέγχου αντιγράφηκε στο πρόχειρο</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Checksum Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Αναντιστοιχία αθροίσματος ελέγχου</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7166,7 +7166,7 @@ Split was not performed.</source>
     <message>
         <location line="+9"/>
         <source>Checksum saved to database</source>
-        <translation type="unfinished"></translation>
+        <translation>Το άθροισμα ελέγχου αποθηκεύτηκε στη βάση δεδομένων</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7197,22 +7197,22 @@ Split was not performed.</source>
     <message>
         <location filename="../qt_quick/PageSearchForm.qml" line="+335"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Πριν 1 ημέρα</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 week ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Πριν 1 εβδομάδα</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 month ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Πριν 1 μήνα</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 year ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Πριν 1 χρόνο</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7222,12 +7222,12 @@ Split was not performed.</source>
     <message>
         <location line="+15"/>
         <source>Delete search history</source>
-        <translation type="unfinished"></translation>
+        <translation>Διαγραφή ιστορικού αναζήτησης</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>This will delete all search history entries. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτό θα διαγράψει όλες τις καταχωρήσεις του ιστορικού αναζήτησης. Συνέχεια;</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -7237,22 +7237,22 @@ Split was not performed.</source>
     <message>
         <location line="+1"/>
         <source>This will delete all but the last 10 search history entries. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτό θα διαγράψει όλες τις καταχωρήσεις του ιστορικού αναζήτησης εκτός από τις τελευταίες 10. Συνέχεια;</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Search History</source>
-        <translation type="unfinished"></translation>
+        <translation>Ιστορικό αναζήτησης</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Keep Last 10</source>
-        <translation type="unfinished"></translation>
+        <translation>Διατήρηση των τελευταίων 10</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Εκκαθάριση</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7262,7 +7262,7 @@ Split was not performed.</source>
     <message>
         <location line="+23"/>
         <source>(no text filter)</source>
-        <translation type="unfinished"></translation>
+        <translation>(χωρίς φίλτρο κειμένου)</translation>
     </message>
     <message>
         <location line="+28"/>
@@ -7272,12 +7272,12 @@ Split was not performed.</source>
     <message>
         <location line="+8"/>
         <source>Connected drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Συνδεδεμένη μονάδα δίσκου</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Path to connected drive or folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Διαδρομή προς τη συνδεδεμένη μονάδα ή φάκελο</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7287,7 +7287,7 @@ Split was not performed.</source>
     <message>
         <location line="+13"/>
         <source>text</source>
-        <translation type="unfinished"></translation>
+        <translation>κείμενο</translation>
     </message>
     <message>
         <location line="+42"/>
@@ -7312,7 +7312,7 @@ Split was not performed.</source>
     <message>
         <location line="+39"/>
         <source>File attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Χαρακτηριστικά αρχείου</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7408,19 +7408,19 @@ Split was not performed.</source>
     <message>
         <location line="+18"/>
         <source>Duplicates</source>
-        <translation type="unfinished"></translation>
+        <translation>Διπλότυπα</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+122"/>
         <source>Duplicates and Differences cannot be used at the same time</source>
-        <translation type="unfinished"></translation>
+        <translation>Τα διπλότυπα και οι διαφορές δεν μπορούν να χρησιμοποιηθούν ταυτόχρονα</translation>
     </message>
     <message>
         <location line="-108"/>
         <location line="+122"/>
         <source>On</source>
-        <translation type="unfinished"></translation>
+        <translation>Σε</translation>
     </message>
     <message>
         <location line="-114"/>
@@ -7437,7 +7437,7 @@ Split was not performed.</source>
     <message>
         <location line="-108"/>
         <source>Scope</source>
-        <translation type="unfinished"></translation>
+        <translation>Εύρος</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7452,12 +7452,12 @@ Split was not performed.</source>
     <message>
         <location line="+14"/>
         <source>Device 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Συσκευή 1</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Device 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Συσκευή 2</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7467,12 +7467,12 @@ Split was not performed.</source>
     <message>
         <location line="+83"/>
         <source>Between</source>
-        <translation type="unfinished"></translation>
+        <translation>Μεταξύ</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>And</source>
-        <translation type="unfinished"></translation>
+        <translation>Και</translation>
     </message>
 </context>
 <context>
@@ -7480,42 +7480,42 @@ Split was not performed.</source>
     <message>
         <location filename="../qt_quick/PageSearchResultsForm.qml" line="+109"/>
         <source>%1 duplicate(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Βρέθηκαν %1 διπλότυπα</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 difference(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Βρέθηκαν %1 διαφορές</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 folder(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Βρέθηκαν %1 φάκελοι</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>%1 file(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Βρέθηκαν %1 αρχεία</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Total: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Σύνολο: %1</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Min: %1   Max: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ελάχ: %1   Μέγ: %2</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Εξαγωγή σε CSV</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Export to Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Εξαγωγή σε κατάλογο</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7540,7 +7540,7 @@ Split was not performed.</source>
     <message>
         <location line="-775"/>
         <source>Extract Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Εξαγωγή μεταδεδομένων</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7551,27 +7551,27 @@ Split was not performed.</source>
     <message>
         <location line="-679"/>
         <source>Exported to: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Εξήχθη σε: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or write error</source>
-        <translation type="unfinished"></translation>
+        <translation>Η εξαγωγή απέτυχε — δεν υπάρχουν αποτελέσματα ή σφάλμα εγγραφής</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Results exported to catalog: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Τα αποτελέσματα εξήχθησαν σε κατάλογο: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or database error</source>
-        <translation type="unfinished"></translation>
+        <translation>Η εξαγωγή απέτυχε — δεν υπάρχουν αποτελέσματα ή σφάλμα βάσης δεδομένων</translation>
     </message>
     <message>
         <location line="+257"/>
         <source>(no selection)</source>
-        <translation type="unfinished"></translation>
+        <translation>(καμία επιλογή)</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -7596,7 +7596,7 @@ Split was not performed.</source>
     <message>
         <location line="+22"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν υπάρχουν διαθέσιμα εκτεταμένα μεταδεδομένα</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7606,7 +7606,7 @@ Split was not performed.</source>
     <message>
         <location line="+4"/>
         <source>Folder path copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Η διαδρομή φακέλου αντιγράφηκε στο πρόχειρο</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7616,7 +7616,7 @@ Split was not performed.</source>
     <message>
         <location line="+4"/>
         <source>Full path copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Η πλήρης διαδρομή αντιγράφηκε στο πρόχειρο</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7627,7 +7627,7 @@ Split was not performed.</source>
         <location line="+4"/>
         <location line="+10"/>
         <source>File name copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Το όνομα αρχείου αντιγράφηκε στο πρόχειρο</translation>
     </message>
     <message>
         <location line="-6"/>
@@ -7637,12 +7637,12 @@ Split was not performed.</source>
     <message>
         <location line="+11"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Υπολογισμός αθροίσματος ελέγχου (SHA-256)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>File not found or could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>Το αρχείο δεν βρέθηκε ή δεν ήταν δυνατή η ανάγνωσή του</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7653,27 +7653,27 @@ Split was not performed.</source>
         <location line="+6"/>
         <location line="+228"/>
         <source>Checksum copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Το άθροισμα ελέγχου αντιγράφηκε στο πρόχειρο</translation>
     </message>
     <message>
         <location line="-224"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Επαλήθευση αθροίσματος ελέγχου (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Σφάλμα: </translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File moved to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Το αρχείο μετακινήθηκε στον κάδο απορριμμάτων</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not move file to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν ήταν δυνατή η μετακίνηση του αρχείου στον κάδο απορριμμάτων</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7683,7 +7683,7 @@ Split was not performed.</source>
     <message>
         <location line="+16"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Εκτεταμένα μεταδεδομένα</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7693,12 +7693,12 @@ Split was not performed.</source>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Το JSON μεταδεδομένων αντιγράφηκε στο πρόχειρο</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished"></translation>
+        <translation>Πεδίο</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7708,7 +7708,7 @@ Split was not performed.</source>
     <message>
         <location line="+83"/>
         <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Άθροισμα ελέγχου (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -7728,7 +7728,7 @@ Split was not performed.</source>
     <message>
         <location line="+15"/>
         <source>Checksum Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Αναντιστοιχία αθροίσματος ελέγχου</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7738,7 +7738,7 @@ Split was not performed.</source>
     <message>
         <location line="+9"/>
         <source>Checksum saved to database</source>
-        <translation type="unfinished"></translation>
+        <translation>Το άθροισμα ελέγχου αποθηκεύτηκε στη βάση δεδομένων</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7758,24 +7758,26 @@ Split was not performed.</source>
     <message>
         <location line="+14"/>
         <source>Delete File</source>
-        <translation type="unfinished"></translation>
+        <translation>Διαγραφή αρχείου</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>Το αρχείο διαγράφηκε</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not delete file</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν ήταν δυνατή η διαγραφή του αρχείου</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Permanently delete this file? This cannot be undone.
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Οριστική διαγραφή αυτού του αρχείου; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.
+
+%1</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -7788,49 +7790,54 @@ Split was not performed.</source>
 Mismatched: %2
 New checksums calculated: %3
 Errors: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Ταιριάζουν: %1
+Δεν ταιριάζουν: %2
+Νέα αθροίσματα ελέγχου υπολογίστηκαν: %3
+Σφάλματα: %4</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Updated: %1
 Skipped: %2
 Errors: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Ενημερώθηκαν: %1
+Παραλείφθηκαν: %2
+Σφάλματα: %3</translation>
     </message>
     <message>
         <location line="-43"/>
         <source>Delete Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Διαγραφή αρχείων</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Move all %1 result(s) to trash?</source>
-        <translation type="unfinished"></translation>
+        <translation>Μετακίνηση και των %1 αποτελεσμάτων στον κάδο απορριμμάτων;</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Permanently delete all %1 result(s)? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Οριστική διαγραφή και των %1 αποτελεσμάτων; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Calculate and verify checksums for all %1 result(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Υπολογισμός και επαλήθευση αθροισμάτων ελέγχου για όλα τα %1 αποτελέσματα;</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Include metadata for all %1 result(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Συμπερίληψη μεταδεδομένων για όλα τα %1 αποτελέσματα;</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>%1 file(s) moved to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 αρχεία μετακινήθηκαν στον κάδο απορριμμάτων</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>%1 file(s) deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 αρχεία διαγράφηκαν</translation>
     </message>
 </context>
 <context>
@@ -8199,22 +8206,22 @@ Errors: %3</source>
     <message>
         <location line="+17"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Πριν 1 ημέρα</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 week ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Πριν 1 εβδομάδα</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 month ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Πριν 1 μήνα</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 year ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Πριν 1 χρόνο</translation>
     </message>
     <message>
         <location line="+19"/>

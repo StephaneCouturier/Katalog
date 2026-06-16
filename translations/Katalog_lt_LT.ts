@@ -6101,7 +6101,7 @@ to the trash?</source>
     <message>
         <location line="+8"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportuoti į CSV</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6242,7 +6242,7 @@ to the trash?</source>
     <message>
         <location line="+24"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportuoti į CSV</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -6800,7 +6800,7 @@ to the trash?</source>
     <message>
         <location line="+3"/>
         <source>Total: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Iš viso: %1</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7094,22 +7094,22 @@ to the trash?</source>
     <message>
         <location line="+13"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Apskaičiuoti kontrolinę sumą (SHA-256)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>File not found or could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>Failas nerastas arba jo nepavyko nuskaityti</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Patikrinti kontrolinę sumą (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Klaida: </translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7129,7 +7129,7 @@ to the trash?</source>
     <message>
         <location line="+18"/>
         <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolinė suma (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -7149,12 +7149,12 @@ to the trash?</source>
     <message>
         <location line="+4"/>
         <source>Checksum copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolinė suma nukopijuota į iškarpinę</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Checksum Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolinė suma nesutampa</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7164,7 +7164,7 @@ to the trash?</source>
     <message>
         <location line="+9"/>
         <source>Checksum saved to database</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolinė suma įrašyta į duomenų bazę</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7195,22 +7195,22 @@ to the trash?</source>
     <message>
         <location filename="../qt_quick/PageSearchForm.qml" line="+335"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Prieš 1 dieną</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 week ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Prieš 1 savaitę</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 month ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Prieš 1 mėnesį</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 year ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Prieš 1 metus</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7220,12 +7220,12 @@ to the trash?</source>
     <message>
         <location line="+15"/>
         <source>Delete search history</source>
-        <translation type="unfinished"></translation>
+        <translation>Ištrinti paieškos istoriją</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>This will delete all search history entries. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tai ištrins visus paieškos istorijos įrašus. Tęsti?</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -7235,22 +7235,22 @@ to the trash?</source>
     <message>
         <location line="+1"/>
         <source>This will delete all but the last 10 search history entries. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tai ištrins visus paieškos istorijos įrašus, išskyrus paskutinius 10. Tęsti?</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Search History</source>
-        <translation type="unfinished"></translation>
+        <translation>Paieškos istorija</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Keep Last 10</source>
-        <translation type="unfinished"></translation>
+        <translation>Palikti paskutinius 10</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Išvalyti</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7260,7 +7260,7 @@ to the trash?</source>
     <message>
         <location line="+23"/>
         <source>(no text filter)</source>
-        <translation type="unfinished"></translation>
+        <translation>(nėra teksto filtro)</translation>
     </message>
     <message>
         <location line="+28"/>
@@ -7270,12 +7270,12 @@ to the trash?</source>
     <message>
         <location line="+8"/>
         <source>Connected drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Prijungtas diskas</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Path to connected drive or folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Kelias iki prijungto disko ar aplanko</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7285,7 +7285,7 @@ to the trash?</source>
     <message>
         <location line="+13"/>
         <source>text</source>
-        <translation type="unfinished"></translation>
+        <translation>tekstas</translation>
     </message>
     <message>
         <location line="+42"/>
@@ -7310,7 +7310,7 @@ to the trash?</source>
     <message>
         <location line="+39"/>
         <source>File attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Failo atributai</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7406,19 +7406,19 @@ to the trash?</source>
     <message>
         <location line="+18"/>
         <source>Duplicates</source>
-        <translation type="unfinished"></translation>
+        <translation>Dublikatai</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+122"/>
         <source>Duplicates and Differences cannot be used at the same time</source>
-        <translation type="unfinished"></translation>
+        <translation>Dublikatų ir skirtumų negalima naudoti vienu metu</translation>
     </message>
     <message>
         <location line="-108"/>
         <location line="+122"/>
         <source>On</source>
-        <translation type="unfinished"></translation>
+        <translation>Vietoje</translation>
     </message>
     <message>
         <location line="-114"/>
@@ -7435,7 +7435,7 @@ to the trash?</source>
     <message>
         <location line="-108"/>
         <source>Scope</source>
-        <translation type="unfinished"></translation>
+        <translation>Apimtis</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7450,12 +7450,12 @@ to the trash?</source>
     <message>
         <location line="+14"/>
         <source>Device 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Įrenginys 1</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Device 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Įrenginys 2</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7465,12 +7465,12 @@ to the trash?</source>
     <message>
         <location line="+83"/>
         <source>Between</source>
-        <translation type="unfinished"></translation>
+        <translation>Tarp</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>And</source>
-        <translation type="unfinished"></translation>
+        <translation>Ir</translation>
     </message>
 </context>
 <context>
@@ -7478,42 +7478,42 @@ to the trash?</source>
     <message>
         <location filename="../qt_quick/PageSearchResultsForm.qml" line="+109"/>
         <source>%1 duplicate(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Rasta %1 dublikatų</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 difference(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Rasta %1 skirtumų</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 folder(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Rasta %1 aplankų</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>%1 file(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Rasta %1 failų</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Total: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Iš viso: %1</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Min: %1   Max: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Min: %1   Maks: %2</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportuoti į CSV</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Export to Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportuoti į katalogą</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7538,7 +7538,7 @@ to the trash?</source>
     <message>
         <location line="-775"/>
         <source>Extract Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Išgauti metaduomenis</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7549,27 +7549,27 @@ to the trash?</source>
     <message>
         <location line="-679"/>
         <source>Exported to: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportuota į: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or write error</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportuoti nepavyko — nėra rezultatų arba rašymo klaida</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Results exported to catalog: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezultatai eksportuoti į katalogą: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or database error</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportuoti nepavyko — nėra rezultatų arba duomenų bazės klaida</translation>
     </message>
     <message>
         <location line="+257"/>
         <source>(no selection)</source>
-        <translation type="unfinished"></translation>
+        <translation>(nieko nepasirinkta)</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -7594,7 +7594,7 @@ to the trash?</source>
     <message>
         <location line="+22"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished"></translation>
+        <translation>Nėra išplėstinių metaduomenų</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7604,7 +7604,7 @@ to the trash?</source>
     <message>
         <location line="+4"/>
         <source>Folder path copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplanko kelias nukopijuotas į iškarpinę</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7614,7 +7614,7 @@ to the trash?</source>
     <message>
         <location line="+4"/>
         <source>Full path copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Visas kelias nukopijuotas į iškarpinę</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7625,7 +7625,7 @@ to the trash?</source>
         <location line="+4"/>
         <location line="+10"/>
         <source>File name copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Failo pavadinimas nukopijuotas į iškarpinę</translation>
     </message>
     <message>
         <location line="-6"/>
@@ -7635,12 +7635,12 @@ to the trash?</source>
     <message>
         <location line="+11"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Apskaičiuoti kontrolinę sumą (SHA-256)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>File not found or could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>Failas nerastas arba jo nepavyko nuskaityti</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7651,27 +7651,27 @@ to the trash?</source>
         <location line="+6"/>
         <location line="+228"/>
         <source>Checksum copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolinė suma nukopijuota į iškarpinę</translation>
     </message>
     <message>
         <location line="-224"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Patikrinti kontrolinę sumą (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Klaida: </translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File moved to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Failas perkeltas į šiukšlinę</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not move file to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepavyko perkelti failo į šiukšlinę</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7681,7 +7681,7 @@ to the trash?</source>
     <message>
         <location line="+16"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Išplėstiniai metaduomenys</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7691,12 +7691,12 @@ to the trash?</source>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Metaduomenų JSON nukopijuotas į iškarpinę</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished"></translation>
+        <translation>Laukas</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7706,7 +7706,7 @@ to the trash?</source>
     <message>
         <location line="+83"/>
         <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolinė suma (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -7726,7 +7726,7 @@ to the trash?</source>
     <message>
         <location line="+15"/>
         <source>Checksum Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolinė suma nesutampa</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7736,7 +7736,7 @@ to the trash?</source>
     <message>
         <location line="+9"/>
         <source>Checksum saved to database</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolinė suma įrašyta į duomenų bazę</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7756,24 +7756,26 @@ to the trash?</source>
     <message>
         <location line="+14"/>
         <source>Delete File</source>
-        <translation type="unfinished"></translation>
+        <translation>Ištrinti failą</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>Failas ištrintas</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not delete file</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepavyko ištrinti failo</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Permanently delete this file? This cannot be undone.
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Visam laikui ištrinti šį failą? To negalima atšaukti.
+
+%1</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -7786,49 +7788,54 @@ to the trash?</source>
 Mismatched: %2
 New checksums calculated: %3
 Errors: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Sutampa: %1
+Nesutampa: %2
+Apskaičiuota naujų kontrolinių sumų: %3
+Klaidų: %4</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Updated: %1
 Skipped: %2
 Errors: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Atnaujinta: %1
+Praleista: %2
+Klaidų: %3</translation>
     </message>
     <message>
         <location line="-43"/>
         <source>Delete Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Ištrinti failus</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Move all %1 result(s) to trash?</source>
-        <translation type="unfinished"></translation>
+        <translation>Perkelti visus %1 rezultatus į šiukšlinę?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Permanently delete all %1 result(s)? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Visam laikui ištrinti visus %1 rezultatus? To negalima atšaukti.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Calculate and verify checksums for all %1 result(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Apskaičiuoti ir patikrinti kontrolines sumas visiems %1 rezultatams?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Include metadata for all %1 result(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Įtraukti metaduomenis visiems %1 rezultatams?</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>%1 file(s) moved to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 failų perkelta į šiukšlinę</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>%1 file(s) deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 failų ištrinta</translation>
     </message>
 </context>
 <context>
@@ -8197,22 +8204,22 @@ Errors: %3</source>
     <message>
         <location line="+17"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Prieš 1 dieną</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 week ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Prieš 1 savaitę</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 month ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Prieš 1 mėnesį</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 year ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Prieš 1 metus</translation>
     </message>
     <message>
         <location line="+19"/>

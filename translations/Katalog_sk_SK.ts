@@ -6102,7 +6102,7 @@ do koša?</translation>
     <message>
         <location line="+8"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportovať do CSV</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6243,7 +6243,7 @@ do koša?</translation>
     <message>
         <location line="+24"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportovať do CSV</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -6801,7 +6801,7 @@ do koša?</translation>
     <message>
         <location line="+3"/>
         <source>Total: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Spolu: %1</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7095,22 +7095,22 @@ do koša?</translation>
     <message>
         <location line="+13"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Vypočítať kontrolný súčet (SHA-256)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>File not found or could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>Súbor sa nenašiel alebo sa nedá prečítať</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Overiť kontrolný súčet (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba: </translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7130,7 +7130,7 @@ do koša?</translation>
     <message>
         <location line="+18"/>
         <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolný súčet (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -7150,12 +7150,12 @@ do koša?</translation>
     <message>
         <location line="+4"/>
         <source>Checksum copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolný súčet skopírovaný do schránky</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Checksum Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Nezhoda kontrolného súčtu</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7165,7 +7165,7 @@ do koša?</translation>
     <message>
         <location line="+9"/>
         <source>Checksum saved to database</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolný súčet uložený do databázy</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7196,22 +7196,22 @@ do koša?</translation>
     <message>
         <location filename="../qt_quick/PageSearchForm.qml" line="+335"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Pred 1 dňom</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 week ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Pred 1 týždňom</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 month ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Pred 1 mesiacom</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 year ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Pred 1 rokom</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7221,12 +7221,12 @@ do koša?</translation>
     <message>
         <location line="+15"/>
         <source>Delete search history</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť históriu hľadania</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>This will delete all search history entries. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Týmto sa odstránia všetky položky histórie hľadania. Pokračovať?</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -7236,22 +7236,22 @@ do koša?</translation>
     <message>
         <location line="+1"/>
         <source>This will delete all but the last 10 search history entries. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Týmto sa odstránia všetky položky histórie hľadania okrem posledných 10. Pokračovať?</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Search History</source>
-        <translation type="unfinished"></translation>
+        <translation>História hľadania</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Keep Last 10</source>
-        <translation type="unfinished"></translation>
+        <translation>Ponechať posledných 10</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Vymazať</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7261,7 +7261,7 @@ do koša?</translation>
     <message>
         <location line="+23"/>
         <source>(no text filter)</source>
-        <translation type="unfinished"></translation>
+        <translation>(žiadny textový filter)</translation>
     </message>
     <message>
         <location line="+28"/>
@@ -7271,12 +7271,12 @@ do koša?</translation>
     <message>
         <location line="+8"/>
         <source>Connected drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Pripojený disk</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Path to connected drive or folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Cesta k pripojenému disku alebo priečinku</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7286,7 +7286,7 @@ do koša?</translation>
     <message>
         <location line="+13"/>
         <source>text</source>
-        <translation type="unfinished"></translation>
+        <translation>text</translation>
     </message>
     <message>
         <location line="+42"/>
@@ -7311,7 +7311,7 @@ do koša?</translation>
     <message>
         <location line="+39"/>
         <source>File attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Atribúty súboru</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7407,19 +7407,19 @@ do koša?</translation>
     <message>
         <location line="+18"/>
         <source>Duplicates</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplikáty</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+122"/>
         <source>Duplicates and Differences cannot be used at the same time</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplikáty a rozdiely nie je možné používať súčasne</translation>
     </message>
     <message>
         <location line="-108"/>
         <location line="+122"/>
         <source>On</source>
-        <translation type="unfinished"></translation>
+        <translation>Na</translation>
     </message>
     <message>
         <location line="-114"/>
@@ -7436,7 +7436,7 @@ do koša?</translation>
     <message>
         <location line="-108"/>
         <source>Scope</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozsah</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7451,12 +7451,12 @@ do koša?</translation>
     <message>
         <location line="+14"/>
         <source>Device 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Zariadenie 1</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Device 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Zariadenie 2</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7466,12 +7466,12 @@ do koša?</translation>
     <message>
         <location line="+83"/>
         <source>Between</source>
-        <translation type="unfinished"></translation>
+        <translation>Medzi</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>And</source>
-        <translation type="unfinished"></translation>
+        <translation>A</translation>
     </message>
 </context>
 <context>
@@ -7479,42 +7479,42 @@ do koša?</translation>
     <message>
         <location filename="../qt_quick/PageSearchResultsForm.qml" line="+109"/>
         <source>%1 duplicate(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Nájdených %1 duplikátov</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 difference(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Nájdených %1 rozdielov</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 folder(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Nájdených %1 priečinkov</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>%1 file(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Nájdených %1 súborov</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Total: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Spolu: %1</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Min: %1   Max: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Min: %1   Max: %2</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportovať do CSV</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Export to Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportovať do katalógu</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7539,7 +7539,7 @@ do koša?</translation>
     <message>
         <location line="-775"/>
         <source>Extract Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Extrahovať metadáta</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7550,27 +7550,27 @@ do koša?</translation>
     <message>
         <location line="-679"/>
         <source>Exported to: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportované do: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or write error</source>
-        <translation type="unfinished"></translation>
+        <translation>Export zlyhal — žiadne výsledky alebo chyba zápisu</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Results exported to catalog: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Výsledky exportované do katalógu: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or database error</source>
-        <translation type="unfinished"></translation>
+        <translation>Export zlyhal — žiadne výsledky alebo chyba databázy</translation>
     </message>
     <message>
         <location line="+257"/>
         <source>(no selection)</source>
-        <translation type="unfinished"></translation>
+        <translation>(žiadny výber)</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -7595,7 +7595,7 @@ do koša?</translation>
     <message>
         <location line="+22"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie sú k dispozícii žiadne rozšírené metadáta</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7605,7 +7605,7 @@ do koša?</translation>
     <message>
         <location line="+4"/>
         <source>Folder path copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Cesta k priečinku skopírovaná do schránky</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7615,7 +7615,7 @@ do koša?</translation>
     <message>
         <location line="+4"/>
         <source>Full path copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Úplná cesta skopírovaná do schránky</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7626,7 +7626,7 @@ do koša?</translation>
         <location line="+4"/>
         <location line="+10"/>
         <source>File name copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Názov súboru skopírovaný do schránky</translation>
     </message>
     <message>
         <location line="-6"/>
@@ -7636,12 +7636,12 @@ do koša?</translation>
     <message>
         <location line="+11"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Vypočítať kontrolný súčet (SHA-256)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>File not found or could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>Súbor sa nenašiel alebo sa nedá prečítať</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7652,27 +7652,27 @@ do koša?</translation>
         <location line="+6"/>
         <location line="+228"/>
         <source>Checksum copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolný súčet skopírovaný do schránky</translation>
     </message>
     <message>
         <location line="-224"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Overiť kontrolný súčet (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba: </translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File moved to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Súbor presunutý do koša</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not move file to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Súbor sa nedá presunúť do koša</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7682,7 +7682,7 @@ do koša?</translation>
     <message>
         <location line="+16"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozšírené metadáta</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7692,12 +7692,12 @@ do koša?</translation>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>JSON metadát skopírovaný do schránky</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished"></translation>
+        <translation>Pole</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7707,7 +7707,7 @@ do koša?</translation>
     <message>
         <location line="+83"/>
         <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolný súčet (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -7727,7 +7727,7 @@ do koša?</translation>
     <message>
         <location line="+15"/>
         <source>Checksum Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Nezhoda kontrolného súčtu</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7737,7 +7737,7 @@ do koša?</translation>
     <message>
         <location line="+9"/>
         <source>Checksum saved to database</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolný súčet uložený do databázy</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7757,24 +7757,26 @@ do koša?</translation>
     <message>
         <location line="+14"/>
         <source>Delete File</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť súbor</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>Súbor odstránený</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not delete file</source>
-        <translation type="unfinished"></translation>
+        <translation>Súbor sa nedá odstrániť</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Permanently delete this file? This cannot be undone.
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Natrvalo odstrániť tento súbor? Túto akciu nie je možné vrátiť späť.
+
+%1</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -7787,49 +7789,54 @@ do koša?</translation>
 Mismatched: %2
 New checksums calculated: %3
 Errors: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Zhodné: %1
+Nezhodné: %2
+Vypočítané nové kontrolné súčty: %3
+Chyby: %4</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Updated: %1
 Skipped: %2
 Errors: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualizované: %1
+Preskočené: %2
+Chyby: %3</translation>
     </message>
     <message>
         <location line="-43"/>
         <source>Delete Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť súbory</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Move all %1 result(s) to trash?</source>
-        <translation type="unfinished"></translation>
+        <translation>Presunúť všetkých %1 výsledkov do koša?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Permanently delete all %1 result(s)? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Natrvalo odstrániť všetkých %1 výsledkov? Túto akciu nie je možné vrátiť späť.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Calculate and verify checksums for all %1 result(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vypočítať a overiť kontrolné súčty pre všetkých %1 výsledkov?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Include metadata for all %1 result(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahrnúť metadáta pre všetkých %1 výsledkov?</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>%1 file(s) moved to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 súborov presunutých do koša</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>%1 file(s) deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 súborov odstránených</translation>
     </message>
 </context>
 <context>
@@ -8198,22 +8205,22 @@ Errors: %3</source>
     <message>
         <location line="+17"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Pred 1 dňom</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 week ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Pred 1 týždňom</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 month ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Pred 1 mesiacom</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 year ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Pred 1 rokom</translation>
     </message>
     <message>
         <location line="+19"/>

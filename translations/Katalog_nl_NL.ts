@@ -6101,7 +6101,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+8"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteren naar CSV</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6242,7 +6242,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+24"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteren naar CSV</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -6800,7 +6800,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+3"/>
         <source>Total: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Totaal: %1</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7094,22 +7094,22 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+13"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlesom berekenen (SHA-256)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>File not found or could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestand niet gevonden of kon niet worden gelezen</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlesom verifiëren (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Fout: </translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7129,7 +7129,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+18"/>
         <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlesom (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -7149,12 +7149,12 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+4"/>
         <source>Checksum copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlesom gekopieerd naar klembord</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Checksum Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlesom komt niet overeen</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7164,7 +7164,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+9"/>
         <source>Checksum saved to database</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlesom opgeslagen in database</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7195,22 +7195,22 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location filename="../qt_quick/PageSearchForm.qml" line="+335"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 dag geleden</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 week ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 week geleden</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 month ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 maand geleden</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 year ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 jaar geleden</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7220,12 +7220,12 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+15"/>
         <source>Delete search history</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoekgeschiedenis verwijderen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>This will delete all search history entries. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiermee worden alle vermeldingen in de zoekgeschiedenis verwijderd. Doorgaan?</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -7235,22 +7235,22 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+1"/>
         <source>This will delete all but the last 10 search history entries. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiermee worden alle vermeldingen in de zoekgeschiedenis verwijderd, behalve de laatste 10. Doorgaan?</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Search History</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoekgeschiedenis</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Keep Last 10</source>
-        <translation type="unfinished"></translation>
+        <translation>Laatste 10 behouden</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Wissen</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7260,7 +7260,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+23"/>
         <source>(no text filter)</source>
-        <translation type="unfinished"></translation>
+        <translation>(geen tekstfilter)</translation>
     </message>
     <message>
         <location line="+28"/>
@@ -7270,12 +7270,12 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+8"/>
         <source>Connected drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbonden station</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Path to connected drive or folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Pad naar verbonden station of map</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7285,7 +7285,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+13"/>
         <source>text</source>
-        <translation type="unfinished"></translation>
+        <translation>tekst</translation>
     </message>
     <message>
         <location line="+42"/>
@@ -7310,7 +7310,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+39"/>
         <source>File attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestandskenmerken</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7406,19 +7406,19 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+18"/>
         <source>Duplicates</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplicaten</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+122"/>
         <source>Duplicates and Differences cannot be used at the same time</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplicaten en verschillen kunnen niet tegelijk worden gebruikt</translation>
     </message>
     <message>
         <location line="-108"/>
         <location line="+122"/>
         <source>On</source>
-        <translation type="unfinished"></translation>
+        <translation>Op</translation>
     </message>
     <message>
         <location line="-114"/>
@@ -7435,7 +7435,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="-108"/>
         <source>Scope</source>
-        <translation type="unfinished"></translation>
+        <translation>Bereik</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7450,12 +7450,12 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+14"/>
         <source>Device 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Apparaat 1</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Device 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Apparaat 2</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7465,12 +7465,12 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+83"/>
         <source>Between</source>
-        <translation type="unfinished"></translation>
+        <translation>Tussen</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>And</source>
-        <translation type="unfinished"></translation>
+        <translation>En</translation>
     </message>
 </context>
 <context>
@@ -7478,42 +7478,42 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location filename="../qt_quick/PageSearchResultsForm.qml" line="+109"/>
         <source>%1 duplicate(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 duplica(a)t(en) gevonden</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 difference(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 verschil(len) gevonden</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 folder(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 map(pen) gevonden</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>%1 file(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 bestand(en) gevonden</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Total: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Totaal: %1</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Min: %1   Max: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Min: %1   Max: %2</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteren naar CSV</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Export to Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteren naar catalogus</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7538,7 +7538,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="-775"/>
         <source>Extract Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Metadata extraheren</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7549,27 +7549,27 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="-679"/>
         <source>Exported to: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Geëxporteerd naar: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or write error</source>
-        <translation type="unfinished"></translation>
+        <translation>Export mislukt — geen resultaten of schrijffout</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Results exported to catalog: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Resultaten geëxporteerd naar catalogus: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or database error</source>
-        <translation type="unfinished"></translation>
+        <translation>Export mislukt — geen resultaten of databasefout</translation>
     </message>
     <message>
         <location line="+257"/>
         <source>(no selection)</source>
-        <translation type="unfinished"></translation>
+        <translation>(geen selectie)</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -7594,7 +7594,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+22"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen uitgebreide metadata beschikbaar</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7604,7 +7604,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+4"/>
         <source>Folder path copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Mappad gekopieerd naar klembord</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7614,7 +7614,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+4"/>
         <source>Full path copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Volledig pad gekopieerd naar klembord</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7625,7 +7625,7 @@ naar de prullenbak verplaatsen?</translation>
         <location line="+4"/>
         <location line="+10"/>
         <source>File name copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestandsnaam gekopieerd naar klembord</translation>
     </message>
     <message>
         <location line="-6"/>
@@ -7635,12 +7635,12 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+11"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlesom berekenen (SHA-256)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>File not found or could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestand niet gevonden of kon niet worden gelezen</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7651,27 +7651,27 @@ naar de prullenbak verplaatsen?</translation>
         <location line="+6"/>
         <location line="+228"/>
         <source>Checksum copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlesom gekopieerd naar klembord</translation>
     </message>
     <message>
         <location line="-224"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlesom verifiëren (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Fout: </translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File moved to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestand naar prullenbak verplaatst</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not move file to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan bestand niet naar prullenbak verplaatsen</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7681,7 +7681,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+16"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Uitgebreide metadata</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7691,12 +7691,12 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Metadata-JSON gekopieerd naar klembord</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished"></translation>
+        <translation>Veld</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7706,7 +7706,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+83"/>
         <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlesom (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -7726,7 +7726,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+15"/>
         <source>Checksum Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlesom komt niet overeen</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7736,7 +7736,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+9"/>
         <source>Checksum saved to database</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlesom opgeslagen in database</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7756,24 +7756,26 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+14"/>
         <source>Delete File</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestand verwijderen</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestand verwijderd</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not delete file</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan bestand niet verwijderen</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Permanently delete this file? This cannot be undone.
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Dit bestand permanent verwijderen? Dit kan niet ongedaan worden gemaakt.
+
+%1</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -7786,49 +7788,54 @@ naar de prullenbak verplaatsen?</translation>
 Mismatched: %2
 New checksums calculated: %3
 Errors: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Overeenkomend: %1
+Niet-overeenkomend: %2
+Nieuwe controlesommen berekend: %3
+Fouten: %4</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Updated: %1
 Skipped: %2
 Errors: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Bijgewerkt: %1
+Overgeslagen: %2
+Fouten: %3</translation>
     </message>
     <message>
         <location line="-43"/>
         <source>Delete Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestanden verwijderen</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Move all %1 result(s) to trash?</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle %1 resulta(a)t(en) naar prullenbak verplaatsen?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Permanently delete all %1 result(s)? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle %1 resulta(a)t(en) permanent verwijderen? Dit kan niet ongedaan worden gemaakt.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Calculate and verify checksums for all %1 result(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlesommen berekenen en verifiëren voor alle %1 resulta(a)t(en)?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Include metadata for all %1 result(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Metadata opnemen voor alle %1 resulta(a)t(en)?</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>%1 file(s) moved to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 bestand(en) naar prullenbak verplaatst</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>%1 file(s) deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 bestand(en) verwijderd</translation>
     </message>
 </context>
 <context>
@@ -8197,22 +8204,22 @@ Errors: %3</source>
     <message>
         <location line="+17"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 dag geleden</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 week ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 week geleden</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 month ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 maand geleden</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 year ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 jaar geleden</translation>
     </message>
     <message>
         <location line="+19"/>

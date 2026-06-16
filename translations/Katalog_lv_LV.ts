@@ -6102,7 +6102,7 @@ uz miskasti?</translation>
     <message>
         <location line="+8"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportēt uz CSV</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6243,7 +6243,7 @@ uz miskasti?</translation>
     <message>
         <location line="+24"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportēt uz CSV</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -6801,7 +6801,7 @@ uz miskasti?</translation>
     <message>
         <location line="+3"/>
         <source>Total: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopā: %1</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7095,22 +7095,22 @@ uz miskasti?</translation>
     <message>
         <location line="+13"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Aprēķināt kontrolsummu (SHA-256)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>File not found or could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>Fails nav atrasts vai to nevarēja nolasīt</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pārbaudīt kontrolsummu (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Kļūda: </translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7130,7 +7130,7 @@ uz miskasti?</translation>
     <message>
         <location line="+18"/>
         <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolsumma (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -7150,12 +7150,12 @@ uz miskasti?</translation>
     <message>
         <location line="+4"/>
         <source>Checksum copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolsumma nokopēta starpliktuvē</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Checksum Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolsummu neatbilstība</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7165,7 +7165,7 @@ uz miskasti?</translation>
     <message>
         <location line="+9"/>
         <source>Checksum saved to database</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolsumma saglabāta datu bāzē</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7196,22 +7196,22 @@ uz miskasti?</translation>
     <message>
         <location filename="../qt_quick/PageSearchForm.qml" line="+335"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Pirms 1 dienas</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 week ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Pirms 1 nedēļas</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 month ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Pirms 1 mēneša</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 year ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Pirms 1 gada</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7221,12 +7221,12 @@ uz miskasti?</translation>
     <message>
         <location line="+15"/>
         <source>Delete search history</source>
-        <translation type="unfinished"></translation>
+        <translation>Dzēst meklēšanas vēsturi</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>This will delete all search history entries. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tādējādi tiks dzēsti visi meklēšanas vēstures ieraksti. Turpināt?</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -7236,22 +7236,22 @@ uz miskasti?</translation>
     <message>
         <location line="+1"/>
         <source>This will delete all but the last 10 search history entries. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tādējādi tiks dzēsti visi meklēšanas vēstures ieraksti, izņemot pēdējos 10. Turpināt?</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Search History</source>
-        <translation type="unfinished"></translation>
+        <translation>Meklēšanas vēsture</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Keep Last 10</source>
-        <translation type="unfinished"></translation>
+        <translation>Paturēt pēdējos 10</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Notīrīt</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7261,7 +7261,7 @@ uz miskasti?</translation>
     <message>
         <location line="+23"/>
         <source>(no text filter)</source>
-        <translation type="unfinished"></translation>
+        <translation>(nav teksta filtra)</translation>
     </message>
     <message>
         <location line="+28"/>
@@ -7271,12 +7271,12 @@ uz miskasti?</translation>
     <message>
         <location line="+8"/>
         <source>Connected drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Pievienots disks</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Path to connected drive or folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Ceļš uz pievienoto disku vai mapi</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7286,7 +7286,7 @@ uz miskasti?</translation>
     <message>
         <location line="+13"/>
         <source>text</source>
-        <translation type="unfinished"></translation>
+        <translation>teksts</translation>
     </message>
     <message>
         <location line="+42"/>
@@ -7311,7 +7311,7 @@ uz miskasti?</translation>
     <message>
         <location line="+39"/>
         <source>File attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Faila atribūti</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7407,19 +7407,19 @@ uz miskasti?</translation>
     <message>
         <location line="+18"/>
         <source>Duplicates</source>
-        <translation type="unfinished"></translation>
+        <translation>Dublikāti</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+122"/>
         <source>Duplicates and Differences cannot be used at the same time</source>
-        <translation type="unfinished"></translation>
+        <translation>Dublikātus un atšķirības nevar izmantot vienlaikus</translation>
     </message>
     <message>
         <location line="-108"/>
         <location line="+122"/>
         <source>On</source>
-        <translation type="unfinished"></translation>
+        <translation>Atrašanās vietā</translation>
     </message>
     <message>
         <location line="-114"/>
@@ -7436,7 +7436,7 @@ uz miskasti?</translation>
     <message>
         <location line="-108"/>
         <source>Scope</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvērums</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7451,12 +7451,12 @@ uz miskasti?</translation>
     <message>
         <location line="+14"/>
         <source>Device 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ierīce 1</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Device 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ierīce 2</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7466,12 +7466,12 @@ uz miskasti?</translation>
     <message>
         <location line="+83"/>
         <source>Between</source>
-        <translation type="unfinished"></translation>
+        <translation>Starp</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>And</source>
-        <translation type="unfinished"></translation>
+        <translation>Un</translation>
     </message>
 </context>
 <context>
@@ -7479,42 +7479,42 @@ uz miskasti?</translation>
     <message>
         <location filename="../qt_quick/PageSearchResultsForm.qml" line="+109"/>
         <source>%1 duplicate(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Atrasti %1 dublikāti</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 difference(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Atrastas %1 atšķirības</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 folder(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Atrastas %1 mapes</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>%1 file(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Atrasti %1 faili</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Total: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopā: %1</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Min: %1   Max: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Min: %1   Maks: %2</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportēt uz CSV</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Export to Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportēt uz katalogu</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7539,7 +7539,7 @@ uz miskasti?</translation>
     <message>
         <location line="-775"/>
         <source>Extract Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvilkt metadatus</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7550,27 +7550,27 @@ uz miskasti?</translation>
     <message>
         <location line="-679"/>
         <source>Exported to: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportēts uz: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or write error</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksports neizdevās — nav rezultātu vai rakstīšanas kļūda</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Results exported to catalog: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezultāti eksportēti uz katalogu: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or database error</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksports neizdevās — nav rezultātu vai datu bāzes kļūda</translation>
     </message>
     <message>
         <location line="+257"/>
         <source>(no selection)</source>
-        <translation type="unfinished"></translation>
+        <translation>(nav atlases)</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -7595,7 +7595,7 @@ uz miskasti?</translation>
     <message>
         <location line="+22"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished"></translation>
+        <translation>Paplašināti metadati nav pieejami</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7605,7 +7605,7 @@ uz miskasti?</translation>
     <message>
         <location line="+4"/>
         <source>Folder path copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapes ceļš nokopēts starpliktuvē</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7615,7 +7615,7 @@ uz miskasti?</translation>
     <message>
         <location line="+4"/>
         <source>Full path copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Pilns ceļš nokopēts starpliktuvē</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7626,7 +7626,7 @@ uz miskasti?</translation>
         <location line="+4"/>
         <location line="+10"/>
         <source>File name copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Faila nosaukums nokopēts starpliktuvē</translation>
     </message>
     <message>
         <location line="-6"/>
@@ -7636,12 +7636,12 @@ uz miskasti?</translation>
     <message>
         <location line="+11"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Aprēķināt kontrolsummu (SHA-256)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>File not found or could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>Fails nav atrasts vai to nevarēja nolasīt</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7652,27 +7652,27 @@ uz miskasti?</translation>
         <location line="+6"/>
         <location line="+228"/>
         <source>Checksum copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolsumma nokopēta starpliktuvē</translation>
     </message>
     <message>
         <location line="-224"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pārbaudīt kontrolsummu (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Kļūda: </translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File moved to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Fails pārvietots uz miskasti</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not move file to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās pārvietot failu uz miskasti</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7682,7 +7682,7 @@ uz miskasti?</translation>
     <message>
         <location line="+16"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Paplašināti metadati</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7692,12 +7692,12 @@ uz miskasti?</translation>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Metadatu JSON nokopēts starpliktuvē</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished"></translation>
+        <translation>Lauks</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7707,7 +7707,7 @@ uz miskasti?</translation>
     <message>
         <location line="+83"/>
         <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolsumma (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -7727,7 +7727,7 @@ uz miskasti?</translation>
     <message>
         <location line="+15"/>
         <source>Checksum Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolsummu neatbilstība</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7737,7 +7737,7 @@ uz miskasti?</translation>
     <message>
         <location line="+9"/>
         <source>Checksum saved to database</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolsumma saglabāta datu bāzē</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7757,24 +7757,26 @@ uz miskasti?</translation>
     <message>
         <location line="+14"/>
         <source>Delete File</source>
-        <translation type="unfinished"></translation>
+        <translation>Dzēst failu</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>Fails dzēsts</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not delete file</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās izdzēst failu</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Permanently delete this file? This cannot be undone.
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai neatgriezeniski dzēst šo failu? To nevar atsaukt.
+
+%1</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -7787,49 +7789,54 @@ uz miskasti?</translation>
 Mismatched: %2
 New checksums calculated: %3
 Errors: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Atbilst: %1
+Neatbilst: %2
+Aprēķinātas jaunas kontrolsummas: %3
+Kļūdas: %4</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Updated: %1
 Skipped: %2
 Errors: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Atjaunināts: %1
+Izlaists: %2
+Kļūdas: %3</translation>
     </message>
     <message>
         <location line="-43"/>
         <source>Delete Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Dzēst failus</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Move all %1 result(s) to trash?</source>
-        <translation type="unfinished"></translation>
+        <translation>Pārvietot visus %1 rezultātus uz miskasti?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Permanently delete all %1 result(s)? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai neatgriezeniski dzēst visus %1 rezultātus? To nevar atsaukt.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Calculate and verify checksums for all %1 result(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Aprēķināt un pārbaudīt kontrolsummas visiem %1 rezultātiem?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Include metadata for all %1 result(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Iekļaut metadatus visiem %1 rezultātiem?</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>%1 file(s) moved to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 faili pārvietoti uz miskasti</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>%1 file(s) deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 faili dzēsti</translation>
     </message>
 </context>
 <context>
@@ -8198,22 +8205,22 @@ Errors: %3</source>
     <message>
         <location line="+17"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Pirms 1 dienas</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 week ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Pirms 1 nedēļas</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 month ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Pirms 1 mēneša</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 year ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Pirms 1 gada</translation>
     </message>
     <message>
         <location line="+19"/>

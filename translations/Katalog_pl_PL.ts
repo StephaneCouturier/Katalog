@@ -6102,7 +6102,7 @@ do kosza?</translation>
     <message>
         <location line="+8"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportuj do CSV</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6243,7 +6243,7 @@ do kosza?</translation>
     <message>
         <location line="+24"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportuj do CSV</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -6801,7 +6801,7 @@ do kosza?</translation>
     <message>
         <location line="+3"/>
         <source>Total: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Razem: %1</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7095,22 +7095,22 @@ do kosza?</translation>
     <message>
         <location line="+13"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Oblicz sumę kontrolną (SHA-256)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>File not found or could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie znaleziono pliku lub nie można go odczytać</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zweryfikuj sumę kontrolną (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd: </translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7130,7 +7130,7 @@ do kosza?</translation>
     <message>
         <location line="+18"/>
         <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Suma kontrolna (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -7150,12 +7150,12 @@ do kosza?</translation>
     <message>
         <location line="+4"/>
         <source>Checksum copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Suma kontrolna skopiowana do schowka</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Checksum Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Niezgodność sumy kontrolnej</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7165,7 +7165,7 @@ do kosza?</translation>
     <message>
         <location line="+9"/>
         <source>Checksum saved to database</source>
-        <translation type="unfinished"></translation>
+        <translation>Suma kontrolna zapisana w bazie danych</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7196,22 +7196,22 @@ do kosza?</translation>
     <message>
         <location filename="../qt_quick/PageSearchForm.qml" line="+335"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 dzień temu</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 week ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 tydzień temu</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 month ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 miesiąc temu</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 year ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 rok temu</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7221,12 +7221,12 @@ do kosza?</translation>
     <message>
         <location line="+15"/>
         <source>Delete search history</source>
-        <translation type="unfinished"></translation>
+        <translation>Usuń historię wyszukiwania</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>This will delete all search history entries. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Spowoduje to usunięcie wszystkich wpisów historii wyszukiwania. Kontynuować?</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -7236,22 +7236,22 @@ do kosza?</translation>
     <message>
         <location line="+1"/>
         <source>This will delete all but the last 10 search history entries. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Spowoduje to usunięcie wszystkich wpisów historii wyszukiwania oprócz ostatnich 10. Kontynuować?</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Search History</source>
-        <translation type="unfinished"></translation>
+        <translation>Historia wyszukiwania</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Keep Last 10</source>
-        <translation type="unfinished"></translation>
+        <translation>Zachowaj ostatnie 10</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyczyść</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7261,7 +7261,7 @@ do kosza?</translation>
     <message>
         <location line="+23"/>
         <source>(no text filter)</source>
-        <translation type="unfinished"></translation>
+        <translation>(brak filtra tekstu)</translation>
     </message>
     <message>
         <location line="+28"/>
@@ -7271,12 +7271,12 @@ do kosza?</translation>
     <message>
         <location line="+8"/>
         <source>Connected drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Podłączony dysk</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Path to connected drive or folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Ścieżka do podłączonego dysku lub folderu</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7286,7 +7286,7 @@ do kosza?</translation>
     <message>
         <location line="+13"/>
         <source>text</source>
-        <translation type="unfinished"></translation>
+        <translation>tekst</translation>
     </message>
     <message>
         <location line="+42"/>
@@ -7311,7 +7311,7 @@ do kosza?</translation>
     <message>
         <location line="+39"/>
         <source>File attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Atrybuty pliku</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7407,19 +7407,19 @@ do kosza?</translation>
     <message>
         <location line="+18"/>
         <source>Duplicates</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplikaty</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+122"/>
         <source>Duplicates and Differences cannot be used at the same time</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplikatów i różnic nie można używać jednocześnie</translation>
     </message>
     <message>
         <location line="-108"/>
         <location line="+122"/>
         <source>On</source>
-        <translation type="unfinished"></translation>
+        <translation>Na</translation>
     </message>
     <message>
         <location line="-114"/>
@@ -7436,7 +7436,7 @@ do kosza?</translation>
     <message>
         <location line="-108"/>
         <source>Scope</source>
-        <translation type="unfinished"></translation>
+        <translation>Zakres</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7451,12 +7451,12 @@ do kosza?</translation>
     <message>
         <location line="+14"/>
         <source>Device 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Urządzenie 1</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Device 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Urządzenie 2</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7466,12 +7466,12 @@ do kosza?</translation>
     <message>
         <location line="+83"/>
         <source>Between</source>
-        <translation type="unfinished"></translation>
+        <translation>Między</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>And</source>
-        <translation type="unfinished"></translation>
+        <translation>I</translation>
     </message>
 </context>
 <context>
@@ -7479,42 +7479,42 @@ do kosza?</translation>
     <message>
         <location filename="../qt_quick/PageSearchResultsForm.qml" line="+109"/>
         <source>%1 duplicate(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Znaleziono %1 duplikat(ów)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 difference(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Znaleziono %1 różnic(e)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 folder(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Znaleziono %1 folder(ów)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>%1 file(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Znaleziono %1 plik(ów)</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Total: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Razem: %1</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Min: %1   Max: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Min: %1   Maks: %2</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportuj do CSV</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Export to Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportuj do katalogu</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7539,7 +7539,7 @@ do kosza?</translation>
     <message>
         <location line="-775"/>
         <source>Extract Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyodrębnij metadane</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7550,27 +7550,27 @@ do kosza?</translation>
     <message>
         <location line="-679"/>
         <source>Exported to: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyeksportowano do: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or write error</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksport nie powiódł się — brak wyników lub błąd zapisu</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Results exported to catalog: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyniki wyeksportowano do katalogu: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or database error</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksport nie powiódł się — brak wyników lub błąd bazy danych</translation>
     </message>
     <message>
         <location line="+257"/>
         <source>(no selection)</source>
-        <translation type="unfinished"></translation>
+        <translation>(brak zaznaczenia)</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -7595,7 +7595,7 @@ do kosza?</translation>
     <message>
         <location line="+22"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished"></translation>
+        <translation>Brak dostępnych rozszerzonych metadanych</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7605,7 +7605,7 @@ do kosza?</translation>
     <message>
         <location line="+4"/>
         <source>Folder path copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Ścieżka folderu skopiowana do schowka</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7615,7 +7615,7 @@ do kosza?</translation>
     <message>
         <location line="+4"/>
         <source>Full path copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Pełna ścieżka skopiowana do schowka</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7626,7 +7626,7 @@ do kosza?</translation>
         <location line="+4"/>
         <location line="+10"/>
         <source>File name copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Nazwa pliku skopiowana do schowka</translation>
     </message>
     <message>
         <location line="-6"/>
@@ -7636,12 +7636,12 @@ do kosza?</translation>
     <message>
         <location line="+11"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Oblicz sumę kontrolną (SHA-256)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>File not found or could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie znaleziono pliku lub nie można go odczytać</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7652,27 +7652,27 @@ do kosza?</translation>
         <location line="+6"/>
         <location line="+228"/>
         <source>Checksum copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Suma kontrolna skopiowana do schowka</translation>
     </message>
     <message>
         <location line="-224"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zweryfikuj sumę kontrolną (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd: </translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File moved to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik przeniesiony do kosza</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not move file to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można przenieść pliku do kosza</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7682,7 +7682,7 @@ do kosza?</translation>
     <message>
         <location line="+16"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozszerzone metadane</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7692,12 +7692,12 @@ do kosza?</translation>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>JSON metadanych skopiowany do schowka</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished"></translation>
+        <translation>Pole</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7707,7 +7707,7 @@ do kosza?</translation>
     <message>
         <location line="+83"/>
         <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Suma kontrolna (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -7727,7 +7727,7 @@ do kosza?</translation>
     <message>
         <location line="+15"/>
         <source>Checksum Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Niezgodność sumy kontrolnej</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7737,7 +7737,7 @@ do kosza?</translation>
     <message>
         <location line="+9"/>
         <source>Checksum saved to database</source>
-        <translation type="unfinished"></translation>
+        <translation>Suma kontrolna zapisana w bazie danych</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7757,24 +7757,26 @@ do kosza?</translation>
     <message>
         <location line="+14"/>
         <source>Delete File</source>
-        <translation type="unfinished"></translation>
+        <translation>Usuń plik</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik usunięty</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not delete file</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można usunąć pliku</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Permanently delete this file? This cannot be undone.
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Trwale usunąć ten plik? Tej operacji nie można cofnąć.
+
+%1</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -7787,49 +7789,54 @@ do kosza?</translation>
 Mismatched: %2
 New checksums calculated: %3
 Errors: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Zgodne: %1
+Niezgodne: %2
+Obliczone nowe sumy kontrolne: %3
+Błędy: %4</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Updated: %1
 Skipped: %2
 Errors: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaktualizowano: %1
+Pominięto: %2
+Błędy: %3</translation>
     </message>
     <message>
         <location line="-43"/>
         <source>Delete Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Usuń pliki</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Move all %1 result(s) to trash?</source>
-        <translation type="unfinished"></translation>
+        <translation>Przenieść wszystkie %1 wynik(ów) do kosza?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Permanently delete all %1 result(s)? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Trwale usunąć wszystkie %1 wynik(ów)? Tej operacji nie można cofnąć.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Calculate and verify checksums for all %1 result(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Obliczyć i zweryfikować sumy kontrolne dla wszystkich %1 wynik(ów)?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Include metadata for all %1 result(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Uwzględnić metadane dla wszystkich %1 wynik(ów)?</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>%1 file(s) moved to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 plik(ów) przeniesiono do kosza</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>%1 file(s) deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 plik(ów) usunięto</translation>
     </message>
 </context>
 <context>
@@ -8198,22 +8205,22 @@ Errors: %3</source>
     <message>
         <location line="+17"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 dzień temu</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 week ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 tydzień temu</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 month ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 miesiąc temu</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 year ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 rok temu</translation>
     </message>
     <message>
         <location line="+19"/>

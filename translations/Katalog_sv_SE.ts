@@ -6102,7 +6102,7 @@ till papperskorgen?</translation>
     <message>
         <location line="+8"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportera till CSV</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6243,7 +6243,7 @@ till papperskorgen?</translation>
     <message>
         <location line="+24"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportera till CSV</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -6801,7 +6801,7 @@ till papperskorgen?</translation>
     <message>
         <location line="+3"/>
         <source>Total: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Totalt: %1</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7095,22 +7095,22 @@ till papperskorgen?</translation>
     <message>
         <location line="+13"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Beräkna kontrollsumma (SHA-256)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>File not found or could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>Filen hittades inte eller kunde inte läsas</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Verifiera kontrollsumma (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Fel: </translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7130,7 +7130,7 @@ till papperskorgen?</translation>
     <message>
         <location line="+18"/>
         <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrollsumma (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -7150,12 +7150,12 @@ till papperskorgen?</translation>
     <message>
         <location line="+4"/>
         <source>Checksum copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrollsumma kopierad till urklipp</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Checksum Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrollsumman matchar inte</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7165,7 +7165,7 @@ till papperskorgen?</translation>
     <message>
         <location line="+9"/>
         <source>Checksum saved to database</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrollsumma sparad i databasen</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7196,22 +7196,22 @@ till papperskorgen?</translation>
     <message>
         <location filename="../qt_quick/PageSearchForm.qml" line="+335"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 dag sedan</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 week ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 vecka sedan</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 month ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 månad sedan</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 year ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 år sedan</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7221,12 +7221,12 @@ till papperskorgen?</translation>
     <message>
         <location line="+15"/>
         <source>Delete search history</source>
-        <translation type="unfinished"></translation>
+        <translation>Radera sökhistorik</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>This will delete all search history entries. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Detta raderar alla poster i sökhistoriken. Fortsätta?</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -7236,22 +7236,22 @@ till papperskorgen?</translation>
     <message>
         <location line="+1"/>
         <source>This will delete all but the last 10 search history entries. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Detta raderar alla poster i sökhistoriken utom de senaste 10. Fortsätta?</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Search History</source>
-        <translation type="unfinished"></translation>
+        <translation>Sökhistorik</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Keep Last 10</source>
-        <translation type="unfinished"></translation>
+        <translation>Behåll de senaste 10</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Rensa</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7261,7 +7261,7 @@ till papperskorgen?</translation>
     <message>
         <location line="+23"/>
         <source>(no text filter)</source>
-        <translation type="unfinished"></translation>
+        <translation>(inget textfilter)</translation>
     </message>
     <message>
         <location line="+28"/>
@@ -7271,12 +7271,12 @@ till papperskorgen?</translation>
     <message>
         <location line="+8"/>
         <source>Connected drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Ansluten enhet</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Path to connected drive or folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Sökväg till ansluten enhet eller mapp</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7286,7 +7286,7 @@ till papperskorgen?</translation>
     <message>
         <location line="+13"/>
         <source>text</source>
-        <translation type="unfinished"></translation>
+        <translation>text</translation>
     </message>
     <message>
         <location line="+42"/>
@@ -7311,7 +7311,7 @@ till papperskorgen?</translation>
     <message>
         <location line="+39"/>
         <source>File attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Filattribut</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7407,19 +7407,19 @@ till papperskorgen?</translation>
     <message>
         <location line="+18"/>
         <source>Duplicates</source>
-        <translation type="unfinished"></translation>
+        <translation>Dubbletter</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+122"/>
         <source>Duplicates and Differences cannot be used at the same time</source>
-        <translation type="unfinished"></translation>
+        <translation>Dubbletter och skillnader kan inte användas samtidigt</translation>
     </message>
     <message>
         <location line="-108"/>
         <location line="+122"/>
         <source>On</source>
-        <translation type="unfinished"></translation>
+        <translation>På</translation>
     </message>
     <message>
         <location line="-114"/>
@@ -7436,7 +7436,7 @@ till papperskorgen?</translation>
     <message>
         <location line="-108"/>
         <source>Scope</source>
-        <translation type="unfinished"></translation>
+        <translation>Omfattning</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7451,12 +7451,12 @@ till papperskorgen?</translation>
     <message>
         <location line="+14"/>
         <source>Device 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Enhet 1</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Device 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Enhet 2</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7466,12 +7466,12 @@ till papperskorgen?</translation>
     <message>
         <location line="+83"/>
         <source>Between</source>
-        <translation type="unfinished"></translation>
+        <translation>Mellan</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>And</source>
-        <translation type="unfinished"></translation>
+        <translation>Och</translation>
     </message>
 </context>
 <context>
@@ -7479,42 +7479,42 @@ till papperskorgen?</translation>
     <message>
         <location filename="../qt_quick/PageSearchResultsForm.qml" line="+109"/>
         <source>%1 duplicate(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 dubblett(er) hittades</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 difference(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 skillnad(er) hittades</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 folder(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 mapp(ar) hittades</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>%1 file(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 fil(er) hittades</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Total: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Totalt: %1</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Min: %1   Max: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Min: %1   Max: %2</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportera till CSV</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Export to Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportera till katalog</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7539,7 +7539,7 @@ till papperskorgen?</translation>
     <message>
         <location line="-775"/>
         <source>Extract Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Extrahera metadata</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7550,27 +7550,27 @@ till papperskorgen?</translation>
     <message>
         <location line="-679"/>
         <source>Exported to: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporterad till: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or write error</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporten misslyckades — inga resultat eller skrivfel</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Results exported to catalog: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Resultat exporterade till katalog: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or database error</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporten misslyckades — inga resultat eller databasfel</translation>
     </message>
     <message>
         <location line="+257"/>
         <source>(no selection)</source>
-        <translation type="unfinished"></translation>
+        <translation>(inget val)</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -7595,7 +7595,7 @@ till papperskorgen?</translation>
     <message>
         <location line="+22"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished"></translation>
+        <translation>Inga utökade metadata tillgängliga</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7605,7 +7605,7 @@ till papperskorgen?</translation>
     <message>
         <location line="+4"/>
         <source>Folder path copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Mappsökväg kopierad till urklipp</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7615,7 +7615,7 @@ till papperskorgen?</translation>
     <message>
         <location line="+4"/>
         <source>Full path copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Fullständig sökväg kopierad till urklipp</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7626,7 +7626,7 @@ till papperskorgen?</translation>
         <location line="+4"/>
         <location line="+10"/>
         <source>File name copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Filnamn kopierat till urklipp</translation>
     </message>
     <message>
         <location line="-6"/>
@@ -7636,12 +7636,12 @@ till papperskorgen?</translation>
     <message>
         <location line="+11"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Beräkna kontrollsumma (SHA-256)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>File not found or could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>Filen hittades inte eller kunde inte läsas</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7652,27 +7652,27 @@ till papperskorgen?</translation>
         <location line="+6"/>
         <location line="+228"/>
         <source>Checksum copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrollsumma kopierad till urklipp</translation>
     </message>
     <message>
         <location line="-224"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Verifiera kontrollsumma (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Fel: </translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File moved to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Fil flyttad till papperskorgen</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not move file to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde inte flytta filen till papperskorgen</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7682,7 +7682,7 @@ till papperskorgen?</translation>
     <message>
         <location line="+16"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Utökade metadata</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7692,12 +7692,12 @@ till papperskorgen?</translation>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Metadata-JSON kopierad till urklipp</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished"></translation>
+        <translation>Fält</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7707,7 +7707,7 @@ till papperskorgen?</translation>
     <message>
         <location line="+83"/>
         <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrollsumma (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -7727,7 +7727,7 @@ till papperskorgen?</translation>
     <message>
         <location line="+15"/>
         <source>Checksum Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrollsumman matchar inte</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7737,7 +7737,7 @@ till papperskorgen?</translation>
     <message>
         <location line="+9"/>
         <source>Checksum saved to database</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrollsumma sparad i databasen</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7757,24 +7757,26 @@ till papperskorgen?</translation>
     <message>
         <location line="+14"/>
         <source>Delete File</source>
-        <translation type="unfinished"></translation>
+        <translation>Radera fil</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>Fil raderad</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not delete file</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde inte radera filen</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Permanently delete this file? This cannot be undone.
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Radera denna fil permanent? Detta kan inte ångras.
+
+%1</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -7787,49 +7789,54 @@ till papperskorgen?</translation>
 Mismatched: %2
 New checksums calculated: %3
 Errors: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Matchade: %1
+Matchade inte: %2
+Nya kontrollsummor beräknade: %3
+Fel: %4</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Updated: %1
 Skipped: %2
 Errors: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Uppdaterade: %1
+Överhoppade: %2
+Fel: %3</translation>
     </message>
     <message>
         <location line="-43"/>
         <source>Delete Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Radera filer</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Move all %1 result(s) to trash?</source>
-        <translation type="unfinished"></translation>
+        <translation>Flytta alla %1 resultat till papperskorgen?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Permanently delete all %1 result(s)? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Radera alla %1 resultat permanent? Detta kan inte ångras.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Calculate and verify checksums for all %1 result(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Beräkna och verifiera kontrollsummor för alla %1 resultat?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Include metadata for all %1 result(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Inkludera metadata för alla %1 resultat?</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>%1 file(s) moved to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 fil(er) flyttade till papperskorgen</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>%1 file(s) deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 fil(er) raderade</translation>
     </message>
 </context>
 <context>
@@ -8198,22 +8205,22 @@ Errors: %3</source>
     <message>
         <location line="+17"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 dag sedan</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 week ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 vecka sedan</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 month ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 månad sedan</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 year ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 år sedan</translation>
     </message>
     <message>
         <location line="+19"/>

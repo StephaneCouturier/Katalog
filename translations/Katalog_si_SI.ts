@@ -6103,7 +6103,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+8"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvozi v CSV</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6244,7 +6244,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+24"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvozi v CSV</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -6802,7 +6802,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+3"/>
         <source>Total: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Skupaj: %1</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7096,22 +7096,22 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+13"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Izračunaj nadzorno vsoto (SHA-256)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>File not found or could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>Datoteke ni mogoče najti ali prebrati</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Preveri nadzorno vsoto (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Napaka: </translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7131,7 +7131,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+18"/>
         <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nadzorna vsota (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -7151,12 +7151,12 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+4"/>
         <source>Checksum copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Nadzorna vsota kopirana v odložišče</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Checksum Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Neujemanje nadzorne vsote</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7166,7 +7166,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+9"/>
         <source>Checksum saved to database</source>
-        <translation type="unfinished"></translation>
+        <translation>Nadzorna vsota shranjena v zbirko podatkov</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7197,22 +7197,22 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location filename="../qt_quick/PageSearchForm.qml" line="+335"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Pred 1 dnevom</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 week ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Pred 1 tednom</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 month ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Pred 1 mesecem</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 year ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Pred 1 letom</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7222,12 +7222,12 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+15"/>
         <source>Delete search history</source>
-        <translation type="unfinished"></translation>
+        <translation>Izbriši zgodovino iskanja</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>This will delete all search history entries. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>S tem boste izbrisali vse vnose zgodovine iskanja. Nadaljujem?</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -7237,22 +7237,22 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+1"/>
         <source>This will delete all but the last 10 search history entries. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>S tem boste izbrisali vse vnose zgodovine iskanja razen zadnjih 10. Nadaljujem?</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Search History</source>
-        <translation type="unfinished"></translation>
+        <translation>Zgodovina iskanja</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Keep Last 10</source>
-        <translation type="unfinished"></translation>
+        <translation>Obdrži zadnjih 10</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Počisti</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7262,7 +7262,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+23"/>
         <source>(no text filter)</source>
-        <translation type="unfinished"></translation>
+        <translation>(brez besedilnega filtra)</translation>
     </message>
     <message>
         <location line="+28"/>
@@ -7272,12 +7272,12 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+8"/>
         <source>Connected drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Povezan pogon</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Path to connected drive or folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Pot do povezanega pogona ali mape</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7287,7 +7287,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+13"/>
         <source>text</source>
-        <translation type="unfinished"></translation>
+        <translation>besedilo</translation>
     </message>
     <message>
         <location line="+42"/>
@@ -7312,7 +7312,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+39"/>
         <source>File attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Atributi datoteke</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7408,19 +7408,19 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+18"/>
         <source>Duplicates</source>
-        <translation type="unfinished"></translation>
+        <translation>Dvojniki</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+122"/>
         <source>Duplicates and Differences cannot be used at the same time</source>
-        <translation type="unfinished"></translation>
+        <translation>Dvojnikov in razlik ni mogoče uporabljati hkrati</translation>
     </message>
     <message>
         <location line="-108"/>
         <location line="+122"/>
         <source>On</source>
-        <translation type="unfinished"></translation>
+        <translation>Na</translation>
     </message>
     <message>
         <location line="-114"/>
@@ -7437,7 +7437,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="-108"/>
         <source>Scope</source>
-        <translation type="unfinished"></translation>
+        <translation>Obseg</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7452,12 +7452,12 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+14"/>
         <source>Device 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Naprava 1</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Device 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Naprava 2</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7467,12 +7467,12 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+83"/>
         <source>Between</source>
-        <translation type="unfinished"></translation>
+        <translation>Med</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>And</source>
-        <translation type="unfinished"></translation>
+        <translation>In</translation>
     </message>
 </context>
 <context>
@@ -7480,42 +7480,42 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location filename="../qt_quick/PageSearchResultsForm.qml" line="+109"/>
         <source>%1 duplicate(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Najdenih %1 dvojnikov</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 difference(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Najdenih %1 razlik</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 folder(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Najdenih %1 map</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>%1 file(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>Najdenih %1 datotek</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Total: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Skupaj: %1</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Min: %1   Max: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Min: %1   Maks: %2</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvozi v CSV</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Export to Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvozi v katalog</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7540,7 +7540,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="-775"/>
         <source>Extract Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvleci metapodatke</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7551,27 +7551,27 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="-679"/>
         <source>Exported to: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvoženo v: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or write error</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvoz ni uspel — ni rezultatov ali napaka pri pisanju</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Results exported to catalog: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezultati izvoženi v katalog: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or database error</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvoz ni uspel — ni rezultatov ali napaka zbirke podatkov</translation>
     </message>
     <message>
         <location line="+257"/>
         <source>(no selection)</source>
-        <translation type="unfinished"></translation>
+        <translation>(ni izbire)</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -7596,7 +7596,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+22"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished"></translation>
+        <translation>Razširjeni metapodatki niso na voljo</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7606,7 +7606,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+4"/>
         <source>Folder path copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Pot do mape kopirana v odložišče</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7616,7 +7616,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+4"/>
         <source>Full path copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Polna pot kopirana v odložišče</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7627,7 +7627,7 @@ Razdelitev ni bila izvedena.</translation>
         <location line="+4"/>
         <location line="+10"/>
         <source>File name copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Ime datoteke kopirano v odložišče</translation>
     </message>
     <message>
         <location line="-6"/>
@@ -7637,12 +7637,12 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+11"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Izračunaj nadzorno vsoto (SHA-256)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>File not found or could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>Datoteke ni mogoče najti ali prebrati</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7653,27 +7653,27 @@ Razdelitev ni bila izvedena.</translation>
         <location line="+6"/>
         <location line="+228"/>
         <source>Checksum copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Nadzorna vsota kopirana v odložišče</translation>
     </message>
     <message>
         <location line="-224"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Preveri nadzorno vsoto (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Napaka: </translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File moved to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Datoteka premaknjena v smeti</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not move file to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Datoteke ni mogoče premakniti v smeti</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7683,7 +7683,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+16"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Razširjeni metapodatki</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7693,12 +7693,12 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>JSON metapodatkov kopiran v odložišče</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished"></translation>
+        <translation>Polje</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7708,7 +7708,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+83"/>
         <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nadzorna vsota (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -7728,7 +7728,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+15"/>
         <source>Checksum Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Neujemanje nadzorne vsote</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7738,7 +7738,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+9"/>
         <source>Checksum saved to database</source>
-        <translation type="unfinished"></translation>
+        <translation>Nadzorna vsota shranjena v zbirko podatkov</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7758,24 +7758,26 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+14"/>
         <source>Delete File</source>
-        <translation type="unfinished"></translation>
+        <translation>Izbriši datoteko</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>Datoteka izbrisana</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not delete file</source>
-        <translation type="unfinished"></translation>
+        <translation>Datoteke ni mogoče izbrisati</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Permanently delete this file? This cannot be undone.
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Trajno izbrišem to datoteko? Tega ni mogoče razveljaviti.
+
+%1</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -7788,49 +7790,54 @@ Razdelitev ni bila izvedena.</translation>
 Mismatched: %2
 New checksums calculated: %3
 Errors: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Ujemajoči: %1
+Neujemajoči: %2
+Izračunane nove nadzorne vsote: %3
+Napake: %4</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Updated: %1
 Skipped: %2
 Errors: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Posodobljeno: %1
+Preskočeno: %2
+Napake: %3</translation>
     </message>
     <message>
         <location line="-43"/>
         <source>Delete Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Izbriši datoteke</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Move all %1 result(s) to trash?</source>
-        <translation type="unfinished"></translation>
+        <translation>Premaknem vseh %1 rezultatov v smeti?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Permanently delete all %1 result(s)? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Trajno izbrišem vseh %1 rezultatov? Tega ni mogoče razveljaviti.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Calculate and verify checksums for all %1 result(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Izračunam in preverim nadzorne vsote za vseh %1 rezultatov?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Include metadata for all %1 result(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vključim metapodatke za vseh %1 rezultatov?</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>%1 file(s) moved to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 datotek premaknjenih v smeti</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>%1 file(s) deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 datotek izbrisanih</translation>
     </message>
 </context>
 <context>
@@ -8199,22 +8206,22 @@ Errors: %3</source>
     <message>
         <location line="+17"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Pred 1 dnevom</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 week ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Pred 1 tednom</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 month ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Pred 1 mesecem</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 year ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Pred 1 letom</translation>
     </message>
     <message>
         <location line="+19"/>

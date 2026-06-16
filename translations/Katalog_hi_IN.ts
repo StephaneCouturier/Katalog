@@ -6101,7 +6101,7 @@ to the trash?</source>
     <message>
         <location line="+8"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>CSV में निर्यात करें</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6242,7 +6242,7 @@ to the trash?</source>
     <message>
         <location line="+24"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>CSV में निर्यात करें</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -6800,7 +6800,7 @@ to the trash?</source>
     <message>
         <location line="+3"/>
         <source>Total: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>कुल: %1</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7094,22 +7094,22 @@ to the trash?</source>
     <message>
         <location line="+13"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>चेकसम की गणना करें (SHA-256)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>File not found or could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>फ़ाइल नहीं मिली या पढ़ी नहीं जा सकी</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>चेकसम सत्यापित करें (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>त्रुटि: </translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7129,7 +7129,7 @@ to the trash?</source>
     <message>
         <location line="+18"/>
         <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>चेकसम (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -7149,12 +7149,12 @@ to the trash?</source>
     <message>
         <location line="+4"/>
         <source>Checksum copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>चेकसम क्लिपबोर्ड पर कॉपी किया गया</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Checksum Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>चेकसम बेमेल</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7164,7 +7164,7 @@ to the trash?</source>
     <message>
         <location line="+9"/>
         <source>Checksum saved to database</source>
-        <translation type="unfinished"></translation>
+        <translation>चेकसम डेटाबेस में सहेजा गया</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7195,22 +7195,22 @@ to the trash?</source>
     <message>
         <location filename="../qt_quick/PageSearchForm.qml" line="+335"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 दिन पहले</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 week ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 सप्ताह पहले</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 month ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 महीने पहले</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 year ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 वर्ष पहले</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7220,12 +7220,12 @@ to the trash?</source>
     <message>
         <location line="+15"/>
         <source>Delete search history</source>
-        <translation type="unfinished"></translation>
+        <translation>खोज इतिहास हटाएँ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>This will delete all search history entries. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>इससे सभी खोज इतिहास प्रविष्टियाँ हट जाएँगी। जारी रखें?</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -7235,22 +7235,22 @@ to the trash?</source>
     <message>
         <location line="+1"/>
         <source>This will delete all but the last 10 search history entries. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>इससे अंतिम 10 को छोड़कर सभी खोज इतिहास प्रविष्टियाँ हट जाएँगी। जारी रखें?</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Search History</source>
-        <translation type="unfinished"></translation>
+        <translation>खोज इतिहास</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Keep Last 10</source>
-        <translation type="unfinished"></translation>
+        <translation>अंतिम 10 रखें</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>साफ़ करें</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7260,7 +7260,7 @@ to the trash?</source>
     <message>
         <location line="+23"/>
         <source>(no text filter)</source>
-        <translation type="unfinished"></translation>
+        <translation>(कोई टेक्स्ट फ़िल्टर नहीं)</translation>
     </message>
     <message>
         <location line="+28"/>
@@ -7270,12 +7270,12 @@ to the trash?</source>
     <message>
         <location line="+8"/>
         <source>Connected drive</source>
-        <translation type="unfinished"></translation>
+        <translation>कनेक्टेड ड्राइव</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Path to connected drive or folder</source>
-        <translation type="unfinished"></translation>
+        <translation>कनेक्टेड ड्राइव या फ़ोल्डर का पथ</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7285,7 +7285,7 @@ to the trash?</source>
     <message>
         <location line="+13"/>
         <source>text</source>
-        <translation type="unfinished"></translation>
+        <translation>टेक्स्ट</translation>
     </message>
     <message>
         <location line="+42"/>
@@ -7310,7 +7310,7 @@ to the trash?</source>
     <message>
         <location line="+39"/>
         <source>File attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>फ़ाइल विशेषताएँ</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7406,19 +7406,19 @@ to the trash?</source>
     <message>
         <location line="+18"/>
         <source>Duplicates</source>
-        <translation type="unfinished"></translation>
+        <translation>डुप्लिकेट</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+122"/>
         <source>Duplicates and Differences cannot be used at the same time</source>
-        <translation type="unfinished"></translation>
+        <translation>डुप्लिकेट और अंतर एक साथ उपयोग नहीं किए जा सकते</translation>
     </message>
     <message>
         <location line="-108"/>
         <location line="+122"/>
         <source>On</source>
-        <translation type="unfinished"></translation>
+        <translation>पर</translation>
     </message>
     <message>
         <location line="-114"/>
@@ -7435,7 +7435,7 @@ to the trash?</source>
     <message>
         <location line="-108"/>
         <source>Scope</source>
-        <translation type="unfinished"></translation>
+        <translation>दायरा</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7450,12 +7450,12 @@ to the trash?</source>
     <message>
         <location line="+14"/>
         <source>Device 1</source>
-        <translation type="unfinished"></translation>
+        <translation>डिवाइस 1</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Device 2</source>
-        <translation type="unfinished"></translation>
+        <translation>डिवाइस 2</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7465,12 +7465,12 @@ to the trash?</source>
     <message>
         <location line="+83"/>
         <source>Between</source>
-        <translation type="unfinished"></translation>
+        <translation>के बीच</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>And</source>
-        <translation type="unfinished"></translation>
+        <translation>और</translation>
     </message>
 </context>
 <context>
@@ -7478,42 +7478,42 @@ to the trash?</source>
     <message>
         <location filename="../qt_quick/PageSearchResultsForm.qml" line="+109"/>
         <source>%1 duplicate(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 डुप्लिकेट मिले</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 difference(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 अंतर मिले</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 folder(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 फ़ोल्डर मिले</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>%1 file(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 फ़ाइलें मिलीं</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Total: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>कुल: %1</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Min: %1   Max: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>न्यूनतम: %1   अधिकतम: %2</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>CSV में निर्यात करें</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Export to Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>कैटलॉग में निर्यात करें</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7538,7 +7538,7 @@ to the trash?</source>
     <message>
         <location line="-775"/>
         <source>Extract Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>मेटाडेटा निकालें</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7549,27 +7549,27 @@ to the trash?</source>
     <message>
         <location line="-679"/>
         <source>Exported to: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>यहाँ निर्यात किया गया: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or write error</source>
-        <translation type="unfinished"></translation>
+        <translation>निर्यात विफल — कोई परिणाम नहीं या लेखन त्रुटि</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Results exported to catalog: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>परिणाम कैटलॉग में निर्यात किए गए: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or database error</source>
-        <translation type="unfinished"></translation>
+        <translation>निर्यात विफल — कोई परिणाम नहीं या डेटाबेस त्रुटि</translation>
     </message>
     <message>
         <location line="+257"/>
         <source>(no selection)</source>
-        <translation type="unfinished"></translation>
+        <translation>(कोई चयन नहीं)</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -7594,7 +7594,7 @@ to the trash?</source>
     <message>
         <location line="+22"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished"></translation>
+        <translation>कोई विस्तारित मेटाडेटा उपलब्ध नहीं</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7604,7 +7604,7 @@ to the trash?</source>
     <message>
         <location line="+4"/>
         <source>Folder path copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>फ़ोल्डर पथ क्लिपबोर्ड पर कॉपी किया गया</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7614,7 +7614,7 @@ to the trash?</source>
     <message>
         <location line="+4"/>
         <source>Full path copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>पूर्ण पथ क्लिपबोर्ड पर कॉपी किया गया</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7625,7 +7625,7 @@ to the trash?</source>
         <location line="+4"/>
         <location line="+10"/>
         <source>File name copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>फ़ाइल नाम क्लिपबोर्ड पर कॉपी किया गया</translation>
     </message>
     <message>
         <location line="-6"/>
@@ -7635,12 +7635,12 @@ to the trash?</source>
     <message>
         <location line="+11"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>चेकसम की गणना करें (SHA-256)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>File not found or could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>फ़ाइल नहीं मिली या पढ़ी नहीं जा सकी</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7651,27 +7651,27 @@ to the trash?</source>
         <location line="+6"/>
         <location line="+228"/>
         <source>Checksum copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>चेकसम क्लिपबोर्ड पर कॉपी किया गया</translation>
     </message>
     <message>
         <location line="-224"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>चेकसम सत्यापित करें (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>त्रुटि: </translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File moved to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>फ़ाइल रद्दी में ले जाई गई</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not move file to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>फ़ाइल को रद्दी में नहीं ले जाया जा सका</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7681,7 +7681,7 @@ to the trash?</source>
     <message>
         <location line="+16"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>विस्तारित मेटाडेटा</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7691,12 +7691,12 @@ to the trash?</source>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>मेटाडेटा JSON क्लिपबोर्ड पर कॉपी किया गया</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished"></translation>
+        <translation>फ़ील्ड</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7706,7 +7706,7 @@ to the trash?</source>
     <message>
         <location line="+83"/>
         <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>चेकसम (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -7726,7 +7726,7 @@ to the trash?</source>
     <message>
         <location line="+15"/>
         <source>Checksum Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>चेकसम बेमेल</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7736,7 +7736,7 @@ to the trash?</source>
     <message>
         <location line="+9"/>
         <source>Checksum saved to database</source>
-        <translation type="unfinished"></translation>
+        <translation>चेकसम डेटाबेस में सहेजा गया</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7756,24 +7756,26 @@ to the trash?</source>
     <message>
         <location line="+14"/>
         <source>Delete File</source>
-        <translation type="unfinished"></translation>
+        <translation>फ़ाइल हटाएँ</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>फ़ाइल हटाई गई</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not delete file</source>
-        <translation type="unfinished"></translation>
+        <translation>फ़ाइल हटाई नहीं जा सकी</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Permanently delete this file? This cannot be undone.
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>इस फ़ाइल को स्थायी रूप से हटाएँ? इसे पूर्ववत नहीं किया जा सकता।
+
+%1</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -7786,49 +7788,54 @@ to the trash?</source>
 Mismatched: %2
 New checksums calculated: %3
 Errors: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>मेल खाए: %1
+मेल नहीं खाए: %2
+नई चेकसम गणना की गई: %3
+त्रुटियाँ: %4</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Updated: %1
 Skipped: %2
 Errors: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>अद्यतन: %1
+छोड़े गए: %2
+त्रुटियाँ: %3</translation>
     </message>
     <message>
         <location line="-43"/>
         <source>Delete Files</source>
-        <translation type="unfinished"></translation>
+        <translation>फ़ाइलें हटाएँ</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Move all %1 result(s) to trash?</source>
-        <translation type="unfinished"></translation>
+        <translation>सभी %1 परिणाम रद्दी में ले जाएँ?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Permanently delete all %1 result(s)? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>सभी %1 परिणाम स्थायी रूप से हटाएँ? इसे पूर्ववत नहीं किया जा सकता।</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Calculate and verify checksums for all %1 result(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>सभी %1 परिणामों के लिए चेकसम की गणना और सत्यापन करें?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Include metadata for all %1 result(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>सभी %1 परिणामों के लिए मेटाडेटा शामिल करें?</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>%1 file(s) moved to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 फ़ाइलें रद्दी में ले जाई गईं</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>%1 file(s) deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 फ़ाइलें हटाई गईं</translation>
     </message>
 </context>
 <context>
@@ -8197,22 +8204,22 @@ Errors: %3</source>
     <message>
         <location line="+17"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 दिन पहले</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 week ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 सप्ताह पहले</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 month ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 महीने पहले</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 year ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 वर्ष पहले</translation>
     </message>
     <message>
         <location line="+19"/>

@@ -6102,7 +6102,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+8"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Als CSV exportieren</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6243,7 +6243,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+24"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Als CSV exportieren</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -6801,7 +6801,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+3"/>
         <source>Total: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Gesamt: %1</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7095,22 +7095,22 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+13"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Prüfsumme berechnen (SHA-256)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>File not found or could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei nicht gefunden oder nicht lesbar</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Prüfsumme überprüfen (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler: </translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7130,7 +7130,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+18"/>
         <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Prüfsumme (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -7150,12 +7150,12 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+4"/>
         <source>Checksum copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Prüfsumme in die Zwischenablage kopiert</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Checksum Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Prüfsummen-Abweichung</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7165,7 +7165,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+9"/>
         <source>Checksum saved to database</source>
-        <translation type="unfinished"></translation>
+        <translation>Prüfsumme in der Datenbank gespeichert</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7196,22 +7196,22 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location filename="../qt_quick/PageSearchForm.qml" line="+335"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Vor 1 Tag</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 week ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Vor 1 Woche</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 month ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Vor 1 Monat</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 year ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Vor 1 Jahr</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7221,12 +7221,12 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+15"/>
         <source>Delete search history</source>
-        <translation type="unfinished"></translation>
+        <translation>Suchverlauf löschen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>This will delete all search history entries. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dadurch werden alle Einträge des Suchverlaufs gelöscht. Fortfahren?</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -7236,22 +7236,22 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+1"/>
         <source>This will delete all but the last 10 search history entries. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dadurch werden alle bis auf die letzten 10 Einträge des Suchverlaufs gelöscht. Fortfahren?</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Search History</source>
-        <translation type="unfinished"></translation>
+        <translation>Suchverlauf</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Keep Last 10</source>
-        <translation type="unfinished"></translation>
+        <translation>Letzte 10 behalten</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Leeren</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7261,7 +7261,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+23"/>
         <source>(no text filter)</source>
-        <translation type="unfinished"></translation>
+        <translation>(kein Textfilter)</translation>
     </message>
     <message>
         <location line="+28"/>
@@ -7271,12 +7271,12 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+8"/>
         <source>Connected drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbundenes Laufwerk</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Path to connected drive or folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Pfad zum verbundenen Laufwerk oder Ordner</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7286,7 +7286,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+13"/>
         <source>text</source>
-        <translation type="unfinished"></translation>
+        <translation>Text</translation>
     </message>
     <message>
         <location line="+42"/>
@@ -7311,7 +7311,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+39"/>
         <source>File attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateiattribute</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7407,19 +7407,19 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+18"/>
         <source>Duplicates</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplikate</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+122"/>
         <source>Duplicates and Differences cannot be used at the same time</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplikate und Unterschiede können nicht gleichzeitig verwendet werden</translation>
     </message>
     <message>
         <location line="-108"/>
         <location line="+122"/>
         <source>On</source>
-        <translation type="unfinished"></translation>
+        <translation>Auf</translation>
     </message>
     <message>
         <location line="-114"/>
@@ -7436,7 +7436,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="-108"/>
         <source>Scope</source>
-        <translation type="unfinished"></translation>
+        <translation>Bereich</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7451,12 +7451,12 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+14"/>
         <source>Device 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerät 1</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Device 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerät 2</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7466,12 +7466,12 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+83"/>
         <source>Between</source>
-        <translation type="unfinished"></translation>
+        <translation>Zwischen</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>And</source>
-        <translation type="unfinished"></translation>
+        <translation>Und</translation>
     </message>
 </context>
 <context>
@@ -7479,42 +7479,42 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location filename="../qt_quick/PageSearchResultsForm.qml" line="+109"/>
         <source>%1 duplicate(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Duplikat(e) gefunden</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 difference(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Unterschied(e) gefunden</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 folder(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Ordner gefunden</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>%1 file(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Datei(en) gefunden</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Total: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Gesamt: %1</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Min: %1   Max: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Min: %1   Max: %2</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Als CSV exportieren</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Export to Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>In Katalog exportieren</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7539,7 +7539,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="-775"/>
         <source>Extract Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Metadaten extrahieren</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7550,27 +7550,27 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="-679"/>
         <source>Exported to: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportiert nach: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or write error</source>
-        <translation type="unfinished"></translation>
+        <translation>Export fehlgeschlagen — keine Ergebnisse oder Schreibfehler</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Results exported to catalog: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ergebnisse in Katalog exportiert: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or database error</source>
-        <translation type="unfinished"></translation>
+        <translation>Export fehlgeschlagen — keine Ergebnisse oder Datenbankfehler</translation>
     </message>
     <message>
         <location line="+257"/>
         <source>(no selection)</source>
-        <translation type="unfinished"></translation>
+        <translation>(keine Auswahl)</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -7595,7 +7595,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+22"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine erweiterten Metadaten verfügbar</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7605,7 +7605,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+4"/>
         <source>Folder path copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordnerpfad in die Zwischenablage kopiert</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7615,7 +7615,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+4"/>
         <source>Full path copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Vollständiger Pfad in die Zwischenablage kopiert</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7626,7 +7626,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
         <location line="+4"/>
         <location line="+10"/>
         <source>File name copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateiname in die Zwischenablage kopiert</translation>
     </message>
     <message>
         <location line="-6"/>
@@ -7636,12 +7636,12 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+11"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Prüfsumme berechnen (SHA-256)</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>File not found or could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei nicht gefunden oder nicht lesbar</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7652,27 +7652,27 @@ Aufteilung wurde nicht durchgeführt.</translation>
         <location line="+6"/>
         <location line="+228"/>
         <source>Checksum copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Prüfsumme in die Zwischenablage kopiert</translation>
     </message>
     <message>
         <location line="-224"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Prüfsumme überprüfen (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler: </translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File moved to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei in den Papierkorb verschoben</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not move file to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei konnte nicht in den Papierkorb verschoben werden</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7682,7 +7682,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+16"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Erweiterte Metadaten</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7692,12 +7692,12 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Metadaten-JSON in die Zwischenablage kopiert</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished"></translation>
+        <translation>Feld</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7707,7 +7707,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+83"/>
         <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
+        <translation>Prüfsumme (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -7727,7 +7727,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+15"/>
         <source>Checksum Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Prüfsummen-Abweichung</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7737,7 +7737,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+9"/>
         <source>Checksum saved to database</source>
-        <translation type="unfinished"></translation>
+        <translation>Prüfsumme in der Datenbank gespeichert</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7757,24 +7757,26 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+14"/>
         <source>Delete File</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei löschen</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei gelöscht</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not delete file</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei konnte nicht gelöscht werden</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Permanently delete this file? This cannot be undone.
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Datei endgültig löschen? Dies kann nicht rückgängig gemacht werden.
+
+%1</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -7787,49 +7789,54 @@ Aufteilung wurde nicht durchgeführt.</translation>
 Mismatched: %2
 New checksums calculated: %3
 Errors: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Übereinstimmend: %1
+Abweichend: %2
+Neue Prüfsummen berechnet: %3
+Fehler: %4</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Updated: %1
 Skipped: %2
 Errors: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualisiert: %1
+Übersprungen: %2
+Fehler: %3</translation>
     </message>
     <message>
         <location line="-43"/>
         <source>Delete Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateien löschen</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Move all %1 result(s) to trash?</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle %1 Ergebnis(se) in den Papierkorb verschieben?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Permanently delete all %1 result(s)? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle %1 Ergebnis(se) endgültig löschen? Dies kann nicht rückgängig gemacht werden.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Calculate and verify checksums for all %1 result(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Prüfsummen für alle %1 Ergebnis(se) berechnen und überprüfen?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Include metadata for all %1 result(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Metadaten für alle %1 Ergebnis(se) einbeziehen?</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>%1 file(s) moved to trash</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Datei(en) in den Papierkorb verschoben</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>%1 file(s) deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Datei(en) gelöscht</translation>
     </message>
 </context>
 <context>
@@ -8198,22 +8205,22 @@ Errors: %3</source>
     <message>
         <location line="+17"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Vor 1 Tag</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 week ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Vor 1 Woche</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 month ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Vor 1 Monat</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 year ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Vor 1 Jahr</translation>
     </message>
     <message>
         <location line="+19"/>
