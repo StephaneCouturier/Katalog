@@ -6001,17 +6001,17 @@ Split was not performed.</source>
     <message>
         <location line="+19"/>
         <source>link(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>σύνδεσμος(οι)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>source</source>
-        <translation type="unfinished"></translation>
+        <translation>πηγή</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>covered</source>
-        <translation type="unfinished"></translation>
+        <translation>καλύφθηκε</translation>
     </message>
     <message>
         <location line="+24"/>

@@ -6000,17 +6000,17 @@ til papirkurven?</translation>
     <message>
         <location line="+19"/>
         <source>link(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>link</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>source</source>
-        <translation type="unfinished"></translation>
+        <translation>kilde</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>covered</source>
-        <translation type="unfinished"></translation>
+        <translation>dækket</translation>
     </message>
     <message>
         <location line="+24"/>

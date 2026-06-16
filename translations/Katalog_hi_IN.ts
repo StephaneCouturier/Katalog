@@ -5999,17 +5999,17 @@ to the trash?</source>
     <message>
         <location line="+19"/>
         <source>link(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>लिंक</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>source</source>
-        <translation type="unfinished"></translation>
+        <translation>स्रोत</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>covered</source>
-        <translation type="unfinished"></translation>
+        <translation>आच्छादित</translation>
     </message>
     <message>
         <location line="+24"/>

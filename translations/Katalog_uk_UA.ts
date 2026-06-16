@@ -6000,17 +6000,17 @@ to the trash?</source>
     <message>
         <location line="+19"/>
         <source>link(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>посилання</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>source</source>
-        <translation type="unfinished"></translation>
+        <translation>джерело</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>covered</source>
-        <translation type="unfinished"></translation>
+        <translation>покрито</translation>
     </message>
     <message>
         <location line="+24"/>

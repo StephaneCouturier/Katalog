@@ -6001,17 +6001,17 @@ to the trash?</source>
     <message>
         <location line="+19"/>
         <source>link(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>lien(s)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>source</source>
-        <translation type="unfinished"></translation>
+        <translation>source</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>covered</source>
-        <translation type="unfinished"></translation>
+        <translation>couvert</translation>
     </message>
     <message>
         <location line="+24"/>

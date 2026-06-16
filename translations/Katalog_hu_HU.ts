@@ -5999,17 +5999,17 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+19"/>
         <source>link(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>hivatkozás(ok)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>source</source>
-        <translation type="unfinished"></translation>
+        <translation>forrás</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>covered</source>
-        <translation type="unfinished"></translation>
+        <translation>lefedve</translation>
     </message>
     <message>
         <location line="+24"/>
