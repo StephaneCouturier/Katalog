@@ -7194,7 +7194,17 @@ to the trash?</source>
 <context>
     <name>PageSearchForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchForm.qml" line="+335"/>
+        <location filename="../qt_quick/PageSearchForm.qml" line="+312"/>
+        <source>Select a date</source>
+        <translation>Изберете дата</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Now</source>
+        <translation>Сега</translation>
+    </message>
+    <message>
+        <location line="+18"/>
         <source>1 day ago</source>
         <translation>Преди 1 ден</translation>
     </message>
@@ -7294,12 +7304,56 @@ to the trash?</source>
         <translation>с</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+6"/>
+        <source>All Words</source>
+        <translation>Всички думи</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Exact Phrase</source>
+        <translation>Точна фраза</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Begins With</source>
+        <translation>Започва с</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Any Word</source>
+        <translation>Всяка дума</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Regex</source>
+        <translation>Regex</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location line="+4"/>
+        <location line="+15"/>
+        <source>File names only</source>
+        <translation>Само имена на файлове</translation>
+    </message>
+    <message>
+        <location line="-14"/>
+        <location line="+15"/>
+        <source>File names or Folder paths</source>
+        <translation>Имена на файлове или пътища на папки</translation>
+    </message>
+    <message>
+        <location line="-14"/>
+        <location line="+15"/>
+        <source>Folder path only</source>
+        <translation>Само път на папка</translation>
+    </message>
+    <message>
+        <location line="-8"/>
         <source>in</source>
         <translation>в</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+17"/>
         <source>case sensitive</source>
         <translation>чувствителен към регистъра</translation>
     </message>

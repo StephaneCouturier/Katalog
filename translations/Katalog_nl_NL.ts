@@ -7193,7 +7193,17 @@ naar de prullenbak verplaatsen?</translation>
 <context>
     <name>PageSearchForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchForm.qml" line="+335"/>
+        <location filename="../qt_quick/PageSearchForm.qml" line="+312"/>
+        <source>Select a date</source>
+        <translation>Selecteer een datum</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Now</source>
+        <translation>Nu</translation>
+    </message>
+    <message>
+        <location line="+18"/>
         <source>1 day ago</source>
         <translation>1 dag geleden</translation>
     </message>
@@ -7293,12 +7303,56 @@ naar de prullenbak verplaatsen?</translation>
         <translation>met</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+6"/>
+        <source>All Words</source>
+        <translation>Alle woorden</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Exact Phrase</source>
+        <translation>Exacte zin</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Begins With</source>
+        <translation>Begint met</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Any Word</source>
+        <translation>Elk woord</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Regex</source>
+        <translation>Regex</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location line="+4"/>
+        <location line="+15"/>
+        <source>File names only</source>
+        <translation>Alleen bestandsnamen</translation>
+    </message>
+    <message>
+        <location line="-14"/>
+        <location line="+15"/>
+        <source>File names or Folder paths</source>
+        <translation>Bestandsnamen of mappaden</translation>
+    </message>
+    <message>
+        <location line="-14"/>
+        <location line="+15"/>
+        <source>Folder path only</source>
+        <translation>Alleen mappad</translation>
+    </message>
+    <message>
+        <location line="-8"/>
         <source>in</source>
         <translation>in</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+17"/>
         <source>case sensitive</source>
         <translation>hoofdlettergevoelig</translation>
     </message>

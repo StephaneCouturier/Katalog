@@ -7194,7 +7194,17 @@ to the trash?</source>
 <context>
     <name>PageSearchForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchForm.qml" line="+335"/>
+        <location filename="../qt_quick/PageSearchForm.qml" line="+312"/>
+        <source>Select a date</source>
+        <translation>选择日期</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Now</source>
+        <translation>现在</translation>
+    </message>
+    <message>
+        <location line="+18"/>
         <source>1 day ago</source>
         <translation>1天前</translation>
     </message>
@@ -7294,12 +7304,56 @@ to the trash?</source>
         <translation>包含</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+6"/>
+        <source>All Words</source>
+        <translation>所有词语</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Exact Phrase</source>
+        <translation>精确短语</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Begins With</source>
+        <translation>以...开始</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Any Word</source>
+        <translation>任何词语</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Regex</source>
+        <translation>正则表达式</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location line="+4"/>
+        <location line="+15"/>
+        <source>File names only</source>
+        <translation>仅文件名</translation>
+    </message>
+    <message>
+        <location line="-14"/>
+        <location line="+15"/>
+        <source>File names or Folder paths</source>
+        <translation>文件名或文件夹路径</translation>
+    </message>
+    <message>
+        <location line="-14"/>
+        <location line="+15"/>
+        <source>Folder path only</source>
+        <translation>仅文件夹路径</translation>
+    </message>
+    <message>
+        <location line="-8"/>
         <source>in</source>
         <translation>在</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+17"/>
         <source>case sensitive</source>
         <translation>区分大小写</translation>
     </message>

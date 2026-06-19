@@ -7194,7 +7194,17 @@ roskakoriin?</translation>
 <context>
     <name>PageSearchForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchForm.qml" line="+335"/>
+        <location filename="../qt_quick/PageSearchForm.qml" line="+312"/>
+        <source>Select a date</source>
+        <translation>Valitse päivämäärä</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Now</source>
+        <translation>Nyt</translation>
+    </message>
+    <message>
+        <location line="+18"/>
         <source>1 day ago</source>
         <translation>1 päivä sitten</translation>
     </message>
@@ -7294,12 +7304,56 @@ roskakoriin?</translation>
         <translation>kanssa</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+6"/>
+        <source>All Words</source>
+        <translation>Kaikki sanat</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Exact Phrase</source>
+        <translation>Tarkka lause</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Begins With</source>
+        <translation>Alkaa tekstillä</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Any Word</source>
+        <translation>Mikä tahansa sana</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Regex</source>
+        <translation>Regex</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location line="+4"/>
+        <location line="+15"/>
+        <source>File names only</source>
+        <translation>Vain tiedostonimet</translation>
+    </message>
+    <message>
+        <location line="-14"/>
+        <location line="+15"/>
+        <source>File names or Folder paths</source>
+        <translation>Tiedostonimet tai kansiopoisut</translation>
+    </message>
+    <message>
+        <location line="-14"/>
+        <location line="+15"/>
+        <source>Folder path only</source>
+        <translation>Vain kansiopolku</translation>
+    </message>
+    <message>
+        <location line="-8"/>
         <source>in</source>
         <translation>sisällä</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+17"/>
         <source>case sensitive</source>
         <translation>kirjainkoon huomioiva</translation>
     </message>

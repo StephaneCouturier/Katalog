@@ -36,8 +36,8 @@ ColumnLayout {
         //File name
         newSearch1.properties = {"searchOnFileName":        search_checkBox_FileNameCriteria.checked};
         newSearch1.properties = {"searchText":              search_TextField_FileNameText.text};
-        newSearch1.properties = {"selectedTextCriteria":    search_ComboBox_TextCriteriaWith.currentText};
-        newSearch1.properties = {"selectedSearchIn":        search_ComboBox_TextCriteriaIn.currentText};
+        newSearch1.properties = {"selectedTextCriteria":    search_ComboBox_TextCriteriaWith.currentValue};
+        newSearch1.properties = {"selectedSearchIn":        search_ComboBox_TextCriteriaIn.currentValue};
         newSearch1.properties = {"caseSensitive":           search_CheckBox_FileNameCaseSensitive.checked};
         newSearch1.properties = {"selectedSearchExclude":   search_TextField_FileNameExclude.text};
 
@@ -218,9 +218,9 @@ ColumnLayout {
         // File name
         search_checkBox_FileNameCriteria.checked          = map.searchOnFileName ?? false
         search_TextField_FileNameText.text                = map.searchText ?? ""
-        var idx = search_ComboBox_TextCriteriaWith.find(map.selectedTextCriteria ?? "")
+        var idx = search_ComboBox_TextCriteriaWith.indexOfValue(map.selectedTextCriteria ?? "")
         if (idx >= 0) search_ComboBox_TextCriteriaWith.currentIndex = idx
-        idx = search_ComboBox_TextCriteriaIn.find(map.selectedSearchIn ?? "")
+        idx = search_ComboBox_TextCriteriaIn.indexOfValue(map.selectedSearchIn ?? "")
         if (idx >= 0) search_ComboBox_TextCriteriaIn.currentIndex = idx
         search_CheckBox_FileNameCaseSensitive.checked     = map.caseSensitive ?? false
         search_TextField_FileNameExclude.text             = map.selectedSearchExclude ?? ""
@@ -309,12 +309,12 @@ ColumnLayout {
     Kirigami.Dialog {
         id: dateDialog
         property string selectedDateField
-        title: "Select a date for " + selectedDateField + " date"
+        title: qsTr("Select a date")
 
         contentItem: ColumnLayout {
             RowLayout {
                 Controls.Button {
-                    text: "Now"
+                    text: qsTr("Now")
                     onClicked: {
                         var today = new Date();
                         var dd = today.getDate();
@@ -586,12 +586,26 @@ ColumnLayout {
             Controls.Label { text: qsTr("with"); Layout.preferredWidth: pageSearchForm.labelW }
             Controls.ComboBox {
                 id: search_ComboBox_TextCriteriaWith
-                model: ["All Words", "Exact Phrase", "Begins With", "Any Word", "Regex"]
+                textRole: "text"
+                valueRole: "value"
+                model: [
+                    {text: qsTr("All Words"),     value: "All Words"},
+                    {text: qsTr("Exact Phrase"),  value: "Exact Phrase"},
+                    {text: qsTr("Begins With"),   value: "Begins With"},
+                    {text: qsTr("Any Word"),      value: "Any Word"},
+                    {text: qsTr("Regex"),         value: "Regex"}
+                ]
                 onCurrentIndexChanged: {
                     if (currentIndex === 2) {
-                        search_ComboBox_TextCriteriaIn.model = ["File names only"];
+                        search_ComboBox_TextCriteriaIn.model = [
+                            {text: qsTr("File names only"), value: "File names only"}
+                        ];
                     } else {
-                        search_ComboBox_TextCriteriaIn.model = ["File names only", "File names or Folder paths", "Folder path only"];
+                        search_ComboBox_TextCriteriaIn.model = [
+                            {text: qsTr("File names only"),            value: "File names only"},
+                            {text: qsTr("File names or Folder paths"), value: "File names or Folder paths"},
+                            {text: qsTr("Folder path only"),           value: "Folder path only"}
+                        ];
                     }
                 }
             }
@@ -600,7 +614,13 @@ ColumnLayout {
             Controls.Label { text: qsTr("in"); Layout.preferredWidth: pageSearchForm.labelW }
             Controls.ComboBox {
                 id: search_ComboBox_TextCriteriaIn
-                model: ["File names only", "File names or Folder paths", "Folder path only"]
+                textRole: "text"
+                valueRole: "value"
+                model: [
+                    {text: qsTr("File names only"),            value: "File names only"},
+                    {text: qsTr("File names or Folder paths"), value: "File names or Folder paths"},
+                    {text: qsTr("Folder path only"),           value: "Folder path only"}
+                ]
             }
         }
         RowLayout {

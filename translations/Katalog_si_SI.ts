@@ -7195,7 +7195,17 @@ Razdelitev ni bila izvedena.</translation>
 <context>
     <name>PageSearchForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchForm.qml" line="+335"/>
+        <location filename="../qt_quick/PageSearchForm.qml" line="+312"/>
+        <source>Select a date</source>
+        <translation>Izberite datum</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Now</source>
+        <translation>Zdaj</translation>
+    </message>
+    <message>
+        <location line="+18"/>
         <source>1 day ago</source>
         <translation>Pred 1 dnevom</translation>
     </message>
@@ -7295,12 +7305,56 @@ Razdelitev ni bila izvedena.</translation>
         <translation>z</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+6"/>
+        <source>All Words</source>
+        <translation>Vse besede</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Exact Phrase</source>
+        <translation>Natančna fraza</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Begins With</source>
+        <translation>Se začne z</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Any Word</source>
+        <translation>Katerakoli beseda</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Regex</source>
+        <translation>Regex</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location line="+4"/>
+        <location line="+15"/>
+        <source>File names only</source>
+        <translation>Samo imena datotek</translation>
+    </message>
+    <message>
+        <location line="-14"/>
+        <location line="+15"/>
+        <source>File names or Folder paths</source>
+        <translation>Imena datotek ali poti map</translation>
+    </message>
+    <message>
+        <location line="-14"/>
+        <location line="+15"/>
+        <source>Folder path only</source>
+        <translation>Samo pot mape</translation>
+    </message>
+    <message>
+        <location line="-8"/>
         <source>in</source>
         <translation>v</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+17"/>
         <source>case sensitive</source>
         <translation>razlikovanje velikih/malih črk</translation>
     </message>

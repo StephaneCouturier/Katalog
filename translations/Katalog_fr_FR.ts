@@ -6506,7 +6506,7 @@ to the trash?</source>
     <message>
         <location line="+13"/>
         <source>Global exclude directory</source>
-        <translation>Répertoire d'exclusion global</translation>
+        <translation>Répertoire d&apos;exclusion global</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -7195,7 +7195,17 @@ to the trash?</source>
 <context>
     <name>PageSearchForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchForm.qml" line="+335"/>
+        <location filename="../qt_quick/PageSearchForm.qml" line="+312"/>
+        <source>Select a date</source>
+        <translation>Sélectionner une date</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Now</source>
+        <translation>Maintenant</translation>
+    </message>
+    <message>
+        <location line="+18"/>
         <source>1 day ago</source>
         <translation>Il y a 1 jour</translation>
     </message>
@@ -7222,12 +7232,12 @@ to the trash?</source>
     <message>
         <location line="+15"/>
         <source>Delete search history</source>
-        <translation>Supprimer l'historique de recherche</translation>
+        <translation>Supprimer l&apos;historique de recherche</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>This will delete all search history entries. Continue?</source>
-        <translation>Cela supprimera toutes les entrées de l'historique de recherche. Continuer ?</translation>
+        <translation>Cela supprimera toutes les entrées de l&apos;historique de recherche. Continuer ?</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -7237,7 +7247,7 @@ to the trash?</source>
     <message>
         <location line="+1"/>
         <source>This will delete all but the last 10 search history entries. Continue?</source>
-        <translation>Cela supprimera toutes les entrées de l'historique de recherche sauf les 10 dernières. Continuer ?</translation>
+        <translation>Cela supprimera toutes les entrées de l&apos;historique de recherche sauf les 10 dernières. Continuer ?</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -7295,12 +7305,56 @@ to the trash?</source>
         <translation>avec</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+6"/>
+        <source>All Words</source>
+        <translation>Tous les Mots</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Exact Phrase</source>
+        <translation>Phrase Extacte</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Begins With</source>
+        <translation>Commence Par</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Any Word</source>
+        <translation>Un des Mots</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Regex</source>
+        <translation>Regex</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location line="+4"/>
+        <location line="+15"/>
+        <source>File names only</source>
+        <translation>Noms de Fichers uniquement</translation>
+    </message>
+    <message>
+        <location line="-14"/>
+        <location line="+15"/>
+        <source>File names or Folder paths</source>
+        <translation>Noms de Fichers ou Chemin des Dossiers</translation>
+    </message>
+    <message>
+        <location line="-14"/>
+        <location line="+15"/>
+        <source>Folder path only</source>
+        <translation>Chemins des Dossiers uniquement</translation>
+    </message>
+    <message>
+        <location line="-8"/>
         <source>in</source>
         <translation>dans</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+17"/>
         <source>case sensitive</source>
         <translation>sensible à la casse</translation>
     </message>
@@ -7556,7 +7610,7 @@ to the trash?</source>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or write error</source>
-        <translation>Échec de l'export — aucun résultat ou erreur d'écriture</translation>
+        <translation>Échec de l&apos;export — aucun résultat ou erreur d&apos;écriture</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7566,7 +7620,7 @@ to the trash?</source>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or database error</source>
-        <translation>Échec de l'export — aucun résultat ou erreur de base de données</translation>
+        <translation>Échec de l&apos;export — aucun résultat ou erreur de base de données</translation>
     </message>
     <message>
         <location line="+257"/>

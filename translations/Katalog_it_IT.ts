@@ -7194,7 +7194,17 @@ nel cestino?</translation>
 <context>
     <name>PageSearchForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchForm.qml" line="+335"/>
+        <location filename="../qt_quick/PageSearchForm.qml" line="+312"/>
+        <source>Select a date</source>
+        <translation>Seleziona una data</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Now</source>
+        <translation>Ora</translation>
+    </message>
+    <message>
+        <location line="+18"/>
         <source>1 day ago</source>
         <translation>1 giorno fa</translation>
     </message>
@@ -7276,7 +7286,7 @@ nel cestino?</translation>
     <message>
         <location line="+14"/>
         <source>Path to connected drive or folder</source>
-        <translation>Percorso dell'unità o della cartella collegata</translation>
+        <translation>Percorso dell&apos;unità o della cartella collegata</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7294,12 +7304,56 @@ nel cestino?</translation>
         <translation>con</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+6"/>
+        <source>All Words</source>
+        <translation>Tutte le parole</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Exact Phrase</source>
+        <translation>Frase esatta</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Begins With</source>
+        <translation>Inizia con</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Any Word</source>
+        <translation>Qualsiasi parola</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Regex</source>
+        <translation>Regex</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location line="+4"/>
+        <location line="+15"/>
+        <source>File names only</source>
+        <translation>Solo nomi file</translation>
+    </message>
+    <message>
+        <location line="-14"/>
+        <location line="+15"/>
+        <source>File names or Folder paths</source>
+        <translation>Nomi file o percorsi cartelle</translation>
+    </message>
+    <message>
+        <location line="-14"/>
+        <location line="+15"/>
+        <source>Folder path only</source>
+        <translation>Solo percorso cartella</translation>
+    </message>
+    <message>
+        <location line="-8"/>
         <source>in</source>
         <translation>in</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+17"/>
         <source>case sensitive</source>
         <translation>sensibile alle maiuscole</translation>
     </message>
@@ -7774,7 +7828,7 @@ nel cestino?</translation>
         <source>Permanently delete this file? This cannot be undone.
 
 %1</source>
-        <translation>Eliminare definitivamente questo file? L'operazione non può essere annullata.
+        <translation>Eliminare definitivamente questo file? L&apos;operazione non può essere annullata.
 
 %1</translation>
     </message>
@@ -7816,7 +7870,7 @@ Errori: %3</translation>
     <message>
         <location line="+2"/>
         <source>Permanently delete all %1 result(s)? This cannot be undone.</source>
-        <translation>Eliminare definitivamente tutti i %1 risultati? L'operazione non può essere annullata.</translation>
+        <translation>Eliminare definitivamente tutti i %1 risultati? L&apos;operazione non può essere annullata.</translation>
     </message>
     <message>
         <location line="+2"/>
