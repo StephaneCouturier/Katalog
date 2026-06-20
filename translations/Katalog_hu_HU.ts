@@ -571,12 +571,12 @@ Válasszon másik nevet.</translation>
     <message>
         <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+131"/>
         <source>Select a Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Válasszon tárolót</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Select a Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Válasszon katalógust</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -607,7 +607,7 @@ Válasszon másik nevet.</translation>
     <message>
         <location filename="../qt_quick/Main.qml" line="+650"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Biztosan &lt;b&gt;törli&lt;/b&gt; ezt a(z) %1 eszközt?&lt;br/&gt;&lt;br/&gt;Név: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -616,7 +616,7 @@ Válasszon másik nevet.</translation>
         <location line="+127"/>
         <location line="+149"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Igen</translation>
     </message>
     <message>
         <location line="-361"/>
@@ -633,7 +633,7 @@ Válasszon másik nevet.</translation>
         <location line="+158"/>
         <location line="+137"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location line="-407"/>
@@ -643,7 +643,7 @@ Válasszon másik nevet.</translation>
     <message>
         <location line="+2"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Rendszer</translation>
     </message>
     <message>
         <location line="-224"/>
@@ -657,7 +657,23 @@ Válasszon másik nevet.</translation>
         <translation>Megnyitás...</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+4"/>
+        <source>Collection Folder...</source>
+        <translation>Gyűjtemény mappája...</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location line="+57"/>
+        <source>SQLite Database...</source>
+        <translation>SQLite-adatbázis...</translation>
+    </message>
+    <message>
+        <location line="-43"/>
+        <source>Hosted Database...</source>
+        <translation>Üzemeltetett adatbázis...</translation>
+    </message>
+    <message>
+        <location line="+39"/>
         <source>New...</source>
         <translation>Új...</translation>
     </message>
@@ -738,7 +754,21 @@ Válasszon másik nevet.</translation>
         <translation>Kártya szövegmérete</translation>
     </message>
     <message>
-        <location line="+156"/>
+        <location line="+117"/>
+        <source>This is an early alpha version of Katalog intended to support development and gather feedback.
+
+</source>
+        <translation>Ez a Katalog korai alfa verziója, amelynek célja a fejlesztés támogatása és visszajelzések gyűjtése.
+
+</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Do not show again</source>
+        <translation>Ne jelenjen meg újra</translation>
+    </message>
+    <message>
+        <location line="+33"/>
         <source>Open existing...</source>
         <translation>Meglévő megnyitása...</translation>
     </message>
@@ -755,19 +785,19 @@ Válasszon másik nevet.</translation>
     <message>
         <location line="+1"/>
         <source>1- Select an entire drive or directory, &lt;br/&gt;2- select options, and &lt;br/&gt;3- click &apos;Create&apos;&lt;br/&gt;</source>
-        <translation type="unfinished">1- Válasszon teljes meghajtót vagy könyvtárat, &lt;br/&gt;2- válasszon opciókat, és &lt;br/&gt;3- kattintson a &apos;Létrehozás&apos;-ra&lt;br/&gt;</translation>
+        <translation>1- Válasszon teljes meghajtót vagy könyvtárat, &lt;br/&gt;2- válasszon opciókat, és &lt;br/&gt;3- kattintson a &apos;Létrehozás&apos;-ra&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+120"/>
         <source>Update the catalog content with the new criteria?</source>
-        <translation type="unfinished"></translation>
+        <translation>Frissíti a katalógus tartalmát az új feltételekkel?</translation>
     </message>
     <message>
         <location line="+8"/>
         <location line="+128"/>
         <location line="+148"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem</translation>
     </message>
     <message>
         <location line="-250"/>
@@ -802,7 +832,7 @@ Válasszon másik nevet.</translation>
     <message>
         <location line="+46"/>
         <source>A snapshot of this collection was recorded:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pillanatfelvétel készült erről a gyűjteményről:</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -812,7 +842,7 @@ Válasszon másik nevet.</translation>
     <message>
         <location line="+1"/>
         <source>Number of files:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájlok száma:</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -820,12 +850,12 @@ Válasszon másik nevet.</translation>
         <location line="+2"/>
         <location line="+1"/>
         <source>added:</source>
-        <translation type="unfinished"></translation>
+        <translation>hozzáadva:</translation>
     </message>
     <message>
         <location line="-3"/>
         <source>Total file size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Teljes fájlméret:</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -836,12 +866,12 @@ Válasszon másik nevet.</translation>
     <message>
         <location line="-109"/>
         <source>Storage free space:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tároló szabad helye:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage total space:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tároló teljes helye:</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -935,25 +965,27 @@ Válasszon másik nevet.</translation>
         <location line="+7"/>
         <location line="+21"/>
         <source>Catalogs updated:</source>
-        <translation type="unfinished"></translation>
+        <translation>Frissített katalógusok:</translation>
     </message>
     <message>
         <location line="-21"/>
         <location line="+21"/>
         <source>skipped</source>
-        <translation type="unfinished"></translation>
+        <translation>kihagyva</translation>
     </message>
     <message>
         <location line="-6"/>
         <source>Selected active catalogs are updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>A kiválasztott aktív katalógusok frissülnek.</translation>
     </message>
     <message>
         <location line="+51"/>
         <source>The source folder does not contain any file.
 This could mean that the source is empty or the device is not mounted to this folder.
 Do you want to save it anyway (the catalog would be empty)?</source>
-        <translation type="unfinished"></translation>
+        <translation>A forrásmappa nem tartalmaz fájlt.
+Ez azt jelentheti, hogy a forrás üres, vagy az eszköz nincs csatolva ehhez a mappához.
+Mindenképpen menti (a katalógus üres lesz)?</translation>
     </message>
     <message>
         <location line="-692"/>
@@ -987,7 +1019,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+7"/>
         <source>History</source>
-        <translation type="unfinished"></translation>
+        <translation>Előzmények</translation>
     </message>
     <message>
         <location line="-138"/>
@@ -1003,19 +1035,34 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Bezárás</translation>
     </message>
     <message>
-        <location line="-420"/>
+        <location line="-561"/>
+        <source>Show device info</source>
+        <translation>Eszközinformációk megjelenítése</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Collapse one level</source>
+        <translation>Egy szint összecsukása</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Expand one level</source>
+        <translation>Egy szint kibontása</translation>
+    </message>
+    <message>
+        <location line="+127"/>
         <source>Duplicates (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Másolatok (%1)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Differences (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Eltérések (%1)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Results</source>
-        <translation type="unfinished"></translation>
+        <translation>Eredmények</translation>
     </message>
     <message>
         <location line="+54"/>
@@ -1044,12 +1091,12 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+123"/>
         <source>Catalog created successfully.</source>
-        <translation type="unfinished"></translation>
+        <translation>A katalógus sikeresen létrejött.</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Catalog creation failed: </source>
-        <translation type="unfinished"></translation>
+        <translation>A katalógus létrehozása sikertelen: </translation>
     </message>
     <message>
         <location line="-1108"/>
@@ -1061,7 +1108,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+47"/>
         <source>Edit Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Eszköz szerkesztése</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -1070,7 +1117,11 @@ Do you want to save it anyway (the catalog would be empty)?</source>
 %1
 
 (The catalog must be updated to reflect these changes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Menti a katalógusdefiníció módosításait?
+
+%1
+
+(A katalógust frissíteni kell a módosítások érvényesítéséhez)</translation>
     </message>
     <message>
         <location line="+25"/>
@@ -1094,15 +1145,25 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+5"/>
         <source>LuckyBackup</source>
-        <translation type="unfinished"></translation>
+        <translation>LuckyBackup</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Generate LuckyBackup profile</source>
-        <translation type="unfinished"></translation>
+        <translation>LuckyBackup-profil létrehozása</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+41"/>
+        <source>Select Collection Folder</source>
+        <translation>Válassza ki a gyűjtemény mappáját</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Open SQLite Database</source>
+        <translation>SQLite-adatbázis megnyitása</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Select the database to create and open:</source>
         <translation>Válassza ki a létrehozandó és megnyitandó adatbázist:</translation>
     </message>
@@ -5918,7 +5979,7 @@ lomtárba helyezése?</translation>
         <location filename="../qt_quick/PageBackupForm.qml" line="+35"/>
         <location line="+315"/>
         <source>in sync</source>
-        <translation type="unfinished"></translation>
+        <translation>szinkronban</translation>
     </message>
     <message>
         <location line="-282"/>
@@ -5933,23 +5994,23 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+2"/>
         <source>Copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Másolva: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Archived &amp; copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Archiválva és másolva: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Conflicts: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ütközések: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+379"/>
         <source>Errors: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hibák: %1</translation>
     </message>
     <message>
         <location line="-360"/>
@@ -5977,7 +6038,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="-153"/>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Szűrő</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6014,12 +6075,12 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+24"/>
         <source>No backup links</source>
-        <translation type="unfinished"></translation>
+        <translation>Nincsenek biztonsági mentési hivatkozások</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Create a link to define a source and target for backup or archive operations.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hozzon létre egy hivatkozást a biztonsági mentési vagy archiválási műveletek forrásának és céljának meghatározásához.</translation>
     </message>
     <message>
         <location line="+118"/>
@@ -6031,7 +6092,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="-13"/>
         <source>Diff</source>
-        <translation type="unfinished"></translation>
+        <translation>Eltérés</translation>
     </message>
     <message>
         <location line="+55"/>
@@ -6071,7 +6132,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+8"/>
         <source>More actions</source>
-        <translation type="unfinished"></translation>
+        <translation>További műveletek</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6086,12 +6147,12 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+1"/>
         <source>Created: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Létrehozva: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Already existing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Már létezik: %1</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -6111,12 +6172,12 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+8"/>
         <source>Delete link</source>
-        <translation type="unfinished"></translation>
+        <translation>Hivatkozás törlése</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Delete link &quot;%1&quot;? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Törli a(z) „%1” hivatkozást? Ezt nem lehet visszavonni.</translation>
     </message>
 </context>
 <context>
@@ -6124,7 +6185,7 @@ lomtárba helyezése?</translation>
     <message>
         <location filename="../qt_quick/PageBackupMappingForm.qml" line="+8"/>
         <source>Add Link</source>
-        <translation type="unfinished"></translation>
+        <translation>Hivatkozás hozzáadása</translation>
     </message>
     <message>
         <location line="+34"/>
@@ -6144,12 +6205,12 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+3"/>
         <source>e.g. Docs → NAS_Docs</source>
-        <translation type="unfinished"></translation>
+        <translation>pl. Docs → NAS_Docs</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Auto-generate name</source>
-        <translation type="unfinished"></translation>
+        <translation>Név automatikus generálása</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6174,7 +6235,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+6"/>
         <source>Source catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Forráskatalógus</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6184,12 +6245,12 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+6"/>
         <source>Target catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Célkatalógus</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6199,7 +6260,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+1"/>
         <source>Mirror folder structure exactly (default)</source>
-        <translation type="unfinished"></translation>
+        <translation>A mappaszerkezet pontos tükrözése (alapértelmezett)</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6209,12 +6270,12 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+4"/>
         <source>Rename oldest - rename target, copy source</source>
-        <translation type="unfinished"></translation>
+        <translation>Legrégebbi átnevezése – cél átnevezése, forrás másolása</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Skip - leave target untouched</source>
-        <translation type="unfinished"></translation>
+        <translation>Kihagyás – cél érintetlenül hagyása</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6224,7 +6285,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+1"/>
         <source>Scan source drive directly (requires connected source)</source>
-        <translation type="unfinished"></translation>
+        <translation>A forrásmeghajtó közvetlen vizsgálata (csatlakoztatott forrás szükséges)</translation>
     </message>
 </context>
 <context>
@@ -6232,7 +6293,7 @@ lomtárba helyezése?</translation>
     <message>
         <location filename="../qt_quick/PageBackupPreviewForm.qml" line="+8"/>
         <source>Backup Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Biztonsági mentés előnézete</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -6252,12 +6313,12 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+15"/>
         <source>Updating catalogs…</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalógusok frissítése…</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Computing preview…</source>
-        <translation type="unfinished"></translation>
+        <translation>Előnézet kiszámítása…</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -6274,37 +6335,37 @@ lomtárba helyezése?</translation>
     <message>
         <location line="-56"/>
         <source>file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>fájl(ok)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Conflicts: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ütközések: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Already in target: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Már a célban: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>source offline</source>
-        <translation type="unfinished"></translation>
+        <translation>forrás offline</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>target offline</source>
-        <translation type="unfinished"></translation>
+        <translation>cél offline</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Insufficient disk space - Required: %1, Available: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nincs elég lemezterület – Szükséges: %1, Elérhető: %2</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Low target space - %1 remaining after operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Kevés célterület – a művelet után %1 marad</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -6334,12 +6395,12 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+31"/>
         <source>Everything is in sync</source>
-        <translation type="unfinished"></translation>
+        <translation>Minden szinkronban van</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>No files need to be copied or moved.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nincs másolandó vagy áthelyezendő fájl.</translation>
     </message>
 </context>
 <context>
@@ -6517,12 +6578,12 @@ lomtárba helyezése?</translation>
     <message>
         <location filename="../qt_quick/PageDeviceEditForm.qml" line="+95"/>
         <source>Provide a name for this device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Adjon meg egy nevet ehhez az eszközhöz.</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Source path: %1 → %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Forrásútvonal: %1 → %2</translation>
     </message>
     <message>
         <location line="+83"/>
@@ -6543,12 +6604,12 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+6"/>
         <source>Parent device</source>
-        <translation type="unfinished"></translation>
+        <translation>Szülő eszköz</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Hely</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6637,7 +6698,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+22"/>
         <source>Exclude folders (this catalog)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mappák kizárása (ez a katalógus)</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6657,7 +6718,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+43"/>
         <source>Storage details</source>
-        <translation type="unfinished"></translation>
+        <translation>Tároló részletei</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6672,22 +6733,22 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+3"/>
         <source>File system</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájlrendszer</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Total space (bytes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Teljes hely (bájt)</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Free space (bytes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Szabad hely (bájt)</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Refresh from disk</source>
-        <translation type="unfinished"></translation>
+        <translation>Frissítés lemezről</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -6702,12 +6763,12 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+3"/>
         <source>Serial number</source>
-        <translation type="unfinished"></translation>
+        <translation>Sorozatszám</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Build date</source>
-        <translation type="unfinished"></translation>
+        <translation>Build dátuma</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6727,12 +6788,12 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+10"/>
         <source>Picture</source>
-        <translation type="unfinished"></translation>
+        <translation>Kép</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Reload pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>Képek újratöltése</translation>
     </message>
 </context>
 <context>
@@ -6741,17 +6802,17 @@ lomtárba helyezése?</translation>
         <location filename="../qt_quick/PageDevicesView.qml" line="+47"/>
         <location line="+37"/>
         <source>Split Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalógus felosztása</translation>
     </message>
     <message>
         <location line="-32"/>
         <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by sub-directory?&lt;br/&gt;&lt;br/&gt;This will create one sub-catalog per immediate sub-directory and remove the original catalog. This operation cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Felosztja a(z) &lt;b&gt;%1&lt;/b&gt; elemet alkatalógusokra alkönyvtár szerint?&lt;br/&gt;&lt;br/&gt;Ez minden közvetlen alkönyvtárhoz létrehoz egy alkatalógust, és eltávolítja az eredeti katalógust. Ezt a műveletet nem lehet visszavonni.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Split</source>
-        <translation type="unfinished"></translation>
+        <translation>Felosztás</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -6765,7 +6826,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="-156"/>
         <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by file type:</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; felosztása alkatalógusokra fájltípus szerint:</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6785,17 +6846,17 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+5"/>
         <source>Verify checksums for &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellenőrzi a(z) &lt;b&gt;%1&lt;/b&gt; ellenőrzőösszegeit?</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Verify</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellenőrzés</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>No checksums are stored for this catalog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ehhez a katalógushoz nincsenek tárolt ellenőrzőösszegek.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6805,58 +6866,58 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+1"/>
         <source>Verified: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellenőrizve: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Mismatches: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Eltérések: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Missing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiányzó: %1</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Checksum Verification</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellenőrzőösszeg-ellenőrzés</translation>
     </message>
     <message>
         <location line="+10"/>
         <location line="+89"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location line="-78"/>
         <source>Unassign Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Eszköz hozzárendelésének megszüntetése</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Unassign &lt;b&gt;%1&lt;/b&gt; from its parent device?</source>
-        <translation type="unfinished"></translation>
+        <translation>Megszünteti a(z) &lt;b&gt;%1&lt;/b&gt; hozzárendelését a szülő eszközéhez?</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Unassign</source>
-        <translation type="unfinished"></translation>
+        <translation>Hozzárendelés megszüntetése</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Delete Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Eszköz törlése</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Biztosan &lt;b&gt;törli&lt;/b&gt; ezt a(z) %1 eszközt?&lt;br/&gt;&lt;br/&gt;Név: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Igen</translation>
     </message>
     <message>
         <location line="+63"/>
@@ -6876,7 +6937,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+9"/>
         <source>Filter from Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Szűrés a kijelölésből</translation>
     </message>
     <message>
         <location line="+33"/>
@@ -6916,7 +6977,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+22"/>
         <source>No devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Nincs eszköz</translation>
     </message>
 </context>
 <context>
@@ -7010,12 +7071,12 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+3"/>
         <source>free</source>
-        <translation type="unfinished"></translation>
+        <translation>szabad</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Műveletek</translation>
     </message>
 </context>
 <context>
@@ -7023,7 +7084,7 @@ lomtárba helyezése?</translation>
     <message>
         <location filename="../qt_quick/PageExploreFiles.qml" line="+67"/>
         <source>No folder selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Nincs kiválasztott mappa</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -7074,12 +7135,12 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+8"/>
         <source>Copy absolute path</source>
-        <translation type="unfinished"></translation>
+        <translation>Abszolút útvonal másolása</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Copy file name</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájlnév másolása</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7914,6 +7975,16 @@ Hibák: %3</translation>
         <source>Edit</source>
         <translation>Szerkesztés</translation>
     </message>
+    <message>
+        <location line="+62"/>
+        <source>Collapse</source>
+        <translation>Összecsukás</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Expand</source>
+        <translation>Kibontás</translation>
+    </message>
 </context>
 <context>
     <name>PageSettings</name>
@@ -8183,7 +8254,7 @@ Hibák: %3</translation>
     <message>
         <location line="+24"/>
         <source>No data</source>
-        <translation type="unfinished"></translation>
+        <translation>Nincs adat</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -8238,12 +8309,12 @@ Hibák: %3</translation>
     <message>
         <location line="+9"/>
         <source>Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Adatok</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>From date</source>
-        <translation type="unfinished"></translation>
+        <translation>Ettől a dátumtól</translation>
     </message>
     <message>
         <location line="+24"/>
@@ -8253,7 +8324,7 @@ Hibák: %3</translation>
     <message>
         <location line="+16"/>
         <source>Select start date</source>
-        <translation type="unfinished"></translation>
+        <translation>Válassza ki a kezdő dátumot</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -8329,12 +8400,12 @@ Hibák: %3</translation>
     <message>
         <location line="+5"/>
         <source>Select or enter a folder to tag.</source>
-        <translation type="unfinished"></translation>
+        <translation>Válasszon ki vagy adjon meg egy címkézendő mappát.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Select or enter a tag name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Válasszon ki vagy adjon meg egy címkenevet.</translation>
     </message>
     <message>
         <source>Please enter a tag name.</source>

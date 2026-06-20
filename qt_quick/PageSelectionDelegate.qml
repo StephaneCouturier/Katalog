@@ -126,7 +126,7 @@ Kirigami.AbstractCard {
                 Layout.columnSpan: 1
                 visible: model.hasChildren && !model.isCollapsed
                 onClicked: appManager1.collapseDevice(model.deviceId)
-                Controls.ToolTip.text: "Collapse"
+                Controls.ToolTip.text: qsTr("Collapse")
                 Controls.ToolTip.visible: hovered
             }
             Controls.ToolButton {
@@ -134,7 +134,7 @@ Kirigami.AbstractCard {
                 Layout.columnSpan: 2
                 visible: model.hasChildren && model.isCollapsed
                 onClicked: appManager1.expandDevice(model.deviceId)
-                Controls.ToolTip.text: "Expand"
+                Controls.ToolTip.text: qsTr("Expand")
                 Controls.ToolTip.visible: hovered
             }
         }

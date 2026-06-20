@@ -571,12 +571,12 @@ Izvēlieties citu nosaukumu.</translation>
     <message>
         <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+131"/>
         <source>Select a Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Atlasiet krātuvi</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Select a Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Atlasiet katalogu</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -607,7 +607,7 @@ Izvēlieties citu nosaukumu.</translation>
     <message>
         <location filename="../qt_quick/Main.qml" line="+650"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai vēlaties &lt;b&gt;dzēst&lt;/b&gt; šo %1 ierīci?&lt;br/&gt;&lt;br/&gt;Nosaukums: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -616,7 +616,7 @@ Izvēlieties citu nosaukumu.</translation>
         <location line="+127"/>
         <location line="+149"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Jā</translation>
     </message>
     <message>
         <location line="-361"/>
@@ -633,7 +633,7 @@ Izvēlieties citu nosaukumu.</translation>
         <location line="+158"/>
         <location line="+137"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>Labi</translation>
     </message>
     <message>
         <location line="-407"/>
@@ -643,7 +643,7 @@ Izvēlieties citu nosaukumu.</translation>
     <message>
         <location line="+2"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistēma</translation>
     </message>
     <message>
         <location line="-224"/>
@@ -657,7 +657,23 @@ Izvēlieties citu nosaukumu.</translation>
         <translation>Atvērt...</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+4"/>
+        <source>Collection Folder...</source>
+        <translation>Kolekcijas mape...</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location line="+57"/>
+        <source>SQLite Database...</source>
+        <translation>SQLite datubāze...</translation>
+    </message>
+    <message>
+        <location line="-43"/>
+        <source>Hosted Database...</source>
+        <translation>Mitināta datubāze...</translation>
+    </message>
+    <message>
+        <location line="+39"/>
         <source>New...</source>
         <translation>Jauns...</translation>
     </message>
@@ -738,7 +754,21 @@ Izvēlieties citu nosaukumu.</translation>
         <translation>Kartītes teksta izmērs</translation>
     </message>
     <message>
-        <location line="+156"/>
+        <location line="+117"/>
+        <source>This is an early alpha version of Katalog intended to support development and gather feedback.
+
+</source>
+        <translation>Šī ir Katalog agrīna alfa versija, kas paredzēta izstrādes atbalstam un atsauksmju vākšanai.
+
+</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Do not show again</source>
+        <translation>Vairs nerādīt</translation>
+    </message>
+    <message>
+        <location line="+33"/>
         <source>Open existing...</source>
         <translation>Atvērt esošo...</translation>
     </message>
@@ -755,19 +785,19 @@ Izvēlieties citu nosaukumu.</translation>
     <message>
         <location line="+1"/>
         <source>1- Select an entire drive or directory, &lt;br/&gt;2- select options, and &lt;br/&gt;3- click &apos;Create&apos;&lt;br/&gt;</source>
-        <translation type="unfinished">1- Izvēlieties veselu disku vai direktoriju, &lt;br/&gt;2- izvēlieties opcijas, un &lt;br/&gt;3- noklikšķiniet &apos;Izveidot&apos;&lt;br/&gt;</translation>
+        <translation>1- Izvēlieties veselu disku vai direktoriju, &lt;br/&gt;2- izvēlieties opcijas, un &lt;br/&gt;3- noklikšķiniet &apos;Izveidot&apos;&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+120"/>
         <source>Update the catalog content with the new criteria?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai atjaunināt kataloga saturu ar jaunajiem kritērijiem?</translation>
     </message>
     <message>
         <location line="+8"/>
         <location line="+128"/>
         <location line="+148"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Nē</translation>
     </message>
     <message>
         <location line="-250"/>
@@ -802,7 +832,7 @@ Izvēlieties citu nosaukumu.</translation>
     <message>
         <location line="+46"/>
         <source>A snapshot of this collection was recorded:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tika ierakstīts šīs kolekcijas momentuzņēmums:</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -812,7 +842,7 @@ Izvēlieties citu nosaukumu.</translation>
     <message>
         <location line="+1"/>
         <source>Number of files:</source>
-        <translation type="unfinished"></translation>
+        <translation>Failu skaits:</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -820,12 +850,12 @@ Izvēlieties citu nosaukumu.</translation>
         <location line="+2"/>
         <location line="+1"/>
         <source>added:</source>
-        <translation type="unfinished"></translation>
+        <translation>pievienots:</translation>
     </message>
     <message>
         <location line="-3"/>
         <source>Total file size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopējais failu izmērs:</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -836,12 +866,12 @@ Izvēlieties citu nosaukumu.</translation>
     <message>
         <location line="-109"/>
         <source>Storage free space:</source>
-        <translation type="unfinished"></translation>
+        <translation>Krātuves brīvā vieta:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage total space:</source>
-        <translation type="unfinished"></translation>
+        <translation>Krātuves kopējā vieta:</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -935,25 +965,27 @@ Izvēlieties citu nosaukumu.</translation>
         <location line="+7"/>
         <location line="+21"/>
         <source>Catalogs updated:</source>
-        <translation type="unfinished"></translation>
+        <translation>Atjauninātie katalogi:</translation>
     </message>
     <message>
         <location line="-21"/>
         <location line="+21"/>
         <source>skipped</source>
-        <translation type="unfinished"></translation>
+        <translation>izlaists</translation>
     </message>
     <message>
         <location line="-6"/>
         <source>Selected active catalogs are updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Atlasītie aktīvie katalogi tiek atjaunināti.</translation>
     </message>
     <message>
         <location line="+51"/>
         <source>The source folder does not contain any file.
 This could mean that the source is empty or the device is not mounted to this folder.
 Do you want to save it anyway (the catalog would be empty)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Avota mape nesatur nevienu failu.
+Tas var nozīmēt, ka avots ir tukšs vai ierīce nav pievienota šai mapei.
+Vai tomēr vēlaties to saglabāt (katalogs būs tukšs)?</translation>
     </message>
     <message>
         <location line="-692"/>
@@ -987,7 +1019,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+7"/>
         <source>History</source>
-        <translation type="unfinished"></translation>
+        <translation>Vēsture</translation>
     </message>
     <message>
         <location line="-138"/>
@@ -1003,19 +1035,34 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Aizvērt</translation>
     </message>
     <message>
-        <location line="-420"/>
+        <location line="-561"/>
+        <source>Show device info</source>
+        <translation>Rādīt ierīces informāciju</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Collapse one level</source>
+        <translation>Sakļaut vienu līmeni</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Expand one level</source>
+        <translation>Izvērst vienu līmeni</translation>
+    </message>
+    <message>
+        <location line="+127"/>
         <source>Duplicates (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dublikāti (%1)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Differences (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Atšķirības (%1)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Results</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezultāti</translation>
     </message>
     <message>
         <location line="+54"/>
@@ -1044,12 +1091,12 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+123"/>
         <source>Catalog created successfully.</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalogs veiksmīgi izveidots.</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Catalog creation failed: </source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās izveidot katalogu: </translation>
     </message>
     <message>
         <location line="-1108"/>
@@ -1061,7 +1108,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+47"/>
         <source>Edit Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Rediģēt ierīci</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -1070,7 +1117,11 @@ Do you want to save it anyway (the catalog would be empty)?</source>
 %1
 
 (The catalog must be updated to reflect these changes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai saglabāt izmaiņas kataloga definīcijā?
+
+%1
+
+(Katalogs ir jāatjaunina, lai atspoguļotu šīs izmaiņas)</translation>
     </message>
     <message>
         <location line="+25"/>
@@ -1094,15 +1145,25 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+5"/>
         <source>LuckyBackup</source>
-        <translation type="unfinished"></translation>
+        <translation>LuckyBackup</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Generate LuckyBackup profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Ģenerēt LuckyBackup profilu</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+41"/>
+        <source>Select Collection Folder</source>
+        <translation>Atlasiet kolekcijas mapi</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Open SQLite Database</source>
+        <translation>Atvērt SQLite datubāzi</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Select the database to create and open:</source>
         <translation>Izvēlēties datubāzi, ko izveidot un atvērt:</translation>
     </message>
@@ -5919,7 +5980,7 @@ uz miskasti?</translation>
         <location filename="../qt_quick/PageBackupForm.qml" line="+35"/>
         <location line="+315"/>
         <source>in sync</source>
-        <translation type="unfinished"></translation>
+        <translation>sinhronizēts</translation>
     </message>
     <message>
         <location line="-282"/>
@@ -5934,23 +5995,23 @@ uz miskasti?</translation>
     <message>
         <location line="+2"/>
         <source>Copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopēti: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Archived &amp; copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Arhivēti un kopēti: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Conflicts: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Konflikti: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+379"/>
         <source>Errors: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kļūdas: %1</translation>
     </message>
     <message>
         <location line="-360"/>
@@ -5978,7 +6039,7 @@ uz miskasti?</translation>
     <message>
         <location line="-153"/>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtrs</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6015,12 +6076,12 @@ uz miskasti?</translation>
     <message>
         <location line="+24"/>
         <source>No backup links</source>
-        <translation type="unfinished"></translation>
+        <translation>Nav dublējuma saišu</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Create a link to define a source and target for backup or archive operations.</source>
-        <translation type="unfinished"></translation>
+        <translation>Izveidojiet saiti, lai definētu avotu un mērķi dublēšanas vai arhivēšanas darbībām.</translation>
     </message>
     <message>
         <location line="+118"/>
@@ -6032,7 +6093,7 @@ uz miskasti?</translation>
     <message>
         <location line="-13"/>
         <source>Diff</source>
-        <translation type="unfinished"></translation>
+        <translation>Atšķ</translation>
     </message>
     <message>
         <location line="+55"/>
@@ -6072,7 +6133,7 @@ uz miskasti?</translation>
     <message>
         <location line="+8"/>
         <source>More actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Vairāk darbību</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6087,12 +6148,12 @@ uz miskasti?</translation>
     <message>
         <location line="+1"/>
         <source>Created: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Izveidoti: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Already existing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Jau esošie: %1</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -6112,12 +6173,12 @@ uz miskasti?</translation>
     <message>
         <location line="+8"/>
         <source>Delete link</source>
-        <translation type="unfinished"></translation>
+        <translation>Dzēst saiti</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Delete link &quot;%1&quot;? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai dzēst saiti “%1”? To nevar atsaukt.</translation>
     </message>
 </context>
 <context>
@@ -6125,7 +6186,7 @@ uz miskasti?</translation>
     <message>
         <location filename="../qt_quick/PageBackupMappingForm.qml" line="+8"/>
         <source>Add Link</source>
-        <translation type="unfinished"></translation>
+        <translation>Pievienot saiti</translation>
     </message>
     <message>
         <location line="+34"/>
@@ -6145,12 +6206,12 @@ uz miskasti?</translation>
     <message>
         <location line="+3"/>
         <source>e.g. Docs → NAS_Docs</source>
-        <translation type="unfinished"></translation>
+        <translation>piem. Docs → NAS_Docs</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Auto-generate name</source>
-        <translation type="unfinished"></translation>
+        <translation>Automātiski ģenerēt nosaukumu</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6175,7 +6236,7 @@ uz miskasti?</translation>
     <message>
         <location line="+6"/>
         <source>Source catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Avota katalogs</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6185,12 +6246,12 @@ uz miskasti?</translation>
     <message>
         <location line="+6"/>
         <source>Target catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Mērķa katalogs</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opcijas</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6200,7 +6261,7 @@ uz miskasti?</translation>
     <message>
         <location line="+1"/>
         <source>Mirror folder structure exactly (default)</source>
-        <translation type="unfinished"></translation>
+        <translation>Precīzi atspoguļot mapju struktūru (noklusējums)</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6210,12 +6271,12 @@ uz miskasti?</translation>
     <message>
         <location line="+4"/>
         <source>Rename oldest - rename target, copy source</source>
-        <translation type="unfinished"></translation>
+        <translation>Pārdēvēt vecāko - pārdēvēt mērķi, kopēt avotu</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Skip - leave target untouched</source>
-        <translation type="unfinished"></translation>
+        <translation>Izlaist - atstāt mērķi neskartu</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6225,7 +6286,7 @@ uz miskasti?</translation>
     <message>
         <location line="+1"/>
         <source>Scan source drive directly (requires connected source)</source>
-        <translation type="unfinished"></translation>
+        <translation>Skenēt avota disku tieši (nepieciešams pievienots avots)</translation>
     </message>
 </context>
 <context>
@@ -6233,7 +6294,7 @@ uz miskasti?</translation>
     <message>
         <location filename="../qt_quick/PageBackupPreviewForm.qml" line="+8"/>
         <source>Backup Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Dublējuma priekšskatījums</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -6253,12 +6314,12 @@ uz miskasti?</translation>
     <message>
         <location line="+15"/>
         <source>Updating catalogs…</source>
-        <translation type="unfinished"></translation>
+        <translation>Notiek katalogu atjaunināšana…</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Computing preview…</source>
-        <translation type="unfinished"></translation>
+        <translation>Notiek priekšskatījuma aprēķins…</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -6275,37 +6336,37 @@ uz miskasti?</translation>
     <message>
         <location line="-56"/>
         <source>file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>fails(-i)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Conflicts: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Konflikti: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Already in target: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Jau mērķī: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>source offline</source>
-        <translation type="unfinished"></translation>
+        <translation>avots bezsaistē</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>target offline</source>
-        <translation type="unfinished"></translation>
+        <translation>mērķis bezsaistē</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Insufficient disk space - Required: %1, Available: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepietiek vietas diskā - Nepieciešams: %1, Pieejams: %2</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Low target space - %1 remaining after operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Maz vietas mērķī - %1 atlicis pēc darbības</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -6335,12 +6396,12 @@ uz miskasti?</translation>
     <message>
         <location line="+31"/>
         <source>Everything is in sync</source>
-        <translation type="unfinished"></translation>
+        <translation>Viss ir sinhronizēts</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>No files need to be copied or moved.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nav nepieciešams kopēt vai pārvietot failus.</translation>
     </message>
 </context>
 <context>
@@ -6518,12 +6579,12 @@ uz miskasti?</translation>
     <message>
         <location filename="../qt_quick/PageDeviceEditForm.qml" line="+95"/>
         <source>Provide a name for this device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Norādiet šīs ierīces nosaukumu.</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Source path: %1 → %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Avota ceļš: %1 → %2</translation>
     </message>
     <message>
         <location line="+83"/>
@@ -6544,12 +6605,12 @@ uz miskasti?</translation>
     <message>
         <location line="+6"/>
         <source>Parent device</source>
-        <translation type="unfinished"></translation>
+        <translation>Vecākierīce</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Atrašanās vieta</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6638,7 +6699,7 @@ uz miskasti?</translation>
     <message>
         <location line="+22"/>
         <source>Exclude folders (this catalog)</source>
-        <translation type="unfinished"></translation>
+        <translation>Izslēgt mapes (šis katalogs)</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6658,7 +6719,7 @@ uz miskasti?</translation>
     <message>
         <location line="+43"/>
         <source>Storage details</source>
-        <translation type="unfinished"></translation>
+        <translation>Krātuves detaļas</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6673,22 +6734,22 @@ uz miskasti?</translation>
     <message>
         <location line="+3"/>
         <source>File system</source>
-        <translation type="unfinished"></translation>
+        <translation>Failu sistēma</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Total space (bytes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopējā vieta (baiti)</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Free space (bytes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Brīvā vieta (baiti)</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Refresh from disk</source>
-        <translation type="unfinished"></translation>
+        <translation>Atsvaidzināt no diska</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -6703,12 +6764,12 @@ uz miskasti?</translation>
     <message>
         <location line="+3"/>
         <source>Serial number</source>
-        <translation type="unfinished"></translation>
+        <translation>Sērijas numurs</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Build date</source>
-        <translation type="unfinished"></translation>
+        <translation>Būvējuma datums</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6728,12 +6789,12 @@ uz miskasti?</translation>
     <message>
         <location line="+10"/>
         <source>Picture</source>
-        <translation type="unfinished"></translation>
+        <translation>Attēls</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Reload pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>Pārlādēt attēlus</translation>
     </message>
 </context>
 <context>
@@ -6742,17 +6803,17 @@ uz miskasti?</translation>
         <location filename="../qt_quick/PageDevicesView.qml" line="+47"/>
         <location line="+37"/>
         <source>Split Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Sadalīt katalogu</translation>
     </message>
     <message>
         <location line="-32"/>
         <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by sub-directory?&lt;br/&gt;&lt;br/&gt;This will create one sub-catalog per immediate sub-directory and remove the original catalog. This operation cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai sadalīt &lt;b&gt;%1&lt;/b&gt; apakškatalogos pēc apakšdirektorija?&lt;br/&gt;&lt;br/&gt;Tādējādi tiks izveidots viens apakškatalogs katram tiešajam apakšdirektorijam un noņemts sākotnējais katalogs. Šo darbību nevar atsaukt.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Split</source>
-        <translation type="unfinished"></translation>
+        <translation>Sadalīt</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -6766,7 +6827,7 @@ uz miskasti?</translation>
     <message>
         <location line="-156"/>
         <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by file type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sadalīt &lt;b&gt;%1&lt;/b&gt; apakškatalogos pēc faila tipa:</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6786,17 +6847,17 @@ uz miskasti?</translation>
     <message>
         <location line="+5"/>
         <source>Verify checksums for &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai pārbaudīt &lt;b&gt;%1&lt;/b&gt; kontrolsummas?</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Verify</source>
-        <translation type="unfinished"></translation>
+        <translation>Pārbaudīt</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>No checksums are stored for this catalog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Šim katalogam nav saglabātu kontrolsummu.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6806,58 +6867,58 @@ uz miskasti?</translation>
     <message>
         <location line="+1"/>
         <source>Verified: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Pārbaudīti: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Mismatches: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Neatbilstības: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Missing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Trūkst: %1</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Checksum Verification</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolsummas pārbaude</translation>
     </message>
     <message>
         <location line="+10"/>
         <location line="+89"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>Labi</translation>
     </message>
     <message>
         <location line="-78"/>
         <source>Unassign Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Noņemt ierīces piešķiri</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Unassign &lt;b&gt;%1&lt;/b&gt; from its parent device?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai noņemt &lt;b&gt;%1&lt;/b&gt; piešķiri no tās vecākierīces?</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Unassign</source>
-        <translation type="unfinished"></translation>
+        <translation>Noņemt piešķiri</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Delete Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Dzēst ierīci</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai vēlaties &lt;b&gt;dzēst&lt;/b&gt; šo %1 ierīci?&lt;br/&gt;&lt;br/&gt;Nosaukums: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Jā</translation>
     </message>
     <message>
         <location line="+63"/>
@@ -6877,7 +6938,7 @@ uz miskasti?</translation>
     <message>
         <location line="+9"/>
         <source>Filter from Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtrēt no atlases</translation>
     </message>
     <message>
         <location line="+33"/>
@@ -6917,7 +6978,7 @@ uz miskasti?</translation>
     <message>
         <location line="+22"/>
         <source>No devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Nav ierīču</translation>
     </message>
 </context>
 <context>
@@ -7011,12 +7072,12 @@ uz miskasti?</translation>
     <message>
         <location line="+3"/>
         <source>free</source>
-        <translation type="unfinished"></translation>
+        <translation>brīvs</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Darbības</translation>
     </message>
 </context>
 <context>
@@ -7024,7 +7085,7 @@ uz miskasti?</translation>
     <message>
         <location filename="../qt_quick/PageExploreFiles.qml" line="+67"/>
         <source>No folder selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Nav atlasīta mape</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -7075,12 +7136,12 @@ uz miskasti?</translation>
     <message>
         <location line="+8"/>
         <source>Copy absolute path</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopēt absolūto ceļu</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Copy file name</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopēt faila nosaukumu</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7915,6 +7976,16 @@ Kļūdas: %3</translation>
         <source>Edit</source>
         <translation>Rediģēt</translation>
     </message>
+    <message>
+        <location line="+62"/>
+        <source>Collapse</source>
+        <translation>Sakļaut</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Expand</source>
+        <translation>Izvērst</translation>
+    </message>
 </context>
 <context>
     <name>PageSettings</name>
@@ -8184,7 +8255,7 @@ Kļūdas: %3</translation>
     <message>
         <location line="+24"/>
         <source>No data</source>
-        <translation type="unfinished"></translation>
+        <translation>Nav datu</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -8239,12 +8310,12 @@ Kļūdas: %3</translation>
     <message>
         <location line="+9"/>
         <source>Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Dati</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>From date</source>
-        <translation type="unfinished"></translation>
+        <translation>No datuma</translation>
     </message>
     <message>
         <location line="+24"/>
@@ -8254,7 +8325,7 @@ Kļūdas: %3</translation>
     <message>
         <location line="+16"/>
         <source>Select start date</source>
-        <translation type="unfinished"></translation>
+        <translation>Atlasiet sākuma datumu</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -8330,12 +8401,12 @@ Kļūdas: %3</translation>
     <message>
         <location line="+5"/>
         <source>Select or enter a folder to tag.</source>
-        <translation type="unfinished"></translation>
+        <translation>Atlasiet vai ievadiet atzīmējamo mapi.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Select or enter a tag name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Atlasiet vai ievadiet birkas nosaukumu.</translation>
     </message>
     <message>
         <source>Please enter a tag name.</source>

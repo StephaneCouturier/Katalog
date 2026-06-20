@@ -571,12 +571,12 @@ Kies een andere naam.</translation>
     <message>
         <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+131"/>
         <source>Select a Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Een opslag selecteren</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Select a Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Een catalogus selecteren</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -607,7 +607,7 @@ Kies een andere naam.</translation>
     <message>
         <location filename="../qt_quick/Main.qml" line="+650"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Wilt u dit %1-apparaat &lt;b&gt;verwijderen&lt;/b&gt;?&lt;br/&gt;&lt;br/&gt;Naam: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -616,7 +616,7 @@ Kies een andere naam.</translation>
         <location line="+127"/>
         <location line="+149"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ja</translation>
     </message>
     <message>
         <location line="-361"/>
@@ -633,7 +633,7 @@ Kies een andere naam.</translation>
         <location line="+158"/>
         <location line="+137"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location line="-407"/>
@@ -643,7 +643,7 @@ Kies een andere naam.</translation>
     <message>
         <location line="+2"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Systeem</translation>
     </message>
     <message>
         <location line="-224"/>
@@ -657,7 +657,23 @@ Kies een andere naam.</translation>
         <translation>Openen...</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+4"/>
+        <source>Collection Folder...</source>
+        <translation>Verzamelingsmap...</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location line="+57"/>
+        <source>SQLite Database...</source>
+        <translation>SQLite-database...</translation>
+    </message>
+    <message>
+        <location line="-43"/>
+        <source>Hosted Database...</source>
+        <translation>Gehoste database...</translation>
+    </message>
+    <message>
+        <location line="+39"/>
         <source>New...</source>
         <translation>Nieuw...</translation>
     </message>
@@ -738,7 +754,21 @@ Kies een andere naam.</translation>
         <translation>Tekstgrootte van kaart</translation>
     </message>
     <message>
-        <location line="+156"/>
+        <location line="+117"/>
+        <source>This is an early alpha version of Katalog intended to support development and gather feedback.
+
+</source>
+        <translation>Dit is een vroege alfaversie van Katalog, bedoeld om de ontwikkeling te ondersteunen en feedback te verzamelen.
+
+</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Do not show again</source>
+        <translation>Niet meer tonen</translation>
+    </message>
+    <message>
+        <location line="+33"/>
         <source>Open existing...</source>
         <translation>Bestaande openen...</translation>
     </message>
@@ -755,19 +785,19 @@ Kies een andere naam.</translation>
     <message>
         <location line="+1"/>
         <source>1- Select an entire drive or directory, &lt;br/&gt;2- select options, and &lt;br/&gt;3- click &apos;Create&apos;&lt;br/&gt;</source>
-        <translation type="unfinished">1- Selecteer een volledige schijf of map, &lt;br/&gt;2- selecteer opties, en &lt;br/&gt;3- klik op &apos;Maken&apos;&lt;br/&gt;</translation>
+        <translation>1- Selecteer een volledige schijf of map, &lt;br/&gt;2- selecteer opties, en &lt;br/&gt;3- klik op &apos;Maken&apos;&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+120"/>
         <source>Update the catalog content with the new criteria?</source>
-        <translation type="unfinished"></translation>
+        <translation>De catalogusinhoud bijwerken met de nieuwe criteria?</translation>
     </message>
     <message>
         <location line="+8"/>
         <location line="+128"/>
         <location line="+148"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Nee</translation>
     </message>
     <message>
         <location line="-250"/>
@@ -802,7 +832,7 @@ Kies een andere naam.</translation>
     <message>
         <location line="+46"/>
         <source>A snapshot of this collection was recorded:</source>
-        <translation type="unfinished"></translation>
+        <translation>Er is een momentopname van deze verzameling vastgelegd:</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -812,7 +842,7 @@ Kies een andere naam.</translation>
     <message>
         <location line="+1"/>
         <source>Number of files:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aantal bestanden:</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -820,12 +850,12 @@ Kies een andere naam.</translation>
         <location line="+2"/>
         <location line="+1"/>
         <source>added:</source>
-        <translation type="unfinished"></translation>
+        <translation>toegevoegd:</translation>
     </message>
     <message>
         <location line="-3"/>
         <source>Total file size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Totale bestandsgrootte:</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -836,12 +866,12 @@ Kies een andere naam.</translation>
     <message>
         <location line="-109"/>
         <source>Storage free space:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vrije opslagruimte:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage total space:</source>
-        <translation type="unfinished"></translation>
+        <translation>Totale opslagruimte:</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -935,25 +965,27 @@ Kies een andere naam.</translation>
         <location line="+7"/>
         <location line="+21"/>
         <source>Catalogs updated:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bijgewerkte catalogi:</translation>
     </message>
     <message>
         <location line="-21"/>
         <location line="+21"/>
         <source>skipped</source>
-        <translation type="unfinished"></translation>
+        <translation>overgeslagen</translation>
     </message>
     <message>
         <location line="-6"/>
         <source>Selected active catalogs are updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geselecteerde actieve catalogi worden bijgewerkt.</translation>
     </message>
     <message>
         <location line="+51"/>
         <source>The source folder does not contain any file.
 This could mean that the source is empty or the device is not mounted to this folder.
 Do you want to save it anyway (the catalog would be empty)?</source>
-        <translation type="unfinished"></translation>
+        <translation>De bronmap bevat geen bestanden.
+Dit kan betekenen dat de bron leeg is of dat het apparaat niet op deze map is aangekoppeld.
+Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
     </message>
     <message>
         <location line="-692"/>
@@ -987,7 +1019,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+7"/>
         <source>History</source>
-        <translation type="unfinished"></translation>
+        <translation>Geschiedenis</translation>
     </message>
     <message>
         <location line="-138"/>
@@ -1003,19 +1035,34 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Sluiten</translation>
     </message>
     <message>
-        <location line="-420"/>
+        <location line="-561"/>
+        <source>Show device info</source>
+        <translation>Apparaatinfo tonen</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Collapse one level</source>
+        <translation>Eén niveau inklappen</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Expand one level</source>
+        <translation>Eén niveau uitklappen</translation>
+    </message>
+    <message>
+        <location line="+127"/>
         <source>Duplicates (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplicaten (%1)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Differences (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Verschillen (%1)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Results</source>
-        <translation type="unfinished"></translation>
+        <translation>Resultaten</translation>
     </message>
     <message>
         <location line="+54"/>
@@ -1044,12 +1091,12 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+123"/>
         <source>Catalog created successfully.</source>
-        <translation type="unfinished"></translation>
+        <translation>Catalogus succesvol aangemaakt.</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Catalog creation failed: </source>
-        <translation type="unfinished"></translation>
+        <translation>Aanmaken van catalogus mislukt: </translation>
     </message>
     <message>
         <location line="-1108"/>
@@ -1061,7 +1108,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+47"/>
         <source>Edit Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Apparaat bewerken</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -1070,7 +1117,11 @@ Do you want to save it anyway (the catalog would be empty)?</source>
 %1
 
 (The catalog must be updated to reflect these changes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzigingen in de catalogusdefinitie opslaan?
+
+%1
+
+(De catalogus moet worden bijgewerkt om deze wijzigingen door te voeren)</translation>
     </message>
     <message>
         <location line="+25"/>
@@ -1094,15 +1145,25 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+5"/>
         <source>LuckyBackup</source>
-        <translation type="unfinished"></translation>
+        <translation>LuckyBackup</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Generate LuckyBackup profile</source>
-        <translation type="unfinished"></translation>
+        <translation>LuckyBackup-profiel genereren</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+41"/>
+        <source>Select Collection Folder</source>
+        <translation>Verzamelingsmap selecteren</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Open SQLite Database</source>
+        <translation>SQLite-database openen</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Select the database to create and open:</source>
         <translation>Selecteer de database om te maken en openen:</translation>
     </message>
@@ -5918,7 +5979,7 @@ naar de prullenbak verplaatsen?</translation>
         <location filename="../qt_quick/PageBackupForm.qml" line="+35"/>
         <location line="+315"/>
         <source>in sync</source>
-        <translation type="unfinished"></translation>
+        <translation>gesynchroniseerd</translation>
     </message>
     <message>
         <location line="-282"/>
@@ -5933,23 +5994,23 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+2"/>
         <source>Copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Gekopieerd: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Archived &amp; copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Gearchiveerd en gekopieerd: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Conflicts: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Conflicten: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+379"/>
         <source>Errors: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Fouten: %1</translation>
     </message>
     <message>
         <location line="-360"/>
@@ -5977,7 +6038,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="-153"/>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6014,12 +6075,12 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+24"/>
         <source>No backup links</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen back-upkoppelingen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Create a link to define a source and target for backup or archive operations.</source>
-        <translation type="unfinished"></translation>
+        <translation>Maak een koppeling om een bron en doel voor back-up- of archiveringsbewerkingen te definiëren.</translation>
     </message>
     <message>
         <location line="+118"/>
@@ -6031,7 +6092,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="-13"/>
         <source>Diff</source>
-        <translation type="unfinished"></translation>
+        <translation>Versch</translation>
     </message>
     <message>
         <location line="+55"/>
@@ -6071,7 +6132,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+8"/>
         <source>More actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Meer acties</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6086,12 +6147,12 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+1"/>
         <source>Created: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Aangemaakt: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Already existing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Reeds bestaand: %1</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -6111,12 +6172,12 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+8"/>
         <source>Delete link</source>
-        <translation type="unfinished"></translation>
+        <translation>Koppeling verwijderen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Delete link &quot;%1&quot;? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Koppeling '%1' verwijderen? Dit kan niet ongedaan worden gemaakt.</translation>
     </message>
 </context>
 <context>
@@ -6124,7 +6185,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location filename="../qt_quick/PageBackupMappingForm.qml" line="+8"/>
         <source>Add Link</source>
-        <translation type="unfinished"></translation>
+        <translation>Koppeling toevoegen</translation>
     </message>
     <message>
         <location line="+34"/>
@@ -6144,12 +6205,12 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+3"/>
         <source>e.g. Docs → NAS_Docs</source>
-        <translation type="unfinished"></translation>
+        <translation>bijv. Docs → NAS_Docs</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Auto-generate name</source>
-        <translation type="unfinished"></translation>
+        <translation>Naam automatisch genereren</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6174,7 +6235,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+6"/>
         <source>Source catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Broncatalogus</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6184,12 +6245,12 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+6"/>
         <source>Target catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Doelcatalogus</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opties</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6199,7 +6260,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+1"/>
         <source>Mirror folder structure exactly (default)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapstructuur exact spiegelen (standaard)</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6209,12 +6270,12 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+4"/>
         <source>Rename oldest - rename target, copy source</source>
-        <translation type="unfinished"></translation>
+        <translation>Oudste hernoemen - doel hernoemen, bron kopiëren</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Skip - leave target untouched</source>
-        <translation type="unfinished"></translation>
+        <translation>Overslaan - doel ongewijzigd laten</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6224,7 +6285,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+1"/>
         <source>Scan source drive directly (requires connected source)</source>
-        <translation type="unfinished"></translation>
+        <translation>Bronstation rechtstreeks scannen (vereist verbonden bron)</translation>
     </message>
 </context>
 <context>
@@ -6232,7 +6293,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location filename="../qt_quick/PageBackupPreviewForm.qml" line="+8"/>
         <source>Backup Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Back-upvoorbeeld</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -6252,12 +6313,12 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+15"/>
         <source>Updating catalogs…</source>
-        <translation type="unfinished"></translation>
+        <translation>Catalogi bijwerken…</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Computing preview…</source>
-        <translation type="unfinished"></translation>
+        <translation>Voorbeeld berekenen…</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -6274,37 +6335,37 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="-56"/>
         <source>file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>bestand(en)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Conflicts: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Conflicten: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Already in target: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Al in doel: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>source offline</source>
-        <translation type="unfinished"></translation>
+        <translation>bron offline</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>target offline</source>
-        <translation type="unfinished"></translation>
+        <translation>doel offline</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Insufficient disk space - Required: %1, Available: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Onvoldoende schijfruimte - Vereist: %1, Beschikbaar: %2</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Low target space - %1 remaining after operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Weinig doelruimte - %1 over na de bewerking</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -6334,12 +6395,12 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+31"/>
         <source>Everything is in sync</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles is gesynchroniseerd</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>No files need to be copied or moved.</source>
-        <translation type="unfinished"></translation>
+        <translation>Er hoeven geen bestanden te worden gekopieerd of verplaatst.</translation>
     </message>
 </context>
 <context>
@@ -6517,12 +6578,12 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location filename="../qt_quick/PageDeviceEditForm.qml" line="+95"/>
         <source>Provide a name for this device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geef een naam op voor dit apparaat.</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Source path: %1 → %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Bronpad: %1 → %2</translation>
     </message>
     <message>
         <location line="+83"/>
@@ -6543,12 +6604,12 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+6"/>
         <source>Parent device</source>
-        <translation type="unfinished"></translation>
+        <translation>Bovenliggend apparaat</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Locatie</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6637,7 +6698,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+22"/>
         <source>Exclude folders (this catalog)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mappen uitsluiten (deze catalogus)</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6657,7 +6718,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+43"/>
         <source>Storage details</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslagdetails</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6672,22 +6733,22 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+3"/>
         <source>File system</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestandssysteem</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Total space (bytes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Totale ruimte (bytes)</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Free space (bytes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Vrije ruimte (bytes)</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Refresh from disk</source>
-        <translation type="unfinished"></translation>
+        <translation>Vernieuwen vanaf schijf</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -6702,12 +6763,12 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+3"/>
         <source>Serial number</source>
-        <translation type="unfinished"></translation>
+        <translation>Serienummer</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Build date</source>
-        <translation type="unfinished"></translation>
+        <translation>Bouwdatum</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6727,12 +6788,12 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+10"/>
         <source>Picture</source>
-        <translation type="unfinished"></translation>
+        <translation>Afbeelding</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Reload pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>Afbeeldingen opnieuw laden</translation>
     </message>
 </context>
 <context>
@@ -6741,17 +6802,17 @@ naar de prullenbak verplaatsen?</translation>
         <location filename="../qt_quick/PageDevicesView.qml" line="+47"/>
         <location line="+37"/>
         <source>Split Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Catalogus splitsen</translation>
     </message>
     <message>
         <location line="-32"/>
         <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by sub-directory?&lt;br/&gt;&lt;br/&gt;This will create one sub-catalog per immediate sub-directory and remove the original catalog. This operation cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; opsplitsen in subcatalogi op submap?&lt;br/&gt;&lt;br/&gt;Hiermee wordt één subcatalogus per directe submap gemaakt en wordt de oorspronkelijke catalogus verwijderd. Deze bewerking kan niet ongedaan worden gemaakt.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Split</source>
-        <translation type="unfinished"></translation>
+        <translation>Splitsen</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -6765,7 +6826,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="-156"/>
         <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by file type:</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; opsplitsen in subcatalogi op bestandstype:</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6785,17 +6846,17 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+5"/>
         <source>Verify checksums for &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlesommen voor &lt;b&gt;%1&lt;/b&gt; verifiëren?</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Verify</source>
-        <translation type="unfinished"></translation>
+        <translation>Verifiëren</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>No checksums are stored for this catalog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Er zijn geen controlesommen opgeslagen voor deze catalogus.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6805,58 +6866,58 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+1"/>
         <source>Verified: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Geverifieerd: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Mismatches: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Verschillen: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Missing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ontbrekend: %1</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Checksum Verification</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlesomverificatie</translation>
     </message>
     <message>
         <location line="+10"/>
         <location line="+89"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location line="-78"/>
         <source>Unassign Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Apparaattoewijzing opheffen</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Unassign &lt;b&gt;%1&lt;/b&gt; from its parent device?</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; loskoppelen van het bovenliggende apparaat?</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Unassign</source>
-        <translation type="unfinished"></translation>
+        <translation>Toewijzing opheffen</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Delete Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Apparaat verwijderen</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Wilt u dit %1-apparaat &lt;b&gt;verwijderen&lt;/b&gt;?&lt;br/&gt;&lt;br/&gt;Naam: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ja</translation>
     </message>
     <message>
         <location line="+63"/>
@@ -6876,7 +6937,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+9"/>
         <source>Filter from Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Filteren op selectie</translation>
     </message>
     <message>
         <location line="+33"/>
@@ -6916,7 +6977,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+22"/>
         <source>No devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen apparaten</translation>
     </message>
 </context>
 <context>
@@ -7010,12 +7071,12 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+3"/>
         <source>free</source>
-        <translation type="unfinished"></translation>
+        <translation>vrij</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Acties</translation>
     </message>
 </context>
 <context>
@@ -7023,7 +7084,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location filename="../qt_quick/PageExploreFiles.qml" line="+67"/>
         <source>No folder selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen map geselecteerd</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -7074,12 +7135,12 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+8"/>
         <source>Copy absolute path</source>
-        <translation type="unfinished"></translation>
+        <translation>Absoluut pad kopiëren</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Copy file name</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestandsnaam kopiëren</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7914,6 +7975,16 @@ Fouten: %3</translation>
         <source>Edit</source>
         <translation>Bewerken</translation>
     </message>
+    <message>
+        <location line="+62"/>
+        <source>Collapse</source>
+        <translation>Inklappen</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Expand</source>
+        <translation>Uitklappen</translation>
+    </message>
 </context>
 <context>
     <name>PageSettings</name>
@@ -8183,7 +8254,7 @@ Fouten: %3</translation>
     <message>
         <location line="+24"/>
         <source>No data</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen gegevens</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -8238,12 +8309,12 @@ Fouten: %3</translation>
     <message>
         <location line="+9"/>
         <source>Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Gegevens</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>From date</source>
-        <translation type="unfinished"></translation>
+        <translation>Vanaf datum</translation>
     </message>
     <message>
         <location line="+24"/>
@@ -8253,7 +8324,7 @@ Fouten: %3</translation>
     <message>
         <location line="+16"/>
         <source>Select start date</source>
-        <translation type="unfinished"></translation>
+        <translation>Startdatum selecteren</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -8329,12 +8400,12 @@ Fouten: %3</translation>
     <message>
         <location line="+5"/>
         <source>Select or enter a folder to tag.</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer of voer een map in om te taggen.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Select or enter a tag name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer of voer een tagnaam in.</translation>
     </message>
     <message>
         <source>Please enter a tag name.</source>

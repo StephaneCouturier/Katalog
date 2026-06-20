@@ -571,12 +571,12 @@ Vælg et andet navn.</translation>
     <message>
         <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+131"/>
         <source>Select a Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Vælg et lager</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Select a Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Vælg et katalog</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -607,7 +607,7 @@ Vælg et andet navn.</translation>
     <message>
         <location filename="../qt_quick/Main.qml" line="+650"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Vil du &lt;b&gt;slette&lt;/b&gt; denne %1-enhed?&lt;br/&gt;&lt;br/&gt;Navn: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -616,7 +616,7 @@ Vælg et andet navn.</translation>
         <location line="+127"/>
         <location line="+149"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ja</translation>
     </message>
     <message>
         <location line="-361"/>
@@ -633,7 +633,7 @@ Vælg et andet navn.</translation>
         <location line="+158"/>
         <location line="+137"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location line="-407"/>
@@ -643,7 +643,7 @@ Vælg et andet navn.</translation>
     <message>
         <location line="+2"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>System</translation>
     </message>
     <message>
         <location line="-224"/>
@@ -657,7 +657,23 @@ Vælg et andet navn.</translation>
         <translation>Åbn...</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+4"/>
+        <source>Collection Folder...</source>
+        <translation>Samlingsmappe...</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location line="+57"/>
+        <source>SQLite Database...</source>
+        <translation>SQLite-database...</translation>
+    </message>
+    <message>
+        <location line="-43"/>
+        <source>Hosted Database...</source>
+        <translation>Hostet database...</translation>
+    </message>
+    <message>
+        <location line="+39"/>
         <source>New...</source>
         <translation>Ny...</translation>
     </message>
@@ -738,7 +754,21 @@ Vælg et andet navn.</translation>
         <translation>Tekststørrelse for kort</translation>
     </message>
     <message>
-        <location line="+156"/>
+        <location line="+117"/>
+        <source>This is an early alpha version of Katalog intended to support development and gather feedback.
+
+</source>
+        <translation>Dette er en tidlig alfaversion af Katalog, der har til formål at understøtte udviklingen og indsamle feedback.
+
+</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Do not show again</source>
+        <translation>Vis ikke igen</translation>
+    </message>
+    <message>
+        <location line="+33"/>
         <source>Open existing...</source>
         <translation>Åbn eksisterende...</translation>
     </message>
@@ -755,19 +785,19 @@ Vælg et andet navn.</translation>
     <message>
         <location line="+1"/>
         <source>1- Select an entire drive or directory, &lt;br/&gt;2- select options, and &lt;br/&gt;3- click &apos;Create&apos;&lt;br/&gt;</source>
-        <translation type="unfinished">1- Vælg et helt drev eller mappe, &lt;br/&gt;2- vælg indstillinger, og &lt;br/&gt;3- klik &apos;Opret&apos;&lt;br/&gt;</translation>
+        <translation>1- Vælg et helt drev eller mappe, &lt;br/&gt;2- vælg indstillinger, og &lt;br/&gt;3- klik &apos;Opret&apos;&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+120"/>
         <source>Update the catalog content with the new criteria?</source>
-        <translation type="unfinished"></translation>
+        <translation>Opdater katalogindholdet med de nye kriterier?</translation>
     </message>
     <message>
         <location line="+8"/>
         <location line="+128"/>
         <location line="+148"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Nej</translation>
     </message>
     <message>
         <location line="-250"/>
@@ -802,7 +832,7 @@ Vælg et andet navn.</translation>
     <message>
         <location line="+46"/>
         <source>A snapshot of this collection was recorded:</source>
-        <translation type="unfinished"></translation>
+        <translation>Et øjebliksbillede af denne samling blev registreret:</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -812,7 +842,7 @@ Vælg et andet navn.</translation>
     <message>
         <location line="+1"/>
         <source>Number of files:</source>
-        <translation type="unfinished"></translation>
+        <translation>Antal filer:</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -820,12 +850,12 @@ Vælg et andet navn.</translation>
         <location line="+2"/>
         <location line="+1"/>
         <source>added:</source>
-        <translation type="unfinished"></translation>
+        <translation>tilføjet:</translation>
     </message>
     <message>
         <location line="-3"/>
         <source>Total file size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Samlet filstørrelse:</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -836,12 +866,12 @@ Vælg et andet navn.</translation>
     <message>
         <location line="-109"/>
         <source>Storage free space:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ledig lagerplads:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage total space:</source>
-        <translation type="unfinished"></translation>
+        <translation>Samlet lagerplads:</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -935,25 +965,27 @@ Vælg et andet navn.</translation>
         <location line="+7"/>
         <location line="+21"/>
         <source>Catalogs updated:</source>
-        <translation type="unfinished"></translation>
+        <translation>Opdaterede kataloger:</translation>
     </message>
     <message>
         <location line="-21"/>
         <location line="+21"/>
         <source>skipped</source>
-        <translation type="unfinished"></translation>
+        <translation>sprunget over</translation>
     </message>
     <message>
         <location line="-6"/>
         <source>Selected active catalogs are updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>De valgte aktive kataloger opdateres.</translation>
     </message>
     <message>
         <location line="+51"/>
         <source>The source folder does not contain any file.
 This could mean that the source is empty or the device is not mounted to this folder.
 Do you want to save it anyway (the catalog would be empty)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kildemappen indeholder ingen filer.
+Det kan betyde, at kilden er tom, eller at enheden ikke er monteret til denne mappe.
+Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
     </message>
     <message>
         <location line="-692"/>
@@ -987,7 +1019,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+7"/>
         <source>History</source>
-        <translation type="unfinished"></translation>
+        <translation>Historik</translation>
     </message>
     <message>
         <location line="-138"/>
@@ -1003,19 +1035,34 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Luk</translation>
     </message>
     <message>
-        <location line="-420"/>
+        <location line="-561"/>
+        <source>Show device info</source>
+        <translation>Vis enhedsinfo</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Collapse one level</source>
+        <translation>Skjul ét niveau</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Expand one level</source>
+        <translation>Udvid ét niveau</translation>
+    </message>
+    <message>
+        <location line="+127"/>
         <source>Duplicates (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dubletter (%1)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Differences (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Forskelle (%1)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Results</source>
-        <translation type="unfinished"></translation>
+        <translation>Resultater</translation>
     </message>
     <message>
         <location line="+54"/>
@@ -1044,12 +1091,12 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+123"/>
         <source>Catalog created successfully.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kataloget blev oprettet.</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Catalog creation failed: </source>
-        <translation type="unfinished"></translation>
+        <translation>Oprettelse af katalog mislykkedes: </translation>
     </message>
     <message>
         <location line="-1108"/>
@@ -1061,7 +1108,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+47"/>
         <source>Edit Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Rediger enhed</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -1070,7 +1117,11 @@ Do you want to save it anyway (the catalog would be empty)?</source>
 %1
 
 (The catalog must be updated to reflect these changes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Gem ændringer i katalogdefinitionen?
+
+%1
+
+(Kataloget skal opdateres for at afspejle disse ændringer)</translation>
     </message>
     <message>
         <location line="+25"/>
@@ -1094,15 +1145,25 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+5"/>
         <source>LuckyBackup</source>
-        <translation type="unfinished"></translation>
+        <translation>LuckyBackup</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Generate LuckyBackup profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Generér LuckyBackup-profil</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+41"/>
+        <source>Select Collection Folder</source>
+        <translation>Vælg samlingsmappe</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Open SQLite Database</source>
+        <translation>Åbn SQLite-database</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Select the database to create and open:</source>
         <translation>Vælg databasen der skal oprettes og åbnes:</translation>
     </message>
@@ -5919,7 +5980,7 @@ til papirkurven?</translation>
         <location filename="../qt_quick/PageBackupForm.qml" line="+35"/>
         <location line="+315"/>
         <source>in sync</source>
-        <translation type="unfinished"></translation>
+        <translation>synkroniseret</translation>
     </message>
     <message>
         <location line="-282"/>
@@ -5934,23 +5995,23 @@ til papirkurven?</translation>
     <message>
         <location line="+2"/>
         <source>Copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopieret: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Archived &amp; copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Arkiveret og kopieret: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Conflicts: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Konflikter: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+379"/>
         <source>Errors: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Fejl: %1</translation>
     </message>
     <message>
         <location line="-360"/>
@@ -5978,7 +6039,7 @@ til papirkurven?</translation>
     <message>
         <location line="-153"/>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6015,12 +6076,12 @@ til papirkurven?</translation>
     <message>
         <location line="+24"/>
         <source>No backup links</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen sikkerhedskopilinks</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Create a link to define a source and target for backup or archive operations.</source>
-        <translation type="unfinished"></translation>
+        <translation>Opret et link for at definere en kilde og et mål til sikkerhedskopiering eller arkivering.</translation>
     </message>
     <message>
         <location line="+118"/>
@@ -6032,7 +6093,7 @@ til papirkurven?</translation>
     <message>
         <location line="-13"/>
         <source>Diff</source>
-        <translation type="unfinished"></translation>
+        <translation>Diff</translation>
     </message>
     <message>
         <location line="+55"/>
@@ -6072,7 +6133,7 @@ til papirkurven?</translation>
     <message>
         <location line="+8"/>
         <source>More actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Flere handlinger</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6087,12 +6148,12 @@ til papirkurven?</translation>
     <message>
         <location line="+1"/>
         <source>Created: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Oprettet: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Already existing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Findes allerede: %1</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -6112,12 +6173,12 @@ til papirkurven?</translation>
     <message>
         <location line="+8"/>
         <source>Delete link</source>
-        <translation type="unfinished"></translation>
+        <translation>Slet link</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Delete link &quot;%1&quot;? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Slet linket '%1'? Dette kan ikke fortrydes.</translation>
     </message>
 </context>
 <context>
@@ -6125,7 +6186,7 @@ til papirkurven?</translation>
     <message>
         <location filename="../qt_quick/PageBackupMappingForm.qml" line="+8"/>
         <source>Add Link</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilføj link</translation>
     </message>
     <message>
         <location line="+34"/>
@@ -6145,12 +6206,12 @@ til papirkurven?</translation>
     <message>
         <location line="+3"/>
         <source>e.g. Docs → NAS_Docs</source>
-        <translation type="unfinished"></translation>
+        <translation>f.eks. Docs → NAS_Docs</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Auto-generate name</source>
-        <translation type="unfinished"></translation>
+        <translation>Generér navn automatisk</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6175,7 +6236,7 @@ til papirkurven?</translation>
     <message>
         <location line="+6"/>
         <source>Source catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Kildekatalog</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6185,12 +6246,12 @@ til papirkurven?</translation>
     <message>
         <location line="+6"/>
         <source>Target catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Målkatalog</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Indstillinger</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6200,7 +6261,7 @@ til papirkurven?</translation>
     <message>
         <location line="+1"/>
         <source>Mirror folder structure exactly (default)</source>
-        <translation type="unfinished"></translation>
+        <translation>Spejl mappestrukturen nøjagtigt (standard)</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6210,12 +6271,12 @@ til papirkurven?</translation>
     <message>
         <location line="+4"/>
         <source>Rename oldest - rename target, copy source</source>
-        <translation type="unfinished"></translation>
+        <translation>Omdøb ældste - omdøb mål, kopiér kilde</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Skip - leave target untouched</source>
-        <translation type="unfinished"></translation>
+        <translation>Spring over - lad målet være urørt</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6225,7 +6286,7 @@ til papirkurven?</translation>
     <message>
         <location line="+1"/>
         <source>Scan source drive directly (requires connected source)</source>
-        <translation type="unfinished"></translation>
+        <translation>Scan kildedrevet direkte (kræver tilsluttet kilde)</translation>
     </message>
 </context>
 <context>
@@ -6233,7 +6294,7 @@ til papirkurven?</translation>
     <message>
         <location filename="../qt_quick/PageBackupPreviewForm.qml" line="+8"/>
         <source>Backup Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Forhåndsvisning af sikkerhedskopi</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -6253,12 +6314,12 @@ til papirkurven?</translation>
     <message>
         <location line="+15"/>
         <source>Updating catalogs…</source>
-        <translation type="unfinished"></translation>
+        <translation>Opdaterer kataloger…</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Computing preview…</source>
-        <translation type="unfinished"></translation>
+        <translation>Beregner forhåndsvisning…</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -6275,37 +6336,37 @@ til papirkurven?</translation>
     <message>
         <location line="-56"/>
         <source>file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>fil(er)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Conflicts: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Konflikter: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Already in target: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Allerede i mål: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>source offline</source>
-        <translation type="unfinished"></translation>
+        <translation>kilde offline</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>target offline</source>
-        <translation type="unfinished"></translation>
+        <translation>mål offline</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Insufficient disk space - Required: %1, Available: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilstrækkelig diskplads - Kræves: %1, Tilgængelig: %2</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Low target space - %1 remaining after operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Lav målplads - %1 tilbage efter handlingen</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -6335,12 +6396,12 @@ til papirkurven?</translation>
     <message>
         <location line="+31"/>
         <source>Everything is in sync</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt er synkroniseret</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>No files need to be copied or moved.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen filer skal kopieres eller flyttes.</translation>
     </message>
 </context>
 <context>
@@ -6518,12 +6579,12 @@ til papirkurven?</translation>
     <message>
         <location filename="../qt_quick/PageDeviceEditForm.qml" line="+95"/>
         <source>Provide a name for this device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Angiv et navn til denne enhed.</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Source path: %1 → %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Kildesti: %1 → %2</translation>
     </message>
     <message>
         <location line="+83"/>
@@ -6544,12 +6605,12 @@ til papirkurven?</translation>
     <message>
         <location line="+6"/>
         <source>Parent device</source>
-        <translation type="unfinished"></translation>
+        <translation>Overordnet enhed</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Placering</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6638,7 +6699,7 @@ til papirkurven?</translation>
     <message>
         <location line="+22"/>
         <source>Exclude folders (this catalog)</source>
-        <translation type="unfinished"></translation>
+        <translation>Udeluk mapper (dette katalog)</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6658,7 +6719,7 @@ til papirkurven?</translation>
     <message>
         <location line="+43"/>
         <source>Storage details</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagerdetaljer</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6673,22 +6734,22 @@ til papirkurven?</translation>
     <message>
         <location line="+3"/>
         <source>File system</source>
-        <translation type="unfinished"></translation>
+        <translation>Filsystem</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Total space (bytes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Samlet plads (byte)</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Free space (bytes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ledig plads (byte)</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Refresh from disk</source>
-        <translation type="unfinished"></translation>
+        <translation>Opdater fra disk</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -6703,12 +6764,12 @@ til papirkurven?</translation>
     <message>
         <location line="+3"/>
         <source>Serial number</source>
-        <translation type="unfinished"></translation>
+        <translation>Serienummer</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Build date</source>
-        <translation type="unfinished"></translation>
+        <translation>Byggedato</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6728,12 +6789,12 @@ til papirkurven?</translation>
     <message>
         <location line="+10"/>
         <source>Picture</source>
-        <translation type="unfinished"></translation>
+        <translation>Billede</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Reload pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>Genindlæs billeder</translation>
     </message>
 </context>
 <context>
@@ -6742,17 +6803,17 @@ til papirkurven?</translation>
         <location filename="../qt_quick/PageDevicesView.qml" line="+47"/>
         <location line="+37"/>
         <source>Split Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Opdel katalog</translation>
     </message>
     <message>
         <location line="-32"/>
         <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by sub-directory?&lt;br/&gt;&lt;br/&gt;This will create one sub-catalog per immediate sub-directory and remove the original catalog. This operation cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Opdel &lt;b&gt;%1&lt;/b&gt; i underkataloger efter undermappe?&lt;br/&gt;&lt;br/&gt;Dette opretter ét underkatalog pr. umiddelbar undermappe og fjerner det oprindelige katalog. Denne handling kan ikke fortrydes.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Split</source>
-        <translation type="unfinished"></translation>
+        <translation>Opdel</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -6766,7 +6827,7 @@ til papirkurven?</translation>
     <message>
         <location line="-156"/>
         <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by file type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Opdel &lt;b&gt;%1&lt;/b&gt; i underkataloger efter filtype:</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6786,17 +6847,17 @@ til papirkurven?</translation>
     <message>
         <location line="+5"/>
         <source>Verify checksums for &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation type="unfinished"></translation>
+        <translation>Bekræft kontrolsummer for &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Verify</source>
-        <translation type="unfinished"></translation>
+        <translation>Bekræft</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>No checksums are stored for this catalog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der er ikke gemt nogen kontrolsummer for dette katalog.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6806,58 +6867,58 @@ til papirkurven?</translation>
     <message>
         <location line="+1"/>
         <source>Verified: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Bekræftet: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Mismatches: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Uoverensstemmelser: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Missing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Mangler: %1</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Checksum Verification</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolsumverifikation</translation>
     </message>
     <message>
         <location line="+10"/>
         <location line="+89"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location line="-78"/>
         <source>Unassign Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjern tildeling af enhed</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Unassign &lt;b&gt;%1&lt;/b&gt; from its parent device?</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjern tildelingen af &lt;b&gt;%1&lt;/b&gt; fra dens overordnede enhed?</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Unassign</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjern tildeling</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Delete Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Slet enhed</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Vil du &lt;b&gt;slette&lt;/b&gt; denne %1-enhed?&lt;br/&gt;&lt;br/&gt;Navn: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ja</translation>
     </message>
     <message>
         <location line="+63"/>
@@ -6877,7 +6938,7 @@ til papirkurven?</translation>
     <message>
         <location line="+9"/>
         <source>Filter from Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtrer fra markering</translation>
     </message>
     <message>
         <location line="+33"/>
@@ -6917,7 +6978,7 @@ til papirkurven?</translation>
     <message>
         <location line="+22"/>
         <source>No devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen enheder</translation>
     </message>
 </context>
 <context>
@@ -7011,12 +7072,12 @@ til papirkurven?</translation>
     <message>
         <location line="+3"/>
         <source>free</source>
-        <translation type="unfinished"></translation>
+        <translation>ledig</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Handlinger</translation>
     </message>
 </context>
 <context>
@@ -7024,7 +7085,7 @@ til papirkurven?</translation>
     <message>
         <location filename="../qt_quick/PageExploreFiles.qml" line="+67"/>
         <source>No folder selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen mappe valgt</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -7075,12 +7136,12 @@ til papirkurven?</translation>
     <message>
         <location line="+8"/>
         <source>Copy absolute path</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiér absolut sti</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Copy file name</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiér filnavn</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7915,6 +7976,16 @@ Fejl: %3</translation>
         <source>Edit</source>
         <translation>Rediger</translation>
     </message>
+    <message>
+        <location line="+62"/>
+        <source>Collapse</source>
+        <translation>Skjul</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Expand</source>
+        <translation>Udvid</translation>
+    </message>
 </context>
 <context>
     <name>PageSettings</name>
@@ -8184,7 +8255,7 @@ Fejl: %3</translation>
     <message>
         <location line="+24"/>
         <source>No data</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen data</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -8239,12 +8310,12 @@ Fejl: %3</translation>
     <message>
         <location line="+9"/>
         <source>Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Data</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>From date</source>
-        <translation type="unfinished"></translation>
+        <translation>Fra dato</translation>
     </message>
     <message>
         <location line="+24"/>
@@ -8254,7 +8325,7 @@ Fejl: %3</translation>
     <message>
         <location line="+16"/>
         <source>Select start date</source>
-        <translation type="unfinished"></translation>
+        <translation>Vælg startdato</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -8330,12 +8401,12 @@ Fejl: %3</translation>
     <message>
         <location line="+5"/>
         <source>Select or enter a folder to tag.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vælg eller indtast en mappe, der skal tagges.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Select or enter a tag name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vælg eller indtast et tagnavn.</translation>
     </message>
     <message>
         <source>Please enter a tag name.</source>

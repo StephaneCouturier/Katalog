@@ -237,7 +237,7 @@ Kirigami.ApplicationWindow {
                 icon.name: "document-open"
                 Kirigami.Action {
                     icon.name: "folder"
-                    text: "Collection Folder..."
+                    text: qsTr("Collection Folder...")
                     onTriggered: {
                         var p = appManager1.getCollectionFolder()
                         if (p.length > 0)
@@ -247,7 +247,7 @@ Kirigami.ApplicationWindow {
                 }
                 Kirigami.Action {
                     icon.name: "network-server-database"
-                    text: "SQLite Database..."
+                    text: qsTr("SQLite Database...")
                     onTriggered: {
                         var p = appManager1.getDatabaseFilePath()
                         if (p.length > 0) {
@@ -261,7 +261,7 @@ Kirigami.ApplicationWindow {
                 }
                 Kirigami.Action {
                     icon.name: "network-workgroup"
-                    text: "Hosted Database..."
+                    text: qsTr("Hosted Database...")
                     onTriggered: root.showLayer(settingsPageComponent, { showHostedForm: true })
                 }
                 Kirigami.Action {
@@ -304,7 +304,7 @@ Kirigami.ApplicationWindow {
                 icon.name: "document-new"
                 Kirigami.Action {
                     icon.name: "network-server-database"
-                    text: "SQLite Database..."
+                    text: qsTr("SQLite Database...")
                     onTriggered: {
                         var p = appManager1.getNewCollectionDefaultPath()
                         newDatabaseFileDialog.currentFile = appManager1.pathToFileUrl(p)
@@ -547,13 +547,13 @@ Kirigami.ApplicationWindow {
         Controls.Label {
             width: parent.width
             wrapMode: Text.WordWrap
-            text: "This is an early alpha version of Katalog intended to support development and gather feedback.\n\n"
+            text: qsTr("This is an early alpha version of Katalog intended to support development and gather feedback.\n\n")
         }
 
         footer: Controls.DialogButtonBox {
             Controls.CheckBox {
                 id: doNotShowAgain
-                text: "Do not show again"
+                text: qsTr("Do not show again")
                 Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.ResetRole
             }
             Controls.Button {
@@ -1086,21 +1086,21 @@ Kirigami.ApplicationWindow {
                 Controls.CheckBox {
                     checked: appManager1.showDeviceInfo
                     onToggled: appManager1.showDeviceInfo = checked
-                    Controls.ToolTip.text: "Show device info"
+                    Controls.ToolTip.text: qsTr("Show device info")
                     Controls.ToolTip.visible: hovered
                 }
                 Controls.ToolButton {
                     icon.name: "go-up"
                     enabled: appManager1.canCollapseDevices
                     onClicked: appManager1.collapseDevices()
-                    Controls.ToolTip.text: "Collapse one level"
+                    Controls.ToolTip.text: qsTr("Collapse one level")
                     Controls.ToolTip.visible: hovered
                 }
                 Controls.ToolButton {
                     icon.name: "go-down"
                     enabled: appManager1.canExpandDevices
                     onClicked: appManager1.expandDevices()
-                    Controls.ToolTip.text: "Expand one level"
+                    Controls.ToolTip.text: qsTr("Expand one level")
                     Controls.ToolTip.visible: hovered
                 }
             }
@@ -1679,7 +1679,7 @@ Kirigami.ApplicationWindow {
     // Dialogs - triggered from Open Collection menu
     Dialogs.FolderDialog {
         id: memoryFolderDialog
-        title: "Select Collection Folder"
+        title: qsTr("Select Collection Folder")
         onAccepted: {
             var path = appManager1.pathFromFileUrl(selectedFolder.toString())
             appManager1.openCollectionMemory(path)
@@ -1688,7 +1688,7 @@ Kirigami.ApplicationWindow {
 
     Dialogs.FileDialog {
         id: databaseFileDialog
-        title: "Open SQLite Database"
+        title: qsTr("Open SQLite Database")
         nameFilters: ["SQLite databases (*.db *.sqlite *.sqlite3)", "All files (*)"]
         onAccepted: {
             var path = appManager1.pathFromFileUrl(selectedFile.toString())

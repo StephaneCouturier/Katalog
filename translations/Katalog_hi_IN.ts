@@ -571,12 +571,12 @@ Choose a different name.</source>
     <message>
         <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+131"/>
         <source>Select a Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>एक भंडारण चुनें</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Select a Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>एक कैटलॉग चुनें</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -607,7 +607,7 @@ Choose a different name.</source>
     <message>
         <location filename="../qt_quick/Main.qml" line="+650"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>क्या आप इस %1 डिवाइस को &lt;b&gt;हटाना&lt;/b&gt; चाहते हैं?&lt;br/&gt;&lt;br/&gt;नाम: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -616,7 +616,7 @@ Choose a different name.</source>
         <location line="+127"/>
         <location line="+149"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>हाँ</translation>
     </message>
     <message>
         <location line="-361"/>
@@ -633,7 +633,7 @@ Choose a different name.</source>
         <location line="+158"/>
         <location line="+137"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>ठीक है</translation>
     </message>
     <message>
         <location line="-407"/>
@@ -643,7 +643,7 @@ Choose a different name.</source>
     <message>
         <location line="+2"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>सिस्टम</translation>
     </message>
     <message>
         <location line="-224"/>
@@ -657,7 +657,23 @@ Choose a different name.</source>
         <translation>खोलें...</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+4"/>
+        <source>Collection Folder...</source>
+        <translation>संग्रह फ़ोल्डर...</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location line="+57"/>
+        <source>SQLite Database...</source>
+        <translation>SQLite डेटाबेस...</translation>
+    </message>
+    <message>
+        <location line="-43"/>
+        <source>Hosted Database...</source>
+        <translation>होस्टेड डेटाबेस...</translation>
+    </message>
+    <message>
+        <location line="+39"/>
         <source>New...</source>
         <translation>नया...</translation>
     </message>
@@ -738,7 +754,21 @@ Choose a different name.</source>
         <translation>कार्ड पाठ आकार</translation>
     </message>
     <message>
-        <location line="+156"/>
+        <location line="+117"/>
+        <source>This is an early alpha version of Katalog intended to support development and gather feedback.
+
+</source>
+        <translation>यह Katalog का प्रारंभिक अल्फा संस्करण है, जो विकास में सहायता और प्रतिक्रिया एकत्र करने के लिए है।
+
+</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Do not show again</source>
+        <translation>फिर से न दिखाएँ</translation>
+    </message>
+    <message>
+        <location line="+33"/>
         <source>Open existing...</source>
         <translation>मौजूदा खोलें...</translation>
     </message>
@@ -755,19 +785,19 @@ Choose a different name.</source>
     <message>
         <location line="+1"/>
         <source>1- Select an entire drive or directory, &lt;br/&gt;2- select options, and &lt;br/&gt;3- click &apos;Create&apos;&lt;br/&gt;</source>
-        <translation type="unfinished">1- एक पूरी ड्राइव या डायरेक्टरी चुनें, &lt;br/&gt;2- विकल्प चुनें, और &lt;br/&gt;3- &apos;बनाएं&apos; पर क्लिक करें&lt;br/&gt;</translation>
+        <translation>1- एक पूरी ड्राइव या डायरेक्टरी चुनें, &lt;br/&gt;2- विकल्प चुनें, और &lt;br/&gt;3- &apos;बनाएं&apos; पर क्लिक करें&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+120"/>
         <source>Update the catalog content with the new criteria?</source>
-        <translation type="unfinished"></translation>
+        <translation>नए मानदंडों के साथ कैटलॉग सामग्री अपडेट करें?</translation>
     </message>
     <message>
         <location line="+8"/>
         <location line="+128"/>
         <location line="+148"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>नहीं</translation>
     </message>
     <message>
         <location line="-250"/>
@@ -802,7 +832,7 @@ Choose a different name.</source>
     <message>
         <location line="+46"/>
         <source>A snapshot of this collection was recorded:</source>
-        <translation type="unfinished"></translation>
+        <translation>इस संग्रह का एक स्नैपशॉट रिकॉर्ड किया गया:</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -812,7 +842,7 @@ Choose a different name.</source>
     <message>
         <location line="+1"/>
         <source>Number of files:</source>
-        <translation type="unfinished"></translation>
+        <translation>फ़ाइलों की संख्या:</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -820,12 +850,12 @@ Choose a different name.</source>
         <location line="+2"/>
         <location line="+1"/>
         <source>added:</source>
-        <translation type="unfinished"></translation>
+        <translation>जोड़े गए:</translation>
     </message>
     <message>
         <location line="-3"/>
         <source>Total file size:</source>
-        <translation type="unfinished"></translation>
+        <translation>कुल फ़ाइल आकार:</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -836,12 +866,12 @@ Choose a different name.</source>
     <message>
         <location line="-109"/>
         <source>Storage free space:</source>
-        <translation type="unfinished"></translation>
+        <translation>भंडारण खाली स्थान:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage total space:</source>
-        <translation type="unfinished"></translation>
+        <translation>भंडारण कुल स्थान:</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -935,25 +965,27 @@ Choose a different name.</source>
         <location line="+7"/>
         <location line="+21"/>
         <source>Catalogs updated:</source>
-        <translation type="unfinished"></translation>
+        <translation>अपडेट किए गए कैटलॉग:</translation>
     </message>
     <message>
         <location line="-21"/>
         <location line="+21"/>
         <source>skipped</source>
-        <translation type="unfinished"></translation>
+        <translation>छोड़े गए</translation>
     </message>
     <message>
         <location line="-6"/>
         <source>Selected active catalogs are updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>चयनित सक्रिय कैटलॉग अपडेट किए जाते हैं।</translation>
     </message>
     <message>
         <location line="+51"/>
         <source>The source folder does not contain any file.
 This could mean that the source is empty or the device is not mounted to this folder.
 Do you want to save it anyway (the catalog would be empty)?</source>
-        <translation type="unfinished"></translation>
+        <translation>स्रोत फ़ोल्डर में कोई फ़ाइल नहीं है।
+इसका अर्थ हो सकता है कि स्रोत खाली है या डिवाइस इस फ़ोल्डर पर माउंट नहीं है।
+क्या आप फिर भी इसे सहेजना चाहते हैं (कैटलॉग खाली रहेगा)?</translation>
     </message>
     <message>
         <location line="-692"/>
@@ -987,7 +1019,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+7"/>
         <source>History</source>
-        <translation type="unfinished"></translation>
+        <translation>इतिहास</translation>
     </message>
     <message>
         <location line="-138"/>
@@ -1003,19 +1035,34 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>बंद करें</translation>
     </message>
     <message>
-        <location line="-420"/>
+        <location line="-561"/>
+        <source>Show device info</source>
+        <translation>डिवाइस जानकारी दिखाएँ</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Collapse one level</source>
+        <translation>एक स्तर संक्षिप्त करें</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Expand one level</source>
+        <translation>एक स्तर विस्तृत करें</translation>
+    </message>
+    <message>
+        <location line="+127"/>
         <source>Duplicates (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>डुप्लिकेट (%1)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Differences (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>अंतर (%1)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Results</source>
-        <translation type="unfinished"></translation>
+        <translation>परिणाम</translation>
     </message>
     <message>
         <location line="+54"/>
@@ -1044,12 +1091,12 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+123"/>
         <source>Catalog created successfully.</source>
-        <translation type="unfinished"></translation>
+        <translation>कैटलॉग सफलतापूर्वक बनाया गया।</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Catalog creation failed: </source>
-        <translation type="unfinished"></translation>
+        <translation>कैटलॉग बनाना विफल: </translation>
     </message>
     <message>
         <location line="-1108"/>
@@ -1061,7 +1108,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+47"/>
         <source>Edit Device</source>
-        <translation type="unfinished"></translation>
+        <translation>डिवाइस संपादित करें</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -1070,7 +1117,11 @@ Do you want to save it anyway (the catalog would be empty)?</source>
 %1
 
 (The catalog must be updated to reflect these changes)</source>
-        <translation type="unfinished"></translation>
+        <translation>कैटलॉग परिभाषा में किए गए परिवर्तन सहेजें?
+
+%1
+
+(इन परिवर्तनों को दर्शाने के लिए कैटलॉग को अपडेट करना आवश्यक है)</translation>
     </message>
     <message>
         <location line="+25"/>
@@ -1094,15 +1145,25 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+5"/>
         <source>LuckyBackup</source>
-        <translation type="unfinished"></translation>
+        <translation>LuckyBackup</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Generate LuckyBackup profile</source>
-        <translation type="unfinished"></translation>
+        <translation>LuckyBackup प्रोफ़ाइल बनाएँ</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+41"/>
+        <source>Select Collection Folder</source>
+        <translation>संग्रह फ़ोल्डर चुनें</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Open SQLite Database</source>
+        <translation>SQLite डेटाबेस खोलें</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Select the database to create and open:</source>
         <translation>बनाने और खोलने के लिए डेटाबेस चुनें:</translation>
     </message>
@@ -5918,7 +5979,7 @@ to the trash?</source>
         <location filename="../qt_quick/PageBackupForm.qml" line="+35"/>
         <location line="+315"/>
         <source>in sync</source>
-        <translation type="unfinished"></translation>
+        <translation>सिंक में</translation>
     </message>
     <message>
         <location line="-282"/>
@@ -5933,23 +5994,23 @@ to the trash?</source>
     <message>
         <location line="+2"/>
         <source>Copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>कॉपी किए गए: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Archived &amp; copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>संग्रहित और कॉपी किए गए: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Conflicts: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>विरोध: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+379"/>
         <source>Errors: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>त्रुटियाँ: %1</translation>
     </message>
     <message>
         <location line="-360"/>
@@ -5977,7 +6038,7 @@ to the trash?</source>
     <message>
         <location line="-153"/>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>फ़िल्टर</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6014,12 +6075,12 @@ to the trash?</source>
     <message>
         <location line="+24"/>
         <source>No backup links</source>
-        <translation type="unfinished"></translation>
+        <translation>कोई बैकअप लिंक नहीं</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Create a link to define a source and target for backup or archive operations.</source>
-        <translation type="unfinished"></translation>
+        <translation>बैकअप या संग्रह संचालन के लिए स्रोत और लक्ष्य परिभाषित करने हेतु एक लिंक बनाएँ।</translation>
     </message>
     <message>
         <location line="+118"/>
@@ -6031,7 +6092,7 @@ to the trash?</source>
     <message>
         <location line="-13"/>
         <source>Diff</source>
-        <translation type="unfinished"></translation>
+        <translation>अंतर</translation>
     </message>
     <message>
         <location line="+55"/>
@@ -6071,7 +6132,7 @@ to the trash?</source>
     <message>
         <location line="+8"/>
         <source>More actions</source>
-        <translation type="unfinished"></translation>
+        <translation>अधिक क्रियाएँ</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6086,12 +6147,12 @@ to the trash?</source>
     <message>
         <location line="+1"/>
         <source>Created: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>बनाए गए: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Already existing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>पहले से मौजूद: %1</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -6111,12 +6172,12 @@ to the trash?</source>
     <message>
         <location line="+8"/>
         <source>Delete link</source>
-        <translation type="unfinished"></translation>
+        <translation>लिंक हटाएँ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Delete link &quot;%1&quot;? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>लिंक "%1" हटाएँ? इसे पूर्ववत नहीं किया जा सकता।</translation>
     </message>
 </context>
 <context>
@@ -6124,7 +6185,7 @@ to the trash?</source>
     <message>
         <location filename="../qt_quick/PageBackupMappingForm.qml" line="+8"/>
         <source>Add Link</source>
-        <translation type="unfinished"></translation>
+        <translation>लिंक जोड़ें</translation>
     </message>
     <message>
         <location line="+34"/>
@@ -6144,12 +6205,12 @@ to the trash?</source>
     <message>
         <location line="+3"/>
         <source>e.g. Docs → NAS_Docs</source>
-        <translation type="unfinished"></translation>
+        <translation>उदा. Docs → NAS_Docs</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Auto-generate name</source>
-        <translation type="unfinished"></translation>
+        <translation>नाम स्वतः बनाएँ</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6174,7 +6235,7 @@ to the trash?</source>
     <message>
         <location line="+6"/>
         <source>Source catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>स्रोत कैटलॉग</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6184,12 +6245,12 @@ to the trash?</source>
     <message>
         <location line="+6"/>
         <source>Target catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>लक्ष्य कैटलॉग</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>विकल्प</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6199,7 +6260,7 @@ to the trash?</source>
     <message>
         <location line="+1"/>
         <source>Mirror folder structure exactly (default)</source>
-        <translation type="unfinished"></translation>
+        <translation>फ़ोल्डर संरचना की सटीक नकल करें (डिफ़ॉल्ट)</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6209,12 +6270,12 @@ to the trash?</source>
     <message>
         <location line="+4"/>
         <source>Rename oldest - rename target, copy source</source>
-        <translation type="unfinished"></translation>
+        <translation>सबसे पुराने का नाम बदलें - लक्ष्य का नाम बदलें, स्रोत कॉपी करें</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Skip - leave target untouched</source>
-        <translation type="unfinished"></translation>
+        <translation>छोड़ें - लक्ष्य को अपरिवर्तित छोड़ें</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6224,7 +6285,7 @@ to the trash?</source>
     <message>
         <location line="+1"/>
         <source>Scan source drive directly (requires connected source)</source>
-        <translation type="unfinished"></translation>
+        <translation>स्रोत ड्राइव को सीधे स्कैन करें (कनेक्टेड स्रोत आवश्यक)</translation>
     </message>
 </context>
 <context>
@@ -6232,7 +6293,7 @@ to the trash?</source>
     <message>
         <location filename="../qt_quick/PageBackupPreviewForm.qml" line="+8"/>
         <source>Backup Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>बैकअप पूर्वावलोकन</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -6252,12 +6313,12 @@ to the trash?</source>
     <message>
         <location line="+15"/>
         <source>Updating catalogs…</source>
-        <translation type="unfinished"></translation>
+        <translation>कैटलॉग अपडेट हो रहे हैं…</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Computing preview…</source>
-        <translation type="unfinished"></translation>
+        <translation>पूर्वावलोकन की गणना हो रही है…</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -6274,37 +6335,37 @@ to the trash?</source>
     <message>
         <location line="-56"/>
         <source>file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>फ़ाइल</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Conflicts: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>विरोध: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Already in target: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>लक्ष्य में पहले से: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>source offline</source>
-        <translation type="unfinished"></translation>
+        <translation>स्रोत ऑफ़लाइन</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>target offline</source>
-        <translation type="unfinished"></translation>
+        <translation>लक्ष्य ऑफ़लाइन</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Insufficient disk space - Required: %1, Available: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>डिस्क स्थान अपर्याप्त - आवश्यक: %1, उपलब्ध: %2</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Low target space - %1 remaining after operation</source>
-        <translation type="unfinished"></translation>
+        <translation>लक्ष्य स्थान कम - संचालन के बाद %1 शेष</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -6334,12 +6395,12 @@ to the trash?</source>
     <message>
         <location line="+31"/>
         <source>Everything is in sync</source>
-        <translation type="unfinished"></translation>
+        <translation>सब कुछ सिंक में है</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>No files need to be copied or moved.</source>
-        <translation type="unfinished"></translation>
+        <translation>किसी फ़ाइल को कॉपी या स्थानांतरित करने की आवश्यकता नहीं है।</translation>
     </message>
 </context>
 <context>
@@ -6517,12 +6578,12 @@ to the trash?</source>
     <message>
         <location filename="../qt_quick/PageDeviceEditForm.qml" line="+95"/>
         <source>Provide a name for this device.</source>
-        <translation type="unfinished"></translation>
+        <translation>इस डिवाइस के लिए एक नाम दें।</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Source path: %1 → %2</source>
-        <translation type="unfinished"></translation>
+        <translation>स्रोत पथ: %1 → %2</translation>
     </message>
     <message>
         <location line="+83"/>
@@ -6543,12 +6604,12 @@ to the trash?</source>
     <message>
         <location line="+6"/>
         <source>Parent device</source>
-        <translation type="unfinished"></translation>
+        <translation>मूल डिवाइस</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>स्थान</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6637,7 +6698,7 @@ to the trash?</source>
     <message>
         <location line="+22"/>
         <source>Exclude folders (this catalog)</source>
-        <translation type="unfinished"></translation>
+        <translation>फ़ोल्डर बाहर करें (यह कैटलॉग)</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6657,7 +6718,7 @@ to the trash?</source>
     <message>
         <location line="+43"/>
         <source>Storage details</source>
-        <translation type="unfinished"></translation>
+        <translation>भंडारण विवरण</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6672,22 +6733,22 @@ to the trash?</source>
     <message>
         <location line="+3"/>
         <source>File system</source>
-        <translation type="unfinished"></translation>
+        <translation>फ़ाइल सिस्टम</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Total space (bytes)</source>
-        <translation type="unfinished"></translation>
+        <translation>कुल स्थान (बाइट्स)</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Free space (bytes)</source>
-        <translation type="unfinished"></translation>
+        <translation>खाली स्थान (बाइट्स)</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Refresh from disk</source>
-        <translation type="unfinished"></translation>
+        <translation>डिस्क से रिफ़्रेश करें</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -6702,12 +6763,12 @@ to the trash?</source>
     <message>
         <location line="+3"/>
         <source>Serial number</source>
-        <translation type="unfinished"></translation>
+        <translation>सीरियल नंबर</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Build date</source>
-        <translation type="unfinished"></translation>
+        <translation>बिल्ड तिथि</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6727,12 +6788,12 @@ to the trash?</source>
     <message>
         <location line="+10"/>
         <source>Picture</source>
-        <translation type="unfinished"></translation>
+        <translation>चित्र</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Reload pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>चित्र पुनः लोड करें</translation>
     </message>
 </context>
 <context>
@@ -6741,17 +6802,17 @@ to the trash?</source>
         <location filename="../qt_quick/PageDevicesView.qml" line="+47"/>
         <location line="+37"/>
         <source>Split Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>कैटलॉग विभाजित करें</translation>
     </message>
     <message>
         <location line="-32"/>
         <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by sub-directory?&lt;br/&gt;&lt;br/&gt;This will create one sub-catalog per immediate sub-directory and remove the original catalog. This operation cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; को उप-निर्देशिका के अनुसार उप-कैटलॉग में विभाजित करें?&lt;br/&gt;&lt;br/&gt;इससे प्रत्येक तत्काल उप-निर्देशिका के लिए एक उप-कैटलॉग बनेगा और मूल कैटलॉग हट जाएगा। इस ऑपरेशन को पूर्ववत नहीं किया जा सकता।</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Split</source>
-        <translation type="unfinished"></translation>
+        <translation>विभाजित करें</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -6765,7 +6826,7 @@ to the trash?</source>
     <message>
         <location line="-156"/>
         <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by file type:</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; को फ़ाइल प्रकार के अनुसार उप-कैटलॉग में विभाजित करें:</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6785,17 +6846,17 @@ to the trash?</source>
     <message>
         <location line="+5"/>
         <source>Verify checksums for &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; के लिए चेकसम सत्यापित करें?</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Verify</source>
-        <translation type="unfinished"></translation>
+        <translation>सत्यापित करें</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>No checksums are stored for this catalog.</source>
-        <translation type="unfinished"></translation>
+        <translation>इस कैटलॉग के लिए कोई चेकसम संग्रहीत नहीं है।</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6805,58 +6866,58 @@ to the trash?</source>
     <message>
         <location line="+1"/>
         <source>Verified: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>सत्यापित: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Mismatches: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>बेमेल: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Missing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>अनुपस्थित: %1</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Checksum Verification</source>
-        <translation type="unfinished"></translation>
+        <translation>चेकसम सत्यापन</translation>
     </message>
     <message>
         <location line="+10"/>
         <location line="+89"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>ठीक है</translation>
     </message>
     <message>
         <location line="-78"/>
         <source>Unassign Device</source>
-        <translation type="unfinished"></translation>
+        <translation>डिवाइस असाइनमेंट हटाएँ</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Unassign &lt;b&gt;%1&lt;/b&gt; from its parent device?</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; को उसके मूल डिवाइस से असाइन हटाएँ?</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Unassign</source>
-        <translation type="unfinished"></translation>
+        <translation>असाइनमेंट हटाएँ</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Delete Device</source>
-        <translation type="unfinished"></translation>
+        <translation>डिवाइस हटाएँ</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>क्या आप इस %1 डिवाइस को &lt;b&gt;हटाना&lt;/b&gt; चाहते हैं?&lt;br/&gt;&lt;br/&gt;नाम: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>हाँ</translation>
     </message>
     <message>
         <location line="+63"/>
@@ -6876,7 +6937,7 @@ to the trash?</source>
     <message>
         <location line="+9"/>
         <source>Filter from Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>चयन से फ़िल्टर करें</translation>
     </message>
     <message>
         <location line="+33"/>
@@ -6916,7 +6977,7 @@ to the trash?</source>
     <message>
         <location line="+22"/>
         <source>No devices</source>
-        <translation type="unfinished"></translation>
+        <translation>कोई डिवाइस नहीं</translation>
     </message>
 </context>
 <context>
@@ -7010,12 +7071,12 @@ to the trash?</source>
     <message>
         <location line="+3"/>
         <source>free</source>
-        <translation type="unfinished"></translation>
+        <translation>खाली</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>क्रियाएँ</translation>
     </message>
 </context>
 <context>
@@ -7023,7 +7084,7 @@ to the trash?</source>
     <message>
         <location filename="../qt_quick/PageExploreFiles.qml" line="+67"/>
         <source>No folder selected</source>
-        <translation type="unfinished"></translation>
+        <translation>कोई फ़ोल्डर चयनित नहीं</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -7074,12 +7135,12 @@ to the trash?</source>
     <message>
         <location line="+8"/>
         <source>Copy absolute path</source>
-        <translation type="unfinished"></translation>
+        <translation>निरपेक्ष पथ कॉपी करें</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Copy file name</source>
-        <translation type="unfinished"></translation>
+        <translation>फ़ाइल नाम कॉपी करें</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7914,6 +7975,16 @@ Errors: %3</source>
         <source>Edit</source>
         <translation>संपादन</translation>
     </message>
+    <message>
+        <location line="+62"/>
+        <source>Collapse</source>
+        <translation>संक्षिप्त करें</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Expand</source>
+        <translation>विस्तृत करें</translation>
+    </message>
 </context>
 <context>
     <name>PageSettings</name>
@@ -8183,7 +8254,7 @@ Errors: %3</source>
     <message>
         <location line="+24"/>
         <source>No data</source>
-        <translation type="unfinished"></translation>
+        <translation>कोई डेटा नहीं</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -8238,12 +8309,12 @@ Errors: %3</source>
     <message>
         <location line="+9"/>
         <source>Data</source>
-        <translation type="unfinished"></translation>
+        <translation>डेटा</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>From date</source>
-        <translation type="unfinished"></translation>
+        <translation>तिथि से</translation>
     </message>
     <message>
         <location line="+24"/>
@@ -8253,7 +8324,7 @@ Errors: %3</source>
     <message>
         <location line="+16"/>
         <source>Select start date</source>
-        <translation type="unfinished"></translation>
+        <translation>प्रारंभ तिथि चुनें</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -8329,12 +8400,12 @@ Errors: %3</source>
     <message>
         <location line="+5"/>
         <source>Select or enter a folder to tag.</source>
-        <translation type="unfinished"></translation>
+        <translation>टैग करने के लिए कोई फ़ोल्डर चुनें या दर्ज करें।</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Select or enter a tag name.</source>
-        <translation type="unfinished"></translation>
+        <translation>कोई टैग नाम चुनें या दर्ज करें।</translation>
     </message>
     <message>
         <source>Please enter a tag name.</source>

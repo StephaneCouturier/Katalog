@@ -571,12 +571,12 @@ Pasirinkite kitą pavadinimą.</translation>
     <message>
         <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+131"/>
         <source>Select a Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasirinkite saugyklą</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Select a Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasirinkite katalogą</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -607,7 +607,7 @@ Pasirinkite kitą pavadinimą.</translation>
     <message>
         <location filename="../qt_quick/Main.qml" line="+650"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ar norite &lt;b&gt;ištrinti&lt;/b&gt; šį %1 įrenginį?&lt;br/&gt;&lt;br/&gt;Pavadinimas: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -616,7 +616,7 @@ Pasirinkite kitą pavadinimą.</translation>
         <location line="+127"/>
         <location line="+149"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Taip</translation>
     </message>
     <message>
         <location line="-361"/>
@@ -633,7 +633,7 @@ Pasirinkite kitą pavadinimą.</translation>
         <location line="+158"/>
         <location line="+137"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerai</translation>
     </message>
     <message>
         <location line="-407"/>
@@ -643,7 +643,7 @@ Pasirinkite kitą pavadinimą.</translation>
     <message>
         <location line="+2"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistema</translation>
     </message>
     <message>
         <location line="-224"/>
@@ -657,7 +657,23 @@ Pasirinkite kitą pavadinimą.</translation>
         <translation>Atverti...</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+4"/>
+        <source>Collection Folder...</source>
+        <translation>Kolekcijos aplankas...</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location line="+57"/>
+        <source>SQLite Database...</source>
+        <translation>SQLite duomenų bazė...</translation>
+    </message>
+    <message>
+        <location line="-43"/>
+        <source>Hosted Database...</source>
+        <translation>Talpinama duomenų bazė...</translation>
+    </message>
+    <message>
+        <location line="+39"/>
         <source>New...</source>
         <translation>Naujas...</translation>
     </message>
@@ -738,7 +754,21 @@ Pasirinkite kitą pavadinimą.</translation>
         <translation>Kortelės teksto dydis</translation>
     </message>
     <message>
-        <location line="+156"/>
+        <location line="+117"/>
+        <source>This is an early alpha version of Katalog intended to support development and gather feedback.
+
+</source>
+        <translation>Tai ankstyvoji „Katalog“ alfa versija, skirta plėtrai palaikyti ir atsiliepimams rinkti.
+
+</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Do not show again</source>
+        <translation>Daugiau nerodyti</translation>
+    </message>
+    <message>
+        <location line="+33"/>
         <source>Open existing...</source>
         <translation>Atidaryti esamą...</translation>
     </message>
@@ -755,19 +785,19 @@ Pasirinkite kitą pavadinimą.</translation>
     <message>
         <location line="+1"/>
         <source>1- Select an entire drive or directory, &lt;br/&gt;2- select options, and &lt;br/&gt;3- click &apos;Create&apos;&lt;br/&gt;</source>
-        <translation type="unfinished">1- Pasirinkite visą diską arba aplanką, &lt;br/&gt;2- pasirinkite parinktis ir &lt;br/&gt;3- spustelėkite &apos;Sukurti&apos;&lt;br/&gt;</translation>
+        <translation>1- Pasirinkite visą diską arba aplanką, &lt;br/&gt;2- pasirinkite parinktis ir &lt;br/&gt;3- spustelėkite &apos;Sukurti&apos;&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+120"/>
         <source>Update the catalog content with the new criteria?</source>
-        <translation type="unfinished"></translation>
+        <translation>Atnaujinti katalogo turinį pagal naujus kriterijus?</translation>
     </message>
     <message>
         <location line="+8"/>
         <location line="+128"/>
         <location line="+148"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne</translation>
     </message>
     <message>
         <location line="-250"/>
@@ -802,7 +832,7 @@ Pasirinkite kitą pavadinimą.</translation>
     <message>
         <location line="+46"/>
         <source>A snapshot of this collection was recorded:</source>
-        <translation type="unfinished"></translation>
+        <translation>Įrašyta šios kolekcijos momentinė kopija:</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -812,7 +842,7 @@ Pasirinkite kitą pavadinimą.</translation>
     <message>
         <location line="+1"/>
         <source>Number of files:</source>
-        <translation type="unfinished"></translation>
+        <translation>Failų skaičius:</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -820,12 +850,12 @@ Pasirinkite kitą pavadinimą.</translation>
         <location line="+2"/>
         <location line="+1"/>
         <source>added:</source>
-        <translation type="unfinished"></translation>
+        <translation>pridėta:</translation>
     </message>
     <message>
         <location line="-3"/>
         <source>Total file size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bendras failų dydis:</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -836,12 +866,12 @@ Pasirinkite kitą pavadinimą.</translation>
     <message>
         <location line="-109"/>
         <source>Storage free space:</source>
-        <translation type="unfinished"></translation>
+        <translation>Laisva saugyklos vieta:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage total space:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bendra saugyklos vieta:</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -935,25 +965,27 @@ Pasirinkite kitą pavadinimą.</translation>
         <location line="+7"/>
         <location line="+21"/>
         <source>Catalogs updated:</source>
-        <translation type="unfinished"></translation>
+        <translation>Atnaujinti katalogai:</translation>
     </message>
     <message>
         <location line="-21"/>
         <location line="+21"/>
         <source>skipped</source>
-        <translation type="unfinished"></translation>
+        <translation>praleista</translation>
     </message>
     <message>
         <location line="-6"/>
         <source>Selected active catalogs are updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasirinkti aktyvūs katalogai atnaujinami.</translation>
     </message>
     <message>
         <location line="+51"/>
         <source>The source folder does not contain any file.
 This could mean that the source is empty or the device is not mounted to this folder.
 Do you want to save it anyway (the catalog would be empty)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Šaltinio aplanke nėra nė vieno failo.
+Tai gali reikšti, kad šaltinis tuščias arba įrenginys nėra prijungtas prie šio aplanko.
+Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
     </message>
     <message>
         <location line="-692"/>
@@ -987,7 +1019,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+7"/>
         <source>History</source>
-        <translation type="unfinished"></translation>
+        <translation>Istorija</translation>
     </message>
     <message>
         <location line="-138"/>
@@ -1003,19 +1035,34 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Uždaryti</translation>
     </message>
     <message>
-        <location line="-420"/>
+        <location line="-561"/>
+        <source>Show device info</source>
+        <translation>Rodyti įrenginio informaciją</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Collapse one level</source>
+        <translation>Suskleisti vieną lygį</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Expand one level</source>
+        <translation>Išskleisti vieną lygį</translation>
+    </message>
+    <message>
+        <location line="+127"/>
         <source>Duplicates (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dublikatai (%1)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Differences (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Skirtumai (%1)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Results</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezultatai</translation>
     </message>
     <message>
         <location line="+54"/>
@@ -1044,12 +1091,12 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+123"/>
         <source>Catalog created successfully.</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalogas sėkmingai sukurtas.</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Catalog creation failed: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nepavyko sukurti katalogo: </translation>
     </message>
     <message>
         <location line="-1108"/>
@@ -1061,7 +1108,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+47"/>
         <source>Edit Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Redaguoti įrenginį</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -1070,7 +1117,11 @@ Do you want to save it anyway (the catalog would be empty)?</source>
 %1
 
 (The catalog must be updated to reflect these changes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Išsaugoti katalogo apibrėžties pakeitimus?
+
+%1
+
+(Katalogą reikia atnaujinti, kad šie pakeitimai įsigaliotų)</translation>
     </message>
     <message>
         <location line="+25"/>
@@ -1094,15 +1145,25 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+5"/>
         <source>LuckyBackup</source>
-        <translation type="unfinished"></translation>
+        <translation>LuckyBackup</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Generate LuckyBackup profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Generuoti LuckyBackup profilį</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+41"/>
+        <source>Select Collection Folder</source>
+        <translation>Pasirinkite kolekcijos aplanką</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Open SQLite Database</source>
+        <translation>Atverti SQLite duomenų bazę</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Select the database to create and open:</source>
         <translation>Pasirinkite duomenų bazę sukūrimui ir atidarymui:</translation>
     </message>
@@ -5918,7 +5979,7 @@ to the trash?</source>
         <location filename="../qt_quick/PageBackupForm.qml" line="+35"/>
         <location line="+315"/>
         <source>in sync</source>
-        <translation type="unfinished"></translation>
+        <translation>sinchronizuota</translation>
     </message>
     <message>
         <location line="-282"/>
@@ -5933,23 +5994,23 @@ to the trash?</source>
     <message>
         <location line="+2"/>
         <source>Copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nukopijuota: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Archived &amp; copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Suarchyvuota ir nukopijuota: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Conflicts: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfliktai: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+379"/>
         <source>Errors: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Klaidos: %1</translation>
     </message>
     <message>
         <location line="-360"/>
@@ -5977,7 +6038,7 @@ to the trash?</source>
     <message>
         <location line="-153"/>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtras</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6014,12 +6075,12 @@ to the trash?</source>
     <message>
         <location line="+24"/>
         <source>No backup links</source>
-        <translation type="unfinished"></translation>
+        <translation>Nėra atsarginių kopijų nuorodų</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Create a link to define a source and target for backup or archive operations.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sukurkite nuorodą, kad apibrėžtumėte atsarginės kopijos arba archyvavimo operacijų šaltinį ir paskirtį.</translation>
     </message>
     <message>
         <location line="+118"/>
@@ -6031,7 +6092,7 @@ to the trash?</source>
     <message>
         <location line="-13"/>
         <source>Diff</source>
-        <translation type="unfinished"></translation>
+        <translation>Skirt</translation>
     </message>
     <message>
         <location line="+55"/>
@@ -6071,7 +6132,7 @@ to the trash?</source>
     <message>
         <location line="+8"/>
         <source>More actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Daugiau veiksmų</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6086,12 +6147,12 @@ to the trash?</source>
     <message>
         <location line="+1"/>
         <source>Created: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Sukurta: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Already existing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Jau esamų: %1</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -6111,12 +6172,12 @@ to the trash?</source>
     <message>
         <location line="+8"/>
         <source>Delete link</source>
-        <translation type="unfinished"></translation>
+        <translation>Ištrinti nuorodą</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Delete link &quot;%1&quot;? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ištrinti nuorodą „%1“? To negalima anuliuoti.</translation>
     </message>
 </context>
 <context>
@@ -6124,7 +6185,7 @@ to the trash?</source>
     <message>
         <location filename="../qt_quick/PageBackupMappingForm.qml" line="+8"/>
         <source>Add Link</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridėti nuorodą</translation>
     </message>
     <message>
         <location line="+34"/>
@@ -6144,12 +6205,12 @@ to the trash?</source>
     <message>
         <location line="+3"/>
         <source>e.g. Docs → NAS_Docs</source>
-        <translation type="unfinished"></translation>
+        <translation>pvz. Docs → NAS_Docs</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Auto-generate name</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatiškai sugeneruoti pavadinimą</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6174,7 +6235,7 @@ to the trash?</source>
     <message>
         <location line="+6"/>
         <source>Source catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Šaltinio katalogas</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6184,12 +6245,12 @@ to the trash?</source>
     <message>
         <location line="+6"/>
         <source>Target catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Paskirties katalogas</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Parinktys</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6199,7 +6260,7 @@ to the trash?</source>
     <message>
         <location line="+1"/>
         <source>Mirror folder structure exactly (default)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiksliai atkartoti aplankų struktūrą (numatytoji)</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6209,12 +6270,12 @@ to the trash?</source>
     <message>
         <location line="+4"/>
         <source>Rename oldest - rename target, copy source</source>
-        <translation type="unfinished"></translation>
+        <translation>Pervadinti seniausią – pervadinti paskirtį, kopijuoti šaltinį</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Skip - leave target untouched</source>
-        <translation type="unfinished"></translation>
+        <translation>Praleisti – palikti paskirtį nepaliestą</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6224,7 +6285,7 @@ to the trash?</source>
     <message>
         <location line="+1"/>
         <source>Scan source drive directly (requires connected source)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiesiogiai nuskaityti šaltinio diską (reikia prijungto šaltinio)</translation>
     </message>
 </context>
 <context>
@@ -6232,7 +6293,7 @@ to the trash?</source>
     <message>
         <location filename="../qt_quick/PageBackupPreviewForm.qml" line="+8"/>
         <source>Backup Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Atsarginės kopijos peržiūra</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -6252,12 +6313,12 @@ to the trash?</source>
     <message>
         <location line="+15"/>
         <source>Updating catalogs…</source>
-        <translation type="unfinished"></translation>
+        <translation>Atnaujinami katalogai…</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Computing preview…</source>
-        <translation type="unfinished"></translation>
+        <translation>Skaičiuojama peržiūra…</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -6274,37 +6335,37 @@ to the trash?</source>
     <message>
         <location line="-56"/>
         <source>file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>failas(-ai)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Conflicts: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfliktai: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Already in target: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Jau paskirtyje: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>source offline</source>
-        <translation type="unfinished"></translation>
+        <translation>šaltinis neprisijungęs</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>target offline</source>
-        <translation type="unfinished"></translation>
+        <translation>paskirtis neprisijungusi</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Insufficient disk space - Required: %1, Available: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepakanka vietos diske – Reikia: %1, Yra: %2</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Low target space - %1 remaining after operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Mažai vietos paskirtyje – po operacijos liks %1</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -6334,12 +6395,12 @@ to the trash?</source>
     <message>
         <location line="+31"/>
         <source>Everything is in sync</source>
-        <translation type="unfinished"></translation>
+        <translation>Viskas sinchronizuota</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>No files need to be copied or moved.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nereikia kopijuoti ar perkelti jokių failų.</translation>
     </message>
 </context>
 <context>
@@ -6517,12 +6578,12 @@ to the trash?</source>
     <message>
         <location filename="../qt_quick/PageDeviceEditForm.qml" line="+95"/>
         <source>Provide a name for this device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nurodykite šio įrenginio pavadinimą.</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Source path: %1 → %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Šaltinio kelias: %1 → %2</translation>
     </message>
     <message>
         <location line="+83"/>
@@ -6543,12 +6604,12 @@ to the trash?</source>
     <message>
         <location line="+6"/>
         <source>Parent device</source>
-        <translation type="unfinished"></translation>
+        <translation>Pirminis įrenginys</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Vieta</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6637,7 +6698,7 @@ to the trash?</source>
     <message>
         <location line="+22"/>
         <source>Exclude folders (this catalog)</source>
-        <translation type="unfinished"></translation>
+        <translation>Neįtraukti aplankų (šis katalogas)</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6657,7 +6718,7 @@ to the trash?</source>
     <message>
         <location line="+43"/>
         <source>Storage details</source>
-        <translation type="unfinished"></translation>
+        <translation>Saugyklos informacija</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6672,22 +6733,22 @@ to the trash?</source>
     <message>
         <location line="+3"/>
         <source>File system</source>
-        <translation type="unfinished"></translation>
+        <translation>Failų sistema</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Total space (bytes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Bendra vieta (baitai)</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Free space (bytes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Laisva vieta (baitai)</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Refresh from disk</source>
-        <translation type="unfinished"></translation>
+        <translation>Atnaujinti iš disko</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -6702,12 +6763,12 @@ to the trash?</source>
     <message>
         <location line="+3"/>
         <source>Serial number</source>
-        <translation type="unfinished"></translation>
+        <translation>Serijos numeris</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Build date</source>
-        <translation type="unfinished"></translation>
+        <translation>Kūrimo data</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6727,12 +6788,12 @@ to the trash?</source>
     <message>
         <location line="+10"/>
         <source>Picture</source>
-        <translation type="unfinished"></translation>
+        <translation>Paveikslėlis</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Reload pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>Iš naujo įkelti paveikslėlius</translation>
     </message>
 </context>
 <context>
@@ -6741,17 +6802,17 @@ to the trash?</source>
         <location filename="../qt_quick/PageDevicesView.qml" line="+47"/>
         <location line="+37"/>
         <source>Split Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Skaidyti katalogą</translation>
     </message>
     <message>
         <location line="-32"/>
         <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by sub-directory?&lt;br/&gt;&lt;br/&gt;This will create one sub-catalog per immediate sub-directory and remove the original catalog. This operation cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Skaidyti &lt;b&gt;%1&lt;/b&gt; į subkatalogus pagal subkatalogą?&lt;br/&gt;&lt;br/&gt;Bus sukurtas po vieną subkatalogą kiekvienam tiesioginiam pakatalogiui ir pašalintas originalus katalogas. Šios operacijos negalima anuliuoti.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Split</source>
-        <translation type="unfinished"></translation>
+        <translation>Skaidyti</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -6765,7 +6826,7 @@ to the trash?</source>
     <message>
         <location line="-156"/>
         <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by file type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skaidyti &lt;b&gt;%1&lt;/b&gt; į subkatalogus pagal failo tipą:</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6785,17 +6846,17 @@ to the trash?</source>
     <message>
         <location line="+5"/>
         <source>Verify checksums for &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation type="unfinished"></translation>
+        <translation>Patikrinti &lt;b&gt;%1&lt;/b&gt; kontrolines sumas?</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Verify</source>
-        <translation type="unfinished"></translation>
+        <translation>Patikrinti</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>No checksums are stored for this catalog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Šiam katalogui nesaugomos jokios kontrolinės sumos.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6805,58 +6866,58 @@ to the trash?</source>
     <message>
         <location line="+1"/>
         <source>Verified: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Patikrinta: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Mismatches: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Neatitikimai: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Missing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Trūksta: %1</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Checksum Verification</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolinės sumos tikrinimas</translation>
     </message>
     <message>
         <location line="+10"/>
         <location line="+89"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerai</translation>
     </message>
     <message>
         <location line="-78"/>
         <source>Unassign Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Atšaukti įrenginio priskyrimą</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Unassign &lt;b&gt;%1&lt;/b&gt; from its parent device?</source>
-        <translation type="unfinished"></translation>
+        <translation>Atšaukti &lt;b&gt;%1&lt;/b&gt; priskyrimą jo pirminiam įrenginiui?</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Unassign</source>
-        <translation type="unfinished"></translation>
+        <translation>Atšaukti priskyrimą</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Delete Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Ištrinti įrenginį</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ar norite &lt;b&gt;ištrinti&lt;/b&gt; šį %1 įrenginį?&lt;br/&gt;&lt;br/&gt;Pavadinimas: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Taip</translation>
     </message>
     <message>
         <location line="+63"/>
@@ -6876,7 +6937,7 @@ to the trash?</source>
     <message>
         <location line="+9"/>
         <source>Filter from Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtruoti pagal pasirinkimą</translation>
     </message>
     <message>
         <location line="+33"/>
@@ -6916,7 +6977,7 @@ to the trash?</source>
     <message>
         <location line="+22"/>
         <source>No devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Nėra įrenginių</translation>
     </message>
 </context>
 <context>
@@ -7010,12 +7071,12 @@ to the trash?</source>
     <message>
         <location line="+3"/>
         <source>free</source>
-        <translation type="unfinished"></translation>
+        <translation>laisva</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Veiksmai</translation>
     </message>
 </context>
 <context>
@@ -7023,7 +7084,7 @@ to the trash?</source>
     <message>
         <location filename="../qt_quick/PageExploreFiles.qml" line="+67"/>
         <source>No folder selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepasirinktas aplankas</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -7074,12 +7135,12 @@ to the trash?</source>
     <message>
         <location line="+8"/>
         <source>Copy absolute path</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopijuoti absoliutų kelią</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Copy file name</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopijuoti failo pavadinimą</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7914,6 +7975,16 @@ Klaidų: %3</translation>
         <source>Edit</source>
         <translation>Redaguoti</translation>
     </message>
+    <message>
+        <location line="+62"/>
+        <source>Collapse</source>
+        <translation>Suskleisti</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Expand</source>
+        <translation>Išskleisti</translation>
+    </message>
 </context>
 <context>
     <name>PageSettings</name>
@@ -8183,7 +8254,7 @@ Klaidų: %3</translation>
     <message>
         <location line="+24"/>
         <source>No data</source>
-        <translation type="unfinished"></translation>
+        <translation>Nėra duomenų</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -8238,12 +8309,12 @@ Klaidų: %3</translation>
     <message>
         <location line="+9"/>
         <source>Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Duomenys</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>From date</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuo datos</translation>
     </message>
     <message>
         <location line="+24"/>
@@ -8253,7 +8324,7 @@ Klaidų: %3</translation>
     <message>
         <location line="+16"/>
         <source>Select start date</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasirinkite pradžios datą</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -8329,12 +8400,12 @@ Klaidų: %3</translation>
     <message>
         <location line="+5"/>
         <source>Select or enter a folder to tag.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasirinkite arba įveskite žymimą aplanką.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Select or enter a tag name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasirinkite arba įveskite žymos pavadinimą.</translation>
     </message>
     <message>
         <source>Please enter a tag name.</source>

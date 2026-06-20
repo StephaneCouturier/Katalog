@@ -571,12 +571,12 @@ Choisissez un autre nom.</translation>
     <message>
         <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+131"/>
         <source>Select a Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner un stockage</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Select a Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner un catalogue</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -607,7 +607,7 @@ Choisissez un autre nom.</translation>
     <message>
         <location filename="../qt_quick/Main.qml" line="+650"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Voulez-vous &lt;b&gt;supprimer&lt;/b&gt; ce périphérique %1 ?&lt;br/&gt;&lt;br/&gt;Nom : &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -616,7 +616,7 @@ Choisissez un autre nom.</translation>
         <location line="+127"/>
         <location line="+149"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Oui</translation>
     </message>
     <message>
         <location line="-361"/>
@@ -633,7 +633,7 @@ Choisissez un autre nom.</translation>
         <location line="+158"/>
         <location line="+137"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location line="-407"/>
@@ -643,7 +643,7 @@ Choisissez un autre nom.</translation>
     <message>
         <location line="+2"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Système</translation>
     </message>
     <message>
         <location line="-224"/>
@@ -657,7 +657,23 @@ Choisissez un autre nom.</translation>
         <translation>Ouvrir...</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+4"/>
+        <source>Collection Folder...</source>
+        <translation>Dossier de collection...</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location line="+57"/>
+        <source>SQLite Database...</source>
+        <translation>Base de données SQLite...</translation>
+    </message>
+    <message>
+        <location line="-43"/>
+        <source>Hosted Database...</source>
+        <translation>Base de données hébergée...</translation>
+    </message>
+    <message>
+        <location line="+39"/>
         <source>New...</source>
         <translation>Nouveau...</translation>
     </message>
@@ -738,7 +754,21 @@ Choisissez un autre nom.</translation>
         <translation>Taille du texte des cartes</translation>
     </message>
     <message>
-        <location line="+156"/>
+        <location line="+117"/>
+        <source>This is an early alpha version of Katalog intended to support development and gather feedback.
+
+</source>
+        <translation>Ceci est une version alpha préliminaire de Katalog destinée à soutenir le développement et à recueillir des retours.
+
+</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Do not show again</source>
+        <translation>Ne plus afficher</translation>
+    </message>
+    <message>
+        <location line="+33"/>
         <source>Open existing...</source>
         <translation>Ouvrir existant...</translation>
     </message>
@@ -755,19 +785,19 @@ Choisissez un autre nom.</translation>
     <message>
         <location line="+1"/>
         <source>1- Select an entire drive or directory, &lt;br/&gt;2- select options, and &lt;br/&gt;3- click &apos;Create&apos;&lt;br/&gt;</source>
-        <translation type="unfinished">1- Sélectionner un disque entier ou un répertoire, &lt;br/&gt;2- Sélectionner des options, et &lt;br/&gt;3- cliquer &apos;Créer&apos;&lt;br/&gt;</translation>
+        <translation>1- Sélectionner un disque entier ou un répertoire, &lt;br/&gt;2- Sélectionner des options, et &lt;br/&gt;3- cliquer &apos;Créer&apos;&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+120"/>
         <source>Update the catalog content with the new criteria?</source>
-        <translation type="unfinished"></translation>
+        <translation>Mettre à jour le contenu du catalogue avec les nouveaux critères ?</translation>
     </message>
     <message>
         <location line="+8"/>
         <location line="+128"/>
         <location line="+148"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Non</translation>
     </message>
     <message>
         <location line="-250"/>
@@ -802,7 +832,7 @@ Choisissez un autre nom.</translation>
     <message>
         <location line="+46"/>
         <source>A snapshot of this collection was recorded:</source>
-        <translation type="unfinished"></translation>
+        <translation>Un instantané de cette collection a été enregistré :</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -812,7 +842,7 @@ Choisissez un autre nom.</translation>
     <message>
         <location line="+1"/>
         <source>Number of files:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de fichiers :</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -820,12 +850,12 @@ Choisissez un autre nom.</translation>
         <location line="+2"/>
         <location line="+1"/>
         <source>added:</source>
-        <translation type="unfinished"></translation>
+        <translation>ajoutés :</translation>
     </message>
     <message>
         <location line="-3"/>
         <source>Total file size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille totale des fichiers :</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -836,12 +866,12 @@ Choisissez un autre nom.</translation>
     <message>
         <location line="-109"/>
         <source>Storage free space:</source>
-        <translation type="unfinished"></translation>
+        <translation>Espace libre du stockage :</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage total space:</source>
-        <translation type="unfinished"></translation>
+        <translation>Espace total du stockage :</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -935,25 +965,27 @@ Choisissez un autre nom.</translation>
         <location line="+7"/>
         <location line="+21"/>
         <source>Catalogs updated:</source>
-        <translation type="unfinished"></translation>
+        <translation>Catalogues mis à jour :</translation>
     </message>
     <message>
         <location line="-21"/>
         <location line="+21"/>
         <source>skipped</source>
-        <translation type="unfinished"></translation>
+        <translation>ignorés</translation>
     </message>
     <message>
         <location line="-6"/>
         <source>Selected active catalogs are updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Les catalogues actifs sélectionnés sont mis à jour.</translation>
     </message>
     <message>
         <location line="+51"/>
         <source>The source folder does not contain any file.
 This could mean that the source is empty or the device is not mounted to this folder.
 Do you want to save it anyway (the catalog would be empty)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Le dossier source ne contient aucun fichier.
+Cela peut signifier que la source est vide ou que le périphérique n'est pas monté sur ce dossier.
+Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
     </message>
     <message>
         <location line="-692"/>
@@ -987,7 +1019,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+7"/>
         <source>History</source>
-        <translation type="unfinished"></translation>
+        <translation>Historique</translation>
     </message>
     <message>
         <location line="-138"/>
@@ -1003,19 +1035,34 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Fermer</translation>
     </message>
     <message>
-        <location line="-420"/>
+        <location line="-561"/>
+        <source>Show device info</source>
+        <translation>Afficher les infos du périphérique</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Collapse one level</source>
+        <translation>Réduire d'un niveau</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Expand one level</source>
+        <translation>Développer d'un niveau</translation>
+    </message>
+    <message>
+        <location line="+127"/>
         <source>Duplicates (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Doublons (%1)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Differences (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Différences (%1)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Results</source>
-        <translation type="unfinished"></translation>
+        <translation>Résultats</translation>
     </message>
     <message>
         <location line="+54"/>
@@ -1044,12 +1091,12 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+123"/>
         <source>Catalog created successfully.</source>
-        <translation type="unfinished"></translation>
+        <translation>Catalogue créé avec succès.</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Catalog creation failed: </source>
-        <translation type="unfinished"></translation>
+        <translation>Échec de la création du catalogue : </translation>
     </message>
     <message>
         <location line="-1108"/>
@@ -1061,7 +1108,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+47"/>
         <source>Edit Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifier le périphérique</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -1070,7 +1117,11 @@ Do you want to save it anyway (the catalog would be empty)?</source>
 %1
 
 (The catalog must be updated to reflect these changes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrer les modifications de la définition du catalogue ?
+
+%1
+
+(Le catalogue doit être mis à jour pour refléter ces modifications)</translation>
     </message>
     <message>
         <location line="+25"/>
@@ -1094,15 +1145,25 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+5"/>
         <source>LuckyBackup</source>
-        <translation type="unfinished"></translation>
+        <translation>LuckyBackup</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Generate LuckyBackup profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Générer un profil LuckyBackup</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+41"/>
+        <source>Select Collection Folder</source>
+        <translation>Sélectionner le dossier de collection</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Open SQLite Database</source>
+        <translation>Ouvrir une base de données SQLite</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Select the database to create and open:</source>
         <translation>Sélectionnez la base de données à créer et ouvrir&#xa0;:</translation>
     </message>
@@ -5920,7 +5981,7 @@ to the trash?</source>
         <location filename="../qt_quick/PageBackupForm.qml" line="+35"/>
         <location line="+315"/>
         <source>in sync</source>
-        <translation type="unfinished"></translation>
+        <translation>synchronisé</translation>
     </message>
     <message>
         <location line="-282"/>
@@ -5935,23 +5996,23 @@ to the trash?</source>
     <message>
         <location line="+2"/>
         <source>Copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiés : %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Archived &amp; copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivés et copiés : %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Conflicts: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Conflits : %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+379"/>
         <source>Errors: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreurs : %1</translation>
     </message>
     <message>
         <location line="-360"/>
@@ -5979,7 +6040,7 @@ to the trash?</source>
     <message>
         <location line="-153"/>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtre</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6016,12 +6077,12 @@ to the trash?</source>
     <message>
         <location line="+24"/>
         <source>No backup links</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun lien de sauvegarde</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Create a link to define a source and target for backup or archive operations.</source>
-        <translation type="unfinished"></translation>
+        <translation>Créez un lien pour définir une source et une cible pour les opérations de sauvegarde ou d'archivage.</translation>
     </message>
     <message>
         <location line="+118"/>
@@ -6033,7 +6094,7 @@ to the trash?</source>
     <message>
         <location line="-13"/>
         <source>Diff</source>
-        <translation type="unfinished"></translation>
+        <translation>Diff</translation>
     </message>
     <message>
         <location line="+55"/>
@@ -6073,7 +6134,7 @@ to the trash?</source>
     <message>
         <location line="+8"/>
         <source>More actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Plus d'actions</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6088,12 +6149,12 @@ to the trash?</source>
     <message>
         <location line="+1"/>
         <source>Created: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Créés : %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Already existing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Déjà existants : %1</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -6113,12 +6174,12 @@ to the trash?</source>
     <message>
         <location line="+8"/>
         <source>Delete link</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer le lien</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Delete link &quot;%1&quot;? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer le lien « %1 » ? Cette action est irréversible.</translation>
     </message>
 </context>
 <context>
@@ -6126,7 +6187,7 @@ to the trash?</source>
     <message>
         <location filename="../qt_quick/PageBackupMappingForm.qml" line="+8"/>
         <source>Add Link</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter un lien</translation>
     </message>
     <message>
         <location line="+34"/>
@@ -6146,12 +6207,12 @@ to the trash?</source>
     <message>
         <location line="+3"/>
         <source>e.g. Docs → NAS_Docs</source>
-        <translation type="unfinished"></translation>
+        <translation>ex. Docs → NAS_Docs</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Auto-generate name</source>
-        <translation type="unfinished"></translation>
+        <translation>Générer le nom automatiquement</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6176,7 +6237,7 @@ to the trash?</source>
     <message>
         <location line="+6"/>
         <source>Source catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Catalogue source</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6186,12 +6247,12 @@ to the trash?</source>
     <message>
         <location line="+6"/>
         <source>Target catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Catalogue cible</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Options</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6201,7 +6262,7 @@ to the trash?</source>
     <message>
         <location line="+1"/>
         <source>Mirror folder structure exactly (default)</source>
-        <translation type="unfinished"></translation>
+        <translation>Reproduire exactement la structure des dossiers (par défaut)</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6211,12 +6272,12 @@ to the trash?</source>
     <message>
         <location line="+4"/>
         <source>Rename oldest - rename target, copy source</source>
-        <translation type="unfinished"></translation>
+        <translation>Renommer le plus ancien - renommer la cible, copier la source</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Skip - leave target untouched</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignorer - laisser la cible inchangée</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6226,7 +6287,7 @@ to the trash?</source>
     <message>
         <location line="+1"/>
         <source>Scan source drive directly (requires connected source)</source>
-        <translation type="unfinished"></translation>
+        <translation>Analyser directement le disque source (nécessite une source connectée)</translation>
     </message>
 </context>
 <context>
@@ -6234,7 +6295,7 @@ to the trash?</source>
     <message>
         <location filename="../qt_quick/PageBackupPreviewForm.qml" line="+8"/>
         <source>Backup Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Aperçu de la sauvegarde</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -6254,12 +6315,12 @@ to the trash?</source>
     <message>
         <location line="+15"/>
         <source>Updating catalogs…</source>
-        <translation type="unfinished"></translation>
+        <translation>Mise à jour des catalogues…</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Computing preview…</source>
-        <translation type="unfinished"></translation>
+        <translation>Calcul de l'aperçu…</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -6276,37 +6337,37 @@ to the trash?</source>
     <message>
         <location line="-56"/>
         <source>file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>fichier(s)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Conflicts: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Conflits : %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Already in target: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Déjà dans la cible : %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>source offline</source>
-        <translation type="unfinished"></translation>
+        <translation>source hors ligne</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>target offline</source>
-        <translation type="unfinished"></translation>
+        <translation>cible hors ligne</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Insufficient disk space - Required: %1, Available: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Espace disque insuffisant - Requis : %1, Disponible : %2</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Low target space - %1 remaining after operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Espace cible faible - %1 restant après l'opération</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -6336,12 +6397,12 @@ to the trash?</source>
     <message>
         <location line="+31"/>
         <source>Everything is in sync</source>
-        <translation type="unfinished"></translation>
+        <translation>Tout est synchronisé</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>No files need to be copied or moved.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun fichier ne doit être copié ou déplacé.</translation>
     </message>
 </context>
 <context>
@@ -6519,12 +6580,12 @@ to the trash?</source>
     <message>
         <location filename="../qt_quick/PageDeviceEditForm.qml" line="+95"/>
         <source>Provide a name for this device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Indiquez un nom pour ce périphérique.</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Source path: %1 → %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Chemin source : %1 → %2</translation>
     </message>
     <message>
         <location line="+83"/>
@@ -6545,12 +6606,12 @@ to the trash?</source>
     <message>
         <location line="+6"/>
         <source>Parent device</source>
-        <translation type="unfinished"></translation>
+        <translation>Périphérique parent</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Emplacement</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6639,7 +6700,7 @@ to the trash?</source>
     <message>
         <location line="+22"/>
         <source>Exclude folders (this catalog)</source>
-        <translation type="unfinished"></translation>
+        <translation>Exclure des dossiers (ce catalogue)</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6659,7 +6720,7 @@ to the trash?</source>
     <message>
         <location line="+43"/>
         <source>Storage details</source>
-        <translation type="unfinished"></translation>
+        <translation>Détails du stockage</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6674,22 +6735,22 @@ to the trash?</source>
     <message>
         <location line="+3"/>
         <source>File system</source>
-        <translation type="unfinished"></translation>
+        <translation>Système de fichiers</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Total space (bytes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Espace total (octets)</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Free space (bytes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Espace libre (octets)</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Refresh from disk</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualiser depuis le disque</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -6704,12 +6765,12 @@ to the trash?</source>
     <message>
         <location line="+3"/>
         <source>Serial number</source>
-        <translation type="unfinished"></translation>
+        <translation>Numéro de série</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Build date</source>
-        <translation type="unfinished"></translation>
+        <translation>Date de compilation</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6729,12 +6790,12 @@ to the trash?</source>
     <message>
         <location line="+10"/>
         <source>Picture</source>
-        <translation type="unfinished"></translation>
+        <translation>Image</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Reload pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>Recharger les images</translation>
     </message>
 </context>
 <context>
@@ -6743,17 +6804,17 @@ to the trash?</source>
         <location filename="../qt_quick/PageDevicesView.qml" line="+47"/>
         <location line="+37"/>
         <source>Split Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Diviser le catalogue</translation>
     </message>
     <message>
         <location line="-32"/>
         <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by sub-directory?&lt;br/&gt;&lt;br/&gt;This will create one sub-catalog per immediate sub-directory and remove the original catalog. This operation cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Diviser &lt;b&gt;%1&lt;/b&gt; en sous-catalogues par sous-répertoire ?&lt;br/&gt;&lt;br/&gt;Cela créera un sous-catalogue par sous-répertoire immédiat et supprimera le catalogue d'origine. Cette opération est irréversible.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Split</source>
-        <translation type="unfinished"></translation>
+        <translation>Diviser</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -6767,7 +6828,7 @@ to the trash?</source>
     <message>
         <location line="-156"/>
         <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by file type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Diviser &lt;b&gt;%1&lt;/b&gt; en sous-catalogues par type de fichier :</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6787,17 +6848,17 @@ to the trash?</source>
     <message>
         <location line="+5"/>
         <source>Verify checksums for &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérifier les sommes de contrôle pour &lt;b&gt;%1&lt;/b&gt; ?</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Verify</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérifier</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>No checksums are stored for this catalog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucune somme de contrôle n'est stockée pour ce catalogue.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6807,58 +6868,58 @@ to the trash?</source>
     <message>
         <location line="+1"/>
         <source>Verified: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérifiés : %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Mismatches: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Non-correspondances : %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Missing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Manquants : %1</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Checksum Verification</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérification de la somme de contrôle</translation>
     </message>
     <message>
         <location line="+10"/>
         <location line="+89"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location line="-78"/>
         <source>Unassign Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Dissocier le périphérique</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Unassign &lt;b&gt;%1&lt;/b&gt; from its parent device?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dissocier &lt;b&gt;%1&lt;/b&gt; de son périphérique parent ?</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Unassign</source>
-        <translation type="unfinished"></translation>
+        <translation>Dissocier</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Delete Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer le périphérique</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Voulez-vous &lt;b&gt;supprimer&lt;/b&gt; ce périphérique %1 ?&lt;br/&gt;&lt;br/&gt;Nom : &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Oui</translation>
     </message>
     <message>
         <location line="+63"/>
@@ -6878,7 +6939,7 @@ to the trash?</source>
     <message>
         <location line="+9"/>
         <source>Filter from Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtrer depuis la sélection</translation>
     </message>
     <message>
         <location line="+33"/>
@@ -6918,7 +6979,7 @@ to the trash?</source>
     <message>
         <location line="+22"/>
         <source>No devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun périphérique</translation>
     </message>
 </context>
 <context>
@@ -7012,12 +7073,12 @@ to the trash?</source>
     <message>
         <location line="+3"/>
         <source>free</source>
-        <translation type="unfinished"></translation>
+        <translation>libre</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Actions</translation>
     </message>
 </context>
 <context>
@@ -7025,7 +7086,7 @@ to the trash?</source>
     <message>
         <location filename="../qt_quick/PageExploreFiles.qml" line="+67"/>
         <source>No folder selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun dossier sélectionné</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -7076,12 +7137,12 @@ to the trash?</source>
     <message>
         <location line="+8"/>
         <source>Copy absolute path</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier le chemin absolu</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Copy file name</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier le nom du fichier</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7916,6 +7977,16 @@ Erreurs : %3</translation>
         <source>Edit</source>
         <translation>Editer</translation>
     </message>
+    <message>
+        <location line="+62"/>
+        <source>Collapse</source>
+        <translation>Réduire</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Expand</source>
+        <translation>Développer</translation>
+    </message>
 </context>
 <context>
     <name>PageSettings</name>
@@ -8185,7 +8256,7 @@ Erreurs : %3</translation>
     <message>
         <location line="+24"/>
         <source>No data</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucune donnée</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -8240,12 +8311,12 @@ Erreurs : %3</translation>
     <message>
         <location line="+9"/>
         <source>Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Données</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>From date</source>
-        <translation type="unfinished"></translation>
+        <translation>À partir du</translation>
     </message>
     <message>
         <location line="+24"/>
@@ -8255,7 +8326,7 @@ Erreurs : %3</translation>
     <message>
         <location line="+16"/>
         <source>Select start date</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner la date de début</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -8331,12 +8402,12 @@ Erreurs : %3</translation>
     <message>
         <location line="+5"/>
         <source>Select or enter a folder to tag.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionnez ou saisissez un dossier à étiqueter.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Select or enter a tag name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionnez ou saisissez un nom d'étiquette.</translation>
     </message>
     <message>
         <source>Please enter a tag name.</source>

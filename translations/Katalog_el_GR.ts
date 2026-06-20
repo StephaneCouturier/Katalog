@@ -571,12 +571,12 @@ Choose a different name.</source>
     <message>
         <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+131"/>
         <source>Select a Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλέξτε αποθηκευτικό χώρο</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Select a Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλέξτε κατάλογο</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -607,7 +607,7 @@ Choose a different name.</source>
     <message>
         <location filename="../qt_quick/Main.qml" line="+650"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Θέλετε να &lt;b&gt;διαγράψετε&lt;/b&gt; αυτή τη συσκευή %1;&lt;br/&gt;&lt;br/&gt;Όνομα: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -616,7 +616,7 @@ Choose a different name.</source>
         <location line="+127"/>
         <location line="+149"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ναι</translation>
     </message>
     <message>
         <location line="-361"/>
@@ -633,7 +633,7 @@ Choose a different name.</source>
         <location line="+158"/>
         <location line="+137"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>Εντάξει</translation>
     </message>
     <message>
         <location line="-407"/>
@@ -643,7 +643,7 @@ Choose a different name.</source>
     <message>
         <location line="+2"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Σύστημα</translation>
     </message>
     <message>
         <location line="-224"/>
@@ -657,7 +657,23 @@ Choose a different name.</source>
         <translation>Άνοιγμα...</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+4"/>
+        <source>Collection Folder...</source>
+        <translation>Φάκελος συλλογής...</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location line="+57"/>
+        <source>SQLite Database...</source>
+        <translation>Βάση δεδομένων SQLite...</translation>
+    </message>
+    <message>
+        <location line="-43"/>
+        <source>Hosted Database...</source>
+        <translation>Φιλοξενούμενη βάση δεδομένων...</translation>
+    </message>
+    <message>
+        <location line="+39"/>
         <source>New...</source>
         <translation>Νέο...</translation>
     </message>
@@ -738,7 +754,21 @@ Choose a different name.</source>
         <translation>Μέγεθος κειμένου κάρτας</translation>
     </message>
     <message>
-        <location line="+156"/>
+        <location line="+117"/>
+        <source>This is an early alpha version of Katalog intended to support development and gather feedback.
+
+</source>
+        <translation>Αυτή είναι μια πρώιμη έκδοση alpha του Katalog, που προορίζεται για την υποστήριξη της ανάπτυξης και τη συλλογή σχολίων.
+
+</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Do not show again</source>
+        <translation>Να μην εμφανιστεί ξανά</translation>
+    </message>
+    <message>
+        <location line="+33"/>
         <source>Open existing...</source>
         <translation>Άνοιγμα υπάρχοντος...</translation>
     </message>
@@ -755,19 +785,19 @@ Choose a different name.</source>
     <message>
         <location line="+1"/>
         <source>1- Select an entire drive or directory, &lt;br/&gt;2- select options, and &lt;br/&gt;3- click &apos;Create&apos;&lt;br/&gt;</source>
-        <translation type="unfinished">1- Επιλέξτε μια ολόκληρη μονάδα δίσκου ή κατάλογο, &lt;br/&gt;2- επιλέξτε επιλογές και &lt;br/&gt;3- κάντε κλικ στην επιλογή &apos;Δημιουργία&apos;&lt;br/&gt;</translation>
+        <translation>1- Επιλέξτε μια ολόκληρη μονάδα δίσκου ή κατάλογο, &lt;br/&gt;2- επιλέξτε επιλογές και &lt;br/&gt;3- κάντε κλικ στην επιλογή &apos;Δημιουργία&apos;&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+120"/>
         <source>Update the catalog content with the new criteria?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ενημέρωση του περιεχομένου του καταλόγου με τα νέα κριτήρια;</translation>
     </message>
     <message>
         <location line="+8"/>
         <location line="+128"/>
         <location line="+148"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Όχι</translation>
     </message>
     <message>
         <location line="-250"/>
@@ -802,7 +832,7 @@ Choose a different name.</source>
     <message>
         <location line="+46"/>
         <source>A snapshot of this collection was recorded:</source>
-        <translation type="unfinished"></translation>
+        <translation>Καταγράφηκε ένα στιγμιότυπο αυτής της συλλογής:</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -812,7 +842,7 @@ Choose a different name.</source>
     <message>
         <location line="+1"/>
         <source>Number of files:</source>
-        <translation type="unfinished"></translation>
+        <translation>Αριθμός αρχείων:</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -820,12 +850,12 @@ Choose a different name.</source>
         <location line="+2"/>
         <location line="+1"/>
         <source>added:</source>
-        <translation type="unfinished"></translation>
+        <translation>προστέθηκαν:</translation>
     </message>
     <message>
         <location line="-3"/>
         <source>Total file size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Συνολικό μέγεθος αρχείων:</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -836,12 +866,12 @@ Choose a different name.</source>
     <message>
         <location line="-109"/>
         <source>Storage free space:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ελεύθερος χώρος αποθήκευσης:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage total space:</source>
-        <translation type="unfinished"></translation>
+        <translation>Συνολικός χώρος αποθήκευσης:</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -935,25 +965,27 @@ Choose a different name.</source>
         <location line="+7"/>
         <location line="+21"/>
         <source>Catalogs updated:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ενημερωμένοι κατάλογοι:</translation>
     </message>
     <message>
         <location line="-21"/>
         <location line="+21"/>
         <source>skipped</source>
-        <translation type="unfinished"></translation>
+        <translation>παραλείφθηκαν</translation>
     </message>
     <message>
         <location line="-6"/>
         <source>Selected active catalogs are updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Οι επιλεγμένοι ενεργοί κατάλογοι ενημερώνονται.</translation>
     </message>
     <message>
         <location line="+51"/>
         <source>The source folder does not contain any file.
 This could mean that the source is empty or the device is not mounted to this folder.
 Do you want to save it anyway (the catalog would be empty)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ο φάκελος προέλευσης δεν περιέχει κανένα αρχείο.
+Αυτό μπορεί να σημαίνει ότι η προέλευση είναι κενή ή ότι η συσκευή δεν είναι προσαρτημένη σε αυτόν τον φάκελο.
+Θέλετε να το αποθηκεύσετε ούτως ή άλλως (ο κατάλογος θα είναι κενός);</translation>
     </message>
     <message>
         <location line="-692"/>
@@ -987,7 +1019,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+7"/>
         <source>History</source>
-        <translation type="unfinished"></translation>
+        <translation>Ιστορικό</translation>
     </message>
     <message>
         <location line="-138"/>
@@ -1003,19 +1035,34 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Κλείσιμο</translation>
     </message>
     <message>
-        <location line="-420"/>
+        <location line="-561"/>
+        <source>Show device info</source>
+        <translation>Εμφάνιση πληροφοριών συσκευής</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Collapse one level</source>
+        <translation>Σύμπτυξη ενός επιπέδου</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Expand one level</source>
+        <translation>Ανάπτυξη ενός επιπέδου</translation>
+    </message>
+    <message>
+        <location line="+127"/>
         <source>Duplicates (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Διπλότυπα (%1)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Differences (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Διαφορές (%1)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Results</source>
-        <translation type="unfinished"></translation>
+        <translation>Αποτελέσματα</translation>
     </message>
     <message>
         <location line="+54"/>
@@ -1044,12 +1091,12 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+123"/>
         <source>Catalog created successfully.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ο κατάλογος δημιουργήθηκε με επιτυχία.</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Catalog creation failed: </source>
-        <translation type="unfinished"></translation>
+        <translation>Η δημιουργία καταλόγου απέτυχε: </translation>
     </message>
     <message>
         <location line="-1108"/>
@@ -1061,7 +1108,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+47"/>
         <source>Edit Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Επεξεργασία συσκευής</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -1070,7 +1117,11 @@ Do you want to save it anyway (the catalog would be empty)?</source>
 %1
 
 (The catalog must be updated to reflect these changes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Αποθήκευση αλλαγών στον ορισμό του καταλόγου;
+
+%1
+
+(Ο κατάλογος πρέπει να ενημερωθεί για να εφαρμοστούν αυτές οι αλλαγές)</translation>
     </message>
     <message>
         <location line="+25"/>
@@ -1094,15 +1145,25 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+5"/>
         <source>LuckyBackup</source>
-        <translation type="unfinished"></translation>
+        <translation>LuckyBackup</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Generate LuckyBackup profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Δημιουργία προφίλ LuckyBackup</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+41"/>
+        <source>Select Collection Folder</source>
+        <translation>Επιλέξτε φάκελο συλλογής</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Open SQLite Database</source>
+        <translation>Άνοιγμα βάσης δεδομένων SQLite</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Select the database to create and open:</source>
         <translation>Επιλογή βάσης δεδομένων για δημιουργία και άνοιγμα:</translation>
     </message>
@@ -5920,7 +5981,7 @@ Split was not performed.</source>
         <location filename="../qt_quick/PageBackupForm.qml" line="+35"/>
         <location line="+315"/>
         <source>in sync</source>
-        <translation type="unfinished"></translation>
+        <translation>συγχρονισμένο</translation>
     </message>
     <message>
         <location line="-282"/>
@@ -5935,23 +5996,23 @@ Split was not performed.</source>
     <message>
         <location line="+2"/>
         <source>Copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Αντιγράφηκαν: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Archived &amp; copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Αρχειοθετήθηκαν &amp; αντιγράφηκαν: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Conflicts: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Διενέξεις: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+379"/>
         <source>Errors: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Σφάλματα: %1</translation>
     </message>
     <message>
         <location line="-360"/>
@@ -5979,7 +6040,7 @@ Split was not performed.</source>
     <message>
         <location line="-153"/>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Φίλτρο</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6016,12 +6077,12 @@ Split was not performed.</source>
     <message>
         <location line="+24"/>
         <source>No backup links</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν υπάρχουν σύνδεσμοι αντιγράφων ασφαλείας</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Create a link to define a source and target for backup or archive operations.</source>
-        <translation type="unfinished"></translation>
+        <translation>Δημιουργήστε έναν σύνδεσμο για να ορίσετε μια προέλευση και έναν προορισμό για λειτουργίες αντιγράφων ασφαλείας ή αρχειοθέτησης.</translation>
     </message>
     <message>
         <location line="+118"/>
@@ -6033,7 +6094,7 @@ Split was not performed.</source>
     <message>
         <location line="-13"/>
         <source>Diff</source>
-        <translation type="unfinished"></translation>
+        <translation>Διαφ</translation>
     </message>
     <message>
         <location line="+55"/>
@@ -6073,7 +6134,7 @@ Split was not performed.</source>
     <message>
         <location line="+8"/>
         <source>More actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Περισσότερες ενέργειες</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6088,12 +6149,12 @@ Split was not performed.</source>
     <message>
         <location line="+1"/>
         <source>Created: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Δημιουργήθηκαν: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Already existing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ήδη υπάρχοντα: %1</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -6113,12 +6174,12 @@ Split was not performed.</source>
     <message>
         <location line="+8"/>
         <source>Delete link</source>
-        <translation type="unfinished"></translation>
+        <translation>Διαγραφή συνδέσμου</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Delete link &quot;%1&quot;? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Διαγραφή του συνδέσμου «%1»; Αυτό δεν μπορεί να αναιρεθεί.</translation>
     </message>
 </context>
 <context>
@@ -6126,7 +6187,7 @@ Split was not performed.</source>
     <message>
         <location filename="../qt_quick/PageBackupMappingForm.qml" line="+8"/>
         <source>Add Link</source>
-        <translation type="unfinished"></translation>
+        <translation>Προσθήκη συνδέσμου</translation>
     </message>
     <message>
         <location line="+34"/>
@@ -6146,12 +6207,12 @@ Split was not performed.</source>
     <message>
         <location line="+3"/>
         <source>e.g. Docs → NAS_Docs</source>
-        <translation type="unfinished"></translation>
+        <translation>π.χ. Docs → NAS_Docs</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Auto-generate name</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτόματη δημιουργία ονόματος</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6176,7 +6237,7 @@ Split was not performed.</source>
     <message>
         <location line="+6"/>
         <source>Source catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Κατάλογος προέλευσης</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6186,12 +6247,12 @@ Split was not performed.</source>
     <message>
         <location line="+6"/>
         <source>Target catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Κατάλογος προορισμού</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλογές</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6201,7 +6262,7 @@ Split was not performed.</source>
     <message>
         <location line="+1"/>
         <source>Mirror folder structure exactly (default)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ακριβής αντικατοπτρισμός δομής φακέλων (προεπιλογή)</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6211,12 +6272,12 @@ Split was not performed.</source>
     <message>
         <location line="+4"/>
         <source>Rename oldest - rename target, copy source</source>
-        <translation type="unfinished"></translation>
+        <translation>Μετονομασία παλαιότερου - μετονομασία προορισμού, αντιγραφή προέλευσης</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Skip - leave target untouched</source>
-        <translation type="unfinished"></translation>
+        <translation>Παράλειψη - διατήρηση προορισμού ως έχει</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6226,7 +6287,7 @@ Split was not performed.</source>
     <message>
         <location line="+1"/>
         <source>Scan source drive directly (requires connected source)</source>
-        <translation type="unfinished"></translation>
+        <translation>Άμεση σάρωση δίσκου προέλευσης (απαιτεί συνδεδεμένη προέλευση)</translation>
     </message>
 </context>
 <context>
@@ -6234,7 +6295,7 @@ Split was not performed.</source>
     <message>
         <location filename="../qt_quick/PageBackupPreviewForm.qml" line="+8"/>
         <source>Backup Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Προεπισκόπηση αντιγράφου ασφαλείας</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -6254,12 +6315,12 @@ Split was not performed.</source>
     <message>
         <location line="+15"/>
         <source>Updating catalogs…</source>
-        <translation type="unfinished"></translation>
+        <translation>Ενημέρωση καταλόγων…</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Computing preview…</source>
-        <translation type="unfinished"></translation>
+        <translation>Υπολογισμός προεπισκόπησης…</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -6276,37 +6337,37 @@ Split was not performed.</source>
     <message>
         <location line="-56"/>
         <source>file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>αρχείο(α)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Conflicts: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Διενέξεις: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Already in target: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ήδη στον προορισμό: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>source offline</source>
-        <translation type="unfinished"></translation>
+        <translation>πηγή εκτός σύνδεσης</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>target offline</source>
-        <translation type="unfinished"></translation>
+        <translation>προορισμός εκτός σύνδεσης</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Insufficient disk space - Required: %1, Available: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ανεπαρκής χώρος στον δίσκο - Απαιτείται: %1, Διαθέσιμος: %2</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Low target space - %1 remaining after operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Χαμηλός χώρος προορισμού - %1 απομένει μετά τη λειτουργία</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -6336,12 +6397,12 @@ Split was not performed.</source>
     <message>
         <location line="+31"/>
         <source>Everything is in sync</source>
-        <translation type="unfinished"></translation>
+        <translation>Όλα είναι συγχρονισμένα</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>No files need to be copied or moved.</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν χρειάζεται να αντιγραφούν ή να μετακινηθούν αρχεία.</translation>
     </message>
 </context>
 <context>
@@ -6519,12 +6580,12 @@ Split was not performed.</source>
     <message>
         <location filename="../qt_quick/PageDeviceEditForm.qml" line="+95"/>
         <source>Provide a name for this device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Δώστε ένα όνομα για αυτή τη συσκευή.</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Source path: %1 → %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Διαδρομή προέλευσης: %1 → %2</translation>
     </message>
     <message>
         <location line="+83"/>
@@ -6545,12 +6606,12 @@ Split was not performed.</source>
     <message>
         <location line="+6"/>
         <source>Parent device</source>
-        <translation type="unfinished"></translation>
+        <translation>Γονική συσκευή</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Τοποθεσία</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6639,7 +6700,7 @@ Split was not performed.</source>
     <message>
         <location line="+22"/>
         <source>Exclude folders (this catalog)</source>
-        <translation type="unfinished"></translation>
+        <translation>Εξαίρεση φακέλων (αυτός ο κατάλογος)</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6659,7 +6720,7 @@ Split was not performed.</source>
     <message>
         <location line="+43"/>
         <source>Storage details</source>
-        <translation type="unfinished"></translation>
+        <translation>Λεπτομέρειες αποθήκευσης</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6674,22 +6735,22 @@ Split was not performed.</source>
     <message>
         <location line="+3"/>
         <source>File system</source>
-        <translation type="unfinished"></translation>
+        <translation>Σύστημα αρχείων</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Total space (bytes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Συνολικός χώρος (byte)</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Free space (bytes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ελεύθερος χώρος (byte)</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Refresh from disk</source>
-        <translation type="unfinished"></translation>
+        <translation>Ανανέωση από τον δίσκο</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -6704,12 +6765,12 @@ Split was not performed.</source>
     <message>
         <location line="+3"/>
         <source>Serial number</source>
-        <translation type="unfinished"></translation>
+        <translation>Σειριακός αριθμός</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Build date</source>
-        <translation type="unfinished"></translation>
+        <translation>Ημερομηνία έκδοσης</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6729,12 +6790,12 @@ Split was not performed.</source>
     <message>
         <location line="+10"/>
         <source>Picture</source>
-        <translation type="unfinished"></translation>
+        <translation>Εικόνα</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Reload pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>Επαναφόρτωση εικόνων</translation>
     </message>
 </context>
 <context>
@@ -6743,17 +6804,17 @@ Split was not performed.</source>
         <location filename="../qt_quick/PageDevicesView.qml" line="+47"/>
         <location line="+37"/>
         <source>Split Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Διαχωρισμός καταλόγου</translation>
     </message>
     <message>
         <location line="-32"/>
         <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by sub-directory?&lt;br/&gt;&lt;br/&gt;This will create one sub-catalog per immediate sub-directory and remove the original catalog. This operation cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Διαχωρισμός του &lt;b&gt;%1&lt;/b&gt; σε υποκαταλόγους ανά υποκατάλογο;&lt;br/&gt;&lt;br/&gt;Αυτό θα δημιουργήσει έναν υποκατάλογο για κάθε άμεσο υποκατάλογο και θα αφαιρέσει τον αρχικό κατάλογο. Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Split</source>
-        <translation type="unfinished"></translation>
+        <translation>Διαχωρισμός</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -6767,7 +6828,7 @@ Split was not performed.</source>
     <message>
         <location line="-156"/>
         <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by file type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Διαχωρισμός του &lt;b&gt;%1&lt;/b&gt; σε υποκαταλόγους ανά τύπο αρχείου:</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6787,17 +6848,17 @@ Split was not performed.</source>
     <message>
         <location line="+5"/>
         <source>Verify checksums for &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation type="unfinished"></translation>
+        <translation>Επαλήθευση αθροισμάτων ελέγχου για &lt;b&gt;%1&lt;/b&gt;;</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Verify</source>
-        <translation type="unfinished"></translation>
+        <translation>Επαλήθευση</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>No checksums are stored for this catalog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν αποθηκεύονται αθροίσματα ελέγχου για αυτόν τον κατάλογο.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6807,58 +6868,58 @@ Split was not performed.</source>
     <message>
         <location line="+1"/>
         <source>Verified: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Επαληθεύτηκαν: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Mismatches: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ασυμφωνίες: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Missing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Λείπουν: %1</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Checksum Verification</source>
-        <translation type="unfinished"></translation>
+        <translation>Επαλήθευση αθροίσματος ελέγχου</translation>
     </message>
     <message>
         <location line="+10"/>
         <location line="+89"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>Εντάξει</translation>
     </message>
     <message>
         <location line="-78"/>
         <source>Unassign Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Κατάργηση ανάθεσης συσκευής</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Unassign &lt;b&gt;%1&lt;/b&gt; from its parent device?</source>
-        <translation type="unfinished"></translation>
+        <translation>Κατάργηση ανάθεσης του &lt;b&gt;%1&lt;/b&gt; από τη γονική του συσκευή;</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Unassign</source>
-        <translation type="unfinished"></translation>
+        <translation>Κατάργηση ανάθεσης</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Delete Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Διαγραφή συσκευής</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Θέλετε να &lt;b&gt;διαγράψετε&lt;/b&gt; αυτή τη συσκευή %1;&lt;br/&gt;&lt;br/&gt;Όνομα: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ναι</translation>
     </message>
     <message>
         <location line="+63"/>
@@ -6878,7 +6939,7 @@ Split was not performed.</source>
     <message>
         <location line="+9"/>
         <source>Filter from Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Φιλτράρισμα από την επιλογή</translation>
     </message>
     <message>
         <location line="+33"/>
@@ -6918,7 +6979,7 @@ Split was not performed.</source>
     <message>
         <location line="+22"/>
         <source>No devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν υπάρχουν συσκευές</translation>
     </message>
 </context>
 <context>
@@ -7012,12 +7073,12 @@ Split was not performed.</source>
     <message>
         <location line="+3"/>
         <source>free</source>
-        <translation type="unfinished"></translation>
+        <translation>ελεύθερο</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Ενέργειες</translation>
     </message>
 </context>
 <context>
@@ -7025,7 +7086,7 @@ Split was not performed.</source>
     <message>
         <location filename="../qt_quick/PageExploreFiles.qml" line="+67"/>
         <source>No folder selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν επιλέχθηκε φάκελος</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -7076,12 +7137,12 @@ Split was not performed.</source>
     <message>
         <location line="+8"/>
         <source>Copy absolute path</source>
-        <translation type="unfinished"></translation>
+        <translation>Αντιγραφή απόλυτης διαδρομής</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Copy file name</source>
-        <translation type="unfinished"></translation>
+        <translation>Αντιγραφή ονόματος αρχείου</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7916,6 +7977,16 @@ Errors: %3</source>
         <source>Edit</source>
         <translation>Επεξεργασία</translation>
     </message>
+    <message>
+        <location line="+62"/>
+        <source>Collapse</source>
+        <translation>Σύμπτυξη</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Expand</source>
+        <translation>Ανάπτυξη</translation>
+    </message>
 </context>
 <context>
     <name>PageSettings</name>
@@ -8185,7 +8256,7 @@ Errors: %3</source>
     <message>
         <location line="+24"/>
         <source>No data</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν υπάρχουν δεδομένα</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -8240,12 +8311,12 @@ Errors: %3</source>
     <message>
         <location line="+9"/>
         <source>Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεδομένα</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>From date</source>
-        <translation type="unfinished"></translation>
+        <translation>Από ημερομηνία</translation>
     </message>
     <message>
         <location line="+24"/>
@@ -8255,7 +8326,7 @@ Errors: %3</source>
     <message>
         <location line="+16"/>
         <source>Select start date</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλέξτε ημερομηνία έναρξης</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -8331,12 +8402,12 @@ Errors: %3</source>
     <message>
         <location line="+5"/>
         <source>Select or enter a folder to tag.</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλέξτε ή εισαγάγετε έναν φάκελο για επισήμανση.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Select or enter a tag name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλέξτε ή εισαγάγετε ένα όνομα ετικέτας.</translation>
     </message>
     <message>
         <source>Please enter a tag name.</source>

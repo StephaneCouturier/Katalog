@@ -571,12 +571,12 @@ Izberite drugo ime.</translation>
     <message>
         <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+131"/>
         <source>Select a Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Izberite shrambo</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Select a Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Izberite katalog</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -607,7 +607,7 @@ Izberite drugo ime.</translation>
     <message>
         <location filename="../qt_quick/Main.qml" line="+650"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ali želite &lt;b&gt;izbrisati&lt;/b&gt; to napravo %1?&lt;br/&gt;&lt;br/&gt;Ime: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -616,7 +616,7 @@ Izberite drugo ime.</translation>
         <location line="+127"/>
         <location line="+149"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Da</translation>
     </message>
     <message>
         <location line="-361"/>
@@ -633,7 +633,7 @@ Izberite drugo ime.</translation>
         <location line="+158"/>
         <location line="+137"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>V redu</translation>
     </message>
     <message>
         <location line="-407"/>
@@ -643,7 +643,7 @@ Izberite drugo ime.</translation>
     <message>
         <location line="+2"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistem</translation>
     </message>
     <message>
         <location line="-224"/>
@@ -657,7 +657,23 @@ Izberite drugo ime.</translation>
         <translation>Odpri...</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+4"/>
+        <source>Collection Folder...</source>
+        <translation>Mapa zbirke...</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location line="+57"/>
+        <source>SQLite Database...</source>
+        <translation>Zbirka podatkov SQLite...</translation>
+    </message>
+    <message>
+        <location line="-43"/>
+        <source>Hosted Database...</source>
+        <translation>Gostovana zbirka podatkov...</translation>
+    </message>
+    <message>
+        <location line="+39"/>
         <source>New...</source>
         <translation>Nov...</translation>
     </message>
@@ -738,7 +754,21 @@ Izberite drugo ime.</translation>
         <translation>Velikost besedila kartice</translation>
     </message>
     <message>
-        <location line="+156"/>
+        <location line="+117"/>
+        <source>This is an early alpha version of Katalog intended to support development and gather feedback.
+
+</source>
+        <translation>To je zgodnja različica alfa programa Katalog, namenjena podpori razvoja in zbiranju povratnih informacij.
+
+</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Do not show again</source>
+        <translation>Ne prikaži več</translation>
+    </message>
+    <message>
+        <location line="+33"/>
         <source>Open existing...</source>
         <translation>Odpri obstoječe...</translation>
     </message>
@@ -755,19 +785,19 @@ Izberite drugo ime.</translation>
     <message>
         <location line="+1"/>
         <source>1- Select an entire drive or directory, &lt;br/&gt;2- select options, and &lt;br/&gt;3- click &apos;Create&apos;&lt;br/&gt;</source>
-        <translation type="unfinished">1 – Izberite celoten pogon ali imenik, &lt;br/&gt;2 – izberite možnosti in &lt;br/&gt;3 – kliknite »Ustvari«&lt;br/&gt;</translation>
+        <translation>1 – Izberite celoten pogon ali imenik, &lt;br/&gt;2 – izberite možnosti in &lt;br/&gt;3 – kliknite »Ustvari«&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+120"/>
         <source>Update the catalog content with the new criteria?</source>
-        <translation type="unfinished"></translation>
+        <translation>Posodobim vsebino kataloga z novimi merili?</translation>
     </message>
     <message>
         <location line="+8"/>
         <location line="+128"/>
         <location line="+148"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne</translation>
     </message>
     <message>
         <location line="-250"/>
@@ -802,7 +832,7 @@ Izberite drugo ime.</translation>
     <message>
         <location line="+46"/>
         <source>A snapshot of this collection was recorded:</source>
-        <translation type="unfinished"></translation>
+        <translation>Posnetek te zbirke je bil zabeležen:</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -812,7 +842,7 @@ Izberite drugo ime.</translation>
     <message>
         <location line="+1"/>
         <source>Number of files:</source>
-        <translation type="unfinished"></translation>
+        <translation>Število datotek:</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -820,12 +850,12 @@ Izberite drugo ime.</translation>
         <location line="+2"/>
         <location line="+1"/>
         <source>added:</source>
-        <translation type="unfinished"></translation>
+        <translation>dodano:</translation>
     </message>
     <message>
         <location line="-3"/>
         <source>Total file size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skupna velikost datotek:</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -836,12 +866,12 @@ Izberite drugo ime.</translation>
     <message>
         <location line="-109"/>
         <source>Storage free space:</source>
-        <translation type="unfinished"></translation>
+        <translation>Prosti prostor shrambe:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage total space:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skupni prostor shrambe:</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -935,25 +965,27 @@ Izberite drugo ime.</translation>
         <location line="+7"/>
         <location line="+21"/>
         <source>Catalogs updated:</source>
-        <translation type="unfinished"></translation>
+        <translation>Posodobljeni katalogi:</translation>
     </message>
     <message>
         <location line="-21"/>
         <location line="+21"/>
         <source>skipped</source>
-        <translation type="unfinished"></translation>
+        <translation>preskočeno</translation>
     </message>
     <message>
         <location line="-6"/>
         <source>Selected active catalogs are updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Izbrani aktivni katalogi se posodobijo.</translation>
     </message>
     <message>
         <location line="+51"/>
         <source>The source folder does not contain any file.
 This could mean that the source is empty or the device is not mounted to this folder.
 Do you want to save it anyway (the catalog would be empty)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvorna mapa ne vsebuje nobene datoteke.
+To lahko pomeni, da je vir prazen ali pa naprava ni priklopljena v to mapo.
+Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
     </message>
     <message>
         <location line="-692"/>
@@ -987,7 +1019,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+7"/>
         <source>History</source>
-        <translation type="unfinished"></translation>
+        <translation>Zgodovina</translation>
     </message>
     <message>
         <location line="-138"/>
@@ -1003,19 +1035,34 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Zapri</translation>
     </message>
     <message>
-        <location line="-420"/>
+        <location line="-561"/>
+        <source>Show device info</source>
+        <translation>Pokaži podatke o napravi</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Collapse one level</source>
+        <translation>Strni eno raven</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Expand one level</source>
+        <translation>Razširi eno raven</translation>
+    </message>
+    <message>
+        <location line="+127"/>
         <source>Duplicates (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dvojniki (%1)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Differences (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Razlike (%1)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Results</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezultati</translation>
     </message>
     <message>
         <location line="+54"/>
@@ -1044,12 +1091,12 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+123"/>
         <source>Catalog created successfully.</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalog je bil uspešno ustvarjen.</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Catalog creation failed: </source>
-        <translation type="unfinished"></translation>
+        <translation>Ustvarjanje kataloga ni uspelo: </translation>
     </message>
     <message>
         <location line="-1108"/>
@@ -1061,7 +1108,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+47"/>
         <source>Edit Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Uredi napravo</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -1070,7 +1117,11 @@ Do you want to save it anyway (the catalog would be empty)?</source>
 %1
 
 (The catalog must be updated to reflect these changes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Shranim spremembe definicije kataloga?
+
+%1
+
+(Katalog je treba posodobiti, da bodo te spremembe upoštevane)</translation>
     </message>
     <message>
         <location line="+25"/>
@@ -1094,15 +1145,25 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+5"/>
         <source>LuckyBackup</source>
-        <translation type="unfinished"></translation>
+        <translation>LuckyBackup</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Generate LuckyBackup profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustvari profil LuckyBackup</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+41"/>
+        <source>Select Collection Folder</source>
+        <translation>Izberite mapo zbirke</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Open SQLite Database</source>
+        <translation>Odpri zbirko podatkov SQLite</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Select the database to create and open:</source>
         <translation>Izberi podatkovno bazo za ustvarjanje in odpiranje:</translation>
     </message>
@@ -5920,7 +5981,7 @@ Razdelitev ni bila izvedena.</translation>
         <location filename="../qt_quick/PageBackupForm.qml" line="+35"/>
         <location line="+315"/>
         <source>in sync</source>
-        <translation type="unfinished"></translation>
+        <translation>sinhronizirano</translation>
     </message>
     <message>
         <location line="-282"/>
@@ -5935,23 +5996,23 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+2"/>
         <source>Copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopirano: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Archived &amp; copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Arhivirano in kopirano: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Conflicts: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Spori: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+379"/>
         <source>Errors: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Napake: %1</translation>
     </message>
     <message>
         <location line="-360"/>
@@ -5979,7 +6040,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="-153"/>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6016,12 +6077,12 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+24"/>
         <source>No backup links</source>
-        <translation type="unfinished"></translation>
+        <translation>Ni povezav varnostne kopije</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Create a link to define a source and target for backup or archive operations.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustvarite povezavo za določitev vira in cilja za operacije varnostnega kopiranja ali arhiviranja.</translation>
     </message>
     <message>
         <location line="+118"/>
@@ -6033,7 +6094,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="-13"/>
         <source>Diff</source>
-        <translation type="unfinished"></translation>
+        <translation>Razlika</translation>
     </message>
     <message>
         <location line="+55"/>
@@ -6073,7 +6134,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+8"/>
         <source>More actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Več dejanj</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6088,12 +6149,12 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+1"/>
         <source>Created: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustvarjeno: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Already existing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Že obstoječe: %1</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -6113,12 +6174,12 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+8"/>
         <source>Delete link</source>
-        <translation type="unfinished"></translation>
+        <translation>Izbriši povezavo</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Delete link &quot;%1&quot;? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Izbrišem povezavo »%1«? Tega ni mogoče razveljaviti.</translation>
     </message>
 </context>
 <context>
@@ -6126,7 +6187,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location filename="../qt_quick/PageBackupMappingForm.qml" line="+8"/>
         <source>Add Link</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodaj povezavo</translation>
     </message>
     <message>
         <location line="+34"/>
@@ -6146,12 +6207,12 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+3"/>
         <source>e.g. Docs → NAS_Docs</source>
-        <translation type="unfinished"></translation>
+        <translation>npr. Docs → NAS_Docs</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Auto-generate name</source>
-        <translation type="unfinished"></translation>
+        <translation>Samodejno ustvari ime</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6176,7 +6237,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+6"/>
         <source>Source catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvorni katalog</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6186,12 +6247,12 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+6"/>
         <source>Target catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Ciljni katalog</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Možnosti</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6201,7 +6262,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+1"/>
         <source>Mirror folder structure exactly (default)</source>
-        <translation type="unfinished"></translation>
+        <translation>Natančno zrcali strukturo map (privzeto)</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6211,12 +6272,12 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+4"/>
         <source>Rename oldest - rename target, copy source</source>
-        <translation type="unfinished"></translation>
+        <translation>Preimenuj najstarejše - preimenuj cilj, kopiraj vir</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Skip - leave target untouched</source>
-        <translation type="unfinished"></translation>
+        <translation>Preskoči - pusti cilj nedotaknjen</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6226,7 +6287,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+1"/>
         <source>Scan source drive directly (requires connected source)</source>
-        <translation type="unfinished"></translation>
+        <translation>Neposredno preglej izvorni pogon (zahteva povezan vir)</translation>
     </message>
 </context>
 <context>
@@ -6234,7 +6295,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location filename="../qt_quick/PageBackupPreviewForm.qml" line="+8"/>
         <source>Backup Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Predogled varnostne kopije</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -6254,12 +6315,12 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+15"/>
         <source>Updating catalogs…</source>
-        <translation type="unfinished"></translation>
+        <translation>Posodabljanje katalogov…</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Computing preview…</source>
-        <translation type="unfinished"></translation>
+        <translation>Računanje predogleda…</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -6276,37 +6337,37 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="-56"/>
         <source>file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>datotek</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Conflicts: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Spori: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Already in target: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Že v cilju: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>source offline</source>
-        <translation type="unfinished"></translation>
+        <translation>vir brez povezave</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>target offline</source>
-        <translation type="unfinished"></translation>
+        <translation>cilj brez povezave</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Insufficient disk space - Required: %1, Available: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Premalo prostora na disku - Zahtevano: %1, Na voljo: %2</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Low target space - %1 remaining after operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Malo ciljnega prostora - %1 ostane po operaciji</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -6336,12 +6397,12 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+31"/>
         <source>Everything is in sync</source>
-        <translation type="unfinished"></translation>
+        <translation>Vse je sinhronizirano</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>No files need to be copied or moved.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nobene datoteke ni treba kopirati ali premakniti.</translation>
     </message>
 </context>
 <context>
@@ -6519,12 +6580,12 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location filename="../qt_quick/PageDeviceEditForm.qml" line="+95"/>
         <source>Provide a name for this device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vnesite ime za to napravo.</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Source path: %1 → %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvorna pot: %1 → %2</translation>
     </message>
     <message>
         <location line="+83"/>
@@ -6545,12 +6606,12 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+6"/>
         <source>Parent device</source>
-        <translation type="unfinished"></translation>
+        <translation>Nadrejena naprava</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Lokacija</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6639,7 +6700,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+22"/>
         <source>Exclude folders (this catalog)</source>
-        <translation type="unfinished"></translation>
+        <translation>Izključi mape (ta katalog)</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6659,7 +6720,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+43"/>
         <source>Storage details</source>
-        <translation type="unfinished"></translation>
+        <translation>Podrobnosti shrambe</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6674,22 +6735,22 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+3"/>
         <source>File system</source>
-        <translation type="unfinished"></translation>
+        <translation>Datotečni sistem</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Total space (bytes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Skupni prostor (bajti)</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Free space (bytes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Prosti prostor (bajti)</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Refresh from disk</source>
-        <translation type="unfinished"></translation>
+        <translation>Osveži z diska</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -6704,12 +6765,12 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+3"/>
         <source>Serial number</source>
-        <translation type="unfinished"></translation>
+        <translation>Serijska številka</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Build date</source>
-        <translation type="unfinished"></translation>
+        <translation>Datum gradnje</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6729,12 +6790,12 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+10"/>
         <source>Picture</source>
-        <translation type="unfinished"></translation>
+        <translation>Slika</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Reload pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>Znova naloži slike</translation>
     </message>
 </context>
 <context>
@@ -6743,17 +6804,17 @@ Razdelitev ni bila izvedena.</translation>
         <location filename="../qt_quick/PageDevicesView.qml" line="+47"/>
         <location line="+37"/>
         <source>Split Catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Razdeli katalog</translation>
     </message>
     <message>
         <location line="-32"/>
         <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by sub-directory?&lt;br/&gt;&lt;br/&gt;This will create one sub-catalog per immediate sub-directory and remove the original catalog. This operation cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Razdelim &lt;b&gt;%1&lt;/b&gt; na podkataloge po podimeniku?&lt;br/&gt;&lt;br/&gt;S tem boste ustvarili en podkatalog za vsak neposredni podimenik in odstranili izvirni katalog. Te operacije ni mogoče razveljaviti.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Split</source>
-        <translation type="unfinished"></translation>
+        <translation>Razdeli</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -6767,7 +6828,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="-156"/>
         <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by file type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Razdeli &lt;b&gt;%1&lt;/b&gt; na podkataloge po vrsti datoteke:</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6787,17 +6848,17 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+5"/>
         <source>Verify checksums for &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation type="unfinished"></translation>
+        <translation>Preverim nadzorne vsote za &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Verify</source>
-        <translation type="unfinished"></translation>
+        <translation>Preveri</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>No checksums are stored for this catalog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Za ta katalog niso shranjene nobene nadzorne vsote.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6807,58 +6868,58 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+1"/>
         <source>Verified: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Preverjeno: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Mismatches: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Neujemanja: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Missing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Manjkajoče: %1</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Checksum Verification</source>
-        <translation type="unfinished"></translation>
+        <translation>Preverjanje nadzorne vsote</translation>
     </message>
     <message>
         <location line="+10"/>
         <location line="+89"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>V redu</translation>
     </message>
     <message>
         <location line="-78"/>
         <source>Unassign Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Prekliči dodelitev naprave</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Unassign &lt;b&gt;%1&lt;/b&gt; from its parent device?</source>
-        <translation type="unfinished"></translation>
+        <translation>Prekličem dodelitev &lt;b&gt;%1&lt;/b&gt; njegovi nadrejeni napravi?</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Unassign</source>
-        <translation type="unfinished"></translation>
+        <translation>Prekliči dodelitev</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Delete Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Izbriši napravo</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ali želite &lt;b&gt;izbrisati&lt;/b&gt; to napravo %1?&lt;br/&gt;&lt;br/&gt;Ime: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Da</translation>
     </message>
     <message>
         <location line="+63"/>
@@ -6878,7 +6939,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+9"/>
         <source>Filter from Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtriraj iz izbire</translation>
     </message>
     <message>
         <location line="+33"/>
@@ -6918,7 +6979,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+22"/>
         <source>No devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Ni naprav</translation>
     </message>
 </context>
 <context>
@@ -7012,12 +7073,12 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+3"/>
         <source>free</source>
-        <translation type="unfinished"></translation>
+        <translation>prosto</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Dejanja</translation>
     </message>
 </context>
 <context>
@@ -7025,7 +7086,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location filename="../qt_quick/PageExploreFiles.qml" line="+67"/>
         <source>No folder selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Ni izbrane mape</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -7076,12 +7137,12 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+8"/>
         <source>Copy absolute path</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiraj absolutno pot</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Copy file name</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiraj ime datoteke</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7916,6 +7977,16 @@ Napake: %3</translation>
         <source>Edit</source>
         <translation>Uredi</translation>
     </message>
+    <message>
+        <location line="+62"/>
+        <source>Collapse</source>
+        <translation>Strni</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Expand</source>
+        <translation>Razširi</translation>
+    </message>
 </context>
 <context>
     <name>PageSettings</name>
@@ -8185,7 +8256,7 @@ Napake: %3</translation>
     <message>
         <location line="+24"/>
         <source>No data</source>
-        <translation type="unfinished"></translation>
+        <translation>Ni podatkov</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -8240,12 +8311,12 @@ Napake: %3</translation>
     <message>
         <location line="+9"/>
         <source>Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Podatki</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>From date</source>
-        <translation type="unfinished"></translation>
+        <translation>Od datuma</translation>
     </message>
     <message>
         <location line="+24"/>
@@ -8255,7 +8326,7 @@ Napake: %3</translation>
     <message>
         <location line="+16"/>
         <source>Select start date</source>
-        <translation type="unfinished"></translation>
+        <translation>Izberite začetni datum</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -8331,12 +8402,12 @@ Napake: %3</translation>
     <message>
         <location line="+5"/>
         <source>Select or enter a folder to tag.</source>
-        <translation type="unfinished"></translation>
+        <translation>Izberite ali vnesite mapo za označevanje.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Select or enter a tag name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Izberite ali vnesite ime oznake.</translation>
     </message>
     <message>
         <source>Please enter a tag name.</source>
