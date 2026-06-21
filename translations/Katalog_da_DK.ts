@@ -590,32 +590,32 @@ Vælg et andet navn.</translation>
     <message>
         <location line="+1538"/>
         <source>root</source>
-        <translation type="unfinished"></translation>
+        <translation>rod</translation>
     </message>
     <message>
         <location line="+44"/>
         <source>Audio</source>
-        <translation type="unfinished">Audio</translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Images</source>
-        <translation type="unfinished"></translation>
+        <translation>Billeder</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Videos</source>
-        <translation type="unfinished"></translation>
+        <translation>Videoer</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Text</source>
-        <translation type="unfinished">Tekst</translation>
+        <translation>Tekst</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Other</source>
-        <translation type="unfinished">Anden</translation>
+        <translation>Anden</translation>
     </message>
 </context>
 <context>
@@ -641,17 +641,17 @@ Vælg et andet navn.</translation>
     <message>
         <location filename="../core/collectionimporter.cpp" line="+1653"/>
         <source>Name</source>
-        <translation type="unfinished">Navn</translation>
+        <translation>Navn</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Device ID</source>
-        <translation type="unfinished">Enheds-ID</translation>
+        <translation>Enheds-ID</translation>
     </message>
 </context>
 <context>
@@ -8067,12 +8067,7 @@ til papirkurven?</translation>
 %1</translation>
     </message>
     <message>
-        <location line="+17"/>
-        <source></source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+46"/>
+        <location line="+63"/>
         <source>Matched: %1
 Mismatched: %2
 New checksums calculated: %3
@@ -8606,32 +8601,32 @@ Fejl: %3</translation>
     <message>
         <location filename="../core/collectionimporter.cpp" line="-69"/>
         <source>Name</source>
-        <translation type="unfinished">Navn</translation>
+        <translation>Navn</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Active</source>
-        <translation type="unfinished">Aktiv</translation>
+        <translation>Aktiv</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Device ID</source>
-        <translation type="unfinished">Enheds-ID</translation>
+        <translation>Enheds-ID</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Parent ID</source>
-        <translation type="unfinished">Forælder-ID</translation>
+        <translation>Forælder-ID</translation>
     </message>
     <message>
         <location line="+38"/>
         <source>Collection</source>
-        <translation type="unfinished">Samling</translation>
+        <translation>Samling</translation>
     </message>
 </context>
 <context>

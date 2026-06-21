@@ -590,32 +590,32 @@ Valitse toinen nimi.</translation>
     <message>
         <location line="+1538"/>
         <source>root</source>
-        <translation type="unfinished"></translation>
+        <translation>juuri</translation>
     </message>
     <message>
         <location line="+44"/>
         <source>Audio</source>
-        <translation type="unfinished">Ääni</translation>
+        <translation>Ääni</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Images</source>
-        <translation type="unfinished"></translation>
+        <translation>Kuvat</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Videos</source>
-        <translation type="unfinished"></translation>
+        <translation>Videot</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Text</source>
-        <translation type="unfinished">Teksti</translation>
+        <translation>Teksti</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Other</source>
-        <translation type="unfinished">Muu</translation>
+        <translation>Muu</translation>
     </message>
 </context>
 <context>
@@ -641,17 +641,17 @@ Valitse toinen nimi.</translation>
     <message>
         <location filename="../core/collectionimporter.cpp" line="+1653"/>
         <source>Name</source>
-        <translation type="unfinished">Nimi</translation>
+        <translation>Nimi</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Type</source>
-        <translation type="unfinished">Tyyppi</translation>
+        <translation>Tyyppi</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Device ID</source>
-        <translation type="unfinished">Laite-ID</translation>
+        <translation>Laite-ID</translation>
     </message>
 </context>
 <context>
@@ -8067,12 +8067,7 @@ roskakoriin?</translation>
 %1</translation>
     </message>
     <message>
-        <location line="+17"/>
-        <source></source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+46"/>
+        <location line="+63"/>
         <source>Matched: %1
 Mismatched: %2
 New checksums calculated: %3
@@ -8606,32 +8601,32 @@ Virheitä: %3</translation>
     <message>
         <location filename="../core/collectionimporter.cpp" line="-69"/>
         <source>Name</source>
-        <translation type="unfinished">Nimi</translation>
+        <translation>Nimi</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Type</source>
-        <translation type="unfinished">Tyyppi</translation>
+        <translation>Tyyppi</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Active</source>
-        <translation type="unfinished">Aktiivinen</translation>
+        <translation>Aktiivinen</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Device ID</source>
-        <translation type="unfinished">Laite-ID</translation>
+        <translation>Laite-ID</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Parent ID</source>
-        <translation type="unfinished">Yläobjekti-ID</translation>
+        <translation>Yläobjekti-ID</translation>
     </message>
     <message>
         <location line="+38"/>
         <source>Collection</source>
-        <translation type="unfinished">Kokoelma</translation>
+        <translation>Kokoelma</translation>
     </message>
 </context>
 <context>

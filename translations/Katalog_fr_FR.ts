@@ -65,7 +65,7 @@
     <message>
         <location line="+10"/>
         <source>Database file does not exist: %1</source>
-        <translation>Le fichier de base de données n'existe pas : %1</translation>
+        <translation>Le fichier de base de données n&apos;existe pas : %1</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -75,7 +75,7 @@
     <message>
         <location line="+8"/>
         <source>Failed to open database: %1</source>
-        <translation>Échec de l'ouverture de la base de données : %1</translation>
+        <translation>Échec de l&apos;ouverture de la base de données : %1</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -191,7 +191,7 @@
     <message>
         <location line="+2"/>
         <source>Failed to open Memory collection: %1</source>
-        <translation>Échec de l'ouverture de la collection en mémoire : %1</translation>
+        <translation>Échec de l&apos;ouverture de la collection en mémoire : %1</translation>
     </message>
     <message>
         <location line="+19"/>
@@ -290,7 +290,7 @@ Choisissez un autre nom et réessayez.</translation>
     <message>
         <location line="+7"/>
         <source>The catalog is already assigned to this Virtual device.</source>
-        <translation>Le catalogue est déjà attribué à cet appareil virtuel.</translation>
+        <translation>Le catalogue est déjà attribué à ce périphérique virtuel.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -497,7 +497,7 @@ Choisissez un autre nom.</translation>
         <location line="+107"/>
         <location line="+132"/>
         <source>Both source and target must be Catalog devices.</source>
-        <translation>La source et la cible doivent être des appareils de type Catalogue.</translation>
+        <translation>La source et la cible doivent être des périphériques de type Catalogue.</translation>
     </message>
     <message>
         <location line="-206"/>
@@ -590,32 +590,32 @@ Choisissez un autre nom.</translation>
     <message>
         <location line="+1538"/>
         <source>root</source>
-        <translation type="unfinished"></translation>
+        <translation>racine</translation>
     </message>
     <message>
         <location line="+44"/>
         <source>Audio</source>
-        <translation type="unfinished">Audio</translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Images</source>
-        <translation type="unfinished"></translation>
+        <translation>Images</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Videos</source>
-        <translation type="unfinished"></translation>
+        <translation>Vidéos</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Text</source>
-        <translation type="unfinished">Texte</translation>
+        <translation>Texte</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Other</source>
-        <translation type="unfinished">Autre</translation>
+        <translation>Autre</translation>
     </message>
 </context>
 <context>
@@ -641,17 +641,17 @@ Choisissez un autre nom.</translation>
     <message>
         <location filename="../core/collectionimporter.cpp" line="+1653"/>
         <source>Name</source>
-        <translation type="unfinished">Nom</translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Device ID</source>
-        <translation type="unfinished">Reference de l&apos;appareil</translation>
+        <translation>Référence du périphérique</translation>
     </message>
 </context>
 <context>
@@ -1266,7 +1266,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     <message>
         <location filename="../qt_quick/main.cpp" line="+107"/>
         <source>Catalog your devices to search, analyze, and backup your files.</source>
-        <translation>Cataloguez vos appareils pour rechercher, analyser et sauvegarder vos fichiers.</translation>
+        <translation>Cataloguez vos périphériques pour rechercher, analyser et sauvegarder vos fichiers.</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -1549,7 +1549,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     <message>
         <location line="+1262"/>
         <source>BackUp &amp; Archive Links for device</source>
-        <translation>Liens de sauvegarde et d&apos;archivage pour l&apos;appareil</translation>
+        <translation>Liens de sauvegarde et d&apos;archivage pour le périphérique</translation>
     </message>
     <message>
         <location line="-8"/>
@@ -2652,7 +2652,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     <message>
         <location line="+94"/>
         <source>Record the values of all devices for statistics on the full collection.</source>
-        <translation>Enregistrez les valeurs de tous les appareils pour obtenir des statistiques sur la collection complète.</translation>
+        <translation>Enregistrez les valeurs de tous les périphériques pour obtenir des statistiques sur la collection complète.</translation>
     </message>
     <message>
         <location line="+29"/>
@@ -2665,7 +2665,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1"/>
         <location line="+0"/>
         <source>Device Name</source>
-        <translation>Nom de l&apos;appareil</translation>
+        <translation>Nom du périphérique</translation>
     </message>
     <message>
         <location line="+73"/>
@@ -2678,7 +2678,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1"/>
         <location line="+0"/>
         <source>Device ID</source>
-        <translation>Reference de l&apos;appareil</translation>
+        <translation>Référence du périphérique</translation>
     </message>
     <message>
         <location line="+2973"/>
@@ -2894,12 +2894,12 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     </message>
     <message>
         <source>BackUp links for device</source>
-        <translation type="vanished">Liens de sauvegarde pour l&apos;appareil</translation>
+        <translation type="vanished">Liens de sauvegarde pour le périphérique</translation>
     </message>
     <message>
         <location line="+2638"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reload links and refresh statistics for the selected device.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Recharger les liens et actualiser les statistiques pour l&apos;appareil sélectionné.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Recharger les liens et actualiser les statistiques pour le périphérique sélectionné.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+265"/>
@@ -2940,7 +2940,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-461"/>
         <source>A Virtual device can only be added to another virtual device.&lt;br/&gt;</source>
-        <translation>Un appareil virtuel ne peut être ajouté qu&apos;à un autre appareil virtuel.&lt;br/&gt;</translation>
+        <translation>Un périphérique virtuel ne peut être ajouté qu&apos;à un autre périphérique virtuel.&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+280"/>
@@ -3167,7 +3167,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     </message>
     <message>
         <source>The device selected must be a Catalog. Try with a different device ID</source>
-        <translation type="vanished">L&apos;appareil sélectionné doit être un catalogue. Essayez avec un autre identifiant d&apos;appareil</translation>
+        <translation type="vanished">Le périphérique sélectionné doit être un catalogue. Essayez avec un autre identifiant de périphérique</translation>
     </message>
     <message>
         <location line="-2536"/>
@@ -3177,7 +3177,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     <message>
         <location line="+35"/>
         <source>A Catalog in the Physical group can only be set under a Storage or this group. Select a Storage in this group.&lt;br/&gt;&lt;br/&gt;To use this catalog under a device in a virtual group, use the Assign command.&lt;b&gt;</source>
-        <translation>Un catalogue dans le groupe Physique ne peut être défini que sous un stockage ou ce groupe. Sélectionnez un stockage dans ce groupe.&lt;br/&gt;&lt;br/&gt;Pour utiliser ce catalogue sous un appareil dans un groupe virtuel, utilisez la commande Attribuer.&lt;b&gt;</translation>
+        <translation>Un catalogue dans le groupe Physique ne peut être défini que sous un stockage ou ce groupe. Sélectionnez un stockage dans ce groupe.&lt;br/&gt;&lt;br/&gt;Pour utiliser ce catalogue sous un périphérique dans un groupe virtuel, utilisez la commande Attribuer.&lt;b&gt;</translation>
     </message>
     <message>
         <location line="+532"/>
@@ -3200,7 +3200,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     <message>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-199"/>
         <source>All device records</source>
-        <translation>Tous les enregistrements de l&apos;appareil</translation>
+        <translation>Tous les enregistrements du périphérique</translation>
     </message>
     <message>
         <location line="+187"/>
@@ -3272,7 +3272,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <location line="-4124"/>
         <location line="+5261"/>
         <source>Device tree</source>
-        <translation>Arborescence des appareils</translation>
+        <translation>Arborescence des périphériques</translation>
     </message>
     <message>
         <location line="-4923"/>
@@ -3530,7 +3530,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     <message>
         <location line="-242"/>
         <source>Device Picture</source>
-        <translation>Image de l&apos;appareil</translation>
+        <translation>Image du périphérique</translation>
     </message>
     <message>
         <location line="+5179"/>
@@ -3704,7 +3704,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     <message>
         <location line="+19"/>
         <source>Display the *Virtual Groups* and their related Devices.</source>
-        <translation>Affichez les *Groupes virtuels* et leurs appareils associés.</translation>
+        <translation>Affichez les *Groupes virtuels* et leurs périphériques associés.</translation>
     </message>
     <message>
         <location line="+19"/>
@@ -3714,7 +3714,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     <message>
         <location line="+21"/>
         <source>Display the *Catalog* devices.</source>
-        <translation>Afficher les appareils du *Catalogue*.</translation>
+        <translation>Afficher les périphériques du *Catalogue*.</translation>
     </message>
     <message>
         <location line="+68"/>
@@ -4285,7 +4285,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <location line="-230"/>
         <location line="+230"/>
         <source>Both source and target must be Catalog devices.</source>
-        <translation>La source et la cible doivent être des appareils de type Catalogue.</translation>
+        <translation>La source et la cible doivent être des périphériques de type Catalogue.</translation>
     </message>
     <message>
         <location line="-326"/>
@@ -4538,7 +4538,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     </message>
     <message>
         <source>Populate the lists first (One or both device lists are empty).</source>
-        <translation type="vanished">Remplissez d’abord les listes (une ou les deux listes d’appareils sont vides).</translation>
+        <translation type="vanished">Remplissez d’abord les listes (une ou les deux listes de périphériques sont vides).</translation>
     </message>
     <message>
         <source>Invalid selection model</source>
@@ -4546,15 +4546,15 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     </message>
     <message>
         <source>Select a device from both lists.</source>
-        <translation type="vanished">Sélectionnez un appareil dans les deux listes.</translation>
+        <translation type="vanished">Sélectionnez un périphérique dans les deux listes.</translation>
     </message>
     <message>
         <source>Invalid device selection.</source>
-        <translation type="vanished">Sélection d&apos;appareil non valide.</translation>
+        <translation type="vanished">Sélection de périphérique non valide.</translation>
     </message>
     <message>
         <source>Empty device ID.</source>
-        <translation type="vanished">ID d&apos;appareil vide.</translation>
+        <translation type="vanished">ID de périphérique vide.</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -4887,7 +4887,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1667"/>
         <source>The catalog is already assigned to this Virtual device.</source>
-        <translation>Le catalogue est déjà attribué à cet appareil virtuel.</translation>
+        <translation>Le catalogue est déjà attribué à ce périphérique virtuel.</translation>
     </message>
     <message>
         <location line="+37"/>
@@ -5054,7 +5054,7 @@ La division n&apos;a pas été effectuée.</translation>
     <message>
         <location line="-26"/>
         <source>The catalog &lt;b&gt;%1&lt;/b&gt; cannot be updated.&lt;br/&gt;&lt;br/&gt; The source folder was not found.&lt;br/&gt;&lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt; Possible reasons:&lt;br/&gt;    - the device is not connected and mounted,&lt;br/&gt;    - the source folder was moved or renamed.,&lt;br/&gt;    - the source folder entered is incorrect.</source>
-        <translation>Le catalogue &lt;b&gt;%1&lt;/b&gt; ne peut pas être mis à jour.&lt;br/&gt;&lt;br/&gt; Le dossier source est introuvable.&lt;br/&gt;&lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/ &gt;&lt;br/&gt; Raisons possibles&#xa0;:&lt;br/&gt; - l&apos;appareil n&apos;est pas connecté et monté,&lt;br/&gt; - le dossier source a été déplacé ou renommé.,&lt;br/&gt; - le dossier source saisi est incorrect.</translation>
+        <translation>Le catalogue &lt;b&gt;%1&lt;/b&gt; ne peut pas être mis à jour.&lt;br/&gt;&lt;br/&gt; Le dossier source est introuvable.&lt;br/&gt;&lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/ &gt;&lt;br/&gt; Raisons possibles&#xa0;:&lt;br/&gt; - le périphérique n&apos;est pas connecté et monté,&lt;br/&gt; - le dossier source a été déplacé ou renommé.,&lt;br/&gt; - le dossier source saisi est incorrect.</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+96"/>
@@ -5116,7 +5116,7 @@ La division n&apos;a pas été effectuée.</translation>
     <message>
         <location line="+714"/>
         <source>Is Full Device</source>
-        <translation>Est un appareil complet</translation>
+        <translation>Est un périphérique complet</translation>
     </message>
     <message>
         <location line="+818"/>
@@ -5261,12 +5261,12 @@ La division n&apos;a pas été effectuée.</translation>
     <message>
         <location line="+4590"/>
         <source>is full device</source>
-        <translation>est un appareil plein</translation>
+        <translation>est un périphérique plein</translation>
     </message>
     <message>
         <location line="+1695"/>
         <source>catalog is for the full device</source>
-        <translation>le catalogue est pour l&apos;appareil complet</translation>
+        <translation>le catalogue est pour le périphérique complet</translation>
     </message>
     <message>
         <location line="-5438"/>
@@ -5734,7 +5734,7 @@ La division n&apos;a pas été effectuée.</translation>
     <message>
         <location line="+1"/>
         <source>Selected Device ID List</source>
-        <translation>Liste des ID d&apos;appareils sélectionnés</translation>
+        <translation>Liste des ID de périphériques sélectionnés</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-182"/>
@@ -5848,7 +5848,7 @@ to the trash?</source>
         <location line="+253"/>
         <location line="+1805"/>
         <source>Device Type</source>
-        <translation>Type d&apos;appareil</translation>
+        <translation>Type de périphérique</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2295"/>
@@ -6060,7 +6060,7 @@ to the trash?</source>
     <message>
         <location filename="../qt_widgets/mainwindow_ui_wrapper_storage.cpp" line="+62"/>
         <source>Storage: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;The source folder does not contain any file:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;This could mean that the device is not mounted to this folder,&lt;br/&gt;or the folder is simply empty.&lt;br/&gt;&lt;br/&gt;Force trying to get values anyhow?</source>
-        <translation>Stockage&#xa0;: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Le dossier source ne contient aucun fichier&#xa0;:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&gt;&lt; br/&gt;Cela pourrait signifier que l&apos;appareil n&apos;est pas monté sur ce dossier,&lt;br/&gt;ou que le dossier est simplement vide.&lt;br/&gt;&lt;br/&gt;Forcer quand même l&apos;obtention des valeurs&#xa0;?</translation>
+        <translation>Stockage&#xa0;: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Le dossier source ne contient aucun fichier&#xa0;:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&gt;&lt; br/&gt;Cela pourrait signifier que le périphérique n&apos;est pas monté sur ce dossier,&lt;br/&gt;ou que le dossier est simplement vide.&lt;br/&gt;&lt;br/&gt;Forcer quand même l&apos;obtention des valeurs&#xa0;?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_tags.cpp" line="+67"/>
@@ -7097,7 +7097,7 @@ to the trash?</source>
     <message>
         <location line="+63"/>
         <source>Device tree</source>
-        <translation>Arborescence des appareils</translation>
+        <translation>Arborescence des périphériques</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -8068,12 +8068,7 @@ to the trash?</source>
 %1</translation>
     </message>
     <message>
-        <location line="+17"/>
-        <source></source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+46"/>
+        <location line="+63"/>
         <source>Matched: %1
 Mismatched: %2
 New checksums calculated: %3
@@ -8607,32 +8602,32 @@ Erreurs : %3</translation>
     <message>
         <location filename="../core/collectionimporter.cpp" line="-69"/>
         <source>Name</source>
-        <translation type="unfinished">Nom</translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Active</source>
-        <translation type="unfinished">Actif</translation>
+        <translation>Actif</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Device ID</source>
-        <translation type="unfinished">Reference de l&apos;appareil</translation>
+        <translation>Référence du périphérique</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Parent ID</source>
-        <translation type="unfinished">ID parent</translation>
+        <translation>ID parent</translation>
     </message>
     <message>
         <location line="+38"/>
         <source>Collection</source>
-        <translation type="unfinished">Collection</translation>
+        <translation>Collection</translation>
     </message>
 </context>
 <context>

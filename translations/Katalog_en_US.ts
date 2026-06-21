@@ -7856,12 +7856,7 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+17"/>
-        <source></source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+46"/>
+        <location line="+63"/>
         <source>Matched: %1
 Mismatched: %2
 New checksums calculated: %3

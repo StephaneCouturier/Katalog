@@ -590,32 +590,32 @@ Kies een andere naam.</translation>
     <message>
         <location line="+1538"/>
         <source>root</source>
-        <translation type="unfinished"></translation>
+        <translation>hoofdmap</translation>
     </message>
     <message>
         <location line="+44"/>
         <source>Audio</source>
-        <translation type="unfinished">Audio</translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Images</source>
-        <translation type="unfinished"></translation>
+        <translation>Afbeeldingen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Videos</source>
-        <translation type="unfinished"></translation>
+        <translation>Video&apos;s</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Text</source>
-        <translation type="unfinished">Tekst</translation>
+        <translation>Tekst</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Other</source>
-        <translation type="unfinished">Overig</translation>
+        <translation>Overig</translation>
     </message>
 </context>
 <context>
@@ -641,17 +641,17 @@ Kies een andere naam.</translation>
     <message>
         <location filename="../core/collectionimporter.cpp" line="+1653"/>
         <source>Name</source>
-        <translation type="unfinished">Naam</translation>
+        <translation>Naam</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Device ID</source>
-        <translation type="unfinished">Apparaat-ID</translation>
+        <translation>Apparaat-ID</translation>
     </message>
 </context>
 <context>
@@ -8066,12 +8066,7 @@ naar de prullenbak verplaatsen?</translation>
 %1</translation>
     </message>
     <message>
-        <location line="+17"/>
-        <source></source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+46"/>
+        <location line="+63"/>
         <source>Matched: %1
 Mismatched: %2
 New checksums calculated: %3
@@ -8605,32 +8600,32 @@ Fouten: %3</translation>
     <message>
         <location filename="../core/collectionimporter.cpp" line="-69"/>
         <source>Name</source>
-        <translation type="unfinished">Naam</translation>
+        <translation>Naam</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Active</source>
-        <translation type="unfinished">Actief</translation>
+        <translation>Actief</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Device ID</source>
-        <translation type="unfinished">Apparaat-ID</translation>
+        <translation>Apparaat-ID</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Parent ID</source>
-        <translation type="unfinished">Bovenliggend ID</translation>
+        <translation>Bovenliggend ID</translation>
     </message>
     <message>
         <location line="+38"/>
         <source>Collection</source>
-        <translation type="unfinished">Verzameling</translation>
+        <translation>Verzameling</translation>
     </message>
 </context>
 <context>

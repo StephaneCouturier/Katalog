@@ -936,7 +936,7 @@ ColumnLayout {
         Layout.bottomMargin: Kirigami.Units.smallSpacing
         spacing: Kirigami.Units.smallSpacing
 
-        Controls.Label { text: qsTr("") }
+        Controls.Label { text: "" }
 
         Item { Layout.fillWidth: true }
     }

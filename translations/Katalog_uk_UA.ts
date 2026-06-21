@@ -186,12 +186,12 @@
     <message>
         <location line="+199"/>
         <source>Memory collection opened: %1</source>
-        <translation>Колекцію в пам'яті відкрито: %1</translation>
+        <translation>Колекцію в пам&apos;яті відкрито: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Failed to open Memory collection: %1</source>
-        <translation>Не вдалося відкрити колекцію в пам'яті: %1</translation>
+        <translation>Не вдалося відкрити колекцію в пам&apos;яті: %1</translation>
     </message>
     <message>
         <location line="+19"/>
@@ -201,7 +201,7 @@
     <message>
         <location line="+2"/>
         <source>Hosted connection failed: %1</source>
-        <translation>Розміщене з'єднання не вдалося: %1</translation>
+        <translation>Розміщене з&apos;єднання не вдалося: %1</translation>
     </message>
     <message>
         <location line="+174"/>
@@ -590,32 +590,32 @@ Choose a different name.</source>
     <message>
         <location line="+1538"/>
         <source>root</source>
-        <translation type="unfinished"></translation>
+        <translation>корінь</translation>
     </message>
     <message>
         <location line="+44"/>
         <source>Audio</source>
-        <translation type="unfinished">Аудіо</translation>
+        <translation>Аудіо</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Images</source>
-        <translation type="unfinished"></translation>
+        <translation>Зображення</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Videos</source>
-        <translation type="unfinished"></translation>
+        <translation>Відео</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Text</source>
-        <translation type="unfinished">Текст</translation>
+        <translation>Текст</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Other</source>
-        <translation type="unfinished">Інше</translation>
+        <translation>Інше</translation>
     </message>
 </context>
 <context>
@@ -641,17 +641,17 @@ Choose a different name.</source>
     <message>
         <location filename="../core/collectionimporter.cpp" line="+1653"/>
         <source>Name</source>
-        <translation type="unfinished">Назва</translation>
+        <translation>Назва</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Type</source>
-        <translation type="unfinished">Тип</translation>
+        <translation>Тип</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Device ID</source>
-        <translation type="unfinished">ID пристрою</translation>
+        <translation>ID пристрою</translation>
     </message>
 </context>
 <context>
@@ -8067,12 +8067,7 @@ to the trash?</source>
 %1</translation>
     </message>
     <message>
-        <location line="+17"/>
-        <source></source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+46"/>
+        <location line="+63"/>
         <source>Matched: %1
 Mismatched: %2
 New checksums calculated: %3
@@ -8606,32 +8601,32 @@ Errors: %3</source>
     <message>
         <location filename="../core/collectionimporter.cpp" line="-69"/>
         <source>Name</source>
-        <translation type="unfinished">Назва</translation>
+        <translation>Назва</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Type</source>
-        <translation type="unfinished">Тип</translation>
+        <translation>Тип</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Active</source>
-        <translation type="unfinished">Активний</translation>
+        <translation>Активний</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Device ID</source>
-        <translation type="unfinished">ID пристрою</translation>
+        <translation>ID пристрою</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Parent ID</source>
-        <translation type="unfinished">ID батьківського</translation>
+        <translation>ID батьківського</translation>
     </message>
     <message>
         <location line="+38"/>
         <source>Collection</source>
-        <translation type="unfinished">Колекція</translation>
+        <translation>Колекція</translation>
     </message>
 </context>
 <context>
