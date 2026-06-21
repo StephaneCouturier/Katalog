@@ -58,7 +58,27 @@
         <translation>Ολοκληρωμένο</translation>
     </message>
     <message>
-        <location line="-2799"/>
+        <location line="-2846"/>
+        <source>Empty database path provided</source>
+        <translation>Δόθηκε κενή διαδρομή βάσης δεδομένων</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Database file does not exist: %1</source>
+        <translation>Το αρχείο βάσης δεδομένων δεν υπάρχει: %1</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Opened: %1</source>
+        <translation>Άνοιξε: %1</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Failed to open database: %1</source>
+        <translation>Αποτυχία ανοίγματος βάσης δεδομένων: %1</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Could not create file: %1</source>
         <translation>Δεν ήταν δυνατή η δημιουργία του αρχείου: %1</translation>
     </message>
@@ -164,7 +184,27 @@
         <translation>Ετικέτα: %1</translation>
     </message>
     <message>
-        <location line="+396"/>
+        <location line="+199"/>
+        <source>Memory collection opened: %1</source>
+        <translation>Άνοιξε η συλλογή μνήμης: %1</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Failed to open Memory collection: %1</source>
+        <translation>Αποτυχία ανοίγματος συλλογής μνήμης: %1</translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Connected: %1/%2</source>
+        <translation>Συνδέθηκε: %1/%2</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Hosted connection failed: %1</source>
+        <translation>Η φιλοξενούμενη σύνδεση απέτυχε: %1</translation>
+    </message>
+    <message>
+        <location line="+174"/>
         <source>Provide a name for this new catalog.</source>
         <translation>Δώστε ένα όνομα για αυτόν τον νέο κατάλογο.</translation>
     </message>
@@ -523,39 +563,95 @@ Choose a different name.</source>
 <context>
     <name>Catalog</name>
     <message>
+        <location filename="../core/catalog.cpp" line="+128"/>
         <source>Name</source>
-        <translation type="vanished">Όνομα</translation>
+        <translation>Όνομα</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Size</source>
-        <translation type="vanished">Μέγεθος</translation>
+        <translation>Μέγεθος</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Folder</source>
-        <translation type="vanished">Φάκελος</translation>
+        <translation>Φάκελος</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Date</source>
-        <translation type="vanished">Ημερομηνία</translation>
+        <translation>Ημερομηνία</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Catalog</source>
-        <translation type="vanished">Κατάλογος</translation>
+        <translation>Κατάλογος</translation>
+    </message>
+    <message>
+        <location line="+1538"/>
+        <source>root</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+44"/>
+        <source>Audio</source>
+        <translation type="unfinished">Ήχος</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Videos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Text</source>
+        <translation type="unfinished">Κείμενο</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Other</source>
+        <translation type="unfinished">Άλλο</translation>
     </message>
 </context>
 <context>
     <name>Collection</name>
     <message>
+        <location filename="../core/collection.cpp" line="+2415"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
-        <translation type="vanished">Αυτός ο φάκελος περιέχει αρχεία συλλογής λειτουργίας μνήμης, αλλά βρίσκεστε αυτήν τη στιγμή σε λειτουργία αρχείου.&lt;br/&gt;Μεταβείτε στη λειτουργία μνήμης ή επιλέξτε διαφορετικό φάκελο.</translation>
+        <translation>Αυτός ο φάκελος περιέχει αρχεία συλλογής λειτουργίας μνήμης, αλλά βρίσκεστε αυτήν τη στιγμή σε λειτουργία αρχείου.&lt;br/&gt;Μεταβείτε στη λειτουργία μνήμης ή επιλέξτε διαφορετικό φάκελο.</translation>
     </message>
     <message>
+        <location line="+4"/>
         <source>This folder contains File mode collection files, but you are currently in Memory mode.&lt;br/&gt;Switch to File mode or select a different folder.</source>
-        <translation type="vanished">Αυτός ο φάκελος περιέχει αρχεία συλλογής λειτουργίας αρχείου, αλλά βρίσκεστε αυτήν τη στιγμή σε λειτουργία μνήμης.&lt;br/&gt;Μεταβείτε στη λειτουργία αρχείου ή επιλέξτε διαφορετικό φάκελο.</translation>
+        <translation>Αυτός ο φάκελος περιέχει αρχεία συλλογής λειτουργίας αρχείου, αλλά βρίσκεστε αυτήν τη στιγμή σε λειτουργία μνήμης.&lt;br/&gt;Μεταβείτε στη λειτουργία αρχείου ή επιλέξτε διαφορετικό φάκελο.</translation>
     </message>
     <message>
+        <location line="+9"/>
         <source>This folder contains user data and is not suitable for a collection.&lt;br/&gt;Collections should be stored in dedicated folders to avoid mixing with personal files.</source>
-        <translation type="vanished">Αυτός ο φάκελος περιέχει δεδομένα χρήστη και δεν είναι κατάλληλος για συλλογή.&lt;br/&gt;Οι συλλογές θα πρέπει να αποθηκεύονται σε αποκλειστικούς φακέλους για να αποφευχθεί η ανάμειξη με προσωπικά αρχεία.</translation>
+        <translation>Αυτός ο φάκελος περιέχει δεδομένα χρήστη και δεν είναι κατάλληλος για συλλογή.&lt;br/&gt;Οι συλλογές θα πρέπει να αποθηκεύονται σε αποκλειστικούς φακέλους για να αποφευχθεί η ανάμειξη με προσωπικά αρχεία.</translation>
+    </message>
+</context>
+<context>
+    <name>CollectionImporter</name>
+    <message>
+        <location filename="../core/collectionimporter.cpp" line="+1653"/>
+        <source>Name</source>
+        <translation type="unfinished">Όνομα</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Type</source>
+        <translation type="unfinished">Τύπος</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Device ID</source>
+        <translation type="unfinished">ID συσκευής</translation>
     </message>
 </context>
 <context>
@@ -1394,27 +1490,32 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Αυτή η συλλογή δημιουργήθηκε με Katalog έκδοση %1, η οποία δεν υποστηρίζεται πλέον.&lt;br/&gt;&lt;br/&gt;Για να τη μετατρέψετε, ανοίξτε την πρώτα με Katalog 2.10.&lt;br/&gt;&lt;br/&gt;Επιλέξτε διαφορετικό φάκελο συλλογής.</translation>
     </message>
     <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="+127"/>
+        <location line="+153"/>
         <source>Metadata Extracted</source>
-        <translation type="vanished">Μεταδεδομένα εξήχθησαν</translation>
+        <translation>Μεταδεδομένα εξήχθησαν</translation>
     </message>
     <message>
+        <location line="+19"/>
         <source>Checksums Calculated</source>
-        <translation type="vanished">Αθροίσματα ελέγχου υπολογίστηκαν</translation>
+        <translation>Αθροίσματα ελέγχου υπολογίστηκαν</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-5542"/>
         <location line="+737"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1383"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="+246"/>
         <source>Checksum</source>
         <translation>Άθροισμα ελέγχου</translation>
     </message>
     <message>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Checksum Date</source>
-        <translation type="vanished">Ημερομηνία αθροίσματος ελέγχου</translation>
+        <translation>Ημερομηνία αθροίσματος ελέγχου</translation>
     </message>
     <message>
-        <location line="-614"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-614"/>
         <source>Within selected device</source>
         <translation>Εντός της επιλεγμένης συσκευής</translation>
     </message>
@@ -1519,24 +1620,35 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Το προφίλ αντιγράφου ασφαλείας δημιουργήθηκε.</translation>
     </message>
     <message>
+        <location filename="../core/catalogjobstoppable.cpp" line="+1442"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
-        <translation type="vanished">Αποθήκευση</translation>
+        <translation>Αποθήκευση</translation>
     </message>
     <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="-159"/>
+        <location line="+67"/>
+        <location line="+140"/>
         <source>Indexed</source>
-        <translation type="vanished">Ευρετηριασμένο</translation>
+        <translation>Ευρετηριασμένο</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+313"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-199"/>
+        <location line="+143"/>
+        <location filename="../core/searchjobstoppable.cpp" line="+430"/>
         <source>File Types Updated</source>
         <translation>Τύποι αρχείων ενημερώθηκαν</translation>
     </message>
     <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="-159"/>
+        <location line="+146"/>
         <source>Counted</source>
-        <translation type="vanished">Μετρημένο</translation>
+        <translation>Μετρημένο</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-777"/>
+        <location filename="../core/searchprogressmanager.cpp" line="+85"/>
         <source>Paused</source>
         <translation>Σε παύση</translation>
     </message>
@@ -1560,6 +1672,10 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+23"/>
         <location line="+23"/>
         <location line="+21"/>
+        <location filename="../core/searchprogressmanager.cpp" line="+27"/>
+        <location line="+24"/>
+        <location line="+18"/>
+        <location line="+34"/>
         <source>Evaluated</source>
         <translation>Αξιολογημένο</translation>
     </message>
@@ -1583,6 +1699,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-36"/>
         <location line="+36"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-96"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-13"/>
         <source>Completed</source>
         <translation>Ολοκληρωμένο</translation>
     </message>
@@ -1597,6 +1715,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+87"/>
         <location line="-87"/>
         <location line="+87"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-76"/>
         <source>Cancelled</source>
         <translation>Ακυρώθηκε</translation>
     </message>
@@ -1604,6 +1723,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-19"/>
         <location line="+21"/>
         <location line="+0"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="+18"/>
+        <location line="+143"/>
+        <location filename="../core/searchjobstoppable.cpp" line="+38"/>
         <source>Loaded</source>
         <translation>Φορτωμένο</translation>
     </message>
@@ -1621,6 +1743,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-79"/>
         <location line="+15"/>
         <location line="+64"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-24"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-98"/>
         <source>In Progress</source>
         <translation>Σε εξέλιξη</translation>
     </message>
@@ -1660,6 +1784,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+279"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+274"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-9"/>
         <source>Height</source>
         <translation>Ύψος</translation>
     </message>
@@ -1667,6 +1792,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+169"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-1"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-1"/>
         <source>Width</source>
         <translation>Πλάτος</translation>
     </message>
@@ -1674,6 +1800,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+223"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+2"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="+2"/>
         <source>Duration</source>
         <translation>Διάρκεια</translation>
     </message>
@@ -1742,36 +1869,43 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="+655"/>
+        <location filename="../core/search.cpp" line="-3"/>
         <source>MIME Type</source>
         <translation>Τύπος MIME</translation>
     </message>
     <message>
         <location line="+4"/>
+        <location filename="../core/search.cpp" line="+4"/>
         <source>Video Width</source>
         <translation>Πλάτος βίντεο</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Video Height</source>
         <translation>Ύψος βίντεο</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Audio Duration</source>
         <translation>Διάρκεια ήχου</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Artist</source>
         <translation>Καλλιτέχνης</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Album</source>
         <translation>Άλμπουμ</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Title</source>
         <translation>Τίτλος</translation>
     </message>
@@ -1878,8 +2012,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Πλήρες εκτεταμένο</translation>
     </message>
     <message>
+        <location filename="../core/device.cpp" line="+651"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
-        <translation type="vanished">Θέλετε να &lt;span style=&apos;color: red&apos;;&gt;διαγράψετε&lt;/span&gt; αυτή τη %1 συσκευή;</translation>
+        <translation>Θέλετε να &lt;span style=&apos;color: red&apos;;&gt;διαγράψετε&lt;/span&gt; αυτή τη %1 συσκευή;</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+848"/>
@@ -1926,12 +2061,14 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1908"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+1010"/>
         <source>Operation cancelled</source>
         <translation>Η λειτουργία ακυρώθηκε</translation>
     </message>
     <message>
+        <location filename="../core/deviceupdatemanager.cpp" line="-48"/>
         <source>Stopping after current catalog completes...</source>
-        <translation type="vanished">Διακοπή μετά την ολοκλήρωση του τρέχοντα καταλόγου...</translation>
+        <translation>Διακοπή μετά την ολοκλήρωση του τρέχοντα καταλόγου...</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_ui_wrapper_catalog.cpp" line="+77"/>
@@ -1972,6 +2109,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+53"/>
         <location line="+316"/>
         <location line="+4"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-1"/>
+        <location line="+53"/>
+        <location line="+45"/>
         <source>Search</source>
         <translation>Αναζήτηση</translation>
     </message>
@@ -2127,6 +2267,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+388"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="-18"/>
         <source>Size</source>
         <translation>Μέγεθος</translation>
     </message>
@@ -2325,6 +2466,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+21"/>
         <location line="+25"/>
         <location line="+4"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-80"/>
+        <location line="+69"/>
+        <location line="+32"/>
         <source>Files found</source>
         <translation>Αρχεία που βρέθηκαν</translation>
     </message>
@@ -2430,6 +2574,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-76"/>
         <location line="+36"/>
         <location line="+40"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-140"/>
+        <location line="+76"/>
+        <location line="+61"/>
         <source>Update</source>
         <translation>Ενημέρωση</translation>
     </message>
@@ -2489,6 +2636,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+240"/>
         <location line="+253"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="+6"/>
         <source>Path</source>
         <translation>Διαδρομή</translation>
     </message>
@@ -2953,6 +3101,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+964"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-4"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-4"/>
         <source>Directory</source>
         <translation>Κατάλογος</translation>
     </message>
@@ -2972,6 +3121,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+243"/>
         <location line="-243"/>
         <location line="+243"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-139"/>
+        <location line="+76"/>
+        <location line="+61"/>
         <source>Create</source>
         <translation>Δημιουργία</translation>
     </message>
@@ -4100,6 +4252,7 @@ to the trash?</source>
     </message>
     <message>
         <location line="+356"/>
+        <location filename="../core/search.cpp" line="+3"/>
         <source>orderValue</source>
         <translation>τιμή ταξινόμησης</translation>
     </message>
@@ -4118,6 +4271,8 @@ to the trash?</source>
         <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
+        <location filename="../core/device.cpp" line="+2"/>
+        <location filename="../core/search.cpp" line="-6"/>
         <source>Name</source>
         <translation>Όνομα</translation>
     </message>
@@ -4133,6 +4288,7 @@ to the trash?</source>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="+2"/>
         <source>Date</source>
         <translation>Ημερομηνία</translation>
     </message>
@@ -4286,6 +4442,7 @@ to the trash?</source>
         <location line="+694"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="+7"/>
         <source>File Type</source>
         <translation>Τύπος αρχείου</translation>
     </message>
@@ -4545,6 +4702,7 @@ Split was not performed.</source>
         <location line="-8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-4"/>
         <source>Catalog ID</source>
         <translation>ID καταλόγου</translation>
     </message>
@@ -4858,6 +5016,7 @@ Split was not performed.</source>
         <location line="+240"/>
         <location line="+253"/>
         <location line="+1805"/>
+        <location filename="../core/device.cpp" line="-1"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -5330,6 +5489,7 @@ Split was not performed.</source>
     </message>
     <message>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-1"/>
         <source>Catalog Name</source>
         <translation>Όνομα καταλόγου</translation>
     </message>
@@ -5382,6 +5542,9 @@ Split was not performed.</source>
     </message>
     <message>
         <location line="+232"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-101"/>
+        <location line="+69"/>
+        <location line="+31"/>
         <source>Folders found</source>
         <translation>Φάκελοι που βρέθηκαν</translation>
     </message>
@@ -5973,6 +6136,16 @@ Split was not performed.</source>
         <location line="+8"/>
         <source>Collection Update</source>
         <translation>Ενημέρωση συλλογής</translation>
+    </message>
+    <message>
+        <location filename="../core/statusbarmessagebuilder.cpp" line="+264"/>
+        <source>Catalog %1 of %2</source>
+        <translation>Κατάλογος %1 από %2</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>%1 of %2 (%3%)</source>
+        <translation>%1 από %2 (%3%)</translation>
     </message>
 </context>
 <context>
@@ -8430,18 +8603,54 @@ Errors: %3</source>
     </message>
 </context>
 <context>
+    <name>QObject</name>
+    <message>
+        <location filename="../core/collectionimporter.cpp" line="-69"/>
+        <source>Name</source>
+        <translation type="unfinished">Όνομα</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Type</source>
+        <translation type="unfinished">Τύπος</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Active</source>
+        <translation type="unfinished">Ενεργό</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Device ID</source>
+        <translation type="unfinished">ID συσκευής</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Parent ID</source>
+        <translation type="unfinished">ID γονέα</translation>
+    </message>
+    <message>
+        <location line="+38"/>
+        <source>Collection</source>
+        <translation type="unfinished">Συλλογή</translation>
+    </message>
+</context>
+<context>
     <name>Tag</name>
     <message>
+        <location filename="../core/tag.cpp" line="+87"/>
         <source>ID</source>
-        <translation type="vanished">ID</translation>
+        <translation>ID</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Folder</source>
-        <translation type="vanished">Φάκελος</translation>
+        <translation>Φάκελος</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Tag</source>
-        <translation type="vanished">Ετικέτα</translation>
+        <translation>Ετικέτα</translation>
     </message>
 </context>
 </TS>

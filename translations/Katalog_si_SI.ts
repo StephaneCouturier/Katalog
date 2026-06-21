@@ -58,7 +58,27 @@
         <translation>Končano</translation>
     </message>
     <message>
-        <location line="-2799"/>
+        <location line="-2846"/>
+        <source>Empty database path provided</source>
+        <translation>Podana prazna pot do zbirke podatkov</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Database file does not exist: %1</source>
+        <translation>Datoteka zbirke podatkov ne obstaja: %1</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Opened: %1</source>
+        <translation>Odprto: %1</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Failed to open database: %1</source>
+        <translation>Zbirke podatkov ni bilo mogoče odpreti: %1</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Could not create file: %1</source>
         <translation>Datoteke ni mogoče ustvariti: %1</translation>
     </message>
@@ -164,7 +184,27 @@
         <translation>Oznaka: %1</translation>
     </message>
     <message>
-        <location line="+396"/>
+        <location line="+199"/>
+        <source>Memory collection opened: %1</source>
+        <translation>Pomnilniška zbirka odprta: %1</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Failed to open Memory collection: %1</source>
+        <translation>Pomnilniške zbirke ni bilo mogoče odpreti: %1</translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Connected: %1/%2</source>
+        <translation>Povezano: %1/%2</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Hosted connection failed: %1</source>
+        <translation>Gostovana povezava ni uspela: %1</translation>
+    </message>
+    <message>
+        <location line="+174"/>
         <source>Provide a name for this new catalog.</source>
         <translation>Navedite ime za ta novi katalog.</translation>
     </message>
@@ -523,39 +563,95 @@ Izberite drugo ime.</translation>
 <context>
     <name>Catalog</name>
     <message>
+        <location filename="../core/catalog.cpp" line="+128"/>
         <source>Name</source>
-        <translation type="vanished">Ime</translation>
+        <translation>Ime</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Size</source>
-        <translation type="vanished">Velikost</translation>
+        <translation>Velikost</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Folder</source>
-        <translation type="vanished">Mapa</translation>
+        <translation>Mapa</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Date</source>
-        <translation type="vanished">Datum</translation>
+        <translation>Datum</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Catalog</source>
-        <translation type="vanished">Katalog</translation>
+        <translation>Katalog</translation>
+    </message>
+    <message>
+        <location line="+1538"/>
+        <source>root</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+44"/>
+        <source>Audio</source>
+        <translation type="unfinished">Zvok</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Videos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Text</source>
+        <translation type="unfinished">Besedilo</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Other</source>
+        <translation type="unfinished">Drugo</translation>
     </message>
 </context>
 <context>
     <name>Collection</name>
     <message>
+        <location filename="../core/collection.cpp" line="+2415"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
-        <translation type="vanished">Ta mapa vsebuje datoteke zbirke v načinu pomnilnika, vendar ste trenutno v načinu datoteke.&lt;br/&gt;Preklopite v način pomnilnika ali izberite drugo mapo.</translation>
+        <translation>Ta mapa vsebuje datoteke zbirke v načinu pomnilnika, vendar ste trenutno v načinu datoteke.&lt;br/&gt;Preklopite v način pomnilnika ali izberite drugo mapo.</translation>
     </message>
     <message>
+        <location line="+4"/>
         <source>This folder contains File mode collection files, but you are currently in Memory mode.&lt;br/&gt;Switch to File mode or select a different folder.</source>
-        <translation type="vanished">Ta mapa vsebuje datoteke zbirke v načinu datoteke, vendar ste trenutno v načinu pomnilnika.&lt;br/&gt;Preklopite v način datoteke ali izberite drugo mapo.</translation>
+        <translation>Ta mapa vsebuje datoteke zbirke v načinu datoteke, vendar ste trenutno v načinu pomnilnika.&lt;br/&gt;Preklopite v način datoteke ali izberite drugo mapo.</translation>
     </message>
     <message>
+        <location line="+9"/>
         <source>This folder contains user data and is not suitable for a collection.&lt;br/&gt;Collections should be stored in dedicated folders to avoid mixing with personal files.</source>
-        <translation type="vanished">Ta mapa vsebuje uporabniške podatke in ni primerna za zbirko.&lt;br/&gt;Zbirke je treba shraniti v namenskih mapah, da se izognete mešanju z osebnimi datotekami.</translation>
+        <translation>Ta mapa vsebuje uporabniške podatke in ni primerna za zbirko.&lt;br/&gt;Zbirke je treba shraniti v namenskih mapah, da se izognete mešanju z osebnimi datotekami.</translation>
+    </message>
+</context>
+<context>
+    <name>CollectionImporter</name>
+    <message>
+        <location filename="../core/collectionimporter.cpp" line="+1653"/>
+        <source>Name</source>
+        <translation type="unfinished">Ime</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Type</source>
+        <translation type="unfinished">Tip</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Device ID</source>
+        <translation type="unfinished">ID naprave</translation>
     </message>
 </context>
 <context>
@@ -1394,27 +1490,32 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <translation>Ta zbirka je bila ustvarjena s Katalog različico %1, ki ni več podprta.&lt;br/&gt;&lt;br/&gt;Za pretvorbo jo najprej odprite s Katalog 2.10.&lt;br/&gt;&lt;br/&gt;Izberite drugo mapo zbirke.</translation>
     </message>
     <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="+127"/>
+        <location line="+153"/>
         <source>Metadata Extracted</source>
-        <translation type="vanished">Metapodatki izvlečeni</translation>
+        <translation>Metapodatki izvlečeni</translation>
     </message>
     <message>
+        <location line="+19"/>
         <source>Checksums Calculated</source>
-        <translation type="vanished">Nadzorne vsote izračunane</translation>
+        <translation>Nadzorne vsote izračunane</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-5542"/>
         <location line="+737"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1383"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="+246"/>
         <source>Checksum</source>
         <translation>Nadzorna vsota</translation>
     </message>
     <message>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Checksum Date</source>
-        <translation type="vanished">Datum nadzorne vsote</translation>
+        <translation>Datum nadzorne vsote</translation>
     </message>
     <message>
-        <location line="-614"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-614"/>
         <source>Within selected device</source>
         <translation>Znotraj izbrane naprave</translation>
     </message>
@@ -1519,24 +1620,35 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <translation>Profil varnostne kopije ustvarjen.</translation>
     </message>
     <message>
+        <location filename="../core/catalogjobstoppable.cpp" line="+1442"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
-        <translation type="vanished">Shranjevanje</translation>
+        <translation>Shranjevanje</translation>
     </message>
     <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="-159"/>
+        <location line="+67"/>
+        <location line="+140"/>
         <source>Indexed</source>
-        <translation type="vanished">Indeksirano</translation>
+        <translation>Indeksirano</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+313"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-199"/>
+        <location line="+143"/>
+        <location filename="../core/searchjobstoppable.cpp" line="+430"/>
         <source>File Types Updated</source>
         <translation>Vrste datotek posodobljene</translation>
     </message>
     <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="-159"/>
+        <location line="+146"/>
         <source>Counted</source>
-        <translation type="vanished">Prešteto</translation>
+        <translation>Prešteto</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-777"/>
+        <location filename="../core/searchprogressmanager.cpp" line="+85"/>
         <source>Paused</source>
         <translation>Premor</translation>
     </message>
@@ -1560,6 +1672,10 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location line="+23"/>
         <location line="+23"/>
         <location line="+21"/>
+        <location filename="../core/searchprogressmanager.cpp" line="+27"/>
+        <location line="+24"/>
+        <location line="+18"/>
+        <location line="+34"/>
         <source>Evaluated</source>
         <translation>Ovrednoteno</translation>
     </message>
@@ -1583,6 +1699,8 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-36"/>
         <location line="+36"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-96"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-13"/>
         <source>Completed</source>
         <translation>Končano</translation>
     </message>
@@ -1597,6 +1715,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location line="+87"/>
         <location line="-87"/>
         <location line="+87"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-76"/>
         <source>Cancelled</source>
         <translation>Preklicano</translation>
     </message>
@@ -1604,6 +1723,9 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-19"/>
         <location line="+21"/>
         <location line="+0"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="+18"/>
+        <location line="+143"/>
+        <location filename="../core/searchjobstoppable.cpp" line="+38"/>
         <source>Loaded</source>
         <translation>Naloženo</translation>
     </message>
@@ -1621,6 +1743,8 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-79"/>
         <location line="+15"/>
         <location line="+64"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-24"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-98"/>
         <source>In Progress</source>
         <translation>V teku</translation>
     </message>
@@ -1660,6 +1784,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location line="+279"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+274"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-9"/>
         <source>Height</source>
         <translation>Višina</translation>
     </message>
@@ -1667,6 +1792,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location line="+169"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-1"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-1"/>
         <source>Width</source>
         <translation>Širina</translation>
     </message>
@@ -1674,6 +1800,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location line="+223"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+2"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="+2"/>
         <source>Duration</source>
         <translation>Trajanje</translation>
     </message>
@@ -1742,36 +1869,43 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
     </message>
     <message>
         <location line="+655"/>
+        <location filename="../core/search.cpp" line="-3"/>
         <source>MIME Type</source>
         <translation>Tip MIME</translation>
     </message>
     <message>
         <location line="+4"/>
+        <location filename="../core/search.cpp" line="+4"/>
         <source>Video Width</source>
         <translation>Širina Videoposnetka</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Video Height</source>
         <translation>Višina Videoposnetka</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Audio Duration</source>
         <translation>Trajanje Zvoka</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Artist</source>
         <translation>Izvajalec</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Album</source>
         <translation>Album</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Title</source>
         <translation>Naslov</translation>
     </message>
@@ -1878,8 +2012,9 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <translation>Polno Razširjeno</translation>
     </message>
     <message>
+        <location filename="../core/device.cpp" line="+651"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
-        <translation type="vanished">Ali želite &lt;span style=&apos;color: red&apos;;&gt;izbrisati&lt;/span&gt; to %1 napravo?</translation>
+        <translation>Ali želite &lt;span style=&apos;color: red&apos;;&gt;izbrisati&lt;/span&gt; to %1 napravo?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+848"/>
@@ -1933,12 +2068,14 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1908"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+1010"/>
         <source>Operation cancelled</source>
         <translation>Operacija preklicana</translation>
     </message>
     <message>
+        <location filename="../core/deviceupdatemanager.cpp" line="-48"/>
         <source>Stopping after current catalog completes...</source>
-        <translation type="vanished">Ustavljanje po dokončanju trenutnega kataloga...</translation>
+        <translation>Ustavljanje po dokončanju trenutnega kataloga...</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-5498"/>
@@ -1972,6 +2109,9 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location line="+53"/>
         <location line="+316"/>
         <location line="+4"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-1"/>
+        <location line="+53"/>
+        <location line="+45"/>
         <source>Search</source>
         <translation>Iskanje</translation>
     </message>
@@ -2127,6 +2267,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location line="+388"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="-18"/>
         <source>Size</source>
         <translation>Velikost</translation>
     </message>
@@ -2330,6 +2471,9 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location line="+21"/>
         <location line="+25"/>
         <location line="+4"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-80"/>
+        <location line="+69"/>
+        <location line="+32"/>
         <source>Files found</source>
         <translation>Najdene datoteke</translation>
     </message>
@@ -2435,6 +2579,9 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-76"/>
         <location line="+36"/>
         <location line="+40"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-140"/>
+        <location line="+76"/>
+        <location line="+61"/>
         <source>Update</source>
         <translation>Posodobi</translation>
     </message>
@@ -2494,6 +2641,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location line="+240"/>
         <location line="+253"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="+6"/>
         <source>Path</source>
         <translation>Pot</translation>
     </message>
@@ -2938,6 +3086,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location line="+964"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-4"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-4"/>
         <source>Directory</source>
         <translation>Imenik</translation>
     </message>
@@ -2957,6 +3106,9 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location line="+243"/>
         <location line="-243"/>
         <location line="+243"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-139"/>
+        <location line="+76"/>
+        <location line="+61"/>
         <source>Create</source>
         <translation>Ustvari</translation>
     </message>
@@ -4049,6 +4201,7 @@ v koš?</translation>
     </message>
     <message>
         <location line="+356"/>
+        <location filename="../core/search.cpp" line="+3"/>
         <source>orderValue</source>
         <translation>vrednostVrstnega reda</translation>
     </message>
@@ -4067,6 +4220,8 @@ v koš?</translation>
         <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
+        <location filename="../core/device.cpp" line="+2"/>
+        <location filename="../core/search.cpp" line="-6"/>
         <source>Name</source>
         <translation>Ime</translation>
     </message>
@@ -4082,6 +4237,7 @@ v koš?</translation>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="+2"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
@@ -4235,6 +4391,7 @@ v koš?</translation>
         <location line="+694"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="+7"/>
         <source>File Type</source>
         <translation>Tip datoteke</translation>
     </message>
@@ -4485,6 +4642,7 @@ Razdelitev ni bila izvedena.</translation>
         <location line="-8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-4"/>
         <source>Catalog ID</source>
         <translation>ID kataloga</translation>
     </message>
@@ -5207,6 +5365,7 @@ Razdelitev ni bila izvedena.</translation>
         <location line="+240"/>
         <location line="+253"/>
         <location line="+1805"/>
+        <location filename="../core/device.cpp" line="-1"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -5679,6 +5838,7 @@ Razdelitev ni bila izvedena.</translation>
     </message>
     <message>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-1"/>
         <source>Catalog Name</source>
         <translation>Ime kataloga</translation>
     </message>
@@ -5731,6 +5891,9 @@ Razdelitev ni bila izvedena.</translation>
     </message>
     <message>
         <location line="+232"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-101"/>
+        <location line="+69"/>
+        <location line="+31"/>
         <source>Folders found</source>
         <translation>Najdene mape</translation>
     </message>
@@ -5973,6 +6136,16 @@ Razdelitev ni bila izvedena.</translation>
         <location line="+8"/>
         <source>Collection Update</source>
         <translation>Posodobi zbirko</translation>
+    </message>
+    <message>
+        <location filename="../core/statusbarmessagebuilder.cpp" line="+264"/>
+        <source>Catalog %1 of %2</source>
+        <translation>Katalog %1 od %2</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>%1 of %2 (%3%)</source>
+        <translation>%1 od %2 (%3 %)</translation>
     </message>
 </context>
 <context>
@@ -8430,18 +8603,54 @@ Napake: %3</translation>
     </message>
 </context>
 <context>
+    <name>QObject</name>
+    <message>
+        <location filename="../core/collectionimporter.cpp" line="-69"/>
+        <source>Name</source>
+        <translation type="unfinished">Ime</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Type</source>
+        <translation type="unfinished">Tip</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Active</source>
+        <translation type="unfinished">Aktivno</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Device ID</source>
+        <translation type="unfinished">ID naprave</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Parent ID</source>
+        <translation type="unfinished">ID nadrejene</translation>
+    </message>
+    <message>
+        <location line="+38"/>
+        <source>Collection</source>
+        <translation type="unfinished">Zbirka</translation>
+    </message>
+</context>
+<context>
     <name>Tag</name>
     <message>
+        <location filename="../core/tag.cpp" line="+87"/>
         <source>ID</source>
-        <translation type="vanished">ID</translation>
+        <translation>ID</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Folder</source>
-        <translation type="vanished">Mapa</translation>
+        <translation>Mapa</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Tag</source>
-        <translation type="vanished">Oznaka</translation>
+        <translation>Oznaka</translation>
     </message>
 </context>
 </TS>

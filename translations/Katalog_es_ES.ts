@@ -58,7 +58,27 @@
         <translation>Completado</translation>
     </message>
     <message>
-        <location line="-2799"/>
+        <location line="-2846"/>
+        <source>Empty database path provided</source>
+        <translation>Se proporcionó una ruta de base de datos vacía</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Database file does not exist: %1</source>
+        <translation>El archivo de base de datos no existe: %1</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Opened: %1</source>
+        <translation>Abierto: %1</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Failed to open database: %1</source>
+        <translation>Error al abrir la base de datos: %1</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Could not create file: %1</source>
         <translation>No se pudo crear el archivo: %1</translation>
     </message>
@@ -164,7 +184,27 @@
         <translation>Etiqueta: %1</translation>
     </message>
     <message>
-        <location line="+396"/>
+        <location line="+199"/>
+        <source>Memory collection opened: %1</source>
+        <translation>Colección en memoria abierta: %1</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Failed to open Memory collection: %1</source>
+        <translation>Error al abrir la colección en memoria: %1</translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Connected: %1/%2</source>
+        <translation>Conectado: %1/%2</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Hosted connection failed: %1</source>
+        <translation>Falló la conexión alojada: %1</translation>
+    </message>
+    <message>
+        <location line="+174"/>
         <source>Provide a name for this new catalog.</source>
         <translation>Indique un nombre para este nuevo catálogo.</translation>
     </message>
@@ -523,39 +563,95 @@ Elija un nombre diferente.</translation>
 <context>
     <name>Catalog</name>
     <message>
+        <location filename="../core/catalog.cpp" line="+128"/>
         <source>Name</source>
-        <translation type="vanished">Nombre</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Size</source>
-        <translation type="vanished">Tamaño</translation>
+        <translation>Tamaño</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Folder</source>
-        <translation type="vanished">Carpeta</translation>
+        <translation>Carpeta</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Date</source>
-        <translation type="vanished">Fecha</translation>
+        <translation>Fecha</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Catalog</source>
-        <translation type="vanished">Catálogo</translation>
+        <translation>Catálogo</translation>
+    </message>
+    <message>
+        <location line="+1538"/>
+        <source>root</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+44"/>
+        <source>Audio</source>
+        <translation type="unfinished">Audio</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Videos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Text</source>
+        <translation type="unfinished">Texto</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Other</source>
+        <translation type="unfinished">Otro</translation>
     </message>
 </context>
 <context>
     <name>Collection</name>
     <message>
+        <location filename="../core/collection.cpp" line="+2415"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
-        <translation type="vanished">Esta carpeta contiene archivos de colección en modo Memoria, pero actualmente está en modo Archivo.&lt;br/&gt;Cambie al modo Memoria o seleccione otra carpeta.</translation>
+        <translation>Esta carpeta contiene archivos de colección en modo Memoria, pero actualmente está en modo Archivo.&lt;br/&gt;Cambie al modo Memoria o seleccione otra carpeta.</translation>
     </message>
     <message>
+        <location line="+4"/>
         <source>This folder contains File mode collection files, but you are currently in Memory mode.&lt;br/&gt;Switch to File mode or select a different folder.</source>
-        <translation type="vanished">Esta carpeta contiene archivos de colección en modo Archivo, pero actualmente está en modo Memoria.&lt;br/&gt;Cambie al modo Archivo o seleccione otra carpeta.</translation>
+        <translation>Esta carpeta contiene archivos de colección en modo Archivo, pero actualmente está en modo Memoria.&lt;br/&gt;Cambie al modo Archivo o seleccione otra carpeta.</translation>
     </message>
     <message>
+        <location line="+9"/>
         <source>This folder contains user data and is not suitable for a collection.&lt;br/&gt;Collections should be stored in dedicated folders to avoid mixing with personal files.</source>
-        <translation type="vanished">Esta carpeta contiene datos de usuario y no es adecuada para una colección.&lt;br/&gt;Las colecciones deben almacenarse en carpetas dedicadas para evitar mezclarlas con archivos personales.</translation>
+        <translation>Esta carpeta contiene datos de usuario y no es adecuada para una colección.&lt;br/&gt;Las colecciones deben almacenarse en carpetas dedicadas para evitar mezclarlas con archivos personales.</translation>
+    </message>
+</context>
+<context>
+    <name>CollectionImporter</name>
+    <message>
+        <location filename="../core/collectionimporter.cpp" line="+1653"/>
+        <source>Name</source>
+        <translation type="unfinished">Nombre</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Type</source>
+        <translation type="unfinished">Tipo</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Device ID</source>
+        <translation type="unfinished">ID del dispositivo</translation>
     </message>
 </context>
 <context>
@@ -1394,27 +1490,32 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation>Esta colección fue creada con Katalog versión %1, que ya no es compatible.&lt;br/&gt;&lt;br/&gt;Para convertirla, ábrala primero con Katalog 2.10.&lt;br/&gt;&lt;br/&gt;Seleccione una carpeta de colección diferente.</translation>
     </message>
     <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="+127"/>
+        <location line="+153"/>
         <source>Metadata Extracted</source>
-        <translation type="vanished">Metadatos extraídos</translation>
+        <translation>Metadatos extraídos</translation>
     </message>
     <message>
+        <location line="+19"/>
         <source>Checksums Calculated</source>
-        <translation type="vanished">Sumas de verificación calculadas</translation>
+        <translation>Sumas de verificación calculadas</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-5542"/>
         <location line="+737"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1383"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="+246"/>
         <source>Checksum</source>
         <translation>Suma de verificación</translation>
     </message>
     <message>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Checksum Date</source>
-        <translation type="vanished">Fecha de suma de verificación</translation>
+        <translation>Fecha de suma de verificación</translation>
     </message>
     <message>
-        <location line="-614"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-614"/>
         <source>Within selected device</source>
         <translation>Dentro del dispositivo seleccionado</translation>
     </message>
@@ -1539,24 +1640,35 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation>Perfil de copia de seguridad creado.</translation>
     </message>
     <message>
+        <location filename="../core/catalogjobstoppable.cpp" line="+1442"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
-        <translation type="vanished">Guardando</translation>
+        <translation>Guardando</translation>
     </message>
     <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="-159"/>
+        <location line="+67"/>
+        <location line="+140"/>
         <source>Indexed</source>
-        <translation type="vanished">Indexado</translation>
+        <translation>Indexado</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+313"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-199"/>
+        <location line="+143"/>
+        <location filename="../core/searchjobstoppable.cpp" line="+430"/>
         <source>File Types Updated</source>
         <translation>Tipos de archivo actualizados</translation>
     </message>
     <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="-159"/>
+        <location line="+146"/>
         <source>Counted</source>
-        <translation type="vanished">Contado</translation>
+        <translation>Contado</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-777"/>
+        <location filename="../core/searchprogressmanager.cpp" line="+85"/>
         <source>Paused</source>
         <translation>En pausa</translation>
     </message>
@@ -1580,6 +1692,10 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location line="+23"/>
         <location line="+23"/>
         <location line="+21"/>
+        <location filename="../core/searchprogressmanager.cpp" line="+27"/>
+        <location line="+24"/>
+        <location line="+18"/>
+        <location line="+34"/>
         <source>Evaluated</source>
         <translation>Evaluado</translation>
     </message>
@@ -1603,6 +1719,8 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-36"/>
         <location line="+36"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-96"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-13"/>
         <source>Completed</source>
         <translation>Completado</translation>
     </message>
@@ -1617,6 +1735,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location line="+87"/>
         <location line="-87"/>
         <location line="+87"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-76"/>
         <source>Cancelled</source>
         <translation>Cancelado</translation>
     </message>
@@ -1624,6 +1743,9 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-19"/>
         <location line="+21"/>
         <location line="+0"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="+18"/>
+        <location line="+143"/>
+        <location filename="../core/searchjobstoppable.cpp" line="+38"/>
         <source>Loaded</source>
         <translation>Cargado</translation>
     </message>
@@ -1641,6 +1763,8 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-79"/>
         <location line="+15"/>
         <location line="+64"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-24"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-98"/>
         <source>In Progress</source>
         <translation>En progreso</translation>
     </message>
@@ -1680,6 +1804,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location line="+279"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+274"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-9"/>
         <source>Height</source>
         <translation>Altura</translation>
     </message>
@@ -1687,6 +1812,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location line="+169"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-1"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-1"/>
         <source>Width</source>
         <translation>Ancho</translation>
     </message>
@@ -1694,6 +1820,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location line="+223"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+2"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="+2"/>
         <source>Duration</source>
         <translation>Duración</translation>
     </message>
@@ -1762,36 +1889,43 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     </message>
     <message>
         <location line="+655"/>
+        <location filename="../core/search.cpp" line="-3"/>
         <source>MIME Type</source>
         <translation>Tipo MIME</translation>
     </message>
     <message>
         <location line="+4"/>
+        <location filename="../core/search.cpp" line="+4"/>
         <source>Video Width</source>
         <translation>Ancho del vídeo</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Video Height</source>
         <translation>Altura del vídeo</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Audio Duration</source>
         <translation>Duración del audio</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Artist</source>
         <translation>Artista</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Album</source>
         <translation>Álbum</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Title</source>
         <translation>Título</translation>
     </message>
@@ -1898,8 +2032,9 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation>Completo extendido</translation>
     </message>
     <message>
+        <location filename="../core/device.cpp" line="+651"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
-        <translation type="vanished">¿Quieres &lt;span style=&apos;color: red&apos;;&gt;eliminar&lt;/span&gt; este dispositivo %1?</translation>
+        <translation>¿Quieres &lt;span style=&apos;color: red&apos;;&gt;eliminar&lt;/span&gt; este dispositivo %1?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+848"/>
@@ -1953,15 +2088,17 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1908"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+1010"/>
         <source>Operation cancelled</source>
         <translation>Operación cancelada</translation>
     </message>
     <message>
+        <location filename="../core/deviceupdatemanager.cpp" line="-48"/>
         <source>Stopping after current catalog completes...</source>
-        <translation type="vanished">Deteniendo después de que se complete el catálogo actual...</translation>
+        <translation>Deteniendo después de que se complete el catálogo actual...</translation>
     </message>
     <message>
-        <location line="+1069"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1069"/>
         <source>Catalog created: </source>
         <translation>Catálogo creado: </translation>
     </message>
@@ -2187,6 +2324,7 @@ No se realizó la división.</translation>
         <location line="-8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-371"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-14"/>
         <source>Catalog ID</source>
         <translation>ID del catálogo</translation>
     </message>
@@ -2585,6 +2723,9 @@ No se realizó la división.</translation>
         <location line="+53"/>
         <location line="+316"/>
         <location line="+4"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-1"/>
+        <location line="+53"/>
+        <location line="+45"/>
         <source>Search</source>
         <translation>Buscar</translation>
     </message>
@@ -2760,6 +2901,7 @@ No se realizó la división.</translation>
         <location line="+388"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="-4"/>
         <source>Size</source>
         <translation>Tamaño</translation>
     </message>
@@ -2914,6 +3056,7 @@ No se realizó la división.</translation>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Date</source>
         <translation>Fecha</translation>
     </message>
@@ -2943,6 +3086,8 @@ No se realizó la división.</translation>
         <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
+        <location filename="../core/device.cpp" line="+2"/>
+        <location filename="../core/search.cpp" line="-2"/>
         <source>Name</source>
         <translation>Nombre</translation>
     </message>
@@ -3020,6 +3165,9 @@ No se realizó la división.</translation>
         <location line="+21"/>
         <location line="+25"/>
         <location line="+4"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-80"/>
+        <location line="+69"/>
+        <location line="+32"/>
         <source>Files found</source>
         <translation>Archivos encontrados</translation>
     </message>
@@ -3282,6 +3430,7 @@ No se realizó la división.</translation>
         <location line="+694"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="+9"/>
         <source>File Type</source>
         <translation>Tipo de archivo</translation>
     </message>
@@ -3353,6 +3502,9 @@ No se realizó la división.</translation>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-76"/>
         <location line="+36"/>
         <location line="+40"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-140"/>
+        <location line="+76"/>
+        <location line="+61"/>
         <source>Update</source>
         <translation>Actualizar</translation>
     </message>
@@ -3646,6 +3798,7 @@ No se realizó la división.</translation>
         <location line="+964"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+254"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-6"/>
         <source>Directory</source>
         <translation>Directorio</translation>
     </message>
@@ -3665,6 +3818,9 @@ No se realizó la división.</translation>
         <location line="+243"/>
         <location line="-243"/>
         <location line="+243"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-139"/>
+        <location line="+76"/>
+        <location line="+61"/>
         <source>Create</source>
         <translation>Crear</translation>
     </message>
@@ -3846,6 +4002,7 @@ No se realizó la división.</translation>
         <location line="+240"/>
         <location line="+253"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="+4"/>
         <source>Path</source>
         <translation>Ruta</translation>
     </message>
@@ -4656,6 +4813,7 @@ No se realizó la división.</translation>
         <location line="+240"/>
         <location line="+253"/>
         <location line="+1805"/>
+        <location filename="../core/device.cpp" line="-1"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -5312,6 +5470,7 @@ a la papelera?</translation>
     </message>
     <message>
         <location line="+356"/>
+        <location filename="../core/search.cpp" line="-1"/>
         <source>orderValue</source>
         <translation>valorOrden</translation>
     </message>
@@ -5329,6 +5488,7 @@ a la papelera?</translation>
     </message>
     <message>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-2"/>
         <source>Catalog Name</source>
         <translation>Nombre del catálogo</translation>
     </message>
@@ -5381,6 +5541,9 @@ a la papelera?</translation>
     </message>
     <message>
         <location line="+232"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-101"/>
+        <location line="+69"/>
+        <location line="+31"/>
         <source>Folders found</source>
         <translation>Carpetas encontradas</translation>
     </message>
@@ -5972,6 +6135,16 @@ a la papelera?</translation>
         <location line="+8"/>
         <source>Collection Update</source>
         <translation>Actualizar colección</translation>
+    </message>
+    <message>
+        <location filename="../core/statusbarmessagebuilder.cpp" line="+264"/>
+        <source>Catalog %1 of %2</source>
+        <translation>Catálogo %1 de %2</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>%1 of %2 (%3%)</source>
+        <translation>%1 de %2 (%3 %)</translation>
     </message>
 </context>
 <context>
@@ -8429,18 +8602,54 @@ Errores: %3</translation>
     </message>
 </context>
 <context>
+    <name>QObject</name>
+    <message>
+        <location filename="../core/collectionimporter.cpp" line="-69"/>
+        <source>Name</source>
+        <translation type="unfinished">Nombre</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Type</source>
+        <translation type="unfinished">Tipo</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Active</source>
+        <translation type="unfinished">Activo</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Device ID</source>
+        <translation type="unfinished">ID del dispositivo</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Parent ID</source>
+        <translation type="unfinished">ID principal</translation>
+    </message>
+    <message>
+        <location line="+38"/>
+        <source>Collection</source>
+        <translation type="unfinished">Colección</translation>
+    </message>
+</context>
+<context>
     <name>Tag</name>
     <message>
+        <location filename="../core/tag.cpp" line="+87"/>
         <source>ID</source>
-        <translation type="vanished">ID</translation>
+        <translation>ID</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Folder</source>
-        <translation type="vanished">Carpeta</translation>
+        <translation>Carpeta</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Tag</source>
-        <translation type="vanished">Etiqueta</translation>
+        <translation>Etiqueta</translation>
     </message>
 </context>
 </TS>

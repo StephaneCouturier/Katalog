@@ -539,7 +539,7 @@ void AppManager::setDatabaseFilePath(const QString &path)
 {
     if (path.isEmpty()) {
         qWarning() << "AppManager::setDatabaseFilePath: Empty path provided";
-        emit databaseConnectionChanged(false, "Empty database path provided");
+        emit databaseConnectionChanged(false, tr("Empty database path provided"));
         return;
     }
 
@@ -549,7 +549,7 @@ void AppManager::setDatabaseFilePath(const QString &path)
     QFile dbFile(path);
     if (!dbFile.exists()) {
         qWarning() << "AppManager::setDatabaseFilePath: Database file does not exist:" << path;
-        emit databaseConnectionChanged(false, "Database file does not exist: " + path);
+        emit databaseConnectionChanged(false, tr("Database file does not exist: %1").arg(path));
         return;
     }
 
@@ -567,7 +567,7 @@ void AppManager::setDatabaseFilePath(const QString &path)
     if (reconnectToDatabase()) {
         qDebug() << "Successfully connected to new database:" << path;
         saveToRecentCollections("File", path, QFileInfo(path).fileName());
-        emit databaseConnectionChanged(true, "Opened: " + QFileInfo(path).fileName());
+        emit databaseConnectionChanged(true, tr("Opened: %1").arg(QFileInfo(path).fileName()));
     } else {
         // Rollback settings and connection
         settings.setValue("Settings/databaseMode",    oldMode);
@@ -575,7 +575,7 @@ void AppManager::setDatabaseFilePath(const QString &path)
         settings.sync();
         collection->databaseFilePath = oldPath;
         reconnectToDatabase();
-        emit databaseConnectionChanged(false, "Failed to open database: " + lastDatabaseError);
+        emit databaseConnectionChanged(false, tr("Failed to open database: %1").arg(lastDatabaseError));
     }
 }
 //----------------------------------------------------------------------
@@ -1514,9 +1514,9 @@ void AppManager::openCollectionMemory(const QString &folder)
 
     if (reconnectToDatabase()) {
         saveToRecentCollections("Memory", folder, QFileInfo(folder).fileName());
-        emit databaseConnectionChanged(true, "Memory collection opened: " + QFileInfo(folder).fileName());
+        emit databaseConnectionChanged(true, tr("Memory collection opened: %1").arg(QFileInfo(folder).fileName()));
     } else {
-        emit databaseConnectionChanged(false, "Failed to open Memory collection: " + lastDatabaseError);
+        emit databaseConnectionChanged(false, tr("Failed to open Memory collection: %1").arg(lastDatabaseError));
     }
 }
 //----------------------------------------------------------------------
@@ -1535,9 +1535,9 @@ void AppManager::openCollectionHosted(const QString &hostName, const QString &db
     if (reconnectToDatabase()) {
         saveToRecentCollections("Hosted", hostName + "/" + dbName, hostName + "/" + dbName,
                                 hostName, dbName, port, userName, password);
-        emit databaseConnectionChanged(true, "Connected: " + hostName + "/" + dbName);
+        emit databaseConnectionChanged(true, tr("Connected: %1/%2").arg(hostName).arg(dbName));
     } else {
-        emit databaseConnectionChanged(false, "Hosted connection failed: " + lastDatabaseError);
+        emit databaseConnectionChanged(false, tr("Hosted connection failed: %1").arg(lastDatabaseError));
     }
 }
 //----------------------------------------------------------------------

@@ -31,6 +31,7 @@
 
 #include "statusbarmessagebuilder.h"
 #include <QStringList>
+#include <QCoreApplication>
 
 StatusBarMessageBuilder::StatusBarMessageBuilder()
 {
@@ -260,7 +261,7 @@ QString StatusBarMessageBuilder::formatDeviceContext() const
         return QString();
     }
 
-    QString deviceText = QString("Catalog %1 of %2")
+    QString deviceText = QCoreApplication::translate("MainWindow", "Catalog %1 of %2")
                              .arg(m_deviceCurrentIndex)
                              .arg(m_deviceTotalCount);
 
@@ -290,7 +291,7 @@ QString StatusBarMessageBuilder::formatProcess() const
     if (m_processTotalCount > 0) {
         // Show "X of Y (Z%)"
         double percent = calculatePercent();
-        processText += QString("%1 of %2 (%3%)")
+        processText += QCoreApplication::translate("MainWindow", "%1 of %2 (%3%)")
                            .arg(QLocale().toString(m_processCurrentCount),
                                 QLocale().toString(m_processTotalCount),
                                 QString::number(percent, 'f', 0));

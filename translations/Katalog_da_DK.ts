@@ -58,7 +58,27 @@
         <translation>Fuldført</translation>
     </message>
     <message>
-        <location line="-2799"/>
+        <location line="-2846"/>
+        <source>Empty database path provided</source>
+        <translation>Tom databasesti angivet</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Database file does not exist: %1</source>
+        <translation>Databasefilen findes ikke: %1</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Opened: %1</source>
+        <translation>Åbnet: %1</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Failed to open database: %1</source>
+        <translation>Kunne ikke åbne databasen: %1</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Could not create file: %1</source>
         <translation>Kunne ikke oprette filen: %1</translation>
     </message>
@@ -164,7 +184,27 @@
         <translation>Mærkat: %1</translation>
     </message>
     <message>
-        <location line="+396"/>
+        <location line="+199"/>
+        <source>Memory collection opened: %1</source>
+        <translation>Hukommelsessamling åbnet: %1</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Failed to open Memory collection: %1</source>
+        <translation>Kunne ikke åbne hukommelsessamlingen: %1</translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Connected: %1/%2</source>
+        <translation>Forbundet: %1/%2</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Hosted connection failed: %1</source>
+        <translation>Hostet forbindelse mislykkedes: %1</translation>
+    </message>
+    <message>
+        <location line="+174"/>
         <source>Provide a name for this new catalog.</source>
         <translation>Angiv et navn til dette nye katalog.</translation>
     </message>
@@ -523,39 +563,95 @@ Vælg et andet navn.</translation>
 <context>
     <name>Catalog</name>
     <message>
+        <location filename="../core/catalog.cpp" line="+128"/>
         <source>Name</source>
-        <translation type="vanished">Navn</translation>
+        <translation>Navn</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Size</source>
-        <translation type="vanished">Størrelse</translation>
+        <translation>Størrelse</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Folder</source>
-        <translation type="vanished">Mappe</translation>
+        <translation>Mappe</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Date</source>
-        <translation type="vanished">Dato</translation>
+        <translation>Dato</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Catalog</source>
-        <translation type="vanished">Katalog</translation>
+        <translation>Katalog</translation>
+    </message>
+    <message>
+        <location line="+1538"/>
+        <source>root</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+44"/>
+        <source>Audio</source>
+        <translation type="unfinished">Audio</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Videos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Text</source>
+        <translation type="unfinished">Tekst</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Other</source>
+        <translation type="unfinished">Anden</translation>
     </message>
 </context>
 <context>
     <name>Collection</name>
     <message>
+        <location filename="../core/collection.cpp" line="+2415"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
-        <translation type="vanished">Denne mappe indeholder samlingsfilter i hukommelsestilstand, men du er i øjeblikket i filtilstand.&lt;br/&gt;Skift til hukommelsestilstand eller vælg en anden mappe.</translation>
+        <translation>Denne mappe indeholder samlingsfilter i hukommelsestilstand, men du er i øjeblikket i filtilstand.&lt;br/&gt;Skift til hukommelsestilstand eller vælg en anden mappe.</translation>
     </message>
     <message>
+        <location line="+4"/>
         <source>This folder contains File mode collection files, but you are currently in Memory mode.&lt;br/&gt;Switch to File mode or select a different folder.</source>
-        <translation type="vanished">Denne mappe indeholder samlingsfilter i filtilstand, men du er i øjeblikket i hukommelsestilstand.&lt;br/&gt;Skift til filtilstand eller vælg en anden mappe.</translation>
+        <translation>Denne mappe indeholder samlingsfilter i filtilstand, men du er i øjeblikket i hukommelsestilstand.&lt;br/&gt;Skift til filtilstand eller vælg en anden mappe.</translation>
     </message>
     <message>
+        <location line="+9"/>
         <source>This folder contains user data and is not suitable for a collection.&lt;br/&gt;Collections should be stored in dedicated folders to avoid mixing with personal files.</source>
-        <translation type="vanished">Denne mappe indeholder brugerdata og er ikke egnet til en samling.&lt;br/&gt;Samlinger bør gemmes i dedikerede mapper for at undgå blanding med personlige filer.</translation>
+        <translation>Denne mappe indeholder brugerdata og er ikke egnet til en samling.&lt;br/&gt;Samlinger bør gemmes i dedikerede mapper for at undgå blanding med personlige filer.</translation>
+    </message>
+</context>
+<context>
+    <name>CollectionImporter</name>
+    <message>
+        <location filename="../core/collectionimporter.cpp" line="+1653"/>
+        <source>Name</source>
+        <translation type="unfinished">Navn</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Type</source>
+        <translation type="unfinished">Type</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Device ID</source>
+        <translation type="unfinished">Enheds-ID</translation>
     </message>
 </context>
 <context>
@@ -1394,27 +1490,32 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <translation>Denne samling blev oprettet med Katalog version %1, som ikke længere understøttes.&lt;br/&gt;&lt;br/&gt;For at konvertere den skal du åbne den med Katalog 2.10 først.&lt;br/&gt;&lt;br/&gt;Vælg venligst en anden samlingsmappe.</translation>
     </message>
     <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="+127"/>
+        <location line="+153"/>
         <source>Metadata Extracted</source>
-        <translation type="vanished">Metadata udtrukket</translation>
+        <translation>Metadata udtrukket</translation>
     </message>
     <message>
+        <location line="+19"/>
         <source>Checksums Calculated</source>
-        <translation type="vanished">Kontrolsummer beregnet</translation>
+        <translation>Kontrolsummer beregnet</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-5542"/>
         <location line="+737"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1383"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="+246"/>
         <source>Checksum</source>
         <translation>Kontrolsum</translation>
     </message>
     <message>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Checksum Date</source>
-        <translation type="vanished">Kontrolsum dato</translation>
+        <translation>Kontrolsum dato</translation>
     </message>
     <message>
-        <location line="-614"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-614"/>
         <source>Within selected device</source>
         <translation>Inden for valgt enhed</translation>
     </message>
@@ -1519,24 +1620,35 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <translation>Backup-profil oprettet.</translation>
     </message>
     <message>
+        <location filename="../core/catalogjobstoppable.cpp" line="+1442"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
-        <translation type="vanished">Gemmer</translation>
+        <translation>Gemmer</translation>
     </message>
     <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="-159"/>
+        <location line="+67"/>
+        <location line="+140"/>
         <source>Indexed</source>
-        <translation type="vanished">Indekseret</translation>
+        <translation>Indekseret</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+313"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-199"/>
+        <location line="+143"/>
+        <location filename="../core/searchjobstoppable.cpp" line="+430"/>
         <source>File Types Updated</source>
         <translation>Filtyper opdateret</translation>
     </message>
     <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="-159"/>
+        <location line="+146"/>
         <source>Counted</source>
-        <translation type="vanished">Talt</translation>
+        <translation>Talt</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-777"/>
+        <location filename="../core/searchprogressmanager.cpp" line="+85"/>
         <source>Paused</source>
         <translation>På pause</translation>
     </message>
@@ -1560,6 +1672,10 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <location line="+23"/>
         <location line="+23"/>
         <location line="+21"/>
+        <location filename="../core/searchprogressmanager.cpp" line="+27"/>
+        <location line="+24"/>
+        <location line="+18"/>
+        <location line="+34"/>
         <source>Evaluated</source>
         <translation>Evalueret</translation>
     </message>
@@ -1583,6 +1699,8 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <location line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-36"/>
         <location line="+36"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-96"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-13"/>
         <source>Completed</source>
         <translation>Fuldført</translation>
     </message>
@@ -1597,6 +1715,7 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <location line="+87"/>
         <location line="-87"/>
         <location line="+87"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-76"/>
         <source>Cancelled</source>
         <translation>Annulleret</translation>
     </message>
@@ -1604,6 +1723,9 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-19"/>
         <location line="+21"/>
         <location line="+0"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="+18"/>
+        <location line="+143"/>
+        <location filename="../core/searchjobstoppable.cpp" line="+38"/>
         <source>Loaded</source>
         <translation>Indlæst</translation>
     </message>
@@ -1621,6 +1743,8 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-79"/>
         <location line="+15"/>
         <location line="+64"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-24"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-98"/>
         <source>In Progress</source>
         <translation>I gang</translation>
     </message>
@@ -1660,6 +1784,7 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <location line="+279"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+274"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-9"/>
         <source>Height</source>
         <translation>Højde</translation>
     </message>
@@ -1667,6 +1792,7 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <location line="+169"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-1"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-1"/>
         <source>Width</source>
         <translation>Bredde</translation>
     </message>
@@ -1674,6 +1800,7 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <location line="+223"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+2"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="+2"/>
         <source>Duration</source>
         <translation>Varighed</translation>
     </message>
@@ -1742,36 +1869,43 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
     </message>
     <message>
         <location line="+655"/>
+        <location filename="../core/search.cpp" line="-3"/>
         <source>MIME Type</source>
         <translation>MIME-type</translation>
     </message>
     <message>
         <location line="+4"/>
+        <location filename="../core/search.cpp" line="+4"/>
         <source>Video Width</source>
         <translation>Videobredde</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Video Height</source>
         <translation>Videohøjde</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Audio Duration</source>
         <translation>Lydvarighed</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Artist</source>
         <translation>Kunstner</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Album</source>
         <translation>Album</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -1878,8 +2012,9 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <translation>Fuld udvidet</translation>
     </message>
     <message>
+        <location filename="../core/device.cpp" line="+651"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
-        <translation type="vanished">Vil du &lt;span style=&apos;color: red&apos;;&gt;slette&lt;/span&gt; denne %1 enhed?</translation>
+        <translation>Vil du &lt;span style=&apos;color: red&apos;;&gt;slette&lt;/span&gt; denne %1 enhed?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+848"/>
@@ -1933,12 +2068,14 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1908"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+1010"/>
         <source>Operation cancelled</source>
         <translation>Operation annulleret</translation>
     </message>
     <message>
+        <location filename="../core/deviceupdatemanager.cpp" line="-48"/>
         <source>Stopping after current catalog completes...</source>
-        <translation type="vanished">Stopper efter nuværende katalog er færdig...</translation>
+        <translation>Stopper efter nuværende katalog er færdig...</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-5498"/>
@@ -1972,6 +2109,9 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <location line="+53"/>
         <location line="+316"/>
         <location line="+4"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-1"/>
+        <location line="+53"/>
+        <location line="+45"/>
         <source>Search</source>
         <translation>Søg</translation>
     </message>
@@ -2127,6 +2267,7 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <location line="+388"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="-18"/>
         <source>Size</source>
         <translation>Størrelse</translation>
     </message>
@@ -2330,6 +2471,9 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <location line="+21"/>
         <location line="+25"/>
         <location line="+4"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-80"/>
+        <location line="+69"/>
+        <location line="+32"/>
         <source>Files found</source>
         <translation>Filer fundet</translation>
     </message>
@@ -2435,6 +2579,9 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-76"/>
         <location line="+36"/>
         <location line="+40"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-140"/>
+        <location line="+76"/>
+        <location line="+61"/>
         <source>Update</source>
         <translation>Opdater</translation>
     </message>
@@ -2494,6 +2641,7 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <location line="+240"/>
         <location line="+253"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="+6"/>
         <source>Path</source>
         <translation>Sti</translation>
     </message>
@@ -2699,6 +2847,9 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <location line="+243"/>
         <location line="-243"/>
         <location line="+243"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-139"/>
+        <location line="+76"/>
+        <location line="+61"/>
         <source>Create</source>
         <translation>Opret</translation>
     </message>
@@ -3564,6 +3715,8 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
+        <location filename="../core/device.cpp" line="+2"/>
+        <location filename="../core/search.cpp" line="-7"/>
         <source>Name</source>
         <translation>Navn</translation>
     </message>
@@ -3579,6 +3732,7 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="+2"/>
         <source>Date</source>
         <translation>Dato</translation>
     </message>
@@ -3630,6 +3784,7 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <location line="+694"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="+7"/>
         <source>File Type</source>
         <translation>Filtype</translation>
     </message>
@@ -3880,6 +4035,7 @@ Opdeling blev ikke udført.</translation>
         <location line="-8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-4"/>
         <source>Catalog ID</source>
         <translation>Katalog-ID</translation>
     </message>
@@ -4688,6 +4844,7 @@ Opdeling blev ikke udført.</translation>
         <location line="+964"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-19"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-2"/>
         <source>Directory</source>
         <translation>Mappe</translation>
     </message>
@@ -5052,6 +5209,7 @@ til papirkurven?</translation>
     </message>
     <message>
         <location line="+547"/>
+        <location filename="../core/search.cpp" line="+3"/>
         <source>orderValue</source>
         <translation>sorteringsværdi</translation>
     </message>
@@ -5255,6 +5413,7 @@ til papirkurven?</translation>
         <location line="+240"/>
         <location line="+253"/>
         <location line="+1805"/>
+        <location filename="../core/device.cpp" line="-1"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -5727,6 +5886,7 @@ til papirkurven?</translation>
     </message>
     <message>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-2"/>
         <source>Catalog Name</source>
         <translation>Katalognavn</translation>
     </message>
@@ -5779,6 +5939,9 @@ til papirkurven?</translation>
     </message>
     <message>
         <location line="+232"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-101"/>
+        <location line="+69"/>
+        <location line="+31"/>
         <source>Folders found</source>
         <translation>Mapper fundet</translation>
     </message>
@@ -5972,6 +6135,16 @@ til papirkurven?</translation>
         <location line="+8"/>
         <source>Collection Update</source>
         <translation>Opdatér samling</translation>
+    </message>
+    <message>
+        <location filename="../core/statusbarmessagebuilder.cpp" line="+264"/>
+        <source>Catalog %1 of %2</source>
+        <translation>Katalog %1 af %2</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>%1 of %2 (%3%)</source>
+        <translation>%1 af %2 (%3 %)</translation>
     </message>
 </context>
 <context>
@@ -6178,7 +6351,7 @@ til papirkurven?</translation>
     <message>
         <location line="+1"/>
         <source>Delete link &quot;%1&quot;? This cannot be undone.</source>
-        <translation>Slet linket '%1'? Dette kan ikke fortrydes.</translation>
+        <translation>Slet linket &apos;%1&apos;? Dette kan ikke fortrydes.</translation>
     </message>
 </context>
 <context>
@@ -8429,18 +8602,54 @@ Fejl: %3</translation>
     </message>
 </context>
 <context>
+    <name>QObject</name>
+    <message>
+        <location filename="../core/collectionimporter.cpp" line="-69"/>
+        <source>Name</source>
+        <translation type="unfinished">Navn</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Type</source>
+        <translation type="unfinished">Type</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Active</source>
+        <translation type="unfinished">Aktiv</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Device ID</source>
+        <translation type="unfinished">Enheds-ID</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Parent ID</source>
+        <translation type="unfinished">Forælder-ID</translation>
+    </message>
+    <message>
+        <location line="+38"/>
+        <source>Collection</source>
+        <translation type="unfinished">Samling</translation>
+    </message>
+</context>
+<context>
     <name>Tag</name>
     <message>
+        <location filename="../core/tag.cpp" line="+87"/>
         <source>ID</source>
-        <translation type="vanished">ID</translation>
+        <translation>ID</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Folder</source>
-        <translation type="vanished">Mappe</translation>
+        <translation>Mappe</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Tag</source>
-        <translation type="vanished">Tag</translation>
+        <translation>Tag</translation>
     </message>
 </context>
 </TS>

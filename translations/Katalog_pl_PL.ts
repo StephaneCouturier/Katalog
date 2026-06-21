@@ -58,7 +58,27 @@
         <translation>Ukończone</translation>
     </message>
     <message>
-        <location line="-2799"/>
+        <location line="-2846"/>
+        <source>Empty database path provided</source>
+        <translation>Podano pustą ścieżkę bazy danych</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Database file does not exist: %1</source>
+        <translation>Plik bazy danych nie istnieje: %1</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Opened: %1</source>
+        <translation>Otwarto: %1</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Failed to open database: %1</source>
+        <translation>Nie udało się otworzyć bazy danych: %1</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Could not create file: %1</source>
         <translation>Nie można utworzyć pliku: %1</translation>
     </message>
@@ -164,7 +184,27 @@
         <translation>Tag: %1</translation>
     </message>
     <message>
-        <location line="+396"/>
+        <location line="+199"/>
+        <source>Memory collection opened: %1</source>
+        <translation>Otwarto kolekcję w pamięci: %1</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Failed to open Memory collection: %1</source>
+        <translation>Nie udało się otworzyć kolekcji w pamięci: %1</translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Connected: %1/%2</source>
+        <translation>Połączono: %1/%2</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Hosted connection failed: %1</source>
+        <translation>Połączenie hostowane nie powiodło się: %1</translation>
+    </message>
+    <message>
+        <location line="+174"/>
         <source>Provide a name for this new catalog.</source>
         <translation>Podaj nazwę dla tego nowego katalogu.</translation>
     </message>
@@ -523,39 +563,95 @@ Wybierz inną nazwę.</translation>
 <context>
     <name>Catalog</name>
     <message>
+        <location filename="../core/catalog.cpp" line="+128"/>
         <source>Name</source>
-        <translation type="vanished">Nazwa</translation>
+        <translation>Nazwa</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Size</source>
-        <translation type="vanished">Rozmiar</translation>
+        <translation>Rozmiar</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Folder</source>
-        <translation type="vanished">Folder</translation>
+        <translation>Folder</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Date</source>
-        <translation type="vanished">Data</translation>
+        <translation>Data</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Catalog</source>
-        <translation type="vanished">Katalog</translation>
+        <translation>Katalog</translation>
+    </message>
+    <message>
+        <location line="+1538"/>
+        <source>root</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+44"/>
+        <source>Audio</source>
+        <translation type="unfinished">Audio</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Videos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Text</source>
+        <translation type="unfinished">Tekst</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Other</source>
+        <translation type="unfinished">Inne</translation>
     </message>
 </context>
 <context>
     <name>Collection</name>
     <message>
+        <location filename="../core/collection.cpp" line="+2415"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
-        <translation type="vanished">Ten folder zawiera pliki kolekcji w trybie pamięci, ale obecnie jesteś w trybie pliku.&lt;br/&gt;Przełącz na tryb pamięci lub wybierz inny folder.</translation>
+        <translation>Ten folder zawiera pliki kolekcji w trybie pamięci, ale obecnie jesteś w trybie pliku.&lt;br/&gt;Przełącz na tryb pamięci lub wybierz inny folder.</translation>
     </message>
     <message>
+        <location line="+4"/>
         <source>This folder contains File mode collection files, but you are currently in Memory mode.&lt;br/&gt;Switch to File mode or select a different folder.</source>
-        <translation type="vanished">Ten folder zawiera pliki kolekcji w trybie pliku, ale obecnie jesteś w trybie pamięci.&lt;br/&gt;Przełącz na tryb pliku lub wybierz inny folder.</translation>
+        <translation>Ten folder zawiera pliki kolekcji w trybie pliku, ale obecnie jesteś w trybie pamięci.&lt;br/&gt;Przełącz na tryb pliku lub wybierz inny folder.</translation>
     </message>
     <message>
+        <location line="+9"/>
         <source>This folder contains user data and is not suitable for a collection.&lt;br/&gt;Collections should be stored in dedicated folders to avoid mixing with personal files.</source>
-        <translation type="vanished">Ten folder zawiera dane użytkownika i nie nadaje się do kolekcji.&lt;br/&gt;Kolekcje powinny być przechowywane w dedykowanych folderach, aby uniknąć mieszania z plikami osobistymi.</translation>
+        <translation>Ten folder zawiera dane użytkownika i nie nadaje się do kolekcji.&lt;br/&gt;Kolekcje powinny być przechowywane w dedykowanych folderach, aby uniknąć mieszania z plikami osobistymi.</translation>
+    </message>
+</context>
+<context>
+    <name>CollectionImporter</name>
+    <message>
+        <location filename="../core/collectionimporter.cpp" line="+1653"/>
+        <source>Name</source>
+        <translation type="unfinished">Nazwa</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Type</source>
+        <translation type="unfinished">Typ</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Device ID</source>
+        <translation type="unfinished">ID urządzenia</translation>
     </message>
 </context>
 <context>
@@ -1394,27 +1490,32 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <translation>Ta kolekcja została utworzona w Katalog w wersji %1, która nie jest już obsługiwana.&lt;br/&gt;&lt;br/&gt;Aby ją przekonwertować, najpierw otwórz ją w Katalog 2.10.&lt;br/&gt;&lt;br/&gt;Wybierz inny folder kolekcji.</translation>
     </message>
     <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="+127"/>
+        <location line="+153"/>
         <source>Metadata Extracted</source>
-        <translation type="vanished">Metadane wyodrębnione</translation>
+        <translation>Metadane wyodrębnione</translation>
     </message>
     <message>
+        <location line="+19"/>
         <source>Checksums Calculated</source>
-        <translation type="vanished">Sumy kontrolne obliczone</translation>
+        <translation>Sumy kontrolne obliczone</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-5542"/>
         <location line="+737"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1383"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="+246"/>
         <source>Checksum</source>
         <translation>Suma kontrolna</translation>
     </message>
     <message>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Checksum Date</source>
-        <translation type="vanished">Data sumy kontrolnej</translation>
+        <translation>Data sumy kontrolnej</translation>
     </message>
     <message>
-        <location line="-614"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-614"/>
         <source>Within selected device</source>
         <translation>W obrębie wybranego urządzenia</translation>
     </message>
@@ -1519,24 +1620,35 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <translation>Profil kopii zapasowej utworzony.</translation>
     </message>
     <message>
+        <location filename="../core/catalogjobstoppable.cpp" line="+1442"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
-        <translation type="vanished">Zapisywanie</translation>
+        <translation>Zapisywanie</translation>
     </message>
     <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="-159"/>
+        <location line="+67"/>
+        <location line="+140"/>
         <source>Indexed</source>
-        <translation type="vanished">Zindeksowane</translation>
+        <translation>Zindeksowane</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+313"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-199"/>
+        <location line="+143"/>
+        <location filename="../core/searchjobstoppable.cpp" line="+430"/>
         <source>File Types Updated</source>
         <translation>Typy plików zaktualizowane</translation>
     </message>
     <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="-159"/>
+        <location line="+146"/>
         <source>Counted</source>
-        <translation type="vanished">Policzone</translation>
+        <translation>Policzone</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-777"/>
+        <location filename="../core/searchprogressmanager.cpp" line="+85"/>
         <source>Paused</source>
         <translation>Wstrzymane</translation>
     </message>
@@ -1560,6 +1672,10 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <location line="+23"/>
         <location line="+23"/>
         <location line="+21"/>
+        <location filename="../core/searchprogressmanager.cpp" line="+27"/>
+        <location line="+24"/>
+        <location line="+18"/>
+        <location line="+34"/>
         <source>Evaluated</source>
         <translation>Ocenione</translation>
     </message>
@@ -1583,6 +1699,8 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <location line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-36"/>
         <location line="+36"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-96"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-13"/>
         <source>Completed</source>
         <translation>Ukończone</translation>
     </message>
@@ -1597,6 +1715,7 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <location line="+87"/>
         <location line="-87"/>
         <location line="+87"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-76"/>
         <source>Cancelled</source>
         <translation>Anulowane</translation>
     </message>
@@ -1604,6 +1723,9 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-19"/>
         <location line="+21"/>
         <location line="+0"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="+18"/>
+        <location line="+143"/>
+        <location filename="../core/searchjobstoppable.cpp" line="+38"/>
         <source>Loaded</source>
         <translation>Załadowane</translation>
     </message>
@@ -1621,6 +1743,8 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-79"/>
         <location line="+15"/>
         <location line="+64"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-24"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-98"/>
         <source>In Progress</source>
         <translation>W toku</translation>
     </message>
@@ -1660,6 +1784,7 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <location line="+279"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+274"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-9"/>
         <source>Height</source>
         <translation>Wysokość</translation>
     </message>
@@ -1667,6 +1792,7 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <location line="+169"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-1"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-1"/>
         <source>Width</source>
         <translation>Szerokość</translation>
     </message>
@@ -1674,6 +1800,7 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <location line="+223"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+2"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="+2"/>
         <source>Duration</source>
         <translation>Czas trwania</translation>
     </message>
@@ -1742,36 +1869,43 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
     </message>
     <message>
         <location line="+655"/>
+        <location filename="../core/search.cpp" line="-3"/>
         <source>MIME Type</source>
         <translation>Typ MIME</translation>
     </message>
     <message>
         <location line="+4"/>
+        <location filename="../core/search.cpp" line="+4"/>
         <source>Video Width</source>
         <translation>Szerokość wideo</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Video Height</source>
         <translation>Wysokość wideo</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Audio Duration</source>
         <translation>Czas trwania dźwięku</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Artist</source>
         <translation>Artysta</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Album</source>
         <translation>Album</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Title</source>
         <translation>Tytuł</translation>
     </message>
@@ -1878,8 +2012,9 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <translation>Pełne rozszerzone</translation>
     </message>
     <message>
+        <location filename="../core/device.cpp" line="+651"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
-        <translation type="vanished">Czy chcesz &lt;span style=&apos;color: red&apos;;&gt;usunąć&lt;/span&gt; to urządzenie %1?</translation>
+        <translation>Czy chcesz &lt;span style=&apos;color: red&apos;;&gt;usunąć&lt;/span&gt; to urządzenie %1?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+848"/>
@@ -1933,12 +2068,14 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1908"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+1010"/>
         <source>Operation cancelled</source>
         <translation>Operacja anulowana</translation>
     </message>
     <message>
+        <location filename="../core/deviceupdatemanager.cpp" line="-48"/>
         <source>Stopping after current catalog completes...</source>
-        <translation type="vanished">Zatrzymywanie po zakończeniu bieżącego katalogu...</translation>
+        <translation>Zatrzymywanie po zakończeniu bieżącego katalogu...</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-5498"/>
@@ -1972,6 +2109,9 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <location line="+53"/>
         <location line="+316"/>
         <location line="+4"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-1"/>
+        <location line="+53"/>
+        <location line="+45"/>
         <source>Search</source>
         <translation>Szukaj</translation>
     </message>
@@ -2127,6 +2267,7 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <location line="+388"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="-18"/>
         <source>Size</source>
         <translation>Rozmiar</translation>
     </message>
@@ -2330,6 +2471,9 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <location line="+21"/>
         <location line="+25"/>
         <location line="+4"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-80"/>
+        <location line="+69"/>
+        <location line="+32"/>
         <source>Files found</source>
         <translation>Znalezione pliki</translation>
     </message>
@@ -2435,6 +2579,9 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-76"/>
         <location line="+36"/>
         <location line="+40"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-140"/>
+        <location line="+76"/>
+        <location line="+61"/>
         <source>Update</source>
         <translation>Aktualizuj</translation>
     </message>
@@ -2494,6 +2641,7 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <location line="+240"/>
         <location line="+253"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="+6"/>
         <source>Path</source>
         <translation>Ścieżka</translation>
     </message>
@@ -2699,6 +2847,9 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <location line="+243"/>
         <location line="-243"/>
         <location line="+243"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-139"/>
+        <location line="+76"/>
+        <location line="+61"/>
         <source>Create</source>
         <translation>Utwórz</translation>
     </message>
@@ -3564,6 +3715,8 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
+        <location filename="../core/device.cpp" line="+2"/>
+        <location filename="../core/search.cpp" line="-7"/>
         <source>Name</source>
         <translation>Nazwa</translation>
     </message>
@@ -3579,6 +3732,7 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="+2"/>
         <source>Date</source>
         <translation>Data</translation>
     </message>
@@ -3630,6 +3784,7 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <location line="+694"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="+7"/>
         <source>File Type</source>
         <translation>Typ pliku</translation>
     </message>
@@ -3880,6 +4035,7 @@ Podział nie został wykonany.</translation>
         <location line="-8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-4"/>
         <source>Catalog ID</source>
         <translation>ID katalogu</translation>
     </message>
@@ -4688,6 +4844,7 @@ Podział nie został wykonany.</translation>
         <location line="+964"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-19"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-2"/>
         <source>Directory</source>
         <translation>Katalog</translation>
     </message>
@@ -5052,6 +5209,7 @@ do kosza?</translation>
     </message>
     <message>
         <location line="+547"/>
+        <location filename="../core/search.cpp" line="+3"/>
         <source>orderValue</source>
         <translation>wartośćPorządku</translation>
     </message>
@@ -5255,6 +5413,7 @@ do kosza?</translation>
         <location line="+240"/>
         <location line="+253"/>
         <location line="+1805"/>
+        <location filename="../core/device.cpp" line="-1"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -5727,6 +5886,7 @@ do kosza?</translation>
     </message>
     <message>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-2"/>
         <source>Catalog Name</source>
         <translation>Nazwa katalogu</translation>
     </message>
@@ -5779,6 +5939,9 @@ do kosza?</translation>
     </message>
     <message>
         <location line="+232"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-101"/>
+        <location line="+69"/>
+        <location line="+31"/>
         <source>Folders found</source>
         <translation>Znalezione foldery</translation>
     </message>
@@ -5972,6 +6135,16 @@ do kosza?</translation>
         <location line="+8"/>
         <source>Collection Update</source>
         <translation>Aktualizuj kolekcję</translation>
+    </message>
+    <message>
+        <location filename="../core/statusbarmessagebuilder.cpp" line="+264"/>
+        <source>Catalog %1 of %2</source>
+        <translation>Katalog %1 z %2</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>%1 of %2 (%3%)</source>
+        <translation>%1 z %2 (%3%)</translation>
     </message>
 </context>
 <context>
@@ -8429,18 +8602,54 @@ Błędy: %3</translation>
     </message>
 </context>
 <context>
+    <name>QObject</name>
+    <message>
+        <location filename="../core/collectionimporter.cpp" line="-69"/>
+        <source>Name</source>
+        <translation type="unfinished">Nazwa</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Type</source>
+        <translation type="unfinished">Typ</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Active</source>
+        <translation type="unfinished">Aktywny</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Device ID</source>
+        <translation type="unfinished">ID urządzenia</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Parent ID</source>
+        <translation type="unfinished">ID nadrzędne</translation>
+    </message>
+    <message>
+        <location line="+38"/>
+        <source>Collection</source>
+        <translation type="unfinished">Kolekcja</translation>
+    </message>
+</context>
+<context>
     <name>Tag</name>
     <message>
+        <location filename="../core/tag.cpp" line="+87"/>
         <source>ID</source>
-        <translation type="vanished">ID</translation>
+        <translation>ID</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Folder</source>
-        <translation type="vanished">Folder</translation>
+        <translation>Folder</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Tag</source>
-        <translation type="vanished">Tag</translation>
+        <translation>Tag</translation>
     </message>
 </context>
 </TS>

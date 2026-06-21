@@ -58,7 +58,27 @@
         <translation>पूर्ण हुआ</translation>
     </message>
     <message>
-        <location line="-2799"/>
+        <location line="-2846"/>
+        <source>Empty database path provided</source>
+        <translation>रिक्त डेटाबेस पथ प्रदान किया गया</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Database file does not exist: %1</source>
+        <translation>डेटाबेस फ़ाइल मौजूद नहीं है: %1</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Opened: %1</source>
+        <translation>खोला गया: %1</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Failed to open database: %1</source>
+        <translation>डेटाबेस खोलने में विफल: %1</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Could not create file: %1</source>
         <translation>फ़ाइल नहीं बनाई जा सकी: %1</translation>
     </message>
@@ -164,7 +184,27 @@
         <translation>टैग: %1</translation>
     </message>
     <message>
-        <location line="+396"/>
+        <location line="+199"/>
+        <source>Memory collection opened: %1</source>
+        <translation>मेमोरी संग्रह खोला गया: %1</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Failed to open Memory collection: %1</source>
+        <translation>मेमोरी संग्रह खोलने में विफल: %1</translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Connected: %1/%2</source>
+        <translation>कनेक्ट किया गया: %1/%2</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Hosted connection failed: %1</source>
+        <translation>होस्टेड कनेक्शन विफल: %1</translation>
+    </message>
+    <message>
+        <location line="+174"/>
         <source>Provide a name for this new catalog.</source>
         <translation>इस नए कैटलॉग के लिए एक नाम दें।</translation>
     </message>
@@ -523,39 +563,95 @@ Choose a different name.</source>
 <context>
     <name>Catalog</name>
     <message>
+        <location filename="../core/catalog.cpp" line="+128"/>
         <source>Name</source>
-        <translation type="vanished">नाम</translation>
+        <translation>नाम</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Size</source>
-        <translation type="vanished">आकार</translation>
+        <translation>आकार</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Folder</source>
-        <translation type="vanished">फ़ोल्डर</translation>
+        <translation>फ़ोल्डर</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Date</source>
-        <translation type="vanished">दिनांक</translation>
+        <translation>दिनांक</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Catalog</source>
-        <translation type="vanished">कैटलॉग</translation>
+        <translation>कैटलॉग</translation>
+    </message>
+    <message>
+        <location line="+1538"/>
+        <source>root</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+44"/>
+        <source>Audio</source>
+        <translation type="unfinished">ऑडियो</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Videos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Text</source>
+        <translation type="unfinished">टेक्स्ट</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Other</source>
+        <translation type="unfinished">अन्य</translation>
     </message>
 </context>
 <context>
     <name>Collection</name>
     <message>
+        <location filename="../core/collection.cpp" line="+2415"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
-        <translation type="vanished">इस फ़ोल्डर में मेमोरी मोड संग्रह फ़ाइलें हैं, लेकिन आप वर्तमान में फ़ाइल मोड में हैं।&lt;br/&gt;मेमोरी मोड पर स्विच करें या कोई भिन्न फ़ोल्डर चुनें।</translation>
+        <translation>इस फ़ोल्डर में मेमोरी मोड संग्रह फ़ाइलें हैं, लेकिन आप वर्तमान में फ़ाइल मोड में हैं।&lt;br/&gt;मेमोरी मोड पर स्विच करें या कोई भिन्न फ़ोल्डर चुनें।</translation>
     </message>
     <message>
+        <location line="+4"/>
         <source>This folder contains File mode collection files, but you are currently in Memory mode.&lt;br/&gt;Switch to File mode or select a different folder.</source>
-        <translation type="vanished">इस फ़ोल्डर में फ़ाइल मोड संग्रह फ़ाइलें हैं, लेकिन आप वर्तमान में मेमोरी मोड में हैं।&lt;br/&gt;फ़ाइल मोड पर स्विच करें या कोई भिन्न फ़ोल्डर चुनें।</translation>
+        <translation>इस फ़ोल्डर में फ़ाइल मोड संग्रह फ़ाइलें हैं, लेकिन आप वर्तमान में मेमोरी मोड में हैं।&lt;br/&gt;फ़ाइल मोड पर स्विच करें या कोई भिन्न फ़ोल्डर चुनें।</translation>
     </message>
     <message>
+        <location line="+9"/>
         <source>This folder contains user data and is not suitable for a collection.&lt;br/&gt;Collections should be stored in dedicated folders to avoid mixing with personal files.</source>
-        <translation type="vanished">इस फ़ोल्डर में उपयोगकर्ता डेटा है और यह संग्रह के लिए उपयुक्त नहीं है।&lt;br/&gt;व्यक्तिगत फ़ाइलों के साथ मिश्रण से बचने के लिए संग्रह को समर्पित फ़ोल्डर में संग्रहीत किया जाना चाहिए।</translation>
+        <translation>इस फ़ोल्डर में उपयोगकर्ता डेटा है और यह संग्रह के लिए उपयुक्त नहीं है।&lt;br/&gt;व्यक्तिगत फ़ाइलों के साथ मिश्रण से बचने के लिए संग्रह को समर्पित फ़ोल्डर में संग्रहीत किया जाना चाहिए।</translation>
+    </message>
+</context>
+<context>
+    <name>CollectionImporter</name>
+    <message>
+        <location filename="../core/collectionimporter.cpp" line="+1653"/>
+        <source>Name</source>
+        <translation type="unfinished">नाम</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Type</source>
+        <translation type="unfinished">प्रकार</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Device ID</source>
+        <translation type="unfinished">डिवाइस ID</translation>
     </message>
 </context>
 <context>
@@ -1394,27 +1490,32 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>यह संग्रह Katalog संस्करण %1 के साथ बनाया गया था, जो अब समर्थित नहीं है।&lt;br/&gt;&lt;br/&gt;इसे परिवर्तित करने के लिए, पहले इसे Katalog 2.10 के साथ खोलें।&lt;br/&gt;&lt;br/&gt;कृपया कोई भिन्न संग्रह फ़ोल्डर चुनें।</translation>
     </message>
     <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="+127"/>
+        <location line="+153"/>
         <source>Metadata Extracted</source>
-        <translation type="vanished">मेटाडेटा निकाला गया</translation>
+        <translation>मेटाडेटा निकाला गया</translation>
     </message>
     <message>
+        <location line="+19"/>
         <source>Checksums Calculated</source>
-        <translation type="vanished">चेकसम की गणना की गई</translation>
+        <translation>चेकसम की गणना की गई</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-5542"/>
         <location line="+737"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1383"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="+246"/>
         <source>Checksum</source>
         <translation>चेकसम</translation>
     </message>
     <message>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Checksum Date</source>
-        <translation type="vanished">चेकसम तिथि</translation>
+        <translation>चेकसम तिथि</translation>
     </message>
     <message>
-        <location line="-614"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-614"/>
         <source>Within selected device</source>
         <translation>चयनित डिवाइस के भीतर</translation>
     </message>
@@ -1519,24 +1620,35 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>बैकअप प्रोफ़ाइल बनाई गई।</translation>
     </message>
     <message>
+        <location filename="../core/catalogjobstoppable.cpp" line="+1442"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
-        <translation type="vanished">सहेज रहा है</translation>
+        <translation>सहेज रहा है</translation>
     </message>
     <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="-159"/>
+        <location line="+67"/>
+        <location line="+140"/>
         <source>Indexed</source>
-        <translation type="vanished">अनुक्रमित</translation>
+        <translation>अनुक्रमित</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+313"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-199"/>
+        <location line="+143"/>
+        <location filename="../core/searchjobstoppable.cpp" line="+430"/>
         <source>File Types Updated</source>
         <translation>फ़ाइल प्रकार अपडेट किए गए</translation>
     </message>
     <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="-159"/>
+        <location line="+146"/>
         <source>Counted</source>
-        <translation type="vanished">गिना गया</translation>
+        <translation>गिना गया</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-777"/>
+        <location filename="../core/searchprogressmanager.cpp" line="+85"/>
         <source>Paused</source>
         <translation>रोका गया</translation>
     </message>
@@ -1560,6 +1672,10 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+23"/>
         <location line="+23"/>
         <location line="+21"/>
+        <location filename="../core/searchprogressmanager.cpp" line="+27"/>
+        <location line="+24"/>
+        <location line="+18"/>
+        <location line="+34"/>
         <source>Evaluated</source>
         <translation>मूल्यांकन किया गया</translation>
     </message>
@@ -1583,6 +1699,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-36"/>
         <location line="+36"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-96"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-13"/>
         <source>Completed</source>
         <translation>पूर्ण हुआ</translation>
     </message>
@@ -1597,6 +1715,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+87"/>
         <location line="-87"/>
         <location line="+87"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-76"/>
         <source>Cancelled</source>
         <translation>रद्द किया गया</translation>
     </message>
@@ -1604,6 +1723,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-19"/>
         <location line="+21"/>
         <location line="+0"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="+18"/>
+        <location line="+143"/>
+        <location filename="../core/searchjobstoppable.cpp" line="+38"/>
         <source>Loaded</source>
         <translation>लोड किया गया</translation>
     </message>
@@ -1621,6 +1743,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-79"/>
         <location line="+15"/>
         <location line="+64"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-24"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-98"/>
         <source>In Progress</source>
         <translation>प्रगति में</translation>
     </message>
@@ -1660,6 +1784,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+279"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+274"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-9"/>
         <source>Height</source>
         <translation>ऊंचाई</translation>
     </message>
@@ -1667,6 +1792,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+169"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-1"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-1"/>
         <source>Width</source>
         <translation>चौड़ाई</translation>
     </message>
@@ -1674,6 +1800,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+223"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+2"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="+2"/>
         <source>Duration</source>
         <translation>अवधि</translation>
     </message>
@@ -1742,36 +1869,43 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="+655"/>
+        <location filename="../core/search.cpp" line="-3"/>
         <source>MIME Type</source>
         <translation>MIME प्रकार</translation>
     </message>
     <message>
         <location line="+4"/>
+        <location filename="../core/search.cpp" line="+4"/>
         <source>Video Width</source>
         <translation>वीडियो चौड़ाई</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Video Height</source>
         <translation>वीडियो ऊंचाई</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Audio Duration</source>
         <translation>ऑडियो अवधि</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Artist</source>
         <translation>कलाकार</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Album</source>
         <translation>एल्बम</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Title</source>
         <translation>शीर्षक</translation>
     </message>
@@ -1878,8 +2012,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>पूर्ण विस्तारित</translation>
     </message>
     <message>
+        <location filename="../core/device.cpp" line="+651"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
-        <translation type="vanished">क्या आप इस %1 डिवाइस को &lt;span style=&apos;color: red&apos;;&gt;डिलीट&lt;/span&gt; करना चाहते हैं?</translation>
+        <translation>क्या आप इस %1 डिवाइस को &lt;span style=&apos;color: red&apos;;&gt;डिलीट&lt;/span&gt; करना चाहते हैं?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+848"/>
@@ -1933,12 +2068,14 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1908"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+1010"/>
         <source>Operation cancelled</source>
         <translation>ऑपरेशन रद्द किया गया</translation>
     </message>
     <message>
+        <location filename="../core/deviceupdatemanager.cpp" line="-48"/>
         <source>Stopping after current catalog completes...</source>
-        <translation type="vanished">वर्तमान कैटलॉग पूरा होने के बाद रुक रहा है...</translation>
+        <translation>वर्तमान कैटलॉग पूरा होने के बाद रुक रहा है...</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-5498"/>
@@ -1972,6 +2109,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+53"/>
         <location line="+316"/>
         <location line="+4"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-1"/>
+        <location line="+53"/>
+        <location line="+45"/>
         <source>Search</source>
         <translation>खोज</translation>
     </message>
@@ -2127,6 +2267,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+388"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="-18"/>
         <source>Size</source>
         <translation>आकार</translation>
     </message>
@@ -2330,6 +2471,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+21"/>
         <location line="+25"/>
         <location line="+4"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-80"/>
+        <location line="+69"/>
+        <location line="+32"/>
         <source>Files found</source>
         <translation>फ़ाइलें मिलीं</translation>
     </message>
@@ -2435,6 +2579,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-76"/>
         <location line="+36"/>
         <location line="+40"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-140"/>
+        <location line="+76"/>
+        <location line="+61"/>
         <source>Update</source>
         <translation>अपडेट</translation>
     </message>
@@ -2494,6 +2641,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+240"/>
         <location line="+253"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="+6"/>
         <source>Path</source>
         <translation>पथ</translation>
     </message>
@@ -2699,6 +2847,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+243"/>
         <location line="-243"/>
         <location line="+243"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-139"/>
+        <location line="+76"/>
+        <location line="+61"/>
         <source>Create</source>
         <translation>बनाएं</translation>
     </message>
@@ -3564,6 +3715,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
+        <location filename="../core/device.cpp" line="+2"/>
+        <location filename="../core/search.cpp" line="-7"/>
         <source>Name</source>
         <translation>नाम</translation>
     </message>
@@ -3579,6 +3732,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="+2"/>
         <source>Date</source>
         <translation>दिनांक</translation>
     </message>
@@ -3630,6 +3784,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+694"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="+7"/>
         <source>File Type</source>
         <translation>फ़ाइल प्रकार</translation>
     </message>
@@ -3880,6 +4035,7 @@ Split was not performed.</source>
         <location line="-8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-4"/>
         <source>Catalog ID</source>
         <translation>कैटलॉग ID</translation>
     </message>
@@ -4688,6 +4844,7 @@ Split was not performed.</source>
         <location line="+964"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-19"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-2"/>
         <source>Directory</source>
         <translation>डायरेक्टरी</translation>
     </message>
@@ -5051,6 +5208,7 @@ to the trash?</source>
     </message>
     <message>
         <location line="+547"/>
+        <location filename="../core/search.cpp" line="+3"/>
         <source>orderValue</source>
         <translation>क्रम मान</translation>
     </message>
@@ -5254,6 +5412,7 @@ to the trash?</source>
         <location line="+240"/>
         <location line="+253"/>
         <location line="+1805"/>
+        <location filename="../core/device.cpp" line="-1"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -5726,6 +5885,7 @@ to the trash?</source>
     </message>
     <message>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-2"/>
         <source>Catalog Name</source>
         <translation>कैटलॉग नाम</translation>
     </message>
@@ -5778,6 +5938,9 @@ to the trash?</source>
     </message>
     <message>
         <location line="+232"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-101"/>
+        <location line="+69"/>
+        <location line="+31"/>
         <source>Folders found</source>
         <translation>फ़ोल्डर मिले</translation>
     </message>
@@ -5971,6 +6134,16 @@ to the trash?</source>
         <location line="+8"/>
         <source>Collection Update</source>
         <translation>संग्रह अपडेट</translation>
+    </message>
+    <message>
+        <location filename="../core/statusbarmessagebuilder.cpp" line="+264"/>
+        <source>Catalog %1 of %2</source>
+        <translation>कैटलॉग %1 / %2</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>%1 of %2 (%3%)</source>
+        <translation>%1 / %2 (%3%)</translation>
     </message>
 </context>
 <context>
@@ -6177,7 +6350,7 @@ to the trash?</source>
     <message>
         <location line="+1"/>
         <source>Delete link &quot;%1&quot;? This cannot be undone.</source>
-        <translation>लिंक "%1" हटाएँ? इसे पूर्ववत नहीं किया जा सकता।</translation>
+        <translation>लिंक &quot;%1&quot; हटाएँ? इसे पूर्ववत नहीं किया जा सकता।</translation>
     </message>
 </context>
 <context>
@@ -8428,18 +8601,54 @@ Errors: %3</source>
     </message>
 </context>
 <context>
+    <name>QObject</name>
+    <message>
+        <location filename="../core/collectionimporter.cpp" line="-69"/>
+        <source>Name</source>
+        <translation type="unfinished">नाम</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Type</source>
+        <translation type="unfinished">प्रकार</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Active</source>
+        <translation type="unfinished">सक्रिय</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Device ID</source>
+        <translation type="unfinished">डिवाइस ID</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Parent ID</source>
+        <translation type="unfinished">पैरेंट ID</translation>
+    </message>
+    <message>
+        <location line="+38"/>
+        <source>Collection</source>
+        <translation type="unfinished">संग्रह</translation>
+    </message>
+</context>
+<context>
     <name>Tag</name>
     <message>
+        <location filename="../core/tag.cpp" line="+87"/>
         <source>ID</source>
-        <translation type="vanished">ID</translation>
+        <translation>ID</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Folder</source>
-        <translation type="vanished">फ़ोल्डर</translation>
+        <translation>फ़ोल्डर</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Tag</source>
-        <translation type="vanished">टैग</translation>
+        <translation>टैग</translation>
     </message>
 </context>
 </TS>

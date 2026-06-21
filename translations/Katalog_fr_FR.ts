@@ -58,7 +58,27 @@
         <translation>Terminé</translation>
     </message>
     <message>
-        <location line="-2799"/>
+        <location line="-2846"/>
+        <source>Empty database path provided</source>
+        <translation>Chemin de base de données vide fourni</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Database file does not exist: %1</source>
+        <translation>Le fichier de base de données n'existe pas : %1</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Opened: %1</source>
+        <translation>Ouvert : %1</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Failed to open database: %1</source>
+        <translation>Échec de l'ouverture de la base de données : %1</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Could not create file: %1</source>
         <translation>Impossible de créer le fichier : %1</translation>
     </message>
@@ -164,7 +184,27 @@
         <translation>Etiquette : %1</translation>
     </message>
     <message>
-        <location line="+396"/>
+        <location line="+199"/>
+        <source>Memory collection opened: %1</source>
+        <translation>Collection en mémoire ouverte : %1</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Failed to open Memory collection: %1</source>
+        <translation>Échec de l'ouverture de la collection en mémoire : %1</translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Connected: %1/%2</source>
+        <translation>Connecté : %1/%2</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Hosted connection failed: %1</source>
+        <translation>Échec de la connexion hébergée : %1</translation>
+    </message>
+    <message>
+        <location line="+174"/>
         <source>Provide a name for this new catalog.</source>
         <translation>Indiquez un nom pour ce nouveau catalogue.</translation>
     </message>
@@ -523,39 +563,95 @@ Choisissez un autre nom.</translation>
 <context>
     <name>Catalog</name>
     <message>
+        <location filename="../core/catalog.cpp" line="+128"/>
         <source>Name</source>
-        <translation type="vanished">Nom</translation>
+        <translation>Nom</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Size</source>
-        <translation type="vanished">Taille</translation>
+        <translation>Taille</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Folder</source>
-        <translation type="vanished">Dossier</translation>
+        <translation>Dossier</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Date</source>
-        <translation type="vanished">Date</translation>
+        <translation>Date</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Catalog</source>
-        <translation type="vanished">Catalogue</translation>
+        <translation>Catalogue</translation>
+    </message>
+    <message>
+        <location line="+1538"/>
+        <source>root</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+44"/>
+        <source>Audio</source>
+        <translation type="unfinished">Audio</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Videos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Text</source>
+        <translation type="unfinished">Texte</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Other</source>
+        <translation type="unfinished">Autre</translation>
     </message>
 </context>
 <context>
     <name>Collection</name>
     <message>
+        <location filename="../core/collection.cpp" line="+2415"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
-        <translation type="vanished">Ce dossier contient des fichiers de collection en mode Mémoire, mais vous êtes actuellement en mode Fichier.&lt;br/&gt;Passez en mode Mémoire ou sélectionnez un autre dossier.</translation>
+        <translation>Ce dossier contient des fichiers de collection en mode Mémoire, mais vous êtes actuellement en mode Fichier.&lt;br/&gt;Passez en mode Mémoire ou sélectionnez un autre dossier.</translation>
     </message>
     <message>
+        <location line="+4"/>
         <source>This folder contains File mode collection files, but you are currently in Memory mode.&lt;br/&gt;Switch to File mode or select a different folder.</source>
-        <translation type="vanished">Ce dossier contient des fichiers de collection en mode Fichier, mais vous êtes actuellement en mode Mémoire.&lt;br/&gt;Passez en mode Fichier ou sélectionnez un autre dossier.</translation>
+        <translation>Ce dossier contient des fichiers de collection en mode Fichier, mais vous êtes actuellement en mode Mémoire.&lt;br/&gt;Passez en mode Fichier ou sélectionnez un autre dossier.</translation>
     </message>
     <message>
+        <location line="+9"/>
         <source>This folder contains user data and is not suitable for a collection.&lt;br/&gt;Collections should be stored in dedicated folders to avoid mixing with personal files.</source>
-        <translation type="vanished">Ce dossier contient des données utilisateur et n&apos;est pas adapté pour une collection.&lt;br/&gt;Les collections doivent être stockées dans des dossiers dédiés pour éviter de les mélanger avec des fichiers personnels.</translation>
+        <translation>Ce dossier contient des données utilisateur et n&apos;est pas adapté pour une collection.&lt;br/&gt;Les collections doivent être stockées dans des dossiers dédiés pour éviter de les mélanger avec des fichiers personnels.</translation>
+    </message>
+</context>
+<context>
+    <name>CollectionImporter</name>
+    <message>
+        <location filename="../core/collectionimporter.cpp" line="+1653"/>
+        <source>Name</source>
+        <translation type="unfinished">Nom</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Type</source>
+        <translation type="unfinished">Type</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Device ID</source>
+        <translation type="unfinished">Reference de l&apos;appareil</translation>
     </message>
 </context>
 <context>
@@ -984,8 +1080,8 @@ Choisissez un autre nom.</translation>
 This could mean that the source is empty or the device is not mounted to this folder.
 Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Le dossier source ne contient aucun fichier.
-Cela peut signifier que la source est vide ou que le périphérique n'est pas monté sur ce dossier.
-Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
+Cela peut signifier que la source est vide ou que le périphérique n&apos;est pas monté sur ce dossier.
+Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</translation>
     </message>
     <message>
         <location line="-692"/>
@@ -1042,12 +1138,12 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
     <message>
         <location line="+7"/>
         <source>Collapse one level</source>
-        <translation>Réduire d'un niveau</translation>
+        <translation>Réduire d&apos;un niveau</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Expand one level</source>
-        <translation>Développer d'un niveau</translation>
+        <translation>Développer d&apos;un niveau</translation>
     </message>
     <message>
         <location line="+127"/>
@@ -1394,27 +1490,32 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
         <translation>Cette collection a été créée avec Katalog version %1, qui n&apos;est plus prise en charge.&lt;br/&gt;&lt;br/&gt;Pour la convertir, ouvrez-la d&apos;abord avec Katalog 2.10.&lt;br/&gt;&lt;br/&gt;Veuillez sélectionner un autre dossier de collection.</translation>
     </message>
     <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="+127"/>
+        <location line="+153"/>
         <source>Metadata Extracted</source>
-        <translation type="vanished">Métadonnées extraites</translation>
+        <translation>Métadonnées extraites</translation>
     </message>
     <message>
+        <location line="+19"/>
         <source>Checksums Calculated</source>
-        <translation type="vanished">Sommes de contrôle calculées</translation>
+        <translation>Sommes de contrôle calculées</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-5542"/>
         <location line="+737"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1383"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="+246"/>
         <source>Checksum</source>
         <translation>Somme de contrôle</translation>
     </message>
     <message>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Checksum Date</source>
-        <translation type="vanished">Date de somme de contrôle</translation>
+        <translation>Date de somme de contrôle</translation>
     </message>
     <message>
-        <location line="-614"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-614"/>
         <source>Within selected device</source>
         <translation>Dans le périphérique sélectionné</translation>
     </message>
@@ -1524,24 +1625,35 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
         <translation>Profil de sauvegarde créé.</translation>
     </message>
     <message>
+        <location filename="../core/catalogjobstoppable.cpp" line="+1442"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
-        <translation type="vanished">Enregistrement</translation>
+        <translation>Enregistrement</translation>
     </message>
     <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="-159"/>
+        <location line="+67"/>
+        <location line="+140"/>
         <source>Indexed</source>
-        <translation type="vanished">Indexé</translation>
+        <translation>Indexé</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+313"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-199"/>
+        <location line="+143"/>
+        <location filename="../core/searchjobstoppable.cpp" line="+430"/>
         <source>File Types Updated</source>
         <translation>Types de fichiers mis à jour</translation>
     </message>
     <message>
+        <location filename="../core/catalogprogressmanager.cpp" line="-159"/>
+        <location line="+146"/>
         <source>Counted</source>
-        <translation type="vanished">Compté</translation>
+        <translation>Compté</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-777"/>
+        <location filename="../core/searchprogressmanager.cpp" line="+85"/>
         <source>Paused</source>
         <translation>En pause</translation>
     </message>
@@ -1565,6 +1677,10 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
         <location line="+23"/>
         <location line="+23"/>
         <location line="+21"/>
+        <location filename="../core/searchprogressmanager.cpp" line="+27"/>
+        <location line="+24"/>
+        <location line="+18"/>
+        <location line="+34"/>
         <source>Evaluated</source>
         <translation>Évalué</translation>
     </message>
@@ -1588,6 +1704,8 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
         <location line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-36"/>
         <location line="+36"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-96"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-13"/>
         <source>Completed</source>
         <translation>Terminé</translation>
     </message>
@@ -1602,6 +1720,7 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
         <location line="+87"/>
         <location line="-87"/>
         <location line="+87"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-76"/>
         <source>Cancelled</source>
         <translation>Annulé</translation>
     </message>
@@ -1609,6 +1728,9 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-19"/>
         <location line="+21"/>
         <location line="+0"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="+18"/>
+        <location line="+143"/>
+        <location filename="../core/searchjobstoppable.cpp" line="+38"/>
         <source>Loaded</source>
         <translation>Chargé</translation>
     </message>
@@ -1626,6 +1748,8 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-79"/>
         <location line="+15"/>
         <location line="+64"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-24"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-98"/>
         <source>In Progress</source>
         <translation>En cours</translation>
     </message>
@@ -1665,6 +1789,7 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
         <location line="+279"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+274"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-9"/>
         <source>Height</source>
         <translation>Hauteur</translation>
     </message>
@@ -1672,6 +1797,7 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
         <location line="+169"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-1"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-1"/>
         <source>Width</source>
         <translation>Largeur</translation>
     </message>
@@ -1679,6 +1805,7 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
         <location line="+223"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+2"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="+2"/>
         <source>Duration</source>
         <translation>Durée</translation>
     </message>
@@ -1747,36 +1874,43 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
     </message>
     <message>
         <location line="+655"/>
+        <location filename="../core/search.cpp" line="-3"/>
         <source>MIME Type</source>
         <translation>Type MIME</translation>
     </message>
     <message>
         <location line="+4"/>
+        <location filename="../core/search.cpp" line="+4"/>
         <source>Video Width</source>
         <translation>Largeur de la vidéo</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Video Height</source>
         <translation>Hauteur de la vidéo</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Audio Duration</source>
         <translation>Durée audio</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Artist</source>
         <translation>Artiste</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Album</source>
         <translation>Album</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Title</source>
         <translation>Titre</translation>
     </message>
@@ -1883,8 +2017,9 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
         <translation>Complet étendu</translation>
     </message>
     <message>
+        <location filename="../core/device.cpp" line="+651"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
-        <translation type="vanished">Voulez-vous &lt;span style=&apos;color: red&apos;;&gt;supprimer&lt;/span&gt; ce périphérique %1 ?</translation>
+        <translation>Voulez-vous &lt;span style=&apos;color: red&apos;;&gt;supprimer&lt;/span&gt; ce périphérique %1 ?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+848"/>
@@ -1938,12 +2073,14 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1908"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+1010"/>
         <source>Operation cancelled</source>
         <translation>Opération annulée</translation>
     </message>
     <message>
+        <location filename="../core/deviceupdatemanager.cpp" line="-48"/>
         <source>Stopping after current catalog completes...</source>
-        <translation type="vanished">Arrêt après la fin du catalogue actuel...</translation>
+        <translation>Arrêt après la fin du catalogue actuel...</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-5334"/>
@@ -2002,6 +2139,9 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
         <location line="+243"/>
         <location line="-243"/>
         <location line="+243"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-142"/>
+        <location line="+76"/>
+        <location line="+61"/>
         <source>Create</source>
         <translation>Créer</translation>
     </message>
@@ -2033,6 +2173,9 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
         <location line="+53"/>
         <location line="+316"/>
         <location line="+4"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-1"/>
+        <location line="+53"/>
+        <location line="+45"/>
         <source>Search</source>
         <translation>Chercher</translation>
     </message>
@@ -2081,6 +2224,9 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-76"/>
         <location line="+36"/>
         <location line="+40"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-135"/>
+        <location line="+76"/>
+        <location line="+61"/>
         <source>Update</source>
         <translation>Actualiser</translation>
     </message>
@@ -2204,6 +2350,7 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="-17"/>
         <source>Date</source>
         <translation>Date</translation>
     </message>
@@ -2236,6 +2383,9 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
         <location line="+21"/>
         <location line="+25"/>
         <location line="+4"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-80"/>
+        <location line="+69"/>
+        <location line="+32"/>
         <source>Files found</source>
         <translation>Fichiers trouvés</translation>
     </message>
@@ -2341,6 +2491,7 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
         <location line="+240"/>
         <location line="+253"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="+5"/>
         <source>Path</source>
         <translation>Chemin</translation>
     </message>
@@ -2359,6 +2510,7 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
         <location line="+388"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="-6"/>
         <source>Size</source>
         <translation>Taille</translation>
     </message>
@@ -2377,6 +2529,8 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
         <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
+        <location filename="../core/device.cpp" line="+2"/>
+        <location filename="../core/search.cpp" line="-1"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
@@ -2576,6 +2730,7 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
         <location line="+694"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
+        <location filename="../core/search.cpp" line="+9"/>
         <source>File Type</source>
         <translation>Type de Fichier</translation>
     </message>
@@ -4012,6 +4167,9 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
     </message>
     <message>
         <location line="+429"/>
+        <location filename="../core/searchprogressmanager.cpp" line="-101"/>
+        <location line="+69"/>
+        <location line="+31"/>
         <source>Folders found</source>
         <translation>Dossiers trouvés</translation>
     </message>
@@ -4423,6 +4581,7 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
         <location line="+240"/>
         <location line="+253"/>
         <location line="+1805"/>
+        <location filename="../core/device.cpp" line="-1"/>
         <source>ID</source>
         <translation>Id</translation>
     </message>
@@ -4716,6 +4875,7 @@ Voulez-vous quand même l'enregistrer (le catalogue serait vide) ?</translation>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-26"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-429"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-4"/>
         <source>Catalog ID</source>
         <translation>Numéro de catalogue</translation>
     </message>
@@ -4974,6 +5134,7 @@ La division n&apos;a pas été effectuée.</translation>
         <location line="+964"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+610"/>
         <location line="+0"/>
+        <location filename="../core/search.cpp" line="-2"/>
         <source>Directory</source>
         <translation>Répertoire</translation>
     </message>
@@ -5245,6 +5406,7 @@ La division n&apos;a pas été effectuée.</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-467"/>
+        <location filename="../core/search.cpp" line="+1"/>
         <source>Catalog Name</source>
         <translation>Nom du catalogue</translation>
     </message>
@@ -5670,6 +5832,7 @@ to the trash?</source>
     </message>
     <message>
         <location line="+547"/>
+        <location filename="../core/search.cpp" line="+2"/>
         <source>orderValue</source>
         <translation>orderValue</translation>
     </message>
@@ -5974,6 +6137,16 @@ to the trash?</source>
         <source>Collection Update</source>
         <translation>Mise à jour de collection</translation>
     </message>
+    <message>
+        <location filename="../core/statusbarmessagebuilder.cpp" line="+264"/>
+        <source>Catalog %1 of %2</source>
+        <translation>Catalogue %1 sur %2</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>%1 of %2 (%3%)</source>
+        <translation>%1 sur %2 (%3 %)</translation>
+    </message>
 </context>
 <context>
     <name>PageBackupForm</name>
@@ -6082,7 +6255,7 @@ to the trash?</source>
     <message>
         <location line="+1"/>
         <source>Create a link to define a source and target for backup or archive operations.</source>
-        <translation>Créez un lien pour définir une source et une cible pour les opérations de sauvegarde ou d'archivage.</translation>
+        <translation>Créez un lien pour définir une source et une cible pour les opérations de sauvegarde ou d&apos;archivage.</translation>
     </message>
     <message>
         <location line="+118"/>
@@ -6134,7 +6307,7 @@ to the trash?</source>
     <message>
         <location line="+8"/>
         <source>More actions</source>
-        <translation>Plus d'actions</translation>
+        <translation>Plus d&apos;actions</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6320,7 +6493,7 @@ to the trash?</source>
     <message>
         <location line="+0"/>
         <source>Computing preview…</source>
-        <translation>Calcul de l'aperçu…</translation>
+        <translation>Calcul de l&apos;aperçu…</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -6367,7 +6540,7 @@ to the trash?</source>
     <message>
         <location line="+3"/>
         <source>Low target space - %1 remaining after operation</source>
-        <translation>Espace cible faible - %1 restant après l'opération</translation>
+        <translation>Espace cible faible - %1 restant après l&apos;opération</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -6809,7 +6982,7 @@ to the trash?</source>
     <message>
         <location line="-32"/>
         <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by sub-directory?&lt;br/&gt;&lt;br/&gt;This will create one sub-catalog per immediate sub-directory and remove the original catalog. This operation cannot be undone.</source>
-        <translation>Diviser &lt;b&gt;%1&lt;/b&gt; en sous-catalogues par sous-répertoire ?&lt;br/&gt;&lt;br/&gt;Cela créera un sous-catalogue par sous-répertoire immédiat et supprimera le catalogue d'origine. Cette opération est irréversible.</translation>
+        <translation>Diviser &lt;b&gt;%1&lt;/b&gt; en sous-catalogues par sous-répertoire ?&lt;br/&gt;&lt;br/&gt;Cela créera un sous-catalogue par sous-répertoire immédiat et supprimera le catalogue d&apos;origine. Cette opération est irréversible.</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6858,7 +7031,7 @@ to the trash?</source>
     <message>
         <location line="+12"/>
         <source>No checksums are stored for this catalog.</source>
-        <translation>Aucune somme de contrôle n'est stockée pour ce catalogue.</translation>
+        <translation>Aucune somme de contrôle n&apos;est stockée pour ce catalogue.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -8407,7 +8580,7 @@ Erreurs : %3</translation>
     <message>
         <location line="+5"/>
         <source>Select or enter a tag name.</source>
-        <translation>Sélectionnez ou saisissez un nom d'étiquette.</translation>
+        <translation>Sélectionnez ou saisissez un nom d&apos;étiquette.</translation>
     </message>
     <message>
         <source>Please enter a tag name.</source>
@@ -8430,18 +8603,54 @@ Erreurs : %3</translation>
     </message>
 </context>
 <context>
+    <name>QObject</name>
+    <message>
+        <location filename="../core/collectionimporter.cpp" line="-69"/>
+        <source>Name</source>
+        <translation type="unfinished">Nom</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Type</source>
+        <translation type="unfinished">Type</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Active</source>
+        <translation type="unfinished">Actif</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Device ID</source>
+        <translation type="unfinished">Reference de l&apos;appareil</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Parent ID</source>
+        <translation type="unfinished">ID parent</translation>
+    </message>
+    <message>
+        <location line="+38"/>
+        <source>Collection</source>
+        <translation type="unfinished">Collection</translation>
+    </message>
+</context>
+<context>
     <name>Tag</name>
     <message>
+        <location filename="../core/tag.cpp" line="+87"/>
         <source>ID</source>
-        <translation type="vanished">Id</translation>
+        <translation>Id</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Folder</source>
-        <translation type="vanished">Dossier</translation>
+        <translation>Dossier</translation>
     </message>
     <message>
+        <location line="+1"/>
         <source>Tag</source>
-        <translation type="vanished">Etiquette</translation>
+        <translation>Etiquette</translation>
     </message>
 </context>
 </TS>

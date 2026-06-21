@@ -101,6 +101,15 @@ set(K3_QML_FILES
     ${CMAKE_SOURCE_DIR}/qt_quick/PageTagsForm.qml
 )
 
+# Core library C++ sources — scanned so user-visible strings built in core
+# (progress/status messages via QCoreApplication::translate("MainWindow", …),
+# e.g. StatusBarMessageBuilder / *ProgressManager) land in the shared .ts files.
+# Without this, those strings are marked vanished by lupdate and show in English.
+file(GLOB CORE_TR_SOURCES
+    ${CMAKE_SOURCE_DIR}/core/*.cpp
+    ${CMAKE_SOURCE_DIR}/core/*.h
+)
+
 set(TS_FILES
     ${CMAKE_SOURCE_DIR}/translations/Katalog_bg_BG.ts
     ${CMAKE_SOURCE_DIR}/translations/Katalog_cs_CZ.ts
@@ -144,7 +153,7 @@ set(QRC_FILES
 if(${Qt6_VERSION} VERSION_GREATER_EQUAL "6.2")
     qt6_add_translations(Katalog
         TS_FILES ${TS_FILES}
-        SOURCES ${MAIN_SOURCES} ${MAIN_HEADERS} ${UI_FILES} ${K3_QML_FILES}
+        SOURCES ${MAIN_SOURCES} ${MAIN_HEADERS} ${UI_FILES} ${K3_QML_FILES} ${CORE_TR_SOURCES}
         LUPDATE_OPTIONS "-extensions" "cpp,h,ui,qml" "-locations" "relative"
         LRELEASE_OPTIONS "-compress" "-nounfinished"
     )
@@ -162,7 +171,7 @@ endif()
 
 # Custom lupdate target for manual control
 add_custom_target(lupdate_manual
-    COMMAND Qt6::lupdate ${MAIN_SOURCES} ${MAIN_HEADERS} ${UI_FILES} ${K3_QML_FILES} -ts ${TS_FILES}
+    COMMAND Qt6::lupdate ${MAIN_SOURCES} ${MAIN_HEADERS} ${UI_FILES} ${K3_QML_FILES} ${CORE_TR_SOURCES} -ts ${TS_FILES}
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     COMMENT "Manually updating translation source files"
 )
