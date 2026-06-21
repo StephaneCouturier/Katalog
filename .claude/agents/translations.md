@@ -44,7 +44,7 @@ separate spec.
   it discards N existing translations, and do it deliberately/in batches.
 - **Never delete a source string** or a `.ts`/`.qm` file without explicit approval.
 - Do not touch `core/`. All work is in `qt_quick/`, `qt_widgets/CMakeLists.txt`
-  (scan list only), `translations/`, and `packaging/`.
+  (scan list only), and `translations/` (incl. the tooling in `translations/scripts/`).
 
 ## What to translate vs leave as-is
 
@@ -115,9 +115,11 @@ Wrapping is necessary but NOT sufficient. Tools live at `/usr/lib64/qt6/bin/`
 when the CMake build is unavailable.
 1. **lupdate** (collect; adds new sources as `unfinished`). Pass the **full K2 + K3
    source set** from `qt_widgets/CMakeLists.txt` (`MAIN_SOURCES`, `MAIN_HEADERS`,
-   `UI_FILES`, `K3_QML_FILES`, `TS_FILES`) — scanning only K3 marks every K2
-   string obsolete. Options: `-extensions cpp,h,ui,qml -locations relative`.
-2. **bridge**: `python3 packaging/sync_k3_translations.py` — copies finished K2
+   `UI_FILES`, `K3_QML_FILES`, `CORE_TR_SOURCES`, `TS_FILES`) — scanning only K3
+   marks every K2 string obsolete, and **omitting `CORE_TR_SOURCES` marks every
+   core progress/status string (`StatusBarMessageBuilder`, `*ProgressManager`)
+   obsolete**. Options: `-extensions cpp,h,ui,qml -locations relative`.
+2. **bridge**: `python3 translations/scripts/sync_k3_translations.py` — copies finished K2
    translations into matching K3 contexts; idempotent.
 3. **lrelease**: compile `.ts` → `.qm` with `-compress -nounfinished` (drops
    unfinished → English fallback).
@@ -125,13 +127,13 @@ when the CMake build is unavailable.
 
 ### C. Complete — AI-fill the remaining untranslated strings
 After B, only genuine new/reworded strings stay `unfinished`.
-1. `python3 packaging/fill_k3_translations.py --extract` → writes
-   `packaging/k3_unfinished.json` = `{ lang: { source: "" } }` (en_US skipped).
+1. `python3 translations/scripts/fill_k3_translations.py --extract` → writes
+   `translations/scripts/k3_unfinished.json` = `{ lang: { source: "" } }` (en_US skipped).
 2. **Translate each value from the English (`en_US`) source only** — never relay
    through another language. Preserve `%1`/`%2` placeholders, HTML/rich-text tags,
    and `&` accelerators exactly. Machine quality is acceptable for alpha but
    should be reviewable.
-3. `python3 packaging/fill_k3_translations.py --apply` (writes back, scoped to K3
+3. `python3 translations/scripts/fill_k3_translations.py --apply` (writes back, scoped to K3
    contexts). `k3_unfinished.json` is transient — need not be committed.
 4. Recompile (`lrelease`) and rebuild.
 

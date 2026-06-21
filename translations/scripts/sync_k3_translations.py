@@ -11,7 +11,7 @@ skip them (they stay in English) until manually translated.
 Workflow
 --------
 1. Run this script (from any directory):
-       python3 scripts/sync_k3_translations.py
+       python3 translations/scripts/sync_k3_translations.py
 
 2. Compile .qm files (in K2 build directory):
        ninja translations_lrelease   # or just: ninja
@@ -28,7 +28,7 @@ import re
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 QML_DIR   = REPO_ROOT / "qt_quick"
 TRANS_DIR = REPO_ROOT / "translations"
 

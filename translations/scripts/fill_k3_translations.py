@@ -12,12 +12,12 @@ translations). This script handles the *fill* step for everything left over.
 Two modes:
 
   1. Extract a template of all unfinished K3 strings, one entry per language:
-         python3 packaging/fill_k3_translations.py --extract
-     -> writes packaging/k3_unfinished.json  (values empty, ready to fill)
+         python3 translations/scripts/fill_k3_translations.py --extract
+     -> writes translations/scripts/k3_unfinished.json  (values empty, ready to fill)
         and prints a per-language / per-context count summary.
 
   2. Apply a filled template back into the .ts files:
-         python3 packaging/fill_k3_translations.py --apply
+         python3 translations/scripts/fill_k3_translations.py --apply
      -> for every non-empty translation, replaces the matching
         <translation type="unfinished"></translation> inside the relevant K3
         context with a finished <translation>…</translation>.
@@ -40,10 +40,10 @@ import re
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 QML_DIR   = REPO_ROOT / "qt_quick"
 TRANS_DIR = REPO_ROOT / "translations"
-JSON_PATH = REPO_ROOT / "packaging" / "k3_unfinished.json"
+JSON_PATH = REPO_ROOT / "translations" / "scripts" / "k3_unfinished.json"
 
 SKIP_LANGS = {"en_US"}  # English source already equals displayed text
 
@@ -175,7 +175,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--extract", action="store_true",
-                   help="dump unfinished K3 strings to packaging/k3_unfinished.json")
+                   help="dump unfinished K3 strings to translations/scripts/k3_unfinished.json")
     g.add_argument("--apply", action="store_true",
                    help="write filled translations from the json back into .ts files")
     args = ap.parse_args()
