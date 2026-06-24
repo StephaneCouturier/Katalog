@@ -39,7 +39,11 @@ Kirigami.AbstractCard {
         Controls.MenuItem {
             text:      qsTr("Update")
             icon.name: "media-playlist-repeat"
-            visible:   model.type === "Catalog" && model.isActive
+            // Match K2 (mainwindow_tab_filters.cpp): Update is available for Storage and
+            // Virtual devices unconditionally, and for Catalogs only when active. The C++
+            // updateDevice() → updateDeviceHierarchy() path already cascades sub-catalogs.
+            visible:   model.type === "Storage" || model.type === "Virtual"
+                       || (model.type === "Catalog" && model.isActive)
             height:    visible ? implicitHeight : 0
             enabled:   !appManager1.deviceUpdateIsRunning
             onTriggered: appManager1.updateDevice(model.deviceId)

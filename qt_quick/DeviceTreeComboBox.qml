@@ -10,7 +10,9 @@ import org.kde.kirigami as Kirigami
 // Set storageOnly: true to restrict selection to Storage-type devices only
 // (ancestor groups are shown as non-selectable context, pre-selection uses getDefaultStorageId()).
 // Set catalogOnly: true to restrict selection to Catalog-type devices only
-// (Virtual ancestors shown as non-selectable context; Storage hidden; no auto-reset on selection change).
+// (Storage and Virtual ancestors shown as non-selectable context, matching K2's backup
+// device tree where catalogs are grouped under their Storage/Virtual parent; no auto-reset
+// on selection change).
 // Set hideCatalogs: true to hide Catalog-type devices from the list entirely.
 Controls.Button {
     id: control
@@ -182,7 +184,6 @@ Controls.Button {
 
                     visible:     !(control.hideCatalogs && type === "Catalog")
                                  && !(control.hideStorages && type === "Storage")
-                                 && !(control.catalogOnly  && type === "Storage")
                                  && (control.groupFilter < 0 || groupId === control.groupFilter)
                                  && deviceId !== control.excludeDeviceId
                     height:      visible ? implicitHeight : 0
