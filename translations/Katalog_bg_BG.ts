@@ -462,45 +462,54 @@ Choose a different name.</source>
         <translation>Не е устройство за съхранение.</translation>
     </message>
     <message>
-        <location line="+158"/>
+        <location line="+160"/>
+        <location line="+22"/>
         <source>Provide a link name.</source>
         <translation>Посочете име на връзка.</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-20"/>
+        <location line="+22"/>
         <source>Select a source catalog first.</source>
         <translation>Първо изберете изходен каталог.</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-20"/>
+        <location line="+22"/>
         <source>Select a target catalog first.</source>
         <translation>Първо изберете целеви каталог.</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-20"/>
+        <location line="+22"/>
         <source>Select a different source or target (a device shall not be mapped to itself).</source>
         <translation>Избери различен източник или цел (устройство не може да бъде картирано към себе си).</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="-18"/>
         <source>Failed to create link.</source>
         <translation>Неуспешно създаване на връзка.</translation>
     </message>
     <message>
-        <location line="+83"/>
-        <location line="+239"/>
+        <location line="+22"/>
+        <source>Failed to update link.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+92"/>
+        <location line="+265"/>
         <source>Link not found.</source>
         <translation>Връзката не е намерена.</translation>
     </message>
     <message>
-        <location line="-227"/>
+        <location line="-253"/>
         <location line="+107"/>
-        <location line="+132"/>
+        <location line="+158"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>Изходът и целта трябва да са каталогови устройства.</translation>
     </message>
     <message>
-        <location line="-206"/>
+        <location line="-232"/>
         <location line="+7"/>
         <source>Move</source>
         <translation>Премести</translation>
@@ -519,13 +528,13 @@ Choose a different name.</source>
     </message>
     <message>
         <location line="+58"/>
-        <location line="+131"/>
+        <location line="+157"/>
         <source>Source not available: %1</source>
         <translation>Източникът не е наличен: %1</translation>
     </message>
     <message>
-        <location line="-127"/>
-        <location line="+131"/>
+        <location line="-153"/>
+        <location line="+157"/>
         <source>Target not available: %1</source>
         <translation>Целта не е налична: %1</translation>
     </message>
@@ -1249,7 +1258,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Генериране на профил за LuckyBackup</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+42"/>
         <source>Select Collection Folder</source>
         <translation>Изберете папка на колекцията</translation>
     </message>
@@ -1549,7 +1558,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+395"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+406"/>
-        <location line="+170"/>
+        <location line="+176"/>
         <location line="+145"/>
         <location line="+19"/>
         <location line="+41"/>
@@ -1558,8 +1567,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-4"/>
         <location line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-443"/>
-        <location line="+170"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-449"/>
+        <location line="+176"/>
         <location line="+145"/>
         <location line="+19"/>
         <location line="+41"/>
@@ -1642,7 +1651,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Преброен</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-777"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-783"/>
         <location filename="../core/searchprogressmanager.cpp" line="+85"/>
         <source>Paused</source>
         <translation>На пауза</translation>
@@ -1676,7 +1685,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-105"/>
-        <location line="+421"/>
+        <location line="+427"/>
         <location line="+128"/>
         <location line="+87"/>
         <location line="+139"/>
@@ -2593,7 +2602,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="-5377"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1138"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1144"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+68"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
@@ -2620,7 +2629,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+799"/>
         <location line="+3246"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+701"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+707"/>
         <location line="+143"/>
         <location line="+301"/>
         <location line="+7"/>
@@ -3345,7 +3354,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1263"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1269"/>
         <location line="+0"/>
         <source>Replicate directories</source>
         <translation>Репликирай папките</translation>
@@ -3353,23 +3362,23 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-6"/>
-        <location line="+1244"/>
+        <location line="+1250"/>
         <location line="+16"/>
-        <location line="-1260"/>
-        <location line="+1244"/>
+        <location line="-1266"/>
+        <location line="+1250"/>
         <location line="+16"/>
         <source>Preview Backup</source>
         <translation>Преглед на резервното копие</translation>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1265"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1271"/>
         <location line="+280"/>
-        <location line="+968"/>
+        <location line="+974"/>
         <location line="+14"/>
-        <location line="-1262"/>
+        <location line="-1268"/>
         <location line="+280"/>
-        <location line="+968"/>
+        <location line="+974"/>
         <location line="+14"/>
         <source>Run Backup</source>
         <translation>Стартирай резервното копиране</translation>
@@ -4081,11 +4090,11 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="+3285"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-640"/>
-        <location line="+338"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-646"/>
+        <location line="+344"/>
         <location line="+745"/>
-        <location line="-1083"/>
-        <location line="+338"/>
+        <location line="-1089"/>
+        <location line="+344"/>
         <location line="+745"/>
         <source>Source</source>
         <translation>Източник</translation>
@@ -5143,8 +5152,8 @@ to the trash?</source>
         <translation>ID на целта</translation>
     </message>
     <message>
-        <location line="-1088"/>
-        <location line="+338"/>
+        <location line="-1094"/>
+        <location line="+344"/>
         <location line="+751"/>
         <location line="-751"/>
         <location line="+751"/>
@@ -5152,46 +5161,46 @@ to the trash?</source>
         <translation>Цел</translation>
     </message>
     <message>
-        <location line="-1193"/>
-        <location line="+1262"/>
+        <location line="-1199"/>
+        <location line="+1268"/>
         <location line="+0"/>
         <source>Run Archive</source>
         <translation>Стартирай архивирането</translation>
     </message>
     <message>
-        <location line="-1257"/>
-        <location line="+1260"/>
+        <location line="-1263"/>
+        <location line="+1266"/>
         <location line="+0"/>
         <source>Preview Archive</source>
         <translation>Преглед на архива</translation>
     </message>
     <message>
-        <location line="-1245"/>
+        <location line="-1251"/>
         <source>Invert (swap source and target)</source>
         <translation>Обърни (размени източника и целта)</translation>
     </message>
     <message>
         <location line="+43"/>
         <location line="+111"/>
-        <location line="+230"/>
+        <location line="+236"/>
         <location line="+444"/>
-        <location line="-674"/>
-        <location line="+230"/>
+        <location line="-680"/>
+        <location line="+236"/>
         <location line="+444"/>
         <source>Select a mapping first.</source>
         <translation>Първо изберете връзка.</translation>
     </message>
     <message>
-        <location line="-763"/>
+        <location line="-769"/>
         <location line="+108"/>
-        <location line="+230"/>
-        <location line="-230"/>
-        <location line="+230"/>
+        <location line="+236"/>
+        <location line="-236"/>
+        <location line="+236"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>Изходът и целта трябва да са каталогови устройства.</translation>
     </message>
     <message>
-        <location line="-326"/>
+        <location line="-332"/>
         <location line="+62"/>
         <location line="+0"/>
         <source>Replicate</source>
@@ -5199,22 +5208,22 @@ to the trash?</source>
     </message>
     <message>
         <location line="-61"/>
-        <location line="+338"/>
+        <location line="+344"/>
         <location line="+0"/>
         <source>%1 not available</source>
         <translation>%1 не е налично</translation>
     </message>
     <message>
-        <location line="-327"/>
+        <location line="-333"/>
         <location line="+90"/>
-        <location line="+249"/>
-        <location line="-249"/>
-        <location line="+249"/>
+        <location line="+255"/>
+        <location line="-255"/>
+        <location line="+255"/>
         <source>A catalog update is already in progress. Please wait and try again.</source>
         <translation>Вече тече актуализация на каталога. Изчакайте и опитайте отново.</translation>
     </message>
     <message>
-        <location line="-287"/>
+        <location line="-293"/>
         <source>Created</source>
         <translation>Създадено</translation>
     </message>
@@ -5225,7 +5234,7 @@ to the trash?</source>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+637"/>
+        <location line="+643"/>
         <location line="+0"/>
         <source>Errors</source>
         <translation>Грешки</translation>
@@ -5570,8 +5579,8 @@ to the trash?</source>
         <translation>Име на каталога</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1169"/>
-        <location line="+974"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1175"/>
+        <location line="+980"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+150"/>
         <location line="+42"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
@@ -5581,8 +5590,8 @@ to the trash?</source>
         <translation>Пауза</translation>
     </message>
     <message>
-        <location line="-967"/>
-        <location line="+967"/>
+        <location line="-973"/>
+        <location line="+973"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-28"/>
         <location line="+30"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
@@ -5833,7 +5842,7 @@ to the trash?</source>
         <translation>Първо избери процес, който да се приложи към всички резултати по-долу.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1017"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1023"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+15"/>
         <location line="+0"/>
         <source>Results exported to the collection folder:</source>
@@ -6154,7 +6163,7 @@ to the trash?</source>
         <translation type="vanished">синхронизирано</translation>
     </message>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+93"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+94"/>
         <source>Cancelled</source>
         <translation>Отменен</translation>
     </message>
@@ -6185,12 +6194,12 @@ to the trash?</source>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+396"/>
+        <location line="+407"/>
         <source>Errors: %1</source>
         <translation>Грешки: %1</translation>
     </message>
     <message>
-        <location line="-377"/>
+        <location line="-388"/>
         <source>Type</source>
         <translation>Тип</translation>
     </message>
@@ -6288,7 +6297,7 @@ to the trash?</source>
         <translation>Актуално</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+36"/>
         <source>ETA %1</source>
         <translation>Остават %1</translation>
     </message>
@@ -6334,6 +6343,11 @@ to the trash?</source>
     </message>
     <message>
         <location line="+7"/>
+        <source>Edit</source>
+        <translation>Редактиране</translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Replicate directories</source>
         <translation>Репликирай папките</translation>
     </message>
@@ -6381,12 +6395,17 @@ to the trash?</source>
 <context>
     <name>PageBackupMappingForm</name>
     <message>
-        <location filename="../qt_quick/PageBackupMappingForm.qml" line="+8"/>
+        <location filename="../qt_quick/PageBackupMappingForm.qml" line="+14"/>
         <source>Add Link</source>
         <translation>Добавяне на връзка</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+0"/>
+        <source>Edit Link</source>
+        <translation>Редактиране на връзката</translation>
+    </message>
+    <message>
+        <location line="+58"/>
         <source>Save</source>
         <translation>Запази</translation>
     </message>

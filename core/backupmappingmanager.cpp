@@ -374,6 +374,40 @@ bool BackupMappingManager::createMapping(
     return true;
 }
 
+bool BackupMappingManager::updateMapping(
+    int mappingId,
+    const QString &name, const QString &type,
+    int sourceId, int targetId,
+    bool strictCopy, const QString &conflictMode,
+    bool sourceDrive)
+{
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    query.prepare(QLatin1String(R"(
+        UPDATE device_mapping SET
+            mapping_name             = :name,
+            mapping_type             = :type,
+            mapping_device_source_id = :sourceId,
+            mapping_device_target_id = :targetId,
+            mapping_strict_copy      = :strictCopy,
+            mapping_conflict_mode    = :conflictMode,
+            mapping_source_mode      = :sourceMode
+        WHERE mapping_id = :mappingId
+    )"));
+    query.bindValue(":name",         name);
+    query.bindValue(":type",         type);
+    query.bindValue(":sourceId",     sourceId);
+    query.bindValue(":targetId",     targetId);
+    query.bindValue(":strictCopy",   strictCopy ? 1 : 0);
+    query.bindValue(":conflictMode", conflictMode);
+    query.bindValue(":sourceMode",   sourceDrive ? QStringLiteral("Drive") : QStringLiteral("Catalog"));
+    query.bindValue(":mappingId",    mappingId);
+    if (!query.exec()) {
+        qWarning() << "BackupMappingManager::updateMapping error:" << query.lastError();
+        return false;
+    }
+    return true;
+}
+
 QSet<QString> BackupMappingManager::getCatalogFilePaths(int catalogExternalId) const
 {
     QSet<QString> paths;

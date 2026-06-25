@@ -28,6 +28,7 @@ ColumnLayout {
     // Signals for sub-page navigation (connected in Main.qml)
     signal requestAddMapping()
     signal requestPreviewMapping(int mappingId)
+    signal requestEditMapping(var mappingData)
 
     function refresh() {
         var deviceId = appManager1.selectedDeviceId
@@ -491,6 +492,11 @@ ColumnLayout {
 
                         Controls.Menu {
                             id: moreMenu
+                            Controls.MenuItem {
+                                text: qsTr("Edit")
+                                icon.name: "document-edit"
+                                onTriggered: root.requestEditMapping(modelData)
+                            }
                             Controls.MenuItem {
                                 text: qsTr("Replicate directories")
                                 icon.name: "folder-sync"

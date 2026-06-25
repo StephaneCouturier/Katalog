@@ -172,6 +172,11 @@ public:
                        int sourceId, int targetId,
                        bool strictCopy, const QString &conflictMode,
                        bool sourceDrive);
+    bool updateMapping(int mappingId,
+                       const QString &name, const QString &type,
+                       int sourceId, int targetId,
+                       bool strictCopy, const QString &conflictMode,
+                       bool sourceDrive);
     bool deleteMapping(int mappingId);
     bool invertMapping(int mappingId);
 

@@ -3536,6 +3536,8 @@ QVariantList AppManager::getBackupMappings(const QString &filterType, int device
         map[QStringLiteral("mappingId")]          = m.mappingId;
         map[QStringLiteral("mappingName")]         = m.mappingName;
         map[QStringLiteral("mappingType")]         = m.mappingType;
+        map[QStringLiteral("sourceDeviceId")]      = m.sourceDeviceId;
+        map[QStringLiteral("targetDeviceId")]      = m.targetDeviceId;
         map[QStringLiteral("sourceName")]          = m.sourceName;
         map[QStringLiteral("sourcePath")]          = m.sourcePath;
         map[QStringLiteral("sourceSize")]          = m.sourceSize;
@@ -3603,6 +3605,28 @@ QString AppManager::createBackupMapping(const QString &name, const QString &type
     BackupMappingManager manager(m_connectionName);
     if (!manager.createMapping(name.trimmed(), type, sourceId, targetId, strictCopy, conflictMode, sourceDrive))
         return tr("Failed to create link.");
+
+    collection->saveMappingTableToFile();
+    emit backupMappingsChanged();
+    return QString();
+}
+//----------------------------------------------------------------------
+QString AppManager::updateBackupMapping(int mappingId, const QString &name, const QString &type,
+    int sourceId, int targetId, bool strictCopy,
+    const QString &conflictMode, bool sourceDrive)
+{
+    if (name.trimmed().isEmpty())
+        return tr("Provide a link name.");
+    if (sourceId <= 0)
+        return tr("Select a source catalog first.");
+    if (targetId <= 0)
+        return tr("Select a target catalog first.");
+    if (sourceId == targetId)
+        return tr("Select a different source or target (a device shall not be mapped to itself).");
+
+    BackupMappingManager manager(m_connectionName);
+    if (!manager.updateMapping(mappingId, name.trimmed(), type, sourceId, targetId, strictCopy, conflictMode, sourceDrive))
+        return tr("Failed to update link.");
 
     collection->saveMappingTableToFile();
     emit backupMappingsChanged();

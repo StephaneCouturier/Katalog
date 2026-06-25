@@ -462,45 +462,54 @@ Elija un nombre diferente.</translation>
         <translation>No es un dispositivo de almacenamiento.</translation>
     </message>
     <message>
-        <location line="+158"/>
+        <location line="+160"/>
+        <location line="+22"/>
         <source>Provide a link name.</source>
         <translation>Indique un nombre de enlace.</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-20"/>
+        <location line="+22"/>
         <source>Select a source catalog first.</source>
         <translation>Seleccione primero un catálogo de origen.</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-20"/>
+        <location line="+22"/>
         <source>Select a target catalog first.</source>
         <translation>Seleccione primero un catálogo de destino.</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-20"/>
+        <location line="+22"/>
         <source>Select a different source or target (a device shall not be mapped to itself).</source>
         <translation>Seleccione un origen o destino diferente (un dispositivo no debe mapearse a sí mismo).</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="-18"/>
         <source>Failed to create link.</source>
         <translation>No se pudo crear el enlace.</translation>
     </message>
     <message>
-        <location line="+83"/>
-        <location line="+239"/>
+        <location line="+22"/>
+        <source>Failed to update link.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+92"/>
+        <location line="+265"/>
         <source>Link not found.</source>
         <translation>Enlace no encontrado.</translation>
     </message>
     <message>
-        <location line="-227"/>
+        <location line="-253"/>
         <location line="+107"/>
-        <location line="+132"/>
+        <location line="+158"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>El origen y el destino deben ser dispositivos de catálogo.</translation>
     </message>
     <message>
-        <location line="-206"/>
+        <location line="-232"/>
         <location line="+7"/>
         <source>Move</source>
         <translation>Mover</translation>
@@ -519,13 +528,13 @@ Elija un nombre diferente.</translation>
     </message>
     <message>
         <location line="+58"/>
-        <location line="+131"/>
+        <location line="+157"/>
         <source>Source not available: %1</source>
         <translation>Origen no disponible: %1</translation>
     </message>
     <message>
-        <location line="-127"/>
-        <location line="+131"/>
+        <location line="-153"/>
+        <location line="+157"/>
         <source>Target not available: %1</source>
         <translation>Destino no disponible: %1</translation>
     </message>
@@ -1249,7 +1258,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation>Generar perfil de LuckyBackup</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+42"/>
         <source>Select Collection Folder</source>
         <translation>Seleccionar carpeta de colección</translation>
     </message>
@@ -1574,7 +1583,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+395"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+406"/>
-        <location line="+170"/>
+        <location line="+176"/>
         <location line="+145"/>
         <location line="+19"/>
         <location line="+41"/>
@@ -1583,8 +1592,8 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-4"/>
         <location line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-443"/>
-        <location line="+170"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-449"/>
+        <location line="+176"/>
         <location line="+145"/>
         <location line="+19"/>
         <location line="+41"/>
@@ -1667,7 +1676,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation>Contado</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-777"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-783"/>
         <location filename="../core/searchprogressmanager.cpp" line="+85"/>
         <source>Paused</source>
         <translation>En pausa</translation>
@@ -1701,7 +1710,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-105"/>
-        <location line="+421"/>
+        <location line="+427"/>
         <location line="+128"/>
         <location line="+87"/>
         <location line="+139"/>
@@ -3251,7 +3260,7 @@ No se realizó la división.</translation>
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1138"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1144"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-97"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+39"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
@@ -3353,7 +3362,7 @@ No se realizó la división.</translation>
     </message>
     <message>
         <location line="-1962"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+1232"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+1238"/>
         <location line="+0"/>
         <source>Device Name</source>
         <translation>Nombre del dispositivo</translation>
@@ -4039,11 +4048,11 @@ No se realizó la división.</translation>
     </message>
     <message>
         <location line="-267"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1092"/>
-        <location line="+338"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1098"/>
+        <location line="+344"/>
         <location line="+745"/>
-        <location line="-1083"/>
-        <location line="+338"/>
+        <location line="-1089"/>
+        <location line="+344"/>
         <location line="+745"/>
         <source>Source</source>
         <translation>Origen</translation>
@@ -4267,7 +4276,7 @@ No se realizó la división.</translation>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1185"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1191"/>
         <location line="+0"/>
         <source>Replicate directories</source>
         <translation>Replicar directorios</translation>
@@ -4275,23 +4284,23 @@ No se realizó la división.</translation>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-6"/>
-        <location line="+1244"/>
+        <location line="+1250"/>
         <location line="+16"/>
-        <location line="-1260"/>
-        <location line="+1244"/>
+        <location line="-1266"/>
+        <location line="+1250"/>
         <location line="+16"/>
         <source>Preview Backup</source>
         <translation>Vista previa de copia de seguridad</translation>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1265"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1271"/>
         <location line="+280"/>
-        <location line="+968"/>
+        <location line="+974"/>
         <location line="+14"/>
-        <location line="-1262"/>
+        <location line="-1268"/>
         <location line="+280"/>
-        <location line="+968"/>
+        <location line="+974"/>
         <location line="+14"/>
         <source>Run Backup</source>
         <translation>Ejecutar copia de seguridad</translation>
@@ -4864,8 +4873,8 @@ No se realizó la división.</translation>
         <translation>ID de destino</translation>
     </message>
     <message>
-        <location line="-1088"/>
-        <location line="+338"/>
+        <location line="-1094"/>
+        <location line="+344"/>
         <location line="+751"/>
         <location line="-751"/>
         <location line="+751"/>
@@ -4873,46 +4882,46 @@ No se realizó la división.</translation>
         <translation>Destino</translation>
     </message>
     <message>
-        <location line="-1193"/>
-        <location line="+1262"/>
+        <location line="-1199"/>
+        <location line="+1268"/>
         <location line="+0"/>
         <source>Run Archive</source>
         <translation>Ejecutar archivo</translation>
     </message>
     <message>
-        <location line="-1257"/>
-        <location line="+1260"/>
+        <location line="-1263"/>
+        <location line="+1266"/>
         <location line="+0"/>
         <source>Preview Archive</source>
         <translation>Vista previa de archivo</translation>
     </message>
     <message>
-        <location line="-1245"/>
+        <location line="-1251"/>
         <source>Invert (swap source and target)</source>
         <translation>Invertir (intercambiar origen y destino)</translation>
     </message>
     <message>
         <location line="+43"/>
         <location line="+111"/>
-        <location line="+230"/>
+        <location line="+236"/>
         <location line="+444"/>
-        <location line="-674"/>
-        <location line="+230"/>
+        <location line="-680"/>
+        <location line="+236"/>
         <location line="+444"/>
         <source>Select a mapping first.</source>
         <translation>Seleccione primero un enlace.</translation>
     </message>
     <message>
-        <location line="-763"/>
+        <location line="-769"/>
         <location line="+108"/>
-        <location line="+230"/>
-        <location line="-230"/>
-        <location line="+230"/>
+        <location line="+236"/>
+        <location line="-236"/>
+        <location line="+236"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>El origen y el destino deben ser dispositivos de catálogo.</translation>
     </message>
     <message>
-        <location line="-326"/>
+        <location line="-332"/>
         <location line="+62"/>
         <location line="+0"/>
         <source>Replicate</source>
@@ -4920,22 +4929,22 @@ No se realizó la división.</translation>
     </message>
     <message>
         <location line="-61"/>
-        <location line="+338"/>
+        <location line="+344"/>
         <location line="+0"/>
         <source>%1 not available</source>
         <translation>%1 no disponible</translation>
     </message>
     <message>
-        <location line="-327"/>
+        <location line="-333"/>
         <location line="+90"/>
-        <location line="+249"/>
-        <location line="-249"/>
-        <location line="+249"/>
+        <location line="+255"/>
+        <location line="-255"/>
+        <location line="+255"/>
         <source>A catalog update is already in progress. Please wait and try again.</source>
         <translation>Ya hay una actualización de catálogo en curso. Espere e inténtelo de nuevo.</translation>
     </message>
     <message>
-        <location line="-287"/>
+        <location line="-293"/>
         <source>Created</source>
         <translation>Creado</translation>
     </message>
@@ -4946,7 +4955,7 @@ No se realizó la división.</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+637"/>
+        <location line="+643"/>
         <location line="+0"/>
         <source>Errors</source>
         <translation>Errores</translation>
@@ -5493,8 +5502,8 @@ a la papelera?</translation>
         <translation>Nombre del catálogo</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1169"/>
-        <location line="+974"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1175"/>
+        <location line="+980"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+150"/>
         <location line="+42"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
@@ -5504,8 +5513,8 @@ a la papelera?</translation>
         <translation>Pausar</translation>
     </message>
     <message>
-        <location line="-967"/>
-        <location line="+967"/>
+        <location line="-973"/>
+        <location line="+973"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-28"/>
         <location line="+30"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
@@ -5717,7 +5726,7 @@ a la papelera?</translation>
         <translation>Seleccione primero un proceso a aplicar a todos los resultados siguientes.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1017"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1023"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+15"/>
         <location line="+0"/>
         <source>Results exported to the collection folder:</source>
@@ -6154,7 +6163,7 @@ a la papelera?</translation>
         <translation type="vanished">sincronizado</translation>
     </message>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+93"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+94"/>
         <source>Cancelled</source>
         <translation>Cancelado</translation>
     </message>
@@ -6185,12 +6194,12 @@ a la papelera?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+396"/>
+        <location line="+407"/>
         <source>Errors: %1</source>
         <translation>Errores: %1</translation>
     </message>
     <message>
-        <location line="-377"/>
+        <location line="-388"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
@@ -6288,7 +6297,7 @@ a la papelera?</translation>
         <translation>Actualizado</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+36"/>
         <source>ETA %1</source>
         <translation>Queda %1</translation>
     </message>
@@ -6334,6 +6343,11 @@ a la papelera?</translation>
     </message>
     <message>
         <location line="+7"/>
+        <source>Edit</source>
+        <translation>Editar</translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Replicate directories</source>
         <translation>Replicar directorios</translation>
     </message>
@@ -6381,12 +6395,17 @@ a la papelera?</translation>
 <context>
     <name>PageBackupMappingForm</name>
     <message>
-        <location filename="../qt_quick/PageBackupMappingForm.qml" line="+8"/>
+        <location filename="../qt_quick/PageBackupMappingForm.qml" line="+14"/>
         <source>Add Link</source>
         <translation>Añadir enlace</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+0"/>
+        <source>Edit Link</source>
+        <translation>Editar enlace</translation>
+    </message>
+    <message>
+        <location line="+58"/>
         <source>Save</source>
         <translation>Guardar</translation>
     </message>

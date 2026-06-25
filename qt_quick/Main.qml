@@ -1657,6 +1657,7 @@ Kirigami.ApplicationWindow {
             id: backupPageForm
             onRequestAddMapping:        root.showLayer(backupMappingFormComponent)
             onRequestPreviewMapping: (mappingId) => root.showLayer(backupPreviewFormComponent, { mappingId: mappingId })
+            onRequestEditMapping: (mappingData) => root.showLayer(backupMappingFormComponent, { editMappingId: mappingData.mappingId, mappingData: mappingData })
         }
     }
 

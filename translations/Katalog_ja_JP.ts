@@ -462,45 +462,54 @@ Choose a different name.</source>
         <translation>ストレージデバイスではありません。</translation>
     </message>
     <message>
-        <location line="+158"/>
+        <location line="+160"/>
+        <location line="+22"/>
         <source>Provide a link name.</source>
         <translation>リンク名を入力してください。</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-20"/>
+        <location line="+22"/>
         <source>Select a source catalog first.</source>
         <translation>最初にソースカタログを選択してください。</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-20"/>
+        <location line="+22"/>
         <source>Select a target catalog first.</source>
         <translation>最初にターゲットカタログを選択してください。</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-20"/>
+        <location line="+22"/>
         <source>Select a different source or target (a device shall not be mapped to itself).</source>
         <translation>別のソースまたはターゲットを選択してください（デバイスは自分自身にマッピングできません）。</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="-18"/>
         <source>Failed to create link.</source>
         <translation>リンクを作成できませんでした。</translation>
     </message>
     <message>
-        <location line="+83"/>
-        <location line="+239"/>
+        <location line="+22"/>
+        <source>Failed to update link.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+92"/>
+        <location line="+265"/>
         <source>Link not found.</source>
         <translation>リンクが見つかりません。</translation>
     </message>
     <message>
-        <location line="-227"/>
+        <location line="-253"/>
         <location line="+107"/>
-        <location line="+132"/>
+        <location line="+158"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>ソースとターゲットはどちらもカタログデバイスである必要があります。</translation>
     </message>
     <message>
-        <location line="-206"/>
+        <location line="-232"/>
         <location line="+7"/>
         <source>Move</source>
         <translation>移動</translation>
@@ -519,13 +528,13 @@ Choose a different name.</source>
     </message>
     <message>
         <location line="+58"/>
-        <location line="+131"/>
+        <location line="+157"/>
         <source>Source not available: %1</source>
         <translation>ソースが利用できません: %1</translation>
     </message>
     <message>
-        <location line="-127"/>
-        <location line="+131"/>
+        <location line="-153"/>
+        <location line="+157"/>
         <source>Target not available: %1</source>
         <translation>ターゲットが利用できません: %1</translation>
     </message>
@@ -1249,7 +1258,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>LuckyBackupプロファイルを生成</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+42"/>
         <source>Select Collection Folder</source>
         <translation>コレクションフォルダーを選択</translation>
     </message>
@@ -1554,7 +1563,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+395"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+406"/>
-        <location line="+170"/>
+        <location line="+176"/>
         <location line="+145"/>
         <location line="+19"/>
         <location line="+41"/>
@@ -1563,8 +1572,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-4"/>
         <location line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-443"/>
-        <location line="+170"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-449"/>
+        <location line="+176"/>
         <location line="+145"/>
         <location line="+19"/>
         <location line="+41"/>
@@ -1647,7 +1656,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>カウント済み</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-777"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-783"/>
         <location filename="../core/searchprogressmanager.cpp" line="+85"/>
         <source>Paused</source>
         <translation>一時停止</translation>
@@ -1681,7 +1690,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-105"/>
-        <location line="+421"/>
+        <location line="+427"/>
         <location line="+128"/>
         <location line="+87"/>
         <location line="+139"/>
@@ -2598,7 +2607,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="-5377"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1138"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1144"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+68"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
@@ -2625,7 +2634,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+799"/>
         <location line="+3246"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+701"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+707"/>
         <location line="+143"/>
         <location line="+301"/>
         <location line="+7"/>
@@ -3314,7 +3323,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1263"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1269"/>
         <location line="+0"/>
         <source>Replicate directories</source>
         <translation>ディレクトリを複製</translation>
@@ -3322,23 +3331,23 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-6"/>
-        <location line="+1244"/>
+        <location line="+1250"/>
         <location line="+16"/>
-        <location line="-1260"/>
-        <location line="+1244"/>
+        <location line="-1266"/>
+        <location line="+1250"/>
         <location line="+16"/>
         <source>Preview Backup</source>
         <translation>バックアップのプレビュー</translation>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1265"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1271"/>
         <location line="+280"/>
-        <location line="+968"/>
+        <location line="+974"/>
         <location line="+14"/>
-        <location line="-1262"/>
+        <location line="-1268"/>
         <location line="+280"/>
-        <location line="+968"/>
+        <location line="+974"/>
         <location line="+14"/>
         <source>Run Backup</source>
         <translation>バックアップを実行</translation>
@@ -4455,7 +4464,7 @@ Split was not performed.</source>
         <translation>最初に以下のすべての結果に適用するプロセスを選択してください。</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-952"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-958"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+15"/>
         <location line="+0"/>
         <source>Results exported to the collection folder:</source>
@@ -4777,10 +4786,10 @@ Split was not performed.</source>
     <message>
         <location line="+3285"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-141"/>
-        <location line="+338"/>
+        <location line="+344"/>
         <location line="+745"/>
-        <location line="-1083"/>
-        <location line="+338"/>
+        <location line="-1089"/>
+        <location line="+344"/>
         <location line="+745"/>
         <source>Source</source>
         <translation>ソース</translation>
@@ -5463,8 +5472,8 @@ to the trash?</source>
         <translation>ターゲットID</translation>
     </message>
     <message>
-        <location line="-1088"/>
-        <location line="+338"/>
+        <location line="-1094"/>
+        <location line="+344"/>
         <location line="+751"/>
         <location line="-751"/>
         <location line="+751"/>
@@ -5472,46 +5481,46 @@ to the trash?</source>
         <translation>ターゲット</translation>
     </message>
     <message>
-        <location line="-1193"/>
-        <location line="+1262"/>
+        <location line="-1199"/>
+        <location line="+1268"/>
         <location line="+0"/>
         <source>Run Archive</source>
         <translation>アーカイブを実行</translation>
     </message>
     <message>
-        <location line="-1257"/>
-        <location line="+1260"/>
+        <location line="-1263"/>
+        <location line="+1266"/>
         <location line="+0"/>
         <source>Preview Archive</source>
         <translation>アーカイブのプレビュー</translation>
     </message>
     <message>
-        <location line="-1245"/>
+        <location line="-1251"/>
         <source>Invert (swap source and target)</source>
         <translation>反転（ソースとターゲットを入替え）</translation>
     </message>
     <message>
         <location line="+43"/>
         <location line="+111"/>
-        <location line="+230"/>
+        <location line="+236"/>
         <location line="+444"/>
-        <location line="-674"/>
-        <location line="+230"/>
+        <location line="-680"/>
+        <location line="+236"/>
         <location line="+444"/>
         <source>Select a mapping first.</source>
         <translation>最初にリンクを選択してください。</translation>
     </message>
     <message>
-        <location line="-763"/>
+        <location line="-769"/>
         <location line="+108"/>
-        <location line="+230"/>
-        <location line="-230"/>
-        <location line="+230"/>
+        <location line="+236"/>
+        <location line="-236"/>
+        <location line="+236"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>ソースとターゲットはどちらもカタログデバイスである必要があります。</translation>
     </message>
     <message>
-        <location line="-326"/>
+        <location line="-332"/>
         <location line="+62"/>
         <location line="+0"/>
         <source>Replicate</source>
@@ -5519,22 +5528,22 @@ to the trash?</source>
     </message>
     <message>
         <location line="-61"/>
-        <location line="+338"/>
+        <location line="+344"/>
         <location line="+0"/>
         <source>%1 not available</source>
         <translation>%1 は利用できません</translation>
     </message>
     <message>
-        <location line="-327"/>
+        <location line="-333"/>
         <location line="+90"/>
-        <location line="+249"/>
-        <location line="-249"/>
-        <location line="+249"/>
+        <location line="+255"/>
+        <location line="-255"/>
+        <location line="+255"/>
         <source>A catalog update is already in progress. Please wait and try again.</source>
         <translation>カタログの更新がすでに進行中です。しばらく待ってから再試行してください。</translation>
     </message>
     <message>
-        <location line="-287"/>
+        <location line="-293"/>
         <source>Created</source>
         <translation>作成済み</translation>
     </message>
@@ -5545,7 +5554,7 @@ to the trash?</source>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+637"/>
+        <location line="+643"/>
         <location line="+0"/>
         <source>Errors</source>
         <translation>エラー</translation>
@@ -5890,8 +5899,8 @@ to the trash?</source>
         <translation>カタログ名</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1169"/>
-        <location line="+974"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1175"/>
+        <location line="+980"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+150"/>
         <location line="+42"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
@@ -5901,8 +5910,8 @@ to the trash?</source>
         <translation>一時停止</translation>
     </message>
     <message>
-        <location line="-967"/>
-        <location line="+967"/>
+        <location line="-973"/>
+        <location line="+973"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-28"/>
         <location line="+30"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
@@ -6153,7 +6162,7 @@ to the trash?</source>
         <translation type="vanished">同期済み</translation>
     </message>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+93"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+94"/>
         <source>Cancelled</source>
         <translation>キャンセル済み</translation>
     </message>
@@ -6184,12 +6193,12 @@ to the trash?</source>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+396"/>
+        <location line="+407"/>
         <source>Errors: %1</source>
         <translation>エラー: %1</translation>
     </message>
     <message>
-        <location line="-377"/>
+        <location line="-388"/>
         <source>Type</source>
         <translation>タイプ</translation>
     </message>
@@ -6287,7 +6296,7 @@ to the trash?</source>
         <translation>最新</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+36"/>
         <source>ETA %1</source>
         <translation>残り %1</translation>
     </message>
@@ -6333,6 +6342,11 @@ to the trash?</source>
     </message>
     <message>
         <location line="+7"/>
+        <source>Edit</source>
+        <translation>編集</translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Replicate directories</source>
         <translation>ディレクトリを複製</translation>
     </message>
@@ -6380,12 +6394,17 @@ to the trash?</source>
 <context>
     <name>PageBackupMappingForm</name>
     <message>
-        <location filename="../qt_quick/PageBackupMappingForm.qml" line="+8"/>
+        <location filename="../qt_quick/PageBackupMappingForm.qml" line="+14"/>
         <source>Add Link</source>
         <translation>リンクを追加</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+0"/>
+        <source>Edit Link</source>
+        <translation>リンクを編集</translation>
+    </message>
+    <message>
+        <location line="+58"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>

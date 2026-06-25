@@ -5,7 +5,27 @@ import org.kde.kirigami as Kirigami
 
 Kirigami.ScrollablePage {
     id: root
-    title: qsTr("Add Link")
+
+    // -1 = creating a new link; >= 0 = editing the link with this mapping id.
+    property int editMappingId: -1
+    // Initial values used to pre-fill the form when editing (set via showLayer props).
+    property var mappingData: null
+
+    title: editMappingId < 0 ? qsTr("Add Link") : qsTr("Edit Link")
+
+    Component.onCompleted: {
+        if (editMappingId >= 0 && mappingData) {
+            nameField.text          = mappingData.mappingName
+            var ti = typeCombo.indexOfValue(mappingData.mappingType)
+            if (ti >= 0) typeCombo.currentIndex = ti
+            sourceCombo.selectById(mappingData.sourceDeviceId)
+            targetCombo.selectById(mappingData.targetDeviceId)
+            strictCopyCheck.checked = mappingData.strictCopy
+            var ci = conflictModeCombo.indexOfValue(mappingData.conflictMode)
+            if (ci >= 0) conflictModeCombo.currentIndex = ci
+            sourceDriveCheck.checked = mappingData.sourceDrive
+        }
+    }
 
     // Generate a suggested name from source → target names
     function generateName() {
@@ -16,15 +36,25 @@ Kirigami.ScrollablePage {
     }
 
     function save() {
-        var err = appManager1.createBackupMapping(
-            nameField.text.trim(),
-            typeCombo.currentValue,
-            sourceCombo.selectedDeviceId,
-            targetCombo.selectedDeviceId,
-            (typeCombo.currentValue !== "Archive") && strictCopyCheck.checked,
-            conflictModeCombo.currentValue,
-            sourceDriveCheck.checked
-        )
+        var strict = (typeCombo.currentValue !== "Archive") && strictCopyCheck.checked
+        var err = editMappingId < 0
+            ? appManager1.createBackupMapping(
+                nameField.text.trim(),
+                typeCombo.currentValue,
+                sourceCombo.selectedDeviceId,
+                targetCombo.selectedDeviceId,
+                strict,
+                conflictModeCombo.currentValue,
+                sourceDriveCheck.checked)
+            : appManager1.updateBackupMapping(
+                editMappingId,
+                nameField.text.trim(),
+                typeCombo.currentValue,
+                sourceCombo.selectedDeviceId,
+                targetCombo.selectedDeviceId,
+                strict,
+                conflictModeCombo.currentValue,
+                sourceDriveCheck.checked)
         if (err) {
             errorMessage.text    = err
             errorMessage.visible = true
