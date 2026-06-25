@@ -665,7 +665,7 @@ Izberite drugo ime.</translation>
 <context>
     <name>DeviceTreeComboBox</name>
     <message>
-        <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+131"/>
+        <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+133"/>
         <source>Select a Storage</source>
         <translation>Izberite shrambo</translation>
     </message>
@@ -6151,13 +6151,11 @@ Razdelitev ni bila izvedena.</translation>
 <context>
     <name>PageBackupForm</name>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+35"/>
-        <location line="+315"/>
         <source>in sync</source>
-        <translation>sinhronizirano</translation>
+        <translation type="vanished">sinhronizirano</translation>
     </message>
     <message>
-        <location line="-282"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+93"/>
         <source>Cancelled</source>
         <translation>Preklicano</translation>
     </message>
@@ -6167,7 +6165,12 @@ Razdelitev ni bila izvedena.</translation>
         <translation>Končano</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
+        <source>Moved: %1</source>
+        <translation>Premaknjeno: %1</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Copied: %1</source>
         <translation>Kopirano: %1</translation>
     </message>
@@ -6183,12 +6186,12 @@ Razdelitev ni bila izvedena.</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+379"/>
+        <location line="+396"/>
         <source>Errors: %1</source>
         <translation>Napake: %1</translation>
     </message>
     <message>
-        <location line="-360"/>
+        <location line="-377"/>
         <source>Type</source>
         <translation>Tip</translation>
     </message>
@@ -6200,40 +6203,40 @@ Razdelitev ni bila izvedena.</translation>
     </message>
     <message>
         <location line="-15"/>
-        <location line="+163"/>
+        <location line="+167"/>
         <source>Backup</source>
         <translation>Varnostna kopija</translation>
     </message>
     <message>
-        <location line="-162"/>
-        <location line="+162"/>
+        <location line="-166"/>
+        <location line="+166"/>
         <source>Archive</source>
         <translation>Arhiv</translation>
     </message>
     <message>
-        <location line="-153"/>
+        <location line="-157"/>
         <source>Filter</source>
         <translation>Filter</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+168"/>
+        <location line="+172"/>
         <source>Source</source>
         <translation>Vir</translation>
     </message>
     <message>
-        <location line="-167"/>
-        <location line="+195"/>
+        <location line="-171"/>
+        <location line="+199"/>
         <source>Target</source>
         <translation>Cilj</translation>
     </message>
     <message>
-        <location line="-175"/>
+        <location line="-179"/>
         <source>Update catalogs</source>
         <translation>Posodobi kataloge</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+21"/>
         <source>link(s)</source>
         <translation>සබැඳි</translation>
     </message>
@@ -6243,7 +6246,7 @@ Razdelitev ni bila izvedena.</translation>
         <translation>මූලාශ්‍රය</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>covered</source>
         <translation>ආවරණය</translation>
     </message>
@@ -6261,16 +6264,37 @@ Razdelitev ni bila izvedena.</translation>
         <location line="+118"/>
         <location line="+28"/>
         <location line="+24"/>
+        <location line="+7"/>
         <source>files</source>
         <translation>datoteke</translation>
     </message>
     <message>
-        <location line="-13"/>
+        <location line="-18"/>
         <source>Diff</source>
         <translation>Razlika</translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+0"/>
+        <source>To move</source>
+        <translation>Za premik</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Nothing to move</source>
+        <translation>Ni česa za premakniti</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Up to date</source>
+        <translation>Posodobljeno</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>ETA %1</source>
+        <translation>Preostalo %1</translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Run Archive</source>
         <translation>Zaženi arhiviranje</translation>
     </message>
@@ -6280,7 +6304,7 @@ Razdelitev ni bila izvedena.</translation>
         <translation>Zaženi varnostno kopiranje</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+22"/>
         <source>Pause</source>
         <translation>Premor</translation>
     </message>
@@ -6569,8 +6593,17 @@ Razdelitev ni bila izvedena.</translation>
     </message>
     <message>
         <location line="+31"/>
+        <source>Nothing to move</source>
+        <translation>Ni česa za premakniti</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Nothing to copy</source>
+        <translation>Ni česa za kopiranje</translation>
+    </message>
+    <message>
         <source>Everything is in sync</source>
-        <translation>Vse je sinhronizirano</translation>
+        <translation type="vanished">Vse je sinhronizirano</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -8131,7 +8164,7 @@ Napake: %3</translation>
         <translation>Posodobi</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+13"/>
         <source>Explore</source>
         <translation>Razišči</translation>
     </message>

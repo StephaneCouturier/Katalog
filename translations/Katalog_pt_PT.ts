@@ -665,7 +665,7 @@ Escolha um nome diferente.</translation>
 <context>
     <name>DeviceTreeComboBox</name>
     <message>
-        <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+131"/>
+        <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+133"/>
         <source>Select a Storage</source>
         <translation>Selecionar um armazenamento</translation>
     </message>
@@ -6150,13 +6150,11 @@ para o lixo?</translation>
 <context>
     <name>PageBackupForm</name>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+35"/>
-        <location line="+315"/>
         <source>in sync</source>
-        <translation>sincronizado</translation>
+        <translation type="vanished">sincronizado</translation>
     </message>
     <message>
-        <location line="-282"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+93"/>
         <source>Cancelled</source>
         <translation>Cancelado</translation>
     </message>
@@ -6166,7 +6164,12 @@ para o lixo?</translation>
         <translation>Concluído</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
+        <source>Moved: %1</source>
+        <translation>Movidos: %1</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Copied: %1</source>
         <translation>Copiados: %1</translation>
     </message>
@@ -6182,12 +6185,12 @@ para o lixo?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+379"/>
+        <location line="+396"/>
         <source>Errors: %1</source>
         <translation>Erros: %1</translation>
     </message>
     <message>
-        <location line="-360"/>
+        <location line="-377"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
@@ -6199,40 +6202,40 @@ para o lixo?</translation>
     </message>
     <message>
         <location line="-15"/>
-        <location line="+163"/>
+        <location line="+167"/>
         <source>Backup</source>
         <translation>Cópia de segurança</translation>
     </message>
     <message>
-        <location line="-162"/>
-        <location line="+162"/>
+        <location line="-166"/>
+        <location line="+166"/>
         <source>Archive</source>
         <translation>Arquivo</translation>
     </message>
     <message>
-        <location line="-153"/>
+        <location line="-157"/>
         <source>Filter</source>
         <translation>Filtro</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+168"/>
+        <location line="+172"/>
         <source>Source</source>
         <translation>Origem</translation>
     </message>
     <message>
-        <location line="-167"/>
-        <location line="+195"/>
+        <location line="-171"/>
+        <location line="+199"/>
         <source>Target</source>
         <translation>Destino</translation>
     </message>
     <message>
-        <location line="-175"/>
+        <location line="-179"/>
         <source>Update catalogs</source>
         <translation>Atualizar catálogos</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+21"/>
         <source>link(s)</source>
         <translation>ligação(ões)</translation>
     </message>
@@ -6242,7 +6245,7 @@ para o lixo?</translation>
         <translation>origem</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>covered</source>
         <translation>coberto</translation>
     </message>
@@ -6260,16 +6263,37 @@ para o lixo?</translation>
         <location line="+118"/>
         <location line="+28"/>
         <location line="+24"/>
+        <location line="+7"/>
         <source>files</source>
         <translation>ficheiros</translation>
     </message>
     <message>
-        <location line="-13"/>
+        <location line="-18"/>
         <source>Diff</source>
         <translation>Dif</translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+0"/>
+        <source>To move</source>
+        <translation>A mover</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Nothing to move</source>
+        <translation>Nada a mover</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Up to date</source>
+        <translation>Atualizado</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>ETA %1</source>
+        <translation>Faltam %1</translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Run Archive</source>
         <translation>Executar arquivo</translation>
     </message>
@@ -6279,7 +6303,7 @@ para o lixo?</translation>
         <translation>Executar cópia de segurança</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+22"/>
         <source>Pause</source>
         <translation>Pausar</translation>
     </message>
@@ -6568,8 +6592,17 @@ para o lixo?</translation>
     </message>
     <message>
         <location line="+31"/>
+        <source>Nothing to move</source>
+        <translation>Nada a mover</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Nothing to copy</source>
+        <translation>Nada a copiar</translation>
+    </message>
+    <message>
         <source>Everything is in sync</source>
-        <translation>Está tudo sincronizado</translation>
+        <translation type="vanished">Está tudo sincronizado</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -8130,7 +8163,7 @@ Erros: %3</translation>
         <translation>Actualizar</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+13"/>
         <source>Explore</source>
         <translation>Explorar</translation>
     </message>

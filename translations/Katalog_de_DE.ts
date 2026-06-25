@@ -665,7 +665,7 @@ Wählen Sie einen anderen Namen.</translation>
 <context>
     <name>DeviceTreeComboBox</name>
     <message>
-        <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+131"/>
+        <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+133"/>
         <source>Select a Storage</source>
         <translation>Speicher auswählen</translation>
     </message>
@@ -6150,13 +6150,11 @@ Aufteilung wurde nicht durchgeführt.</translation>
 <context>
     <name>PageBackupForm</name>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+35"/>
-        <location line="+315"/>
         <source>in sync</source>
-        <translation>synchronisiert</translation>
+        <translation type="vanished">synchronisiert</translation>
     </message>
     <message>
-        <location line="-282"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+93"/>
         <source>Cancelled</source>
         <translation>Abgebrochen</translation>
     </message>
@@ -6166,7 +6164,12 @@ Aufteilung wurde nicht durchgeführt.</translation>
         <translation>Abgeschlossen</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
+        <source>Moved: %1</source>
+        <translation>Verschoben: %1</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Copied: %1</source>
         <translation>Kopiert: %1</translation>
     </message>
@@ -6182,12 +6185,12 @@ Aufteilung wurde nicht durchgeführt.</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+379"/>
+        <location line="+396"/>
         <source>Errors: %1</source>
         <translation>Fehler: %1</translation>
     </message>
     <message>
-        <location line="-360"/>
+        <location line="-377"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
@@ -6199,40 +6202,40 @@ Aufteilung wurde nicht durchgeführt.</translation>
     </message>
     <message>
         <location line="-15"/>
-        <location line="+163"/>
+        <location line="+167"/>
         <source>Backup</source>
         <translation>Datensicherung</translation>
     </message>
     <message>
-        <location line="-162"/>
-        <location line="+162"/>
+        <location line="-166"/>
+        <location line="+166"/>
         <source>Archive</source>
         <translation>Archiv</translation>
     </message>
     <message>
-        <location line="-153"/>
+        <location line="-157"/>
         <source>Filter</source>
         <translation>Filter</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+168"/>
+        <location line="+172"/>
         <source>Source</source>
         <translation>Quelle</translation>
     </message>
     <message>
-        <location line="-167"/>
-        <location line="+195"/>
+        <location line="-171"/>
+        <location line="+199"/>
         <source>Target</source>
         <translation>Ziel</translation>
     </message>
     <message>
-        <location line="-175"/>
+        <location line="-179"/>
         <source>Update catalogs</source>
         <translation>Kataloge aktualisieren</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+21"/>
         <source>link(s)</source>
         <translation>Link(s)</translation>
     </message>
@@ -6242,7 +6245,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
         <translation>Quelle</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>covered</source>
         <translation>abgedeckt</translation>
     </message>
@@ -6260,16 +6263,37 @@ Aufteilung wurde nicht durchgeführt.</translation>
         <location line="+118"/>
         <location line="+28"/>
         <location line="+24"/>
+        <location line="+7"/>
         <source>files</source>
         <translation>Dateien</translation>
     </message>
     <message>
-        <location line="-13"/>
+        <location line="-18"/>
         <source>Diff</source>
         <translation>Diff</translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+0"/>
+        <source>To move</source>
+        <translation>Zu verschieben</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Nothing to move</source>
+        <translation>Nichts zu verschieben</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Up to date</source>
+        <translation>Aktuell</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>ETA %1</source>
+        <translation>Restzeit %1</translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Run Archive</source>
         <translation>Archivierung starten</translation>
     </message>
@@ -6279,7 +6303,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
         <translation>Datensicherung starten</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+22"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
@@ -6568,8 +6592,17 @@ Aufteilung wurde nicht durchgeführt.</translation>
     </message>
     <message>
         <location line="+31"/>
+        <source>Nothing to move</source>
+        <translation>Nichts zu verschieben</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Nothing to copy</source>
+        <translation>Nichts zu kopieren</translation>
+    </message>
+    <message>
         <source>Everything is in sync</source>
-        <translation>Alles ist synchronisiert</translation>
+        <translation type="vanished">Alles ist synchronisiert</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -8130,7 +8163,7 @@ Fehler: %3</translation>
         <translation>Aktualisieren</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+13"/>
         <source>Explore</source>
         <translation>Entdecken</translation>
     </message>

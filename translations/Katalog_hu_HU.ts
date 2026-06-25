@@ -665,7 +665,7 @@ Válasszon másik nevet.</translation>
 <context>
     <name>DeviceTreeComboBox</name>
     <message>
-        <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+131"/>
+        <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+133"/>
         <source>Select a Storage</source>
         <translation>Válasszon tárolót</translation>
     </message>
@@ -6149,13 +6149,11 @@ lomtárba helyezése?</translation>
 <context>
     <name>PageBackupForm</name>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+35"/>
-        <location line="+315"/>
         <source>in sync</source>
-        <translation>szinkronban</translation>
+        <translation type="vanished">szinkronban</translation>
     </message>
     <message>
-        <location line="-282"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+93"/>
         <source>Cancelled</source>
         <translation>Megszakítva</translation>
     </message>
@@ -6165,7 +6163,12 @@ lomtárba helyezése?</translation>
         <translation>Befejezve</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
+        <source>Moved: %1</source>
+        <translation>Áthelyezve: %1</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Copied: %1</source>
         <translation>Másolva: %1</translation>
     </message>
@@ -6181,12 +6184,12 @@ lomtárba helyezése?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+379"/>
+        <location line="+396"/>
         <source>Errors: %1</source>
         <translation>Hibák: %1</translation>
     </message>
     <message>
-        <location line="-360"/>
+        <location line="-377"/>
         <source>Type</source>
         <translation>Típus</translation>
     </message>
@@ -6198,40 +6201,40 @@ lomtárba helyezése?</translation>
     </message>
     <message>
         <location line="-15"/>
-        <location line="+163"/>
+        <location line="+167"/>
         <source>Backup</source>
         <translation>Biztonsági mentés</translation>
     </message>
     <message>
-        <location line="-162"/>
-        <location line="+162"/>
+        <location line="-166"/>
+        <location line="+166"/>
         <source>Archive</source>
         <translation>Archívum</translation>
     </message>
     <message>
-        <location line="-153"/>
+        <location line="-157"/>
         <source>Filter</source>
         <translation>Szűrő</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+168"/>
+        <location line="+172"/>
         <source>Source</source>
         <translation>Forrás</translation>
     </message>
     <message>
-        <location line="-167"/>
-        <location line="+195"/>
+        <location line="-171"/>
+        <location line="+199"/>
         <source>Target</source>
         <translation>Cél</translation>
     </message>
     <message>
-        <location line="-175"/>
+        <location line="-179"/>
         <source>Update catalogs</source>
         <translation>Katalógusok frissítése</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+21"/>
         <source>link(s)</source>
         <translation>hivatkozás(ok)</translation>
     </message>
@@ -6241,7 +6244,7 @@ lomtárba helyezése?</translation>
         <translation>forrás</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>covered</source>
         <translation>lefedve</translation>
     </message>
@@ -6259,16 +6262,37 @@ lomtárba helyezése?</translation>
         <location line="+118"/>
         <location line="+28"/>
         <location line="+24"/>
+        <location line="+7"/>
         <source>files</source>
         <translation>fájlok</translation>
     </message>
     <message>
-        <location line="-13"/>
+        <location line="-18"/>
         <source>Diff</source>
         <translation>Eltérés</translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+0"/>
+        <source>To move</source>
+        <translation>Áthelyezendő</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Nothing to move</source>
+        <translation>Nincs mit áthelyezni</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Up to date</source>
+        <translation>Naprakész</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>ETA %1</source>
+        <translation>Hátralévő %1</translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Run Archive</source>
         <translation>Archiválás futtatása</translation>
     </message>
@@ -6278,7 +6302,7 @@ lomtárba helyezése?</translation>
         <translation>Biztonsági mentés futtatása</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+22"/>
         <source>Pause</source>
         <translation>Szünet</translation>
     </message>
@@ -6567,8 +6591,17 @@ lomtárba helyezése?</translation>
     </message>
     <message>
         <location line="+31"/>
+        <source>Nothing to move</source>
+        <translation>Nincs mit áthelyezni</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Nothing to copy</source>
+        <translation>Nincs mit másolni</translation>
+    </message>
+    <message>
         <source>Everything is in sync</source>
-        <translation>Minden szinkronban van</translation>
+        <translation type="vanished">Minden szinkronban van</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -8129,7 +8162,7 @@ Hibák: %3</translation>
         <translation>Frissítés</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+13"/>
         <source>Explore</source>
         <translation>Tallózás</translation>
     </message>

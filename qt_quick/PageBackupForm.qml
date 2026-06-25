@@ -20,6 +20,10 @@ ColumnLayout {
     property string progressFile:      ""
     property string lastReportSummary: ""
     property bool   lastReportIsError: false
+    property bool   runningIsArchive:  false   // type of the mapping currently running
+    property string progressSpeedStr:  ""      // e.g. "12.3 MB/s"
+    property string progressEtaStr:    ""      // e.g. "2:30"
+    property double runStartMs:         0       // Date.now() when the run started
 
     // Signals for sub-page navigation (connected in Main.qml)
     signal requestAddMapping()
@@ -31,10 +35,18 @@ ColumnLayout {
         root.totals   = appManager1.getBackupTotals(root.filterType, deviceId, root.mappingTypeFilter)
     }
 
-    function formatDiff(diff, unit) {
-        if (diff === 0) return qsTr("in sync")
-        var sign = diff > 0 ? "+" : ""
-        return sign + diff + " " + unit
+    // Format a duration in seconds as M:SS or H:MM:SS
+    function formatDuration(totalSec) {
+        totalSec = Math.max(0, Math.round(totalSec))
+        var h = Math.floor(totalSec / 3600)
+        var m = Math.floor((totalSec % 3600) / 60)
+        var s = totalSec % 60
+        var ss = (s < 10 ? "0" : "") + s
+        if (h > 0) {
+            var mm = (m < 10 ? "0" : "") + m
+            return h + ":" + mm + ":" + ss
+        }
+        return m + ":" + ss
     }
 
     Component.onCompleted: {
@@ -58,16 +70,31 @@ ColumnLayout {
             root.progressTotalFiles = totalFiles
             root.progressFraction   = (totalBytes > 0) ? bytesCopied / totalBytes : 0
             root.progressFile       = currentFile
+
+            // Average speed + ETA from cumulative bytes over elapsed time
+            var elapsedSec = (Date.now() - root.runStartMs) / 1000
+            if (elapsedSec > 0.5 && bytesCopied > 0) {
+                var bytesPerSec = bytesCopied / elapsedSec
+                root.progressSpeedStr = appManager1.formatDataSize(bytesPerSec) + "/s"
+                if (totalBytes > bytesCopied && bytesPerSec > 0)
+                    root.progressEtaStr = root.formatDuration((totalBytes - bytesCopied) / bytesPerSec)
+                else
+                    root.progressEtaStr = ""
+            }
         }
         function onBackupFinished(copiedCount, movedCount, renamedCount, conflictCount, errorCount, totalBytesCopied, wasCancelled) {
             root.runningMappingId  = -1
             root.isPaused          = false
             root.progressFraction  = 1.0
             root.progressFile      = ""
+            root.progressSpeedStr  = ""
+            root.progressEtaStr    = ""
             root.lastReportIsError = false
             var status = wasCancelled ? qsTr("Cancelled") : qsTr("Completed")
+            var transferred = copiedCount + movedCount
             root.lastReportSummary = status + " - "
-                + qsTr("Copied: %1").arg(copiedCount + movedCount)
+                + (root.runningIsArchive ? qsTr("Moved: %1").arg(transferred)
+                                         : qsTr("Copied: %1").arg(transferred))
                 + (renamedCount > 0 ? " · " + qsTr("Archived & copied: %1").arg(renamedCount) : "")
                 + (conflictCount > 0 ? " · " + qsTr("Conflicts: %1").arg(conflictCount) : "")
                 + (errorCount    > 0 ? " · " + qsTr("Errors: %1").arg(errorCount)        : "")
@@ -151,10 +178,14 @@ ColumnLayout {
         showCloseButton:     false
         text: {
             if (!root.totals.deviceName) return ""
-            return root.totals.deviceName
+            // Coverage % is a Backup concept (how much of the source is mirrored in the
+            // target); it has no meaning for Archive (files are moved out of the source).
+            var base = root.totals.deviceName
                 + " - " + (root.totals.totalMappings || 0) + " " + qsTr("link(s)")
                 + " · " + (root.totals.totalSourceSizeStr || "0") + " " + qsTr("source")
-                + " · " + (root.totals.coveragePct || "0") + "% " + qsTr("covered")
+            if (root.mappingTypeFilter === "Archive")
+                return base
+            return base + " · " + (root.totals.coveragePct || "0") + "% " + qsTr("covered")
         }
     }
 
@@ -331,12 +362,14 @@ ColumnLayout {
                     }
                 }
 
-                // ── Diff ──────────────────────────────────────────────────────
+                // ── Diff (Backup) / To move (Archive) ─────────────────────────
+                // Archive moves files out of the source, so a size/coverage "diff"
+                // against the target is meaningless — show the quantity to move instead.
                 RowLayout {
                     Layout.fillWidth: true
                     spacing: Kirigami.Units.smallSpacing
                     Controls.Label {
-                        text:    qsTr("Diff")
+                        text:    modelData.mappingType === "Archive" ? qsTr("To move") : qsTr("Diff")
                         opacity: 0.7
                         Layout.preferredWidth: Kirigami.Units.gridUnit * 4
                     }
@@ -344,15 +377,26 @@ ColumnLayout {
                         Layout.fillWidth: true
                         elide: Text.ElideRight
                         text: {
+                            if (modelData.mappingType === "Archive") {
+                                if (modelData.sourceFileCount === 0)
+                                    return qsTr("Nothing to move")
+                                return modelData.sourceFileCount + " " + qsTr("files")
+                            }
                             var sizeSign  = modelData.sizeDiff       > 0 ? "+" : (modelData.sizeDiff       < 0 ? "−" : "")
                             var filesSign = modelData.fileCountDiff   > 0 ? "+" : (modelData.fileCountDiff   < 0 ? "−" : "")
                             if (modelData.sizeDiff === 0 && modelData.fileCountDiff === 0)
-                                return qsTr("in sync")
+                                return qsTr("Up to date")
                             return sizeSign + modelData.sizeDiffStr
                                 + " · " + filesSign + Math.abs(modelData.fileCountDiff) + " " + qsTr("files")
                                 + (modelData.sourceDateUpdated ? " · " + modelData.sourceDateUpdated : "")
                         }
-                        color: modelData.sizeDiff > 0 ? Kirigami.Theme.neutralTextColor : Kirigami.Theme.textColor
+                        // Archive: highlight when there are files to move (source not empty).
+                        // Backup: highlight when the source is larger than the target.
+                        color: (modelData.mappingType === "Archive"
+                                    ? modelData.sourceFileCount > 0
+                                    : modelData.sizeDiff > 0)
+                               ? Kirigami.Theme.neutralTextColor
+                               : Kirigami.Theme.textColor
                     }
                 }
 
@@ -376,6 +420,8 @@ ColumnLayout {
                             Layout.fillWidth: true
                             text: Math.round(root.progressFraction * 100) + "% · "
                                 + root.progressFilesDone + "/" + root.progressTotalFiles
+                                + (root.progressSpeedStr ? " · " + root.progressSpeedStr : "")
+                                + (root.progressEtaStr   ? " · " + qsTr("ETA %1").arg(root.progressEtaStr) : "")
                                 + (root.progressFile ? " · " + root.progressFile : "")
                             elide: Text.ElideRight
                             font.pixelSize: Kirigami.Units.gridUnit * 0.85
@@ -398,11 +444,15 @@ ColumnLayout {
                                    && !appManager1.catalogUpdateForBackupRunning
                         onClicked: {
                             root.runningMappingId   = modelData.mappingId
+                            root.runningIsArchive   = (modelData.mappingType === "Archive")
                             root.isPaused           = false
                             root.progressFraction   = 0
                             root.progressFilesDone  = 0
                             root.progressTotalFiles = 0
                             root.progressFile       = ""
+                            root.progressSpeedStr   = ""
+                            root.progressEtaStr     = ""
+                            root.runStartMs         = Date.now()
                             root.lastReportSummary  = ""
                             appManager1.runBackup(modelData.mappingId)
                         }

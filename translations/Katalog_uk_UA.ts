@@ -665,7 +665,7 @@ Choose a different name.</source>
 <context>
     <name>DeviceTreeComboBox</name>
     <message>
-        <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+131"/>
+        <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+133"/>
         <source>Select a Storage</source>
         <translation>Виберіть сховище</translation>
     </message>
@@ -6150,13 +6150,11 @@ to the trash?</source>
 <context>
     <name>PageBackupForm</name>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+35"/>
-        <location line="+315"/>
         <source>in sync</source>
-        <translation>синхронізовано</translation>
+        <translation type="vanished">синхронізовано</translation>
     </message>
     <message>
-        <location line="-282"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+93"/>
         <source>Cancelled</source>
         <translation>Скасовано</translation>
     </message>
@@ -6166,7 +6164,12 @@ to the trash?</source>
         <translation>Завершено</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
+        <source>Moved: %1</source>
+        <translation>Переміщено: %1</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Copied: %1</source>
         <translation>Скопійовано: %1</translation>
     </message>
@@ -6182,12 +6185,12 @@ to the trash?</source>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+379"/>
+        <location line="+396"/>
         <source>Errors: %1</source>
         <translation>Помилки: %1</translation>
     </message>
     <message>
-        <location line="-360"/>
+        <location line="-377"/>
         <source>Type</source>
         <translation>Тип</translation>
     </message>
@@ -6199,40 +6202,40 @@ to the trash?</source>
     </message>
     <message>
         <location line="-15"/>
-        <location line="+163"/>
+        <location line="+167"/>
         <source>Backup</source>
         <translation>Резервна копія</translation>
     </message>
     <message>
-        <location line="-162"/>
-        <location line="+162"/>
+        <location line="-166"/>
+        <location line="+166"/>
         <source>Archive</source>
         <translation>Архів</translation>
     </message>
     <message>
-        <location line="-153"/>
+        <location line="-157"/>
         <source>Filter</source>
         <translation>Фільтр</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+168"/>
+        <location line="+172"/>
         <source>Source</source>
         <translation>Джерело</translation>
     </message>
     <message>
-        <location line="-167"/>
-        <location line="+195"/>
+        <location line="-171"/>
+        <location line="+199"/>
         <source>Target</source>
         <translation>Ціль</translation>
     </message>
     <message>
-        <location line="-175"/>
+        <location line="-179"/>
         <source>Update catalogs</source>
         <translation>Оновити каталоги</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+21"/>
         <source>link(s)</source>
         <translation>посилання</translation>
     </message>
@@ -6242,7 +6245,7 @@ to the trash?</source>
         <translation>джерело</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>covered</source>
         <translation>покрито</translation>
     </message>
@@ -6260,16 +6263,37 @@ to the trash?</source>
         <location line="+118"/>
         <location line="+28"/>
         <location line="+24"/>
+        <location line="+7"/>
         <source>files</source>
         <translation>файли</translation>
     </message>
     <message>
-        <location line="-13"/>
+        <location line="-18"/>
         <source>Diff</source>
         <translation>Різн</translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+0"/>
+        <source>To move</source>
+        <translation>Перемістити</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Nothing to move</source>
+        <translation>Немає чого переміщувати</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Up to date</source>
+        <translation>Актуально</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>ETA %1</source>
+        <translation>Залишилось %1</translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Run Archive</source>
         <translation>Запустити архівування</translation>
     </message>
@@ -6279,7 +6303,7 @@ to the trash?</source>
         <translation>Запустити резервне копіювання</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+22"/>
         <source>Pause</source>
         <translation>Пауза</translation>
     </message>
@@ -6568,8 +6592,17 @@ to the trash?</source>
     </message>
     <message>
         <location line="+31"/>
+        <source>Nothing to move</source>
+        <translation>Немає чого переміщувати</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Nothing to copy</source>
+        <translation>Немає чого копіювати</translation>
+    </message>
+    <message>
         <source>Everything is in sync</source>
-        <translation>Усе синхронізовано</translation>
+        <translation type="vanished">Усе синхронізовано</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -8130,7 +8163,7 @@ Errors: %3</source>
         <translation>Оновити</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+13"/>
         <source>Explore</source>
         <translation>Переглянути</translation>
     </message>

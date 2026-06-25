@@ -665,7 +665,7 @@ Kies een andere naam.</translation>
 <context>
     <name>DeviceTreeComboBox</name>
     <message>
-        <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+131"/>
+        <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+133"/>
         <source>Select a Storage</source>
         <translation>Een opslag selecteren</translation>
     </message>
@@ -6149,13 +6149,11 @@ naar de prullenbak verplaatsen?</translation>
 <context>
     <name>PageBackupForm</name>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+35"/>
-        <location line="+315"/>
         <source>in sync</source>
-        <translation>gesynchroniseerd</translation>
+        <translation type="vanished">gesynchroniseerd</translation>
     </message>
     <message>
-        <location line="-282"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+93"/>
         <source>Cancelled</source>
         <translation>Geannuleerd</translation>
     </message>
@@ -6165,7 +6163,12 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Voltooid</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
+        <source>Moved: %1</source>
+        <translation>Verplaatst: %1</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Copied: %1</source>
         <translation>Gekopieerd: %1</translation>
     </message>
@@ -6181,12 +6184,12 @@ naar de prullenbak verplaatsen?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+379"/>
+        <location line="+396"/>
         <source>Errors: %1</source>
         <translation>Fouten: %1</translation>
     </message>
     <message>
-        <location line="-360"/>
+        <location line="-377"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
@@ -6198,40 +6201,40 @@ naar de prullenbak verplaatsen?</translation>
     </message>
     <message>
         <location line="-15"/>
-        <location line="+163"/>
+        <location line="+167"/>
         <source>Backup</source>
         <translation>Back-up</translation>
     </message>
     <message>
-        <location line="-162"/>
-        <location line="+162"/>
+        <location line="-166"/>
+        <location line="+166"/>
         <source>Archive</source>
         <translation>Archief</translation>
     </message>
     <message>
-        <location line="-153"/>
+        <location line="-157"/>
         <source>Filter</source>
         <translation>Filter</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+168"/>
+        <location line="+172"/>
         <source>Source</source>
         <translation>Bron</translation>
     </message>
     <message>
-        <location line="-167"/>
-        <location line="+195"/>
+        <location line="-171"/>
+        <location line="+199"/>
         <source>Target</source>
         <translation>Doel</translation>
     </message>
     <message>
-        <location line="-175"/>
+        <location line="-179"/>
         <source>Update catalogs</source>
         <translation>Catalogi bijwerken</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+21"/>
         <source>link(s)</source>
         <translation>koppeling(en)</translation>
     </message>
@@ -6241,7 +6244,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation>bron</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>covered</source>
         <translation>gedekt</translation>
     </message>
@@ -6259,16 +6262,37 @@ naar de prullenbak verplaatsen?</translation>
         <location line="+118"/>
         <location line="+28"/>
         <location line="+24"/>
+        <location line="+7"/>
         <source>files</source>
         <translation>bestanden</translation>
     </message>
     <message>
-        <location line="-13"/>
+        <location line="-18"/>
         <source>Diff</source>
         <translation>Versch</translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+0"/>
+        <source>To move</source>
+        <translation>Te verplaatsen</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Nothing to move</source>
+        <translation>Niets te verplaatsen</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Up to date</source>
+        <translation>Up-to-date</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>ETA %1</source>
+        <translation>Resterend %1</translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Run Archive</source>
         <translation>Archief uitvoeren</translation>
     </message>
@@ -6278,7 +6302,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Back-up uitvoeren</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+22"/>
         <source>Pause</source>
         <translation>Pauzeren</translation>
     </message>
@@ -6567,8 +6591,17 @@ naar de prullenbak verplaatsen?</translation>
     </message>
     <message>
         <location line="+31"/>
+        <source>Nothing to move</source>
+        <translation>Niets te verplaatsen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Nothing to copy</source>
+        <translation>Niets te kopiëren</translation>
+    </message>
+    <message>
         <source>Everything is in sync</source>
-        <translation>Alles is gesynchroniseerd</translation>
+        <translation type="vanished">Alles is gesynchroniseerd</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -8129,7 +8162,7 @@ Fouten: %3</translation>
         <translation>Bijwerken</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+13"/>
         <source>Explore</source>
         <translation>Verkennen</translation>
     </message>

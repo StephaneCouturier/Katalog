@@ -455,26 +455,32 @@ MainWindow::BackupCompareResult MainWindow::compareForBackup(
 {
     BackupCompareResult out;
 
-    if (strictCopy) {
+    if (sourceDrive) {
+        // DRIVE mode: walk the source filesystem directly. This is independent of the
+        // source catalog index, so it works even when "Update catalogs" is off (the
+        // index may be stale or empty). It is the only drive-walking comparator, so it
+        // applies to both strictCopy and non-strict mappings — notably Archive, which
+        // forces non-strict and previously fell through to the index-based branch below
+        // (finding nothing to move when the catalog was not updated first).
         CatalogDifferenceEngine engine(m_connectionName);
-        StrictDifferenceResult r;
+        StrictDifferenceResult r = engine.compareStrictFromDrive(
+            sourceDevice.path,
+            targetDevice.externalID,
+            targetDevice.path
+        );
+        out.filesToCopy   = r.filesToCopy;
+        out.fileConflicts = r.conflicts;
+        out.skippedCount  = r.skippedCount;
 
-        if (sourceDrive) {
-            // DRIVE mode: walk source filesystem directly — bypasses catalog index and exclusions
-            r = engine.compareStrictFromDrive(
-                sourceDevice.path,
-                targetDevice.externalID,
-                targetDevice.path
-            );
-        } else {
-            // CATALOG mode (default): use catalog index
-            r = engine.compareStrict(
-                sourceDevice.externalID,
-                targetDevice.externalID,
-                sourceDevice.path,
-                targetDevice.path
-            );
-        }
+    } else if (strictCopy) {
+        // CATALOG mode (default): use catalog index
+        CatalogDifferenceEngine engine(m_connectionName);
+        StrictDifferenceResult r = engine.compareStrict(
+            sourceDevice.externalID,
+            targetDevice.externalID,
+            sourceDevice.path,
+            targetDevice.path
+        );
         out.filesToCopy   = r.filesToCopy;
         out.fileConflicts = r.conflicts;
         out.skippedCount  = r.skippedCount;

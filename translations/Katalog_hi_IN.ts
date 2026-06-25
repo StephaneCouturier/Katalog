@@ -665,7 +665,7 @@ Choose a different name.</source>
 <context>
     <name>DeviceTreeComboBox</name>
     <message>
-        <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+131"/>
+        <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+133"/>
         <source>Select a Storage</source>
         <translation>एक भंडारण चुनें</translation>
     </message>
@@ -6149,13 +6149,11 @@ to the trash?</source>
 <context>
     <name>PageBackupForm</name>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+35"/>
-        <location line="+315"/>
         <source>in sync</source>
-        <translation>सिंक में</translation>
+        <translation type="vanished">सिंक में</translation>
     </message>
     <message>
-        <location line="-282"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+93"/>
         <source>Cancelled</source>
         <translation>रद्द किया गया</translation>
     </message>
@@ -6165,7 +6163,12 @@ to the trash?</source>
         <translation>पूर्ण हुआ</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
+        <source>Moved: %1</source>
+        <translation>स्थानांतरित: %1</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Copied: %1</source>
         <translation>कॉपी किए गए: %1</translation>
     </message>
@@ -6181,12 +6184,12 @@ to the trash?</source>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+379"/>
+        <location line="+396"/>
         <source>Errors: %1</source>
         <translation>त्रुटियाँ: %1</translation>
     </message>
     <message>
-        <location line="-360"/>
+        <location line="-377"/>
         <source>Type</source>
         <translation>प्रकार</translation>
     </message>
@@ -6198,40 +6201,40 @@ to the trash?</source>
     </message>
     <message>
         <location line="-15"/>
-        <location line="+163"/>
+        <location line="+167"/>
         <source>Backup</source>
         <translation>बैकअप</translation>
     </message>
     <message>
-        <location line="-162"/>
-        <location line="+162"/>
+        <location line="-166"/>
+        <location line="+166"/>
         <source>Archive</source>
         <translation>आर्काइव</translation>
     </message>
     <message>
-        <location line="-153"/>
+        <location line="-157"/>
         <source>Filter</source>
         <translation>फ़िल्टर</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+168"/>
+        <location line="+172"/>
         <source>Source</source>
         <translation>स्रोत</translation>
     </message>
     <message>
-        <location line="-167"/>
-        <location line="+195"/>
+        <location line="-171"/>
+        <location line="+199"/>
         <source>Target</source>
         <translation>लक्ष्य</translation>
     </message>
     <message>
-        <location line="-175"/>
+        <location line="-179"/>
         <source>Update catalogs</source>
         <translation>कैटलॉग अपडेट करें</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+21"/>
         <source>link(s)</source>
         <translation>लिंक</translation>
     </message>
@@ -6241,7 +6244,7 @@ to the trash?</source>
         <translation>स्रोत</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>covered</source>
         <translation>आच्छादित</translation>
     </message>
@@ -6259,16 +6262,37 @@ to the trash?</source>
         <location line="+118"/>
         <location line="+28"/>
         <location line="+24"/>
+        <location line="+7"/>
         <source>files</source>
         <translation>फ़ाइलें</translation>
     </message>
     <message>
-        <location line="-13"/>
+        <location line="-18"/>
         <source>Diff</source>
         <translation>अंतर</translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+0"/>
+        <source>To move</source>
+        <translation>स्थानांतरित करने हेतु</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Nothing to move</source>
+        <translation>स्थानांतरित करने के लिए कुछ नहीं</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Up to date</source>
+        <translation>अद्यतित</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>ETA %1</source>
+        <translation>शेष %1</translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Run Archive</source>
         <translation>आर्काइव चलाएँ</translation>
     </message>
@@ -6278,7 +6302,7 @@ to the trash?</source>
         <translation>बैकअप चलाएँ</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+22"/>
         <source>Pause</source>
         <translation>रोकें</translation>
     </message>
@@ -6567,8 +6591,17 @@ to the trash?</source>
     </message>
     <message>
         <location line="+31"/>
+        <source>Nothing to move</source>
+        <translation>स्थानांतरित करने के लिए कुछ नहीं</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Nothing to copy</source>
+        <translation>कॉपी करने के लिए कुछ नहीं</translation>
+    </message>
+    <message>
         <source>Everything is in sync</source>
-        <translation>सब कुछ सिंक में है</translation>
+        <translation type="vanished">सब कुछ सिंक में है</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -8129,7 +8162,7 @@ Errors: %3</source>
         <translation>अपडेट</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+13"/>
         <source>Explore</source>
         <translation>अन्वेषण</translation>
     </message>

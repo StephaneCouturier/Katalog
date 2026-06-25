@@ -232,7 +232,8 @@ Kirigami.ScrollablePage {
             visible: root.previewData !== null
                      && root.previewData.filesToCopy.length === 0
                      && root.previewData.fileConflicts.length === 0
-            text: qsTr("Everything is in sync")
+            text: (root.previewData && root.previewData.isArchive) ? qsTr("Nothing to move")
+                                                                   : qsTr("Nothing to copy")
             explanation: qsTr("No files need to be copied or moved.")
             icon.name: "checkmark"
         }

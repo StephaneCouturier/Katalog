@@ -3635,15 +3635,24 @@ AppManager::BackupCompareResult AppManager::compareForBackup(
 {
     BackupCompareResult out;
 
-    if (strictCopy) {
+    if (sourceDrive) {
+        // DRIVE mode: walk the source filesystem directly. This is independent of the
+        // source catalog index, so it works even when "Update catalogs" is off (the
+        // index may be stale or empty). It is the only drive-walking comparator, so it
+        // applies to both strictCopy and non-strict mappings — notably Archive, which
+        // forces non-strict and previously fell through to the index-based branch below
+        // (finding nothing to move when the catalog was not updated first).
         CatalogDifferenceEngine engine(m_connectionName);
-        StrictDifferenceResult r;
-        if (sourceDrive) {
-            r = engine.compareStrictFromDrive(sourceDevice.path, targetDevice.externalID, targetDevice.path);
-        } else {
-            r = engine.compareStrict(sourceDevice.externalID, targetDevice.externalID,
-                                     sourceDevice.path, targetDevice.path);
-        }
+        StrictDifferenceResult r = engine.compareStrictFromDrive(
+            sourceDevice.path, targetDevice.externalID, targetDevice.path);
+        out.filesToCopy   = r.filesToCopy;
+        out.fileConflicts = r.conflicts;
+        out.skippedCount  = r.skippedCount;
+    } else if (strictCopy) {
+        CatalogDifferenceEngine engine(m_connectionName);
+        StrictDifferenceResult r = engine.compareStrict(
+            sourceDevice.externalID, targetDevice.externalID,
+            sourceDevice.path, targetDevice.path);
         out.filesToCopy   = r.filesToCopy;
         out.fileConflicts = r.conflicts;
         out.skippedCount  = r.skippedCount;
@@ -3819,6 +3828,7 @@ void AppManager::executeBackupJob(int mappingId)
         return;
     }
 
+    m_backupSourceDevice     = sourceDevice;
     m_backupTargetDevice     = targetDevice;
     m_runningBackupMappingId = mappingId;
 
@@ -3901,21 +3911,46 @@ void AppManager::onBackupFinishedInternal(const BackupReport &report)
         report.totalBytesCopied,
         report.wasCancelled);
 
-    // Update target catalog after successful backup (same rule as K2: same checkbox controls before AND after)
+    // Re-scan the affected catalogs after a successful backup so the card's totals/diff
+    // refresh (same rule as K2: the "Update catalogs" checkbox controls before AND after).
+    // Backup only changes the target; Archive moves files out of the source, so re-scan
+    // both — source first so the visible "To move" count updates, then target.
     if (!report.wasCancelled && updateBeforeBackup() && !m_catalogUpdateForBackupRunning) {
-        if (!m_deviceUpdateManager)
-            setupDeviceUpdateManager();
-        disconnect(m_deviceUpdateManager, nullptr, this, nullptr);
-        connect(m_deviceUpdateManager, &DeviceUpdateManager::operationCompleted,
-                this, [this]() { setupDeviceUpdateManager(); emit backupMappingsChanged(); });
-        connect(m_deviceUpdateManager, &DeviceUpdateManager::operationError,
-                this, [this](const QString &) { setupDeviceUpdateManager(); });
-        connect(m_deviceUpdateManager, &DeviceUpdateManager::operationCancelled,
-                this, [this]() { setupDeviceUpdateManager(); });
-        Device *dev = new Device();
-        *dev = m_backupTargetDevice;
-        m_deviceUpdateManager->updateDeviceHierarchy(dev, collection->databaseMode, collection->folder, "update");
+        m_postBackupUpdateQueue.clear();
+        if (m_backupIsArchive)
+            m_postBackupUpdateQueue.append(m_backupSourceDevice.ID);
+        m_postBackupUpdateQueue.append(m_backupTargetDevice.ID);
+        // Defer past DeviceUpdateManager's ~10 ms post-operation cleanup window (same
+        // singleShot guard used in onCatalogUpdateForBackupStep) so the update runs
+        // against a fully idle manager rather than erroring out.
+        QTimer::singleShot(60, this, [this]() { runNextPostBackupUpdate(); });
     }
+}
+//----------------------------------------------------------------------
+void AppManager::runNextPostBackupUpdate()
+{
+    if (m_postBackupUpdateQueue.isEmpty()) {
+        emit backupMappingsChanged();
+        return;
+    }
+    const int id = m_postBackupUpdateQueue.takeFirst();
+    setupDeviceUpdateManager();   // clean, idle manager
+    disconnect(m_deviceUpdateManager, nullptr, this, nullptr);
+    // Refresh after each catalog (on any outcome) and chain to the next one, deferring
+    // past the cleanup window so the manager is idle before the next update.
+    auto onDone = [this]() {
+        setupDeviceUpdateManager();
+        emit backupMappingsChanged();
+        QTimer::singleShot(60, this, [this]() { runNextPostBackupUpdate(); });
+    };
+    connect(m_deviceUpdateManager, &DeviceUpdateManager::operationCompleted, this, [onDone]() { onDone(); });
+    connect(m_deviceUpdateManager, &DeviceUpdateManager::operationError,     this, [onDone](const QString &) { onDone(); });
+    connect(m_deviceUpdateManager, &DeviceUpdateManager::operationCancelled, this, [onDone]() { onDone(); });
+
+    Device *dev = new Device();
+    dev->ID = id;
+    dev->loadDevice(m_connectionName);
+    m_deviceUpdateManager->updateDeviceHierarchy(dev, collection->databaseMode, collection->folder, "update");
 }
 //----------------------------------------------------------------------
 QVariantMap AppManager::replicateDirectories(int mappingId)

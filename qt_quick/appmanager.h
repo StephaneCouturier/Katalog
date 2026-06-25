@@ -504,9 +504,15 @@ private:
     QThread                *m_backupThread          = nullptr;
     bool                    m_backupIsArchive        = false;
     QElapsedTimer           m_backupTimer;
+    Device                  m_backupSourceDevice;
     Device                  m_backupTargetDevice;
     int                     m_runningBackupMappingId = -1;
     QList<BackupPreviewRow> m_lastPreviewRows;
+
+    // Post-backup catalog re-scan queue (refreshes the card's totals/diff). Backup
+    // re-scans the target; Archive re-scans source (files moved out) AND target.
+    QList<int>              m_postBackupUpdateQueue;
+    void                    runNextPostBackupUpdate();
 
     // Catalog-update-before-backup state
     enum class BackupCatalogUpdatePhase { None, UpdatingSource, UpdatingTarget };
