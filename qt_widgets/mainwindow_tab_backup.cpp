@@ -700,6 +700,8 @@ void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, Mapping
 {
     // Save target device so onBackupFinished() can update the target catalog afterward
     m_pendingBackupTargetDevice = targetDevice;
+    // Remember which mapping is running so onBackupFinished() can record its last-backup date/size
+    m_currentBackupMappingId = mapping.mappingId;
 
     //Memory mode: load file data into 'file' table first
     if (collection->databaseMode == "Memory") {
@@ -860,6 +862,20 @@ void MainWindow::onBackupFinished(const BackupReport &report)
     ui->BackUp_label_ProgressSummary->setText(msg);
 
     showBackupReport(report);
+
+    // Record the completed run on the mapping (date + bytes transferred), then refresh
+    // the list so the "last backup" columns reflect it. Any completed (non-cancelled) run.
+    if (!report.wasCancelled && m_currentBackupMappingId >= 0) {
+        if (!backupMappingManager)
+            backupMappingManager = new BackupMappingManager(m_connectionName, this);
+        backupMappingManager->setLastBackup(
+            m_currentBackupMappingId,
+            QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"),
+            report.totalBytesCopied);
+        collection->saveMappingTableToFile();
+        loadBackUpMapping();
+    }
+    m_currentBackupMappingId = -1;
 
     // Update the target catalog to reflect the newly copied files
     if (!report.wasCancelled

@@ -3558,6 +3558,9 @@ QVariantList AppManager::getBackupMappings(const QString &filterType, int device
         map[QStringLiteral("strictCopy")]          = m.strictCopy;
         map[QStringLiteral("conflictMode")]        = conflictModeToString(m.conflictMode);
         map[QStringLiteral("sourceDrive")]         = m.sourceDrive;
+        map[QStringLiteral("lastBackupDate")]      = m.lastBackupDate;
+        map[QStringLiteral("lastBackupSize")]      = m.lastBackupSize;
+        map[QStringLiteral("lastBackupSizeStr")]   = QLocale().formattedDataSize(m.lastBackupSize);
         result.append(map);
     }
     return result;
@@ -3923,6 +3926,7 @@ void AppManager::onBackupProgressInternal(int filesDone, int totalFiles,
 //----------------------------------------------------------------------
 void AppManager::onBackupFinishedInternal(const BackupReport &report)
 {
+    const int finishedMappingId = m_runningBackupMappingId;
     m_backupJob              = nullptr;
     m_backupThread           = nullptr;
     m_runningBackupMappingId = -1;
@@ -3934,6 +3938,17 @@ void AppManager::onBackupFinishedInternal(const BackupReport &report)
         report.errorCount(),
         report.totalBytesCopied,
         report.wasCancelled);
+
+    // Record the completed run on the mapping (date + bytes transferred) so the card can
+    // show "Last backup". Done for any completed (non-cancelled) run, including 0 files.
+    if (!report.wasCancelled && finishedMappingId >= 0) {
+        BackupMappingManager manager(m_connectionName);
+        manager.setLastBackup(finishedMappingId,
+                              QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd hh:mm:ss")),
+                              report.totalBytesCopied);
+        collection->saveMappingTableToFile();
+        emit backupMappingsChanged();
+    }
 
     // Re-scan the affected catalogs after a successful backup so the card's totals/diff
     // refresh (same rule as K2: the "Update catalogs" checkbox controls before AND after).

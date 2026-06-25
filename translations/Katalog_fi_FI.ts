@@ -462,7 +462,7 @@ Valitse toinen nimi.</translation>
         <translation>Ei tallennuslaite.</translation>
     </message>
     <message>
-        <location line="+160"/>
+        <location line="+163"/>
         <location line="+22"/>
         <source>Provide a link name.</source>
         <translation>Anna linkin nimi.</translation>
@@ -497,19 +497,19 @@ Valitse toinen nimi.</translation>
     </message>
     <message>
         <location line="+92"/>
-        <location line="+265"/>
+        <location line="+277"/>
         <source>Link not found.</source>
         <translation>Linkkiä ei löytynyt.</translation>
     </message>
     <message>
-        <location line="-253"/>
+        <location line="-265"/>
         <location line="+107"/>
-        <location line="+158"/>
+        <location line="+170"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>Lähteen ja kohteen täytyy olla luettelolaitteita.</translation>
     </message>
     <message>
-        <location line="-232"/>
+        <location line="-244"/>
         <location line="+7"/>
         <source>Move</source>
         <translation>Siirrä</translation>
@@ -528,13 +528,13 @@ Valitse toinen nimi.</translation>
     </message>
     <message>
         <location line="+58"/>
-        <location line="+157"/>
+        <location line="+169"/>
         <source>Source not available: %1</source>
         <translation>Lähde ei käytettävissä: %1</translation>
     </message>
     <message>
-        <location line="-153"/>
-        <location line="+157"/>
+        <location line="-165"/>
+        <location line="+169"/>
         <source>Target not available: %1</source>
         <translation>Kohde ei käytettävissä: %1</translation>
     </message>
@@ -1564,7 +1564,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+406"/>
         <location line="+176"/>
-        <location line="+145"/>
+        <location line="+147"/>
         <location line="+19"/>
         <location line="+41"/>
         <location line="+38"/>
@@ -1572,9 +1572,9 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-4"/>
         <location line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-449"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-451"/>
         <location line="+176"/>
-        <location line="+145"/>
+        <location line="+147"/>
         <location line="+19"/>
         <location line="+41"/>
         <location line="+38"/>
@@ -1617,7 +1617,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <translation type="vanished">Kopioi tiedoston tarkistussumma</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+285"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+299"/>
         <location line="+29"/>
         <location line="+0"/>
         <source>No backup links found.</source>
@@ -1656,7 +1656,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <translation>Laskettu</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-783"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-799"/>
         <location filename="../core/searchprogressmanager.cpp" line="+85"/>
         <source>Paused</source>
         <translation>Keskeytetty</translation>
@@ -1690,18 +1690,18 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-105"/>
-        <location line="+427"/>
+        <location line="+429"/>
         <location line="+128"/>
-        <location line="+87"/>
+        <location line="+101"/>
         <location line="+139"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-37"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-45"/>
         <location line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+285"/>
         <location line="+36"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-354"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-368"/>
         <location line="+128"/>
-        <location line="+87"/>
+        <location line="+101"/>
         <location line="+139"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-44"/>
@@ -1719,11 +1719,11 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <translation>Käytetty tila</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-335"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-349"/>
         <location line="+109"/>
-        <location line="+87"/>
-        <location line="-87"/>
-        <location line="+87"/>
+        <location line="+101"/>
+        <location line="-101"/>
+        <location line="+101"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-76"/>
         <source>Cancelled</source>
         <translation>Peruutettu</translation>
@@ -2607,7 +2607,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
     </message>
     <message>
         <location line="-5377"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1144"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1160"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+68"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
@@ -2634,7 +2634,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
     <message>
         <location line="+799"/>
         <location line="+3246"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+707"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+723"/>
         <location line="+143"/>
         <location line="+301"/>
         <location line="+7"/>
@@ -3323,7 +3323,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1269"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1285"/>
         <location line="+0"/>
         <source>Replicate directories</source>
         <translation>Replikoi hakemistot</translation>
@@ -3331,23 +3331,23 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-6"/>
-        <location line="+1250"/>
+        <location line="+1266"/>
         <location line="+16"/>
-        <location line="-1266"/>
-        <location line="+1250"/>
+        <location line="-1282"/>
+        <location line="+1266"/>
         <location line="+16"/>
         <source>Preview Backup</source>
         <translation>Varmuuskopion esikatselu</translation>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1271"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1287"/>
         <location line="+280"/>
-        <location line="+974"/>
+        <location line="+990"/>
         <location line="+14"/>
-        <location line="-1268"/>
+        <location line="-1284"/>
         <location line="+280"/>
-        <location line="+974"/>
+        <location line="+990"/>
         <location line="+14"/>
         <source>Run Backup</source>
         <translation>Suorita varmuuskopiointi</translation>
@@ -4464,7 +4464,7 @@ Jakamista ei suoritettu.</translation>
         <translation>Valitse ensin prosessi jota sovelletaan kaikkiin alla oleviin tuloksiin.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-958"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-974"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+15"/>
         <location line="+0"/>
         <source>Results exported to the collection folder:</source>
@@ -4787,10 +4787,10 @@ Jakamista ei suoritettu.</translation>
         <location line="+3285"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-141"/>
         <location line="+344"/>
-        <location line="+745"/>
-        <location line="-1089"/>
+        <location line="+761"/>
+        <location line="-1105"/>
         <location line="+344"/>
-        <location line="+745"/>
+        <location line="+761"/>
         <source>Source</source>
         <translation>Lähde</translation>
     </message>
@@ -5473,30 +5473,30 @@ roskakoriin?</translation>
         <translation>Kohde-ID</translation>
     </message>
     <message>
-        <location line="-1094"/>
+        <location line="-1110"/>
         <location line="+344"/>
-        <location line="+751"/>
-        <location line="-751"/>
-        <location line="+751"/>
+        <location line="+767"/>
+        <location line="-767"/>
+        <location line="+767"/>
         <source>Target</source>
         <translation>Kohde</translation>
     </message>
     <message>
-        <location line="-1199"/>
-        <location line="+1268"/>
+        <location line="-1215"/>
+        <location line="+1284"/>
         <location line="+0"/>
         <source>Run Archive</source>
         <translation>Suorita arkistointi</translation>
     </message>
     <message>
-        <location line="-1263"/>
-        <location line="+1266"/>
+        <location line="-1279"/>
+        <location line="+1282"/>
         <location line="+0"/>
         <source>Preview Archive</source>
         <translation>Arkiston esikatselu</translation>
     </message>
     <message>
-        <location line="-1251"/>
+        <location line="-1267"/>
         <source>Invert (swap source and target)</source>
         <translation>Käännä (vaihda lähde ja kohde)</translation>
     </message>
@@ -5504,15 +5504,15 @@ roskakoriin?</translation>
         <location line="+43"/>
         <location line="+111"/>
         <location line="+236"/>
-        <location line="+444"/>
-        <location line="-680"/>
+        <location line="+460"/>
+        <location line="-696"/>
         <location line="+236"/>
-        <location line="+444"/>
+        <location line="+460"/>
         <source>Select a mapping first.</source>
         <translation>Valitse ensin linkki.</translation>
     </message>
     <message>
-        <location line="-769"/>
+        <location line="-785"/>
         <location line="+108"/>
         <location line="+236"/>
         <location line="-236"/>
@@ -5555,14 +5555,14 @@ roskakoriin?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+643"/>
+        <location line="+659"/>
         <location line="+0"/>
         <source>Errors</source>
         <translation>Virheet</translation>
     </message>
     <message>
-        <location line="-218"/>
-        <location line="+239"/>
+        <location line="-232"/>
+        <location line="+253"/>
         <location line="+74"/>
         <location line="-74"/>
         <location line="+74"/>
@@ -5570,8 +5570,8 @@ roskakoriin?</translation>
         <translation>Siirrä</translation>
     </message>
     <message>
-        <location line="-313"/>
-        <location line="+239"/>
+        <location line="-327"/>
+        <location line="+253"/>
         <location line="+74"/>
         <location line="-74"/>
         <location line="+74"/>
@@ -5579,14 +5579,14 @@ roskakoriin?</translation>
         <translation>Kopioi</translation>
     </message>
     <message>
-        <location line="-312"/>
-        <location line="+240"/>
+        <location line="-326"/>
+        <location line="+254"/>
         <location line="+0"/>
         <source>Already in target</source>
         <translation>Jo kohteessa</translation>
     </message>
     <message>
-        <location line="-154"/>
+        <location line="-168"/>
         <location line="+32"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+8"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
@@ -5630,7 +5630,7 @@ roskakoriin?</translation>
         <translation>%1</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+74"/>
         <location line="+143"/>
         <location line="+0"/>
         <source>Status</source>
@@ -5939,8 +5939,8 @@ roskakoriin?</translation>
         <translation>Katalogin nimi</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1175"/>
-        <location line="+980"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1191"/>
+        <location line="+996"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+150"/>
         <location line="+42"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
@@ -5950,8 +5950,8 @@ roskakoriin?</translation>
         <translation>Keskeytä</translation>
     </message>
     <message>
-        <location line="-973"/>
-        <location line="+973"/>
+        <location line="-989"/>
+        <location line="+989"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-28"/>
         <location line="+30"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
@@ -6194,12 +6194,12 @@ roskakoriin?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+407"/>
+        <location line="+420"/>
         <source>Errors: %1</source>
         <translation>Virheet: %1</translation>
     </message>
     <message>
-        <location line="-388"/>
+        <location line="-401"/>
         <source>Type</source>
         <translation>Tyyppi</translation>
     </message>
@@ -6297,7 +6297,22 @@ roskakoriin?</translation>
         <translation>Ajan tasalla</translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+19"/>
+        <source>Last archive</source>
+        <translation>Viimeisin arkistointi</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Last backup</source>
+        <translation>Viimeisin varmuuskopio</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>never</source>
+        <translation>ei koskaan</translation>
+    </message>
+    <message>
+        <location line="+25"/>
         <source>ETA %1</source>
         <translation>Jäljellä %1</translation>
     </message>

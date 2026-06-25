@@ -457,7 +457,7 @@ Choose a different name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+160"/>
+        <location line="+163"/>
         <location line="+22"/>
         <source>Provide a link name.</source>
         <translation type="unfinished"></translation>
@@ -492,19 +492,19 @@ Choose a different name.</source>
     </message>
     <message>
         <location line="+92"/>
-        <location line="+265"/>
+        <location line="+277"/>
         <source>Link not found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-253"/>
+        <location line="-265"/>
         <location line="+107"/>
-        <location line="+158"/>
+        <location line="+170"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-232"/>
+        <location line="-244"/>
         <location line="+7"/>
         <source>Move</source>
         <translation type="unfinished"></translation>
@@ -523,13 +523,13 @@ Choose a different name.</source>
     </message>
     <message>
         <location line="+58"/>
-        <location line="+157"/>
+        <location line="+169"/>
         <source>Source not available: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-153"/>
-        <location line="+157"/>
+        <location line="-165"/>
+        <location line="+169"/>
         <source>Target not available: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1337,18 +1337,18 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-105"/>
-        <location line="+427"/>
+        <location line="+429"/>
         <location line="+128"/>
-        <location line="+87"/>
+        <location line="+101"/>
         <location line="+139"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+550"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-45"/>
         <location line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+368"/>
         <location line="+36"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-354"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-368"/>
         <location line="+128"/>
-        <location line="+87"/>
+        <location line="+101"/>
         <location line="+139"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-44"/>
@@ -1851,7 +1851,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="-5377"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1144"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1160"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+68"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
@@ -1878,7 +1878,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+799"/>
         <location line="+3246"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+707"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+723"/>
         <location line="+143"/>
         <location line="+301"/>
         <location line="+7"/>
@@ -2549,9 +2549,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/devicemappingview.cpp" line="-8"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-165"/>
         <location line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1015"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1031"/>
         <location line="+176"/>
-        <location line="+145"/>
+        <location line="+147"/>
         <location line="+19"/>
         <location line="+41"/>
         <location line="+38"/>
@@ -2559,9 +2559,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-4"/>
         <location line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-449"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-451"/>
         <location line="+176"/>
-        <location line="+145"/>
+        <location line="+147"/>
         <location line="+19"/>
         <location line="+41"/>
         <location line="+38"/>
@@ -2629,7 +2629,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-703"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-705"/>
         <location line="+0"/>
         <source>Replicate directories</source>
         <translation type="unfinished"></translation>
@@ -2637,23 +2637,23 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-6"/>
-        <location line="+1250"/>
+        <location line="+1266"/>
         <location line="+16"/>
-        <location line="-1266"/>
-        <location line="+1250"/>
+        <location line="-1282"/>
+        <location line="+1266"/>
         <location line="+16"/>
         <source>Preview Backup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1271"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1287"/>
         <location line="+280"/>
-        <location line="+974"/>
+        <location line="+990"/>
         <location line="+14"/>
-        <location line="-1268"/>
+        <location line="-1284"/>
         <location line="+280"/>
-        <location line="+974"/>
+        <location line="+990"/>
         <location line="+14"/>
         <source>Run Backup</source>
         <translation type="unfinished"></translation>
@@ -3962,7 +3962,7 @@ Split was not performed.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-958"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-974"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+15"/>
         <location line="+0"/>
         <source>Results exported to the collection folder:</source>
@@ -4385,10 +4385,10 @@ Split was not performed.</translation>
         <location line="+3285"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-141"/>
         <location line="+344"/>
-        <location line="+745"/>
-        <location line="-1089"/>
+        <location line="+761"/>
+        <location line="-1105"/>
         <location line="+344"/>
-        <location line="+745"/>
+        <location line="+761"/>
         <source>Source</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4692,11 +4692,11 @@ Split was not performed.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-586"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-600"/>
         <location line="+109"/>
-        <location line="+87"/>
-        <location line="-87"/>
-        <location line="+87"/>
+        <location line="+101"/>
+        <location line="-101"/>
+        <location line="+101"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-132"/>
         <source>Cancelled</source>
         <translation type="unfinished"></translation>
@@ -5185,30 +5185,30 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1094"/>
+        <location line="-1110"/>
         <location line="+344"/>
-        <location line="+751"/>
-        <location line="-751"/>
-        <location line="+751"/>
+        <location line="+767"/>
+        <location line="-767"/>
+        <location line="+767"/>
         <source>Target</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1199"/>
-        <location line="+1268"/>
+        <location line="-1215"/>
+        <location line="+1284"/>
         <location line="+0"/>
         <source>Run Archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1263"/>
-        <location line="+1266"/>
+        <location line="-1279"/>
+        <location line="+1282"/>
         <location line="+0"/>
         <source>Preview Archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1251"/>
+        <location line="-1267"/>
         <source>Invert (swap source and target)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5216,15 +5216,15 @@ to the trash?</source>
         <location line="+43"/>
         <location line="+111"/>
         <location line="+236"/>
-        <location line="+444"/>
-        <location line="-680"/>
+        <location line="+460"/>
+        <location line="-696"/>
         <location line="+236"/>
-        <location line="+444"/>
+        <location line="+460"/>
         <source>Select a mapping first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-769"/>
+        <location line="-785"/>
         <location line="+108"/>
         <location line="+236"/>
         <location line="-236"/>
@@ -5267,14 +5267,14 @@ to the trash?</source>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+643"/>
+        <location line="+659"/>
         <location line="+0"/>
         <source>Errors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-218"/>
-        <location line="+239"/>
+        <location line="-232"/>
+        <location line="+253"/>
         <location line="+74"/>
         <location line="-74"/>
         <location line="+74"/>
@@ -5282,8 +5282,8 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-313"/>
-        <location line="+239"/>
+        <location line="-327"/>
+        <location line="+253"/>
         <location line="+74"/>
         <location line="-74"/>
         <location line="+74"/>
@@ -5291,14 +5291,14 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-312"/>
-        <location line="+240"/>
+        <location line="-326"/>
+        <location line="+254"/>
         <location line="+0"/>
         <source>Already in target</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-154"/>
+        <location line="-168"/>
         <location line="+32"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+8"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
@@ -5342,7 +5342,7 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+74"/>
         <location line="+143"/>
         <location line="+0"/>
         <source>Status</source>
@@ -5607,8 +5607,8 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1175"/>
-        <location line="+980"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1191"/>
+        <location line="+996"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+150"/>
         <location line="+42"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
@@ -5618,8 +5618,8 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-973"/>
-        <location line="+973"/>
+        <location line="-989"/>
+        <location line="+989"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-28"/>
         <location line="+30"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
@@ -5982,12 +5982,12 @@ to the trash?</source>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+407"/>
+        <location line="+420"/>
         <source>Errors: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-388"/>
+        <location line="-401"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6085,7 +6085,22 @@ to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+19"/>
+        <source>Last archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Last backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>never</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
         <source>ETA %1</source>
         <translation type="unfinished"></translation>
     </message>

@@ -399,6 +399,19 @@ ColumnLayout {
                                ? Kirigami.Theme.neutralTextColor
                                : Kirigami.Theme.textColor
                     }
+                    // Last run info, right-aligned under the file counts (saves a line).
+                    // "Last archive" for Archive links, "Last backup" otherwise.
+                    Controls.Label {
+                        elide:   Text.ElideRight
+                        opacity: 0.7
+                        horizontalAlignment: Text.AlignRight
+                        text: (modelData.mappingType === "Archive" ? qsTr("Last archive")
+                                                                   : qsTr("Last backup"))
+                              + ": "
+                              + (modelData.lastBackupDate
+                                 ? modelData.lastBackupDate + " · " + modelData.lastBackupSizeStr
+                                 : qsTr("never"))
+                    }
                 }
 
                 // ── Progress (only while running) ─────────────────────────────

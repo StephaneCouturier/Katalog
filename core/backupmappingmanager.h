@@ -46,6 +46,7 @@ struct MappingInfo {
     // Order optimized to minimize padding
     qint64 sourceSize;
     qint64 targetSize;
+    qint64 lastBackupSize;            // bytes transferred in the last completed run (0 = never run)
     QString mappingName;
     QString mappingType;
     QString sourceName;
@@ -54,6 +55,7 @@ struct MappingInfo {
     QString targetName;
     QString targetPath;
     QString targetDateUpdated;
+    QString lastBackupDate;          // timestamp of the last completed run (empty = never run)
     int mappingId;
     int sourceDeviceId;
     int sourceFileCount;
@@ -68,6 +70,7 @@ struct MappingInfo {
     MappingInfo()
         : sourceSize(0)
         , targetSize(0)
+        , lastBackupSize(0)
         , mappingId(-1)
         , sourceDeviceId(-1)
         , sourceFileCount(0)
@@ -179,6 +182,8 @@ public:
                        bool sourceDrive);
     bool deleteMapping(int mappingId);
     bool invertMapping(int mappingId);
+    // Record the result of a completed backup/archive run (date + bytes transferred).
+    bool setLastBackup(int mappingId, const QString &dateTime, qint64 size);
 
     // Catalog content helpers (used by backup comparison)
     QSet<QString> getCatalogFilePaths(int catalogExternalId) const;

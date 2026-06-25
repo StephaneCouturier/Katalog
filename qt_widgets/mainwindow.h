@@ -520,6 +520,7 @@ class MainWindow : public KXmlGuiWindow
             Device  m_pendingBackupSourceDevice;
             Device  m_pendingBackupTargetDevice;
             int     m_pendingBackupMappingId = -1;
+            int     m_currentBackupMappingId = -1;  // mapping of the run in progress (for onBackupFinished)
             bool    m_pendingBackupSourceDrive = false;
 
             bool    m_currentBackupIsArchive    = false;

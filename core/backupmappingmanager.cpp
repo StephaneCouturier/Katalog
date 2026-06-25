@@ -72,7 +72,9 @@ QString BackupMappingManager::buildSelectFromJoin()
             d2.device_date_updated AS target_date_updated,
             COALESCE(dm.mapping_strict_copy,    1) AS mapping_strict_copy,
             COALESCE(dm.mapping_conflict_mode, 'RenameOldest') AS mapping_conflict_mode,
-            COALESCE(dm.mapping_source_mode, 'Catalog') AS mapping_source_mode
+            COALESCE(dm.mapping_source_mode, 'Catalog') AS mapping_source_mode,
+            dm.mapping_backup_last_date AS backup_last_date,
+            COALESCE(dm.mapping_backup_last_size, 0) AS backup_last_size
         FROM device_mapping dm
         JOIN device d1 ON dm.mapping_device_source_id = d1.device_id
         JOIN device d2 ON dm.mapping_device_target_id = d2.device_id
@@ -205,6 +207,8 @@ MappingInfo BackupMappingManager::parseMappingFromQuery(const QSqlQuery& query)
     info.strictCopy                = query.value("mapping_strict_copy").toInt() != 0;
     info.conflictMode              = conflictModeFromString(query.value("mapping_conflict_mode").toString());
     info.sourceDrive               = query.value("mapping_source_mode").toString() == QLatin1String("Drive");
+    info.lastBackupDate            = query.value("backup_last_date").toString();
+    info.lastBackupSize            = query.value("backup_last_size").toLongLong();
 
     return info;
 }
@@ -403,6 +407,25 @@ bool BackupMappingManager::updateMapping(
     query.bindValue(":mappingId",    mappingId);
     if (!query.exec()) {
         qWarning() << "BackupMappingManager::updateMapping error:" << query.lastError();
+        return false;
+    }
+    return true;
+}
+
+bool BackupMappingManager::setLastBackup(int mappingId, const QString &dateTime, qint64 size)
+{
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    query.prepare(QLatin1String(R"(
+        UPDATE device_mapping SET
+            mapping_backup_last_date = :date,
+            mapping_backup_last_size = :size
+        WHERE mapping_id = :mappingId
+    )"));
+    query.bindValue(":date",      dateTime);
+    query.bindValue(":size",      size);
+    query.bindValue(":mappingId", mappingId);
+    if (!query.exec()) {
+        qWarning() << "BackupMappingManager::setLastBackup error:" << query.lastError();
         return false;
     }
     return true;
