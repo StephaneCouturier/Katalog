@@ -283,6 +283,10 @@ void AppManager::initializeDeviceListModel()
     if (deviceListModel) {
         delete deviceListModel;
     }
+    // Recompute each device's active state from the filesystem (drive mounted?) before
+    // loading the list — the stored device_active is stale when opening a collection
+    // (it reflects connectivity at the time it was last saved, possibly on another machine).
+    collection->updateAllDeviceActive();
     deviceListModel = new DeviceListModel(this);
     deviceListModel->loadFromConnection(m_connectionName);
     m_deviceExpandLevel = -1; // reset to fully expanded on new connection
@@ -680,6 +684,10 @@ void AppManager::refreshDeviceList()
 {
     if (deviceListModel) {
         qDebug() << "Refreshing device list model";
+        // Recompute device active states from the filesystem before reloading the list,
+        // so the Selection page reflects what is actually mounted now (not stale values
+        // carried over when switching/opening a collection). Mirrors K2's device refresh.
+        collection->updateAllDeviceActive();
         deviceListModel->refreshData();
         emit deviceListRefreshed();
         emit deviceListModelChanged();
