@@ -8,6 +8,10 @@ ColumnLayout {
     id: pageSearchForm
     spacing: 0
 
+    // Emitted when the user requests a search from within the form (e.g. Enter in the
+    // text field). Main.qml runs the same action as the Search button (run + show results).
+    signal searchRequested()
+
     // Width of the left label column inside sub-sections
     readonly property int labelW: Kirigami.Units.gridUnit * 4
 
@@ -553,10 +557,12 @@ ColumnLayout {
                     width: parent.availableWidth
                     wrapMode: Text.WordWrap
                     background: Item {}
+                    // Enter (no modifier) triggers the search; Shift+Enter inserts a
+                    // newline for multi-line terms. Matches K2 (eventFilter on the search field).
                     Keys.onPressed: function(event) {
                         if ((event.key === Qt.Key_Return || event.key === Qt.Key_Enter)
-                                && (event.modifiers & Qt.ControlModifier)) {
-                            pageSearchForm.executeSearch()
+                                && !(event.modifiers & Qt.ShiftModifier)) {
+                            pageSearchForm.searchRequested()
                             event.accepted = true
                         }
                     }

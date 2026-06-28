@@ -1118,39 +1118,46 @@ Kirigami.ApplicationWindow {
     Kirigami.ScrollablePage {
         id: pageSearch
         title: qsTr("Search")
+
+        // Run the search and show the results page. Shared by the Search action button
+        // and the Enter key in the search text field so both behave identically.
+        function runSearch() {
+            if (appManager1.searchIsRunning)
+                return
+            root.searchTriggered()
+            pageSearchForm.executeSearch()
+            // If the results page is already the top of the stack, do NOT remove and
+            // re-push it: removing and immediately re-pushing the same static page object
+            // in one event loop tick corrupts the QML component context and crashes.
+            // The onSearchTriggered Connections in PageSearchResultsForm resets the model.
+            let resultsAtTop = pageStack.depth > 0
+                               && pageStack.get(pageStack.depth - 1) === pageSearchResults
+            if (resultsAtTop) {
+                pageStack.currentIndex = pageStack.depth - 1
+            } else {
+                // Remove any stale pages beyond Search, then push Results fresh.
+                let searchIdx = indexOfPage(pageSearch)
+                while (pageStack.depth - 1 > searchIdx) {
+                    let p = pageStack.get(pageStack.depth - 1)
+                    pageStack.removePage(p)
+                    p.visible = false
+                }
+                // Ensure currentIndex points to Search before pushing.
+                // Kirigami's push() truncates pages forward of currentIndex, so if
+                // the user back-navigated without removing pages, push() would drop Search.
+                pageStack.currentIndex = searchIdx
+                pageSearchResults.visible = true
+                pageStack.push(pageSearchResults)
+            }
+        }
+
         actions: [
             Kirigami.Action {
                 text:        qsTr("Search")
                 icon.name:   "edit-find"
                 displayHint: Kirigami.DisplayHint.KeepVisible
                 enabled:     !appManager1.searchIsRunning
-                onTriggered: {
-                    root.searchTriggered()
-                    pageSearchForm.executeSearch()
-                    // If the results page is already the top of the stack, do NOT remove and
-                    // re-push it: removing and immediately re-pushing the same static page object
-                    // in one event loop tick corrupts the QML component context and crashes.
-                    // The onSearchTriggered Connections in PageSearchResultsForm resets the model.
-                    let resultsAtTop = pageStack.depth > 0
-                                       && pageStack.get(pageStack.depth - 1) === pageSearchResults
-                    if (resultsAtTop) {
-                        pageStack.currentIndex = pageStack.depth - 1
-                    } else {
-                        // Remove any stale pages beyond Search, then push Results fresh.
-                        let searchIdx = indexOfPage(pageSearch)
-                        while (pageStack.depth - 1 > searchIdx) {
-                            let p = pageStack.get(pageStack.depth - 1)
-                            pageStack.removePage(p)
-                            p.visible = false
-                        }
-                        // Ensure currentIndex points to Search before pushing.
-                        // Kirigami's push() truncates pages forward of currentIndex, so if
-                        // the user back-navigated without removing pages, push() would drop Search.
-                        pageStack.currentIndex = searchIdx
-                        pageSearchResults.visible = true
-                        pageStack.push(pageSearchResults)
-                    }
-                }
+                onTriggered: pageSearch.runSearch()
             },
             Kirigami.Action {
                 text:        appManager1.searchIsPaused ? qsTr("Resume") : qsTr("Pause")
@@ -1217,6 +1224,7 @@ Kirigami.ApplicationWindow {
 
         PageSearchForm {
             id: pageSearchForm
+            onSearchRequested: pageSearch.runSearch()
         }
     }
 
