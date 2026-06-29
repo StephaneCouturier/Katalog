@@ -7,6 +7,10 @@ ColumnLayout {
     id: root
     spacing: 0
 
+    // Global card text scale from the drawer slider (1.0 = default). Mirrors the
+    // Selection/Devices pages so all card-based views resize together.
+    property real cardScale: 1.0
+
     // Internal state
     property string filterType:        "None"   // "None"|"Source"|"Target"
     property string mappingTypeFilter: "All"    // "All"|"Backup"|"Archive"
@@ -230,6 +234,9 @@ ColumnLayout {
             required property var modelData
             required property int index
 
+            // Card text size driven by the global drawer slider (root.cardScale).
+            readonly property real cardFontSize: Kirigami.Theme.defaultFont.pointSize * root.cardScale
+
             Layout.fillWidth:    true
             Layout.topMargin:    Kirigami.Units.smallSpacing
             Layout.leftMargin:   Kirigami.Units.largeSpacing
@@ -287,6 +294,7 @@ ColumnLayout {
                     Controls.Label {
                         text: modelData.mappingName
                         font.bold: true
+                        font.pointSize: mappingCard.cardFontSize
                         elide: Text.ElideRight
                         Layout.fillWidth: true
                     }
@@ -295,7 +303,7 @@ ColumnLayout {
                         color: modelData.mappingType === "Archive"
                                ? Kirigami.Theme.neutralTextColor
                                : Kirigami.Theme.positiveTextColor
-                        font.pixelSize: Kirigami.Units.gridUnit * 0.75
+                        font.pixelSize: Kirigami.Units.gridUnit * 0.75 * root.cardScale
                         padding: 3
                         background: Rectangle {
                             color:   parent.color
@@ -314,6 +322,7 @@ ColumnLayout {
                     Controls.Label {
                         text:    qsTr("Source")
                         opacity: 0.7
+                        font.pointSize: mappingCard.cardFontSize
                         Layout.preferredWidth: Kirigami.Units.gridUnit * 4
                     }
                     Rectangle {
@@ -325,12 +334,14 @@ ColumnLayout {
                     }
                     Controls.Label {
                         text:  modelData.sourceName
+                        font.pointSize: mappingCard.cardFontSize
                         elide: Text.ElideRight
                         Layout.fillWidth: true
                     }
                     Controls.Label {
                         text:    modelData.sourceSizeStr + " · " + modelData.sourceFileCount + " " + qsTr("files")
                         opacity: 0.7
+                        font.pointSize: mappingCard.cardFontSize
                         elide:   Text.ElideRight
                     }
                 }
@@ -342,6 +353,7 @@ ColumnLayout {
                     Controls.Label {
                         text:    qsTr("Target")
                         opacity: 0.7
+                        font.pointSize: mappingCard.cardFontSize
                         Layout.preferredWidth: Kirigami.Units.gridUnit * 4
                     }
                     Rectangle {
@@ -353,12 +365,14 @@ ColumnLayout {
                     }
                     Controls.Label {
                         text:  modelData.targetName
+                        font.pointSize: mappingCard.cardFontSize
                         elide: Text.ElideRight
                         Layout.fillWidth: true
                     }
                     Controls.Label {
                         text:    modelData.targetSizeStr + " · " + modelData.targetFileCount + " " + qsTr("files")
                         opacity: 0.7
+                        font.pointSize: mappingCard.cardFontSize
                         elide:   Text.ElideRight
                     }
                 }
@@ -372,11 +386,13 @@ ColumnLayout {
                     Controls.Label {
                         text:    modelData.mappingType === "Archive" ? qsTr("To move") : qsTr("Diff")
                         opacity: 0.7
+                        font.pointSize: mappingCard.cardFontSize
                         Layout.preferredWidth: Kirigami.Units.gridUnit * 4
                     }
                     Controls.Label {
                         Layout.fillWidth: true
                         elide: Text.ElideRight
+                        font.pointSize: mappingCard.cardFontSize
                         text: {
                             if (modelData.mappingType === "Archive") {
                                 if (modelData.sourceFileCount === 0)
@@ -404,6 +420,7 @@ ColumnLayout {
                     Controls.Label {
                         elide:   Text.ElideRight
                         opacity: 0.7
+                        font.pointSize: mappingCard.cardFontSize
                         horizontalAlignment: Text.AlignRight
                         text: (modelData.mappingType === "Archive" ? qsTr("Last archive")
                                                                    : qsTr("Last backup"))
@@ -438,7 +455,7 @@ ColumnLayout {
                                 + (root.progressEtaStr   ? " · " + qsTr("ETA %1").arg(root.progressEtaStr) : "")
                                 + (root.progressFile ? " · " + root.progressFile : "")
                             elide: Text.ElideRight
-                            font.pixelSize: Kirigami.Units.gridUnit * 0.85
+                            font.pixelSize: Kirigami.Units.gridUnit * 0.85 * root.cardScale
                             opacity: 0.8
                         }
                     }
