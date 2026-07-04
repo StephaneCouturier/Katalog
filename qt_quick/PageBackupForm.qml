@@ -40,6 +40,17 @@ ColumnLayout {
         root.totals   = appManager1.getBackupTotals(root.filterType, deviceId, root.mappingTypeFilter)
     }
 
+    // Off-screen refreshes are deferred: getBackupMappings() + getBackupTotals() ran
+    // synchronously on every Selection card tap (via onSelectedDeviceChanged), delaying
+    // the card-highlight repaint. Mark dirty when hidden and refresh once, on becoming
+    // visible.
+    property bool needsRefresh: false
+    function requestRefresh() {
+        if (root.visible) root.refresh()
+        else root.needsRefresh = true
+    }
+    onVisibleChanged: if (visible && needsRefresh) { needsRefresh = false; refresh() }
+
     // Format a duration in seconds as M:SS or H:MM:SS
     function formatDuration(totalSec) {
         totalSec = Math.max(0, Math.round(totalSec))
@@ -68,8 +79,8 @@ ColumnLayout {
 
     Connections {
         target: appManager1
-        function onSelectedDeviceChanged()   { root.refresh() }
-        function onBackupMappingsChanged()   { root.refresh() }
+        function onSelectedDeviceChanged()   { root.requestRefresh() }
+        function onBackupMappingsChanged()   { root.requestRefresh() }
         function onBackupProgress(filesDone, totalFiles, bytesCopied, totalBytes, currentFile) {
             root.progressFilesDone  = filesDone
             root.progressTotalFiles = totalFiles

@@ -37,6 +37,17 @@ ColumnLayout {
         updateChart(data)
     }
 
+    // Off-screen refreshes are deferred: running getStatisticsData() + rebuilding the
+    // chart series while this page is hidden ran synchronously on every Selection card
+    // tap (via onSelectedDeviceChanged), delaying the card-highlight repaint. Mark dirty
+    // when hidden and refresh once, on becoming visible.
+    property bool needsRefresh: false
+    function requestRefresh() {
+        if (root.visible) root.refresh()
+        else root.needsRefresh = true
+    }
+    onVisibleChanged: if (visible && needsRefresh) { needsRefresh = false; refresh() }
+
     function updateChart(data) {
         series1Line.clear()
         series2Line.clear()
@@ -119,8 +130,8 @@ ColumnLayout {
 
     Connections {
         target: appManager1
-        function onSelectedDeviceChanged() { root.refresh() }
-        function onStatisticsRefreshed()   { root.refresh() }
+        function onSelectedDeviceChanged() { root.requestRefresh() }
+        function onStatisticsRefreshed()   { root.requestRefresh() }
     }
 
     // ─── Controls bar ─────────────────────────────────────────────────────────
