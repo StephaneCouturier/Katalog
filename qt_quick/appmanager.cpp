@@ -4146,17 +4146,33 @@ void AppManager::setupCatalogUpdateForBackupConnections()
         setupDeviceUpdateManager();
     disconnect(m_deviceUpdateManager, nullptr, this, nullptr);
 
+    // Route catalog-update progress to the backup-specific status text so the Backup
+    // page can show the same StatusBarMessageBuilder messages as other screens. Wire
+    // this explicitly (not via setupDeviceUpdateManager) so it is deterministic even
+    // if a device/create update ran earlier and pointed the progress manager elsewhere.
+    if (!m_catalogProgressManager)
+        m_catalogProgressManager = new CatalogProgressManager(this);
+    disconnect(m_catalogProgressManager, nullptr, this, nullptr);
+    connect(m_catalogProgressManager, &CatalogProgressManager::statusMessageChanged,
+            this, [this](const QString &message, int /*timeout*/) {
+                m_catalogUpdateForBackupStatusText = message;
+                emit catalogUpdateForBackupStatusChanged();
+            });
+    m_deviceUpdateManager->setCatalogProgressManager(m_catalogProgressManager);
+
     connect(m_deviceUpdateManager, &DeviceUpdateManager::operationCompleted,
             this, &AppManager::onCatalogUpdateForBackupStep);
 
     auto onFail = [this](const QString &error) {
         m_catalogUpdateForBackupRunning = false;
+        m_catalogUpdateForBackupStatusText.clear();
         m_backupCatalogUpdatePhase      = BackupCatalogUpdatePhase::None;
         m_pendingBackupAfterUpdate      = -1;
         int id                          = m_pendingCatalogUpdateMappingId;
         m_pendingCatalogUpdateMappingId = -1;
         setupDeviceUpdateManager();
         emit catalogUpdateForBackupRunningChanged();
+        emit catalogUpdateForBackupStatusChanged();
         emit catalogsForMappingPrepared(id, false, error);
     };
     connect(m_deviceUpdateManager, &DeviceUpdateManager::operationError,     this, onFail);
@@ -4189,9 +4205,11 @@ void AppManager::onCatalogUpdateForBackupStep()
     int pendingBackup               = m_pendingBackupAfterUpdate;
     m_pendingBackupAfterUpdate      = -1;
     m_catalogUpdateForBackupRunning = false;
+    m_catalogUpdateForBackupStatusText.clear();   // backup/archive run shows its own progress next
 
     setupDeviceUpdateManager();  // restore normal catalog/device connections
     emit catalogUpdateForBackupRunningChanged();
+    emit catalogUpdateForBackupStatusChanged();
     emit catalogsForMappingPrepared(id, true, QString());
 
     if (pendingBackup >= 0)

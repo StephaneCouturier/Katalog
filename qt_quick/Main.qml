@@ -1661,6 +1661,29 @@ Kirigami.ApplicationWindow {
             }
         ]
 
+        // Catalog-update progress shown while "Update catalogs" runs before a preview or
+        // a backup/archive — same StatusBarMessageBuilder messages as the other screens.
+        footer: RowLayout {
+            visible: appManager1.catalogUpdateForBackupRunning
+                     || appManager1.catalogUpdateForBackupStatusText.length > 0
+            spacing: Kirigami.Units.smallSpacing
+            Controls.BusyIndicator {
+                running: appManager1.catalogUpdateForBackupRunning
+                visible: appManager1.catalogUpdateForBackupRunning
+                implicitWidth:  Kirigami.Units.gridUnit * 1.5
+                implicitHeight: Kirigami.Units.gridUnit * 1.5
+                Layout.leftMargin: Kirigami.Units.smallSpacing
+            }
+            Controls.Label {
+                Layout.fillWidth: true
+                Layout.margins: Kirigami.Units.smallSpacing
+                text: appManager1.catalogUpdateForBackupStatusText
+                textFormat: Text.StyledText
+                elide: Text.ElideRight
+                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
+            }
+        }
+
         PageBackupForm {
             id: backupPageForm
             cardScale: root.cardScale

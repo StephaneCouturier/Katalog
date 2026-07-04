@@ -110,6 +110,7 @@ class AppManager : public QObject
     Q_PROPERTY(DeviceListModel* importSourceDeviceModel READ getImportSourceDeviceModel NOTIFY importSourceChanged)
     Q_PROPERTY(bool updateBeforeBackup READ updateBeforeBackup WRITE setUpdateBeforeBackup NOTIFY updateBeforeBackupChanged)
     Q_PROPERTY(bool catalogUpdateForBackupRunning READ catalogUpdateForBackupRunning NOTIFY catalogUpdateForBackupRunningChanged)
+    Q_PROPERTY(QString catalogUpdateForBackupStatusText READ getCatalogUpdateForBackupStatusText NOTIFY catalogUpdateForBackupStatusChanged)
     Q_PROPERTY(bool    deviceUpdateIsRunning  READ getDeviceUpdateIsRunning  NOTIFY deviceUpdateStateChanged)
     Q_PROPERTY(QString deviceUpdateStatusText READ getDeviceUpdateStatusText NOTIFY deviceUpdateStatusChanged)
     Q_PROPERTY(bool    isFirstRun             READ isFirstRun                NOTIFY firstRunChanged)
@@ -241,6 +242,7 @@ public slots:
     bool updateBeforeBackup() const;
     void setUpdateBeforeBackup(bool v);
     bool catalogUpdateForBackupRunning() const { return m_catalogUpdateForBackupRunning; }
+    QString getCatalogUpdateForBackupStatusText() const { return m_catalogUpdateForBackupStatusText; }
     Q_INVOKABLE void prepareCatalogsForMapping(int mappingId);
 
     Q_INVOKABLE QVariantList getTagEntries(const QString &filterName = QString()) const;
@@ -458,6 +460,7 @@ signals:
     void backupNotification(const QString &message, bool isError);
     void updateBeforeBackupChanged();
     void catalogUpdateForBackupRunningChanged();
+    void catalogUpdateForBackupStatusChanged();
     void catalogsForMappingPrepared(int mappingId, bool success, const QString &error);
     void deviceUpdateStateChanged();
     void deviceUpdateStatusChanged();
@@ -523,6 +526,7 @@ private:
     Device                   m_pendingCatalogUpdateSourceDevice;
     Device                   m_pendingCatalogUpdateTargetDevice;
     bool                     m_catalogUpdateForBackupRunning  = false;
+    QString                  m_catalogUpdateForBackupStatusText;
     void setupCatalogUpdateForBackupConnections();
     void onCatalogUpdateForBackupStep();
 
