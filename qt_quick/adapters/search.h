@@ -85,8 +85,12 @@ public:
             map["metadataMinimumWidth"]     = metadataMinimumWidth;
             map["metadataMaximumWidth"]     = metadataMaximumWidth;
             map["searchOnMetadataDuration"] = searchOnMetadataDuration;
-            map["metadataDurationMin"]      = metadataDurationMin;
-            map["metadataDurationMax"]      = metadataDurationMax;
+            // Emit as "HH:mm:ss" strings (not raw QDateTime) so the value round-trips
+            // through the QML duration text fields and back through setProperties(),
+            // which parses this same format. A raw QDateTime would stringify to an ISO
+            // datetime and restore incorrect values.
+            map["metadataDurationMin"]      = metadataDurationMin.time().toString("HH:mm:ss");
+            map["metadataDurationMax"]      = metadataDurationMax.time().toString("HH:mm:ss");
             //Duplicates
             map["searchOnDuplicates"]             = searchOnDuplicates;
             map["searchDuplicatesOnName"]         = searchDuplicatesOnName;

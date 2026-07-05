@@ -571,8 +571,14 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
                          metadataDurationMax.time().minute() * 60 +
                          metadataDurationMax.time().second();
 
-        // Duration condition - check both video and audio duration
-        QString durationCondition = QString("((video_duration_seconds >= %1 AND video_duration_seconds <= %2) OR (audio_duration_seconds >= %1 AND audio_duration_seconds <= %2))")
+        // Duration condition - check both video and audio duration.
+        // The "> 0" guard is essential (same rationale as the size filter above):
+        // videos store audio_duration_seconds = 0 (and audio files store
+        // video_duration_seconds = 0, non-media files store 0 in both), so without
+        // it a 0 placeholder would satisfy "duration >= min" whenever min = 0 (the
+        // default 00:00:00), making the OR always true and the real duration never
+        // enforced. Only branches with a present duration count.
+        QString durationCondition = QString("((video_duration_seconds > 0 AND video_duration_seconds >= %1 AND video_duration_seconds <= %2) OR (audio_duration_seconds > 0 AND audio_duration_seconds >= %1 AND audio_duration_seconds <= %2))")
                                         .arg(minSeconds)
                                         .arg(maxSeconds);
 
