@@ -32,6 +32,11 @@ Kirigami.ApplicationWindow {
     // featureOpen = is any non-Selection page currently in the stack.
     property bool featureOpen: false
 
+    // The feature page currently open (null when only Selection is shown). Kept
+    // reactive so context menus can adapt to the active page — e.g. the Selection
+    // card menu hides its "Search" shortcut while Search/Results is already open.
+    property var openFeaturePage: null
+
     function indexOfPage(page) {
         for (var i = 0; i < pageStack.depth; i++)
             if (pageStack.get(i) === page) return i
@@ -147,6 +152,7 @@ Kirigami.ApplicationWindow {
             removeAllFeaturePages()
             syncSelectionVisibility()
             pageStack.currentIndex = 0
+            openFeaturePage = null
             return
         }
 
@@ -155,6 +161,7 @@ Kirigami.ApplicationWindow {
         let existing = indexOfPage(page)
         if (existing >= 0) {
             pageStack.currentIndex = existing
+            openFeaturePage = page
             return
         }
 
@@ -166,6 +173,7 @@ Kirigami.ApplicationWindow {
         featureOpen = true
         syncSelectionVisibility()
         pageStack.currentIndex = indexOfPage(page)
+        openFeaturePage = page
     }
 
     // Show a layer overlay (Settings, About).

@@ -36,6 +36,21 @@ Kirigami.AbstractCard {
         }
         Controls.MenuSeparator {}
 
+        // Quick jump to the Search page without opening the drawer. Hidden when
+        // Search or Results is already the open feature page (the Selection panel
+        // stays visible as a side column beside those pages).
+        Controls.MenuItem {
+            text:      qsTr("Search")
+            icon.name: "edit-find"
+            visible:   root.openFeaturePage !== pageSearch
+                       && root.openFeaturePage !== pageSearchResults
+            height:    visible ? implicitHeight : 0
+            onTriggered: {
+                appManager1.setLastPage("Search")
+                root.showPage(pageSearch)
+            }
+        }
+
         Controls.MenuItem {
             text:      qsTr("Update")
             icon.name: "media-playlist-repeat"
