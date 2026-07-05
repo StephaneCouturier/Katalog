@@ -33,6 +33,10 @@ ColumnLayout {
         if (n < 1024 ** 4)             return (n / (1024 ** 3)).toFixed(2) + " GiB"
         return                                (n / (1024 ** 4)).toFixed(2) + " TiB"
     }
+    function formatDate(dateStr) {
+        let s = String(dateStr ?? "")
+        return s.length >= 10 ? s.substring(0, 10) : s
+    }
     function formatDuration(secs) {
         let s = Number(secs)
         if (!s || s <= 0) return ""
@@ -40,10 +44,6 @@ ColumnLayout {
         let m   = Math.floor((s % 3600) / 60)
         let sec = Math.floor(s % 60)
         return String(h).padStart(2, '0') + ":" + String(m).padStart(2, '0') + ":" + String(sec).padStart(2, '0')
-    }
-    function formatDate(dateStr) {
-        let s = String(dateStr ?? "")
-        return s.length >= 10 ? s.substring(0, 10) : s
     }
 
     // ── Device path ──────────────────────────────────────────────────────
@@ -350,12 +350,12 @@ ColumnLayout {
                         case  7: return 0    // Path (hidden)
                         case  8: return 80   // File Type
                         case  9: return 140  // MIME Type
-                        case 10: return 60   // Width
-                        case 11: return 60   // Height
-                        case 12: return 80   // Duration
-                        case 13: return 80   // Video Width
-                        case 14: return 80   // Video Height
-                        case 15: return 90   // Audio Duration
+                        case 10: return 60   // Width (merged image + video)
+                        case 11: return 60   // Height (merged image + video)
+                        case 12: return 80   // Duration (merged video + audio)
+                        case 13: return 0    // Video Width  (merged into Width, hidden — matches K2)
+                        case 14: return 0    // Video Height (merged into Height, hidden — matches K2)
+                        case 15: return 0    // Audio Duration (merged into Duration, hidden — matches K2)
                         case 16: return 140  // Artist
                         case 17: return 140  // Album
                         case 18: return 140  // Title
@@ -423,9 +423,26 @@ ColumnLayout {
                             rightMargin: 4
                         }
                         text: {
+                            // Merged metadata columns combine two source columns per row
+                            // (image∥video for size, video∥audio for duration), matching K2's
+                            // FilesView. The primary value arrives as `display`; the secondary
+                            // is read from its sibling column. Do this in QML because `display`
+                            // exposes the raw per-column value, not FilesView's merged output.
+                            let m = appManager1.searchSortModel
+                            if (column === 10) {   // Width  — image (10) ∥ video (13)
+                                let w = Number(display) || Number(m.data(m.index(row, 13), Qt.DisplayRole))
+                                return w > 0 ? String(w) : ""
+                            }
+                            if (column === 11) {   // Height — image (11) ∥ video (14)
+                                let h = Number(display) || Number(m.data(m.index(row, 14), Qt.DisplayRole))
+                                return h > 0 ? String(h) : ""
+                            }
+                            if (column === 12) {   // Duration — video (12) ∥ audio (15)
+                                let d = Number(display) || Number(m.data(m.index(row, 15), Qt.DisplayRole))
+                                return formatDuration(d)
+                            }
                             if (display === undefined || display === null) return ""
                             if (column === 1)  return formatFileSize(Number(display))
-                            if (column === 12 || column === 15) return formatDuration(Number(display))
                             return String(display)
                         }
                         horizontalAlignment: (column === 1 || column === 12 || column === 15)

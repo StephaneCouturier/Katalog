@@ -541,14 +541,18 @@ void SearchJobStoppable::searchFilesInCatalog(Device *device, QMutex &mutex, boo
     if (searchOnFileMetadata && searchOnMetadataSize) {
         QStringList sizeConditions;
 
-        // Height condition - check both image and video height
-        QString heightCondition = QString("((image_height >= %1 AND image_height <= %2) OR (video_height >= %1 AND video_height <= %2))")
+        // Height condition - check both image and video height.
+        // The "> 0" guard is essential: videos store image_height = 0 (and images
+        // store video_height = 0), so without it a 0 placeholder would satisfy
+        // "height >= min" whenever min = 0, making the OR always true and the real
+        // dimension never enforced. Only branches with a present dimension count.
+        QString heightCondition = QString("((image_height > 0 AND image_height >= %1 AND image_height <= %2) OR (video_height > 0 AND video_height >= %1 AND video_height <= %2))")
                                       .arg(metadataMinimumHeight)
                                       .arg(metadataMaximumHeight);
         sizeConditions.append(heightCondition);
 
-        // Width condition - check both image and video width
-        QString widthCondition = QString("((image_width >= %1 AND image_width <= %2) OR (video_width >= %1 AND video_width <= %2))")
+        // Width condition - check both image and video width (same "> 0" guard rationale)
+        QString widthCondition = QString("((image_width > 0 AND image_width >= %1 AND image_width <= %2) OR (video_width > 0 AND video_width >= %1 AND video_width <= %2))")
                                      .arg(metadataMinimumWidth)
                                      .arg(metadataMaximumWidth);
         sizeConditions.append(widthCondition);
