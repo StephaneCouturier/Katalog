@@ -681,7 +681,14 @@ ColumnLayout {
         text: qsTr("File attributes")
         Layout.leftMargin: Kirigami.Units.smallSpacing
         font.bold: checked ? true : false
-        onCheckedChanged: fileAtrributeCriteria.visible = checked
+        onCheckedChanged: {
+            fileAtrributeCriteria.visible = checked
+            // Convenience: enabling File attributes while Type is still the default
+            // "All" auto-ticks Type so the combo is ready — one less click to pick
+            // another type. "All" applies no type filter, so this changes nothing.
+            if (checked && search_comboBox_FileType.currentValue === "All")
+                search_checkBox_Type.checked = true
+        }
     }
     ColumnLayout {
         id: fileAtrributeCriteria
