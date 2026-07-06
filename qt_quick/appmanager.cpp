@@ -2726,6 +2726,7 @@ QVariantMap AppManager::getDeviceDetails(int deviceId) const
 
     if (dev.type == "Catalog") {
         r["fileType"]        = dev.catalog->fileType;
+        r["includeSubDir"]   = dev.catalog->includeSubDir;
         r["includeHidden"]   = dev.catalog->includeHidden;
         r["includeMetadata"] = dev.catalog->includeMetadata;
         r["includeChecksum"] = dev.catalog->includeChecksum;
@@ -2842,7 +2843,8 @@ QString AppManager::saveDeviceBasicFields(int deviceId, const QString &name, int
     return {};
 }
 //----------------------------------------------------------------------
-QVariantMap AppManager::checkCatalogOptionChanges(int deviceId, const QString &fileType, bool includeHidden,
+QVariantMap AppManager::checkCatalogOptionChanges(int deviceId, const QString &fileType, bool includeSubDir,
+                                                   bool includeHidden,
                                                    const QString &includeMetadata, const QString &includeChecksum,
                                                    bool isFullDevice) const
 {
@@ -2856,6 +2858,12 @@ QVariantMap AppManager::checkCatalogOptionChanges(int deviceId, const QString &f
 
     if (fileType != prev.catalog->fileType) {
         changedFields << tr("File type: %1 → %2").arg(prev.catalog->fileType, fileType);
+        rescanNeeded = true;
+    }
+    if (includeSubDir != prev.catalog->includeSubDir) {
+        changedFields << tr("Include subdirectories: %1 → %2")
+                             .arg(prev.catalog->includeSubDir ? tr("yes") : tr("no"),
+                                  includeSubDir               ? tr("yes") : tr("no"));
         rescanNeeded = true;
     }
     if (includeHidden != prev.catalog->includeHidden) {
@@ -2888,7 +2896,8 @@ QVariantMap AppManager::checkCatalogOptionChanges(int deviceId, const QString &f
     return result;
 }
 //----------------------------------------------------------------------
-QString AppManager::saveCatalogOptions(int deviceId, const QString &fileType, bool includeHidden,
+QString AppManager::saveCatalogOptions(int deviceId, const QString &fileType, bool includeSubDir,
+                                        bool includeHidden,
                                         const QString &includeMetadata, const QString &includeChecksum,
                                         bool isFullDevice)
 {
@@ -2900,6 +2909,7 @@ QString AppManager::saveCatalogOptions(int deviceId, const QString &fileType, bo
     const QString prevMetadata = dev.catalog->includeMetadata;
 
     dev.catalog->fileType        = fileType;
+    dev.catalog->includeSubDir   = includeSubDir;
     dev.catalog->includeHidden   = includeHidden;
     dev.catalog->includeMetadata = includeMetadata;
     dev.catalog->includeChecksum = includeChecksum;

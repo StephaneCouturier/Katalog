@@ -6165,7 +6165,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <item row="0" column="1" rowspan="2">
                    <widget class="QGroupBox" name="Devices_groupBox_IncludeExclude">
                     <property name="title">
-                     <string>Excluded folders from this catalog</string>
+                     <string>Exclude folders or files</string>
                     </property>
                     <layout class="QVBoxLayout" name="Devices_verticalLayout_IncludeExclude">
                      <item>
@@ -6180,7 +6180,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <item>
                         <widget class="QLineEdit" name="Devices_lineEdit_NewExcludeFolder">
                          <property name="placeholderText">
-                          <string>Folder path or pattern to exclude</string>
+                          <string>Path or text to exclude</string>
                          </property>
                         </widget>
                        </item>
@@ -8248,7 +8248,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   <item>
                    <widget class="QGroupBox" name="Create_groupBox_ExcludeFolders">
                     <property name="title">
-                     <string>Excluded folders from this catalog</string>
+                     <string>Exclude folders or files</string>
                     </property>
                     <layout class="QVBoxLayout" name="Create_verticalLayout_ExcludeFolders">
                      <item>
@@ -8263,7 +8263,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <item>
                         <widget class="QLineEdit" name="Create_lineEdit_NewExcludeFolder">
                          <property name="placeholderText">
-                          <string>Folder path or pattern to exclude</string>
+                          <string>Path or text to exclude</string>
                          </property>
                         </widget>
                        </item>

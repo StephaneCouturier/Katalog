@@ -49,6 +49,7 @@ ColumnLayout {
                     edit_comboBox_FileType.currentIndex = i; break
                 }
             }
+            edit_checkBox_IncludeSubDir.checked = d.includeSubDir
             edit_comboBox_IncludeHidden.currentIndex = d.includeHidden ? 1 : 0
             for (var j = 0; j < edit_comboBox_Metadata.model.length; j++) {
                 if (edit_comboBox_Metadata.model[j].value === d.includeMetadata) {
@@ -106,12 +107,13 @@ ColumnLayout {
 
         if (deviceType === "Catalog") {
             var fileType = edit_comboBox_FileType.model[edit_comboBox_FileType.currentIndex].value
+            var subdir   = edit_checkBox_IncludeSubDir.checked
             var hidden   = edit_comboBox_IncludeHidden.currentIndex === 1
             var metadata = edit_comboBox_Metadata.model[edit_comboBox_Metadata.currentIndex].value
             var checksum = edit_comboBox_Checksum.model[edit_comboBox_Checksum.currentIndex].value
 
             var pathChanged = (path !== originalPath && originalPath !== "")
-            var check = appManager1.checkCatalogOptionChanges(deviceId, fileType, hidden, metadata, checksum, _originalIsFullDevice)
+            var check = appManager1.checkCatalogOptionChanges(deviceId, fileType, subdir, hidden, metadata, checksum, _originalIsFullDevice)
             var message = check.message
             if (pathChanged) {
                 if (message !== "") message += "\n"
@@ -159,10 +161,11 @@ ColumnLayout {
     // Called from Main.qml after catalog confirm dialog accepted
     function confirmCatalogSave(rescanNeeded, pathChanged) {
         var fileType = edit_comboBox_FileType.model[edit_comboBox_FileType.currentIndex].value
+        var subdir   = edit_checkBox_IncludeSubDir.checked
         var hidden   = edit_comboBox_IncludeHidden.currentIndex === 1
         var metadata = edit_comboBox_Metadata.model[edit_comboBox_Metadata.currentIndex].value
         var checksum = edit_comboBox_Checksum.model[edit_comboBox_Checksum.currentIndex].value
-        appManager1.saveCatalogOptions(deviceId, fileType, hidden, metadata, checksum, _originalIsFullDevice)
+        appManager1.saveCatalogOptions(deviceId, fileType, subdir, hidden, metadata, checksum, _originalIsFullDevice)
 
         if (pathChanged) {
             storagePathChangeNeeded(originalPath, edit_lineEdit_Path.text.trim())
@@ -321,6 +324,13 @@ ColumnLayout {
             }
         }
 
+        Controls.Label { text: qsTr("Include subdirectories"); opacity: 0.7; visible: root.deviceType === "Catalog" }
+        Controls.CheckBox {
+            id: edit_checkBox_IncludeSubDir
+            checked: true
+            visible: root.deviceType === "Catalog"
+        }
+
         Controls.Label { text: qsTr("Include hidden files"); opacity: 0.7; visible: root.deviceType === "Catalog" }
         Controls.ComboBox {
             id: edit_comboBox_IncludeHidden
@@ -360,29 +370,23 @@ ColumnLayout {
             currentIndex: 0
         }
 
-        // ── Exclude folders (Catalog) ──────────────────────────────────────────
-        Kirigami.Separator {
-            Layout.fillWidth: true; Layout.columnSpan: 2
-            Layout.topMargin: Kirigami.Units.largeSpacing
-            visible: root.deviceType === "Catalog"
-        }
-        Kirigami.Heading {
-            level: 3
-            text: qsTr("Exclude folders (this catalog)")
-            color: Kirigami.Theme.linkColor
+        // ── Exclude folders or files (Catalog) — sub-title within Content options ─
+        Controls.Label {
+            text: qsTr("Exclude folders or files")
+            font.bold: true
             Layout.columnSpan: 2
             Layout.topMargin: Kirigami.Units.smallSpacing
             visible: root.deviceType === "Catalog"
         }
 
-        Controls.Label { text: qsTr("Folder to exclude"); opacity: 0.7; visible: root.deviceType === "Catalog" }
+        Controls.Label { text: qsTr("Path or text to exclude"); opacity: 0.7; visible: root.deviceType === "Catalog" }
         RowLayout {
             Layout.fillWidth: true
             visible: root.deviceType === "Catalog"
             Controls.TextField {
                 id: edit_lineEdit_NewExcludeFolder
                 Layout.fillWidth: true
-                placeholderText: qsTr("Path to exclude")
+                placeholderText: qsTr("Path or text to exclude")
             }
             Controls.Button {
                 icon.name: "folder-open"
