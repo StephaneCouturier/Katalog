@@ -43,22 +43,22 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+58"/>
-        <location line="+1576"/>
-        <location line="+1502"/>
+        <location line="+1584"/>
+        <location line="+1512"/>
         <location line="+11"/>
         <location line="+60"/>
         <source>In Progress</source>
         <translation>W toku</translation>
     </message>
     <message>
-        <location line="-3135"/>
-        <location line="+3116"/>
+        <location line="-3153"/>
+        <location line="+3134"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Ukończone</translation>
     </message>
     <message>
-        <location line="-2846"/>
+        <location line="-2860"/>
         <source>Empty database path provided</source>
         <translation>Podano pustą ścieżkę bazy danych</translation>
     </message>
@@ -98,7 +98,7 @@
         <translation>Dysk lokalny</translation>
     </message>
     <message>
-        <location line="+303"/>
+        <location line="+307"/>
         <source>search_results</source>
         <translation>wyniki_wyszukiwania</translation>
     </message>
@@ -144,12 +144,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2105"/>
+        <location line="+2115"/>
         <source>Size</source>
         <translation>Rozmiar</translation>
     </message>
     <message>
-        <location line="-2104"/>
+        <location line="-2114"/>
         <source>Date</source>
         <translation>Data</translation>
     </message>
@@ -344,7 +344,7 @@ Wybierz inną nazwę i spróbuj ponownie.</translation>
         <translation>Nie można otworzyć pliku: %1</translation>
     </message>
     <message>
-        <location line="+151"/>
+        <location line="+152"/>
         <source>There is already a catalog with this name: %1
 Choose a different name.</source>
         <translation>Istnieje już katalog o tej nazwie: %1
@@ -356,12 +356,17 @@ Wybierz inną nazwę.</translation>
         <translation>Katalog z grupy Fizyczne można umieścić tylko pod urządzeniem przechowywania.</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+64"/>
         <source>File type: %1 → %2</source>
         <translation>Typ pliku: %1 → %2</translation>
     </message>
     <message>
         <location line="+4"/>
+        <source>Include subdirectories: %1 → %2</source>
+        <translation>Uwzględnij podkatalogi: %1 → %2</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Include hidden: %1 → %2</source>
         <translation>Uwzględnij ukryte: %1 → %2</translation>
     </message>
@@ -393,19 +398,23 @@ Wybierz inną nazwę.</translation>
         <translation>Pełne urządzenie: %1 → %2</translation>
     </message>
     <message>
+        <location line="-21"/>
         <location line="+1"/>
+        <location line="+21"/>
         <location line="+1"/>
         <source>yes</source>
         <translation>tak</translation>
     </message>
     <message>
-        <location line="-1"/>
+        <location line="-23"/>
+        <location line="+1"/>
+        <location line="+21"/>
         <location line="+1"/>
         <source>no</source>
         <translation>nie</translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+53"/>
         <source>There is already a Storage with this ID. Choose a different ID.</source>
         <translation>Istnieje już miejsce przechowywania o tym identyfikatorze. Wybierz inny identyfikator.</translation>
     </message>
@@ -710,7 +719,7 @@ Wybierz inną nazwę.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+650"/>
+        <location filename="../qt_quick/Main.qml" line="+658"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Czy chcesz &lt;b&gt;usunąć&lt;/b&gt; to urządzenie %1?&lt;br/&gt;&lt;br/&gt;Nazwa: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -727,12 +736,12 @@ Wybierz inną nazwę.</translation>
         <location line="-361"/>
         <location line="+60"/>
         <location line="+162"/>
-        <location line="+687"/>
+        <location line="+695"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
     <message>
-        <location line="-1009"/>
+        <location line="-1017"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+158"/>
@@ -790,36 +799,36 @@ Wybierz inną nazwę.</translation>
     </message>
     <message>
         <location line="-720"/>
-        <location line="+954"/>
+        <location line="+962"/>
         <source>Devices</source>
         <translation>Urządzenia</translation>
     </message>
     <message>
-        <location line="-949"/>
-        <location line="+1057"/>
+        <location line="-957"/>
+        <location line="+1065"/>
         <source>Explore</source>
         <translation>Eksploruj</translation>
     </message>
     <message>
-        <location line="-1047"/>
-        <location line="+1282"/>
+        <location line="-1055"/>
+        <location line="+1290"/>
         <source>Backup</source>
         <translation>Kopia zapasowa</translation>
     </message>
     <message>
-        <location line="-1277"/>
-        <location line="+1241"/>
+        <location line="-1285"/>
+        <location line="+1249"/>
         <source>Statistics</source>
         <translation>Statystyki</translation>
     </message>
     <message>
-        <location line="-1236"/>
-        <location line="+1256"/>
+        <location line="-1244"/>
+        <location line="+1264"/>
         <source>Tags</source>
         <translation>Tagi</translation>
     </message>
     <message>
-        <location line="-1243"/>
+        <location line="-1251"/>
         <source>Documentation</source>
         <translation>Dokumentacja</translation>
     </message>
@@ -1095,12 +1104,12 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
     <message>
         <location line="-692"/>
         <location line="+795"/>
-        <location line="+3"/>
+        <location line="+36"/>
         <source>Search</source>
         <translation>Szukaj</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+7"/>
         <source>Resume</source>
         <translation>Wznów</translation>
     </message>
@@ -1111,13 +1120,13 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+131"/>
+        <location line="+132"/>
         <location line="+178"/>
         <source>Stop</source>
         <translation>Zatrzymaj</translation>
     </message>
     <message>
-        <location line="-302"/>
+        <location line="-303"/>
         <source>Reset</source>
         <translation>Resetuj</translation>
     </message>
@@ -1127,9 +1136,9 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <translation>Historia</translation>
     </message>
     <message>
-        <location line="-138"/>
-        <location line="+145"/>
-        <location line="+55"/>
+        <location line="-145"/>
+        <location line="+152"/>
+        <location line="+56"/>
         <location line="+107"/>
         <location line="+51"/>
         <location line="+81"/>
@@ -1140,7 +1149,7 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <translation>Zamknij</translation>
     </message>
     <message>
-        <location line="-561"/>
+        <location line="-569"/>
         <source>Show device info</source>
         <translation>Pokaż informacje o urządzeniu</translation>
     </message>
@@ -1155,7 +1164,7 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <translation>Rozwiń o jeden poziom</translation>
     </message>
     <message>
-        <location line="+127"/>
+        <location line="+135"/>
         <source>Duplicates (%1)</source>
         <translation>Duplikaty (%1)</translation>
     </message>
@@ -1204,8 +1213,8 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <translation>Tworzenie katalogu nie powiodło się: </translation>
     </message>
     <message>
-        <location line="-1108"/>
-        <location line="+1102"/>
+        <location line="-1116"/>
+        <location line="+1110"/>
         <location line="+24"/>
         <source>Create</source>
         <translation>Utwórz</translation>
@@ -1258,7 +1267,7 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <translation>Wygeneruj profil LuckyBackup</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+66"/>
         <source>Select Collection Folder</source>
         <translation>Wybierz folder kolekcji</translation>
     </message>
@@ -2743,15 +2752,11 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <translation>Zmiana zostanie zastosowana tylko podczas zapisywania</translation>
     </message>
     <message>
-        <location line="+159"/>
-        <location line="+2083"/>
         <source>Excluded folders from this catalog</source>
-        <translation>Foldery wykluczone z tego katalogu</translation>
+        <translation type="vanished">Foldery wykluczone z tego katalogu</translation>
     </message>
     <message>
-        <location line="-2068"/>
-        <location line="+2083"/>
-        <location line="+382"/>
+        <location line="+2639"/>
         <source>Folder path or pattern to exclude</source>
         <translation>Ścieżka folderu lub wzorzec do wykluczenia</translation>
     </message>
@@ -2763,7 +2768,13 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <translation>Dodaj</translation>
     </message>
     <message>
-        <location line="-2326"/>
+        <location line="-2511"/>
+        <location line="+2083"/>
+        <source>Exclude folders or files</source>
+        <translation>Wyklucz foldery lub pliki</translation>
+    </message>
+    <message>
+        <location line="-1898"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1008"/>
         <location line="+0"/>
         <source>Comment 1</source>
@@ -3284,7 +3295,13 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <translation>Linki katalogów</translation>
     </message>
     <message>
-        <location line="-239"/>
+        <location line="-3461"/>
+        <location line="+2083"/>
+        <source>Path or name to exclude</source>
+        <translation>Ścieżka lub nazwa do wykluczenia</translation>
+    </message>
+    <message>
+        <location line="+1139"/>
         <source>Linked</source>
         <translation>Połączony</translation>
     </message>
@@ -6163,7 +6180,7 @@ do kosza?</translation>
         <translation type="vanished">zsynchronizowano</translation>
     </message>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+94"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+109"/>
         <source>Cancelled</source>
         <translation>Anulowane</translation>
     </message>
@@ -6194,12 +6211,12 @@ do kosza?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+420"/>
+        <location line="+433"/>
         <source>Errors: %1</source>
         <translation>Błędy: %1</translation>
     </message>
     <message>
-        <location line="-401"/>
+        <location line="-414"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
@@ -6211,35 +6228,35 @@ do kosza?</translation>
     </message>
     <message>
         <location line="-15"/>
-        <location line="+167"/>
+        <location line="+171"/>
         <source>Backup</source>
         <translation>Kopia zapasowa</translation>
     </message>
     <message>
-        <location line="-166"/>
-        <location line="+166"/>
+        <location line="-170"/>
+        <location line="+170"/>
         <source>Archive</source>
         <translation>Archiwum</translation>
     </message>
     <message>
-        <location line="-157"/>
+        <location line="-161"/>
         <source>Filter</source>
         <translation>Filtr</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+172"/>
+        <location line="+176"/>
         <source>Source</source>
         <translation>Źródło</translation>
     </message>
     <message>
-        <location line="-171"/>
-        <location line="+199"/>
+        <location line="-175"/>
+        <location line="+206"/>
         <source>Target</source>
         <translation>Cel</translation>
     </message>
     <message>
-        <location line="-179"/>
+        <location line="-186"/>
         <source>Update catalogs</source>
         <translation>Aktualizuj katalogi</translation>
     </message>
@@ -6269,15 +6286,15 @@ do kosza?</translation>
         <translation>Utwórz łącze, aby zdefiniować źródło i cel operacji tworzenia kopii zapasowej lub archiwizacji.</translation>
     </message>
     <message>
-        <location line="+118"/>
-        <location line="+28"/>
-        <location line="+24"/>
+        <location line="+124"/>
+        <location line="+31"/>
+        <location line="+27"/>
         <location line="+7"/>
         <source>files</source>
         <translation>pliki</translation>
     </message>
     <message>
-        <location line="-18"/>
+        <location line="-20"/>
         <source>Diff</source>
         <translation>Różn</translation>
     </message>
@@ -6287,7 +6304,7 @@ do kosza?</translation>
         <translation>Do przeniesienia</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+12"/>
         <source>Nothing to move</source>
         <translation>Nie ma nic do przeniesienia</translation>
     </message>
@@ -6297,7 +6314,7 @@ do kosza?</translation>
         <translation>Aktualne</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+20"/>
         <source>Last archive</source>
         <translation>Ostatnia archiwizacja</translation>
     </message>
@@ -6783,14 +6800,27 @@ do kosza?</translation>
         <translation>Uwzględnij sumę kontrolną</translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>Folder to exclude</source>
-        <translation>Folder do wykluczenia</translation>
+        <location line="+15"/>
+        <source>Exclude folders or files</source>
+        <translation>Wyklucz foldery lub pliki</translation>
     </message>
     <message>
+        <location line="+5"/>
         <location line="+6"/>
+        <source>Path or name to exclude</source>
+        <translation>Ścieżka lub nazwa do wykluczenia</translation>
+    </message>
+    <message>
+        <source>Path or text to exclude</source>
+        <translation type="vanished">Ścieżka lub tekst do wykluczenia</translation>
+    </message>
+    <message>
+        <source>Folder to exclude</source>
+        <translation type="vanished">Folder do wykluczenia</translation>
+    </message>
+    <message>
         <source>Path to exclude</source>
-        <translation>Ścieżka do wykluczenia</translation>
+        <translation type="vanished">Ścieżka do wykluczenia</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -6817,28 +6847,28 @@ do kosza?</translation>
 <context>
     <name>PageDeviceEditForm</name>
     <message>
-        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+95"/>
+        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+96"/>
         <source>Provide a name for this device.</source>
         <translation>Podaj nazwę tego urządzenia.</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+24"/>
         <source>Source path: %1 → %2</source>
         <translation>Ścieżka źródłowa: %1 → %2</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+84"/>
         <source>Device</source>
         <translation>Urządzenie</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+243"/>
+        <location line="+244"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
     <message>
-        <location line="-240"/>
+        <location line="-241"/>
         <source>Name</source>
         <translation>Nazwa</translation>
     </message>
@@ -6869,12 +6899,12 @@ do kosza?</translation>
     </message>
     <message>
         <location line="+9"/>
-        <location line="+41"/>
+        <location line="+48"/>
         <source>All</source>
         <translation>Wszystkie</translation>
     </message>
     <message>
-        <location line="-40"/>
+        <location line="-47"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
@@ -6900,14 +6930,19 @@ do kosza?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+35"/>
+        <location line="+42"/>
         <location line="+12"/>
         <location line="+16"/>
         <source>None</source>
         <translation>Brak</translation>
     </message>
     <message>
-        <location line="-33"/>
+        <location line="-40"/>
+        <source>Include subdirectories</source>
+        <translation>Uwzględnij podkatalogi</translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Include hidden files</source>
         <translation>Uwzględnij ukryte pliki</translation>
     </message>
@@ -6937,19 +6972,31 @@ do kosza?</translation>
         <translation>Uwzględnij sumę kontrolną</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+16"/>
+        <source>Exclude folders or files</source>
+        <translation>Wyklucz foldery lub pliki</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+7"/>
+        <source>Path or name to exclude</source>
+        <translation>Ścieżka lub nazwa do wykluczenia</translation>
+    </message>
+    <message>
+        <source>Path or text to exclude</source>
+        <translation type="vanished">Ścieżka lub tekst do wykluczenia</translation>
+    </message>
+    <message>
         <source>Exclude folders (this catalog)</source>
-        <translation>Wyklucz foldery (ten katalog)</translation>
+        <translation type="vanished">Wyklucz foldery (ten katalog)</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>Folder to exclude</source>
-        <translation>Folder do wykluczenia</translation>
+        <translation type="vanished">Folder do wykluczenia</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>Path to exclude</source>
-        <translation>Ścieżka do wykluczenia</translation>
+        <translation type="vanished">Ścieżka do wykluczenia</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -7495,7 +7542,7 @@ do kosza?</translation>
 <context>
     <name>PageSearchForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchForm.qml" line="+312"/>
+        <location filename="../qt_quick/PageSearchForm.qml" line="+316"/>
         <source>Select a date</source>
         <translation>Wybierz datę</translation>
     </message>
@@ -7600,7 +7647,7 @@ do kosza?</translation>
         <translation>tekst</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+44"/>
         <source>with</source>
         <translation>z</translation>
     </message>
@@ -7669,7 +7716,7 @@ do kosza?</translation>
         <translation>Atrybuty pliku</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+23"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
@@ -7873,7 +7920,7 @@ do kosza?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+778"/>
+        <location line="+795"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Weryfikuj sumy kontrolne</translation>
@@ -7885,25 +7932,25 @@ do kosza?</translation>
         <translation>Uwzględnij metadane</translation>
     </message>
     <message>
-        <location line="-829"/>
-        <location line="+469"/>
+        <location line="-846"/>
+        <location line="+486"/>
         <location line="+305"/>
         <source>Move to Trash</source>
         <translation>Przenieś do kosza</translation>
     </message>
     <message>
-        <location line="-775"/>
+        <location line="-792"/>
         <source>Extract Metadata</source>
         <translation>Wyodrębnij metadane</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+734"/>
+        <location line="+751"/>
         <source>Delete</source>
         <translation>Usuń</translation>
     </message>
     <message>
-        <location line="-679"/>
+        <location line="-696"/>
         <source>Exported to: %1</source>
         <translation>Wyeksportowano do: %1</translation>
     </message>
@@ -7923,7 +7970,7 @@ do kosza?</translation>
         <translation>Eksport nie powiódł się — brak wyników lub błąd bazy danych</translation>
     </message>
     <message>
-        <location line="+257"/>
+        <location line="+274"/>
         <source>(no selection)</source>
         <translation>(brak zaznaczenia)</translation>
     </message>
@@ -8192,7 +8239,12 @@ Błędy: %3</translation>
 <context>
     <name>PageSelectionDelegate</name>
     <message>
-        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+40"/>
+        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+43"/>
+        <source>Search</source>
+        <translation>Szukaj</translation>
+    </message>
+    <message>
+        <location line="+12"/>
         <source>Update</source>
         <translation>Aktualizuj</translation>
     </message>
@@ -8488,7 +8540,7 @@ Błędy: %3</translation>
         <translation>KiB</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+35"/>
         <source>No data</source>
         <translation>Brak danych</translation>
     </message>

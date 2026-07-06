@@ -43,22 +43,22 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+58"/>
-        <location line="+1576"/>
-        <location line="+1502"/>
+        <location line="+1584"/>
+        <location line="+1512"/>
         <location line="+11"/>
         <location line="+60"/>
         <source>In Progress</source>
         <translation>Bezig</translation>
     </message>
     <message>
-        <location line="-3135"/>
-        <location line="+3116"/>
+        <location line="-3153"/>
+        <location line="+3134"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Voltooid</translation>
     </message>
     <message>
-        <location line="-2846"/>
+        <location line="-2860"/>
         <source>Empty database path provided</source>
         <translation>Leeg databasepad opgegeven</translation>
     </message>
@@ -98,7 +98,7 @@
         <translation>Lokale schijf</translation>
     </message>
     <message>
-        <location line="+303"/>
+        <location line="+307"/>
         <source>search_results</source>
         <translation>zoekresultaten</translation>
     </message>
@@ -144,12 +144,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2105"/>
+        <location line="+2115"/>
         <source>Size</source>
         <translation>Grootte</translation>
     </message>
     <message>
-        <location line="-2104"/>
+        <location line="-2114"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
@@ -344,7 +344,7 @@ Kies een andere naam en probeer het opnieuw.</translation>
         <translation>Kan bestand niet openen: %1</translation>
     </message>
     <message>
-        <location line="+151"/>
+        <location line="+152"/>
         <source>There is already a catalog with this name: %1
 Choose a different name.</source>
         <translation>Er bestaat al een catalogus met deze naam: %1
@@ -356,12 +356,17 @@ Kies een andere naam.</translation>
         <translation>Een catalogus in de groep Fysiek kan alleen onder een opslagapparaat worden geplaatst.</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+64"/>
         <source>File type: %1 → %2</source>
         <translation>Bestandstype: %1 → %2</translation>
     </message>
     <message>
         <location line="+4"/>
+        <source>Include subdirectories: %1 → %2</source>
+        <translation>Submappen opnemen: %1 → %2</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Include hidden: %1 → %2</source>
         <translation>Verborgen opnemen: %1 → %2</translation>
     </message>
@@ -393,19 +398,23 @@ Kies een andere naam.</translation>
         <translation>Volledig apparaat: %1 → %2</translation>
     </message>
     <message>
+        <location line="-21"/>
         <location line="+1"/>
+        <location line="+21"/>
         <location line="+1"/>
         <source>yes</source>
         <translation>ja</translation>
     </message>
     <message>
-        <location line="-1"/>
+        <location line="-23"/>
+        <location line="+1"/>
+        <location line="+21"/>
         <location line="+1"/>
         <source>no</source>
         <translation>nee</translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+53"/>
         <source>There is already a Storage with this ID. Choose a different ID.</source>
         <translation>Er bestaat al een opslag met deze ID. Kies een andere ID.</translation>
     </message>
@@ -710,7 +719,7 @@ Kies een andere naam.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+650"/>
+        <location filename="../qt_quick/Main.qml" line="+658"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Wilt u dit %1-apparaat &lt;b&gt;verwijderen&lt;/b&gt;?&lt;br/&gt;&lt;br/&gt;Naam: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -727,12 +736,12 @@ Kies een andere naam.</translation>
         <location line="-361"/>
         <location line="+60"/>
         <location line="+162"/>
-        <location line="+687"/>
+        <location line="+695"/>
         <source>Cancel</source>
         <translation>Annuleren</translation>
     </message>
     <message>
-        <location line="-1009"/>
+        <location line="-1017"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+158"/>
@@ -790,36 +799,36 @@ Kies een andere naam.</translation>
     </message>
     <message>
         <location line="-720"/>
-        <location line="+954"/>
+        <location line="+962"/>
         <source>Devices</source>
         <translation>Apparaten</translation>
     </message>
     <message>
-        <location line="-949"/>
-        <location line="+1057"/>
+        <location line="-957"/>
+        <location line="+1065"/>
         <source>Explore</source>
         <translation>Verkennen</translation>
     </message>
     <message>
-        <location line="-1047"/>
-        <location line="+1282"/>
+        <location line="-1055"/>
+        <location line="+1290"/>
         <source>Backup</source>
         <translation>Back-up</translation>
     </message>
     <message>
-        <location line="-1277"/>
-        <location line="+1241"/>
+        <location line="-1285"/>
+        <location line="+1249"/>
         <source>Statistics</source>
         <translation>Statistieken</translation>
     </message>
     <message>
-        <location line="-1236"/>
-        <location line="+1256"/>
+        <location line="-1244"/>
+        <location line="+1264"/>
         <source>Tags</source>
         <translation>Tags</translation>
     </message>
     <message>
-        <location line="-1243"/>
+        <location line="-1251"/>
         <source>Documentation</source>
         <translation>Documentatie</translation>
     </message>
@@ -1095,12 +1104,12 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
     <message>
         <location line="-692"/>
         <location line="+795"/>
-        <location line="+3"/>
+        <location line="+36"/>
         <source>Search</source>
         <translation>Zoeken</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+7"/>
         <source>Resume</source>
         <translation>Hervatten</translation>
     </message>
@@ -1111,13 +1120,13 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+131"/>
+        <location line="+132"/>
         <location line="+178"/>
         <source>Stop</source>
         <translation>Stoppen</translation>
     </message>
     <message>
-        <location line="-302"/>
+        <location line="-303"/>
         <source>Reset</source>
         <translation>Herstellen</translation>
     </message>
@@ -1127,9 +1136,9 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Geschiedenis</translation>
     </message>
     <message>
-        <location line="-138"/>
-        <location line="+145"/>
-        <location line="+55"/>
+        <location line="-145"/>
+        <location line="+152"/>
+        <location line="+56"/>
         <location line="+107"/>
         <location line="+51"/>
         <location line="+81"/>
@@ -1140,7 +1149,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Sluiten</translation>
     </message>
     <message>
-        <location line="-561"/>
+        <location line="-569"/>
         <source>Show device info</source>
         <translation>Apparaatinfo tonen</translation>
     </message>
@@ -1155,7 +1164,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Eén niveau uitklappen</translation>
     </message>
     <message>
-        <location line="+127"/>
+        <location line="+135"/>
         <source>Duplicates (%1)</source>
         <translation>Duplicaten (%1)</translation>
     </message>
@@ -1204,8 +1213,8 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Aanmaken van catalogus mislukt: </translation>
     </message>
     <message>
-        <location line="-1108"/>
-        <location line="+1102"/>
+        <location line="-1116"/>
+        <location line="+1110"/>
         <location line="+24"/>
         <source>Create</source>
         <translation>Maken</translation>
@@ -1258,7 +1267,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>LuckyBackup-profiel genereren</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+66"/>
         <source>Select Collection Folder</source>
         <translation>Verzamelingsmap selecteren</translation>
     </message>
@@ -2743,15 +2752,11 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>De wijziging wordt alleen toegepast bij het opslaan</translation>
     </message>
     <message>
-        <location line="+159"/>
-        <location line="+2083"/>
         <source>Excluded folders from this catalog</source>
-        <translation>Uitgesloten mappen uit deze catalogus</translation>
+        <translation type="vanished">Uitgesloten mappen uit deze catalogus</translation>
     </message>
     <message>
-        <location line="-2068"/>
-        <location line="+2083"/>
-        <location line="+382"/>
+        <location line="+2639"/>
         <source>Folder path or pattern to exclude</source>
         <translation>Mappad of patroon om uit te sluiten</translation>
     </message>
@@ -2763,7 +2768,13 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Toevoegen</translation>
     </message>
     <message>
-        <location line="-2326"/>
+        <location line="-2511"/>
+        <location line="+2083"/>
+        <source>Exclude folders or files</source>
+        <translation>Mappen of bestanden uitsluiten</translation>
+    </message>
+    <message>
+        <location line="-1898"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1008"/>
         <location line="+0"/>
         <source>Comment 1</source>
@@ -3284,7 +3295,13 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Cataloguslinks</translation>
     </message>
     <message>
-        <location line="-239"/>
+        <location line="-3461"/>
+        <location line="+2083"/>
+        <source>Path or name to exclude</source>
+        <translation>Uit te sluiten pad of naam</translation>
+    </message>
+    <message>
+        <location line="+1139"/>
         <source>Linked</source>
         <translation>Gekoppeld</translation>
     </message>
@@ -6162,7 +6179,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation type="vanished">gesynchroniseerd</translation>
     </message>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+94"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+109"/>
         <source>Cancelled</source>
         <translation>Geannuleerd</translation>
     </message>
@@ -6193,12 +6210,12 @@ naar de prullenbak verplaatsen?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+420"/>
+        <location line="+433"/>
         <source>Errors: %1</source>
         <translation>Fouten: %1</translation>
     </message>
     <message>
-        <location line="-401"/>
+        <location line="-414"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
@@ -6210,35 +6227,35 @@ naar de prullenbak verplaatsen?</translation>
     </message>
     <message>
         <location line="-15"/>
-        <location line="+167"/>
+        <location line="+171"/>
         <source>Backup</source>
         <translation>Back-up</translation>
     </message>
     <message>
-        <location line="-166"/>
-        <location line="+166"/>
+        <location line="-170"/>
+        <location line="+170"/>
         <source>Archive</source>
         <translation>Archief</translation>
     </message>
     <message>
-        <location line="-157"/>
+        <location line="-161"/>
         <source>Filter</source>
         <translation>Filter</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+172"/>
+        <location line="+176"/>
         <source>Source</source>
         <translation>Bron</translation>
     </message>
     <message>
-        <location line="-171"/>
-        <location line="+199"/>
+        <location line="-175"/>
+        <location line="+206"/>
         <source>Target</source>
         <translation>Doel</translation>
     </message>
     <message>
-        <location line="-179"/>
+        <location line="-186"/>
         <source>Update catalogs</source>
         <translation>Catalogi bijwerken</translation>
     </message>
@@ -6268,15 +6285,15 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Maak een koppeling om een bron en doel voor back-up- of archiveringsbewerkingen te definiëren.</translation>
     </message>
     <message>
-        <location line="+118"/>
-        <location line="+28"/>
-        <location line="+24"/>
+        <location line="+124"/>
+        <location line="+31"/>
+        <location line="+27"/>
         <location line="+7"/>
         <source>files</source>
         <translation>bestanden</translation>
     </message>
     <message>
-        <location line="-18"/>
+        <location line="-20"/>
         <source>Diff</source>
         <translation>Versch</translation>
     </message>
@@ -6286,7 +6303,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Te verplaatsen</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+12"/>
         <source>Nothing to move</source>
         <translation>Niets te verplaatsen</translation>
     </message>
@@ -6296,7 +6313,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Up-to-date</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+20"/>
         <source>Last archive</source>
         <translation>Laatste archivering</translation>
     </message>
@@ -6782,14 +6799,27 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Controlesom opnemen</translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>Folder to exclude</source>
-        <translation>Uit te sluiten map</translation>
+        <location line="+15"/>
+        <source>Exclude folders or files</source>
+        <translation>Mappen of bestanden uitsluiten</translation>
     </message>
     <message>
+        <location line="+5"/>
         <location line="+6"/>
+        <source>Path or name to exclude</source>
+        <translation>Uit te sluiten pad of naam</translation>
+    </message>
+    <message>
+        <source>Path or text to exclude</source>
+        <translation type="vanished">Uit te sluiten pad of tekst</translation>
+    </message>
+    <message>
+        <source>Folder to exclude</source>
+        <translation type="vanished">Uit te sluiten map</translation>
+    </message>
+    <message>
         <source>Path to exclude</source>
-        <translation>Uit te sluiten pad</translation>
+        <translation type="vanished">Uit te sluiten pad</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -6816,28 +6846,28 @@ naar de prullenbak verplaatsen?</translation>
 <context>
     <name>PageDeviceEditForm</name>
     <message>
-        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+95"/>
+        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+96"/>
         <source>Provide a name for this device.</source>
         <translation>Geef een naam op voor dit apparaat.</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+24"/>
         <source>Source path: %1 → %2</source>
         <translation>Bronpad: %1 → %2</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+84"/>
         <source>Device</source>
         <translation>Apparaat</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+243"/>
+        <location line="+244"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
     <message>
-        <location line="-240"/>
+        <location line="-241"/>
         <source>Name</source>
         <translation>Naam</translation>
     </message>
@@ -6868,12 +6898,12 @@ naar de prullenbak verplaatsen?</translation>
     </message>
     <message>
         <location line="+9"/>
-        <location line="+41"/>
+        <location line="+48"/>
         <source>All</source>
         <translation>Alle</translation>
     </message>
     <message>
-        <location line="-40"/>
+        <location line="-47"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
@@ -6899,14 +6929,19 @@ naar de prullenbak verplaatsen?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+35"/>
+        <location line="+42"/>
         <location line="+12"/>
         <location line="+16"/>
         <source>None</source>
         <translation>Geen</translation>
     </message>
     <message>
-        <location line="-33"/>
+        <location line="-40"/>
+        <source>Include subdirectories</source>
+        <translation>Submappen opnemen</translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Include hidden files</source>
         <translation>Verborgen bestanden opnemen</translation>
     </message>
@@ -6936,19 +6971,31 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Controlesom opnemen</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+16"/>
+        <source>Exclude folders or files</source>
+        <translation>Mappen of bestanden uitsluiten</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+7"/>
+        <source>Path or name to exclude</source>
+        <translation>Uit te sluiten pad of naam</translation>
+    </message>
+    <message>
+        <source>Path or text to exclude</source>
+        <translation type="vanished">Uit te sluiten pad of tekst</translation>
+    </message>
+    <message>
         <source>Exclude folders (this catalog)</source>
-        <translation>Mappen uitsluiten (deze catalogus)</translation>
+        <translation type="vanished">Mappen uitsluiten (deze catalogus)</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>Folder to exclude</source>
-        <translation>Uit te sluiten map</translation>
+        <translation type="vanished">Uit te sluiten map</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>Path to exclude</source>
-        <translation>Uit te sluiten pad</translation>
+        <translation type="vanished">Uit te sluiten pad</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -7494,7 +7541,7 @@ naar de prullenbak verplaatsen?</translation>
 <context>
     <name>PageSearchForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchForm.qml" line="+312"/>
+        <location filename="../qt_quick/PageSearchForm.qml" line="+316"/>
         <source>Select a date</source>
         <translation>Selecteer een datum</translation>
     </message>
@@ -7599,7 +7646,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation>tekst</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+44"/>
         <source>with</source>
         <translation>met</translation>
     </message>
@@ -7668,7 +7715,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Bestandskenmerken</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+23"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
@@ -7872,7 +7919,7 @@ naar de prullenbak verplaatsen?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+778"/>
+        <location line="+795"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Controleersommen verifiëren</translation>
@@ -7884,25 +7931,25 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Metadata opnemen</translation>
     </message>
     <message>
-        <location line="-829"/>
-        <location line="+469"/>
+        <location line="-846"/>
+        <location line="+486"/>
         <location line="+305"/>
         <source>Move to Trash</source>
         <translation>Naar prullenbak verplaatsen</translation>
     </message>
     <message>
-        <location line="-775"/>
+        <location line="-792"/>
         <source>Extract Metadata</source>
         <translation>Metadata extraheren</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+734"/>
+        <location line="+751"/>
         <source>Delete</source>
         <translation>Verwijderen</translation>
     </message>
     <message>
-        <location line="-679"/>
+        <location line="-696"/>
         <source>Exported to: %1</source>
         <translation>Geëxporteerd naar: %1</translation>
     </message>
@@ -7922,7 +7969,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Export mislukt — geen resultaten of databasefout</translation>
     </message>
     <message>
-        <location line="+257"/>
+        <location line="+274"/>
         <source>(no selection)</source>
         <translation>(geen selectie)</translation>
     </message>
@@ -8191,7 +8238,12 @@ Fouten: %3</translation>
 <context>
     <name>PageSelectionDelegate</name>
     <message>
-        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+40"/>
+        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+43"/>
+        <source>Search</source>
+        <translation>Zoeken</translation>
+    </message>
+    <message>
+        <location line="+12"/>
         <source>Update</source>
         <translation>Bijwerken</translation>
     </message>
@@ -8487,7 +8539,7 @@ Fouten: %3</translation>
         <translation>KiB</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+35"/>
         <source>No data</source>
         <translation>Geen gegevens</translation>
     </message>

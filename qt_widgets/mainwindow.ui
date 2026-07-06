@@ -6180,7 +6180,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <item>
                         <widget class="QLineEdit" name="Devices_lineEdit_NewExcludeFolder">
                          <property name="placeholderText">
-                          <string>Path or text to exclude</string>
+                          <string>Path or name to exclude</string>
                          </property>
                         </widget>
                        </item>
@@ -8263,7 +8263,7 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                        <item>
                         <widget class="QLineEdit" name="Create_lineEdit_NewExcludeFolder">
                          <property name="placeholderText">
-                          <string>Path or text to exclude</string>
+                          <string>Path or name to exclude</string>
                          </property>
                         </widget>
                        </item>

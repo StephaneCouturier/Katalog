@@ -43,22 +43,22 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+58"/>
-        <location line="+1576"/>
-        <location line="+1502"/>
+        <location line="+1584"/>
+        <location line="+1512"/>
         <location line="+11"/>
         <location line="+60"/>
         <source>In Progress</source>
         <translation>Prebieha</translation>
     </message>
     <message>
-        <location line="-3135"/>
-        <location line="+3116"/>
+        <location line="-3153"/>
+        <location line="+3134"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Dokončené</translation>
     </message>
     <message>
-        <location line="-2846"/>
+        <location line="-2860"/>
         <source>Empty database path provided</source>
         <translation>Zadaná prázdna cesta k databáze</translation>
     </message>
@@ -98,7 +98,7 @@
         <translation>Lokálny disk</translation>
     </message>
     <message>
-        <location line="+303"/>
+        <location line="+307"/>
         <source>search_results</source>
         <translation>výsledky_vyhľadávania</translation>
     </message>
@@ -144,12 +144,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2105"/>
+        <location line="+2115"/>
         <source>Size</source>
         <translation>Veľkosť</translation>
     </message>
     <message>
-        <location line="-2104"/>
+        <location line="-2114"/>
         <source>Date</source>
         <translation>Dátum</translation>
     </message>
@@ -344,7 +344,7 @@ Zvoľte iný názov a skúste to znova.</translation>
         <translation>Súbor sa nepodarilo otvoriť: %1</translation>
     </message>
     <message>
-        <location line="+151"/>
+        <location line="+152"/>
         <source>There is already a catalog with this name: %1
 Choose a different name.</source>
         <translation>Katalóg s týmto názvom už existuje: %1
@@ -356,12 +356,17 @@ Zvoľte iný názov.</translation>
         <translation>Katalóg v skupine Fyzické možno umiestniť iba pod úložné zariadenie.</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+64"/>
         <source>File type: %1 → %2</source>
         <translation>Typ súboru: %1 → %2</translation>
     </message>
     <message>
         <location line="+4"/>
+        <source>Include subdirectories: %1 → %2</source>
+        <translation>Zahrnúť podadresáre: %1 → %2</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Include hidden: %1 → %2</source>
         <translation>Zahrnúť skryté: %1 → %2</translation>
     </message>
@@ -393,19 +398,23 @@ Zvoľte iný názov.</translation>
         <translation>Celé zariadenie: %1 → %2</translation>
     </message>
     <message>
+        <location line="-21"/>
         <location line="+1"/>
+        <location line="+21"/>
         <location line="+1"/>
         <source>yes</source>
         <translation>áno</translation>
     </message>
     <message>
-        <location line="-1"/>
+        <location line="-23"/>
+        <location line="+1"/>
+        <location line="+21"/>
         <location line="+1"/>
         <source>no</source>
         <translation>nie</translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+53"/>
         <source>There is already a Storage with this ID. Choose a different ID.</source>
         <translation>Úložisko s týmto ID už existuje. Zvoľte iné ID.</translation>
     </message>
@@ -710,7 +719,7 @@ Zvoľte iný názov.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+650"/>
+        <location filename="../qt_quick/Main.qml" line="+658"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Chcete &lt;b&gt;odstrániť&lt;/b&gt; toto zariadenie %1?&lt;br/&gt;&lt;br/&gt;Názov: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -727,12 +736,12 @@ Zvoľte iný názov.</translation>
         <location line="-361"/>
         <location line="+60"/>
         <location line="+162"/>
-        <location line="+687"/>
+        <location line="+695"/>
         <source>Cancel</source>
         <translation>Zrušiť</translation>
     </message>
     <message>
-        <location line="-1009"/>
+        <location line="-1017"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+158"/>
@@ -790,36 +799,36 @@ Zvoľte iný názov.</translation>
     </message>
     <message>
         <location line="-720"/>
-        <location line="+954"/>
+        <location line="+962"/>
         <source>Devices</source>
         <translation>Zariadenia</translation>
     </message>
     <message>
-        <location line="-949"/>
-        <location line="+1057"/>
+        <location line="-957"/>
+        <location line="+1065"/>
         <source>Explore</source>
         <translation>Prehliadať</translation>
     </message>
     <message>
-        <location line="-1047"/>
-        <location line="+1282"/>
+        <location line="-1055"/>
+        <location line="+1290"/>
         <source>Backup</source>
         <translation>Záloha</translation>
     </message>
     <message>
-        <location line="-1277"/>
-        <location line="+1241"/>
+        <location line="-1285"/>
+        <location line="+1249"/>
         <source>Statistics</source>
         <translation>Štatistiky</translation>
     </message>
     <message>
-        <location line="-1236"/>
-        <location line="+1256"/>
+        <location line="-1244"/>
+        <location line="+1264"/>
         <source>Tags</source>
         <translation>Značky</translation>
     </message>
     <message>
-        <location line="-1243"/>
+        <location line="-1251"/>
         <source>Documentation</source>
         <translation>Dokumentácia</translation>
     </message>
@@ -1095,12 +1104,12 @@ Chcete ho aj tak uložiť (katalóg by bol prázdny)?</translation>
     <message>
         <location line="-692"/>
         <location line="+795"/>
-        <location line="+3"/>
+        <location line="+36"/>
         <source>Search</source>
         <translation>Hľadať</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+7"/>
         <source>Resume</source>
         <translation>Pokračovať</translation>
     </message>
@@ -1111,13 +1120,13 @@ Chcete ho aj tak uložiť (katalóg by bol prázdny)?</translation>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+131"/>
+        <location line="+132"/>
         <location line="+178"/>
         <source>Stop</source>
         <translation>Zastaviť</translation>
     </message>
     <message>
-        <location line="-302"/>
+        <location line="-303"/>
         <source>Reset</source>
         <translation>Resetovať</translation>
     </message>
@@ -1127,9 +1136,9 @@ Chcete ho aj tak uložiť (katalóg by bol prázdny)?</translation>
         <translation>História</translation>
     </message>
     <message>
-        <location line="-138"/>
-        <location line="+145"/>
-        <location line="+55"/>
+        <location line="-145"/>
+        <location line="+152"/>
+        <location line="+56"/>
         <location line="+107"/>
         <location line="+51"/>
         <location line="+81"/>
@@ -1140,7 +1149,7 @@ Chcete ho aj tak uložiť (katalóg by bol prázdny)?</translation>
         <translation>Zavrieť</translation>
     </message>
     <message>
-        <location line="-561"/>
+        <location line="-569"/>
         <source>Show device info</source>
         <translation>Zobraziť informácie o zariadení</translation>
     </message>
@@ -1155,7 +1164,7 @@ Chcete ho aj tak uložiť (katalóg by bol prázdny)?</translation>
         <translation>Rozbaliť o jednu úroveň</translation>
     </message>
     <message>
-        <location line="+127"/>
+        <location line="+135"/>
         <source>Duplicates (%1)</source>
         <translation>Duplikáty (%1)</translation>
     </message>
@@ -1204,8 +1213,8 @@ Chcete ho aj tak uložiť (katalóg by bol prázdny)?</translation>
         <translation>Vytvorenie katalógu zlyhalo: </translation>
     </message>
     <message>
-        <location line="-1108"/>
-        <location line="+1102"/>
+        <location line="-1116"/>
+        <location line="+1110"/>
         <location line="+24"/>
         <source>Create</source>
         <translation>Vytvoriť</translation>
@@ -1258,7 +1267,7 @@ Chcete ho aj tak uložiť (katalóg by bol prázdny)?</translation>
         <translation>Vygenerovať profil LuckyBackup</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+66"/>
         <source>Select Collection Folder</source>
         <translation>Vyberte priečinok zbierky</translation>
     </message>
@@ -2743,15 +2752,11 @@ Chcete ho aj tak uložiť (katalóg by bol prázdny)?</translation>
         <translation>Zmena sa použije iba pri uložení</translation>
     </message>
     <message>
-        <location line="+159"/>
-        <location line="+2083"/>
         <source>Excluded folders from this catalog</source>
-        <translation>Vylúčené priečinky z tohto katalógu</translation>
+        <translation type="vanished">Vylúčené priečinky z tohto katalógu</translation>
     </message>
     <message>
-        <location line="-2068"/>
-        <location line="+2083"/>
-        <location line="+382"/>
+        <location line="+2639"/>
         <source>Folder path or pattern to exclude</source>
         <translation>Cesta k priečinku alebo vzor na vylúčenie</translation>
     </message>
@@ -2763,7 +2768,13 @@ Chcete ho aj tak uložiť (katalóg by bol prázdny)?</translation>
         <translation>Pridať</translation>
     </message>
     <message>
-        <location line="-2326"/>
+        <location line="-2511"/>
+        <location line="+2083"/>
+        <source>Exclude folders or files</source>
+        <translation>Vylúčiť priečinky alebo súbory</translation>
+    </message>
+    <message>
+        <location line="-1898"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1008"/>
         <location line="+0"/>
         <source>Comment 1</source>
@@ -3284,7 +3295,13 @@ Chcete ho aj tak uložiť (katalóg by bol prázdny)?</translation>
         <translation>Odkazy katalógu</translation>
     </message>
     <message>
-        <location line="-239"/>
+        <location line="-3461"/>
+        <location line="+2083"/>
+        <source>Path or name to exclude</source>
+        <translation>Cesta alebo názov na vylúčenie</translation>
+    </message>
+    <message>
+        <location line="+1139"/>
         <source>Linked</source>
         <translation>Prepojené</translation>
     </message>
@@ -6163,7 +6180,7 @@ do koša?</translation>
         <translation type="vanished">synchronizované</translation>
     </message>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+94"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+109"/>
         <source>Cancelled</source>
         <translation>Zrušené</translation>
     </message>
@@ -6194,12 +6211,12 @@ do koša?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+420"/>
+        <location line="+433"/>
         <source>Errors: %1</source>
         <translation>Chyby: %1</translation>
     </message>
     <message>
-        <location line="-401"/>
+        <location line="-414"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
@@ -6211,35 +6228,35 @@ do koša?</translation>
     </message>
     <message>
         <location line="-15"/>
-        <location line="+167"/>
+        <location line="+171"/>
         <source>Backup</source>
         <translation>Záloha</translation>
     </message>
     <message>
-        <location line="-166"/>
-        <location line="+166"/>
+        <location line="-170"/>
+        <location line="+170"/>
         <source>Archive</source>
         <translation>Archív</translation>
     </message>
     <message>
-        <location line="-157"/>
+        <location line="-161"/>
         <source>Filter</source>
         <translation>Filter</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+172"/>
+        <location line="+176"/>
         <source>Source</source>
         <translation>Zdroj</translation>
     </message>
     <message>
-        <location line="-171"/>
-        <location line="+199"/>
+        <location line="-175"/>
+        <location line="+206"/>
         <source>Target</source>
         <translation>Cieľ</translation>
     </message>
     <message>
-        <location line="-179"/>
+        <location line="-186"/>
         <source>Update catalogs</source>
         <translation>Aktualizovať katalógy</translation>
     </message>
@@ -6269,15 +6286,15 @@ do koša?</translation>
         <translation>Vytvorte odkaz na definovanie zdroja a cieľa pre operácie zálohovania alebo archivácie.</translation>
     </message>
     <message>
-        <location line="+118"/>
-        <location line="+28"/>
-        <location line="+24"/>
+        <location line="+124"/>
+        <location line="+31"/>
+        <location line="+27"/>
         <location line="+7"/>
         <source>files</source>
         <translation>súbory</translation>
     </message>
     <message>
-        <location line="-18"/>
+        <location line="-20"/>
         <source>Diff</source>
         <translation>Rozdiel</translation>
     </message>
@@ -6287,7 +6304,7 @@ do koša?</translation>
         <translation>Na presunutie</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+12"/>
         <source>Nothing to move</source>
         <translation>Nie je čo presúvať</translation>
     </message>
@@ -6297,7 +6314,7 @@ do koša?</translation>
         <translation>Aktuálne</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+20"/>
         <source>Last archive</source>
         <translation>Posledná archivácia</translation>
     </message>
@@ -6783,14 +6800,27 @@ do koša?</translation>
         <translation>Zahrnúť kontrolný súčet</translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>Folder to exclude</source>
-        <translation>Priečinok na vylúčenie</translation>
+        <location line="+15"/>
+        <source>Exclude folders or files</source>
+        <translation>Vylúčiť priečinky alebo súbory</translation>
     </message>
     <message>
+        <location line="+5"/>
         <location line="+6"/>
+        <source>Path or name to exclude</source>
+        <translation>Cesta alebo názov na vylúčenie</translation>
+    </message>
+    <message>
+        <source>Path or text to exclude</source>
+        <translation type="vanished">Cesta alebo text na vylúčenie</translation>
+    </message>
+    <message>
+        <source>Folder to exclude</source>
+        <translation type="vanished">Priečinok na vylúčenie</translation>
+    </message>
+    <message>
         <source>Path to exclude</source>
-        <translation>Cesta na vylúčenie</translation>
+        <translation type="vanished">Cesta na vylúčenie</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -6817,28 +6847,28 @@ do koša?</translation>
 <context>
     <name>PageDeviceEditForm</name>
     <message>
-        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+95"/>
+        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+96"/>
         <source>Provide a name for this device.</source>
         <translation>Zadajte názov tohto zariadenia.</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+24"/>
         <source>Source path: %1 → %2</source>
         <translation>Zdrojová cesta: %1 → %2</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+84"/>
         <source>Device</source>
         <translation>Zariadenie</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+243"/>
+        <location line="+244"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
     <message>
-        <location line="-240"/>
+        <location line="-241"/>
         <source>Name</source>
         <translation>Názov</translation>
     </message>
@@ -6869,12 +6899,12 @@ do koša?</translation>
     </message>
     <message>
         <location line="+9"/>
-        <location line="+41"/>
+        <location line="+48"/>
         <source>All</source>
         <translation>Všetko</translation>
     </message>
     <message>
-        <location line="-40"/>
+        <location line="-47"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
@@ -6900,14 +6930,19 @@ do koša?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+35"/>
+        <location line="+42"/>
         <location line="+12"/>
         <location line="+16"/>
         <source>None</source>
         <translation>Žiadne</translation>
     </message>
     <message>
-        <location line="-33"/>
+        <location line="-40"/>
+        <source>Include subdirectories</source>
+        <translation>Zahrnúť podadresáre</translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Include hidden files</source>
         <translation>Zahrnúť skryté súbory</translation>
     </message>
@@ -6937,19 +6972,31 @@ do koša?</translation>
         <translation>Zahrnúť kontrolný súčet</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+16"/>
+        <source>Exclude folders or files</source>
+        <translation>Vylúčiť priečinky alebo súbory</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+7"/>
+        <source>Path or name to exclude</source>
+        <translation>Cesta alebo názov na vylúčenie</translation>
+    </message>
+    <message>
+        <source>Path or text to exclude</source>
+        <translation type="vanished">Cesta alebo text na vylúčenie</translation>
+    </message>
+    <message>
         <source>Exclude folders (this catalog)</source>
-        <translation>Vylúčiť priečinky (tento katalóg)</translation>
+        <translation type="vanished">Vylúčiť priečinky (tento katalóg)</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>Folder to exclude</source>
-        <translation>Priečinok na vylúčenie</translation>
+        <translation type="vanished">Priečinok na vylúčenie</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>Path to exclude</source>
-        <translation>Cesta na vylúčenie</translation>
+        <translation type="vanished">Cesta na vylúčenie</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -7495,7 +7542,7 @@ do koša?</translation>
 <context>
     <name>PageSearchForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchForm.qml" line="+312"/>
+        <location filename="../qt_quick/PageSearchForm.qml" line="+316"/>
         <source>Select a date</source>
         <translation>Vyberte dátum</translation>
     </message>
@@ -7600,7 +7647,7 @@ do koša?</translation>
         <translation>text</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+44"/>
         <source>with</source>
         <translation>s</translation>
     </message>
@@ -7669,7 +7716,7 @@ do koša?</translation>
         <translation>Atribúty súboru</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+23"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
@@ -7873,7 +7920,7 @@ do koša?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+778"/>
+        <location line="+795"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Overiť kontrolné súčty</translation>
@@ -7885,25 +7932,25 @@ do koša?</translation>
         <translation>Zahrnúť metadáta</translation>
     </message>
     <message>
-        <location line="-829"/>
-        <location line="+469"/>
+        <location line="-846"/>
+        <location line="+486"/>
         <location line="+305"/>
         <source>Move to Trash</source>
         <translation>Presunúť do koša</translation>
     </message>
     <message>
-        <location line="-775"/>
+        <location line="-792"/>
         <source>Extract Metadata</source>
         <translation>Extrahovať metadáta</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+734"/>
+        <location line="+751"/>
         <source>Delete</source>
         <translation>Zmazať</translation>
     </message>
     <message>
-        <location line="-679"/>
+        <location line="-696"/>
         <source>Exported to: %1</source>
         <translation>Exportované do: %1</translation>
     </message>
@@ -7923,7 +7970,7 @@ do koša?</translation>
         <translation>Export zlyhal — žiadne výsledky alebo chyba databázy</translation>
     </message>
     <message>
-        <location line="+257"/>
+        <location line="+274"/>
         <source>(no selection)</source>
         <translation>(žiadny výber)</translation>
     </message>
@@ -8192,7 +8239,12 @@ Chyby: %3</translation>
 <context>
     <name>PageSelectionDelegate</name>
     <message>
-        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+40"/>
+        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+43"/>
+        <source>Search</source>
+        <translation>Hľadať</translation>
+    </message>
+    <message>
+        <location line="+12"/>
         <source>Update</source>
         <translation>Aktualizovať</translation>
     </message>
@@ -8488,7 +8540,7 @@ Chyby: %3</translation>
         <translation>KiB</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+35"/>
         <source>No data</source>
         <translation>Žiadne údaje</translation>
     </message>

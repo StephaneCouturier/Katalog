@@ -287,13 +287,13 @@ ColumnLayout {
             Layout.columnSpan: 2
             Layout.topMargin: Kirigami.Units.smallSpacing
         }
-        Controls.Label { text: qsTr("Path or text to exclude"); opacity: 0.7 }
+        Controls.Label { text: qsTr("Path or name to exclude"); opacity: 0.7 }
         RowLayout {
             Layout.fillWidth: true
             Controls.TextField {
                 id: create_lineEdit_NewExcludeFolder
                 Layout.fillWidth: true
-                placeholderText: qsTr("Path or text to exclude")
+                placeholderText: qsTr("Path or name to exclude")
             }
             Controls.Button {
                 icon.name: "folder-open"

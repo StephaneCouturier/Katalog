@@ -43,22 +43,22 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+58"/>
-        <location line="+1576"/>
-        <location line="+1502"/>
+        <location line="+1584"/>
+        <location line="+1512"/>
         <location line="+11"/>
         <location line="+60"/>
         <source>In Progress</source>
         <translation>У току</translation>
     </message>
     <message>
-        <location line="-3135"/>
-        <location line="+3116"/>
+        <location line="-3153"/>
+        <location line="+3134"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Завршено</translation>
     </message>
     <message>
-        <location line="-2846"/>
+        <location line="-2860"/>
         <source>Empty database path provided</source>
         <translation>Navedena prazna putanja baze podataka</translation>
     </message>
@@ -98,7 +98,7 @@
         <translation>Lokalni disk</translation>
     </message>
     <message>
-        <location line="+303"/>
+        <location line="+307"/>
         <source>search_results</source>
         <translation>rezultati_pretrage</translation>
     </message>
@@ -144,12 +144,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2105"/>
+        <location line="+2115"/>
         <source>Size</source>
         <translation>Veličina</translation>
     </message>
     <message>
-        <location line="-2104"/>
+        <location line="-2114"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
@@ -344,7 +344,7 @@ Choose a different name and try again.</source>
         <translation>Датотеку није могуће отворити: %1</translation>
     </message>
     <message>
-        <location line="+151"/>
+        <location line="+152"/>
         <source>There is already a catalog with this name: %1
 Choose a different name.</source>
         <translation>Већ постоји каталог са овим називом: %1
@@ -356,12 +356,17 @@ Choose a different name.</source>
         <translation>Каталог из групе Физички може се поставити само испод уређаја за складиштење.</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+64"/>
         <source>File type: %1 → %2</source>
         <translation>Врста датотеке: %1 → %2</translation>
     </message>
     <message>
         <location line="+4"/>
+        <source>Include subdirectories: %1 → %2</source>
+        <translation>Укључи подфолдере: %1 → %2</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Include hidden: %1 → %2</source>
         <translation>Укључи скривене: %1 → %2</translation>
     </message>
@@ -393,19 +398,23 @@ Choose a different name.</source>
         <translation>Цео уређај: %1 → %2</translation>
     </message>
     <message>
+        <location line="-21"/>
         <location line="+1"/>
+        <location line="+21"/>
         <location line="+1"/>
         <source>yes</source>
         <translation>да</translation>
     </message>
     <message>
-        <location line="-1"/>
+        <location line="-23"/>
+        <location line="+1"/>
+        <location line="+21"/>
         <location line="+1"/>
         <source>no</source>
         <translation>не</translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+53"/>
         <source>There is already a Storage with this ID. Choose a different ID.</source>
         <translation>Већ постоји складиште са овим ИД-ом. Изаберите други ИД.</translation>
     </message>
@@ -710,7 +719,7 @@ Choose a different name.</source>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+650"/>
+        <location filename="../qt_quick/Main.qml" line="+658"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Želite li da &lt;b&gt;obrišete&lt;/b&gt; ovaj uređaj %1?&lt;br/&gt;&lt;br/&gt;Ime: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -727,12 +736,12 @@ Choose a different name.</source>
         <location line="-361"/>
         <location line="+60"/>
         <location line="+162"/>
-        <location line="+687"/>
+        <location line="+695"/>
         <source>Cancel</source>
         <translation>Otkaži</translation>
     </message>
     <message>
-        <location line="-1009"/>
+        <location line="-1017"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+158"/>
@@ -790,36 +799,36 @@ Choose a different name.</source>
     </message>
     <message>
         <location line="-720"/>
-        <location line="+954"/>
+        <location line="+962"/>
         <source>Devices</source>
         <translation>Uređaji</translation>
     </message>
     <message>
-        <location line="-949"/>
-        <location line="+1057"/>
+        <location line="-957"/>
+        <location line="+1065"/>
         <source>Explore</source>
         <translation>Istražuj</translation>
     </message>
     <message>
-        <location line="-1047"/>
-        <location line="+1282"/>
+        <location line="-1055"/>
+        <location line="+1290"/>
         <source>Backup</source>
         <translation>Rezervna kopija</translation>
     </message>
     <message>
-        <location line="-1277"/>
-        <location line="+1241"/>
+        <location line="-1285"/>
+        <location line="+1249"/>
         <source>Statistics</source>
         <translation>Statistike</translation>
     </message>
     <message>
-        <location line="-1236"/>
-        <location line="+1256"/>
+        <location line="-1244"/>
+        <location line="+1264"/>
         <source>Tags</source>
         <translation>Oznake</translation>
     </message>
     <message>
-        <location line="-1243"/>
+        <location line="-1251"/>
         <source>Documentation</source>
         <translation>Dokumentacija</translation>
     </message>
@@ -1095,12 +1104,12 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
     <message>
         <location line="-692"/>
         <location line="+795"/>
-        <location line="+3"/>
+        <location line="+36"/>
         <source>Search</source>
         <translation>Pretraga</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+7"/>
         <source>Resume</source>
         <translation>Nastavi</translation>
     </message>
@@ -1111,13 +1120,13 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
     </message>
     <message>
         <location line="+7"/>
-        <location line="+131"/>
+        <location line="+132"/>
         <location line="+178"/>
         <source>Stop</source>
         <translation>Zaustavi</translation>
     </message>
     <message>
-        <location line="-302"/>
+        <location line="-303"/>
         <source>Reset</source>
         <translation>Resetuj</translation>
     </message>
@@ -1127,9 +1136,9 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <translation>Istorija</translation>
     </message>
     <message>
-        <location line="-138"/>
-        <location line="+145"/>
-        <location line="+55"/>
+        <location line="-145"/>
+        <location line="+152"/>
+        <location line="+56"/>
         <location line="+107"/>
         <location line="+51"/>
         <location line="+81"/>
@@ -1140,7 +1149,7 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <translation>Затвори</translation>
     </message>
     <message>
-        <location line="-561"/>
+        <location line="-569"/>
         <source>Show device info</source>
         <translation>Prikaži informacije o uređaju</translation>
     </message>
@@ -1155,7 +1164,7 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <translation>Raširi jedan nivo</translation>
     </message>
     <message>
-        <location line="+127"/>
+        <location line="+135"/>
         <source>Duplicates (%1)</source>
         <translation>Duplikati (%1)</translation>
     </message>
@@ -1204,8 +1213,8 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <translation>Kreiranje kataloga nije uspelo: </translation>
     </message>
     <message>
-        <location line="-1108"/>
-        <location line="+1102"/>
+        <location line="-1116"/>
+        <location line="+1110"/>
         <location line="+24"/>
         <source>Create</source>
         <translation>Kreiraj</translation>
@@ -1258,7 +1267,7 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <translation>Generiši LuckyBackup profil</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+66"/>
         <source>Select Collection Folder</source>
         <translation>Izaberite fasciklu kolekcije</translation>
     </message>
@@ -2743,15 +2752,11 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <translation>Promena će biti primenjena samo pri čuvanju</translation>
     </message>
     <message>
-        <location line="+159"/>
-        <location line="+2083"/>
         <source>Excluded folders from this catalog</source>
-        <translation>Iskључene mape iz ovog kataloga</translation>
+        <translation type="vanished">Iskључene mape iz ovog kataloga</translation>
     </message>
     <message>
-        <location line="-2068"/>
-        <location line="+2083"/>
-        <location line="+382"/>
+        <location line="+2639"/>
         <source>Folder path or pattern to exclude</source>
         <translation>Putanja mape ili obrazac za isključivanje</translation>
     </message>
@@ -2763,7 +2768,13 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <translation>Dodaj</translation>
     </message>
     <message>
-        <location line="-2326"/>
+        <location line="-2511"/>
+        <location line="+2083"/>
+        <source>Exclude folders or files</source>
+        <translation>Искључи фасцикле или датотеке</translation>
+    </message>
+    <message>
+        <location line="-1898"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1008"/>
         <location line="+0"/>
         <source>Comment 1</source>
@@ -3284,7 +3295,13 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <translation>Linkovi kataloga</translation>
     </message>
     <message>
-        <location line="-239"/>
+        <location line="-3461"/>
+        <location line="+2083"/>
+        <source>Path or name to exclude</source>
+        <translation>Путања или име за искључивање</translation>
+    </message>
+    <message>
+        <location line="+1139"/>
         <source>Linked</source>
         <translation>Povezan</translation>
     </message>
@@ -6163,7 +6180,7 @@ u smeće?</translation>
         <translation type="vanished">sinhronizovano</translation>
     </message>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+94"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+109"/>
         <source>Cancelled</source>
         <translation>Отказано</translation>
     </message>
@@ -6194,12 +6211,12 @@ u smeće?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+420"/>
+        <location line="+433"/>
         <source>Errors: %1</source>
         <translation>Greške: %1</translation>
     </message>
     <message>
-        <location line="-401"/>
+        <location line="-414"/>
         <source>Type</source>
         <translation>Tip</translation>
     </message>
@@ -6211,35 +6228,35 @@ u smeće?</translation>
     </message>
     <message>
         <location line="-15"/>
-        <location line="+167"/>
+        <location line="+171"/>
         <source>Backup</source>
         <translation>Rezervna kopija</translation>
     </message>
     <message>
-        <location line="-166"/>
-        <location line="+166"/>
+        <location line="-170"/>
+        <location line="+170"/>
         <source>Archive</source>
         <translation>Arhiva</translation>
     </message>
     <message>
-        <location line="-157"/>
+        <location line="-161"/>
         <source>Filter</source>
         <translation>Filter</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+172"/>
+        <location line="+176"/>
         <source>Source</source>
         <translation>Izvor</translation>
     </message>
     <message>
-        <location line="-171"/>
-        <location line="+199"/>
+        <location line="-175"/>
+        <location line="+206"/>
         <source>Target</source>
         <translation>Cilj</translation>
     </message>
     <message>
-        <location line="-179"/>
+        <location line="-186"/>
         <source>Update catalogs</source>
         <translation>Ažuriraj kataloge</translation>
     </message>
@@ -6269,15 +6286,15 @@ u smeće?</translation>
         <translation>Napravite vezu da biste definisali izvor i odredište za operacije rezervne kopije ili arhiviranja.</translation>
     </message>
     <message>
-        <location line="+118"/>
-        <location line="+28"/>
-        <location line="+24"/>
+        <location line="+124"/>
+        <location line="+31"/>
+        <location line="+27"/>
         <location line="+7"/>
         <source>files</source>
         <translation>датотеке</translation>
     </message>
     <message>
-        <location line="-18"/>
+        <location line="-20"/>
         <source>Diff</source>
         <translation>Razlika</translation>
     </message>
@@ -6287,7 +6304,7 @@ u smeće?</translation>
         <translation>Za premeštanje</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+12"/>
         <source>Nothing to move</source>
         <translation>Nema šta da se premesti</translation>
     </message>
@@ -6297,7 +6314,7 @@ u smeće?</translation>
         <translation>Ažurno</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+20"/>
         <source>Last archive</source>
         <translation>Poslednja arhivacija</translation>
     </message>
@@ -6783,14 +6800,27 @@ u smeće?</translation>
         <translation>Укључи контролни збир</translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>Folder to exclude</source>
-        <translation>Фасцикла за искључивање</translation>
+        <location line="+15"/>
+        <source>Exclude folders or files</source>
+        <translation>Искључи фасцикле или датотеке</translation>
     </message>
     <message>
+        <location line="+5"/>
         <location line="+6"/>
+        <source>Path or name to exclude</source>
+        <translation>Путања или име за искључивање</translation>
+    </message>
+    <message>
+        <source>Path or text to exclude</source>
+        <translation type="vanished">Путања или текст за искључивање</translation>
+    </message>
+    <message>
+        <source>Folder to exclude</source>
+        <translation type="vanished">Фасцикла за искључивање</translation>
+    </message>
+    <message>
         <source>Path to exclude</source>
-        <translation>Путања за искључивање</translation>
+        <translation type="vanished">Путања за искључивање</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -6817,28 +6847,28 @@ u smeće?</translation>
 <context>
     <name>PageDeviceEditForm</name>
     <message>
-        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+95"/>
+        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+96"/>
         <source>Provide a name for this device.</source>
         <translation>Unesite ime za ovaj uređaj.</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+24"/>
         <source>Source path: %1 → %2</source>
         <translation>Izvorna putanja: %1 → %2</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+84"/>
         <source>Device</source>
         <translation>Uređaj</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+243"/>
+        <location line="+244"/>
         <source>Type</source>
         <translation>Tip</translation>
     </message>
     <message>
-        <location line="-240"/>
+        <location line="-241"/>
         <source>Name</source>
         <translation>Ime</translation>
     </message>
@@ -6869,12 +6899,12 @@ u smeće?</translation>
     </message>
     <message>
         <location line="+9"/>
-        <location line="+41"/>
+        <location line="+48"/>
         <source>All</source>
         <translation>Sve</translation>
     </message>
     <message>
-        <location line="-40"/>
+        <location line="-47"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
@@ -6900,14 +6930,19 @@ u smeće?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+35"/>
+        <location line="+42"/>
         <location line="+12"/>
         <location line="+16"/>
         <source>None</source>
         <translation>Ниједан</translation>
     </message>
     <message>
-        <location line="-33"/>
+        <location line="-40"/>
+        <source>Include subdirectories</source>
+        <translation>Укључи подфолдере</translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Include hidden files</source>
         <translation>Укључи скривене датотеке</translation>
     </message>
@@ -6937,19 +6972,31 @@ u smeće?</translation>
         <translation>Укључи контролни збир</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+16"/>
+        <source>Exclude folders or files</source>
+        <translation>Искључи фасцикле или датотеке</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+7"/>
+        <source>Path or name to exclude</source>
+        <translation>Путања или име за искључивање</translation>
+    </message>
+    <message>
+        <source>Path or text to exclude</source>
+        <translation type="vanished">Путања или текст за искључивање</translation>
+    </message>
+    <message>
         <source>Exclude folders (this catalog)</source>
-        <translation>Izuzmi fascikle (ovaj katalog)</translation>
+        <translation type="vanished">Izuzmi fascikle (ovaj katalog)</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>Folder to exclude</source>
-        <translation>Фасцикла за искључивање</translation>
+        <translation type="vanished">Фасцикла за искључивање</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>Path to exclude</source>
-        <translation>Путања за искључивање</translation>
+        <translation type="vanished">Путања за искључивање</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -7495,7 +7542,7 @@ u smeće?</translation>
 <context>
     <name>PageSearchForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchForm.qml" line="+312"/>
+        <location filename="../qt_quick/PageSearchForm.qml" line="+316"/>
         <source>Select a date</source>
         <translation>Izaberite datum</translation>
     </message>
@@ -7600,7 +7647,7 @@ u smeće?</translation>
         <translation>текст</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+44"/>
         <source>with</source>
         <translation>sa</translation>
     </message>
@@ -7669,7 +7716,7 @@ u smeće?</translation>
         <translation>Атрибути датотеке</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+23"/>
         <source>Type</source>
         <translation>Tip</translation>
     </message>
@@ -7873,7 +7920,7 @@ u smeće?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+778"/>
+        <location line="+795"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Провери контролне суме</translation>
@@ -7885,25 +7932,25 @@ u smeće?</translation>
         <translation>Uključi metapodatke</translation>
     </message>
     <message>
-        <location line="-829"/>
-        <location line="+469"/>
+        <location line="-846"/>
+        <location line="+486"/>
         <location line="+305"/>
         <source>Move to Trash</source>
         <translation>Premesti u korpu</translation>
     </message>
     <message>
-        <location line="-775"/>
+        <location line="-792"/>
         <source>Extract Metadata</source>
         <translation>Издвоји метаподатке</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+734"/>
+        <location line="+751"/>
         <source>Delete</source>
         <translation>Obriši</translation>
     </message>
     <message>
-        <location line="-679"/>
+        <location line="-696"/>
         <source>Exported to: %1</source>
         <translation>Извезено у: %1</translation>
     </message>
@@ -7923,7 +7970,7 @@ u smeće?</translation>
         <translation>Извоз није успео — нема резултата или грешка базе података</translation>
     </message>
     <message>
-        <location line="+257"/>
+        <location line="+274"/>
         <source>(no selection)</source>
         <translation>(нема избора)</translation>
     </message>
@@ -8192,7 +8239,12 @@ Errors: %3</source>
 <context>
     <name>PageSelectionDelegate</name>
     <message>
-        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+40"/>
+        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+43"/>
+        <source>Search</source>
+        <translation>Pretraga</translation>
+    </message>
+    <message>
+        <location line="+12"/>
         <source>Update</source>
         <translation>Ažuriraj</translation>
     </message>
@@ -8488,7 +8540,7 @@ Errors: %3</source>
         <translation>KiB</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+35"/>
         <source>No data</source>
         <translation>Nema podataka</translation>
     </message>

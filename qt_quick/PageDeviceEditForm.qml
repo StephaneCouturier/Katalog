@@ -379,14 +379,14 @@ ColumnLayout {
             visible: root.deviceType === "Catalog"
         }
 
-        Controls.Label { text: qsTr("Path or text to exclude"); opacity: 0.7; visible: root.deviceType === "Catalog" }
+        Controls.Label { text: qsTr("Path or name to exclude"); opacity: 0.7; visible: root.deviceType === "Catalog" }
         RowLayout {
             Layout.fillWidth: true
             visible: root.deviceType === "Catalog"
             Controls.TextField {
                 id: edit_lineEdit_NewExcludeFolder
                 Layout.fillWidth: true
-                placeholderText: qsTr("Path or text to exclude")
+                placeholderText: qsTr("Path or name to exclude")
             }
             Controls.Button {
                 icon.name: "folder-open"
