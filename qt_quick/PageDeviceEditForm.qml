@@ -10,6 +10,10 @@ ColumnLayout {
 
     property int    deviceId:   0
     property string deviceType: ""
+    // Group of the loaded device (0=Physical, 1=Virtual); -1 until loadDevice() runs.
+    // Drives the parent picker: a Physical-group catalog must sit under a Storage,
+    // but a Virtual-group catalog (e.g. a search-results export) sits under a Virtual.
+    property int    _groupId:   -1
     property string originalPath: ""
     property bool   _originalIsFullDevice: false
     property var    storagePictureList:    [""]
@@ -29,11 +33,13 @@ ColumnLayout {
     function loadDevice() {
         var d = appManager1.getDeviceDetails(deviceId)
         deviceType    = d.type
+        _groupId      = d.groupId
         originalPath  = d.path
 
         edit_lineEdit_Name.text = d.name
         // Only offer parents in the same group, and never the device itself —
         // re-parenting can reorganise within a group but never cross groups.
+        // _groupId is set above first so storageOnly is correct before selectById().
         edit_storageComboBox.groupFilter     = d.groupId
         edit_storageComboBox.excludeDeviceId = deviceId
         edit_storageComboBox.selectById(d.parentId)
@@ -219,7 +225,10 @@ ColumnLayout {
         Controls.Label { text: qsTr("Parent device"); opacity: root.deviceId === 1 ? 0.35 : 0.7 }
         DeviceTreeComboBox {
             id: edit_storageComboBox
-            storageOnly: root.deviceType === "Catalog"
+            // Only a Physical-group catalog must be under a Storage. A Virtual-group
+            // catalog is parented to a Virtual device, so storageOnly must stay off
+            // there or the Virtual parent gets rejected and cleared to root on save.
+            storageOnly: root.deviceType === "Catalog" && root._groupId === 0
             hideCatalogs: true
             hideStorages: root.deviceType === "Storage"
             // The editor's parent must reflect only the loaded device + explicit
