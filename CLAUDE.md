@@ -14,6 +14,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 > **CRITICAL — File safety:**
 > - **NEVER delete any file** without the user explicitly and unambiguously saying to delete it.
 
+> **CRITICAL — Specifications gate:**
+> - Before implementing any feature-scope change, new request, or non-trivial bug fix, obtain a verdict from the `specifications` agent (`.claude/agents/specifications.md`).
+> - Proceed only on **IN SPEC**. **VIOLATES CONSTRAINT** and **NOT IN SPEC** require explicit user approval and a spec update *first* — the `docs_src/docs/Spec*.md` file, not the chat, is the record of what is authorised.
+> - The current code is **never** a source of requirements: it may contain unauthorised or buggy behaviour. Only `Spec*.md` defines what Katalog is required to do.
+
 > **CRITICAL — Core class changes:**
 > - **NEVER add or modify methods in `core/` classes** without explicit user approval first.
 > - Before proposing a new core method, always check: does the equivalent SQL/logic already exist in K2's UI layer? If so, state where it is and ask for approval to move it to core.

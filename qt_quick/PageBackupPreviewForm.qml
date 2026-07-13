@@ -68,16 +68,41 @@ Kirigami.ScrollablePage {
         }
     ]
 
+    // Catalog-update progress shown while "Update catalogs" runs before the preview —
+    // same StatusBarMessageBuilder messages as the other screens.
+    footer: RowLayout {
+        visible: appManager1.catalogUpdateForBackupRunning
+                 || appManager1.catalogUpdateForBackupStatusText.length > 0
+        spacing: Kirigami.Units.smallSpacing
+        Controls.BusyIndicator {
+            running: appManager1.catalogUpdateForBackupRunning
+            visible: appManager1.catalogUpdateForBackupRunning
+            implicitWidth:  Kirigami.Units.gridUnit * 1.5
+            implicitHeight: Kirigami.Units.gridUnit * 1.5
+            Layout.leftMargin: Kirigami.Units.smallSpacing
+        }
+        Controls.Label {
+            Layout.fillWidth: true
+            Layout.margins: Kirigami.Units.smallSpacing
+            text: appManager1.catalogUpdateForBackupStatusText
+            textFormat: Text.StyledText
+            elide: Text.ElideRight
+            font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
+        }
+    }
+
     ColumnLayout {
         spacing: Kirigami.Units.largeSpacing
         width: parent.width
 
-        // Loading state
+        // Loading state — while catalogs are being updated the progress is reported by
+        // the StatusBarMessageBuilder footer (below); only the short preview-compute step
+        // shows a placeholder here.
         Kirigami.PlaceholderMessage {
             Layout.fillWidth: true
-            visible: root.previewData === null
-            text: root.updatingCatalogs ? qsTr("Updating catalogs…") : qsTr("Computing preview…")
-            icon.name: root.updatingCatalogs ? "view-refresh" : "hourglass"
+            visible: root.previewData === null && !root.updatingCatalogs
+            text: qsTr("Computing preview…")
+            icon.name: "hourglass"
         }
 
         // Error state

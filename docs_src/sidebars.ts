@@ -84,7 +84,8 @@ export default {
                 'SpecCollection',
                 'SpecDeviceStorageRoot',
                 'SpecSearchList',
-                'SpecDevicesSplit'
+                'SpecDevicesSplit',
+                'SpecBackup'
                 ],
       },
        'Development-Repository',
