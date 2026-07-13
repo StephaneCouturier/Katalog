@@ -49,13 +49,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 > - **Decisions requiring a choice** (Yes/No, destructive confirmation) → modal `Controls.Dialog` / `Kirigami.PromptDialog`.
 
 > **CRITICAL — Version context:**
-> - Last **released** version: **2.11**
-> - Current **development** version: **2.12** (branch `katalog_development`)
-> - Database migrations 2.12 were introduced **during** the 2.12 development cycle and have **never been shipped**. Any field added by those migrations can be changed in-place (schema + migration ALTER TABLE) — no additional migration step is needed.
+> - Last **released** version: **2.12** (schema 2.12 is shipped — its migrations are frozen, do NOT edit them in place)
+> - Current **development** version: **K2 2.13 / K3 3.0** (branch `katalog_development`), database schema **2.13**
+> - Database migrations 2.13 are introduced **during** the 2.13/3.0 development cycle and have **never been shipped**. Any field added by those migrations can be changed in-place (schema + migration ALTER TABLE) — no additional migration step is needed *while 2.13 stays unreleased*.
 > - **Rule:** When a new DB field is introduced in the current development version, note it here so future work knows it has not been released yet and can be edited directly rather than adding a new migration.
 >
-> **New fields added in 2.12 (unreleased — edit in place, no extra migration needed):**
-> - `catalog.catalog_include_sub_dir` INTEGER DEFAULT 1 — whether the catalog scanner recurses into subdirectories; `false` for the `(root)` split catalog in the Devices Split feature
+> **Schema changes in 2.13 (unreleased — edit in place, no extra migration needed):**
+> - `Database::runMigration_2_13` — normalizes `device.device_order` to 0 for existing collections. The field was reserved earlier but never populated (`Device::order` was uninitialised at insert); the device-tree sort now uses it as a secondary key after `device_group_id`, so leftover indeterminate values are reset. New collections stamp schema 2.13 (`Collection::load`).
 
 ## Project Overview
 
