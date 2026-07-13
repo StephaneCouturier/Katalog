@@ -66,7 +66,9 @@ Observable behaviour that can be triggered and watched.
 | BKP-F11 | A standalone "Replicate directories" action replicates the source directory tree onto the target without copying any file. | [Implemented] |
 | BKP-F12 | A running backup can be paused and stopped. | [Implemented] |
 | BKP-F13 | Additional conflict handling where the source always wins (overwrite) or the target is always renamed. | [Backlog] |
-| BKP-F14 | When the run updates catalogs before comparing (BKP-F7), that catalog update reports progress through the standard status-bar message builder (UPDATE format), shown in the current page's status area — not via a separate placeholder/loading page. | [Implemented] |
+| BKP-F14 | When the run updates catalogs before comparing (BKP-F7), that catalog update reports progress through the standard status-bar message builder (UPDATE format) shown on the Backup page's status area. The Backup Preview page opens only once the preview report is ready; it is never shown while the update or preview is still computing. | [Implemented] |
+| BKP-F15 | In the backup preview, the file-list table (Status, File Name, Path, Size) presents a resizable header: the user can adjust each column's width by dragging its header divider, consistent with the K3 search-results and explore tables. | [Implemented] |
+| BKP-F16 | The backup preview computation (loading catalog file lists and comparing source vs target) runs in the background so the UI stays responsive, and reports progress through the standard status-bar message builder, consistent with catalog updates. The user can cancel a running preview. | [Implemented] |
 
 ## Constructional requirements — *how it is built / limits / MUST-NOTs*
 
@@ -81,6 +83,7 @@ Boundaries and implementation constraints, not user-visible behaviour.
 | BKP-C5 | Works in Memory and File/Hosted database modes. In Memory mode, file lists and folder lists are loaded into their tables before comparison and replication. | [Implemented] |
 | BKP-C6 | K2 and K3 have identical backup behaviour; both call the same `core/` code. | [Implemented] |
 | BKP-C7 | The UI layer contains no raw SQL for backup. | [Implemented] |
+| BKP-C8 | The preview/compare computation MUST keep the UI responsive and cancellable while it runs — yielding cooperatively on the main thread (periodic processEvents + a stop flag), consistent with how catalog update and search run — and MUST NOT block the UI thread with a single synchronous call. The compare/orchestration logic lives in `core/` (per BKP-C4); the UI layer only triggers it and displays progress and result. | [Implemented] |
 
 ---
 
@@ -95,4 +98,7 @@ For each row: set up the stated condition, run the operation, confirm the result
 - **BKP-F5** — Modify a target file so it differs, with the source newer. In RenameOldest, the old target file is renamed with a datetime stamp and the source is copied; in Skip, the target is untouched.
 - **BKP-F6** — Run an Archive mapping. Files appear on the target and are removed from the source; the target keeps everything it already had.
 - **BKP-F8** — Point at a target with insufficient free space. The run is blocked with a message.
-- **BKP-F14** — Enable "Update catalogs" and start a backup/preview. During the pre-backup update the page shows a standard `UPDATE | In Progress | ...` builder message in its status area; no empty placeholder page appears.
+- **BKP-F14** — Enable "Update catalogs" and request a Preview. The pre-preview catalog update shows a standard `UPDATE | In Progress | ...` builder message on the Backup page; the Backup Preview page appears only when the report is ready, never as an empty page with a progress indicator.
+- **BKP-F15** — Open a backup preview with files listed. Drag a column-header divider; that column resizes to the dragged width.
+- **BKP-F16** — With a large source and target catalog, trigger a Preview. The UI stays responsive while the compare runs and a `... | In Progress | ...` builder message is shown; the preview can be cancelled; the Preview page opens when the compare completes.
+- **BKP-C8** — Trigger a preview on a large catalog; the UI stays responsive (repaints, Stop works) during the compare and does not freeze.

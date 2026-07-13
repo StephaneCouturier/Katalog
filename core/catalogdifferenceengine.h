@@ -64,6 +64,13 @@ struct StrictDifferenceResult {
     int skippedCount = 0;                    // Files already in sync
 };
 
+// Result of a backup source→target comparison (files to copy/move vs conflicts)
+struct BackupCompareResult {
+    QList<DifferenceFileEntry> filesToCopy;
+    QList<DifferenceFileEntry> fileConflicts;
+    int skippedCount = 0;
+};
+
 class CatalogDifferenceEngine
 {
 public:
@@ -99,7 +106,8 @@ public:
         const QList<int> &targetDeviceIds,
         CompareFields matchFields,
         bool checksumNotEqual = false,
-        const QString &tableName = QLatin1String("filetemp")
+        const QString &tableName = QLatin1String("filetemp"),
+        bool *stopRequested = nullptr
     );
 
     /**
@@ -119,7 +127,8 @@ public:
         int sourceCatalogId,
         int targetCatalogId,
         const QString &sourceRoot,
-        const QString &targetRoot
+        const QString &targetRoot,
+        bool *stopRequested = nullptr
     );
 
     /**
@@ -137,7 +146,26 @@ public:
     StrictDifferenceResult compareStrictFromDrive(
         const QString &sourceRoot,
         int targetCatalogId,
-        const QString &targetRoot
+        const QString &targetRoot,
+        bool *stopRequested = nullptr
+    );
+
+    /**
+     * @brief Compare a source catalog/device against a target for a backup run.
+     *
+     * Picks the correct comparator (drive-walk / strict / index-based) and returns the
+     * files to copy/move vs conflicts. Orchestration lives in core (BKP-C4/BKP-C8); the
+     * UI layer only triggers this and displays the result.
+     *
+     * @param stopRequested Optional cancel flag, polled during the comparison so the UI
+     *                      stays responsive and the preview can be cancelled.
+     */
+    BackupCompareResult compareForBackup(
+        const Device &sourceDevice,
+        const Device &targetDevice,
+        bool strictCopy,
+        bool sourceDrive,
+        bool *stopRequested = nullptr
     );
 
     /**

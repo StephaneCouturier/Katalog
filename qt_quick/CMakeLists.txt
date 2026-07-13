@@ -32,6 +32,7 @@ set(CORE_SOURCES
     adapters/search.h            adapters/search.cpp
     adapters/devicelistmodel.h   adapters/devicelistmodel.cpp
     adapters/explorefilesmodel.h adapters/explorefilesmodel.cpp
+    adapters/backuppreviewmodel.h adapters/backuppreviewmodel.cpp
     #adapters/commandline.h adapters/commandline.cpp
     #adapters/database.cpp adapters/database.h
     #adapters/searchjob.cpp adapters/searchjob.h

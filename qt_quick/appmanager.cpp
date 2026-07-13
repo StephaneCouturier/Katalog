@@ -96,6 +96,8 @@ void AppManager::setSearchObject(SearchSync *search)
     m_exploreSortModel  = new FilesView(this);
     m_exploreSortModel->setSourceModel(m_exploreFilesModel);
 
+    m_backupPreviewModel = new BackupPreviewModel(this);
+
     m_searchSortModel->setCaseSensitive(m_fileSortCaseSensitive);
     m_exploreSortModel->setCaseSensitive(m_fileSortCaseSensitive);
 
@@ -3674,73 +3676,70 @@ bool AppManager::invertBackupMapping(int mappingId)
     return true;
 }
 //----------------------------------------------------------------------
-AppManager::BackupCompareResult AppManager::compareForBackup(
-    const Device &sourceDevice, const Device &targetDevice,
-    bool strictCopy, bool sourceDrive)
+// compareForBackup moved to core (CatalogDifferenceEngine::compareForBackup) per
+// BKP-C4/BKP-C8 so the UI layer no longer holds compare/orchestration logic.
+//----------------------------------------------------------------------
+// startBackupPreview: entry point from QML. Runs the pre-preview catalog update (if
+// enabled) on the Backup page, then the compare — both keep the UI responsive — and
+// emits backupPreviewReady so the Backup Preview page opens only when the report is
+// ready (BKP-F14/BKP-F16).
+void AppManager::startBackupPreview(int mappingId)
 {
-    BackupCompareResult out;
+    if (m_backupPreviewRunning || m_catalogUpdateForBackupRunning)
+        return;
 
-    if (sourceDrive) {
-        // DRIVE mode: walk the source filesystem directly. This is independent of the
-        // source catalog index, so it works even when "Update catalogs" is off (the
-        // index may be stale or empty). It is the only drive-walking comparator, so it
-        // applies to both strictCopy and non-strict mappings — notably Archive, which
-        // forces non-strict and previously fell through to the index-based branch below
-        // (finding nothing to move when the catalog was not updated first).
-        CatalogDifferenceEngine engine(m_connectionName);
-        StrictDifferenceResult r = engine.compareStrictFromDrive(
-            sourceDevice.path, targetDevice.externalID, targetDevice.path);
-        out.filesToCopy   = r.filesToCopy;
-        out.fileConflicts = r.conflicts;
-        out.skippedCount  = r.skippedCount;
-    } else if (strictCopy) {
-        CatalogDifferenceEngine engine(m_connectionName);
-        StrictDifferenceResult r = engine.compareStrict(
-            sourceDevice.externalID, targetDevice.externalID,
-            sourceDevice.path, targetDevice.path);
-        out.filesToCopy   = r.filesToCopy;
-        out.fileConflicts = r.conflicts;
-        out.skippedCount  = r.skippedCount;
-    } else {
-        CatalogDifferenceEngine engine(m_connectionName);
-        const QList<int> sourceIds = CatalogDifferenceEngine::resolveCatalogDeviceIds(
-            const_cast<Device*>(&sourceDevice), m_connectionName);
-        const QList<int> targetIds = CatalogDifferenceEngine::resolveCatalogDeviceIds(
-            const_cast<Device*>(&targetDevice), m_connectionName);
-        const DifferenceResult diff = engine.compare(
-            sourceIds, targetIds,
-            CatalogDifferenceEngine::Name | CatalogDifferenceEngine::Size,
-            false, QStringLiteral("file"));
-
-        BackupMappingManager manager(m_connectionName);
-        const QSet<QString> targetPaths  = manager.getCatalogFilePaths(targetDevice.externalID);
-        const int           srcRootLen   = sourceDevice.path.length();
-        for (const DifferenceFileEntry &e : diff.onlyInSource) {
-            const QString relFolder    = e.folderPath.mid(srcRootLen);
-            const QString expectedPath = targetDevice.path + relFolder + QLatin1Char('/') + e.fileName;
-            if (targetPaths.contains(expectedPath))
-                out.fileConflicts.append(e);
-            else
-                out.filesToCopy.append(e);
-        }
-        out.skippedCount = manager.getCatalogFileCount(sourceDevice.externalID)
-                           - out.filesToCopy.size()
-                           - out.fileConflicts.size();
+    if (updateBeforeBackup()) {
+        m_previewAfterUpdateMappingId = mappingId;
+        prepareCatalogsForMapping(mappingId);   // threaded update; chains to runPreviewCompare on completion
+        return;
     }
-    return out;
+    runPreviewCompare(mappingId);
 }
 //----------------------------------------------------------------------
-QVariantMap AppManager::previewBackup(int mappingId)
+void AppManager::stopBackupPreview()
 {
+    if (m_backupPreviewRunning)
+        m_previewStopRequested = true;
+}
+//----------------------------------------------------------------------
+void AppManager::runPreviewCompare(int mappingId)
+{
+    if (m_backupPreviewModel) m_backupPreviewModel->clear();
+
+    // Enter the running state so the Backup page shows compare progress + a Stop button.
+    m_backupPreviewRunning    = true;
+    m_previewStopRequested    = false;
+    m_backupPreviewStatusText = StatusBarMessageBuilder()
+                                    .setOperation(tr("Search"))
+                                    .setStatus(tr("In Progress"))
+                                    .build();
+    emit backupPreviewRunningChanged();
+    emit backupPreviewStatusChanged();
+    QCoreApplication::processEvents();  // paint the running state before the compare starts
+
     QVariantMap result;
     result[QStringLiteral("hasData")] = false;
     result[QStringLiteral("error")]   = QString();
+    m_lastPreviewSummary = result;
+
+    // Clears the running state and notifies QML. success/cancelled decide whether the
+    // Backup Preview page opens (BKP-F14/BKP-F16).
+    auto finish = [&](bool success, bool cancelled) {
+        m_backupPreviewRunning = false;
+        m_backupPreviewStatusText.clear();
+        emit backupPreviewRunningChanged();
+        emit backupPreviewStatusChanged();
+        emit backupPreviewReady(mappingId, success, cancelled);
+    };
 
     BackupMappingManager manager(m_connectionName);
     MappingInfo mapping = manager.getMappingById(mappingId);
     if (mapping.mappingId < 0) {
         result[QStringLiteral("error")] = tr("Link not found.");
-        return result;
+        m_lastPreviewSummary = result;
+        emit backupNotification(tr("Link not found."), true);
+        finish(false, false);
+        return;
     }
 
     Device sourceDevice;
@@ -3752,7 +3751,10 @@ QVariantMap AppManager::previewBackup(int mappingId)
 
     if (sourceDevice.type != QLatin1String("Catalog") || targetDevice.type != QLatin1String("Catalog")) {
         result[QStringLiteral("error")] = tr("Both source and target must be Catalog devices.");
-        return result;
+        m_lastPreviewSummary = result;
+        emit backupNotification(tr("Both source and target must be Catalog devices."), true);
+        finish(false, false);
+        return;
     }
 
     sourceDevice.updateActiveState(m_connectionName);
@@ -3760,12 +3762,16 @@ QVariantMap AppManager::previewBackup(int mappingId)
 
     if (collection->databaseMode == QLatin1String("Memory")) {
         QMutex mutex;
-        bool stopRequested = false;
-        sourceDevice.catalog->loadCatalogFileListToTable(mutex, stopRequested);
-        targetDevice.catalog->loadCatalogFileListToTable(mutex, stopRequested);
+        sourceDevice.catalog->loadCatalogFileListToTable(mutex, m_previewStopRequested);
+        targetDevice.catalog->loadCatalogFileListToTable(mutex, m_previewStopRequested);
     }
+    if (m_previewStopRequested) { finish(false, true); return; }
 
-    const BackupCompareResult cmp      = compareForBackup(sourceDevice, targetDevice, mapping.strictCopy, mapping.sourceDrive);
+    CatalogDifferenceEngine cmpEngine(m_connectionName);
+    const BackupCompareResult cmp = cmpEngine.compareForBackup(
+        sourceDevice, targetDevice, mapping.strictCopy, mapping.sourceDrive, &m_previewStopRequested);
+    if (m_previewStopRequested) { finish(false, true); return; }
+
     const bool                isArchive = (mapping.mappingType == QLatin1String("Archive"));
 
     const BackupSpaceCheck spaceCheck = evaluateBackupSpace(
@@ -3814,6 +3820,11 @@ QVariantMap AppManager::previewBackup(int mappingId)
         m_lastPreviewRows.append(pr);
     }
 
+    // Feed the resizable-column preview table (BKP-F15): copy/move rows first, then
+    // conflicts — the trailing fileConflicts rows are flagged so the table can style them.
+    if (m_backupPreviewModel)
+        m_backupPreviewModel->populate(m_lastPreviewRows, static_cast<int>(cmp.fileConflicts.size()));
+
     result[QStringLiteral("hasData")]        = true;
     result[QStringLiteral("isArchive")]      = isArchive;
     result[QStringLiteral("filesToCopy")]    = filesToCopy;
@@ -3827,7 +3838,9 @@ QVariantMap AppManager::previewBackup(int mappingId)
     result[QStringLiteral("sourceActive")]   = sourceDevice.active;
     result[QStringLiteral("targetActive")]   = targetDevice.active;
     result[QStringLiteral("mappingName")]    = mapping.mappingName;
-    return result;
+
+    m_lastPreviewSummary = result;
+    finish(true, false);
 }
 //----------------------------------------------------------------------
 void AppManager::runBackup(int mappingId)
@@ -3897,7 +3910,8 @@ void AppManager::executeBackupJob(int mappingId)
         replicator.replicate({sourceDevice.externalID}, sourceDevice.path, targetDevice.path);
     }
 
-    const BackupCompareResult cmp = compareForBackup(sourceDevice, targetDevice, mapping.strictCopy, mapping.sourceDrive);
+    CatalogDifferenceEngine cmpEngine(m_connectionName);
+    const BackupCompareResult cmp = cmpEngine.compareForBackup(sourceDevice, targetDevice, mapping.strictCopy, mapping.sourceDrive);
     if (cmp.filesToCopy.isEmpty() && cmp.fileConflicts.isEmpty()) {
         m_runningBackupMappingId = -1;
         emit backupFinished(0, 0, 0, 0, 0, 0, false);
@@ -4192,6 +4206,15 @@ void AppManager::setupCatalogUpdateForBackupConnections()
         emit catalogUpdateForBackupRunningChanged();
         emit catalogUpdateForBackupStatusChanged();
         emit catalogsForMappingPrepared(id, false, error);
+
+        // If a preview was waiting on this update, report it as a failed preview so the
+        // Backup page clears and the Preview page does not open.
+        if (m_previewAfterUpdateMappingId == id) {
+            m_previewAfterUpdateMappingId = -1;
+            if (!error.isEmpty())
+                emit backupNotification(error, true);
+            emit backupPreviewReady(id, false, false);
+        }
     };
     connect(m_deviceUpdateManager, &DeviceUpdateManager::operationError,     this, onFail);
     connect(m_deviceUpdateManager, &DeviceUpdateManager::operationCancelled, this,
@@ -4232,5 +4255,11 @@ void AppManager::onCatalogUpdateForBackupStep()
 
     if (pendingBackup >= 0)
         executeBackupJob(pendingBackup);
+    else if (m_previewAfterUpdateMappingId == id) {
+        // Preview flow: catalogs are updated — now run the (cancellable) compare, then
+        // backupPreviewReady opens the Preview page.
+        m_previewAfterUpdateMappingId = -1;
+        runPreviewCompare(id);
+    }
 }
 

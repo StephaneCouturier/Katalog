@@ -67,6 +67,7 @@
 #include "adapters/search.h"
 #include "adapters/devicelistmodel.h"
 #include "adapters/explorefilesmodel.h"
+#include "adapters/backuppreviewmodel.h"
 #include "filesview.h"
 #include <QElapsedTimer>
 
@@ -80,6 +81,7 @@ class AppManager : public QObject
     Q_PROPERTY(QSortFilterProxyModel* deviceFilterModel  READ getDeviceFilterModel  CONSTANT)
     Q_PROPERTY(QAbstractItemModel*    searchSortModel   READ getSearchSortModel    CONSTANT)
     Q_PROPERTY(QAbstractItemModel*    exploreSortModel  READ getExploreSortModel   CONSTANT)
+    Q_PROPERTY(QAbstractItemModel*    backupPreviewModel READ getBackupPreviewModel CONSTANT)
     Q_PROPERTY(int     selectedDeviceId   READ getSelectedDeviceId   NOTIFY selectedDeviceChanged)
     Q_PROPERTY(QString selectedDeviceName READ getSelectedDeviceName NOTIFY selectedDeviceChanged)
     Q_PROPERTY(QString selectedDeviceType READ getSelectedDeviceType NOTIFY selectedDeviceChanged)
@@ -111,6 +113,8 @@ class AppManager : public QObject
     Q_PROPERTY(bool updateBeforeBackup READ updateBeforeBackup WRITE setUpdateBeforeBackup NOTIFY updateBeforeBackupChanged)
     Q_PROPERTY(bool catalogUpdateForBackupRunning READ catalogUpdateForBackupRunning NOTIFY catalogUpdateForBackupRunningChanged)
     Q_PROPERTY(QString catalogUpdateForBackupStatusText READ getCatalogUpdateForBackupStatusText NOTIFY catalogUpdateForBackupStatusChanged)
+    Q_PROPERTY(bool backupPreviewRunning READ backupPreviewRunning NOTIFY backupPreviewRunningChanged)
+    Q_PROPERTY(QString backupPreviewStatusText READ getBackupPreviewStatusText NOTIFY backupPreviewStatusChanged)
     Q_PROPERTY(bool    deviceUpdateIsRunning  READ getDeviceUpdateIsRunning  NOTIFY deviceUpdateStateChanged)
     Q_PROPERTY(QString deviceUpdateStatusText READ getDeviceUpdateStatusText NOTIFY deviceUpdateStatusChanged)
     Q_PROPERTY(bool    isFirstRun             READ isFirstRun                NOTIFY firstRunChanged)
@@ -227,7 +231,9 @@ public slots:
     Q_INVOKABLE QString      updateBackupMapping(int mappingId, const QString &name, const QString &type, int sourceId, int targetId, bool strictCopy, const QString &conflictMode, bool sourceDrive);
     Q_INVOKABLE bool         deleteBackupMapping(int mappingId);
     Q_INVOKABLE bool         invertBackupMapping(int mappingId);
-    Q_INVOKABLE QVariantMap  previewBackup(int mappingId);
+    Q_INVOKABLE void         startBackupPreview(int mappingId);
+    Q_INVOKABLE void         stopBackupPreview();
+    Q_INVOKABLE QVariantMap  lastBackupPreviewSummary() const { return m_lastPreviewSummary; }
     Q_INVOKABLE void         runBackup(int mappingId);
     Q_INVOKABLE void         stopBackup();
     Q_INVOKABLE void         pauseBackup();
@@ -243,6 +249,8 @@ public slots:
     void setUpdateBeforeBackup(bool v);
     bool catalogUpdateForBackupRunning() const { return m_catalogUpdateForBackupRunning; }
     QString getCatalogUpdateForBackupStatusText() const { return m_catalogUpdateForBackupStatusText; }
+    bool backupPreviewRunning() const { return m_backupPreviewRunning; }
+    QString getBackupPreviewStatusText() const { return m_backupPreviewStatusText; }
     Q_INVOKABLE void prepareCatalogsForMapping(int mappingId);
 
     Q_INVOKABLE QVariantList getTagEntries(const QString &filterName = QString()) const;
@@ -344,6 +352,7 @@ public slots:
     // Sort model accessors (for Q_PROPERTY)
     QAbstractItemModel *getSearchSortModel()  const { return m_searchSortModel; }
     QAbstractItemModel *getExploreSortModel() const { return m_exploreSortModel; }
+    QAbstractItemModel *getBackupPreviewModel() const { return m_backupPreviewModel; }
 
     // Storage helpers
     Q_INVOKABLE QStringList  getStoragePictureList() const;
@@ -464,6 +473,9 @@ signals:
     void catalogUpdateForBackupRunningChanged();
     void catalogUpdateForBackupStatusChanged();
     void catalogsForMappingPrepared(int mappingId, bool success, const QString &error);
+    void backupPreviewRunningChanged();
+    void backupPreviewStatusChanged();
+    void backupPreviewReady(int mappingId, bool success, bool cancelled);
     void deviceUpdateStateChanged();
     void deviceUpdateStatusChanged();
     void deviceUpdateReportReady(QVariantMap report);
@@ -496,12 +508,11 @@ private:
     void onCatalogCreationCancelled();
 
     // Backup helpers
-    struct BackupCompareResult {
-        QList<DifferenceFileEntry> filesToCopy;
-        QList<DifferenceFileEntry> fileConflicts;
-        int skippedCount = 0;
-    };
-    BackupCompareResult compareForBackup(const Device &src, const Device &tgt, bool strictCopy, bool sourceDrive);
+    // Runs the preview compare via core (CatalogDifferenceEngine::compareForBackup) with
+    // cooperative yielding + m_previewStopRequested so the UI stays responsive and can be
+    // cancelled (BKP-F16/BKP-C8); populates the model + m_lastPreviewSummary, then emits
+    // backupPreviewReady.
+    void runPreviewCompare(int mappingId);
     void executeBackupJob(int mappingId);
     void onBackupProgressInternal(int filesDone, int totalFiles, qint64 bytesCopied, qint64 totalBytes, const QString &currentFile);
     void onBackupFinishedInternal(const BackupReport &report);
@@ -514,6 +525,13 @@ private:
     Device                  m_backupTargetDevice;
     int                     m_runningBackupMappingId = -1;
     QList<BackupPreviewRow> m_lastPreviewRows;
+
+    // Async, cancellable preview state (BKP-F16/BKP-C8)
+    bool        m_backupPreviewRunning        = false;
+    bool        m_previewStopRequested        = false;
+    QString     m_backupPreviewStatusText;
+    QVariantMap m_lastPreviewSummary;
+    int         m_previewAfterUpdateMappingId = -1;  // preview waiting on the pre-preview catalog update
 
     // Post-backup catalog re-scan queue (refreshes the card's totals/diff). Backup
     // re-scans the target; Archive re-scans source (files moved out) AND target.
@@ -549,6 +567,7 @@ private:
 
     ExploreFilesModel *m_exploreFilesModel = nullptr;
     FilesView         *m_exploreSortModel  = nullptr;
+    BackupPreviewModel *m_backupPreviewModel = nullptr;
     FilesView         *m_searchSortModel   = nullptr;
 
     void saveToRecentCollections(const QString &mode, const QString &path,

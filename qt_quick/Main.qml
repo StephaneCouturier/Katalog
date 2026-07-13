@@ -1641,6 +1641,7 @@ Kirigami.ApplicationWindow {
         id: pageBackup
         visible: false
         title: qsTr("Backup")
+
         onVisibleChanged: {
             if (visible)
                 Qt.callLater(function() { backupPageForm.refresh() })
@@ -1669,15 +1670,21 @@ Kirigami.ApplicationWindow {
             }
         ]
 
-        // Catalog-update progress shown while "Update catalogs" runs before a preview or
-        // a backup/archive — same StatusBarMessageBuilder messages as the other screens.
+        // Preparation progress shown on the Backup page while "Update catalogs" runs and/or
+        // while the preview compare runs (BKP-F14/BKP-F16) — same StatusBarMessageBuilder
+        // messages as the other screens. The compare can be cancelled from here.
         footer: RowLayout {
-            visible: appManager1.catalogUpdateForBackupRunning
-                     || appManager1.catalogUpdateForBackupStatusText.length > 0
+            id: backupPrepFooter
+            readonly property bool   prepRunning: appManager1.catalogUpdateForBackupRunning
+                                                  || appManager1.backupPreviewRunning
+            readonly property string prepStatus:  appManager1.backupPreviewRunning
+                                                  ? appManager1.backupPreviewStatusText
+                                                  : appManager1.catalogUpdateForBackupStatusText
+            visible: prepRunning || prepStatus.length > 0
             spacing: Kirigami.Units.smallSpacing
             Controls.BusyIndicator {
-                running: appManager1.catalogUpdateForBackupRunning
-                visible: appManager1.catalogUpdateForBackupRunning
+                running: backupPrepFooter.prepRunning
+                visible: backupPrepFooter.prepRunning
                 implicitWidth:  Kirigami.Units.gridUnit * 1.5
                 implicitHeight: Kirigami.Units.gridUnit * 1.5
                 Layout.leftMargin: Kirigami.Units.smallSpacing
@@ -1685,10 +1692,17 @@ Kirigami.ApplicationWindow {
             Controls.Label {
                 Layout.fillWidth: true
                 Layout.margins: Kirigami.Units.smallSpacing
-                text: appManager1.catalogUpdateForBackupStatusText
+                text: backupPrepFooter.prepStatus
                 textFormat: Text.StyledText
                 elide: Text.ElideRight
                 font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
+            }
+            Controls.Button {
+                visible: appManager1.backupPreviewRunning
+                text:      qsTr("Cancel")
+                icon.name: "process-stop"
+                Layout.rightMargin: Kirigami.Units.smallSpacing
+                onClicked: appManager1.stopBackupPreview()
             }
         }
 
@@ -1696,8 +1710,21 @@ Kirigami.ApplicationWindow {
             id: backupPageForm
             cardScale: root.cardScale
             onRequestAddMapping:        root.showLayer(backupMappingFormComponent)
-            onRequestPreviewMapping: (mappingId) => root.showLayer(backupPreviewFormComponent, { mappingId: mappingId })
+            // The whole preview flow (optional catalog update → cancellable compare) runs in
+            // AppManager on the Backup page; the footer shows progress. The Preview page opens
+            // only when the report is ready (BKP-F14/BKP-F16).
+            onRequestPreviewMapping: (mappingId) => appManager1.startBackupPreview(mappingId)
             onRequestEditMapping: (mappingData) => root.showLayer(backupMappingFormComponent, { editMappingId: mappingData.mappingId, mappingData: mappingData })
+        }
+
+        // Preview compare finished — open the Preview page now that the report is ready.
+        // Not fired for a cancelled or failed preview.
+        Connections {
+            target: appManager1
+            function onBackupPreviewReady(mappingId, success, cancelled) {
+                if (success)
+                    root.showLayer(backupPreviewFormComponent, { mappingId: mappingId })
+            }
         }
     }
 

@@ -32,6 +32,7 @@
 
 #include "catalogdifferenceengine.h"
 #include "device.h"
+#include "backupmappingmanager.h"
 
 #include <QSqlQuery>
 #include <QSqlError>
@@ -39,6 +40,20 @@
 #include <QDebug>
 #include <QDirIterator>
 #include <QFileInfo>
+#include <QCoreApplication>
+#include <QSet>
+
+namespace {
+// Yield to the UI event loop periodically so a long comparison keeps the UI
+// responsive on the main thread (BKP-C8), and report whether the user asked to
+// stop. Called once per processed row; pumps events every ~512 rows.
+inline bool yieldAndCheckStop(int &counter, bool *stopRequested)
+{
+    if ((++counter & 0x1FF) == 0)
+        QCoreApplication::processEvents();
+    return stopRequested && *stopRequested;
+}
+}
 
 //----------------------------------------------------------------------
 CatalogDifferenceEngine::CatalogDifferenceEngine(const QString &connectionName)
@@ -52,9 +67,11 @@ DifferenceResult CatalogDifferenceEngine::compare(
     const QList<int> &targetDeviceIds,
     CompareFields matchFields,
     bool checksumNotEqual,
-    const QString &tableName)
+    const QString &tableName,
+    bool *stopRequested)
 {
     DifferenceResult result;
+    int yieldN = 0;
 
     if (sourceDeviceIds.isEmpty() || targetDeviceIds.isEmpty()) {
         qWarning() << "CatalogDifferenceEngine::compare - empty device ID list";
@@ -115,6 +132,7 @@ DifferenceResult CatalogDifferenceEngine::compare(
 
         while (query.next()) {
             result.differentContent.append(entryFromQuery(query));
+            if (yieldAndCheckStop(yieldN, stopRequested)) return result;
         }
 
         // Target side: files in target with different checksum in source
@@ -147,6 +165,7 @@ DifferenceResult CatalogDifferenceEngine::compare(
 
         while (query.next()) {
             result.differentContent.append(entryFromQuery(query));
+            if (yieldAndCheckStop(yieldN, stopRequested)) return result;
         }
 
     }
@@ -186,6 +205,7 @@ DifferenceResult CatalogDifferenceEngine::compare(
 
         while (query.next()) {
             result.onlyInSource.append(entryFromQuery(query));
+            if (yieldAndCheckStop(yieldN, stopRequested)) return result;
         }
 
         // Files only in target (missing from source)
@@ -215,6 +235,7 @@ DifferenceResult CatalogDifferenceEngine::compare(
 
         while (query.next()) {
             result.onlyInTarget.append(entryFromQuery(query));
+            if (yieldAndCheckStop(yieldN, stopRequested)) return result;
         }
 
     }
@@ -292,9 +313,11 @@ StrictDifferenceResult CatalogDifferenceEngine::compareStrict(
     int sourceCatalogId,
     int targetCatalogId,
     const QString &sourceRoot,
-    const QString &targetRoot)
+    const QString &targetRoot,
+    bool *stopRequested)
 {
     StrictDifferenceResult result;
+    int yieldN = 0;
 
     // Normalize roots: remove trailing slash
     const QString sourceRootNorm = sourceRoot.endsWith('/') ? sourceRoot.chopped(1) : sourceRoot;
@@ -328,6 +351,7 @@ StrictDifferenceResult CatalogDifferenceEngine::compareStrict(
             e.fileSize    = q.value(2).toLongLong();
             e.dateUpdated = q.value(3).toString();
             result.filesToCopy.append(e);
+            if (yieldAndCheckStop(yieldN, stopRequested)) return result;
         }
     } else {
         qWarning() << "CatalogDifferenceEngine::compareStrict - filesToCopy error:"
@@ -365,6 +389,7 @@ StrictDifferenceResult CatalogDifferenceEngine::compareStrict(
             e.dateUpdated       = q.value(3).toString();
             e.targetDateUpdated = q.value(4).toString();
             result.conflicts.append(e);
+            if (yieldAndCheckStop(yieldN, stopRequested)) return result;
         }
     } else {
         qWarning() << "CatalogDifferenceEngine::compareStrict - conflicts error:"
@@ -385,9 +410,11 @@ StrictDifferenceResult CatalogDifferenceEngine::compareStrict(
 StrictDifferenceResult CatalogDifferenceEngine::compareStrictFromDrive(
     const QString &sourceRoot,
     int targetCatalogId,
-    const QString &targetRoot)
+    const QString &targetRoot,
+    bool *stopRequested)
 {
     StrictDifferenceResult result;
+    int yieldN = 0;
 
     const QString sourceRootNorm = sourceRoot.endsWith('/') ? sourceRoot.chopped(1) : sourceRoot;
     const QString targetRootNorm = targetRoot.endsWith('/') ? targetRoot.chopped(1) : targetRoot;
@@ -410,6 +437,7 @@ StrictDifferenceResult CatalogDifferenceEngine::compareStrictFromDrive(
                 // Relative folder = everything after targetRoot, including trailing slash
                 const QString relFolder = fullPath.mid(targetRootLen);
                 targetMap.insert(relFolder + name, {q.value(2).toLongLong(), q.value(3).toString()});
+                if (yieldAndCheckStop(yieldN, stopRequested)) return result;
             }
         } else {
             qWarning() << "compareStrictFromDrive: failed to load target catalog:"
@@ -450,6 +478,7 @@ StrictDifferenceResult CatalogDifferenceEngine::compareStrictFromDrive(
             result.conflicts.append(e);
         }
         // else: same name, same relative path, same size → already in sync (skipped)
+        if (yieldAndCheckStop(yieldN, stopRequested)) return result;
     }
 
     result.skippedCount = totalSourceFiles
@@ -457,5 +486,52 @@ StrictDifferenceResult CatalogDifferenceEngine::compareStrictFromDrive(
                           - result.conflicts.size();
 
     return result;
+}
+//----------------------------------------------------------------------
+BackupCompareResult CatalogDifferenceEngine::compareForBackup(
+    const Device &sourceDevice, const Device &targetDevice,
+    bool strictCopy, bool sourceDrive, bool *stopRequested)
+{
+    BackupCompareResult out;
+
+    if (sourceDrive) {
+        // DRIVE mode: walk the source filesystem directly (independent of the source
+        // catalog index, so it works even when "Update catalogs" is off).
+        const StrictDifferenceResult r = compareStrictFromDrive(
+            sourceDevice.path, targetDevice.externalID, targetDevice.path, stopRequested);
+        out.filesToCopy   = r.filesToCopy;
+        out.fileConflicts = r.conflicts;
+        out.skippedCount  = r.skippedCount;
+    } else if (strictCopy) {
+        const StrictDifferenceResult r = compareStrict(
+            sourceDevice.externalID, targetDevice.externalID,
+            sourceDevice.path, targetDevice.path, stopRequested);
+        out.filesToCopy   = r.filesToCopy;
+        out.fileConflicts = r.conflicts;
+        out.skippedCount  = r.skippedCount;
+    } else {
+        const QList<int> sourceIds = resolveCatalogDeviceIds(
+            const_cast<Device*>(&sourceDevice), m_connectionName);
+        const QList<int> targetIds = resolveCatalogDeviceIds(
+            const_cast<Device*>(&targetDevice), m_connectionName);
+        const DifferenceResult diff = compare(
+            sourceIds, targetIds, Name | Size, false, QStringLiteral("file"), stopRequested);
+
+        BackupMappingManager manager(m_connectionName);
+        const QSet<QString> targetPaths = manager.getCatalogFilePaths(targetDevice.externalID);
+        const int           srcRootLen  = sourceDevice.path.length();
+        for (const DifferenceFileEntry &e : diff.onlyInSource) {
+            const QString relFolder    = e.folderPath.mid(srcRootLen);
+            const QString expectedPath = targetDevice.path + relFolder + QLatin1Char('/') + e.fileName;
+            if (targetPaths.contains(expectedPath))
+                out.fileConflicts.append(e);
+            else
+                out.filesToCopy.append(e);
+        }
+        out.skippedCount = manager.getCatalogFileCount(sourceDevice.externalID)
+                           - out.filesToCopy.size()
+                           - out.fileConflicts.size();
+    }
+    return out;
 }
 //----------------------------------------------------------------------

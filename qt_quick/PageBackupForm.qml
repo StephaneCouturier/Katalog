@@ -484,6 +484,7 @@ ColumnLayout {
                         enabled:   modelData.sourceActive && modelData.targetActive
                                    && root.runningMappingId === -1
                                    && !appManager1.catalogUpdateForBackupRunning
+                                   && !appManager1.backupPreviewRunning
                         onClicked: {
                             root.runningMappingId   = modelData.mappingId
                             root.runningIsArchive   = (modelData.mappingType === "Archive")
@@ -521,6 +522,9 @@ ColumnLayout {
                         visible:   !mappingCard.isRunning
                         text:      modelData.mappingType === "Archive" ? qsTr("Preview Archive") : qsTr("Preview Backup")
                         icon.name: "view-preview"
+                        enabled:   root.runningMappingId === -1
+                                   && !appManager1.catalogUpdateForBackupRunning
+                                   && !appManager1.backupPreviewRunning
                         onClicked: root.requestPreviewMapping(modelData.mappingId)
                     }
                     Controls.Button {
