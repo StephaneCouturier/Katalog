@@ -25,7 +25,7 @@
 // File Name:   directoryreplicator.cpp
 // Purpose:     Replicate a catalog's directory structure to a target path
 // Description: Queries the folder table, computes relative paths, and creates
-//              or prunes directories on the target filesystem.
+//              the corresponding directories on the target filesystem.
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */
@@ -37,7 +37,6 @@
 #include <QSqlError>
 #include <QDir>
 #include <QDirIterator>
-#include <QSet>
 #include <QDebug>
 #include <algorithm>
 
@@ -94,60 +93,6 @@ ReplicationResult DirectoryReplicator::replicate(
             else {
                 result.errors.append(relativePath + " (failed to create)");
                 qWarning() << "DirectoryReplicator::replicate - failed to create:" << fullTargetPath;
-            }
-        }
-    }
-
-
-    return result;
-}
-
-//----------------------------------------------------------------------
-ReplicationResult DirectoryReplicator::replicateAndPrune(
-    const QList<int> &catalogIds,
-    const QString &sourcePath,
-    const QString &targetPath,
-    bool dryRun)
-{
-    // First, replicate (create missing directories)
-    ReplicationResult result = replicate(catalogIds, sourcePath, targetPath, dryRun);
-
-    // Build the set of relative paths that should exist (from the source catalog)
-    QStringList absoluteFolders = loadSourceFolders(catalogIds);
-    QSet<QString> sourceRelativeSet;
-    for (const QString &rel : toRelativePaths(absoluteFolders, sourcePath)) {
-        if (!rel.isEmpty())
-            sourceRelativeSet.insert(rel);
-    }
-
-    // Scan the target filesystem for existing directories
-    QStringList targetRelativePaths = scanTargetDirectories(targetPath);
-
-    // Sort deepest-first so we remove children before parents
-    std::sort(targetRelativePaths.begin(), targetRelativePaths.end(),
-              [](const QString &a, const QString &b) { return a.size() > b.size(); });
-
-    for (const QString &targetRelative : targetRelativePaths) {
-        if (sourceRelativeSet.contains(targetRelative))
-            continue;
-
-        QString fullPath = targetPath + "/" + targetRelative;
-        QDir dir(fullPath);
-
-        // Only remove empty directories
-        if (!dir.isEmpty())
-            continue;
-
-        if (dryRun) {
-            result.removed.append(targetRelative);
-        }
-        else {
-            if (dir.rmdir(fullPath)) {
-                result.removed.append(targetRelative);
-            }
-            else {
-                result.errors.append(targetRelative + " (failed to remove orphan)");
-                qWarning() << "DirectoryReplicator::replicateAndPrune - failed to remove:" << fullPath;
             }
         }
     }
@@ -268,26 +213,6 @@ QStringList DirectoryReplicator::toRelativePaths(const QStringList &absolutePath
         else {
             qWarning() << "DirectoryReplicator::toRelativePaths - path does not start with source root:"
                         << absPath << "(source:" << sourcePath << ")";
-        }
-    }
-
-    return relativePaths;
-}
-
-//----------------------------------------------------------------------
-QStringList DirectoryReplicator::scanTargetDirectories(const QString &targetPath)
-{
-    QStringList relativePaths;
-
-    QString prefix = targetPath;
-    if (!prefix.endsWith('/'))
-        prefix += '/';
-
-    QDirIterator it(targetPath, QDir::Dirs | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
-    while (it.hasNext()) {
-        QString dirPath = it.next();
-        if (dirPath.startsWith(prefix)) {
-            relativePaths.append(dirPath.mid(prefix.length()));
         }
     }
 

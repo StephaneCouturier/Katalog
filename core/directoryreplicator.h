@@ -40,12 +40,10 @@
 struct ReplicationResult {
     QStringList created;        // Directories successfully created on target
     QStringList alreadyExist;   // Directories that already existed on target
-    QStringList removed;        // Orphan directories removed from target (when pruning)
     QStringList errors;         // Directories that failed (with error description)
 
     int createdCount() const   { return created.size(); }
     int skippedCount() const   { return alreadyExist.size(); }
-    int removedCount() const   { return removed.size(); }
     int errorCount() const     { return errors.size(); }
     int totalProcessed() const { return created.size() + alreadyExist.size() + errors.size(); }
 };
@@ -66,28 +64,9 @@ public:
      * @param sourcePath        Source catalog root path (to compute relative paths)
      * @param targetPath        Target root path where directories will be created
      * @param dryRun            If true, compute what would happen without creating anything
-     * @return ReplicationResult with created, skipped, removed, and error lists
+     * @return ReplicationResult with created, skipped, and error lists
      */
     ReplicationResult replicate(
-        const QList<int> &catalogIds,
-        const QString &sourcePath,
-        const QString &targetPath,
-        bool dryRun = false
-    );
-
-    /**
-     * @brief Replicate and prune: create missing directories, remove orphans.
-     *
-     * Same as replicate(), but also scans the target for directories that
-     * do not exist in the source catalog and removes them (empty dirs only).
-     *
-     * @param catalogIds        Catalog IDs
-     * @param sourcePath        Source catalog root path
-     * @param targetPath        Target root path
-     * @param dryRun            If true, compute without modifying filesystem
-     * @return ReplicationResult including removed orphan directories
-     */
-    ReplicationResult replicateAndPrune(
         const QList<int> &catalogIds,
         const QString &sourcePath,
         const QString &targetPath,
@@ -127,11 +106,6 @@ private:
      * @return List of relative paths (e.g. "Photos/2024" from "/mnt/drive/Photos/2024").
      */
     static QStringList toRelativePaths(const QStringList &absolutePaths, const QString &sourcePath);
-
-    /**
-     * @brief Scan the target directory recursively and return all subdirectory relative paths.
-     */
-    static QStringList scanTargetDirectories(const QString &targetPath);
 };
 
 #endif // DIRECTORYREPLICATOR_H

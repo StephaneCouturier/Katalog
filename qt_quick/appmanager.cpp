@@ -3884,9 +3884,17 @@ void AppManager::executeBackupJob(int mappingId)
         targetDevice.catalog->loadCatalogFileListToTable(mutex, stopRequested);
     }
 
+    //Replicate the full directory tree first (preserves empty directories)
     if (mapping.sourceDrive) {
+        //Drive mode: walk the source filesystem directly
         DirectoryReplicator replicator(m_connectionName);
         replicator.replicateFromDrive(sourceDevice.path, targetDevice.path);
+    } else {
+        //Catalog mode: replicate from the folder table (includes empty directories)
+        if (collection->databaseMode == QLatin1String("Memory"))
+            sourceDevice.catalog->loadFoldersToTable();
+        DirectoryReplicator replicator(m_connectionName);
+        replicator.replicate({sourceDevice.externalID}, sourceDevice.path, targetDevice.path);
     }
 
     const BackupCompareResult cmp = compareForBackup(sourceDevice, targetDevice, mapping.strictCopy, mapping.sourceDrive);

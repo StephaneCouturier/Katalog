@@ -711,10 +711,17 @@ void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, Mapping
         targetDevice.catalog->loadCatalogFileListToTable(mutex, stopRequested);
     }
 
-    //Drive mode: replicate full directory tree first (preserves empty directories)
+    //Replicate the full directory tree first (preserves empty directories)
     if (mapping.sourceDrive) {
+        //Drive mode: walk the source filesystem directly
         DirectoryReplicator replicator(m_connectionName);
         replicator.replicateFromDrive(sourceDevice.path, targetDevice.path);
+    } else {
+        //Catalog mode: replicate from the folder table (includes empty directories)
+        if (collection->databaseMode == "Memory")
+            sourceDevice.catalog->loadFoldersToTable();
+        DirectoryReplicator replicator(m_connectionName);
+        replicator.replicate({sourceDevice.externalID}, sourceDevice.path, targetDevice.path);
     }
 
     //Run comparison (respects strictCopy setting)
