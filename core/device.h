@@ -85,7 +85,7 @@ public:
         qint64 totalSpace = 0;
         qint64 freeSpace = 0;
         int groupID = 0;
-        int order;
+        int order = 0;
         QDateTime dateTimeUpdated;
 
         //Contents

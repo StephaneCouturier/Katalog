@@ -50,6 +50,9 @@ public:
     void setColorizeFullRow(bool fullRow);
     void setKatalogTheme(bool katalogTheme);
 
+protected:
+    bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const override;
+
 private:
     QVariant extracted() const;
     QVariant data(const QModelIndex &index, int role) const;

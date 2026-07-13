@@ -1014,7 +1014,12 @@ QList<Device::DeviceTreeNode> Device::loadDeviceTree(const QString &connectionNa
     if (!db.isOpen())
         return result;
 
-    // Recursive CTE: depth-first order via sort_path (zero-padded device_order + lower name).
+    // Recursive CTE: depth-first order via sort_path.
+    // Root groups are ordered by device_group_id first (0 = Physical group before
+    // 1 = Virtual groups) so the Physical group is always on top regardless of its
+    // name — no reliance on a leading-space name hack. Within a group the key is
+    // zero-padded device_order then lower(name). A subtree inherits its root's
+    // group prefix (a device shares its parent's group), so only the anchor needs it.
     // scopeDeviceId == 0 → start from all root devices (device_parent_id = 0).
     // scopeDeviceId  > 0 → start from that single device and recurse into its subtree.
     QString startCond = (scopeDeviceId > 0)
@@ -1026,10 +1031,10 @@ QList<Device::DeviceTreeNode> Device::loadDeviceTree(const QString &connectionNa
 
     QString anchorSortPath, recursiveSortPath;
     if (isMySQL) {
-        anchorSortPath    = "CONCAT(RIGHT(CONCAT('0000000000', CAST(COALESCE(device_order,0) AS CHAR)), 10), '|', LOWER(device_name))";
+        anchorSortPath    = "CONCAT(CAST(COALESCE(device_group_id,0) AS CHAR), '#', RIGHT(CONCAT('0000000000', CAST(COALESCE(device_order,0) AS CHAR)), 10), '|', LOWER(device_name))";
         recursiveSortPath = "CONCAT(p.sort_path, '/', RIGHT(CONCAT('0000000000', CAST(COALESCE(c.device_order,0) AS CHAR)), 10), '|', LOWER(c.device_name))";
     } else {
-        anchorSortPath    = "SUBSTR('0000000000' || CAST(COALESCE(device_order,0) AS CHAR), -10) || '|' || LOWER(device_name)";
+        anchorSortPath    = "CAST(COALESCE(device_group_id,0) AS CHAR) || '#' || SUBSTR('0000000000' || CAST(COALESCE(device_order,0) AS CHAR), -10) || '|' || LOWER(device_name)";
         recursiveSortPath = "p.sort_path || '/' || SUBSTR('0000000000' || CAST(COALESCE(c.device_order,0) AS CHAR), -10) || '|' || LOWER(c.device_name)";
     }
 

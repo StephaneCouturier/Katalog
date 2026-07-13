@@ -1247,6 +1247,25 @@ QSqlError Database::runMigration_2_12(const QString &connectionName)
 }
 //----------------------------------------------------------------------
 
+QSqlError Database::runMigration_2_13(const QString &connectionName)
+{
+    // device_order was reserved in the schema but never populated before 2.13
+    // (Device::order was uninitialised at insert time, so existing rows hold
+    // indeterminate values). The device-tree sort uses device_order as a secondary
+    // key after the group, so reset the leftover values to 0: every device then
+    // ties at 0 and sorts by name within its group.
+    QStringList deviceColumns = getTableColumns(connectionName, "device");
+    if (deviceColumns.contains("device_order")) {
+        QSqlError err = executeSql(connectionName, "UPDATE device SET device_order = 0");
+        if (err.type() != QSqlError::NoError) {
+            qWarning() << "WARNING: Failed to normalize device_order:" << err.text();
+            return err;
+        }
+    }
+    return QSqlError();
+}
+//----------------------------------------------------------------------
+
 QSqlError Database::ensureMappingSourceCollectionColumn(const QString &connectionName)
 {
     QStringList mappingColumns = getTableColumns(connectionName, "device_mapping");

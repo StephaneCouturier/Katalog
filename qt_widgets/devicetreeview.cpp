@@ -75,6 +75,21 @@ void DeviceTreeView::setKatalogTheme(bool katalogTheme)
     m_katalogTheme = katalogTheme;
 }
 
+bool DeviceTreeView::lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const
+{
+    // Root groups are ordered by device_group_id first (0 = Physical group before
+    // 1 = Virtual groups), so the Physical group stays on top regardless of its name.
+    // Only the full device-tree model carries the Group ID column; narrower models
+    // (parent picker, search filter) have fewer columns and fall back to name sort.
+    if (sourceModel() && sourceModel()->columnCount() > DeviceTreeColumns::GROUP_ID) {
+        const int leftGroup  = source_left.siblingAtColumn(DeviceTreeColumns::GROUP_ID).data().toInt();
+        const int rightGroup = source_right.siblingAtColumn(DeviceTreeColumns::GROUP_ID).data().toInt();
+        if (leftGroup != rightGroup)
+            return leftGroup < rightGroup;
+    }
+    return QSortFilterProxyModel::lessThan(source_left, source_right);
+}
+
 QVariant DeviceTreeView::data(const QModelIndex &index, int role) const
 {
     switch ( role )
