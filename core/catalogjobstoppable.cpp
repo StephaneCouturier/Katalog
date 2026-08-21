@@ -684,7 +684,6 @@ void CatalogJobStoppable::verifyMimeTypes()
         FROM file
         WHERE file_catalog_id = :catalog_id
         AND (mime_verified = 0 OR mime_verified IS NULL)
-        ORDER BY file_size ASC
     )");
     query.bindValue(":catalog_id", m_device->catalog->ID);
 
@@ -969,7 +968,6 @@ void CatalogJobStoppable::extractMissingMetadata()
         WHERE file_catalog_id = :catalog_id
         AND (metadata_extraction_date IS NULL OR metadata_extraction_date = '')
         AND file_type IN ('Image', 'Audio', 'Video')
-        ORDER BY file_size ASC
     )");
     query.bindValue(":catalog_id", m_device->catalog->ID);
 
@@ -1613,7 +1611,6 @@ QList<QVariantList> CatalogJobStoppable::findFilesWithoutMetadata()
         WHERE file_catalog_id = :catalog_id
         AND (metadata_extraction_date IS NULL OR metadata_extraction_date = '')
         %1
-        ORDER BY file_size ASC
     )").arg(fileTypeFilter);
 
     query.prepare(querySQL);
@@ -1663,7 +1660,6 @@ QList<QVariantList> CatalogJobStoppable::findFilesWithoutChecksum()
                            "FROM file "
                            "WHERE file_catalog_id = %1 "
                            "AND (checksum_extraction_date IS NULL OR checksum_extraction_date = '') "
-                           "ORDER BY file_size ASC"
                            ).arg(catalog->ID);
 
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
@@ -2501,9 +2497,22 @@ void CatalogJobStoppable::extractMetadataForChangedFiles(const QList<QVariantLis
     int processedFiles = 0;
 
 
-    // ETA tracking
+    // ETA tracking.
+    // Files must NOT be ordered by size here. Processing smallest first makes the
+    // cost per file rise steadily through the run, which forces any estimate to
+    // under-report badly — an average since the start is then dragged down by the
+    // early cheap files and only converges at the very end. In natural order the
+    // per-file cost is randomly distributed and the estimate settles quickly.
+    // The trailing window below is what keeps the figure tracking the speed the
+    // job is running at now, rather than its average since it started.
     QElapsedTimer totalTimer;
     totalTimer.start();
+
+    const qint64 rateWindowMs = 60000;
+    QList<qint64> sampleTimes;   // elapsed ms at each sample
+    QList<int>    sampleCounts;  // files processed at each sample
+    sampleTimes  << 0;
+    sampleCounts << 0;
 
     // Determine thread count based on system and database mode
     int optimalThreads = 4;  // Safe default
@@ -2573,11 +2582,30 @@ void CatalogJobStoppable::extractMetadataForChangedFiles(const QList<QVariantLis
 
         // Calculate time to completion
         QString timeToCompletionString;
+        const qint64 elapsedMs = totalTimer.elapsed();
+
+        sampleTimes  << elapsedMs;
+        sampleCounts << processedFiles;
+        // Drop samples that have fallen out of the window, but always keep one
+        // older sample so a window shorter than a single batch still yields the
+        // most recent batch's rate.
+        while (sampleTimes.size() > 2 && (elapsedMs - sampleTimes.first()) > rateWindowMs) {
+            sampleTimes.removeFirst();
+            sampleCounts.removeFirst();
+        }
+
         if (processedFiles > 0 && processedFiles < totalFiles) {
-            qint64 elapsedMs = totalTimer.elapsed();
-            double avgMsPerFile = static_cast<double>(elapsedMs) / processedFiles;
+            const qint64 windowMs    = elapsedMs - sampleTimes.first();
+            const int    windowFiles = processedFiles - sampleCounts.first();
+
+            // Recent throughput; fall back to the run average if the window is
+            // not yet usable (guards against a zero divisor).
+            double msPerFile = (windowFiles > 0 && windowMs > 0)
+                               ? static_cast<double>(windowMs) / windowFiles
+                               : static_cast<double>(elapsedMs) / processedFiles;
+
             int remainingFiles = totalFiles - processedFiles;
-            qint64 remainingMs = static_cast<qint64>(avgMsPerFile * remainingFiles);
+            qint64 remainingMs = static_cast<qint64>(msPerFile * remainingFiles);
 
             int totalSeconds = remainingMs / 1000;
             int hours = totalSeconds / 3600;
