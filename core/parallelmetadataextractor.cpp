@@ -44,18 +44,6 @@ void MetadataExtractionWorker::run()
     }
 }
 
-ParallelMetadataExtractor::ParallelMetadataExtractor()
-{
-    m_threadPool = new QThreadPool();
-}
-
-ParallelMetadataExtractor::~ParallelMetadataExtractor()
-{
-    if (m_threadPool) {
-        m_threadPool->waitForDone();
-    }
-}
-
 QList<MetadataExtractionResult> ParallelMetadataExtractor::extractBatch(
     const QStringList& filePaths,
     const QStringList& fileNames,
@@ -69,7 +57,7 @@ QList<MetadataExtractionResult> ParallelMetadataExtractor::extractBatch(
         return results;
     }
 
-    m_threadPool->setMaxThreadCount(maxThreads);
+    m_threadPool.setMaxThreadCount(maxThreads);
 
     QMutex resultsMutex;
     int completedCount = 0;
@@ -88,7 +76,7 @@ QList<MetadataExtractionResult> ParallelMetadataExtractor::extractBatch(
             &allDoneCondition
             );
 
-        m_threadPool->start(worker);
+        m_threadPool.start(worker);
     }
 
     {

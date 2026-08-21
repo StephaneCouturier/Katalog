@@ -12,6 +12,19 @@ Kirigami.ApplicationWindow {
     // Unique identifier to reference this object
     id: root
 
+    // Re-probe device active status when the user comes back to Katalog, so a
+    // drive connected or removed meanwhile shows correctly. Off by default and
+    // gated on the mount table, so this is normally a no-op — see
+    // SpecDeviceActiveStatus.md. Application-level rather than per-window, so a
+    // future secondary window would not change the behaviour.
+    Connections {
+        target: Qt.application
+        function onStateChanged() {
+            if (Qt.application.state === Qt.ApplicationActive)
+                appManager1.refreshDeviceActiveOnActivation()
+        }
+    }
+
     Settings {
         id: windowSettings
         property int  savedWidth:     900

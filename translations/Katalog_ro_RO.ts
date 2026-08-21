@@ -4,14 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+119"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+142"/>
         <location line="+87"/>
         <location line="+14"/>
+        <location line="+3545"/>
         <source>Search</source>
         <translation>Căutare</translation>
     </message>
     <message>
-        <location line="-97"/>
+        <location line="-3642"/>
         <source>Stopped</source>
         <translation>Oprit</translation>
     </message>
@@ -43,22 +44,23 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+58"/>
-        <location line="+1584"/>
-        <location line="+1512"/>
+        <location line="+1630"/>
+        <location line="+1515"/>
         <location line="+11"/>
         <location line="+60"/>
+        <location line="+344"/>
         <source>In Progress</source>
         <translation>În curs</translation>
     </message>
     <message>
-        <location line="-3153"/>
-        <location line="+3134"/>
+        <location line="-3546"/>
+        <location line="+3183"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Finalizat</translation>
     </message>
     <message>
-        <location line="-2860"/>
+        <location line="-2868"/>
         <source>Empty database path provided</source>
         <translation>Cale de bază de date goală furnizată</translation>
     </message>
@@ -98,7 +100,7 @@
         <translation>Disc local</translation>
     </message>
     <message>
-        <location line="+307"/>
+        <location line="+308"/>
         <source>search_results</source>
         <translation>rezultate_cautare</translation>
     </message>
@@ -108,7 +110,7 @@
         <translation>Rezultatele căutării</translation>
     </message>
     <message>
-        <location line="+352"/>
+        <location line="+356"/>
         <source>Case sensitive</source>
         <translation>Sensibil la majuscule</translation>
     </message>
@@ -144,12 +146,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2115"/>
+        <location line="+2118"/>
         <source>Size</source>
         <translation>Dimensiune</translation>
     </message>
     <message>
-        <location line="-2114"/>
+        <location line="-2117"/>
         <source>Date</source>
         <translation>Dată</translation>
     </message>
@@ -268,7 +270,7 @@ Alegeți alt nume și încercați din nou.</translation>
         <translation>Ștergerea a eșuat</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+71"/>
         <source>Virtual</source>
         <translation>Virtual</translation>
     </message>
@@ -351,7 +353,7 @@ Choose a different name.</source>
 Alegeți alt nume.</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+15"/>
         <source>A Catalog in the Physical group can only be set under a Storage device.</source>
         <translation>Un catalog din grupul Fizic poate fi plasat doar sub un dispozitiv de stocare.</translation>
     </message>
@@ -471,7 +473,7 @@ Alegeți alt nume.</translation>
         <translation>Nu este un dispozitiv de stocare.</translation>
     </message>
     <message>
-        <location line="+163"/>
+        <location line="+168"/>
         <location line="+22"/>
         <source>Provide a link name.</source>
         <translation>Indicați un nume de legătură.</translation>
@@ -505,20 +507,22 @@ Alegeți alt nume.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+92"/>
-        <location line="+277"/>
+        <location line="+86"/>
+        <location line="+2"/>
+        <location line="+301"/>
         <source>Link not found.</source>
         <translation>Legătura nu a fost găsită.</translation>
     </message>
     <message>
-        <location line="-265"/>
-        <location line="+107"/>
-        <location line="+170"/>
+        <location line="-288"/>
+        <location line="+2"/>
+        <location line="+119"/>
+        <location line="+179"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>Sursa și destinația trebuie să fie dispozitive de catalog.</translation>
     </message>
     <message>
-        <location line="-244"/>
+        <location line="-260"/>
         <location line="+7"/>
         <source>Move</source>
         <translation>Mută</translation>
@@ -536,14 +540,14 @@ Alegeți alt nume.</translation>
         <translation>Conflict</translation>
     </message>
     <message>
-        <location line="+58"/>
-        <location line="+169"/>
+        <location line="+65"/>
+        <location line="+178"/>
         <source>Source not available: %1</source>
         <translation>Sursă indisponibilă: %1</translation>
     </message>
     <message>
-        <location line="-165"/>
-        <location line="+169"/>
+        <location line="-174"/>
+        <location line="+178"/>
         <source>Target not available: %1</source>
         <translation>Destinație indisponibilă: %1</translation>
     </message>
@@ -606,7 +610,7 @@ Alegeți alt nume.</translation>
         <translation>Catalog</translation>
     </message>
     <message>
-        <location line="+1538"/>
+        <location line="+1548"/>
         <source>root</source>
         <translation>rădăcină</translation>
     </message>
@@ -639,7 +643,7 @@ Alegeți alt nume.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2415"/>
+        <location filename="../core/collection.cpp" line="+2479"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Acest folder conține fișiere de colecție în modul Memorie, dar sunteți în prezent în modul Fișier.&lt;br/&gt;Comutați la modul Memorie sau selectați un alt folder.</translation>
     </message>
@@ -719,7 +723,7 @@ Alegeți alt nume.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+658"/>
+        <location filename="../qt_quick/Main.qml" line="+671"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Doriți să &lt;b&gt;ștergeți&lt;/b&gt; acest dispozitiv %1?&lt;br/&gt;&lt;br/&gt;Nume: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -737,11 +741,12 @@ Alegeți alt nume.</translation>
         <location line="+60"/>
         <location line="+162"/>
         <location line="+695"/>
+        <location line="+117"/>
         <source>Cancel</source>
         <translation>Anulare</translation>
     </message>
     <message>
-        <location line="-1017"/>
+        <location line="-1134"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+158"/>
@@ -1144,12 +1149,12 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+81"/>
         <location line="+118"/>
         <location line="+18"/>
-        <location line="+36"/>
+        <location line="+37"/>
         <source>Close</source>
         <translation>Închide</translation>
     </message>
     <message>
-        <location line="-569"/>
+        <location line="-570"/>
         <source>Show device info</source>
         <translation>Afișează informațiile dispozitivului</translation>
     </message>
@@ -1252,7 +1257,7 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <translation type="vanished">Copie de rezervă</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+84"/>
         <source>Add</source>
         <translation>Adaugă</translation>
     </message>
@@ -1267,7 +1272,7 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <translation>Generează profil LuckyBackup</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+92"/>
         <source>Select Collection Folder</source>
         <translation>Selectați dosarul colecției</translation>
     </message>
@@ -1307,20 +1312,12 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+541"/>
         <location line="+15"/>
         <location line="+22"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-578"/>
-        <location line="+541"/>
-        <location line="+15"/>
-        <location line="+22"/>
         <source>Verify Checksums</source>
         <translation>Verificați sumele de control</translation>
     </message>
     <message>
         <location line="-45"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+76"/>
-        <location line="+7"/>
-        <location line="-7"/>
         <location line="+7"/>
         <source>Loading</source>
         <translation>Se încarcă</translation>
@@ -1348,7 +1345,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location line="+27"/>
         <location line="+5"/>
-        <location line="+0"/>
         <source>Verified:</source>
         <translation>Verificat:</translation>
     </message>
@@ -1386,22 +1382,18 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+251"/>
         <location line="+18"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-861"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Copy Checksum</source>
         <translation>Copiați suma de control</translation>
     </message>
     <message>
         <location line="-8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-8"/>
-        <location line="+0"/>
         <source>Calculate Checksum</source>
         <translation>Calculați suma de control</translation>
     </message>
     <message>
         <location line="+13"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+13"/>
-        <location line="+0"/>
         <source>Verify Checksum</source>
         <translation>Verificați suma de control</translation>
     </message>
@@ -1414,8 +1406,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+43"/>
         <location line="+58"/>
         <location line="+68"/>
-        <location line="-68"/>
-        <location line="+68"/>
         <source>Checksum saved to database.</source>
         <translation>Suma de control salvată în baza de date.</translation>
     </message>
@@ -1427,7 +1417,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location line="+5"/>
         <location line="+122"/>
-        <location line="+0"/>
         <source>Copy to Clipboard</source>
         <translation>Copiați în clipboard</translation>
     </message>
@@ -1498,7 +1487,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2173"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Continue?</source>
         <translation>Continuați?</translation>
     </message>
@@ -1522,7 +1510,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location filename="../qt_widgets/mainwindow.ui" line="-5542"/>
         <location line="+737"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1383"/>
-        <location line="+0"/>
         <location filename="../core/search.cpp" line="+246"/>
         <source>Checksum</source>
         <translation>Sumă de control</translation>
@@ -1573,17 +1560,7 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+406"/>
         <location line="+176"/>
-        <location line="+147"/>
-        <location line="+19"/>
-        <location line="+41"/>
-        <location line="+38"/>
-        <location line="+30"/>
-        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-4"/>
-        <location line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-451"/>
-        <location line="+176"/>
-        <location line="+147"/>
+        <location line="+154"/>
         <location line="+19"/>
         <location line="+41"/>
         <location line="+38"/>
@@ -1596,13 +1573,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+872"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+2"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-3"/>
-        <location line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-128"/>
-        <location line="+19"/>
-        <location line="+41"/>
-        <location line="+68"/>
-        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-4"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-128"/>
         <location line="+19"/>
@@ -1628,7 +1598,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+299"/>
         <location line="+29"/>
-        <location line="+0"/>
         <source>No backup links found.</source>
         <translation>Nu au fost găsite linkuri de backup.</translation>
     </message>
@@ -1665,7 +1634,7 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <translation>Numărat</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-799"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-806"/>
         <location filename="../core/searchprogressmanager.cpp" line="+85"/>
         <source>Paused</source>
         <translation>Întrerupt</translation>
@@ -1681,15 +1650,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+23"/>
         <location line="+23"/>
         <location line="+21"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-113"/>
-        <location line="+30"/>
-        <location line="+54"/>
-        <location line="+25"/>
-        <location line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-67"/>
-        <location line="+23"/>
-        <location line="+23"/>
-        <location line="+21"/>
         <location filename="../core/searchprogressmanager.cpp" line="+27"/>
         <location line="+24"/>
         <location line="+18"/>
@@ -1699,7 +1659,7 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-105"/>
-        <location line="+429"/>
+        <location line="+436"/>
         <location line="+128"/>
         <location line="+101"/>
         <location line="+139"/>
@@ -1707,15 +1667,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-45"/>
         <location line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+285"/>
-        <location line="+36"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-368"/>
-        <location line="+128"/>
-        <location line="+101"/>
-        <location line="+139"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-44"/>
-        <location line="+44"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-36"/>
         <location line="+36"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-96"/>
         <location filename="../core/searchprogressmanager.cpp" line="-13"/>
@@ -1731,8 +1682,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-349"/>
         <location line="+109"/>
         <location line="+101"/>
-        <location line="-101"/>
-        <location line="+101"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-76"/>
         <source>Cancelled</source>
         <translation>Anulat</translation>
@@ -1740,7 +1689,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-19"/>
         <location line="+21"/>
-        <location line="+0"/>
         <location filename="../core/catalogprogressmanager.cpp" line="+18"/>
         <location line="+143"/>
         <location filename="../core/searchjobstoppable.cpp" line="+38"/>
@@ -1755,12 +1703,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-89"/>
         <location line="+15"/>
         <location line="+64"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-54"/>
-        <location line="+54"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-79"/>
-        <location line="+15"/>
-        <location line="+64"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-24"/>
         <location filename="../core/searchprogressmanager.cpp" line="-98"/>
         <source>In Progress</source>
@@ -1769,7 +1711,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+72"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-127"/>
-        <location line="+0"/>
         <source>Stopped</source>
         <translation>Oprit</translation>
     </message>
@@ -1801,7 +1742,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location line="+279"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+274"/>
-        <location line="+0"/>
         <location filename="../core/search.cpp" line="-9"/>
         <source>Height</source>
         <translation>Înălțime</translation>
@@ -1809,7 +1749,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location line="+169"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-1"/>
-        <location line="+0"/>
         <location filename="../core/search.cpp" line="-1"/>
         <source>Width</source>
         <translation>Lățime</translation>
@@ -1817,7 +1756,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location line="+223"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+2"/>
-        <location line="+0"/>
         <location filename="../core/search.cpp" line="+2"/>
         <source>Duration</source>
         <translation>Durată</translation>
@@ -1848,8 +1786,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+503"/>
         <location line="+19"/>
         <location line="+11"/>
-        <location line="-11"/>
-        <location line="+11"/>
         <source>Other</source>
         <translation>Altele</translation>
     </message>
@@ -1865,23 +1801,12 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+9"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+697"/>
         <location line="+1"/>
-        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-104"/>
-        <location line="+11"/>
-        <location line="+15"/>
-        <location line="+12"/>
-        <location line="+34"/>
-        <location line="+8"/>
-        <location line="+15"/>
-        <location line="+9"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1"/>
-        <location line="+1"/>
         <source>None</source>
         <translation>Niciunul</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-658"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-950"/>
-        <location line="+0"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Afișează metadate extinse (JSON)</translation>
     </message>
@@ -1930,7 +1855,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-250"/>
         <location line="+8"/>
-        <location line="+0"/>
         <source>Copy JSON</source>
         <translation>Copiază JSON</translation>
     </message>
@@ -1940,10 +1864,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+32"/>
         <location line="+1"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-3"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-33"/>
-        <location line="+32"/>
-        <location line="+1"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>Copied</source>
         <translation>Copiat</translation>
     </message>
@@ -1985,14 +1905,12 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location line="+1"/>
         <location line="+9"/>
-        <location line="+0"/>
         <source>Select Different Folder</source>
         <translation>Selectează Alt Dosar</translation>
     </message>
     <message>
         <location line="-6"/>
         <location line="+9"/>
-        <location line="+0"/>
         <source>Use Application Folder</source>
         <translation>Folosește Dosarul Aplicației</translation>
     </message>
@@ -2003,7 +1921,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-77"/>
         <location line="+12"/>
-        <location line="+0"/>
         <source>Media Basic</source>
         <translation>Media Simplu</translation>
     </message>
@@ -2018,14 +1935,12 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location line="-11"/>
         <location line="+12"/>
-        <location line="+0"/>
         <source>Media Extended</source>
         <translation>Media Extins</translation>
     </message>
     <message>
         <location line="-11"/>
         <location line="+12"/>
-        <location line="+0"/>
         <source>Full Extended</source>
         <translation>Complet Extins</translation>
     </message>
@@ -2037,7 +1952,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+848"/>
         <location line="+38"/>
-        <location line="+0"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
         <translation>Cataloage actualizate:&lt;b&gt; %1 &lt;/b&gt;(%2 omise)</translation>
     </message>
@@ -2059,7 +1973,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_ui_wrapper_catalog.cpp" line="+77"/>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+6"/>
-        <location line="+0"/>
         <source>The source folder does not contain any file.&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Folderul sursă nu conține niciun fișier.&lt;br/&gt;Aceasta ar putea însemna că sursa este goală sau dispozitivul nu este montat în acest folder.&lt;br/&gt;Vrei să-l salvezi oricum (catalogul ar fi gol)?</translation>
     </message>
@@ -2072,14 +1985,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+136"/>
         <location line="+123"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+246"/>
-        <location line="+40"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-448"/>
-        <location line="+117"/>
-        <location line="+72"/>
-        <location line="+136"/>
-        <location line="+123"/>
-        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-40"/>
         <location line="+40"/>
         <source>A device operation is already running.</source>
         <translation>O operație pe dispozitiv rulează deja.</translation>
@@ -2099,8 +2004,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location filename="../qt_widgets/mainwindow.ui" line="-5498"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+926"/>
         <location line="+6"/>
-        <location line="-6"/>
-        <location line="+6"/>
         <source>Katalog</source>
         <translation>Katalog</translation>
     </message>
@@ -2111,16 +2014,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+37"/>
         <location line="+39"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-434"/>
-        <location line="+20"/>
-        <location line="+30"/>
-        <location line="+150"/>
-        <location line="+53"/>
-        <location line="+316"/>
-        <location line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-76"/>
-        <location line="+37"/>
-        <location line="+39"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-573"/>
         <location line="+20"/>
         <location line="+30"/>
         <location line="+150"/>
@@ -2141,9 +2034,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location line="+3110"/>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+84"/>
-        <location line="+19"/>
-        <location line="+11"/>
-        <location line="-30"/>
         <location line="+19"/>
         <location line="+11"/>
         <source>Text</source>
@@ -2173,7 +2063,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location line="+32"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+368"/>
-        <location line="+0"/>
         <source>All Words</source>
         <translation>Toate cuvintele</translation>
     </message>
@@ -2200,7 +2089,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location line="+34"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1013"/>
-        <location line="+0"/>
         <source>File names or Folder paths</source>
         <translation>Numele fișierelor sau căile dosarelor</translation>
     </message>
@@ -2209,16 +2097,12 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-5"/>
         <location line="+4"/>
         <location line="+1015"/>
-        <location line="-1019"/>
-        <location line="+4"/>
-        <location line="+1015"/>
         <source>File names only</source>
         <translation>Numai numele fișierelor</translation>
     </message>
     <message>
         <location line="+10"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1013"/>
-        <location line="+0"/>
         <source>Folder path only</source>
         <translation>Numai calea dosarului</translation>
     </message>
@@ -2265,8 +2149,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+743"/>
         <location filename="../qt_widgets/mainwindow.cpp" line="+307"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-266"/>
-        <location filename="../qt_widgets/mainwindow.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>File</source>
         <translation>Fișier</translation>
     </message>
@@ -2280,11 +2162,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+388"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-31"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-244"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-531"/>
-        <location line="+143"/>
-        <location line="+388"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <location filename="../core/search.cpp" line="-18"/>
         <source>Size</source>
         <translation>Dimensiune</translation>
@@ -2335,9 +2212,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-95"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1587"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <source>Type</source>
         <translation>Tip</translation>
     </message>
@@ -2393,39 +2267,12 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+1"/>
         <location line="+4"/>
         <location line="+1"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-166"/>
-        <location line="+158"/>
-        <location line="+8"/>
-        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-130"/>
-        <location line="+19"/>
-        <location line="+11"/>
-        <location line="+91"/>
-        <location line="+9"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1"/>
-        <location line="+1"/>
-        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-93"/>
-        <location line="+1"/>
-        <location line="+1"/>
-        <location line="+9"/>
-        <location line="+1"/>
-        <location line="+62"/>
-        <location line="+2"/>
-        <location line="+1"/>
-        <location line="+1"/>
-        <location line="+4"/>
-        <location line="+1"/>
-        <location line="+4"/>
-        <location line="+1"/>
-        <location line="+4"/>
-        <location line="+1"/>
         <source>All</source>
         <translation>Toate</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-129"/>
         <location line="+19"/>
-        <location line="+11"/>
-        <location line="-11"/>
         <location line="+11"/>
         <source>Audio</source>
         <translation>Audio</translation>
@@ -2434,16 +2281,12 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="-29"/>
         <location line="+19"/>
         <location line="+11"/>
-        <location line="-11"/>
-        <location line="+11"/>
         <source>Image</source>
         <translation>Imagine</translation>
     </message>
     <message>
         <location line="-28"/>
         <location line="+19"/>
-        <location line="+11"/>
-        <location line="-11"/>
         <location line="+11"/>
         <source>Video</source>
         <translation>Video</translation>
@@ -2462,7 +2305,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location line="+9"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1408"/>
-        <location line="+0"/>
         <source>Export Results</source>
         <translation>Exportați rezultatele</translation>
     </message>
@@ -2474,14 +2316,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location line="+101"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+473"/>
-        <location line="+50"/>
-        <location line="+24"/>
-        <location line="+24"/>
-        <location line="+33"/>
-        <location line="+21"/>
-        <location line="+25"/>
-        <location line="+4"/>
-        <location line="-181"/>
         <location line="+50"/>
         <location line="+24"/>
         <location line="+24"/>
@@ -2529,7 +2363,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="-3120"/>
         <location line="+347"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-16"/>
-        <location line="+0"/>
         <source>Catalogs</source>
         <translation>Cataloage</translation>
     </message>
@@ -2537,7 +2370,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="-312"/>
         <location line="+2154"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-30"/>
-        <location line="+0"/>
         <source>Total File Size</source>
         <translation>Dimensiunea totală a fișierelor</translation>
     </message>
@@ -2568,13 +2400,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+18"/>
         <location line="+14"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-166"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-71"/>
-        <location line="+21"/>
-        <location line="+18"/>
-        <location line="+18"/>
-        <location line="+14"/>
-        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+0"/>
         <source>Explore</source>
         <translation>Explorează</translation>
     </message>
@@ -2590,13 +2415,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-102"/>
         <location line="+36"/>
         <location line="+40"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-191"/>
-        <location line="+119"/>
-        <location line="+72"/>
-        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-76"/>
-        <location line="+36"/>
-        <location line="+40"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-140"/>
         <location line="+76"/>
         <location line="+61"/>
@@ -2608,20 +2426,14 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-149"/>
         <location line="+103"/>
         <location line="+71"/>
-        <location line="-174"/>
-        <location line="+103"/>
-        <location line="+71"/>
         <source>Edit</source>
         <translation>Editare</translation>
     </message>
     <message>
         <location line="-5377"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1160"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1167"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+68"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Delete</source>
         <translation>Șterge</translation>
     </message>
@@ -2635,15 +2447,13 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+7387"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+6"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+255"/>
-        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <source>Catalog</source>
         <translation>Catalog</translation>
     </message>
     <message>
         <location line="+799"/>
         <location line="+3246"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+723"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+730"/>
         <location line="+143"/>
         <location line="+301"/>
         <location line="+7"/>
@@ -2651,14 +2461,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+240"/>
         <location line="+253"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+3"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-451"/>
-        <location line="+143"/>
-        <location line="+301"/>
-        <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-493"/>
-        <location line="+240"/>
-        <location line="+253"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../core/search.cpp" line="+6"/>
         <source>Path</source>
         <translation>Cale</translation>
@@ -2677,7 +2479,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location line="-11687"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1252"/>
-        <location line="+0"/>
         <source>Virtual</source>
         <translation>Virtual</translation>
     </message>
@@ -2709,22 +2510,18 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location line="+3799"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-74"/>
-        <location line="+0"/>
         <source>Select...</source>
         <translation>Selectați...</translation>
     </message>
     <message>
         <location line="+13"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+29"/>
-        <location line="+0"/>
         <source>Rename (KRename)</source>
         <translation>Redenumire (KRename)</translation>
     </message>
     <message>
         <location line="+8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-726"/>
-        <location line="+732"/>
-        <location line="-732"/>
         <location line="+732"/>
         <source>Move to Trash</source>
         <translation>Mutați la coșul de gunoi</translation>
@@ -2737,7 +2534,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location line="+223"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1327"/>
-        <location line="+0"/>
         <source>Keep last 10</source>
         <translation>Păstrează ultimele 10</translation>
     </message>
@@ -2776,35 +2572,30 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location line="-1898"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1008"/>
-        <location line="+0"/>
         <source>Comment 1</source>
         <translation>Comentariu 1</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Comment 2</source>
         <translation>Comentariu 2</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Comment 3</source>
         <translation>Comentariu 3</translation>
     </message>
     <message>
         <location line="+141"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-6"/>
-        <location line="+0"/>
         <source>Brand</source>
         <translation>Marcă</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Model</source>
         <translation>Model</translation>
     </message>
@@ -2850,9 +2641,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-101"/>
         <location line="+94"/>
         <location line="+38"/>
-        <location line="-132"/>
-        <location line="+94"/>
-        <location line="+38"/>
         <source>Number of Files</source>
         <translation>Numărul de fișiere</translation>
     </message>
@@ -2864,8 +2652,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location line="+209"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-116"/>
-        <location line="+243"/>
-        <location line="-243"/>
         <location line="+243"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-139"/>
         <location line="+76"/>
@@ -3070,7 +2856,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location line="+366"/>
         <location filename="../qt_widgets/mainwindow.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Hosted</source>
         <translation>Găzduit</translation>
     </message>
@@ -3102,10 +2887,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-334"/>
         <location line="+214"/>
         <location line="+5"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-219"/>
-        <location line="+214"/>
-        <location line="+5"/>
         <source>Select</source>
         <translation>Selectați</translation>
     </message>
@@ -3115,10 +2896,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-977"/>
         <location line="+2831"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+15"/>
-        <location line="+2"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2831"/>
-        <location line="+2831"/>
-        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-2"/>
         <location line="+2"/>
         <source>Storage</source>
         <translation>Stocare</translation>
@@ -3139,7 +2916,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+722"/>
         <location line="+28"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
-        <location line="+0"/>
         <source>Total Space</source>
         <translation>Spațiul total</translation>
     </message>
@@ -3198,7 +2974,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location line="-4007"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+80"/>
-        <location line="+0"/>
         <source>Device Name</source>
         <translation>Numele dispozitivului</translation>
     </message>
@@ -3211,7 +2986,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="-26"/>
         <location line="+13"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1"/>
-        <location line="+0"/>
         <source>Device ID</source>
         <translation>ID-ul dispozitivului</translation>
     </message>
@@ -3264,7 +3038,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+20"/>
         <location line="+24"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-144"/>
-        <location line="+0"/>
         <source>Select a folder</source>
         <translation>Selectați un dosar</translation>
     </message>
@@ -3321,15 +3094,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+10"/>
         <location line="+7"/>
         <location line="+5"/>
-        <location line="-78"/>
-        <location line="+8"/>
-        <location line="+7"/>
-        <location line="+3"/>
-        <location line="+31"/>
-        <location line="+7"/>
-        <location line="+10"/>
-        <location line="+7"/>
-        <location line="+5"/>
         <source>Export</source>
         <translation>Exportă</translation>
     </message>
@@ -3340,31 +3104,23 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1285"/>
-        <location line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1292"/>
         <source>Replicate directories</source>
         <translation>Replică directoarele</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-6"/>
-        <location line="+1266"/>
-        <location line="+16"/>
-        <location line="-1282"/>
-        <location line="+1266"/>
+        <location line="+1273"/>
         <location line="+16"/>
         <source>Preview Backup</source>
         <translation>Previzualizare copie de rezervă</translation>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1287"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1294"/>
         <location line="+280"/>
-        <location line="+990"/>
-        <location line="+14"/>
-        <location line="-1284"/>
-        <location line="+280"/>
-        <location line="+990"/>
+        <location line="+997"/>
         <location line="+14"/>
         <source>Run Backup</source>
         <translation>Rulează copia de rezervă</translation>
@@ -3394,7 +3150,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location line="+10"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-78"/>
-        <location line="+0"/>
         <source>On conflict</source>
         <translation>La conflict</translation>
     </message>
@@ -3404,10 +3159,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-153"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2591"/>
         <location line="+1771"/>
-        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1771"/>
-        <location line="+1771"/>
         <source>Skip</source>
         <translation>Omite</translation>
     </message>
@@ -3415,8 +3166,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+5"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+2"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+1"/>
-        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+0"/>
         <source>Rename oldest</source>
         <translation>Redenumește cel mai vechi</translation>
     </message>
@@ -3424,7 +3173,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+40"/>
         <location line="+486"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-310"/>
-        <location line="+0"/>
         <source>Settings</source>
         <translation>Setări</translation>
     </message>
@@ -3672,8 +3420,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="-1242"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-677"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+480"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Open file</source>
         <translation>Deschide fișierul</translation>
     </message>
@@ -3686,13 +3432,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+109"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+42"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-174"/>
-        <location line="+103"/>
-        <location line="+71"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-109"/>
-        <location line="+109"/>
-        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Open folder</source>
         <translation>Deschide dosarul</translation>
     </message>
@@ -3700,29 +3439,24 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-62"/>
         <location line="+68"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+64"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Copy folder path</source>
         <translation>Copiați calea dosarului</translation>
     </message>
     <message>
         <location line="-64"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
-        <location line="+0"/>
         <source>Copy file absolute path</source>
         <translation>Copiați calea absolută a fișierului</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
-        <location line="+0"/>
         <source>Copy file name with extension</source>
         <translation>Copiați numele fișierului cu extensia</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
-        <location line="+0"/>
         <source>Copy file name without extension</source>
         <translation>Copiați numele fișierului fără extensie</translation>
     </message>
@@ -3735,12 +3469,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+607"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-654"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2298"/>
-        <location line="+240"/>
-        <location line="+253"/>
-        <location line="+1805"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <location filename="../core/device.cpp" line="+2"/>
         <location filename="../core/search.cpp" line="-7"/>
         <source>Name</source>
@@ -3754,10 +3482,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1360"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+20"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <location filename="../core/search.cpp" line="+2"/>
         <source>Date</source>
         <translation>Dată</translation>
@@ -3767,16 +3491,12 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+77"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+34"/>
         <location filename="../qt_widgets/mainwindow_tab_tags.cpp" line="+44"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_tags.cpp" line="+0"/>
         <source>Select the directory to be cataloged in this new catalog</source>
         <translation>Selectați directorul care va fi catalogat în acest nou catalog</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+20"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-19"/>
-        <location line="+0"/>
         <source>Select the directory for this collection</source>
         <translation>Selectați directorul pentru această colecție</translation>
     </message>
@@ -3786,9 +3506,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2291"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="-493"/>
-        <location line="+240"/>
-        <location line="+253"/>
         <source>Total Size</source>
         <translation>Dimensiunea totală</translation>
     </message>
@@ -3796,7 +3513,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="-1440"/>
         <location line="+1610"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+742"/>
-        <location line="+0"/>
         <source>Source Path</source>
         <translation>Calea sursă</translation>
     </message>
@@ -3806,10 +3522,6 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+694"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+20"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+9"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-694"/>
-        <location line="+694"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <location filename="../core/search.cpp" line="+7"/>
         <source>File Type</source>
         <translation>Tipul fișierului</translation>
@@ -3818,29 +3530,24 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+3612"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+5"/>
         <location line="+7"/>
-        <location line="-7"/>
-        <location line="+7"/>
         <source>File Size</source>
         <translation>Dimensiunea fișierului</translation>
     </message>
     <message>
         <location line="-3065"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-956"/>
-        <location line="+0"/>
         <source>Label</source>
         <translation>Etichetă</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
-        <location line="+0"/>
         <source>FileSystem</source>
         <translation>Sistemul de fișiere</translation>
     </message>
     <message>
         <location line="+2741"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+4"/>
-        <location line="+0"/>
         <source>Total</source>
         <translation>Total</translation>
     </message>
@@ -3852,14 +3559,12 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location line="+804"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+3"/>
-        <location line="+0"/>
         <source>Serial Number</source>
         <translation>Numărul de serie</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Build Date</source>
         <translation>Data de construire</translation>
     </message>
@@ -3897,7 +3602,6 @@ Această operațiune nu poate fi anulată.</translation>
     <message>
         <location line="+12"/>
         <location line="+41"/>
-        <location line="+0"/>
         <source>Split failed: no catalogs were created.</source>
         <translation>Împărțirea a eșuat: nu s-au creat cataloage.</translation>
     </message>
@@ -3966,28 +3670,24 @@ Split was not performed.</source>
     <message>
         <location line="+2"/>
         <location line="+1771"/>
-        <location line="+0"/>
         <source>Old path:</source>
         <translation>Calea veche:</translation>
     </message>
     <message>
         <location line="-1770"/>
         <location line="+1771"/>
-        <location line="+0"/>
         <source>New path:</source>
         <translation>Calea nouă:</translation>
     </message>
     <message>
         <location line="-1769"/>
         <location line="+1771"/>
-        <location line="+0"/>
         <source>How should the catalog indexes be updated?</source>
         <translation>Cum ar trebui actualizate indexurile catalogului?</translation>
     </message>
     <message>
         <location line="-1769"/>
         <location line="+1771"/>
-        <location line="+0"/>
         <source>Replace path root</source>
         <translation>Înlocuiește rădăcina căii</translation>
     </message>
@@ -3999,9 +3699,6 @@ Split was not performed.</source>
     <message>
         <location line="+484"/>
         <location line="+240"/>
-        <location line="+253"/>
-        <location line="+1805"/>
-        <location line="-2058"/>
         <location line="+253"/>
         <location line="+1805"/>
         <source>Parent ID</source>
@@ -4016,16 +3713,12 @@ Split was not performed.</source>
         <location line="+1"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="-253"/>
-        <location line="+253"/>
         <source>Number of files</source>
         <translation>Numărul de fișiere</translation>
     </message>
     <message>
         <location line="-490"/>
         <location line="+240"/>
-        <location line="+253"/>
-        <location line="-253"/>
         <location line="+253"/>
         <source>Free space</source>
         <translation>Spațiu liber</translation>
@@ -4034,16 +3727,12 @@ Split was not performed.</source>
         <location line="-492"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="-253"/>
-        <location line="+253"/>
         <source>Total space</source>
         <translation>Spațiul total</translation>
     </message>
     <message>
         <location line="-492"/>
         <location line="+240"/>
-        <location line="+253"/>
-        <location line="-253"/>
         <location line="+253"/>
         <source>Date updated</source>
         <translation>Data actualizării</translation>
@@ -4052,15 +3741,12 @@ Split was not performed.</source>
         <location line="-491"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="-253"/>
-        <location line="+253"/>
         <source>Group ID</source>
         <translation>ID-ul grupului</translation>
     </message>
     <message>
         <location line="-8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location line="+0"/>
         <location filename="../core/search.cpp" line="-4"/>
         <source>Catalog ID</source>
         <translation>ID-ul catalogului</translation>
@@ -4155,7 +3841,6 @@ Split was not performed.</source>
     <message>
         <location line="+17"/>
         <location line="+143"/>
-        <location line="+0"/>
         <source>No catalog found.</source>
         <translation>Nu s-a găsit niciun catalog.</translation>
     </message>
@@ -4176,18 +3861,12 @@ Split was not performed.</source>
         <location line="+17"/>
         <location line="+24"/>
         <location line="+23"/>
-        <location line="-86"/>
-        <location line="+22"/>
-        <location line="+17"/>
-        <location line="+24"/>
-        <location line="+23"/>
         <source>Path: </source>
         <translation>Cale: </translation>
     </message>
     <message>
         <location line="-100"/>
         <location line="+39"/>
-        <location line="+0"/>
         <source>Number of files: </source>
         <translation>Numărul de fișiere: </translation>
     </message>
@@ -4209,29 +3888,12 @@ Split was not performed.</source>
         <location line="+64"/>
         <location line="+1"/>
         <location line="+1"/>
-        <location line="-171"/>
-        <location line="+17"/>
-        <location line="+1"/>
-        <location line="+1"/>
-        <location line="+37"/>
-        <location line="+1"/>
-        <location line="+1"/>
-        <location line="+24"/>
-        <location line="+1"/>
-        <location line="+1"/>
-        <location line="+19"/>
-        <location line="+1"/>
-        <location line="+1"/>
-        <location line="+64"/>
-        <location line="+1"/>
-        <location line="+1"/>
         <source>(added: </source>
         <translation>(adăugat: </translation>
     </message>
     <message>
         <location line="-171"/>
         <location line="+39"/>
-        <location line="+0"/>
         <source>Total file size: </source>
         <translation>Dimensiunea totală a fișierului: </translation>
     </message>
@@ -4240,19 +3902,12 @@ Split was not performed.</source>
         <location line="+39"/>
         <location line="+24"/>
         <location line="+23"/>
-        <location line="-47"/>
-        <location line="+24"/>
-        <location line="+23"/>
         <source>Storage updated: </source>
         <translation>Stocare actualizată: </translation>
     </message>
     <message>
         <location line="-81"/>
         <location line="+39"/>
-        <location line="+26"/>
-        <location line="+21"/>
-        <location line="+66"/>
-        <location line="-113"/>
         <location line="+26"/>
         <location line="+21"/>
         <location line="+66"/>
@@ -4265,20 +3920,12 @@ Split was not performed.</source>
         <location line="+26"/>
         <location line="+21"/>
         <location line="+66"/>
-        <location line="-113"/>
-        <location line="+26"/>
-        <location line="+21"/>
-        <location line="+66"/>
         <source>Free Space: </source>
         <translation>Spațiu liber: </translation>
     </message>
     <message>
         <location line="-151"/>
         <location line="+39"/>
-        <location line="+26"/>
-        <location line="+21"/>
-        <location line="+66"/>
-        <location line="-113"/>
         <location line="+26"/>
         <location line="+21"/>
         <location line="+66"/>
@@ -4311,8 +3958,6 @@ Split was not performed.</source>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2047"/>
         <location line="+240"/>
-        <location line="+253"/>
-        <location line="-253"/>
         <location line="+253"/>
         <source>Used space</source>
         <translation>Spațiul utilizat</translation>
@@ -4383,9 +4028,6 @@ Split was not performed.</source>
         <location line="+11"/>
         <location line="+35"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-115"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-35"/>
-        <location line="+35"/>
-        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>GiB</source>
         <translation>GiB</translation>
     </message>
@@ -4393,8 +4035,6 @@ Split was not performed.</source>
         <location line="-44"/>
         <location line="+11"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+8"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>KiB</source>
         <translation>KiB</translation>
     </message>
@@ -4402,8 +4042,6 @@ Split was not performed.</source>
         <location line="-12"/>
         <location line="+11"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-4"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>MiB</source>
         <translation>MiB</translation>
     </message>
@@ -4415,7 +4053,6 @@ Split was not performed.</source>
     <message>
         <location line="+250"/>
         <location line="+597"/>
-        <location line="+0"/>
         <source>MOVE</source>
         <translation>MUTARE</translation>
     </message>
@@ -4427,7 +4064,6 @@ Split was not performed.</source>
     <message>
         <location line="+7"/>
         <location line="+64"/>
-        <location line="+0"/>
         <source>Information</source>
         <translation>Informații</translation>
     </message>
@@ -4439,9 +4075,6 @@ Split was not performed.</source>
     <message>
         <location line="-770"/>
         <location line="+13"/>
-        <location line="+803"/>
-        <location line="+572"/>
-        <location line="-1375"/>
         <location line="+803"/>
         <location line="+572"/>
         <source>DELETE</source>
@@ -4461,16 +4094,12 @@ Split was not performed.</source>
         <location line="+46"/>
         <location line="+11"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-8"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>TiB</source>
         <translation>TiB</translation>
     </message>
     <message>
         <location line="-7"/>
         <location line="+11"/>
-        <location line="+30"/>
-        <location line="-30"/>
         <location line="+30"/>
         <source>Bytes</source>
         <translation>Octeți</translation>
@@ -4481,9 +4110,8 @@ Split was not performed.</source>
         <translation>Selectați mai întâi un proces care să fie aplicat tuturor rezultatelor de mai jos.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-974"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-981"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+15"/>
-        <location line="+0"/>
         <source>Results exported to the collection folder:</source>
         <translation>Rezultatele exportate în dosarul colecției:</translation>
     </message>
@@ -4735,8 +4363,6 @@ Split was not performed.</source>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+18"/>
         <location line="+145"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-515"/>
-        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
         <source>Select the directory to exclude</source>
         <translation>Selectează directorul de exclus</translation>
     </message>
@@ -4744,8 +4370,6 @@ Split was not performed.</source>
         <location line="-77"/>
         <location line="+103"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+35"/>
-        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
         <source>Remove</source>
         <translation>Elimină</translation>
     </message>
@@ -4772,7 +4396,6 @@ Split was not performed.</source>
     <message>
         <location line="+2"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1057"/>
-        <location line="+0"/>
         <source>Choose a different name and try again.</source>
         <translation>Alegeți un nume diferit și încercați din nou.</translation>
     </message>
@@ -4804,10 +4427,7 @@ Split was not performed.</source>
         <location line="+3285"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-141"/>
         <location line="+344"/>
-        <location line="+761"/>
-        <location line="-1105"/>
-        <location line="+344"/>
-        <location line="+761"/>
+        <location line="+768"/>
         <source>Source</source>
         <translation>Sursă</translation>
     </message>
@@ -4834,16 +4454,6 @@ Split was not performed.</source>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-96"/>
         <location line="+18"/>
         <location line="+49"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-117"/>
-        <location line="+117"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-243"/>
-        <location line="+107"/>
-        <location line="+9"/>
-        <location line="+127"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-67"/>
-        <location line="+18"/>
-        <location line="+49"/>
         <source>Cancel</source>
         <translation>Anulare</translation>
     </message>
@@ -4855,7 +4465,6 @@ Split was not performed.</source>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-3664"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1272"/>
-        <location line="+0"/>
         <source>Storage ID</source>
         <translation>ID-ul stocării</translation>
     </message>
@@ -4869,7 +4478,6 @@ Split was not performed.</source>
         <location line="+1133"/>
         <location line="+964"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-19"/>
-        <location line="+0"/>
         <location filename="../core/search.cpp" line="-2"/>
         <source>Directory</source>
         <translation>Director</translation>
@@ -4908,7 +4516,6 @@ Split was not performed.</source>
     <message>
         <location line="+4008"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-183"/>
-        <location line="+0"/>
         <source>Tag</source>
         <translation>Etichetă</translation>
     </message>
@@ -4920,8 +4527,6 @@ Split was not performed.</source>
     <message>
         <location line="+359"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1963"/>
-        <location line="+13"/>
-        <location line="-13"/>
         <location line="+13"/>
         <source>Search history</source>
         <translation>Istoricul căutărilor</translation>
@@ -4943,14 +4548,12 @@ Split was not performed.</source>
     <message>
         <location line="+85"/>
         <location line="+6"/>
-        <location line="+0"/>
         <source>Select or create a database file for this collection</source>
         <translation>Selectați sau creați un fișier de baze de date pentru această colecție</translation>
     </message>
     <message>
         <location line="-4"/>
         <location line="+6"/>
-        <location line="+0"/>
         <source>Database files (*.db)</source>
         <translation>Fișiere de baze de date (*.db)</translation>
     </message>
@@ -5039,12 +4642,6 @@ Split was not performed.</source>
         <location line="+64"/>
         <location line="+533"/>
         <location line="+39"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1375"/>
-        <location line="+739"/>
-        <location line="+64"/>
-        <location line="+533"/>
-        <location line="+39"/>
         <source>Confirmation</source>
         <translation>Confirmare</translation>
     </message>
@@ -5055,46 +4652,36 @@ Split was not performed.</source>
         <location line="+3"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-624"/>
         <location line="+64"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-38"/>
-        <location line="+35"/>
-        <location line="+3"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-64"/>
-        <location line="+64"/>
         <source>Warning</source>
         <translation>Avertisment</translation>
     </message>
     <message>
         <location line="-41"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-67"/>
-        <location line="+0"/>
         <source>Moved to trash:&lt;br/&gt;</source>
         <translation>Mutat la coșul de gunoi:&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+3"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+3"/>
-        <location line="+0"/>
         <source>Move to trash failed.</source>
         <translation>Mutarea la coșul de gunoi a eșuat.</translation>
     </message>
     <message>
         <location line="+35"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+61"/>
-        <location line="+0"/>
         <source>Deleted.</source>
         <translation>Șters.</translation>
     </message>
     <message>
         <location line="+3"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+3"/>
-        <location line="+0"/>
         <source>Failed to delete.</source>
         <translation>Ștergerea a eșuat.</translation>
     </message>
     <message>
         <location line="-182"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-214"/>
-        <location line="+0"/>
         <source>Delete file</source>
         <translation>Șterge fișierul</translation>
     </message>
@@ -5138,14 +4725,12 @@ la coșul de gunoi?</translation>
     <message>
         <location line="+5"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+36"/>
-        <location line="+0"/>
         <source>updates only</source>
         <translation>doar actualizări</translation>
     </message>
     <message>
         <location line="+5"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-4"/>
-        <location line="+0"/>
         <source>snapshots only</source>
         <translation>doar instantanee</translation>
     </message>
@@ -5246,10 +4831,6 @@ la coșul de gunoi?</translation>
         <location line="+240"/>
         <location line="+253"/>
         <location line="+1805"/>
-        <location line="-2298"/>
-        <location line="+240"/>
-        <location line="+253"/>
-        <location line="+1805"/>
         <source>Device Type</source>
         <translation>Tipul dispozitivului</translation>
     </message>
@@ -5262,7 +4843,6 @@ la coșul de gunoi?</translation>
         <location filename="../qt_widgets/mainwindow.ui" line="+4956"/>
         <location line="+753"/>
         <location filename="../qt_widgets/mainwindow.cpp" line="-2"/>
-        <location line="+0"/>
         <source>Memory</source>
         <translation>Memorie</translation>
     </message>
@@ -5286,7 +4866,6 @@ la coșul de gunoi?</translation>
     <message>
         <location line="-2236"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-443"/>
-        <location line="+0"/>
         <source>File name</source>
         <translation>Numele fișierului</translation>
     </message>
@@ -5313,10 +4892,6 @@ la coșul de gunoi?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1076"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+263"/>
-        <location line="+587"/>
-        <location line="+14"/>
-        <location line="+20"/>
-        <location line="-621"/>
         <location line="+587"/>
         <location line="+14"/>
         <location line="+20"/>
@@ -5422,20 +4997,12 @@ la coșul de gunoi?</translation>
         <location line="+399"/>
         <location line="+7"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+512"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-406"/>
-        <location line="+399"/>
-        <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Catalog with results</source>
         <translation>Catalog cu rezultate</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+436"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1220"/>
-        <location line="+240"/>
-        <location line="+253"/>
-        <location line="+1805"/>
-        <location line="-2298"/>
         <location line="+240"/>
         <location line="+253"/>
         <location line="+1805"/>
@@ -5460,11 +5027,6 @@ la coșul de gunoi?</translation>
         <location line="+240"/>
         <location line="+253"/>
         <location line="+1805"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2298"/>
-        <location line="+240"/>
-        <location line="+253"/>
-        <location line="+1805"/>
         <source>Active</source>
         <translation>Activ</translation>
     </message>
@@ -5472,15 +5034,12 @@ la coșul de gunoi?</translation>
         <location line="-4"/>
         <location line="+7"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+189"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+0"/>
         <source>Files</source>
         <translation>Fișiere</translation>
     </message>
     <message>
         <location line="-6"/>
         <location line="+7"/>
-        <location line="+0"/>
         <source>Date Updated</source>
         <translation>Data actualizării</translation>
     </message>
@@ -5490,30 +5049,26 @@ la coșul de gunoi?</translation>
         <translation>ID-ul țintei</translation>
     </message>
     <message>
-        <location line="-1110"/>
+        <location line="-1117"/>
         <location line="+344"/>
-        <location line="+767"/>
-        <location line="-767"/>
-        <location line="+767"/>
+        <location line="+774"/>
         <source>Target</source>
         <translation>Ținta</translation>
     </message>
     <message>
-        <location line="-1215"/>
-        <location line="+1284"/>
-        <location line="+0"/>
+        <location line="-1222"/>
+        <location line="+1291"/>
         <source>Run Archive</source>
         <translation>Rulează arhivarea</translation>
     </message>
     <message>
-        <location line="-1279"/>
-        <location line="+1282"/>
-        <location line="+0"/>
+        <location line="-1286"/>
+        <location line="+1289"/>
         <source>Preview Archive</source>
         <translation>Previzualizare arhivă</translation>
     </message>
     <message>
-        <location line="-1267"/>
+        <location line="-1274"/>
         <source>Invert (swap source and target)</source>
         <translation>Inversează (schimbă sursa și destinația)</translation>
     </message>
@@ -5521,18 +5076,13 @@ la coșul de gunoi?</translation>
         <location line="+43"/>
         <location line="+111"/>
         <location line="+236"/>
-        <location line="+460"/>
-        <location line="-696"/>
-        <location line="+236"/>
-        <location line="+460"/>
+        <location line="+467"/>
         <source>Select a mapping first.</source>
         <translation>Selectați mai întâi un link.</translation>
     </message>
     <message>
-        <location line="-785"/>
+        <location line="-792"/>
         <location line="+108"/>
-        <location line="+236"/>
-        <location line="-236"/>
         <location line="+236"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>Sursa și destinația trebuie să fie dispozitive de catalog.</translation>
@@ -5540,22 +5090,18 @@ la coșul de gunoi?</translation>
     <message>
         <location line="-332"/>
         <location line="+62"/>
-        <location line="+0"/>
         <source>Replicate</source>
         <translation>Replică</translation>
     </message>
     <message>
         <location line="-61"/>
         <location line="+344"/>
-        <location line="+0"/>
         <source>%1 not available</source>
         <translation>%1 indisponibil</translation>
     </message>
     <message>
         <location line="-333"/>
         <location line="+90"/>
-        <location line="+255"/>
-        <location line="-255"/>
         <location line="+255"/>
         <source>A catalog update is already in progress. Please wait and try again.</source>
         <translation>O actualizare de catalog este deja în curs. Așteptați și încercați din nou.</translation>
@@ -5572,16 +5118,13 @@ la coșul de gunoi?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+659"/>
-        <location line="+0"/>
+        <location line="+666"/>
         <source>Errors</source>
         <translation>Erori</translation>
     </message>
     <message>
         <location line="-232"/>
         <location line="+253"/>
-        <location line="+74"/>
-        <location line="-74"/>
         <location line="+74"/>
         <source>Move</source>
         <translation>Mută</translation>
@@ -5590,15 +5133,12 @@ la coșul de gunoi?</translation>
         <location line="-327"/>
         <location line="+253"/>
         <location line="+74"/>
-        <location line="-74"/>
-        <location line="+74"/>
         <source>Copy</source>
         <translation>Copiază</translation>
     </message>
     <message>
         <location line="-326"/>
         <location line="+254"/>
-        <location line="+0"/>
         <source>Already in target</source>
         <translation>Deja în destinație</translation>
     </message>
@@ -5606,8 +5146,6 @@ la coșul de gunoi?</translation>
         <location line="-168"/>
         <location line="+32"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+8"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+0"/>
         <source>%1s</source>
         <translation>%1s</translation>
     </message>
@@ -5615,8 +5153,6 @@ la coșul de gunoi?</translation>
         <location line="-30"/>
         <location line="+32"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+2"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+0"/>
         <source>%1m %2s</source>
         <translation>%1m %2s</translation>
     </message>
@@ -5624,8 +5160,6 @@ la coșul de gunoi?</translation>
         <location line="-30"/>
         <location line="+32"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+2"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+0"/>
         <source>%1h %2m</source>
         <translation>%1h %2m</translation>
     </message>
@@ -5642,14 +5176,12 @@ la coșul de gunoi?</translation>
     <message>
         <location line="+3"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+1"/>
-        <location line="+0"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
         <location line="+74"/>
         <location line="+143"/>
-        <location line="+0"/>
         <source>Status</source>
         <translation>Stare</translation>
     </message>
@@ -5661,26 +5193,18 @@ la coșul de gunoi?</translation>
     <message>
         <location line="+8"/>
         <location line="+33"/>
-        <location line="+0"/>
         <source>Archived</source>
         <translation>Arhivat</translation>
     </message>
     <message>
         <location line="-25"/>
         <location line="+135"/>
-        <location line="+0"/>
         <source>Conflict</source>
         <translation>Conflict</translation>
     </message>
     <message>
         <location line="-127"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-173"/>
-        <location line="+64"/>
-        <location line="+10"/>
-        <location line="+58"/>
-        <location line="+73"/>
-        <location line="+35"/>
-        <location line="-240"/>
         <location line="+64"/>
         <location line="+10"/>
         <location line="+58"/>
@@ -5697,7 +5221,6 @@ la coșul de gunoi?</translation>
     <message>
         <location line="+4"/>
         <location line="+23"/>
-        <location line="+0"/>
         <source>Conflicts</source>
         <translation>Conflicte</translation>
     </message>
@@ -5829,7 +5352,6 @@ la coșul de gunoi?</translation>
     <message>
         <location line="+271"/>
         <location line="+90"/>
-        <location line="+0"/>
         <source>Filelight</source>
         <translation>Filelight</translation>
     </message>
@@ -5901,7 +5423,6 @@ la coșul de gunoi?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-646"/>
         <location line="+324"/>
-        <location line="+0"/>
         <source>Search Error</source>
         <translation>Eroare de căutare</translation>
     </message>
@@ -5917,23 +5438,17 @@ la coșul de gunoi?</translation>
         <translation>Numele catalogului</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1191"/>
-        <location line="+996"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1198"/>
+        <location line="+1003"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+150"/>
-        <location line="+42"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-42"/>
         <location line="+42"/>
         <source>Pause</source>
         <translation>Pauză</translation>
     </message>
     <message>
-        <location line="-989"/>
-        <location line="+989"/>
+        <location line="-996"/>
+        <location line="+996"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-28"/>
-        <location line="+30"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-30"/>
         <location line="+30"/>
         <source>Resume</source>
         <translation>Reluare</translation>
@@ -6009,7 +5524,6 @@ la coșul de gunoi?</translation>
     <message>
         <location line="+3"/>
         <location line="+11"/>
-        <location line="+0"/>
         <source>&lt;tr&gt;&lt;td&gt;Files processed: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</source>
         <translation>&lt;tr&gt;&lt;td&gt;Fișiere procesate: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
@@ -6074,7 +5588,6 @@ la coșul de gunoi?</translation>
     <message>
         <location line="+15"/>
         <location line="+53"/>
-        <location line="+0"/>
         <source>Select a catalog first (some info is missing).&lt;br/&gt; currentCatalogFilePath: %1 &lt;br/&gt;currentCatalogName: %2 &lt;br/&gt; currentCatalogSourcePath: %3</source>
         <translation>Selectați mai întâi un catalog (lipsesc unele informații).&lt;br/&gt; calea_fișierului_catalogului_curent: %1 &lt;br/&gt;numele_catalogului_curent: %2 &lt;br/&gt; calea_sursei_catalogului_curent: %3</translation>
     </message>
@@ -6086,7 +5599,6 @@ la coșul de gunoi?</translation>
     <message>
         <location line="+14"/>
         <location line="+87"/>
-        <location line="+0"/>
         <source>Could not open file.</source>
         <translation>Nu s-a putut deschide fișierul.</translation>
     </message>
@@ -6108,33 +5620,24 @@ la coșul de gunoi?</translation>
     <message>
         <location filename="../qt_widgets/devicemappingview.cpp" line="-10"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+169"/>
-        <location line="+0"/>
         <source>Strict</source>
         <translation>Strict</translation>
     </message>
     <message>
         <location line="+2"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Unique</source>
         <translation>Unic</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Drive</source>
         <translation>Unitate</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-177"/>
         <location line="+10"/>
-        <location line="+58"/>
-        <location line="+11"/>
-        <location line="+15"/>
-        <location line="+38"/>
-        <location line="+9"/>
-        <location line="-131"/>
         <location line="+58"/>
         <location line="+11"/>
         <location line="+15"/>
@@ -6156,8 +5659,6 @@ la coșul de gunoi?</translation>
     <message>
         <location line="+88"/>
         <location line="+10"/>
-        <location line="+8"/>
-        <location line="-8"/>
         <location line="+8"/>
         <source>Collection Update</source>
         <translation>Actualizare colecție</translation>
@@ -6211,12 +5712,12 @@ la coșul de gunoi?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+433"/>
+        <location line="+437"/>
         <source>Errors: %1</source>
         <translation>Erori: %1</translation>
     </message>
     <message>
-        <location line="-414"/>
+        <location line="-418"/>
         <source>Type</source>
         <translation>Tip</translation>
     </message>
@@ -6344,7 +5845,7 @@ la coșul de gunoi?</translation>
         <translation>Rulează copia de rezervă</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+23"/>
         <source>Pause</source>
         <translation>Pauză</translation>
     </message>
@@ -6369,7 +5870,7 @@ la coșul de gunoi?</translation>
         <translation>Previzualizare copie de rezervă</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+11"/>
         <source>More actions</source>
         <translation>Mai multe acțiuni</translation>
     </message>
@@ -6540,17 +6041,17 @@ la coșul de gunoi?</translation>
 <context>
     <name>PageBackupPreviewForm</name>
     <message>
-        <location filename="../qt_quick/PageBackupPreviewForm.qml" line="+8"/>
+        <location filename="../qt_quick/PageBackupPreviewForm.qml" line="+9"/>
         <source>Backup Preview</source>
         <translation>Previzualizare backup</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+15"/>
         <source>Preview</source>
         <translation>Previzualizare</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+13"/>
         <source>Export to CSV</source>
         <translation>Exportă în CSV</translation>
     </message>
@@ -6560,29 +6061,28 @@ la coșul de gunoi?</translation>
         <translation>Închide</translation>
     </message>
     <message>
-        <location line="+15"/>
         <source>Updating catalogs…</source>
-        <translation>Se actualizează cataloagele…</translation>
+        <translation type="vanished">Se actualizează cataloagele…</translation>
     </message>
     <message>
-        <location line="+0"/>
+        <location line="+16"/>
         <source>Computing preview…</source>
         <translation>Se calculează previzualizarea…</translation>
     </message>
     <message>
-        <location line="+36"/>
-        <location line="+59"/>
+        <location line="+34"/>
+        <location line="+146"/>
         <source>Move</source>
         <translation>Mută</translation>
     </message>
     <message>
-        <location line="-59"/>
-        <location line="+59"/>
+        <location line="-146"/>
+        <location line="+146"/>
         <source>Copy</source>
         <translation>Copiază</translation>
     </message>
     <message>
-        <location line="-56"/>
+        <location line="-143"/>
         <source>file(s)</source>
         <translation>fișier(e)</translation>
     </message>
@@ -6607,7 +6107,7 @@ la coșul de gunoi?</translation>
         <translation>țintă offline</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+18"/>
         <source>Insufficient disk space - Required: %1, Available: %2</source>
         <translation>Spațiu pe disc insuficient - Necesar: %1, Disponibil: %2</translation>
     </message>
@@ -6617,32 +6117,32 @@ la coșul de gunoi?</translation>
         <translation>Spațiu redus în țintă - %1 rămas după operațiune</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="-109"/>
         <source>Status</source>
         <translation>Stare</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>File Name</source>
         <translation>Nume fișier</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>Path</source>
         <translation>Cale</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>Size</source>
         <translation>Dimensiune</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+226"/>
         <source>Conflict</source>
         <translation>Conflict</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+20"/>
         <source>Nothing to move</source>
         <translation>Nimic de mutat</translation>
     </message>
@@ -6664,7 +6164,7 @@ la coșul de gunoi?</translation>
 <context>
     <name>PageCreateForm</name>
     <message>
-        <location filename="../qt_quick/PageCreateForm.qml" line="+205"/>
+        <location filename="../qt_quick/PageCreateForm.qml" line="+206"/>
         <location line="+46"/>
         <source>All</source>
         <translation>Toate</translation>
@@ -6680,7 +6180,7 @@ la coșul de gunoi?</translation>
         <translation>Audio</translation>
     </message>
     <message>
-        <location line="-183"/>
+        <location line="-184"/>
         <source>Provide a name for this new catalog.</source>
         <translation>Indicați un nume pentru acest catalog nou.</translation>
     </message>
@@ -6712,7 +6212,7 @@ la coșul de gunoi?</translation>
         <translation>Cale de indexat</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+14"/>
         <source>Storage</source>
         <translation>Stocare</translation>
     </message>
@@ -6823,13 +6323,13 @@ la coșul de gunoi?</translation>
         <translation type="vanished">Cale de exclus</translation>
     </message>
     <message>
-        <location line="+12"/>
-        <location line="+81"/>
+        <location line="+13"/>
+        <location line="+82"/>
         <source>Add</source>
         <translation>Adaugă</translation>
     </message>
     <message>
-        <location line="-35"/>
+        <location line="-36"/>
         <source>Global Parameters</source>
         <translation>Parametrii globali</translation>
     </message>
@@ -6847,12 +6347,12 @@ la coșul de gunoi?</translation>
 <context>
     <name>PageDeviceEditForm</name>
     <message>
-        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+96"/>
+        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+102"/>
         <source>Provide a name for this device.</source>
         <translation>Indicați un nume pentru acest dispozitiv.</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+22"/>
         <source>Source path: %1 → %2</source>
         <translation>Cale sursă: %1 → %2</translation>
     </message>
@@ -6863,12 +6363,12 @@ la coșul de gunoi?</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+244"/>
+        <location line="+249"/>
         <source>Type</source>
         <translation>Tip</translation>
     </message>
     <message>
-        <location line="-241"/>
+        <location line="-246"/>
         <source>Name</source>
         <translation>Nume</translation>
     </message>
@@ -6878,7 +6378,7 @@ la coșul de gunoi?</translation>
         <translation>Dispozitiv părinte</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+26"/>
         <source>Location</source>
         <translation>Locație</translation>
     </message>
@@ -6888,7 +6388,7 @@ la coșul de gunoi?</translation>
         <translation>Cale sursă</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+27"/>
         <source>Content options</source>
         <translation>Opțiuni de conținut</translation>
     </message>
@@ -6999,7 +6499,7 @@ la coșul de gunoi?</translation>
         <translation type="vanished">Cale de exclus</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <source>Add</source>
         <translation>Adaugă</translation>
     </message>
@@ -7542,7 +7042,7 @@ la coșul de gunoi?</translation>
 <context>
     <name>PageSearchForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchForm.qml" line="+316"/>
+        <location filename="../qt_quick/PageSearchForm.qml" line="+320"/>
         <source>Select a date</source>
         <translation>Selectați o dată</translation>
     </message>
@@ -7647,7 +7147,7 @@ la coșul de gunoi?</translation>
         <translation>text</translation>
     </message>
     <message>
-        <location line="+44"/>
+        <location line="+27"/>
         <source>with</source>
         <translation>cu</translation>
     </message>
@@ -7711,7 +7211,7 @@ la coșul de gunoi?</translation>
         <translation>exclude</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+32"/>
         <source>File attributes</source>
         <translation>Atribute fișier</translation>
     </message>
@@ -8321,12 +7821,12 @@ Erori: %3</translation>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+392"/>
+        <location line="+397"/>
         <source>(none)</source>
         <translation>(niciuna)</translation>
     </message>
     <message>
-        <location line="-384"/>
+        <location line="-389"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8502,7 +8002,12 @@ Erori: %3</translation>
         <translation>Dacă este activată, sortarea va respecta sortarea sensibilă la majuscule, astfel încât să avem această ordine AA, AB, AC, Aa, Ab, Ac</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
+        <source>Refresh device status when returning to the application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Language</source>
         <translation>Limbă</translation>
     </message>

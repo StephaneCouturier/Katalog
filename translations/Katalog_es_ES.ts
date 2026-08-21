@@ -4,14 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+119"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+142"/>
         <location line="+87"/>
         <location line="+14"/>
+        <location line="+3545"/>
         <source>Search</source>
         <translation>Buscar</translation>
     </message>
     <message>
-        <location line="-97"/>
+        <location line="-3642"/>
         <source>Stopped</source>
         <translation>Detenido</translation>
     </message>
@@ -43,22 +44,23 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+58"/>
-        <location line="+1584"/>
-        <location line="+1512"/>
+        <location line="+1630"/>
+        <location line="+1515"/>
         <location line="+11"/>
         <location line="+60"/>
+        <location line="+344"/>
         <source>In Progress</source>
         <translation>En progreso</translation>
     </message>
     <message>
-        <location line="-3153"/>
-        <location line="+3134"/>
+        <location line="-3546"/>
+        <location line="+3183"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Completado</translation>
     </message>
     <message>
-        <location line="-2860"/>
+        <location line="-2868"/>
         <source>Empty database path provided</source>
         <translation>Se proporcionó una ruta de base de datos vacía</translation>
     </message>
@@ -98,7 +100,7 @@
         <translation>Disco local</translation>
     </message>
     <message>
-        <location line="+307"/>
+        <location line="+308"/>
         <source>search_results</source>
         <translation>resultados_busqueda</translation>
     </message>
@@ -108,7 +110,7 @@
         <translation>Resultados de búsqueda</translation>
     </message>
     <message>
-        <location line="+352"/>
+        <location line="+356"/>
         <source>Case sensitive</source>
         <translation>Distinguir mayúsculas y minúsculas</translation>
     </message>
@@ -144,12 +146,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2115"/>
+        <location line="+2118"/>
         <source>Size</source>
         <translation>Tamaño</translation>
     </message>
     <message>
-        <location line="-2114"/>
+        <location line="-2117"/>
         <source>Date</source>
         <translation>Fecha</translation>
     </message>
@@ -268,7 +270,7 @@ Elija un nombre diferente e inténtelo de nuevo.</translation>
         <translation>Error al eliminar</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+71"/>
         <source>Virtual</source>
         <translation>Virtual</translation>
     </message>
@@ -351,7 +353,7 @@ Choose a different name.</source>
 Elija un nombre diferente.</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+15"/>
         <source>A Catalog in the Physical group can only be set under a Storage device.</source>
         <translation>Un catálogo del grupo Físico solo puede ubicarse bajo un dispositivo de almacenamiento.</translation>
     </message>
@@ -471,7 +473,7 @@ Elija un nombre diferente.</translation>
         <translation>No es un dispositivo de almacenamiento.</translation>
     </message>
     <message>
-        <location line="+163"/>
+        <location line="+168"/>
         <location line="+22"/>
         <source>Provide a link name.</source>
         <translation>Indique un nombre de enlace.</translation>
@@ -505,20 +507,22 @@ Elija un nombre diferente.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+92"/>
-        <location line="+277"/>
+        <location line="+86"/>
+        <location line="+2"/>
+        <location line="+301"/>
         <source>Link not found.</source>
         <translation>Enlace no encontrado.</translation>
     </message>
     <message>
-        <location line="-265"/>
-        <location line="+107"/>
-        <location line="+170"/>
+        <location line="-288"/>
+        <location line="+2"/>
+        <location line="+119"/>
+        <location line="+179"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>El origen y el destino deben ser dispositivos de catálogo.</translation>
     </message>
     <message>
-        <location line="-244"/>
+        <location line="-260"/>
         <location line="+7"/>
         <source>Move</source>
         <translation>Mover</translation>
@@ -536,14 +540,14 @@ Elija un nombre diferente.</translation>
         <translation>Conflicto</translation>
     </message>
     <message>
-        <location line="+58"/>
-        <location line="+169"/>
+        <location line="+65"/>
+        <location line="+178"/>
         <source>Source not available: %1</source>
         <translation>Origen no disponible: %1</translation>
     </message>
     <message>
-        <location line="-165"/>
-        <location line="+169"/>
+        <location line="-174"/>
+        <location line="+178"/>
         <source>Target not available: %1</source>
         <translation>Destino no disponible: %1</translation>
     </message>
@@ -606,7 +610,7 @@ Elija un nombre diferente.</translation>
         <translation>Catálogo</translation>
     </message>
     <message>
-        <location line="+1538"/>
+        <location line="+1548"/>
         <source>root</source>
         <translation>raíz</translation>
     </message>
@@ -639,7 +643,7 @@ Elija un nombre diferente.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2415"/>
+        <location filename="../core/collection.cpp" line="+2479"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Esta carpeta contiene archivos de colección en modo Memoria, pero actualmente está en modo Archivo.&lt;br/&gt;Cambie al modo Memoria o seleccione otra carpeta.</translation>
     </message>
@@ -719,7 +723,7 @@ Elija un nombre diferente.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+658"/>
+        <location filename="../qt_quick/Main.qml" line="+671"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>¿Desea &lt;b&gt;eliminar&lt;/b&gt; este dispositivo %1?&lt;br/&gt;&lt;br/&gt;Nombre: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -737,11 +741,12 @@ Elija un nombre diferente.</translation>
         <location line="+60"/>
         <location line="+162"/>
         <location line="+695"/>
+        <location line="+117"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location line="-1017"/>
+        <location line="-1134"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+158"/>
@@ -1144,12 +1149,12 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location line="+81"/>
         <location line="+118"/>
         <location line="+18"/>
-        <location line="+36"/>
+        <location line="+37"/>
         <source>Close</source>
         <translation>Cerrar</translation>
     </message>
     <message>
-        <location line="-569"/>
+        <location line="-570"/>
         <source>Show device info</source>
         <translation>Mostrar información del dispositivo</translation>
     </message>
@@ -1252,7 +1257,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation type="vanished">Copia de seguridad</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+84"/>
         <source>Add</source>
         <translation>Añadir</translation>
     </message>
@@ -1267,7 +1272,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation>Generar perfil de LuckyBackup</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+92"/>
         <source>Select Collection Folder</source>
         <translation>Seleccionar carpeta de colección</translation>
     </message>
@@ -1307,20 +1312,12 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location line="+541"/>
         <location line="+15"/>
         <location line="+22"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-578"/>
-        <location line="+541"/>
-        <location line="+15"/>
-        <location line="+22"/>
         <source>Verify Checksums</source>
         <translation>Verificar sumas de verificación</translation>
     </message>
     <message>
         <location line="-45"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+76"/>
-        <location line="+7"/>
-        <location line="-7"/>
         <location line="+7"/>
         <source>Loading</source>
         <translation>Cargando</translation>
@@ -1348,7 +1345,6 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     <message>
         <location line="+27"/>
         <location line="+5"/>
-        <location line="+0"/>
         <source>Verified:</source>
         <translation>Verificado:</translation>
     </message>
@@ -1386,22 +1382,18 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+251"/>
         <location line="+18"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-861"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Copy Checksum</source>
         <translation>Copiar suma de verificación</translation>
     </message>
     <message>
         <location line="-8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-8"/>
-        <location line="+0"/>
         <source>Calculate Checksum</source>
         <translation>Calcular suma de verificación</translation>
     </message>
     <message>
         <location line="+13"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+13"/>
-        <location line="+0"/>
         <source>Verify Checksum</source>
         <translation>Verificar suma de verificación</translation>
     </message>
@@ -1414,8 +1406,6 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location line="+43"/>
         <location line="+58"/>
         <location line="+68"/>
-        <location line="-68"/>
-        <location line="+68"/>
         <source>Checksum saved to database.</source>
         <translation>Suma de verificación guardada en la base de datos.</translation>
     </message>
@@ -1427,7 +1417,6 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     <message>
         <location line="+5"/>
         <location line="+122"/>
-        <location line="+0"/>
         <source>Copy to Clipboard</source>
         <translation>Copiar al portapapeles</translation>
     </message>
@@ -1498,7 +1487,6 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2173"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Continue?</source>
         <translation>¿Continuar?</translation>
     </message>
@@ -1522,7 +1510,6 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location filename="../qt_widgets/mainwindow.ui" line="-5542"/>
         <location line="+737"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1383"/>
-        <location line="+0"/>
         <location filename="../core/search.cpp" line="+246"/>
         <source>Checksum</source>
         <translation>Suma de verificación</translation>
@@ -1593,17 +1580,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+406"/>
         <location line="+176"/>
-        <location line="+147"/>
-        <location line="+19"/>
-        <location line="+41"/>
-        <location line="+38"/>
-        <location line="+30"/>
-        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-4"/>
-        <location line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-451"/>
-        <location line="+176"/>
-        <location line="+147"/>
+        <location line="+154"/>
         <location line="+19"/>
         <location line="+41"/>
         <location line="+38"/>
@@ -1616,13 +1593,6 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location line="+872"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+2"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-3"/>
-        <location line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-128"/>
-        <location line="+19"/>
-        <location line="+41"/>
-        <location line="+68"/>
-        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-4"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-128"/>
         <location line="+19"/>
@@ -1648,7 +1618,6 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+299"/>
         <location line="+29"/>
-        <location line="+0"/>
         <source>No backup links found.</source>
         <translation>No se encontraron enlaces de copia de seguridad.</translation>
     </message>
@@ -1685,7 +1654,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation>Contado</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-799"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-806"/>
         <location filename="../core/searchprogressmanager.cpp" line="+85"/>
         <source>Paused</source>
         <translation>En pausa</translation>
@@ -1701,15 +1670,6 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location line="+23"/>
         <location line="+23"/>
         <location line="+21"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-113"/>
-        <location line="+30"/>
-        <location line="+54"/>
-        <location line="+25"/>
-        <location line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-67"/>
-        <location line="+23"/>
-        <location line="+23"/>
-        <location line="+21"/>
         <location filename="../core/searchprogressmanager.cpp" line="+27"/>
         <location line="+24"/>
         <location line="+18"/>
@@ -1719,7 +1679,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-105"/>
-        <location line="+429"/>
+        <location line="+436"/>
         <location line="+128"/>
         <location line="+101"/>
         <location line="+139"/>
@@ -1727,15 +1687,6 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-45"/>
         <location line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+285"/>
-        <location line="+36"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-368"/>
-        <location line="+128"/>
-        <location line="+101"/>
-        <location line="+139"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-44"/>
-        <location line="+44"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-36"/>
         <location line="+36"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-96"/>
         <location filename="../core/searchprogressmanager.cpp" line="-13"/>
@@ -1751,8 +1702,6 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-349"/>
         <location line="+109"/>
         <location line="+101"/>
-        <location line="-101"/>
-        <location line="+101"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-76"/>
         <source>Cancelled</source>
         <translation>Cancelado</translation>
@@ -1760,7 +1709,6 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-19"/>
         <location line="+21"/>
-        <location line="+0"/>
         <location filename="../core/catalogprogressmanager.cpp" line="+18"/>
         <location line="+143"/>
         <location filename="../core/searchjobstoppable.cpp" line="+38"/>
@@ -1775,12 +1723,6 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-89"/>
         <location line="+15"/>
         <location line="+64"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-54"/>
-        <location line="+54"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-79"/>
-        <location line="+15"/>
-        <location line="+64"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-24"/>
         <location filename="../core/searchprogressmanager.cpp" line="-98"/>
         <source>In Progress</source>
@@ -1789,7 +1731,6 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+72"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-127"/>
-        <location line="+0"/>
         <source>Stopped</source>
         <translation>Detenido</translation>
     </message>
@@ -1821,7 +1762,6 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     <message>
         <location line="+279"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+274"/>
-        <location line="+0"/>
         <location filename="../core/search.cpp" line="-9"/>
         <source>Height</source>
         <translation>Altura</translation>
@@ -1829,7 +1769,6 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     <message>
         <location line="+169"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-1"/>
-        <location line="+0"/>
         <location filename="../core/search.cpp" line="-1"/>
         <source>Width</source>
         <translation>Ancho</translation>
@@ -1837,7 +1776,6 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     <message>
         <location line="+223"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+2"/>
-        <location line="+0"/>
         <location filename="../core/search.cpp" line="+2"/>
         <source>Duration</source>
         <translation>Duración</translation>
@@ -1868,8 +1806,6 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+503"/>
         <location line="+19"/>
         <location line="+11"/>
-        <location line="-11"/>
-        <location line="+11"/>
         <source>Other</source>
         <translation>Otro</translation>
     </message>
@@ -1885,23 +1821,12 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location line="+9"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+697"/>
         <location line="+1"/>
-        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-104"/>
-        <location line="+11"/>
-        <location line="+15"/>
-        <location line="+12"/>
-        <location line="+34"/>
-        <location line="+8"/>
-        <location line="+15"/>
-        <location line="+9"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1"/>
-        <location line="+1"/>
         <source>None</source>
         <translation>Ninguno</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-658"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-950"/>
-        <location line="+0"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Mostrar metadatos extendidos (JSON)</translation>
     </message>
@@ -1950,7 +1875,6 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-250"/>
         <location line="+8"/>
-        <location line="+0"/>
         <source>Copy JSON</source>
         <translation>Copiar JSON</translation>
     </message>
@@ -1960,10 +1884,6 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location line="+32"/>
         <location line="+1"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-3"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-33"/>
-        <location line="+32"/>
-        <location line="+1"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>Copied</source>
         <translation>Copiado</translation>
     </message>
@@ -2005,14 +1925,12 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     <message>
         <location line="+1"/>
         <location line="+9"/>
-        <location line="+0"/>
         <source>Select Different Folder</source>
         <translation>Seleccionar otra carpeta</translation>
     </message>
     <message>
         <location line="-6"/>
         <location line="+9"/>
-        <location line="+0"/>
         <source>Use Application Folder</source>
         <translation>Usar carpeta de aplicación</translation>
     </message>
@@ -2023,7 +1941,6 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-77"/>
         <location line="+12"/>
-        <location line="+0"/>
         <source>Media Basic</source>
         <translation>Medios básico</translation>
     </message>
@@ -2038,14 +1955,12 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     <message>
         <location line="-11"/>
         <location line="+12"/>
-        <location line="+0"/>
         <source>Media Extended</source>
         <translation>Medios extendido</translation>
     </message>
     <message>
         <location line="-11"/>
         <location line="+12"/>
-        <location line="+0"/>
         <source>Full Extended</source>
         <translation>Completo extendido</translation>
     </message>
@@ -2057,7 +1972,6 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+848"/>
         <location line="+38"/>
-        <location line="+0"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
         <translation>Catálogos actualizados:&lt;b&gt; %1 &lt;/b&gt;(%2 omitidos)</translation>
     </message>
@@ -2079,7 +1993,6 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     <message>
         <location filename="../qt_widgets/mainwindow_ui_wrapper_catalog.cpp" line="+77"/>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+6"/>
-        <location line="+0"/>
         <source>The source folder does not contain any file.&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>La carpeta de origen no contiene ningún archivo.&lt;br/&gt;Esto podría significar que el origen está vacío o el dispositivo no está montado en esta carpeta.&lt;br/&gt;¿Quieres guardarlo de todos modos (el catálogo estaría vacío)?</translation>
     </message>
@@ -2092,14 +2005,6 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location line="+136"/>
         <location line="+123"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+246"/>
-        <location line="+40"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-448"/>
-        <location line="+117"/>
-        <location line="+72"/>
-        <location line="+136"/>
-        <location line="+123"/>
-        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-40"/>
         <location line="+40"/>
         <source>A device operation is already running.</source>
         <translation>Ya se está ejecutando una operación del dispositivo.</translation>
@@ -2123,11 +2028,6 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     <message>
         <location line="-38"/>
         <location line="+17"/>
-        <location line="+22"/>
-        <location line="+17"/>
-        <location line="+24"/>
-        <location line="+23"/>
-        <location line="-86"/>
         <location line="+22"/>
         <location line="+17"/>
         <location line="+24"/>
@@ -2169,7 +2069,6 @@ Esta operación no se puede deshacer.</translation>
     <message>
         <location line="+12"/>
         <location line="+41"/>
-        <location line="+0"/>
         <source>Split failed: no catalogs were created.</source>
         <translation>División fallida: no se crearon catálogos.</translation>
     </message>
@@ -2238,28 +2137,24 @@ No se realizó la división.</translation>
     <message>
         <location line="+2"/>
         <location line="+1771"/>
-        <location line="+0"/>
         <source>Old path:</source>
         <translation>Ruta anterior:</translation>
     </message>
     <message>
         <location line="-1770"/>
         <location line="+1771"/>
-        <location line="+0"/>
         <source>New path:</source>
         <translation>Nueva ruta:</translation>
     </message>
     <message>
         <location line="-1769"/>
         <location line="+1771"/>
-        <location line="+0"/>
         <source>How should the catalog indexes be updated?</source>
         <translation>¿Cómo deben actualizarse los índices del catálogo?</translation>
     </message>
     <message>
         <location line="-1769"/>
         <location line="+1771"/>
-        <location line="+0"/>
         <source>Replace path root</source>
         <translation>Reemplazar raíz de ruta</translation>
     </message>
@@ -2271,9 +2166,6 @@ No se realizó la división.</translation>
     <message>
         <location line="+484"/>
         <location line="+240"/>
-        <location line="+253"/>
-        <location line="+1805"/>
-        <location line="-2058"/>
         <location line="+253"/>
         <location line="+1805"/>
         <source>Parent ID</source>
@@ -2288,16 +2180,12 @@ No se realizó la división.</translation>
         <location line="+1"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="-253"/>
-        <location line="+253"/>
         <source>Number of files</source>
         <translation>Número de archivos</translation>
     </message>
     <message>
         <location line="-491"/>
         <location line="+240"/>
-        <location line="+253"/>
-        <location line="-253"/>
         <location line="+253"/>
         <source>Used space</source>
         <translation>Espacio usado</translation>
@@ -2306,16 +2194,12 @@ No se realizó la división.</translation>
         <location line="-492"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="-253"/>
-        <location line="+253"/>
         <source>Free space</source>
         <translation>Espacio libre</translation>
     </message>
     <message>
         <location line="-492"/>
         <location line="+240"/>
-        <location line="+253"/>
-        <location line="-253"/>
         <location line="+253"/>
         <source>Total space</source>
         <translation>Espacio total</translation>
@@ -2324,8 +2208,6 @@ No se realizó la división.</translation>
         <location line="-492"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="-253"/>
-        <location line="+253"/>
         <source>Date updated</source>
         <translation>Fecha de actualización</translation>
     </message>
@@ -2333,15 +2215,12 @@ No se realizó la división.</translation>
         <location line="-491"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="-253"/>
-        <location line="+253"/>
         <source>Group ID</source>
         <translation>ID del grupo</translation>
     </message>
     <message>
         <location line="-8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-371"/>
-        <location line="+0"/>
         <location filename="../core/search.cpp" line="-14"/>
         <source>Catalog ID</source>
         <translation>ID del catálogo</translation>
@@ -2436,7 +2315,6 @@ No se realizó la división.</translation>
     <message>
         <location line="+17"/>
         <location line="+143"/>
-        <location line="+0"/>
         <source>No catalog found.</source>
         <translation>No se encontró catálogo.</translation>
     </message>
@@ -2453,14 +2331,12 @@ No se realizó la división.</translation>
     <message>
         <location line="+4"/>
         <location line="+39"/>
-        <location line="+0"/>
         <source>Number of files: </source>
         <translation>Número de archivos: </translation>
     </message>
     <message>
         <location line="-38"/>
         <location line="+39"/>
-        <location line="+0"/>
         <source>Total file size: </source>
         <translation>Tamaño total del archivo: </translation>
     </message>
@@ -2469,19 +2345,12 @@ No se realizó la división.</translation>
         <location line="+39"/>
         <location line="+24"/>
         <location line="+23"/>
-        <location line="-47"/>
-        <location line="+24"/>
-        <location line="+23"/>
         <source>Storage updated: </source>
         <translation>Almacenamiento actualizado: </translation>
     </message>
     <message>
         <location line="-81"/>
         <location line="+39"/>
-        <location line="+26"/>
-        <location line="+21"/>
-        <location line="+66"/>
-        <location line="-113"/>
         <location line="+26"/>
         <location line="+21"/>
         <location line="+66"/>
@@ -2524,22 +2393,6 @@ No se realizó la división.</translation>
         <location line="+64"/>
         <location line="+1"/>
         <location line="+1"/>
-        <location line="-171"/>
-        <location line="+17"/>
-        <location line="+1"/>
-        <location line="+1"/>
-        <location line="+37"/>
-        <location line="+1"/>
-        <location line="+1"/>
-        <location line="+24"/>
-        <location line="+1"/>
-        <location line="+1"/>
-        <location line="+19"/>
-        <location line="+1"/>
-        <location line="+1"/>
-        <location line="+64"/>
-        <location line="+1"/>
-        <location line="+1"/>
         <source>(added: </source>
         <translation>(agregado: </translation>
     </message>
@@ -2549,20 +2402,12 @@ No se realizó la división.</translation>
         <location line="+26"/>
         <location line="+21"/>
         <location line="+66"/>
-        <location line="-113"/>
-        <location line="+26"/>
-        <location line="+21"/>
-        <location line="+66"/>
         <source>Free Space: </source>
         <translation>Espacio libre: </translation>
     </message>
     <message>
         <location line="-151"/>
         <location line="+39"/>
-        <location line="+26"/>
-        <location line="+21"/>
-        <location line="+66"/>
-        <location line="-113"/>
         <location line="+26"/>
         <location line="+21"/>
         <location line="+66"/>
@@ -2577,7 +2422,6 @@ No se realizó la división.</translation>
     <message>
         <location line="+15"/>
         <location line="+53"/>
-        <location line="+0"/>
         <source>Select a catalog first (some info is missing).&lt;br/&gt; currentCatalogFilePath: %1 &lt;br/&gt;currentCatalogName: %2 &lt;br/&gt; currentCatalogSourcePath: %3</source>
         <translation>Seleccione primero un catálogo (falta información).&lt;br/&gt; rutaArchivoCatálogoActual: %1 &lt;br/&gt;nombreCatálogoActual: %2 &lt;br/&gt; rutaOrigenCatálogoActual: %3</translation>
     </message>
@@ -2589,7 +2433,6 @@ No se realizó la división.</translation>
     <message>
         <location line="+14"/>
         <location line="+87"/>
-        <location line="+0"/>
         <source>Could not open file.</source>
         <translation>No se pudo abrir el archivo.</translation>
     </message>
@@ -2607,8 +2450,6 @@ No se realizó la división.</translation>
         <location filename="../qt_widgets/mainwindow.ui" line="-5498"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-280"/>
         <location line="+6"/>
-        <location line="-6"/>
-        <location line="+6"/>
         <source>Katalog</source>
         <translation>Katalog</translation>
     </message>
@@ -2621,7 +2462,6 @@ No se realizó la división.</translation>
     <message>
         <location line="-11687"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2588"/>
-        <location line="+0"/>
         <source>Virtual</source>
         <translation>Virtual</translation>
     </message>
@@ -2632,10 +2472,6 @@ No se realizó la división.</translation>
         <location line="+2831"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <location line="+2"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2831"/>
-        <location line="+2831"/>
-        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-2"/>
-        <location line="+2"/>
         <source>Storage</source>
         <translation>Almacenamiento</translation>
     </message>
@@ -2644,8 +2480,6 @@ No se realizó la división.</translation>
         <location line="+7387"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+6"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-28"/>
-        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <source>Catalog</source>
         <translation>Catálogo</translation>
     </message>
@@ -2696,10 +2530,6 @@ No se realizó la división.</translation>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-334"/>
         <location line="+214"/>
         <location line="+5"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-219"/>
-        <location line="+214"/>
-        <location line="+5"/>
         <source>Select</source>
         <translation>Seleccionar</translation>
     </message>
@@ -2725,16 +2555,6 @@ No se realizó la división.</translation>
         <location line="+37"/>
         <location line="+39"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-63"/>
-        <location line="+20"/>
-        <location line="+30"/>
-        <location line="+150"/>
-        <location line="+53"/>
-        <location line="+316"/>
-        <location line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-76"/>
-        <location line="+37"/>
-        <location line="+39"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-573"/>
         <location line="+20"/>
         <location line="+30"/>
         <location line="+150"/>
@@ -2780,7 +2600,6 @@ No se realizó la división.</translation>
     <message>
         <location line="-4479"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-55"/>
-        <location line="+0"/>
         <source>File name</source>
         <translation>Nombre del archivo</translation>
     </message>
@@ -2826,7 +2645,6 @@ No se realizó la división.</translation>
     <message>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+368"/>
-        <location line="+0"/>
         <source>All Words</source>
         <translation>Todas las palabras</translation>
     </message>
@@ -2864,23 +2682,18 @@ No se realizó la división.</translation>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1018"/>
         <location line="+4"/>
         <location line="+1015"/>
-        <location line="-1019"/>
-        <location line="+4"/>
-        <location line="+1015"/>
         <source>File names only</source>
         <translation>Solo nombres de archivo</translation>
     </message>
     <message>
         <location line="+5"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1014"/>
-        <location line="+0"/>
         <source>File names or Folder paths</source>
         <translation>Nombres de archivo o rutas de carpetas</translation>
     </message>
     <message>
         <location line="+5"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Folder path only</source>
         <translation>Solo ruta de carpeta</translation>
     </message>
@@ -2914,11 +2727,6 @@ No se realizó la división.</translation>
         <location line="+388"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-3"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-510"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-531"/>
-        <location line="+143"/>
-        <location line="+388"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <location filename="../core/search.cpp" line="-4"/>
         <source>Size</source>
         <translation>Tamaño</translation>
@@ -2958,9 +2766,6 @@ No se realizó la división.</translation>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-95"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1858"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
@@ -3002,31 +2807,6 @@ No se realizó la división.</translation>
         <location line="+1"/>
         <location line="+4"/>
         <location line="+1"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-166"/>
-        <location line="+158"/>
-        <location line="+8"/>
-        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-130"/>
-        <location line="+19"/>
-        <location line="+11"/>
-        <location line="+91"/>
-        <location line="+9"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1"/>
-        <location line="+1"/>
-        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-93"/>
-        <location line="+1"/>
-        <location line="+1"/>
-        <location line="+9"/>
-        <location line="+1"/>
-        <location line="+62"/>
-        <location line="+2"/>
-        <location line="+1"/>
-        <location line="+1"/>
-        <location line="+4"/>
-        <location line="+1"/>
-        <location line="+4"/>
-        <location line="+1"/>
-        <location line="+4"/>
-        <location line="+1"/>
         <source>All</source>
         <translation>Todo</translation>
     </message>
@@ -3034,16 +2814,12 @@ No se realizó la división.</translation>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-129"/>
         <location line="+19"/>
         <location line="+11"/>
-        <location line="-11"/>
-        <location line="+11"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
     <message>
         <location line="-29"/>
         <location line="+19"/>
-        <location line="+11"/>
-        <location line="-11"/>
         <location line="+11"/>
         <source>Image</source>
         <translation>Imagen</translation>
@@ -3053,17 +2829,12 @@ No se realizó la división.</translation>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-29"/>
         <location line="+19"/>
         <location line="+11"/>
-        <location line="-30"/>
-        <location line="+19"/>
-        <location line="+11"/>
         <source>Text</source>
         <translation>Texto</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-29"/>
         <location line="+19"/>
-        <location line="+11"/>
-        <location line="-11"/>
         <location line="+11"/>
         <source>Video</source>
         <translation>Video</translation>
@@ -3076,10 +2847,6 @@ No se realizó la división.</translation>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+2030"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+20"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <location filename="../core/search.cpp" line="+1"/>
         <source>Date</source>
         <translation>Fecha</translation>
@@ -3103,12 +2870,6 @@ No se realizó la división.</translation>
         <location line="+253"/>
         <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-2"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2298"/>
-        <location line="+240"/>
-        <location line="+253"/>
-        <location line="+1805"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <location filename="../core/device.cpp" line="+2"/>
         <location filename="../core/search.cpp" line="-2"/>
@@ -3157,7 +2918,6 @@ No se realizó la división.</translation>
     <message>
         <location line="+3"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+30"/>
-        <location line="+0"/>
         <source>Tag</source>
         <translation>Etiqueta</translation>
     </message>
@@ -3174,14 +2934,6 @@ No se realizó la división.</translation>
     <message>
         <location line="+25"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+473"/>
-        <location line="+50"/>
-        <location line="+24"/>
-        <location line="+24"/>
-        <location line="+33"/>
-        <location line="+21"/>
-        <location line="+25"/>
-        <location line="+4"/>
-        <location line="-181"/>
         <location line="+50"/>
         <location line="+24"/>
         <location line="+24"/>
@@ -3231,9 +2983,6 @@ No se realizó la división.</translation>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2291"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="-493"/>
-        <location line="+240"/>
-        <location line="+253"/>
         <source>Total Size</source>
         <translation>Tamaño total</translation>
     </message>
@@ -3246,21 +2995,18 @@ No se realizó la división.</translation>
     <message>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-658"/>
-        <location line="+0"/>
         <source>Select...</source>
         <translation>Seleccionar...</translation>
     </message>
     <message>
         <location line="+5"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+6"/>
-        <location line="+0"/>
         <source>Export Results</source>
         <translation>Exportar resultados</translation>
     </message>
     <message>
         <location line="+8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+23"/>
-        <location line="+0"/>
         <source>Rename (KRename)</source>
         <translation>Renombrar (KRename)</translation>
     </message>
@@ -3268,19 +3014,14 @@ No se realizó la división.</translation>
         <location line="+8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-726"/>
         <location line="+732"/>
-        <location line="-732"/>
-        <location line="+732"/>
         <source>Move to Trash</source>
         <translation>Mover a la papelera</translation>
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1160"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1167"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-97"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+39"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Delete</source>
         <translation>Eliminar</translation>
     </message>
@@ -3297,8 +3038,6 @@ No se realizó la división.</translation>
     <message>
         <location line="+31"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1379"/>
-        <location line="+13"/>
-        <location line="-13"/>
         <location line="+13"/>
         <source>Search history</source>
         <translation>Historial de búsqueda</translation>
@@ -3350,7 +3089,6 @@ No se realizó la división.</translation>
         <location line="+722"/>
         <location line="+28"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-20"/>
-        <location line="+0"/>
         <source>Total Space</source>
         <translation>Espacio total</translation>
     </message>
@@ -3377,8 +3115,7 @@ No se realizó la división.</translation>
     </message>
     <message>
         <location line="-1962"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+1254"/>
-        <location line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+1261"/>
         <source>Device Name</source>
         <translation>Nombre del dispositivo</translation>
     </message>
@@ -3389,10 +3126,6 @@ No se realizó la división.</translation>
         <location line="+240"/>
         <location line="+253"/>
         <location line="+1805"/>
-        <location line="-2298"/>
-        <location line="+240"/>
-        <location line="+253"/>
-        <location line="+1805"/>
         <source>Device Type</source>
         <translation>Tipo de dispositivo</translation>
     </message>
@@ -3400,7 +3133,6 @@ No se realizó la división.</translation>
         <location line="+13"/>
         <location line="+13"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1"/>
-        <location line="+0"/>
         <source>Device ID</source>
         <translation>ID del dispositivo</translation>
     </message>
@@ -3413,7 +3145,6 @@ No se realizó la división.</translation>
         <location line="+36"/>
         <location line="+1610"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1057"/>
-        <location line="+0"/>
         <source>Source Path</source>
         <translation>Ruta de origen</translation>
     </message>
@@ -3432,10 +3163,6 @@ No se realizó la división.</translation>
         <location line="+587"/>
         <location line="+14"/>
         <location line="+20"/>
-        <location line="-621"/>
-        <location line="+587"/>
-        <location line="+14"/>
-        <location line="+20"/>
         <source>Include Metadata</source>
         <translation>Incluir metadatos</translation>
     </message>
@@ -3450,10 +3177,6 @@ No se realizó la división.</translation>
         <location line="+694"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+22"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+446"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-694"/>
-        <location line="+694"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <location filename="../core/search.cpp" line="+9"/>
         <source>File Type</source>
         <translation>Tipo de archivo</translation>
@@ -3471,28 +3194,24 @@ No se realizó la división.</translation>
     <message>
         <location line="+59"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-966"/>
-        <location line="+0"/>
         <source>Storage ID</source>
         <translation>ID de almacenamiento</translation>
     </message>
     <message>
         <location line="+38"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+16"/>
-        <location line="+0"/>
         <source>Comment 1</source>
         <translation>Comentario 1</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Comment 2</source>
         <translation>Comentario 2</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Comment 3</source>
         <translation>Comentario 3</translation>
     </message>
@@ -3519,13 +3238,6 @@ No se realizó la división.</translation>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-268"/>
         <location line="+36"/>
         <location line="+40"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-191"/>
-        <location line="+119"/>
-        <location line="+72"/>
-        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-76"/>
-        <location line="+36"/>
-        <location line="+40"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-140"/>
         <location line="+76"/>
         <location line="+61"/>
@@ -3541,42 +3253,36 @@ No se realizó la división.</translation>
     <message>
         <location line="+28"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-691"/>
-        <location line="+0"/>
         <source>Brand</source>
         <translation>Marca</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Model</source>
         <translation>Modelo</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Serial Number</source>
         <translation>Número de serie</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Build Date</source>
         <translation>Fecha de fabricación</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-5"/>
-        <location line="+0"/>
         <source>Label</source>
         <translation>Etiqueta</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
-        <location line="+0"/>
         <source>FileSystem</source>
         <translation>Sistema de archivos</translation>
     </message>
@@ -3598,16 +3304,6 @@ No se realizó la división.</translation>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-203"/>
         <location line="+18"/>
         <location line="+49"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-117"/>
-        <location line="+117"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-243"/>
-        <location line="+107"/>
-        <location line="+9"/>
-        <location line="+127"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-67"/>
-        <location line="+18"/>
-        <location line="+49"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
@@ -3615,7 +3311,6 @@ No se realizó la división.</translation>
         <location line="-3241"/>
         <location line="+347"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-18"/>
-        <location line="+0"/>
         <source>Catalogs</source>
         <translation>Catálogos</translation>
     </message>
@@ -3623,7 +3318,6 @@ No se realizó la división.</translation>
         <location line="-312"/>
         <location line="+2154"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-30"/>
-        <location line="+0"/>
         <source>Total File Size</source>
         <translation>Tamaño total del archivo</translation>
     </message>
@@ -3658,7 +3352,6 @@ No se realizó la división.</translation>
     <message>
         <location line="+4071"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2133"/>
-        <location line="+0"/>
         <source>Keep last 10</source>
         <translation>Conservar los últimos 10</translation>
     </message>
@@ -3776,13 +3469,6 @@ No se realizó la división.</translation>
         <location line="+18"/>
         <location line="+14"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+26"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-71"/>
-        <location line="+21"/>
-        <location line="+18"/>
-        <location line="+18"/>
-        <location line="+14"/>
-        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+0"/>
         <source>Explore</source>
         <translation>Explorar</translation>
     </message>
@@ -3803,9 +3489,6 @@ No se realizó la división.</translation>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-101"/>
         <location line="+94"/>
         <location line="+38"/>
-        <location line="-132"/>
-        <location line="+94"/>
-        <location line="+38"/>
         <source>Number of Files</source>
         <translation>Número de archivos</translation>
     </message>
@@ -3823,7 +3506,6 @@ No se realizó la división.</translation>
         <location line="+31"/>
         <location line="+964"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+254"/>
-        <location line="+0"/>
         <location filename="../core/search.cpp" line="-6"/>
         <source>Directory</source>
         <translation>Directorio</translation>
@@ -3841,8 +3523,6 @@ No se realizó la división.</translation>
     <message>
         <location line="+118"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-245"/>
-        <location line="+243"/>
-        <location line="-243"/>
         <location line="+243"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-139"/>
         <location line="+76"/>
@@ -4020,14 +3700,6 @@ No se realizó la división.</translation>
         <location line="+240"/>
         <location line="+253"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-451"/>
-        <location line="+143"/>
-        <location line="+301"/>
-        <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-493"/>
-        <location line="+240"/>
-        <location line="+253"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../core/search.cpp" line="+4"/>
         <source>Path</source>
         <translation>Ruta</translation>
@@ -4065,12 +3737,9 @@ No se realizó la división.</translation>
     </message>
     <message>
         <location line="-267"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1114"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1121"/>
         <location line="+344"/>
-        <location line="+761"/>
-        <location line="-1105"/>
-        <location line="+344"/>
-        <location line="+761"/>
+        <location line="+768"/>
         <source>Source</source>
         <translation>Origen</translation>
     </message>
@@ -4082,14 +3751,12 @@ No se realizó la división.</translation>
     <message>
         <location line="+5"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-54"/>
-        <location line="+0"/>
         <source>updates only</source>
         <translation>solo actualizaciones</translation>
     </message>
     <message>
         <location line="+5"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-4"/>
-        <location line="+0"/>
         <source>snapshots only</source>
         <translation>solo instantáneas</translation>
     </message>
@@ -4143,8 +3810,6 @@ No se realizó la división.</translation>
         <location line="-16"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-677"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+480"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Open file</source>
         <translation>Abrir archivo</translation>
     </message>
@@ -4162,7 +3827,6 @@ No se realizó la división.</translation>
         <location line="+20"/>
         <location line="+24"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-8"/>
-        <location line="+0"/>
         <source>Select a folder</source>
         <translation>Seleccionar una carpeta</translation>
     </message>
@@ -4226,8 +3890,6 @@ No se realizó la división.</translation>
         <location line="+35"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+3"/>
         <location line="+7"/>
-        <location line="-7"/>
-        <location line="+7"/>
         <source>File Size</source>
         <translation>Tamaño del archivo</translation>
     </message>
@@ -4249,7 +3911,6 @@ No se realizó la división.</translation>
     <message>
         <location line="+14"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+99"/>
-        <location line="+0"/>
         <source>Total</source>
         <translation>Total</translation>
     </message>
@@ -4274,15 +3935,6 @@ No se realizó la división.</translation>
         <location line="+10"/>
         <location line="+7"/>
         <location line="+5"/>
-        <location line="-78"/>
-        <location line="+8"/>
-        <location line="+7"/>
-        <location line="+3"/>
-        <location line="+31"/>
-        <location line="+7"/>
-        <location line="+10"/>
-        <location line="+7"/>
-        <location line="+5"/>
         <source>Export</source>
         <translation>Exportar</translation>
     </message>
@@ -4293,31 +3945,23 @@ No se realizó la división.</translation>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1207"/>
-        <location line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1214"/>
         <source>Replicate directories</source>
         <translation>Replicar directorios</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-6"/>
-        <location line="+1266"/>
-        <location line="+16"/>
-        <location line="-1282"/>
-        <location line="+1266"/>
+        <location line="+1273"/>
         <location line="+16"/>
         <source>Preview Backup</source>
         <translation>Vista previa de copia de seguridad</translation>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1287"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1294"/>
         <location line="+280"/>
-        <location line="+990"/>
-        <location line="+14"/>
-        <location line="-1284"/>
-        <location line="+280"/>
-        <location line="+990"/>
+        <location line="+997"/>
         <location line="+14"/>
         <source>Run Backup</source>
         <translation>Ejecutar copia de seguridad</translation>
@@ -4365,7 +4009,6 @@ No se realizó la división.</translation>
     <message>
         <location line="+10"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-78"/>
-        <location line="+0"/>
         <source>On conflict</source>
         <translation>En conflicto</translation>
     </message>
@@ -4375,10 +4018,6 @@ No se realizó la división.</translation>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-153"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-984"/>
         <location line="+1771"/>
-        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1771"/>
-        <location line="+1771"/>
         <source>Skip</source>
         <translation>Omitir</translation>
     </message>
@@ -4386,8 +4025,6 @@ No se realizó la división.</translation>
         <location line="+5"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+2"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+1"/>
-        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+0"/>
         <source>Rename oldest</source>
         <translation>Renombrar el más antiguo</translation>
     </message>
@@ -4395,7 +4032,6 @@ No se realizó la división.</translation>
         <location line="+40"/>
         <location line="+486"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-310"/>
-        <location line="+0"/>
         <source>Settings</source>
         <translation>Configuración</translation>
     </message>
@@ -4504,9 +4140,6 @@ No se realizó la división.</translation>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+15"/>
         <location line="+103"/>
         <location line="+71"/>
-        <location line="-174"/>
-        <location line="+103"/>
-        <location line="+71"/>
         <source>Edit</source>
         <translation>Editar</translation>
     </message>
@@ -4565,13 +4198,6 @@ No se realizó la división.</translation>
         <location line="+109"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-174"/>
-        <location line="+103"/>
-        <location line="+71"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-109"/>
-        <location line="+109"/>
-        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Open folder</source>
         <translation>Abrir carpeta</translation>
     </message>
@@ -4632,7 +4258,6 @@ No se realizó la división.</translation>
         <location line="-740"/>
         <location line="+753"/>
         <location filename="../qt_widgets/mainwindow.cpp" line="+306"/>
-        <location line="+0"/>
         <source>Memory</source>
         <translation>Memoria</translation>
     </message>
@@ -4641,15 +4266,12 @@ No se realizó la división.</translation>
         <location line="+743"/>
         <location filename="../qt_widgets/mainwindow.cpp" line="+1"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-410"/>
-        <location filename="../qt_widgets/mainwindow.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>File</source>
         <translation>Archivo</translation>
     </message>
     <message>
         <location line="-738"/>
         <location filename="../qt_widgets/mainwindow.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Hosted</source>
         <translation>Hospedado</translation>
     </message>
@@ -4752,10 +4374,6 @@ No se realizó la división.</translation>
         <location line="+399"/>
         <location line="+7"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1511"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-406"/>
-        <location line="+399"/>
-        <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Catalog with results</source>
         <translation>Catálogo con resultados</translation>
     </message>
@@ -4791,21 +4409,18 @@ No se realizó la división.</translation>
     <message>
         <location line="+15"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-84"/>
-        <location line="+0"/>
         <source>Select the directory for this collection</source>
         <translation>Seleccionar el directorio para esta colección</translation>
     </message>
     <message>
         <location line="+70"/>
         <location line="+6"/>
-        <location line="+0"/>
         <source>Select or create a database file for this collection</source>
         <translation>Seleccionar o crear un archivo de base de datos para esta colección</translation>
     </message>
     <message>
         <location line="-4"/>
         <location line="+6"/>
-        <location line="+0"/>
         <source>Database files (*.db)</source>
         <translation>Archivos de base de datos (*.db)</translation>
     </message>
@@ -4835,10 +4450,6 @@ No se realizó la división.</translation>
         <location line="+240"/>
         <location line="+253"/>
         <location line="+1805"/>
-        <location line="-2298"/>
-        <location line="+240"/>
-        <location line="+253"/>
-        <location line="+1805"/>
         <location filename="../core/device.cpp" line="-1"/>
         <source>ID</source>
         <translation>ID</translation>
@@ -4860,11 +4471,6 @@ No se realizó la división.</translation>
         <location line="+240"/>
         <location line="+253"/>
         <location line="+1805"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2298"/>
-        <location line="+240"/>
-        <location line="+253"/>
-        <location line="+1805"/>
         <source>Active</source>
         <translation>Activo</translation>
     </message>
@@ -4872,15 +4478,12 @@ No se realizó la división.</translation>
         <location line="-4"/>
         <location line="+7"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+160"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+0"/>
         <source>Files</source>
         <translation>Archivos</translation>
     </message>
     <message>
         <location line="-6"/>
         <location line="+7"/>
-        <location line="+0"/>
         <source>Date Updated</source>
         <translation>Fecha de actualización</translation>
     </message>
@@ -4890,30 +4493,26 @@ No se realizó la división.</translation>
         <translation>ID de destino</translation>
     </message>
     <message>
-        <location line="-1110"/>
+        <location line="-1117"/>
         <location line="+344"/>
-        <location line="+767"/>
-        <location line="-767"/>
-        <location line="+767"/>
+        <location line="+774"/>
         <source>Target</source>
         <translation>Destino</translation>
     </message>
     <message>
-        <location line="-1215"/>
-        <location line="+1284"/>
-        <location line="+0"/>
+        <location line="-1222"/>
+        <location line="+1291"/>
         <source>Run Archive</source>
         <translation>Ejecutar archivo</translation>
     </message>
     <message>
-        <location line="-1279"/>
-        <location line="+1282"/>
-        <location line="+0"/>
+        <location line="-1286"/>
+        <location line="+1289"/>
         <source>Preview Archive</source>
         <translation>Vista previa de archivo</translation>
     </message>
     <message>
-        <location line="-1267"/>
+        <location line="-1274"/>
         <source>Invert (swap source and target)</source>
         <translation>Invertir (intercambiar origen y destino)</translation>
     </message>
@@ -4921,18 +4520,13 @@ No se realizó la división.</translation>
         <location line="+43"/>
         <location line="+111"/>
         <location line="+236"/>
-        <location line="+460"/>
-        <location line="-696"/>
-        <location line="+236"/>
-        <location line="+460"/>
+        <location line="+467"/>
         <source>Select a mapping first.</source>
         <translation>Seleccione primero un enlace.</translation>
     </message>
     <message>
-        <location line="-785"/>
+        <location line="-792"/>
         <location line="+108"/>
-        <location line="+236"/>
-        <location line="-236"/>
         <location line="+236"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>El origen y el destino deben ser dispositivos de catálogo.</translation>
@@ -4940,22 +4534,18 @@ No se realizó la división.</translation>
     <message>
         <location line="-332"/>
         <location line="+62"/>
-        <location line="+0"/>
         <source>Replicate</source>
         <translation>Replicar</translation>
     </message>
     <message>
         <location line="-61"/>
         <location line="+344"/>
-        <location line="+0"/>
         <source>%1 not available</source>
         <translation>%1 no disponible</translation>
     </message>
     <message>
         <location line="-333"/>
         <location line="+90"/>
-        <location line="+255"/>
-        <location line="-255"/>
         <location line="+255"/>
         <source>A catalog update is already in progress. Please wait and try again.</source>
         <translation>Ya hay una actualización de catálogo en curso. Espere e inténtelo de nuevo.</translation>
@@ -4972,16 +4562,13 @@ No se realizó la división.</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+659"/>
-        <location line="+0"/>
+        <location line="+666"/>
         <source>Errors</source>
         <translation>Errores</translation>
     </message>
     <message>
         <location line="-232"/>
         <location line="+253"/>
-        <location line="+74"/>
-        <location line="-74"/>
         <location line="+74"/>
         <source>Move</source>
         <translation>Mover</translation>
@@ -4990,15 +4577,12 @@ No se realizó la división.</translation>
         <location line="-327"/>
         <location line="+253"/>
         <location line="+74"/>
-        <location line="-74"/>
-        <location line="+74"/>
         <source>Copy</source>
         <translation>Copiar</translation>
     </message>
     <message>
         <location line="-326"/>
         <location line="+254"/>
-        <location line="+0"/>
         <source>Already in target</source>
         <translation>Ya en destino</translation>
     </message>
@@ -5006,8 +4590,6 @@ No se realizó la división.</translation>
         <location line="-168"/>
         <location line="+32"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+8"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+0"/>
         <source>%1s</source>
         <translation>%1s</translation>
     </message>
@@ -5015,8 +4597,6 @@ No se realizó la división.</translation>
         <location line="-30"/>
         <location line="+32"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+2"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+0"/>
         <source>%1m %2s</source>
         <translation>%1m %2s</translation>
     </message>
@@ -5024,8 +4604,6 @@ No se realizó la división.</translation>
         <location line="-30"/>
         <location line="+32"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+2"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+0"/>
         <source>%1h %2m</source>
         <translation>%1h %2m</translation>
     </message>
@@ -5042,14 +4620,12 @@ No se realizó la división.</translation>
     <message>
         <location line="+3"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+1"/>
-        <location line="+0"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
         <location line="+74"/>
         <location line="+143"/>
-        <location line="+0"/>
         <source>Status</source>
         <translation>Estado</translation>
     </message>
@@ -5061,26 +4637,18 @@ No se realizó la división.</translation>
     <message>
         <location line="+8"/>
         <location line="+33"/>
-        <location line="+0"/>
         <source>Archived</source>
         <translation>Archivado</translation>
     </message>
     <message>
         <location line="-25"/>
         <location line="+135"/>
-        <location line="+0"/>
         <source>Conflict</source>
         <translation>Conflicto</translation>
     </message>
     <message>
         <location line="-127"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-173"/>
-        <location line="+64"/>
-        <location line="+10"/>
-        <location line="+58"/>
-        <location line="+73"/>
-        <location line="+35"/>
-        <location line="-240"/>
         <location line="+64"/>
         <location line="+10"/>
         <location line="+58"/>
@@ -5097,7 +4665,6 @@ No se realizó la división.</translation>
     <message>
         <location line="+4"/>
         <location line="+23"/>
-        <location line="+0"/>
         <source>Conflicts</source>
         <translation>Conflictos</translation>
     </message>
@@ -5221,9 +4788,6 @@ No se realizó la división.</translation>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+77"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+34"/>
         <location filename="../qt_widgets/mainwindow_tab_tags.cpp" line="+44"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_tags.cpp" line="+0"/>
         <source>Select the directory to be cataloged in this new catalog</source>
         <translation>Seleccione el directorio a catalogar en este nuevo catálogo</translation>
     </message>
@@ -5235,8 +4799,6 @@ No se realizó la división.</translation>
         <location line="+18"/>
         <location line="+145"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-458"/>
-        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
         <source>Select the directory to exclude</source>
         <translation>Seleccionar el directorio a excluir</translation>
     </message>
@@ -5244,8 +4806,6 @@ No se realizó la división.</translation>
         <location line="-77"/>
         <location line="+103"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+35"/>
-        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
         <source>Remove</source>
         <translation>Eliminar</translation>
     </message>
@@ -5272,7 +4832,6 @@ No se realizó la división.</translation>
     <message>
         <location line="+2"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2856"/>
-        <location line="+0"/>
         <source>Choose a different name and try again.</source>
         <translation>Elija un nombre diferente e inténtelo de nuevo.</translation>
     </message>
@@ -5289,7 +4848,6 @@ No se realizó la división.</translation>
     <message>
         <location line="+271"/>
         <location line="+90"/>
-        <location line="+0"/>
         <source>Filelight</source>
         <translation>Filelight</translation>
     </message>
@@ -5367,29 +4925,24 @@ No se realizó la división.</translation>
         <location line="+81"/>
         <location line="+68"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1447"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Copy folder path</source>
         <translation>Copiar ruta de carpeta</translation>
     </message>
     <message>
         <location line="-64"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
-        <location line="+0"/>
         <source>Copy file absolute path</source>
         <translation>Copiar ruta absoluta del archivo</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
-        <location line="+0"/>
         <source>Copy file name with extension</source>
         <translation>Copiar nombre del archivo con extensión</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
-        <location line="+0"/>
         <source>Copy file name without extension</source>
         <translation>Copiar nombre del archivo sin extensión</translation>
     </message>
@@ -5401,7 +4954,6 @@ No se realizó la división.</translation>
     <message>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+39"/>
-        <location line="+0"/>
         <source>Delete file</source>
         <translation>Eliminar archivo</translation>
     </message>
@@ -5419,12 +4971,6 @@ No se realizó la división.</translation>
         <location line="+115"/>
         <location line="+33"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-601"/>
-        <location line="+739"/>
-        <location line="+64"/>
-        <location line="+533"/>
-        <location line="+39"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1375"/>
         <location line="+739"/>
         <location line="+64"/>
         <location line="+533"/>
@@ -5448,25 +4994,18 @@ a la papelera?</translation>
         <location line="+3"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-624"/>
         <location line="+64"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-38"/>
-        <location line="+35"/>
-        <location line="+3"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-64"/>
-        <location line="+64"/>
         <source>Warning</source>
         <translation>Advertencia</translation>
     </message>
     <message>
         <location line="-41"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-67"/>
-        <location line="+0"/>
         <source>Moved to trash:&lt;br/&gt;</source>
         <translation>Movido a papelera:&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+3"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+3"/>
-        <location line="+0"/>
         <source>Move to trash failed.</source>
         <translation>Error al mover a papelera.</translation>
     </message>
@@ -5478,14 +5017,12 @@ a la papelera?</translation>
     <message>
         <location line="+8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+61"/>
-        <location line="+0"/>
         <source>Deleted.</source>
         <translation>Eliminado.</translation>
     </message>
     <message>
         <location line="+3"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+3"/>
-        <location line="+0"/>
         <source>Failed to delete.</source>
         <translation>Error al eliminar.</translation>
     </message>
@@ -5503,7 +5040,6 @@ a la papelera?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-646"/>
         <location line="+324"/>
-        <location line="+0"/>
         <source>Search Error</source>
         <translation>Error de búsqueda</translation>
     </message>
@@ -5519,23 +5055,17 @@ a la papelera?</translation>
         <translation>Nombre del catálogo</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1191"/>
-        <location line="+996"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1198"/>
+        <location line="+1003"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+150"/>
-        <location line="+42"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-42"/>
         <location line="+42"/>
         <source>Pause</source>
         <translation>Pausar</translation>
     </message>
     <message>
-        <location line="-989"/>
-        <location line="+989"/>
+        <location line="-996"/>
+        <location line="+996"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-28"/>
-        <location line="+30"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-30"/>
         <location line="+30"/>
         <source>Resume</source>
         <translation>Reanudar</translation>
@@ -5611,7 +5141,6 @@ a la papelera?</translation>
     <message>
         <location line="+3"/>
         <location line="+11"/>
-        <location line="+0"/>
         <source>&lt;tr&gt;&lt;td&gt;Files processed: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</source>
         <translation>&lt;tr&gt;&lt;td&gt;Archivos procesados: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
@@ -5648,7 +5177,6 @@ a la papelera?</translation>
     <message>
         <location line="+250"/>
         <location line="+597"/>
-        <location line="+0"/>
         <source>MOVE</source>
         <translation>MOVER</translation>
     </message>
@@ -5660,7 +5188,6 @@ a la papelera?</translation>
     <message>
         <location line="+7"/>
         <location line="+64"/>
-        <location line="+0"/>
         <source>Information</source>
         <translation>Información</translation>
     </message>
@@ -5672,9 +5199,6 @@ a la papelera?</translation>
     <message>
         <location line="-770"/>
         <location line="+13"/>
-        <location line="+803"/>
-        <location line="+572"/>
-        <location line="-1375"/>
         <location line="+803"/>
         <location line="+572"/>
         <source>DELETE</source>
@@ -5694,8 +5218,6 @@ a la papelera?</translation>
         <location line="+46"/>
         <location line="+11"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-131"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>TiB</source>
         <translation>TiB</translation>
     </message>
@@ -5704,9 +5226,6 @@ a la papelera?</translation>
         <location line="+11"/>
         <location line="+35"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-35"/>
-        <location line="+35"/>
-        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>GiB</source>
         <translation>GiB</translation>
     </message>
@@ -5714,8 +5233,6 @@ a la papelera?</translation>
         <location line="-45"/>
         <location line="+11"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>MiB</source>
         <translation>MiB</translation>
     </message>
@@ -5723,16 +5240,12 @@ a la papelera?</translation>
         <location line="-10"/>
         <location line="+11"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>KiB</source>
         <translation>KiB</translation>
     </message>
     <message>
         <location line="-10"/>
         <location line="+11"/>
-        <location line="+30"/>
-        <location line="-30"/>
         <location line="+30"/>
         <source>Bytes</source>
         <translation>Bytes</translation>
@@ -5743,9 +5256,8 @@ a la papelera?</translation>
         <translation>Seleccione primero un proceso a aplicar a todos los resultados siguientes.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1039"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1046"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+15"/>
-        <location line="+0"/>
         <source>Results exported to the collection folder:</source>
         <translation>Resultados exportados a la carpeta de colección:</translation>
     </message>
@@ -6108,33 +5620,24 @@ a la papelera?</translation>
     <message>
         <location filename="../qt_widgets/devicemappingview.cpp" line="-10"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-80"/>
-        <location line="+0"/>
         <source>Strict</source>
         <translation>Estricto</translation>
     </message>
     <message>
         <location line="+2"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Unique</source>
         <translation>Único</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Drive</source>
         <translation>Unidad</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-177"/>
         <location line="+10"/>
-        <location line="+58"/>
-        <location line="+11"/>
-        <location line="+15"/>
-        <location line="+38"/>
-        <location line="+9"/>
-        <location line="-131"/>
         <location line="+58"/>
         <location line="+11"/>
         <location line="+15"/>
@@ -6156,8 +5659,6 @@ a la papelera?</translation>
     <message>
         <location line="+88"/>
         <location line="+10"/>
-        <location line="+8"/>
-        <location line="-8"/>
         <location line="+8"/>
         <source>Collection Update</source>
         <translation>Actualizar colección</translation>
@@ -6211,12 +5712,12 @@ a la papelera?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+433"/>
+        <location line="+437"/>
         <source>Errors: %1</source>
         <translation>Errores: %1</translation>
     </message>
     <message>
-        <location line="-414"/>
+        <location line="-418"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
@@ -6344,7 +5845,7 @@ a la papelera?</translation>
         <translation>Ejecutar copia de seguridad</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+23"/>
         <source>Pause</source>
         <translation>Pausar</translation>
     </message>
@@ -6369,7 +5870,7 @@ a la papelera?</translation>
         <translation>Vista previa de copia de seguridad</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+11"/>
         <source>More actions</source>
         <translation>Más acciones</translation>
     </message>
@@ -6540,17 +6041,17 @@ a la papelera?</translation>
 <context>
     <name>PageBackupPreviewForm</name>
     <message>
-        <location filename="../qt_quick/PageBackupPreviewForm.qml" line="+8"/>
+        <location filename="../qt_quick/PageBackupPreviewForm.qml" line="+9"/>
         <source>Backup Preview</source>
         <translation>Vista previa de la copia de seguridad</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+15"/>
         <source>Preview</source>
         <translation>Vista previa</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+13"/>
         <source>Export to CSV</source>
         <translation>Exportar a CSV</translation>
     </message>
@@ -6560,29 +6061,28 @@ a la papelera?</translation>
         <translation>Cerrar</translation>
     </message>
     <message>
-        <location line="+15"/>
         <source>Updating catalogs…</source>
-        <translation>Actualizando catálogos…</translation>
+        <translation type="vanished">Actualizando catálogos…</translation>
     </message>
     <message>
-        <location line="+0"/>
+        <location line="+16"/>
         <source>Computing preview…</source>
         <translation>Calculando vista previa…</translation>
     </message>
     <message>
-        <location line="+36"/>
-        <location line="+59"/>
+        <location line="+34"/>
+        <location line="+146"/>
         <source>Move</source>
         <translation>Mover</translation>
     </message>
     <message>
-        <location line="-59"/>
-        <location line="+59"/>
+        <location line="-146"/>
+        <location line="+146"/>
         <source>Copy</source>
         <translation>Copiar</translation>
     </message>
     <message>
-        <location line="-56"/>
+        <location line="-143"/>
         <source>file(s)</source>
         <translation>archivo(s)</translation>
     </message>
@@ -6607,7 +6107,7 @@ a la papelera?</translation>
         <translation>destino sin conexión</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+18"/>
         <source>Insufficient disk space - Required: %1, Available: %2</source>
         <translation>Espacio en disco insuficiente: requerido: %1, disponible: %2</translation>
     </message>
@@ -6617,32 +6117,32 @@ a la papelera?</translation>
         <translation>Poco espacio en el destino: %1 restante tras la operación</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="-109"/>
         <source>Status</source>
         <translation>Estado</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>File Name</source>
         <translation>Nombre de archivo</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>Path</source>
         <translation>Ruta</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>Size</source>
         <translation>Tamaño</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+226"/>
         <source>Conflict</source>
         <translation>Conflicto</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+20"/>
         <source>Nothing to move</source>
         <translation>Nada que mover</translation>
     </message>
@@ -6664,7 +6164,7 @@ a la papelera?</translation>
 <context>
     <name>PageCreateForm</name>
     <message>
-        <location filename="../qt_quick/PageCreateForm.qml" line="+205"/>
+        <location filename="../qt_quick/PageCreateForm.qml" line="+206"/>
         <location line="+46"/>
         <source>All</source>
         <translation>Todo</translation>
@@ -6680,7 +6180,7 @@ a la papelera?</translation>
         <translation>Audio</translation>
     </message>
     <message>
-        <location line="-183"/>
+        <location line="-184"/>
         <source>Provide a name for this new catalog.</source>
         <translation>Indique un nombre para este nuevo catálogo.</translation>
     </message>
@@ -6712,7 +6212,7 @@ a la papelera?</translation>
         <translation>Ruta a indexar</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+14"/>
         <source>Storage</source>
         <translation>Almacenamiento</translation>
     </message>
@@ -6823,13 +6323,13 @@ a la papelera?</translation>
         <translation type="vanished">Ruta a excluir</translation>
     </message>
     <message>
-        <location line="+12"/>
-        <location line="+81"/>
+        <location line="+13"/>
+        <location line="+82"/>
         <source>Add</source>
         <translation>Añadir</translation>
     </message>
     <message>
-        <location line="-35"/>
+        <location line="-36"/>
         <source>Global Parameters</source>
         <translation>Parámetros globales</translation>
     </message>
@@ -6847,12 +6347,12 @@ a la papelera?</translation>
 <context>
     <name>PageDeviceEditForm</name>
     <message>
-        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+96"/>
+        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+102"/>
         <source>Provide a name for this device.</source>
         <translation>Indique un nombre para este dispositivo.</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+22"/>
         <source>Source path: %1 → %2</source>
         <translation>Ruta de origen: %1 → %2</translation>
     </message>
@@ -6863,12 +6363,12 @@ a la papelera?</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+244"/>
+        <location line="+249"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
     <message>
-        <location line="-241"/>
+        <location line="-246"/>
         <source>Name</source>
         <translation>Nombre</translation>
     </message>
@@ -6878,7 +6378,7 @@ a la papelera?</translation>
         <translation>Dispositivo principal</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+26"/>
         <source>Location</source>
         <translation>Ubicación</translation>
     </message>
@@ -6888,7 +6388,7 @@ a la papelera?</translation>
         <translation>Ruta de origen</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+27"/>
         <source>Content options</source>
         <translation>Opciones de contenido</translation>
     </message>
@@ -6999,7 +6499,7 @@ a la papelera?</translation>
         <translation type="vanished">Ruta a excluir</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <source>Add</source>
         <translation>Añadir</translation>
     </message>
@@ -7542,7 +7042,7 @@ a la papelera?</translation>
 <context>
     <name>PageSearchForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchForm.qml" line="+316"/>
+        <location filename="../qt_quick/PageSearchForm.qml" line="+320"/>
         <source>Select a date</source>
         <translation>Seleccionar una fecha</translation>
     </message>
@@ -7647,7 +7147,7 @@ a la papelera?</translation>
         <translation>texto</translation>
     </message>
     <message>
-        <location line="+44"/>
+        <location line="+27"/>
         <source>with</source>
         <translation>con</translation>
     </message>
@@ -7711,7 +7211,7 @@ a la papelera?</translation>
         <translation>excluir</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+32"/>
         <source>File attributes</source>
         <translation>Atributos de archivo</translation>
     </message>
@@ -8321,12 +7821,12 @@ Errores: %3</translation>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+392"/>
+        <location line="+397"/>
         <source>(none)</source>
         <translation>(ninguno)</translation>
     </message>
     <message>
-        <location line="-384"/>
+        <location line="-389"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8502,7 +8002,12 @@ Errores: %3</translation>
         <translation>Si está habilitado, la ordenación respetará la ordenación sensible a mayúsculas, para tener este orden AA, AB, AC, Aa, Ab, Ac</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
+        <source>Refresh device status when returning to the application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Language</source>
         <translation>Idioma</translation>
     </message>

@@ -1200,8 +1200,7 @@ void CatalogJobStoppable::processBatch(QStringList& fileNames, QStringList& file
                 }
 
 
-                ParallelMetadataExtractor extractor;
-                QList<MetadataExtractionResult> results = extractor.extractBatch(
+                QList<MetadataExtractionResult> results = metadataExtractor.extractBatch(
                     extractFilePaths,
                     extractFileNames,
                     extractFolderPaths,
@@ -2517,6 +2516,10 @@ void CatalogJobStoppable::extractMetadataForChangedFiles(const QList<QVariantLis
     }
 
 
+    // One extractor for the whole run: it owns a thread pool, so constructing it
+    // per batch would spawn and tear down worker threads every 100 files.
+    ParallelMetadataExtractor extractor;
+
     // Process in batches of files (progressRefreshRate)
     for (int batchStart = 0; batchStart < totalFiles; batchStart += progressRefreshRate) {
         // Check if stop requested between batches
@@ -2543,7 +2546,6 @@ void CatalogJobStoppable::extractMetadataForChangedFiles(const QList<QVariantLis
         batchTimer.start();
 
         // Parallel extraction for this batch
-        ParallelMetadataExtractor extractor;
         auto results = extractor.extractBatch(batchFullPaths, batchFileNames, batchFolderPaths,
                                               m_device->catalog->includeMetadata, optimalThreads);
 

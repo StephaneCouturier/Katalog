@@ -43,12 +43,14 @@ private:
     QWaitCondition* m_allDoneCondition;
 };
 
-// Manager for parallel extraction
+// Manager for parallel extraction.
+// Reuse one instance across batches: each instance owns a thread pool, so
+// creating one per batch spawns and tears down worker threads repeatedly.
 class ParallelMetadataExtractor
 {
 public:
-    ParallelMetadataExtractor();
-    ~ParallelMetadataExtractor();
+    ParallelMetadataExtractor() = default;
+    ~ParallelMetadataExtractor() = default;
 
     QList<MetadataExtractionResult> extractBatch(
         const QStringList& filePaths,
@@ -58,7 +60,11 @@ public:
         int maxThreads = 4);
 
 private:
-    QThreadPool* m_threadPool;
+    // Held by value: QThreadPool's destructor waits for running tasks and
+    // releases its threads. The previous owning raw pointer was never deleted,
+    // so every batch leaked a pool whose idle threads lingered until their
+    // 30 s expiry — hundreds of live threads during a large catalog run.
+    QThreadPool m_threadPool;
 };
 
 #endif // PARALLELMETADATAEXTRACTOR_H

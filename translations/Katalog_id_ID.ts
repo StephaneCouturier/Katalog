@@ -4,14 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+119"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+142"/>
         <location line="+87"/>
         <location line="+14"/>
+        <location line="+3545"/>
         <source>Search</source>
         <translation>Cari</translation>
     </message>
     <message>
-        <location line="-97"/>
+        <location line="-3642"/>
         <source>Stopped</source>
         <translation>Dihentikan</translation>
     </message>
@@ -43,22 +44,23 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+58"/>
-        <location line="+1584"/>
-        <location line="+1512"/>
+        <location line="+1630"/>
+        <location line="+1515"/>
         <location line="+11"/>
         <location line="+60"/>
+        <location line="+344"/>
         <source>In Progress</source>
         <translation>Sedang berlangsung</translation>
     </message>
     <message>
-        <location line="-3153"/>
-        <location line="+3134"/>
+        <location line="-3546"/>
+        <location line="+3183"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Selesai</translation>
     </message>
     <message>
-        <location line="-2860"/>
+        <location line="-2868"/>
         <source>Empty database path provided</source>
         <translation>Jalur basis data kosong diberikan</translation>
     </message>
@@ -98,7 +100,7 @@
         <translation>Disk lokal</translation>
     </message>
     <message>
-        <location line="+307"/>
+        <location line="+308"/>
         <source>search_results</source>
         <translation>hasil_pencarian</translation>
     </message>
@@ -108,7 +110,7 @@
         <translation>Hasil Pencarian</translation>
     </message>
     <message>
-        <location line="+352"/>
+        <location line="+356"/>
         <source>Case sensitive</source>
         <translation>Peka huruf besar/kecil</translation>
     </message>
@@ -144,12 +146,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2115"/>
+        <location line="+2118"/>
         <source>Size</source>
         <translation>Ukuran</translation>
     </message>
     <message>
-        <location line="-2114"/>
+        <location line="-2117"/>
         <source>Date</source>
         <translation>Tanggal</translation>
     </message>
@@ -268,7 +270,7 @@ Pilih nama lain dan coba lagi.</translation>
         <translation>Penghapusan gagal</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+71"/>
         <source>Virtual</source>
         <translation>Virtual</translation>
     </message>
@@ -351,7 +353,7 @@ Choose a different name.</source>
 Pilih nama lain.</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+15"/>
         <source>A Catalog in the Physical group can only be set under a Storage device.</source>
         <translation>Katalog dalam grup Fisik hanya dapat ditempatkan di bawah perangkat penyimpanan.</translation>
     </message>
@@ -471,7 +473,7 @@ Pilih nama lain.</translation>
         <translation>Bukan perangkat penyimpanan.</translation>
     </message>
     <message>
-        <location line="+163"/>
+        <location line="+168"/>
         <location line="+22"/>
         <source>Provide a link name.</source>
         <translation>Berikan nama tautan.</translation>
@@ -505,20 +507,22 @@ Pilih nama lain.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+92"/>
-        <location line="+277"/>
+        <location line="+86"/>
+        <location line="+2"/>
+        <location line="+301"/>
         <source>Link not found.</source>
         <translation>Tautan tidak ditemukan.</translation>
     </message>
     <message>
-        <location line="-265"/>
-        <location line="+107"/>
-        <location line="+170"/>
+        <location line="-288"/>
+        <location line="+2"/>
+        <location line="+119"/>
+        <location line="+179"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>Sumber dan target harus berupa perangkat katalog.</translation>
     </message>
     <message>
-        <location line="-244"/>
+        <location line="-260"/>
         <location line="+7"/>
         <source>Move</source>
         <translation>Pindah</translation>
@@ -536,14 +540,14 @@ Pilih nama lain.</translation>
         <translation>Konflik</translation>
     </message>
     <message>
-        <location line="+58"/>
-        <location line="+169"/>
+        <location line="+65"/>
+        <location line="+178"/>
         <source>Source not available: %1</source>
         <translation>Sumber tidak tersedia: %1</translation>
     </message>
     <message>
-        <location line="-165"/>
-        <location line="+169"/>
+        <location line="-174"/>
+        <location line="+178"/>
         <source>Target not available: %1</source>
         <translation>Target tidak tersedia: %1</translation>
     </message>
@@ -606,7 +610,7 @@ Pilih nama lain.</translation>
         <translation>Katalog</translation>
     </message>
     <message>
-        <location line="+1538"/>
+        <location line="+1548"/>
         <source>root</source>
         <translation>root</translation>
     </message>
@@ -639,7 +643,7 @@ Pilih nama lain.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2415"/>
+        <location filename="../core/collection.cpp" line="+2479"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Folder ini berisi file koleksi mode Memori, tetapi Anda saat ini dalam mode File.&lt;br/&gt;Beralih ke mode Memori atau pilih folder lain.</translation>
     </message>
@@ -719,7 +723,7 @@ Pilih nama lain.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+658"/>
+        <location filename="../qt_quick/Main.qml" line="+671"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Apakah Anda ingin &lt;b&gt;menghapus&lt;/b&gt; perangkat %1 ini?&lt;br/&gt;&lt;br/&gt;Nama: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -737,11 +741,12 @@ Pilih nama lain.</translation>
         <location line="+60"/>
         <location line="+162"/>
         <location line="+695"/>
+        <location line="+117"/>
         <source>Cancel</source>
         <translation>Batal</translation>
     </message>
     <message>
-        <location line="-1017"/>
+        <location line="-1134"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+158"/>
@@ -1144,12 +1149,12 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+81"/>
         <location line="+118"/>
         <location line="+18"/>
-        <location line="+36"/>
+        <location line="+37"/>
         <source>Close</source>
         <translation>Tutup</translation>
     </message>
     <message>
-        <location line="-569"/>
+        <location line="-570"/>
         <source>Show device info</source>
         <translation>Tampilkan info perangkat</translation>
     </message>
@@ -1252,7 +1257,7 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <translation type="vanished">Cadangan</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+84"/>
         <source>Add</source>
         <translation>Tambah</translation>
     </message>
@@ -1267,7 +1272,7 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <translation>Buat profil LuckyBackup</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+92"/>
         <source>Select Collection Folder</source>
         <translation>Pilih folder koleksi</translation>
     </message>
@@ -1307,20 +1312,12 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+541"/>
         <location line="+15"/>
         <location line="+22"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-578"/>
-        <location line="+541"/>
-        <location line="+15"/>
-        <location line="+22"/>
         <source>Verify Checksums</source>
         <translation>Verifikasi checksum</translation>
     </message>
     <message>
         <location line="-45"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+76"/>
-        <location line="+7"/>
-        <location line="-7"/>
         <location line="+7"/>
         <source>Loading</source>
         <translation>Memuat</translation>
@@ -1348,7 +1345,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location line="+27"/>
         <location line="+5"/>
-        <location line="+0"/>
         <source>Verified:</source>
         <translation>Diverifikasi:</translation>
     </message>
@@ -1386,22 +1382,18 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+251"/>
         <location line="+18"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-861"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Copy Checksum</source>
         <translation>Salin checksum</translation>
     </message>
     <message>
         <location line="-8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-8"/>
-        <location line="+0"/>
         <source>Calculate Checksum</source>
         <translation>Hitung checksum</translation>
     </message>
     <message>
         <location line="+13"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+13"/>
-        <location line="+0"/>
         <source>Verify Checksum</source>
         <translation>Verifikasi checksum</translation>
     </message>
@@ -1414,8 +1406,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+43"/>
         <location line="+58"/>
         <location line="+68"/>
-        <location line="-68"/>
-        <location line="+68"/>
         <source>Checksum saved to database.</source>
         <translation>Checksum disimpan ke database.</translation>
     </message>
@@ -1427,7 +1417,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location line="+5"/>
         <location line="+122"/>
-        <location line="+0"/>
         <source>Copy to Clipboard</source>
         <translation>Salin ke clipboard</translation>
     </message>
@@ -1498,7 +1487,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2173"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Continue?</source>
         <translation>Lanjutkan?</translation>
     </message>
@@ -1522,7 +1510,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location filename="../qt_widgets/mainwindow.ui" line="-5542"/>
         <location line="+737"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1383"/>
-        <location line="+0"/>
         <location filename="../core/search.cpp" line="+246"/>
         <source>Checksum</source>
         <translation>Checksum</translation>
@@ -1573,17 +1560,7 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+406"/>
         <location line="+176"/>
-        <location line="+147"/>
-        <location line="+19"/>
-        <location line="+41"/>
-        <location line="+38"/>
-        <location line="+30"/>
-        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-4"/>
-        <location line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-451"/>
-        <location line="+176"/>
-        <location line="+147"/>
+        <location line="+154"/>
         <location line="+19"/>
         <location line="+41"/>
         <location line="+38"/>
@@ -1596,13 +1573,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+872"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+2"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-3"/>
-        <location line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-128"/>
-        <location line="+19"/>
-        <location line="+41"/>
-        <location line="+68"/>
-        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-4"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-128"/>
         <location line="+19"/>
@@ -1628,7 +1598,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+299"/>
         <location line="+29"/>
-        <location line="+0"/>
         <source>No backup links found.</source>
         <translation>Tidak ada tautan cadangan ditemukan.</translation>
     </message>
@@ -1665,7 +1634,7 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <translation>Dihitung</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-799"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-806"/>
         <location filename="../core/searchprogressmanager.cpp" line="+85"/>
         <source>Paused</source>
         <translation>Dijeda</translation>
@@ -1681,15 +1650,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+23"/>
         <location line="+23"/>
         <location line="+21"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-113"/>
-        <location line="+30"/>
-        <location line="+54"/>
-        <location line="+25"/>
-        <location line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-67"/>
-        <location line="+23"/>
-        <location line="+23"/>
-        <location line="+21"/>
         <location filename="../core/searchprogressmanager.cpp" line="+27"/>
         <location line="+24"/>
         <location line="+18"/>
@@ -1699,7 +1659,7 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-105"/>
-        <location line="+429"/>
+        <location line="+436"/>
         <location line="+128"/>
         <location line="+101"/>
         <location line="+139"/>
@@ -1707,15 +1667,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-45"/>
         <location line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+285"/>
-        <location line="+36"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-368"/>
-        <location line="+128"/>
-        <location line="+101"/>
-        <location line="+139"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-44"/>
-        <location line="+44"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-36"/>
         <location line="+36"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-96"/>
         <location filename="../core/searchprogressmanager.cpp" line="-13"/>
@@ -1731,8 +1682,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-349"/>
         <location line="+109"/>
         <location line="+101"/>
-        <location line="-101"/>
-        <location line="+101"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-76"/>
         <source>Cancelled</source>
         <translation>Dibatalkan</translation>
@@ -1740,7 +1689,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-19"/>
         <location line="+21"/>
-        <location line="+0"/>
         <location filename="../core/catalogprogressmanager.cpp" line="+18"/>
         <location line="+143"/>
         <location filename="../core/searchjobstoppable.cpp" line="+38"/>
@@ -1755,12 +1703,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-89"/>
         <location line="+15"/>
         <location line="+64"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-54"/>
-        <location line="+54"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-79"/>
-        <location line="+15"/>
-        <location line="+64"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-24"/>
         <location filename="../core/searchprogressmanager.cpp" line="-98"/>
         <source>In Progress</source>
@@ -1769,7 +1711,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+72"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-127"/>
-        <location line="+0"/>
         <source>Stopped</source>
         <translation>Dihentikan</translation>
     </message>
@@ -1801,7 +1742,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location line="+279"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+274"/>
-        <location line="+0"/>
         <location filename="../core/search.cpp" line="-9"/>
         <source>Height</source>
         <translation>Tinggi</translation>
@@ -1809,7 +1749,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location line="+169"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-1"/>
-        <location line="+0"/>
         <location filename="../core/search.cpp" line="-1"/>
         <source>Width</source>
         <translation>Lebar</translation>
@@ -1817,7 +1756,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location line="+223"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+2"/>
-        <location line="+0"/>
         <location filename="../core/search.cpp" line="+2"/>
         <source>Duration</source>
         <translation>Durasi</translation>
@@ -1848,8 +1786,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+503"/>
         <location line="+19"/>
         <location line="+11"/>
-        <location line="-11"/>
-        <location line="+11"/>
         <source>Other</source>
         <translation>Lainnya</translation>
     </message>
@@ -1865,23 +1801,12 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+9"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+697"/>
         <location line="+1"/>
-        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-104"/>
-        <location line="+11"/>
-        <location line="+15"/>
-        <location line="+12"/>
-        <location line="+34"/>
-        <location line="+8"/>
-        <location line="+15"/>
-        <location line="+9"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1"/>
-        <location line="+1"/>
         <source>None</source>
         <translation>Tidak ada</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-658"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-950"/>
-        <location line="+0"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Tampilkan metadata yang diperluas (JSON)</translation>
     </message>
@@ -1930,7 +1855,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-250"/>
         <location line="+8"/>
-        <location line="+0"/>
         <source>Copy JSON</source>
         <translation>Salin JSON</translation>
     </message>
@@ -1940,10 +1864,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+32"/>
         <location line="+1"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-3"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-33"/>
-        <location line="+32"/>
-        <location line="+1"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>Copied</source>
         <translation>Disalin</translation>
     </message>
@@ -1985,14 +1905,12 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location line="+1"/>
         <location line="+9"/>
-        <location line="+0"/>
         <source>Select Different Folder</source>
         <translation>Pilih folder lain</translation>
     </message>
     <message>
         <location line="-6"/>
         <location line="+9"/>
-        <location line="+0"/>
         <source>Use Application Folder</source>
         <translation>Gunakan folder aplikasi</translation>
     </message>
@@ -2003,7 +1921,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-77"/>
         <location line="+12"/>
-        <location line="+0"/>
         <source>Media Basic</source>
         <translation>Media dasar</translation>
     </message>
@@ -2018,14 +1935,12 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location line="-11"/>
         <location line="+12"/>
-        <location line="+0"/>
         <source>Media Extended</source>
         <translation>Media diperluas</translation>
     </message>
     <message>
         <location line="-11"/>
         <location line="+12"/>
-        <location line="+0"/>
         <source>Full Extended</source>
         <translation>Lengkap diperluas</translation>
     </message>
@@ -2037,7 +1952,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+848"/>
         <location line="+38"/>
-        <location line="+0"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
         <translation>Katalog diperbarui:&lt;b&gt; %1 &lt;/b&gt;(%2 dilewati)</translation>
     </message>
@@ -2059,7 +1973,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_ui_wrapper_catalog.cpp" line="+77"/>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+6"/>
-        <location line="+0"/>
         <source>The source folder does not contain any file.&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Folder sumber tidak mengandung file apapun.&lt;br/&gt;Ini bisa berarti sumber kosong atau perangkat tidak terpasang ke folder ini.&lt;br/&gt;Apakah Anda ingin menyimpannya tetap (katalog akan kosong)?</translation>
     </message>
@@ -2072,14 +1985,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+136"/>
         <location line="+123"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+246"/>
-        <location line="+40"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-448"/>
-        <location line="+117"/>
-        <location line="+72"/>
-        <location line="+136"/>
-        <location line="+123"/>
-        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-40"/>
         <location line="+40"/>
         <source>A device operation is already running.</source>
         <translation>Operasi perangkat sudah berjalan.</translation>
@@ -2099,8 +2004,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location filename="../qt_widgets/mainwindow.ui" line="-5498"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+926"/>
         <location line="+6"/>
-        <location line="-6"/>
-        <location line="+6"/>
         <source>Katalog</source>
         <translation>Katalog</translation>
     </message>
@@ -2111,16 +2014,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+37"/>
         <location line="+39"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-434"/>
-        <location line="+20"/>
-        <location line="+30"/>
-        <location line="+150"/>
-        <location line="+53"/>
-        <location line="+316"/>
-        <location line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-76"/>
-        <location line="+37"/>
-        <location line="+39"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-573"/>
         <location line="+20"/>
         <location line="+30"/>
         <location line="+150"/>
@@ -2141,9 +2034,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location line="+3110"/>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+84"/>
-        <location line="+19"/>
-        <location line="+11"/>
-        <location line="-30"/>
         <location line="+19"/>
         <location line="+11"/>
         <source>Text</source>
@@ -2173,7 +2063,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location line="+32"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+368"/>
-        <location line="+0"/>
         <source>All Words</source>
         <translation>Semua Kata</translation>
     </message>
@@ -2200,7 +2089,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location line="+34"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1013"/>
-        <location line="+0"/>
         <source>File names or Folder paths</source>
         <translation>Nama file atau jalur folder</translation>
     </message>
@@ -2209,16 +2097,12 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-5"/>
         <location line="+4"/>
         <location line="+1015"/>
-        <location line="-1019"/>
-        <location line="+4"/>
-        <location line="+1015"/>
         <source>File names only</source>
         <translation>Hanya nama file</translation>
     </message>
     <message>
         <location line="+10"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1013"/>
-        <location line="+0"/>
         <source>Folder path only</source>
         <translation>Hanya jalur folder</translation>
     </message>
@@ -2265,8 +2149,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+743"/>
         <location filename="../qt_widgets/mainwindow.cpp" line="+307"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-266"/>
-        <location filename="../qt_widgets/mainwindow.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <source>File</source>
         <translation>File</translation>
     </message>
@@ -2280,11 +2162,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+388"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-31"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-244"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-531"/>
-        <location line="+143"/>
-        <location line="+388"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <location filename="../core/search.cpp" line="-18"/>
         <source>Size</source>
         <translation>Ukuran</translation>
@@ -2335,9 +2212,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-95"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1587"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <source>Type</source>
         <translation>Tipe</translation>
     </message>
@@ -2393,39 +2267,12 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+1"/>
         <location line="+4"/>
         <location line="+1"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-166"/>
-        <location line="+158"/>
-        <location line="+8"/>
-        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-130"/>
-        <location line="+19"/>
-        <location line="+11"/>
-        <location line="+91"/>
-        <location line="+9"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1"/>
-        <location line="+1"/>
-        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-93"/>
-        <location line="+1"/>
-        <location line="+1"/>
-        <location line="+9"/>
-        <location line="+1"/>
-        <location line="+62"/>
-        <location line="+2"/>
-        <location line="+1"/>
-        <location line="+1"/>
-        <location line="+4"/>
-        <location line="+1"/>
-        <location line="+4"/>
-        <location line="+1"/>
-        <location line="+4"/>
-        <location line="+1"/>
         <source>All</source>
         <translation>Semua</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-129"/>
         <location line="+19"/>
-        <location line="+11"/>
-        <location line="-11"/>
         <location line="+11"/>
         <source>Audio</source>
         <translation>Audio</translation>
@@ -2434,16 +2281,12 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="-29"/>
         <location line="+19"/>
         <location line="+11"/>
-        <location line="-11"/>
-        <location line="+11"/>
         <source>Image</source>
         <translation>Gambar</translation>
     </message>
     <message>
         <location line="-28"/>
         <location line="+19"/>
-        <location line="+11"/>
-        <location line="-11"/>
         <location line="+11"/>
         <source>Video</source>
         <translation>Video</translation>
@@ -2462,7 +2305,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location line="+9"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1408"/>
-        <location line="+0"/>
         <source>Export Results</source>
         <translation>Ekspor Hasil</translation>
     </message>
@@ -2474,14 +2316,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location line="+101"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+473"/>
-        <location line="+50"/>
-        <location line="+24"/>
-        <location line="+24"/>
-        <location line="+33"/>
-        <location line="+21"/>
-        <location line="+25"/>
-        <location line="+4"/>
-        <location line="-181"/>
         <location line="+50"/>
         <location line="+24"/>
         <location line="+24"/>
@@ -2529,7 +2363,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="-3120"/>
         <location line="+347"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-16"/>
-        <location line="+0"/>
         <source>Catalogs</source>
         <translation>Katalog</translation>
     </message>
@@ -2537,7 +2370,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="-312"/>
         <location line="+2154"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-30"/>
-        <location line="+0"/>
         <source>Total File Size</source>
         <translation>Total Ukuran File</translation>
     </message>
@@ -2568,13 +2400,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+18"/>
         <location line="+14"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-166"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-71"/>
-        <location line="+21"/>
-        <location line="+18"/>
-        <location line="+18"/>
-        <location line="+14"/>
-        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+0"/>
         <source>Explore</source>
         <translation>Jelajahi</translation>
     </message>
@@ -2590,13 +2415,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-102"/>
         <location line="+36"/>
         <location line="+40"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-191"/>
-        <location line="+119"/>
-        <location line="+72"/>
-        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-76"/>
-        <location line="+36"/>
-        <location line="+40"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-140"/>
         <location line="+76"/>
         <location line="+61"/>
@@ -2608,20 +2426,14 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-149"/>
         <location line="+103"/>
         <location line="+71"/>
-        <location line="-174"/>
-        <location line="+103"/>
-        <location line="+71"/>
         <source>Edit</source>
         <translation>Edit</translation>
     </message>
     <message>
         <location line="-5377"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1160"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1167"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+68"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Delete</source>
         <translation>Hapus</translation>
     </message>
@@ -2635,15 +2447,13 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+7387"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+6"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+255"/>
-        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <source>Catalog</source>
         <translation>Katalog</translation>
     </message>
     <message>
         <location line="+799"/>
         <location line="+3246"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+723"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+730"/>
         <location line="+143"/>
         <location line="+301"/>
         <location line="+7"/>
@@ -2651,14 +2461,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+240"/>
         <location line="+253"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+3"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-451"/>
-        <location line="+143"/>
-        <location line="+301"/>
-        <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-493"/>
-        <location line="+240"/>
-        <location line="+253"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
         <location filename="../core/search.cpp" line="+6"/>
         <source>Path</source>
         <translation>Jalur</translation>
@@ -2677,7 +2479,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location line="-11687"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1252"/>
-        <location line="+0"/>
         <source>Virtual</source>
         <translation>Virtual</translation>
     </message>
@@ -2709,22 +2510,18 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location line="+3799"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-74"/>
-        <location line="+0"/>
         <source>Select...</source>
         <translation>Pilih...</translation>
     </message>
     <message>
         <location line="+13"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+29"/>
-        <location line="+0"/>
         <source>Rename (KRename)</source>
         <translation>Ubah Nama (KRename)</translation>
     </message>
     <message>
         <location line="+8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-726"/>
-        <location line="+732"/>
-        <location line="-732"/>
         <location line="+732"/>
         <source>Move to Trash</source>
         <translation>Pindah ke Sampah</translation>
@@ -2737,7 +2534,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location line="+223"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1327"/>
-        <location line="+0"/>
         <source>Keep last 10</source>
         <translation>Pertahankan 10 terakhir</translation>
     </message>
@@ -2776,35 +2572,30 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location line="-1898"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1008"/>
-        <location line="+0"/>
         <source>Comment 1</source>
         <translation>Komentar 1</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Comment 2</source>
         <translation>Komentar 2</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Comment 3</source>
         <translation>Komentar 3</translation>
     </message>
     <message>
         <location line="+141"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-6"/>
-        <location line="+0"/>
         <source>Brand</source>
         <translation>Merek</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Model</source>
         <translation>Model</translation>
     </message>
@@ -2850,9 +2641,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-101"/>
         <location line="+94"/>
         <location line="+38"/>
-        <location line="-132"/>
-        <location line="+94"/>
-        <location line="+38"/>
         <source>Number of Files</source>
         <translation>Jumlah File</translation>
     </message>
@@ -2864,8 +2652,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location line="+209"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-116"/>
-        <location line="+243"/>
-        <location line="-243"/>
         <location line="+243"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-139"/>
         <location line="+76"/>
@@ -3070,7 +2856,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location line="+366"/>
         <location filename="../qt_widgets/mainwindow.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Hosted</source>
         <translation>Di-host</translation>
     </message>
@@ -3102,10 +2887,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-334"/>
         <location line="+214"/>
         <location line="+5"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-219"/>
-        <location line="+214"/>
-        <location line="+5"/>
         <source>Select</source>
         <translation>Pilih</translation>
     </message>
@@ -3115,10 +2896,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-977"/>
         <location line="+2831"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+15"/>
-        <location line="+2"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2831"/>
-        <location line="+2831"/>
-        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-2"/>
         <location line="+2"/>
         <source>Storage</source>
         <translation>Penyimpanan</translation>
@@ -3139,7 +2916,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+722"/>
         <location line="+28"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
-        <location line="+0"/>
         <source>Total Space</source>
         <translation>Total Ruang</translation>
     </message>
@@ -3198,7 +2974,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location line="-4007"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+80"/>
-        <location line="+0"/>
         <source>Device Name</source>
         <translation>Nama Perangkat</translation>
     </message>
@@ -3211,7 +2986,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="-26"/>
         <location line="+13"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1"/>
-        <location line="+0"/>
         <source>Device ID</source>
         <translation>ID Perangkat</translation>
     </message>
@@ -3264,7 +3038,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+20"/>
         <location line="+24"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-144"/>
-        <location line="+0"/>
         <source>Select a folder</source>
         <translation>Pilih folder</translation>
     </message>
@@ -3321,15 +3094,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+10"/>
         <location line="+7"/>
         <location line="+5"/>
-        <location line="-78"/>
-        <location line="+8"/>
-        <location line="+7"/>
-        <location line="+3"/>
-        <location line="+31"/>
-        <location line="+7"/>
-        <location line="+10"/>
-        <location line="+7"/>
-        <location line="+5"/>
         <source>Export</source>
         <translation>Ekspor</translation>
     </message>
@@ -3340,31 +3104,23 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1285"/>
-        <location line="+0"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1292"/>
         <source>Replicate directories</source>
         <translation>Replikasi direktori</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-6"/>
-        <location line="+1266"/>
-        <location line="+16"/>
-        <location line="-1282"/>
-        <location line="+1266"/>
+        <location line="+1273"/>
         <location line="+16"/>
         <source>Preview Backup</source>
         <translation>Pratinjau cadangan</translation>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1287"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1294"/>
         <location line="+280"/>
-        <location line="+990"/>
-        <location line="+14"/>
-        <location line="-1284"/>
-        <location line="+280"/>
-        <location line="+990"/>
+        <location line="+997"/>
         <location line="+14"/>
         <source>Run Backup</source>
         <translation>Jalankan pencadangan</translation>
@@ -3394,7 +3150,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location line="+10"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-78"/>
-        <location line="+0"/>
         <source>On conflict</source>
         <translation>Saat konflik</translation>
     </message>
@@ -3404,10 +3159,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-153"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2591"/>
         <location line="+1771"/>
-        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1771"/>
-        <location line="+1771"/>
         <source>Skip</source>
         <translation>Lewati</translation>
     </message>
@@ -3415,8 +3166,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+5"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+2"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+1"/>
-        <location filename="../qt_widgets/devicemappingview.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+0"/>
         <source>Rename oldest</source>
         <translation>Ganti nama yang terlama</translation>
     </message>
@@ -3424,7 +3173,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+40"/>
         <location line="+486"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-310"/>
-        <location line="+0"/>
         <source>Settings</source>
         <translation>Pengaturan</translation>
     </message>
@@ -3672,8 +3420,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="-1242"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-677"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+480"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Open file</source>
         <translation>Buka file</translation>
     </message>
@@ -3686,13 +3432,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+109"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+42"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-174"/>
-        <location line="+103"/>
-        <location line="+71"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-109"/>
-        <location line="+109"/>
-        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Open folder</source>
         <translation>Buka folder</translation>
     </message>
@@ -3700,29 +3439,24 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-62"/>
         <location line="+68"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+64"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Copy folder path</source>
         <translation>Salin jalur folder</translation>
     </message>
     <message>
         <location line="-64"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
-        <location line="+0"/>
         <source>Copy file absolute path</source>
         <translation>Salin jalur absolut file</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
-        <location line="+0"/>
         <source>Copy file name with extension</source>
         <translation>Salin nama file dengan ekstensi</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
-        <location line="+0"/>
         <source>Copy file name without extension</source>
         <translation>Salin nama file tanpa ekstensi</translation>
     </message>
@@ -3735,12 +3469,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+607"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-654"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2298"/>
-        <location line="+240"/>
-        <location line="+253"/>
-        <location line="+1805"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <location filename="../core/device.cpp" line="+2"/>
         <location filename="../core/search.cpp" line="-7"/>
         <source>Name</source>
@@ -3754,10 +3482,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1360"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+20"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <location filename="../core/search.cpp" line="+2"/>
         <source>Date</source>
         <translation>Tanggal</translation>
@@ -3767,16 +3491,12 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+77"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+34"/>
         <location filename="../qt_widgets/mainwindow_tab_tags.cpp" line="+44"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_tags.cpp" line="+0"/>
         <source>Select the directory to be cataloged in this new catalog</source>
         <translation>Pilih direktori yang akan dikatalogkan dalam katalog baru ini</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+20"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-19"/>
-        <location line="+0"/>
         <source>Select the directory for this collection</source>
         <translation>Pilih direktori untuk koleksi ini</translation>
     </message>
@@ -3786,9 +3506,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2291"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="-493"/>
-        <location line="+240"/>
-        <location line="+253"/>
         <source>Total Size</source>
         <translation>Total Ukuran</translation>
     </message>
@@ -3796,7 +3513,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="-1440"/>
         <location line="+1610"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+742"/>
-        <location line="+0"/>
         <source>Source Path</source>
         <translation>Jalur Sumber</translation>
     </message>
@@ -3806,10 +3522,6 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+694"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+20"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+9"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-694"/>
-        <location line="+694"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <location filename="../core/search.cpp" line="+7"/>
         <source>File Type</source>
         <translation>Tipe File</translation>
@@ -3818,29 +3530,24 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+3612"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+5"/>
         <location line="+7"/>
-        <location line="-7"/>
-        <location line="+7"/>
         <source>File Size</source>
         <translation>Ukuran File</translation>
     </message>
     <message>
         <location line="-3065"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-956"/>
-        <location line="+0"/>
         <source>Label</source>
         <translation>Label</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
-        <location line="+0"/>
         <source>FileSystem</source>
         <translation>Sistem File</translation>
     </message>
     <message>
         <location line="+2741"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+4"/>
-        <location line="+0"/>
         <source>Total</source>
         <translation>Total</translation>
     </message>
@@ -3852,14 +3559,12 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location line="+804"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+3"/>
-        <location line="+0"/>
         <source>Serial Number</source>
         <translation>Nomor Seri</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Build Date</source>
         <translation>Tanggal Pembuatan</translation>
     </message>
@@ -3897,7 +3602,6 @@ Operasi ini tidak dapat dibatalkan.</translation>
     <message>
         <location line="+12"/>
         <location line="+41"/>
-        <location line="+0"/>
         <source>Split failed: no catalogs were created.</source>
         <translation>Pembagian gagal: tidak ada katalog yang dibuat.</translation>
     </message>
@@ -3966,28 +3670,24 @@ Pembagian tidak dilakukan.</translation>
     <message>
         <location line="+2"/>
         <location line="+1771"/>
-        <location line="+0"/>
         <source>Old path:</source>
         <translation>Jalur lama:</translation>
     </message>
     <message>
         <location line="-1770"/>
         <location line="+1771"/>
-        <location line="+0"/>
         <source>New path:</source>
         <translation>Jalur baru:</translation>
     </message>
     <message>
         <location line="-1769"/>
         <location line="+1771"/>
-        <location line="+0"/>
         <source>How should the catalog indexes be updated?</source>
         <translation>Bagaimana indeks katalog harus diperbarui?</translation>
     </message>
     <message>
         <location line="-1769"/>
         <location line="+1771"/>
-        <location line="+0"/>
         <source>Replace path root</source>
         <translation>Ganti root jalur</translation>
     </message>
@@ -3999,9 +3699,6 @@ Pembagian tidak dilakukan.</translation>
     <message>
         <location line="+484"/>
         <location line="+240"/>
-        <location line="+253"/>
-        <location line="+1805"/>
-        <location line="-2058"/>
         <location line="+253"/>
         <location line="+1805"/>
         <source>Parent ID</source>
@@ -4016,16 +3713,12 @@ Pembagian tidak dilakukan.</translation>
         <location line="+1"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="-253"/>
-        <location line="+253"/>
         <source>Number of files</source>
         <translation>Jumlah file</translation>
     </message>
     <message>
         <location line="-490"/>
         <location line="+240"/>
-        <location line="+253"/>
-        <location line="-253"/>
         <location line="+253"/>
         <source>Free space</source>
         <translation>Ruang kosong</translation>
@@ -4034,16 +3727,12 @@ Pembagian tidak dilakukan.</translation>
         <location line="-492"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="-253"/>
-        <location line="+253"/>
         <source>Total space</source>
         <translation>Total ruang</translation>
     </message>
     <message>
         <location line="-492"/>
         <location line="+240"/>
-        <location line="+253"/>
-        <location line="-253"/>
         <location line="+253"/>
         <source>Date updated</source>
         <translation>Tanggal diperbarui</translation>
@@ -4052,15 +3741,12 @@ Pembagian tidak dilakukan.</translation>
         <location line="-491"/>
         <location line="+240"/>
         <location line="+253"/>
-        <location line="-253"/>
-        <location line="+253"/>
         <source>Group ID</source>
         <translation>ID Grup</translation>
     </message>
     <message>
         <location line="-8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location line="+0"/>
         <location filename="../core/search.cpp" line="-4"/>
         <source>Catalog ID</source>
         <translation>ID Katalog</translation>
@@ -4155,7 +3841,6 @@ Pembagian tidak dilakukan.</translation>
     <message>
         <location line="+17"/>
         <location line="+143"/>
-        <location line="+0"/>
         <source>No catalog found.</source>
         <translation>Tidak ada katalog ditemukan.</translation>
     </message>
@@ -4176,18 +3861,12 @@ Pembagian tidak dilakukan.</translation>
         <location line="+17"/>
         <location line="+24"/>
         <location line="+23"/>
-        <location line="-86"/>
-        <location line="+22"/>
-        <location line="+17"/>
-        <location line="+24"/>
-        <location line="+23"/>
         <source>Path: </source>
         <translation>Jalur: </translation>
     </message>
     <message>
         <location line="-100"/>
         <location line="+39"/>
-        <location line="+0"/>
         <source>Number of files: </source>
         <translation>Jumlah file: </translation>
     </message>
@@ -4209,29 +3888,12 @@ Pembagian tidak dilakukan.</translation>
         <location line="+64"/>
         <location line="+1"/>
         <location line="+1"/>
-        <location line="-171"/>
-        <location line="+17"/>
-        <location line="+1"/>
-        <location line="+1"/>
-        <location line="+37"/>
-        <location line="+1"/>
-        <location line="+1"/>
-        <location line="+24"/>
-        <location line="+1"/>
-        <location line="+1"/>
-        <location line="+19"/>
-        <location line="+1"/>
-        <location line="+1"/>
-        <location line="+64"/>
-        <location line="+1"/>
-        <location line="+1"/>
         <source>(added: </source>
         <translation>(ditambahkan: </translation>
     </message>
     <message>
         <location line="-171"/>
         <location line="+39"/>
-        <location line="+0"/>
         <source>Total file size: </source>
         <translation>Total ukuran file: </translation>
     </message>
@@ -4240,19 +3902,12 @@ Pembagian tidak dilakukan.</translation>
         <location line="+39"/>
         <location line="+24"/>
         <location line="+23"/>
-        <location line="-47"/>
-        <location line="+24"/>
-        <location line="+23"/>
         <source>Storage updated: </source>
         <translation>Penyimpanan diperbarui: </translation>
     </message>
     <message>
         <location line="-81"/>
         <location line="+39"/>
-        <location line="+26"/>
-        <location line="+21"/>
-        <location line="+66"/>
-        <location line="-113"/>
         <location line="+26"/>
         <location line="+21"/>
         <location line="+66"/>
@@ -4265,20 +3920,12 @@ Pembagian tidak dilakukan.</translation>
         <location line="+26"/>
         <location line="+21"/>
         <location line="+66"/>
-        <location line="-113"/>
-        <location line="+26"/>
-        <location line="+21"/>
-        <location line="+66"/>
         <source>Free Space: </source>
         <translation>Ruang Kosong: </translation>
     </message>
     <message>
         <location line="-151"/>
         <location line="+39"/>
-        <location line="+26"/>
-        <location line="+21"/>
-        <location line="+66"/>
-        <location line="-113"/>
         <location line="+26"/>
         <location line="+21"/>
         <location line="+66"/>
@@ -4311,8 +3958,6 @@ Pembagian tidak dilakukan.</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2047"/>
         <location line="+240"/>
-        <location line="+253"/>
-        <location line="-253"/>
         <location line="+253"/>
         <source>Used space</source>
         <translation>Ruang terpakai</translation>
@@ -4383,9 +4028,6 @@ Pembagian tidak dilakukan.</translation>
         <location line="+11"/>
         <location line="+35"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-115"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-35"/>
-        <location line="+35"/>
-        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>GiB</source>
         <translation>GiB</translation>
     </message>
@@ -4393,8 +4035,6 @@ Pembagian tidak dilakukan.</translation>
         <location line="-44"/>
         <location line="+11"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+8"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>KiB</source>
         <translation>KiB</translation>
     </message>
@@ -4402,8 +4042,6 @@ Pembagian tidak dilakukan.</translation>
         <location line="-12"/>
         <location line="+11"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-4"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>MiB</source>
         <translation>MiB</translation>
     </message>
@@ -4415,7 +4053,6 @@ Pembagian tidak dilakukan.</translation>
     <message>
         <location line="+250"/>
         <location line="+597"/>
-        <location line="+0"/>
         <source>MOVE</source>
         <translation>PINDAH</translation>
     </message>
@@ -4427,7 +4064,6 @@ Pembagian tidak dilakukan.</translation>
     <message>
         <location line="+7"/>
         <location line="+64"/>
-        <location line="+0"/>
         <source>Information</source>
         <translation>Informasi</translation>
     </message>
@@ -4439,9 +4075,6 @@ Pembagian tidak dilakukan.</translation>
     <message>
         <location line="-770"/>
         <location line="+13"/>
-        <location line="+803"/>
-        <location line="+572"/>
-        <location line="-1375"/>
         <location line="+803"/>
         <location line="+572"/>
         <source>DELETE</source>
@@ -4461,16 +4094,12 @@ Pembagian tidak dilakukan.</translation>
         <location line="+46"/>
         <location line="+11"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-8"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <source>TiB</source>
         <translation>TiB</translation>
     </message>
     <message>
         <location line="-7"/>
         <location line="+11"/>
-        <location line="+30"/>
-        <location line="-30"/>
         <location line="+30"/>
         <source>Bytes</source>
         <translation>Bytes</translation>
@@ -4481,9 +4110,8 @@ Pembagian tidak dilakukan.</translation>
         <translation>Pilih terlebih dahulu proses yang akan diterapkan pada semua hasil di bawah ini.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-974"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-981"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+15"/>
-        <location line="+0"/>
         <source>Results exported to the collection folder:</source>
         <translation>Hasil diekspor ke folder koleksi:</translation>
     </message>
@@ -4735,8 +4363,6 @@ Pembagian tidak dilakukan.</translation>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+18"/>
         <location line="+145"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-515"/>
-        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
         <source>Select the directory to exclude</source>
         <translation>Pilih direktori yang dikecualikan</translation>
     </message>
@@ -4744,8 +4370,6 @@ Pembagian tidak dilakukan.</translation>
         <location line="-77"/>
         <location line="+103"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+35"/>
-        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+0"/>
         <source>Remove</source>
         <translation>Hapus</translation>
     </message>
@@ -4772,7 +4396,6 @@ Pembagian tidak dilakukan.</translation>
     <message>
         <location line="+2"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1057"/>
-        <location line="+0"/>
         <source>Choose a different name and try again.</source>
         <translation>Pilih nama yang berbeda dan coba lagi.</translation>
     </message>
@@ -4804,10 +4427,7 @@ Pembagian tidak dilakukan.</translation>
         <location line="+3285"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-141"/>
         <location line="+344"/>
-        <location line="+761"/>
-        <location line="-1105"/>
-        <location line="+344"/>
-        <location line="+761"/>
+        <location line="+768"/>
         <source>Source</source>
         <translation>Sumber</translation>
     </message>
@@ -4834,16 +4454,6 @@ Pembagian tidak dilakukan.</translation>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-96"/>
         <location line="+18"/>
         <location line="+49"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-117"/>
-        <location line="+117"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-243"/>
-        <location line="+107"/>
-        <location line="+9"/>
-        <location line="+127"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-67"/>
-        <location line="+18"/>
-        <location line="+49"/>
         <source>Cancel</source>
         <translation>Batal</translation>
     </message>
@@ -4855,7 +4465,6 @@ Pembagian tidak dilakukan.</translation>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-3664"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1272"/>
-        <location line="+0"/>
         <source>Storage ID</source>
         <translation>ID Penyimpanan</translation>
     </message>
@@ -4869,7 +4478,6 @@ Pembagian tidak dilakukan.</translation>
         <location line="+1133"/>
         <location line="+964"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-19"/>
-        <location line="+0"/>
         <location filename="../core/search.cpp" line="-2"/>
         <source>Directory</source>
         <translation>Direktori</translation>
@@ -4908,7 +4516,6 @@ Pembagian tidak dilakukan.</translation>
     <message>
         <location line="+4008"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-183"/>
-        <location line="+0"/>
         <source>Tag</source>
         <translation>Tag</translation>
     </message>
@@ -4920,8 +4527,6 @@ Pembagian tidak dilakukan.</translation>
     <message>
         <location line="+359"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1963"/>
-        <location line="+13"/>
-        <location line="-13"/>
         <location line="+13"/>
         <source>Search history</source>
         <translation>Riwayat pencarian</translation>
@@ -4943,14 +4548,12 @@ Pembagian tidak dilakukan.</translation>
     <message>
         <location line="+85"/>
         <location line="+6"/>
-        <location line="+0"/>
         <source>Select or create a database file for this collection</source>
         <translation>Pilih atau buat file basis data untuk koleksi ini</translation>
     </message>
     <message>
         <location line="-4"/>
         <location line="+6"/>
-        <location line="+0"/>
         <source>Database files (*.db)</source>
         <translation>File basis data (*.db)</translation>
     </message>
@@ -5039,12 +4642,6 @@ Pembagian tidak dilakukan.</translation>
         <location line="+64"/>
         <location line="+533"/>
         <location line="+39"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1375"/>
-        <location line="+739"/>
-        <location line="+64"/>
-        <location line="+533"/>
-        <location line="+39"/>
         <source>Confirmation</source>
         <translation>Konfirmasi</translation>
     </message>
@@ -5055,46 +4652,36 @@ Pembagian tidak dilakukan.</translation>
         <location line="+3"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-624"/>
         <location line="+64"/>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-38"/>
-        <location line="+35"/>
-        <location line="+3"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-64"/>
-        <location line="+64"/>
         <source>Warning</source>
         <translation>Peringatan</translation>
     </message>
     <message>
         <location line="-41"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-67"/>
-        <location line="+0"/>
         <source>Moved to trash:&lt;br/&gt;</source>
         <translation>Dipindah ke sampah:&lt;br/&gt;</translation>
     </message>
     <message>
         <location line="+3"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+3"/>
-        <location line="+0"/>
         <source>Move to trash failed.</source>
         <translation>Pindah ke sampah gagal.</translation>
     </message>
     <message>
         <location line="+35"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+61"/>
-        <location line="+0"/>
         <source>Deleted.</source>
         <translation>Dihapus.</translation>
     </message>
     <message>
         <location line="+3"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+3"/>
-        <location line="+0"/>
         <source>Failed to delete.</source>
         <translation>Gagal menghapus.</translation>
     </message>
     <message>
         <location line="-182"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-214"/>
-        <location line="+0"/>
         <source>Delete file</source>
         <translation>Hapus file</translation>
     </message>
@@ -5138,14 +4725,12 @@ ke sampah?</translation>
     <message>
         <location line="+5"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+36"/>
-        <location line="+0"/>
         <source>updates only</source>
         <translation>hanya pembaruan</translation>
     </message>
     <message>
         <location line="+5"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-4"/>
-        <location line="+0"/>
         <source>snapshots only</source>
         <translation>hanya snapshot</translation>
     </message>
@@ -5246,10 +4831,6 @@ ke sampah?</translation>
         <location line="+240"/>
         <location line="+253"/>
         <location line="+1805"/>
-        <location line="-2298"/>
-        <location line="+240"/>
-        <location line="+253"/>
-        <location line="+1805"/>
         <source>Device Type</source>
         <translation>Tipe Perangkat</translation>
     </message>
@@ -5262,7 +4843,6 @@ ke sampah?</translation>
         <location filename="../qt_widgets/mainwindow.ui" line="+4956"/>
         <location line="+753"/>
         <location filename="../qt_widgets/mainwindow.cpp" line="-2"/>
-        <location line="+0"/>
         <source>Memory</source>
         <translation>Memori</translation>
     </message>
@@ -5286,7 +4866,6 @@ ke sampah?</translation>
     <message>
         <location line="-2236"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-443"/>
-        <location line="+0"/>
         <source>File name</source>
         <translation>Nama file</translation>
     </message>
@@ -5313,10 +4892,6 @@ ke sampah?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1076"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+263"/>
-        <location line="+587"/>
-        <location line="+14"/>
-        <location line="+20"/>
-        <location line="-621"/>
         <location line="+587"/>
         <location line="+14"/>
         <location line="+20"/>
@@ -5422,20 +4997,12 @@ ke sampah?</translation>
         <location line="+399"/>
         <location line="+7"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+512"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-406"/>
-        <location line="+399"/>
-        <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+0"/>
         <source>Catalog with results</source>
         <translation>Katalog dengan hasil</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+436"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1220"/>
-        <location line="+240"/>
-        <location line="+253"/>
-        <location line="+1805"/>
-        <location line="-2298"/>
         <location line="+240"/>
         <location line="+253"/>
         <location line="+1805"/>
@@ -5460,11 +5027,6 @@ ke sampah?</translation>
         <location line="+240"/>
         <location line="+253"/>
         <location line="+1805"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2298"/>
-        <location line="+240"/>
-        <location line="+253"/>
-        <location line="+1805"/>
         <source>Active</source>
         <translation>Aktif</translation>
     </message>
@@ -5472,15 +5034,12 @@ ke sampah?</translation>
         <location line="-4"/>
         <location line="+7"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+189"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+0"/>
         <source>Files</source>
         <translation>File</translation>
     </message>
     <message>
         <location line="-6"/>
         <location line="+7"/>
-        <location line="+0"/>
         <source>Date Updated</source>
         <translation>Tanggal Diperbarui</translation>
     </message>
@@ -5490,30 +5049,26 @@ ke sampah?</translation>
         <translation>ID Target</translation>
     </message>
     <message>
-        <location line="-1110"/>
+        <location line="-1117"/>
         <location line="+344"/>
-        <location line="+767"/>
-        <location line="-767"/>
-        <location line="+767"/>
+        <location line="+774"/>
         <source>Target</source>
         <translation>Target</translation>
     </message>
     <message>
-        <location line="-1215"/>
-        <location line="+1284"/>
-        <location line="+0"/>
+        <location line="-1222"/>
+        <location line="+1291"/>
         <source>Run Archive</source>
         <translation>Jalankan pengarsipan</translation>
     </message>
     <message>
-        <location line="-1279"/>
-        <location line="+1282"/>
-        <location line="+0"/>
+        <location line="-1286"/>
+        <location line="+1289"/>
         <source>Preview Archive</source>
         <translation>Pratinjau arsip</translation>
     </message>
     <message>
-        <location line="-1267"/>
+        <location line="-1274"/>
         <source>Invert (swap source and target)</source>
         <translation>Balik (tukar sumber dan target)</translation>
     </message>
@@ -5521,18 +5076,13 @@ ke sampah?</translation>
         <location line="+43"/>
         <location line="+111"/>
         <location line="+236"/>
-        <location line="+460"/>
-        <location line="-696"/>
-        <location line="+236"/>
-        <location line="+460"/>
+        <location line="+467"/>
         <source>Select a mapping first.</source>
         <translation>Pilih tautan terlebih dahulu.</translation>
     </message>
     <message>
-        <location line="-785"/>
+        <location line="-792"/>
         <location line="+108"/>
-        <location line="+236"/>
-        <location line="-236"/>
         <location line="+236"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>Sumber dan target harus berupa perangkat katalog.</translation>
@@ -5540,22 +5090,18 @@ ke sampah?</translation>
     <message>
         <location line="-332"/>
         <location line="+62"/>
-        <location line="+0"/>
         <source>Replicate</source>
         <translation>Replikasi</translation>
     </message>
     <message>
         <location line="-61"/>
         <location line="+344"/>
-        <location line="+0"/>
         <source>%1 not available</source>
         <translation>%1 tidak tersedia</translation>
     </message>
     <message>
         <location line="-333"/>
         <location line="+90"/>
-        <location line="+255"/>
-        <location line="-255"/>
         <location line="+255"/>
         <source>A catalog update is already in progress. Please wait and try again.</source>
         <translation>Pembaruan katalog sedang berlangsung. Harap tunggu dan coba lagi.</translation>
@@ -5572,16 +5118,13 @@ ke sampah?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+659"/>
-        <location line="+0"/>
+        <location line="+666"/>
         <source>Errors</source>
         <translation>Kesalahan</translation>
     </message>
     <message>
         <location line="-232"/>
         <location line="+253"/>
-        <location line="+74"/>
-        <location line="-74"/>
         <location line="+74"/>
         <source>Move</source>
         <translation>Pindah</translation>
@@ -5590,15 +5133,12 @@ ke sampah?</translation>
         <location line="-327"/>
         <location line="+253"/>
         <location line="+74"/>
-        <location line="-74"/>
-        <location line="+74"/>
         <source>Copy</source>
         <translation>Salin</translation>
     </message>
     <message>
         <location line="-326"/>
         <location line="+254"/>
-        <location line="+0"/>
         <source>Already in target</source>
         <translation>Sudah ada di target</translation>
     </message>
@@ -5606,8 +5146,6 @@ ke sampah?</translation>
         <location line="-168"/>
         <location line="+32"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+8"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+0"/>
         <source>%1s</source>
         <translation>%1s</translation>
     </message>
@@ -5615,8 +5153,6 @@ ke sampah?</translation>
         <location line="-30"/>
         <location line="+32"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+2"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+0"/>
         <source>%1m %2s</source>
         <translation>%1m %2s</translation>
     </message>
@@ -5624,8 +5160,6 @@ ke sampah?</translation>
         <location line="-30"/>
         <location line="+32"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+2"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+0"/>
         <source>%1h %2m</source>
         <translation>%1h %2m</translation>
     </message>
@@ -5642,14 +5176,12 @@ ke sampah?</translation>
     <message>
         <location line="+3"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+1"/>
-        <location line="+0"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
         <location line="+74"/>
         <location line="+143"/>
-        <location line="+0"/>
         <source>Status</source>
         <translation>Status</translation>
     </message>
@@ -5661,26 +5193,18 @@ ke sampah?</translation>
     <message>
         <location line="+8"/>
         <location line="+33"/>
-        <location line="+0"/>
         <source>Archived</source>
         <translation>Diarsipkan</translation>
     </message>
     <message>
         <location line="-25"/>
         <location line="+135"/>
-        <location line="+0"/>
         <source>Conflict</source>
         <translation>Konflik</translation>
     </message>
     <message>
         <location line="-127"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-173"/>
-        <location line="+64"/>
-        <location line="+10"/>
-        <location line="+58"/>
-        <location line="+73"/>
-        <location line="+35"/>
-        <location line="-240"/>
         <location line="+64"/>
         <location line="+10"/>
         <location line="+58"/>
@@ -5697,7 +5221,6 @@ ke sampah?</translation>
     <message>
         <location line="+4"/>
         <location line="+23"/>
-        <location line="+0"/>
         <source>Conflicts</source>
         <translation>Konflik</translation>
     </message>
@@ -5829,7 +5352,6 @@ ke sampah?</translation>
     <message>
         <location line="+271"/>
         <location line="+90"/>
-        <location line="+0"/>
         <source>Filelight</source>
         <translation>Filelight</translation>
     </message>
@@ -5901,7 +5423,6 @@ ke sampah?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-646"/>
         <location line="+324"/>
-        <location line="+0"/>
         <source>Search Error</source>
         <translation>Kesalahan Pencarian</translation>
     </message>
@@ -5917,23 +5438,17 @@ ke sampah?</translation>
         <translation>Nama Katalog</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1191"/>
-        <location line="+996"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1198"/>
+        <location line="+1003"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+150"/>
-        <location line="+42"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-42"/>
         <location line="+42"/>
         <source>Pause</source>
         <translation>Jeda</translation>
     </message>
     <message>
-        <location line="-989"/>
-        <location line="+989"/>
+        <location line="-996"/>
+        <location line="+996"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-28"/>
-        <location line="+30"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-30"/>
         <location line="+30"/>
         <source>Resume</source>
         <translation>Lanjutkan</translation>
@@ -6009,7 +5524,6 @@ ke sampah?</translation>
     <message>
         <location line="+3"/>
         <location line="+11"/>
-        <location line="+0"/>
         <source>&lt;tr&gt;&lt;td&gt;Files processed: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</source>
         <translation>&lt;tr&gt;&lt;td&gt;File diproses: &lt;/td&gt;&lt;td&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
@@ -6074,7 +5588,6 @@ ke sampah?</translation>
     <message>
         <location line="+15"/>
         <location line="+53"/>
-        <location line="+0"/>
         <source>Select a catalog first (some info is missing).&lt;br/&gt; currentCatalogFilePath: %1 &lt;br/&gt;currentCatalogName: %2 &lt;br/&gt; currentCatalogSourcePath: %3</source>
         <translation>Pilih katalog terlebih dahulu (beberapa info hilang).&lt;br/&gt; currentCatalogFilePath: %1 &lt;br/&gt;currentCatalogName: %2 &lt;br/&gt; currentCatalogSourcePath: %3</translation>
     </message>
@@ -6086,7 +5599,6 @@ ke sampah?</translation>
     <message>
         <location line="+14"/>
         <location line="+87"/>
-        <location line="+0"/>
         <source>Could not open file.</source>
         <translation>Tidak dapat membuka file.</translation>
     </message>
@@ -6108,33 +5620,24 @@ ke sampah?</translation>
     <message>
         <location filename="../qt_widgets/devicemappingview.cpp" line="-10"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+169"/>
-        <location line="+0"/>
         <source>Strict</source>
         <translation>Ketat</translation>
     </message>
     <message>
         <location line="+2"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Unique</source>
         <translation>Unik</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+1"/>
-        <location line="+0"/>
         <source>Drive</source>
         <translation>Drive</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-177"/>
         <location line="+10"/>
-        <location line="+58"/>
-        <location line="+11"/>
-        <location line="+15"/>
-        <location line="+38"/>
-        <location line="+9"/>
-        <location line="-131"/>
         <location line="+58"/>
         <location line="+11"/>
         <location line="+15"/>
@@ -6156,8 +5659,6 @@ ke sampah?</translation>
     <message>
         <location line="+88"/>
         <location line="+10"/>
-        <location line="+8"/>
-        <location line="-8"/>
         <location line="+8"/>
         <source>Collection Update</source>
         <translation>Perbarui koleksi</translation>
@@ -6211,12 +5712,12 @@ ke sampah?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+433"/>
+        <location line="+437"/>
         <source>Errors: %1</source>
         <translation>Kesalahan: %1</translation>
     </message>
     <message>
-        <location line="-414"/>
+        <location line="-418"/>
         <source>Type</source>
         <translation>Tipe</translation>
     </message>
@@ -6344,7 +5845,7 @@ ke sampah?</translation>
         <translation>Jalankan pencadangan</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+23"/>
         <source>Pause</source>
         <translation>Jeda</translation>
     </message>
@@ -6369,7 +5870,7 @@ ke sampah?</translation>
         <translation>Pratinjau cadangan</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+11"/>
         <source>More actions</source>
         <translation>Tindakan lainnya</translation>
     </message>
@@ -6540,17 +6041,17 @@ ke sampah?</translation>
 <context>
     <name>PageBackupPreviewForm</name>
     <message>
-        <location filename="../qt_quick/PageBackupPreviewForm.qml" line="+8"/>
+        <location filename="../qt_quick/PageBackupPreviewForm.qml" line="+9"/>
         <source>Backup Preview</source>
         <translation>Pratinjau cadangan</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+15"/>
         <source>Preview</source>
         <translation>Pratinjau</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+13"/>
         <source>Export to CSV</source>
         <translation>Ekspor ke CSV</translation>
     </message>
@@ -6560,29 +6061,28 @@ ke sampah?</translation>
         <translation>Tutup</translation>
     </message>
     <message>
-        <location line="+15"/>
         <source>Updating catalogs…</source>
-        <translation>Memperbarui katalog…</translation>
+        <translation type="vanished">Memperbarui katalog…</translation>
     </message>
     <message>
-        <location line="+0"/>
+        <location line="+16"/>
         <source>Computing preview…</source>
         <translation>Menghitung pratinjau…</translation>
     </message>
     <message>
-        <location line="+36"/>
-        <location line="+59"/>
+        <location line="+34"/>
+        <location line="+146"/>
         <source>Move</source>
         <translation>Pindah</translation>
     </message>
     <message>
-        <location line="-59"/>
-        <location line="+59"/>
+        <location line="-146"/>
+        <location line="+146"/>
         <source>Copy</source>
         <translation>Salin</translation>
     </message>
     <message>
-        <location line="-56"/>
+        <location line="-143"/>
         <source>file(s)</source>
         <translation>berkas</translation>
     </message>
@@ -6607,7 +6107,7 @@ ke sampah?</translation>
         <translation>tujuan offline</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+18"/>
         <source>Insufficient disk space - Required: %1, Available: %2</source>
         <translation>Ruang disk tidak cukup - Diperlukan: %1, Tersedia: %2</translation>
     </message>
@@ -6617,32 +6117,32 @@ ke sampah?</translation>
         <translation>Ruang tujuan rendah - %1 tersisa setelah operasi</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="-109"/>
         <source>Status</source>
         <translation>Status</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>File Name</source>
         <translation>Nama file</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>Path</source>
         <translation>Jalur</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>Size</source>
         <translation>Ukuran</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+226"/>
         <source>Conflict</source>
         <translation>Konflik</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+20"/>
         <source>Nothing to move</source>
         <translation>Tidak ada yang dipindahkan</translation>
     </message>
@@ -6664,7 +6164,7 @@ ke sampah?</translation>
 <context>
     <name>PageCreateForm</name>
     <message>
-        <location filename="../qt_quick/PageCreateForm.qml" line="+205"/>
+        <location filename="../qt_quick/PageCreateForm.qml" line="+206"/>
         <location line="+46"/>
         <source>All</source>
         <translation>Semua</translation>
@@ -6680,7 +6180,7 @@ ke sampah?</translation>
         <translation>Audio</translation>
     </message>
     <message>
-        <location line="-183"/>
+        <location line="-184"/>
         <source>Provide a name for this new catalog.</source>
         <translation>Berikan nama untuk katalog baru ini.</translation>
     </message>
@@ -6712,7 +6212,7 @@ ke sampah?</translation>
         <translation>Jalur untuk diindeks</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+14"/>
         <source>Storage</source>
         <translation>Penyimpanan</translation>
     </message>
@@ -6823,13 +6323,13 @@ ke sampah?</translation>
         <translation type="vanished">Jalur yang dikecualikan</translation>
     </message>
     <message>
-        <location line="+12"/>
-        <location line="+81"/>
+        <location line="+13"/>
+        <location line="+82"/>
         <source>Add</source>
         <translation>Tambah</translation>
     </message>
     <message>
-        <location line="-35"/>
+        <location line="-36"/>
         <source>Global Parameters</source>
         <translation>Parameter global</translation>
     </message>
@@ -6847,12 +6347,12 @@ ke sampah?</translation>
 <context>
     <name>PageDeviceEditForm</name>
     <message>
-        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+96"/>
+        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+102"/>
         <source>Provide a name for this device.</source>
         <translation>Berikan nama untuk perangkat ini.</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+22"/>
         <source>Source path: %1 → %2</source>
         <translation>Jalur sumber: %1 → %2</translation>
     </message>
@@ -6863,12 +6363,12 @@ ke sampah?</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+244"/>
+        <location line="+249"/>
         <source>Type</source>
         <translation>Tipe</translation>
     </message>
     <message>
-        <location line="-241"/>
+        <location line="-246"/>
         <source>Name</source>
         <translation>Nama</translation>
     </message>
@@ -6878,7 +6378,7 @@ ke sampah?</translation>
         <translation>Perangkat induk</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+26"/>
         <source>Location</source>
         <translation>Lokasi</translation>
     </message>
@@ -6888,7 +6388,7 @@ ke sampah?</translation>
         <translation>Jalur sumber</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+27"/>
         <source>Content options</source>
         <translation>Opsi konten</translation>
     </message>
@@ -6999,7 +6499,7 @@ ke sampah?</translation>
         <translation type="vanished">Jalur yang dikecualikan</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <source>Add</source>
         <translation>Tambah</translation>
     </message>
@@ -7542,7 +7042,7 @@ ke sampah?</translation>
 <context>
     <name>PageSearchForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchForm.qml" line="+316"/>
+        <location filename="../qt_quick/PageSearchForm.qml" line="+320"/>
         <source>Select a date</source>
         <translation>Pilih tanggal</translation>
     </message>
@@ -7647,7 +7147,7 @@ ke sampah?</translation>
         <translation>teks</translation>
     </message>
     <message>
-        <location line="+44"/>
+        <location line="+27"/>
         <source>with</source>
         <translation>dengan</translation>
     </message>
@@ -7711,7 +7211,7 @@ ke sampah?</translation>
         <translation>kecualikan</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+32"/>
         <source>File attributes</source>
         <translation>Atribut berkas</translation>
     </message>
@@ -8321,12 +7821,12 @@ Kesalahan: %3</translation>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+392"/>
+        <location line="+397"/>
         <source>(none)</source>
         <translation>(tidak ada)</translation>
     </message>
     <message>
-        <location line="-384"/>
+        <location line="-389"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8502,7 +8002,12 @@ Kesalahan: %3</translation>
         <translation>Jika diaktifkan, pengurutan akan menghormati pengurutan peka huruf, sehingga memiliki urutan AA, AB, AC, Aa, Ab, Ac</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
+        <source>Refresh device status when returning to the application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Language</source>
         <translation>Bahasa</translation>
     </message>

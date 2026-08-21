@@ -93,6 +93,7 @@ class AppManager : public QObject
     Q_PROPERTY(bool canExpandDevices READ canExpandDevices NOTIFY deviceExpandLevelChanged)
     Q_PROPERTY(bool canCollapseDevices READ canCollapseDevices NOTIFY deviceExpandLevelChanged)
     Q_PROPERTY(bool showDeviceInfo READ getShowDeviceInfo WRITE setShowDeviceInfo NOTIFY showDeviceInfoChanged)
+    Q_PROPERTY(bool refreshDeviceStatusOnActivation READ getRefreshDeviceStatusOnActivation WRITE setRefreshDeviceStatusOnActivation NOTIFY refreshDeviceStatusOnActivationChanged)
     Q_PROPERTY(bool showSelectionPage READ getShowSelectionPage WRITE setShowSelectionPage NOTIFY showSelectionPageChanged)
     Q_PROPERTY(bool deviceFilterFromSelection READ getDeviceFilterFromSelection WRITE setDeviceFilterFromSelection NOTIFY deviceFilterFromSelectionChanged)
     Q_PROPERTY(bool searchKeepsSelection READ getSearchKeepsSelection WRITE setSearchKeepsSelection NOTIFY searchKeepsSelectionChanged)
@@ -194,6 +195,12 @@ public slots:
     Q_INVOKABLE bool canCollapseDevices() const;
     bool getShowDeviceInfo() const;
     void setShowDeviceInfo(bool value);
+    bool getRefreshDeviceStatusOnActivation() const;
+    void setRefreshDeviceStatusOnActivation(bool value);
+    // Called when the application becomes active. Does nothing unless the
+    // setting above is on; then skips cheaply when nothing was mounted or
+    // unmounted, or when a probe already ran in the last 30 seconds.
+    Q_INVOKABLE void refreshDeviceActiveOnActivation();
     bool getShowSelectionPage() const;
     void setShowSelectionPage(bool value);
     bool getDeviceFilterFromSelection() const;
@@ -445,6 +452,7 @@ signals:
     void deviceListModelChanged();
     void deviceExpandLevelChanged();
     void showDeviceInfoChanged();
+    void refreshDeviceStatusOnActivationChanged();
     void showSelectionPageChanged();
     void searchKeepsSelectionChanged();
     void deviceFilterFromSelectionChanged();
@@ -487,6 +495,10 @@ signals:
 
 private:
     QString m_connectionName = "defaultConnection";
+    // Device active-status refresh policy (SpecDeviceActiveStatus.md).
+    // Mutable: getDeviceList() is const but legitimately re-probes before reading.
+    mutable QDateTime m_lastActiveProbe;
+    QString m_lastMountSignature;
     bool    m_firstRun = false;
     bool    m_searchIsRunning  = false;
     bool    m_searchIsPaused   = false;

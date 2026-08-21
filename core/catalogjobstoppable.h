@@ -36,6 +36,7 @@
 #include <QAtomicInt>
 #include <QMutex>
 #include "device.h"
+#include "parallelmetadataextractor.h"
 
 /**
  * @brief The CatalogJobStoppable class
@@ -152,6 +153,11 @@ public:
     qint64 filesProcessed = 0;
     QString currentCatalogName;
     int progressRefreshRate = 100; // Progress update frequency
+
+    // Shared across all batches of one catalog run. processBatch() is called
+    // once per 100 files, so a local extractor would rebuild its thread pool
+    // on every batch.
+    ParallelMetadataExtractor metadataExtractor;
 
     QList<qint64> getResults() const;
 

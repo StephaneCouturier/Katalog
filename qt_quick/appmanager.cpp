@@ -310,6 +310,10 @@ void AppManager::initializeDeviceListModel()
     // loading the list — the stored device_active is stale when opening a collection
     // (it reflects connectivity at the time it was last saved, possibly on another machine).
     collection->updateAllDeviceActive();
+    // Seed the refresh policy state so the activation that follows startup finds
+    // an unchanged mount table and exits at the cheap gate.
+    m_lastActiveProbe = QDateTime::currentDateTime();
+    m_lastMountSignature = collection->mountSignature();
     deviceListModel = new DeviceListModel(this);
     deviceListModel->loadFromConnection(m_connectionName);
     m_deviceExpandLevel = -1; // reset to fully expanded on new connection
@@ -394,6 +398,43 @@ void AppManager::setShowDeviceInfo(bool value)
     settings.setValue("Selection/ShowDeviceInfo", value);
     settings.sync();
     emit showDeviceInfoChanged();
+}
+//----------------------------------------------------------------------
+bool AppManager::getRefreshDeviceStatusOnActivation() const
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    // Opt-in: nobody acquires a background filesystem probe they did not ask for.
+    return settings.value("Settings/RefreshDeviceStatusOnActivation", false).toBool();
+}
+//----------------------------------------------------------------------
+void AppManager::setRefreshDeviceStatusOnActivation(bool value)
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("Settings/RefreshDeviceStatusOnActivation", value);
+    settings.sync();
+    emit refreshDeviceStatusOnActivationChanged();
+}
+//----------------------------------------------------------------------
+void AppManager::refreshDeviceActiveOnActivation()
+{
+    if (!getRefreshDeviceStatusOnActivation())
+        return;
+
+    // Cheap gate first: reading the mount table costs nothing and, when nothing
+    // has been mounted or unmounted, spares every device path a QDir::exists()
+    // that would block on an unreachable network mount.
+    const QString signature = collection->mountSignature();
+    if (signature == m_lastMountSignature)
+        return;
+    m_lastMountSignature = signature;
+
+    // Debounce: also absorbs the activation that immediately follows startup,
+    // where the collection was just opened and already probed.
+    if (m_lastActiveProbe.isValid()
+            && m_lastActiveProbe.secsTo(QDateTime::currentDateTime()) < 30)
+        return;
+
+    refreshDeviceList();
 }
 //----------------------------------------------------------------------
 bool AppManager::getShowSelectionPage() const
@@ -711,6 +752,7 @@ void AppManager::refreshDeviceList()
         // so the Selection page reflects what is actually mounted now (not stale values
         // carried over when switching/opening a collection). Mirrors K2's device refresh.
         collection->updateAllDeviceActive();
+        m_lastActiveProbe = QDateTime::currentDateTime();
         deviceListModel->refreshData();
         emit deviceListRefreshed();
         emit deviceListModelChanged();
@@ -1967,6 +2009,14 @@ QString AppManager::deleteDevice(int deviceId)
 QVariantList AppManager::getDeviceList(const QString &viewFilter, int scopeDeviceId) const
 {
     const QString conn = m_connectionName;
+
+    // Re-probe the filesystem before reading device_active, so opening the
+    // Devices page or switching its type filter reflects what is mounted now.
+    // K2 does the same inside its device-tree model loaders; without it this
+    // path would display whatever was cached at the last device operation.
+    collection->updateAllDeviceActive();
+    m_lastActiveProbe = QDateTime::currentDateTime();
+
     const QList<Device::DeviceTreeNode> nodes = Device::loadDeviceTree(conn, scopeDeviceId);
 
     // Build id → type map so each node can resolve its parent's type without a second query.

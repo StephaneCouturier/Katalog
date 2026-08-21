@@ -428,6 +428,11 @@ Kirigami.ScrollablePage {
                 Controls.ToolTip.visible: hovered
                 Controls.ToolTip.text: qsTr("If enabled, the sorting will respect case sensitive sorting, so as to have this order AA, AB, AC, Aa, Ab, Ac")
             }
+            Controls.CheckBox {
+                text: qsTr("Refresh device status when returning to the application")
+                checked: appManager1.refreshDeviceStatusOnActivation
+                onCheckedChanged: appManager1.refreshDeviceStatusOnActivation = checked
+            }
         }
 
         Controls.Label { text: qsTr("Language"); opacity: 0.7; Layout.topMargin: Kirigami.Units.largeSpacing * 2; Layout.alignment: Qt.AlignTop }

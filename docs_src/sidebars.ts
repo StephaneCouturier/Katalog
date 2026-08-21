@@ -83,6 +83,7 @@ export default {
                 'SpecVersions',
                 'SpecCollection',
                 'SpecDeviceStorageRoot',
+                'SpecDeviceActiveStatus',
                 'SpecSearchList',
                 'SpecDevicesSplit',
                 'SpecBackup'

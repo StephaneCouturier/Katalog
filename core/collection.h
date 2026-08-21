@@ -149,6 +149,9 @@ public:
     //Data management
     bool insertPhysicalStorageGroup();
     void updateAllDeviceActive();
+    // Signature of the currently mounted volumes' root paths. Compare successive
+    // values to detect a mount or unmount without probing any device path.
+    QString mountSignature() const;
     bool executeSplitBySubDirectory(Device *activeDevice);
     bool executeSplitByFileType(Device *activeDevice);
 

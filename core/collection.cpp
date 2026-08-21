@@ -34,6 +34,7 @@
 #include "device.h"
 #include "catalog.h"
 #include <QMutex>
+#include <QStorageInfo>
 
 namespace {
 
@@ -2395,12 +2396,28 @@ void Collection::updateAllDeviceActive()
     query.exec();
 
     //Update and Save sourcePathIsActive for each catalog
+    //loadDevice() already calls updateActiveState() internally, so probing again
+    //here would cost a second QDir::exists() and a second UPDATE per device.
     Device loopDevice;
     while (query.next()){
         loopDevice.ID = query.value(0).toInt();
         loopDevice.loadDevice(m_connectionName);
-        loopDevice.updateActiveState(m_connectionName);
     }
+}
+
+QString Collection::mountSignature() const
+{//Cheap signature of what is currently mounted, used to skip a full active-state
+ //probe when nothing has been mounted or unmounted since the last check.
+ //Only root paths are read: querying per-volume space or readiness would block
+ //on an unreachable network mount, which is exactly what this guard avoids.
+    QStringList rootPaths;
+    const QList<QStorageInfo> volumes = QStorageInfo::mountedVolumes();
+    rootPaths.reserve(volumes.size());
+    for (const QStorageInfo &volume : volumes)
+        rootPaths << volume.rootPath();
+
+    rootPaths.sort();
+    return rootPaths.join(QLatin1Char('\n'));
 }
 //----------------------------------------------------------------------
 Collection::CollectionFolderStatus Collection::validateCollectionFolder(const QString& folderPath, const QString& targetMode) const

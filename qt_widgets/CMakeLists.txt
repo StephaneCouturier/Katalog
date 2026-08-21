@@ -91,6 +91,7 @@ set(K3_QML_FILES
     ${CMAKE_SOURCE_DIR}/qt_quick/PageDevicesViewDelegate.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/PageCreateForm.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/DeviceTreeComboBox.qml
+    ${CMAKE_SOURCE_DIR}/qt_quick/SearchTermList.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/PageDeviceEditForm.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/PageBackupForm.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/PageBackupMappingForm.qml
