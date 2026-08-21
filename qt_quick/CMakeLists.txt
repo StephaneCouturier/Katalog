@@ -69,6 +69,7 @@ qt_add_qml_module(Katalog3
         PageBackupPreviewForm.qml
         PageSelectionView.qml
         DeviceTreeComboBox.qml
+        SearchTermList.qml
         PageExploreFolders.qml
         PageExploreFiles.qml
     SOURCES

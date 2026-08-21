@@ -32,6 +32,10 @@ ColumnLayout {
     }
 
     function getCriteria() {
+        //Drop blank term rows from the form before the criteria are read
+        search_TextField_FileNameText.normalize()
+        search_TextField_FileNameExclude.normalize()
+
         //Global type of search
         newSearch1.properties = {"searchInCatalogsChecked":  search_radioButton_SearchInCatalogs.checked};
         newSearch1.properties = {"searchInConnectedChecked": search_radioButton_SearchInConnected.checked};
@@ -109,11 +113,11 @@ ColumnLayout {
 
         // Reset fileNameCriteria
         search_checkBox_FileNameCriteria.checked = true
-        search_TextField_FileNameText.text = ""
+        search_TextField_FileNameText.clearAll()
         search_ComboBox_TextCriteriaWith.currentIndex = 0
         search_ComboBox_TextCriteriaIn.currentIndex = 0
         search_CheckBox_FileNameCaseSensitive.checked = false
-        search_TextField_FileNameExclude.text = ""
+        search_TextField_FileNameExclude.clearAll()
 
         // Reset fileAtrributes
             checkBoxFileAttributesCriteria.checked = false
@@ -546,27 +550,10 @@ ColumnLayout {
         RowLayout {
             Layout.fillWidth: true
             Controls.Label { text: qsTr("text"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop }
-            Controls.ScrollView {
+            SearchTermList {
+                id: search_TextField_FileNameText
                 Layout.fillWidth: true
-                implicitHeight: Kirigami.Units.gridUnit * 2
-                background: Rectangle {
-                    color: palette.base
-                }
-                Controls.TextArea {
-                    id: search_TextField_FileNameText
-                    width: parent.availableWidth
-                    wrapMode: Text.WordWrap
-                    background: Item {}
-                    // Enter (no modifier) triggers the search; Shift+Enter inserts a
-                    // newline for multi-line terms. Matches K2 (eventFilter on the search field).
-                    Keys.onPressed: function(event) {
-                        if ((event.key === Qt.Key_Return || event.key === Qt.Key_Enter)
-                                && !(event.modifiers & Qt.ShiftModifier)) {
-                            pageSearchForm.searchRequested()
-                            event.accepted = true
-                        }
-                    }
-                }
+                onAccepted: pageSearchForm.searchRequested()
             }
             RowLayout {
                 Layout.alignment: Qt.AlignTop
@@ -574,17 +561,17 @@ ColumnLayout {
                 Controls.Button {
                     id: search_Button_ClearSearchText
                     icon.name: "edit-clear"
-                    onClicked: search_TextField_FileNameText.clear()
+                    onClicked: search_TextField_FileNameText.clearAll()
                 }
                 Controls.Button {
                     id: search_Button_PasteClipboard
                     icon.name: "edit-paste"
-                    onClicked: search_TextField_FileNameText.text = pageSearch1.returnClipboard()
+                    onClicked: search_TextField_FileNameText.pasteReplaceAll()
                 }
                 Controls.Button {
                     id: search_Button_CleanText
                     icon.name: "edit-clear-history"
-                    onClicked: search_TextField_FileNameText.text = pageSearch1.returnCleanedText(search_TextField_FileNameText.text)
+                    onClicked: search_TextField_FileNameText.cleanAll()
                 }
             }
         }
@@ -639,35 +626,28 @@ ColumnLayout {
         }
         RowLayout {
             Layout.fillWidth: true
-            Controls.Label { text: qsTr("exclude"); Layout.preferredWidth: pageSearchForm.labelW }
-            Controls.TextField {
+            Controls.Label { text: qsTr("exclude"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop }
+            SearchTermList {
                 id: search_TextField_FileNameExclude
                 Layout.fillWidth: true
-                leftPadding: Kirigami.Units.largeSpacing
-                rightPadding: text.length > 0
-                              ? Kirigami.Units.iconSizes.small + Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing
-                              : Kirigami.Units.smallSpacing
-                Kirigami.Icon {
-                    anchors { right: parent.right; rightMargin: Kirigami.Units.smallSpacing * 2; verticalCenter: parent.verticalCenter }
-                    source: parent.LayoutMirroring.enabled ? "edit-clear-locationbar-ltr" : "edit-clear-locationbar-rtl"
-                    implicitWidth: Kirigami.Units.iconSizes.small
-                    implicitHeight: Kirigami.Units.iconSizes.small
-                    visible: parent.text.length > 0
-                    opacity: excludeClearTap.pressed ? 0.5 : 1.0
-                    Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration } }
-                    HoverHandler { cursorShape: Qt.ArrowCursor }
-                    TapHandler { id: excludeClearTap; onTapped: search_TextField_FileNameExclude.clear() }
+                // Keeps the inline per-row clear icon this field has always had,
+                // instead of gaining a list-level Clear button.
+                showInlineClear: true
+                onAccepted: pageSearchForm.searchRequested()
+            }
+            RowLayout {
+                Layout.alignment: Qt.AlignTop
+                spacing: Kirigami.Units.smallSpacing
+                Controls.Button {
+                    id: search_Button_ExcludePasteClipboard
+                    icon.name: "edit-paste"
+                    onClicked: search_TextField_FileNameExclude.pasteReplaceAll()
                 }
-            }
-            Controls.Button {
-                id: search_Button_ExcludePasteClipboard
-                icon.name: "edit-paste"
-                onClicked: search_TextField_FileNameExclude.text = pageSearch1.returnClipboard()
-            }
-            Controls.Button {
-                id: search_Button_ExcludeCleanText
-                icon.name: "edit-clear-history"
-                onClicked: search_TextField_FileNameExclude.text = pageSearch1.returnCleanedText(search_TextField_FileNameExclude.text)
+                Controls.Button {
+                    id: search_Button_ExcludeCleanText
+                    icon.name: "edit-clear-history"
+                    onClicked: search_TextField_FileNameExclude.cleanAll()
+                }
             }
         }
     }

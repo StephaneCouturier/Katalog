@@ -35,6 +35,49 @@
 #include "catalog.h"
 #include <QMutex>
 
+namespace {
+
+// Memory-mode history files are tab-separated and newline-terminated with no
+// quoting, so a field containing either delimiter would split one record across
+// several physical lines and corrupt every record that follows. A multi-term
+// search phrase holds its terms joined with '\n', which makes that the normal
+// case rather than an edge case.
+// Escape the backslash first so the delimiter escapes it produces are not
+// themselves re-escaped.
+QString escapeHistoryField(const QString &value)
+{
+    QString escaped = value;
+    escaped.replace(QLatin1String("\\"), QLatin1String("\\\\"));
+    escaped.replace(QLatin1String("\t"), QLatin1String("\\t"));
+    escaped.replace(QLatin1String("\r"), QLatin1String("\\r"));
+    escaped.replace(QLatin1String("\n"), QLatin1String("\\n"));
+    return escaped;
+}
+
+// Single left-to-right pass — sequential replace() calls would be wrong, since
+// unescaping "\\" to "\" first would let the resulting backslash combine with a
+// following literal 'n' and produce a spurious newline.
+QString unescapeHistoryField(const QString &value)
+{
+    QString result;
+    result.reserve(value.size());
+    for (int i = 0; i < value.size(); ++i) {
+        if (value.at(i) == QLatin1Char('\\') && i + 1 < value.size()) {
+            const QChar next = value.at(++i);
+            if      (next == QLatin1Char('n'))  result += QLatin1Char('\n');
+            else if (next == QLatin1Char('t'))  result += QLatin1Char('\t');
+            else if (next == QLatin1Char('r'))  result += QLatin1Char('\r');
+            else if (next == QLatin1Char('\\')) result += QLatin1Char('\\');
+            else { result += QLatin1Char('\\'); result += next; }
+        } else {
+            result += value.at(i);
+        }
+    }
+    return result;
+}
+
+} // namespace
+
 Collection::Collection(QObject *parent) : QObject(parent)
 {
 
@@ -894,6 +937,10 @@ void Collection::loadSearchHistoryFileToTable()
                         //Split the string with tabulation into a list
                         QStringList fieldList = line.split('\t');
 
+                        //Restore any delimiter that was escaped on write
+                        for (QString &field : fieldList)
+                            field = unescapeHistoryField(field);
+
                         //add empty values to support the addition of new fields to files from older versions
                         int  targetFieldsCount = 43;
                         int currentFiledsCount = fieldList.count();
@@ -1601,7 +1648,7 @@ void Collection::saveSearchHistoryTableToFile()
                 for (int i=0, recCount = record.count() ; i<recCount ; ++i){
                     if (i>0)
                         out << '\t';
-                    out << record.value(i).toString();
+                    out << escapeHistoryField(record.value(i).toString());
                 }
                 out << '\n';
             }

@@ -751,7 +751,16 @@ void CommandLineHandler::loadLastSearchCriteria()
         if (verbose) {
             QTextStream stdout_stream(stdout);
             stdout_stream << "Loaded search criteria from: " << dateTime << Qt::endl;
-            stdout_stream << "Search text: \"" << searchText << "\"" << Qt::endl;
+            // Terms are stored joined with '\n'; quote each so the entry stays
+            // on one line (SpecSearchList.md SRL-C9).
+            QStringList quotedTerms;
+            const QStringList terms = searchText.split(QLatin1Char('\n'), Qt::SkipEmptyParts);
+            for (const QString &term : terms) {
+                const QString trimmed = term.trimmed();
+                if (!trimmed.isEmpty())
+                    quotedTerms << QLatin1Char('"') + trimmed + QLatin1Char('"');
+            }
+            stdout_stream << "Search text: " << quotedTerms.join(QLatin1String(", ")) << Qt::endl;
             stdout_stream << "Search in catalogs: " << (catalogsChecked ? "Yes" : "No") << Qt::endl;
             stdout_stream << "Search in directories: " << (directoriesChecked ? "Yes" : "No") << Qt::endl;
         }

@@ -298,8 +298,11 @@ static QString buildTermPattern(const QString &term, const QString &criteria)
 {
     if (term.trimmed().isEmpty())
         return QString();
+    // Every branch must return a pattern with no *top-level* alternation: the
+    // exclude clause is prefixed to the result, and '|' binds looser than
+    // concatenation, so a bare "a|b" would leave the exclude guarding only "a".
     if (criteria == Search::TEXT_CRITERIA_REGEX)
-        return term;
+        return "(?:" + term + ")";
     if (criteria == Search::TEXT_CRITERIA_EXACT_PHRASE)
         return QRegularExpression::escape(term);
     if (criteria == Search::TEXT_CRITERIA_BEGINS_WITH)
@@ -307,7 +310,7 @@ static QString buildTermPattern(const QString &term, const QString &criteria)
     if (criteria == Search::TEXT_CRITERIA_ANY_WORD) {
         QStringList words = term.split(" ", Qt::SkipEmptyParts);
         for (QString &w : words) w = QRegularExpression::escape(w);
-        return words.join("|");
+        return "(?:" + words.join("|") + ")";
     }
     // ALL_WORDS (default)
     QString group;
@@ -328,7 +331,11 @@ void Search::prepareSearchPatterns()
             if (!pat.isEmpty())
                 termPatterns << pat;
         }
-        regexSearchtext = termPatterns.join("|");
+        // Group the alternation so a prefixed exclude clause applies to every
+        // term, not just the first.
+        regexSearchtext = termPatterns.isEmpty()
+                          ? QString()
+                          : "(?:" + termPatterns.join("|") + ")";
     } else {
         // Single-term — original logic
         const QString term = lines.isEmpty() ? searchText : lines.first();
@@ -350,16 +357,29 @@ void Search::prepareSearchPatterns()
     // Add the words to exclude to the Regular Expression
     if (selectedSearchExclude != "") {
         bool escapeExclude = (selectedTextCriteria != TEXT_CRITERIA_REGEX);
-        QStringList lineFieldList = selectedSearchExclude.split(" ", Qt::SkipEmptyParts);
+        // Split on any whitespace so a multi-row exclude list (rows joined with
+        // '\n') yields one term per word, exactly as a single space-separated
+        // line always has.
+        QStringList lineFieldList = selectedSearchExclude.split(QRegularExpression("\\s+"), Qt::SkipEmptyParts);
         if (escapeExclude) {
             for (QString &w : lineFieldList) w = QRegularExpression::escape(w);
         }
-        QString excludeGroupRegEx = "^(?!.*(" + lineFieldList[0];
-        for (int i = 1; i < lineFieldList.count(); i++) {
-            excludeGroupRegEx += "|" + lineFieldList[i];
+        // A whitespace-only exclude passes the != "" test but splits to nothing,
+        // so guard before indexing.
+        if (!lineFieldList.isEmpty()) {
+            QString excludeGroupRegEx = "^(?!.*(" + lineFieldList[0];
+            for (int i = 1; i < lineFieldList.count(); i++) {
+                excludeGroupRegEx += "|" + lineFieldList[i];
+            }
+            excludeGroupRegEx += "))";
+            // The exclude clause is anchored with '^', so the search pattern has
+            // to be wrapped in a lookahead: concatenating it directly would force
+            // it to match at position 0 and turn every non-anchored mode (Exact
+            // Phrase, Any Word, Regex) into a "starts with" search.
+            regexPattern = regexPattern.isEmpty()
+                           ? excludeGroupRegEx
+                           : excludeGroupRegEx + "(?=.*" + regexPattern + ")";
         }
-        excludeGroupRegEx += "))";
-        regexPattern = excludeGroupRegEx + regexPattern;
     }
 }
 

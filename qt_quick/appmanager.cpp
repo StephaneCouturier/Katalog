@@ -23,6 +23,27 @@
 #include <QCryptographicHash>
 #include <QTimer>
 
+namespace {
+
+// Render a stored search phrase or exclude string for a single-line display.
+// Terms are stored joined with '\n'; each is quoted separately and the quoted
+// terms are joined with ", ", so nothing but punctuation is added and the
+// result never contains a newline. See SpecSearchList.md (SRL-F11, SRL-C9).
+QString quoteSearchTerms(const QString &stored)
+{
+    const QStringList terms = stored.split(QLatin1Char('\n'), Qt::SkipEmptyParts);
+    QStringList quoted;
+    quoted.reserve(terms.size());
+    for (const QString &term : terms) {
+        const QString trimmed = term.trimmed();
+        if (!trimmed.isEmpty())
+            quoted << QLatin1Char('"') + trimmed + QLatin1Char('"');
+    }
+    return quoted.join(QLatin1String(", "));
+}
+
+} // namespace
+
 AppManager::AppManager(QObject *parent) : QObject(parent)
 {
     m_importSourceDeviceModel = new DeviceListModel(this);
@@ -1277,7 +1298,11 @@ QVariantList AppManager::getSearchHistory() const
             QString phrase = query.value(2).toString();
             QString criteria = query.value(3).toString();
             if (!phrase.isEmpty()) {
-                QString item = QLatin1Char('"') + phrase + QLatin1Char('"');
+                // A multi-term phrase holds its terms joined with '\n'. The
+                // delegate is a single line, so quote each term and join them
+                // with ", " — a newline must never reach it. A single-term
+                // phrase renders exactly as it always has.
+                QString item = quoteSearchTerms(phrase);
                 if (!criteria.isEmpty() && criteria != QLatin1String("All Words"))
                     item += QLatin1String(" (") + criteria + QLatin1Char(')');
                 parts << item;
@@ -1286,7 +1311,7 @@ QVariantList AppManager::getSearchHistory() const
                 parts << tr("Case sensitive");
             QString exclude = query.value(5).toString();
             if (!exclude.isEmpty())
-                parts << tr("Exclude: %1").arg(exclude);
+                parts << tr("Exclude: %1").arg(quoteSearchTerms(exclude));
         }
 
         // ── File criteria ──────────────────────────────────────────────────
