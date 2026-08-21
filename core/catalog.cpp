@@ -137,18 +137,28 @@ QVariant Catalog::headerData(int section, Qt::Orientation orientation, int role)
 
 
 //set catalog definition
+QString Catalog::normalizeSourcePath(const QString &selectedSourcePath)
+{
+    QString normalizedPath = selectedSourcePath;
+
+    if (normalizedPath.isEmpty())
+        return normalizedPath;
+
+    //Keep filesystem roots as they are: "/" (Linux) and "X:/" (Windows)
+    if (normalizedPath == "/")
+        return normalizedPath;
+    if (normalizedPath.length() == 3 and normalizedPath.at(1) == ':' and normalizedPath.at(2) == '/')
+        return normalizedPath;
+
+    //Remove the / at the end if any
+    if (normalizedPath.endsWith('/'))
+        normalizedPath.chop(1);
+
+    return normalizedPath;
+}
 void Catalog::setSourcePath(QString selectedSourcePath)
 {
-    sourcePath = selectedSourcePath;
-
-    //Remove the / at the end if any, except for root path (Linux)
-    if(sourcePath!=""){
-        int pathLength   = sourcePath.length();
-        QString lastChar = sourcePath.at(pathLength-1);
-        if (sourcePath !="/" and lastChar=="/") {
-            sourcePath.remove(pathLength-1,1);
-        }
-    }
+    sourcePath = normalizeSourcePath(selectedSourcePath);
 }
 void Catalog::updateFileCount()
 {

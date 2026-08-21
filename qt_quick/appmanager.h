@@ -364,6 +364,7 @@ public slots:
     // URL / path conversion helpers (cross-platform, wrap QUrl)
     Q_INVOKABLE QString      pathToFileUrl(const QString &path) const;
     Q_INVOKABLE QString      pathFromFileUrl(const QString &url) const;
+    Q_INVOKABLE QString      normalizeSourcePath(const QString &path) const;
 
     // Exclude directories (collection-level)
     Q_INVOKABLE QStringList  getExcludeDirectories() const;

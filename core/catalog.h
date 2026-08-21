@@ -97,6 +97,7 @@ public:
         CatalogRole    = Qt::UserRole + 5
     };
 
+    static QString normalizeSourcePath(const QString &selectedSourcePath);
     void setSourcePath(QString selectedSourcePath);
     void updateFileCount();
     void updateTotalFileSize();

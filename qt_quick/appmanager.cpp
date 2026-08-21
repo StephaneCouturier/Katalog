@@ -2779,12 +2779,7 @@ QString AppManager::saveDeviceBasicFields(int deviceId, const QString &name, int
     }
 
     dev.name = name;
-    dev.path = path;
-
-    // Trim trailing slash (except root "/")
-    if (dev.path.length() > 1 && dev.path.endsWith('/'))
-        dev.path.chop(1);
-
+    dev.path = Catalog::normalizeSourcePath(path);
     dev.catalog->sourcePath = dev.path;
 
     // Parent + groupId cascade
@@ -3488,6 +3483,11 @@ QString AppManager::pathToFileUrl(const QString &path) const
 QString AppManager::pathFromFileUrl(const QString &url) const
 {
     return QUrl(url).toLocalFile();
+}
+//----------------------------------------------------------------------
+QString AppManager::normalizeSourcePath(const QString &path) const
+{
+    return Catalog::normalizeSourcePath(path.trimmed());
 }
 
 // Exclude directories (collection-level)

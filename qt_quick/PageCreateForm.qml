@@ -31,7 +31,7 @@ ColumnLayout {
             showValidationMessage(qsTr("Select a Storage for this new catalog.\n(Selection panel on the left and dropdown list)"))
             return
         }
-        if (appManager1.isDirectoryEmpty(create_lineEdit_NewCatalogPath.text.trim())) {
+        if (appManager1.isDirectoryEmpty(appManager1.normalizeSourcePath(create_lineEdit_NewCatalogPath.text))) {
             emptyDirConfirmNeeded()
             return
         }
@@ -51,7 +51,7 @@ ColumnLayout {
 
         var error = appManager1.createCatalog(
             create_lineEdit_NewCatalogName.text.trim(),
-            create_lineEdit_NewCatalogPath.text.trim(),
+            appManager1.normalizeSourcePath(create_lineEdit_NewCatalogPath.text),
             create_storageComboBox.selectedDeviceId,
             create_comboBox_FileType.currentValue,
             create_checkBox_IncludeSubDir.checked,
@@ -82,7 +82,7 @@ ColumnLayout {
             // selectedDevice->loadDevice() runs after the signal is emitted;
             // defer one event-loop tick so the path reflects the new device.
             Qt.callLater(function() {
-                create_lineEdit_NewCatalogPath.text = appManager1.selectedDevicePath
+                create_lineEdit_NewCatalogPath.text = appManager1.normalizeSourcePath(appManager1.selectedDevicePath)
             })
         }
     }
@@ -94,15 +94,15 @@ ColumnLayout {
     // ── Folder dialogs ─────────────────────────────────────────────────────────
     FolderDialog {
         id: sourcePathDialog
-        onAccepted: create_lineEdit_NewCatalogPath.text = appManager1.pathFromFileUrl(selectedFolder.toString())
+        onAccepted: create_lineEdit_NewCatalogPath.text = appManager1.normalizeSourcePath(appManager1.pathFromFileUrl(selectedFolder.toString()))
     }
     FolderDialog {
         id: perCatalogExcludeDialog
-        onAccepted: create_lineEdit_NewExcludeFolder.text = appManager1.pathFromFileUrl(selectedFolder.toString())
+        onAccepted: create_lineEdit_NewExcludeFolder.text = appManager1.normalizeSourcePath(appManager1.pathFromFileUrl(selectedFolder.toString()))
     }
     FolderDialog {
         id: globalExcludeDialog
-        onAccepted: create_lineEdit_FolderToExclude.text = appManager1.pathFromFileUrl(selectedFolder.toString())
+        onAccepted: create_lineEdit_FolderToExclude.text = appManager1.normalizeSourcePath(appManager1.pathFromFileUrl(selectedFolder.toString()))
     }
 
     Kirigami.InlineMessage {
@@ -143,6 +143,7 @@ ColumnLayout {
                 Layout.fillWidth: true
                 placeholderText: qsTr("Path to index")
                 onTextChanged: createValidationMessage.visible = false
+                onEditingFinished: text = appManager1.normalizeSourcePath(text)
             }
             Controls.Button {
                 icon.name: "folder-open"
@@ -176,7 +177,7 @@ ColumnLayout {
                 Controls.ToolTip.text: qsTr("Generate name from path")
                 Controls.ToolTip.visible: hovered
                 onClicked: {
-                    var generated = create_lineEdit_NewCatalogPath.text
+                    var generated = appManager1.normalizeSourcePath(create_lineEdit_NewCatalogPath.text)
                     generated = generated.replace(/\//g, "_").replace(/:/g, "_")
                     create_lineEdit_NewCatalogName.text = generated
                 }
@@ -294,6 +295,7 @@ ColumnLayout {
                 id: create_lineEdit_NewExcludeFolder
                 Layout.fillWidth: true
                 placeholderText: qsTr("Path or name to exclude")
+                onEditingFinished: text = appManager1.normalizeSourcePath(text)
             }
             Controls.Button {
                 icon.name: "folder-open"
@@ -307,7 +309,7 @@ ColumnLayout {
                 icon.name: "list-add"
                 text: qsTr("Add")
                 onClicked: {
-                    var p = create_lineEdit_NewExcludeFolder.text.trim()
+                    var p = appManager1.normalizeSourcePath(create_lineEdit_NewExcludeFolder.text)
                     if (p === "") return
                     for (var i = 0; i < pendingExcludesModel.count; i++)
                         if (pendingExcludesModel.get(i).folderPath === p) return
@@ -375,6 +377,7 @@ ColumnLayout {
                 id: create_lineEdit_FolderToExclude
                 Layout.fillWidth: true
                 placeholderText: qsTr("Path to exclude globally")
+                onEditingFinished: text = appManager1.normalizeSourcePath(text)
             }
             Controls.Button {
                 icon.name: "folder-open"
@@ -388,7 +391,7 @@ ColumnLayout {
                 icon.name: "list-add"
                 text: qsTr("Add")
                 onClicked: {
-                    var p = create_lineEdit_FolderToExclude.text.trim()
+                    var p = appManager1.normalizeSourcePath(create_lineEdit_FolderToExclude.text)
                     if (p !== "") {
                         appManager1.addExcludeDirectory(p)
                         create_lineEdit_FolderToExclude.text = ""

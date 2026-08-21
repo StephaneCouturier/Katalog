@@ -103,9 +103,7 @@ ColumnLayout {
             return
         }
 
-        var path     = (deviceType !== "Virtual") ? edit_lineEdit_Path.text.trim() : ""
-        if (path.length > 1 && path.endsWith("/"))
-            path = path.slice(0, -1)
+        var path     = (deviceType !== "Virtual") ? appManager1.normalizeSourcePath(edit_lineEdit_Path.text) : ""
         var parentId = edit_storageComboBox.selectedDeviceId
 
         var err = appManager1.saveDeviceBasicFields(deviceId, name, parentId, path)
@@ -174,7 +172,7 @@ ColumnLayout {
         appManager1.saveCatalogOptions(deviceId, fileType, subdir, hidden, metadata, checksum, _originalIsFullDevice)
 
         if (pathChanged) {
-            storagePathChangeNeeded(originalPath, edit_lineEdit_Path.text.trim())
+            storagePathChangeNeeded(originalPath, appManager1.normalizeSourcePath(edit_lineEdit_Path.text))
         } else if (rescanNeeded) {
             catalogUpdateContentNeeded()
         } else {
@@ -187,11 +185,11 @@ ColumnLayout {
     // ── Folder dialogs ─────────────────────────────────────────────────────────
     FolderDialog {
         id: editPathDialog
-        onAccepted: edit_lineEdit_Path.text = appManager1.pathFromFileUrl(selectedFolder.toString())
+        onAccepted: edit_lineEdit_Path.text = appManager1.normalizeSourcePath(appManager1.pathFromFileUrl(selectedFolder.toString()))
     }
     FolderDialog {
         id: editExcludeDialog
-        onAccepted: edit_lineEdit_NewExcludeFolder.text = appManager1.pathFromFileUrl(selectedFolder.toString())
+        onAccepted: edit_lineEdit_NewExcludeFolder.text = appManager1.normalizeSourcePath(appManager1.pathFromFileUrl(selectedFolder.toString()))
     }
 
     ListModel { id: excludeFoldersModel }
@@ -262,6 +260,7 @@ ColumnLayout {
             Controls.TextField {
                 id: edit_lineEdit_Path
                 Layout.fillWidth: true
+                onEditingFinished: text = appManager1.normalizeSourcePath(text)
             }
             Controls.Button {
                 icon.name: "folder-open"
@@ -396,6 +395,7 @@ ColumnLayout {
                 id: edit_lineEdit_NewExcludeFolder
                 Layout.fillWidth: true
                 placeholderText: qsTr("Path or name to exclude")
+                onEditingFinished: text = appManager1.normalizeSourcePath(text)
             }
             Controls.Button {
                 icon.name: "folder-open"
@@ -409,7 +409,7 @@ ColumnLayout {
                 icon.name: "list-add"
                 text: qsTr("Add")
                 onClicked: {
-                    var p = edit_lineEdit_NewExcludeFolder.text.trim()
+                    var p = appManager1.normalizeSourcePath(edit_lineEdit_NewExcludeFolder.text)
                     if (p === "") return
                     if (appManager1.addDeviceExcludeFolder(deviceId, p)) {
                         for (var i = 0; i < excludeFoldersModel.count; i++)
