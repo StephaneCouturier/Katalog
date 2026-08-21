@@ -466,14 +466,14 @@ ColumnLayout {
                     spacing: Kirigami.Units.smallSpacing / 2
                     Controls.Label {
                         text: model.dateTime
-                        font.bold: true
                         Layout.fillWidth: true
+                        color: Kirigami.Theme.disabledTextColor
                     }
                     Controls.Label {
                         text: model.summary.length > 0 ? model.summary : qsTr("(no text filter)")
                         wrapMode: Text.WordWrap
                         Layout.fillWidth: true
-                        color: Kirigami.Theme.disabledTextColor
+                        font.bold: true
                         font.italic: model.summary.length === 0
                     }
                 }
