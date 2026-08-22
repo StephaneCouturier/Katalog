@@ -12,6 +12,19 @@ Kirigami.ApplicationWindow {
     // Unique identifier to reference this object
     id: root
 
+    // Global activity panel: running job progress plus the queue behind it.
+    // Anchored to pageStack rather than used as the window footer: the window
+    // footer spans the whole window, so a pinned (non-modal) global drawer sits
+    // on top of its left edge. pageStack already excludes the drawer, so
+    // matching its geometry puts the panel beside the drawer, not under it.
+    OperationQueueView {
+        id: activityPanel
+        anchors.left:   root.pageStack.left
+        anchors.right:  root.pageStack.right
+        anchors.bottom: root.pageStack.bottom
+        z: 1
+    }
+
     // Re-probe device active status when the user comes back to Katalog, so a
     // drive connected or removed meanwhile shows correctly. Off by default and
     // gated on the mount table, so this is normally a no-op — see
@@ -1316,7 +1329,8 @@ Kirigami.ApplicationWindow {
                 text:        qsTr("All active")
                 icon.name:   "media-playlist-repeat"
                 displayHint: Kirigami.DisplayHint.KeepVisible
-                enabled: !appManager1.deviceUpdateIsRunning
+                // Always enabled: requests are queued while an operation runs
+                // (SpecOperationQueue.md).
                 onTriggered: devUpdateAllDialog.open()
             },
             Kirigami.Action {
@@ -1378,24 +1392,8 @@ Kirigami.ApplicationWindow {
             }
         ]
 
-        footer: RowLayout {
-            visible: appManager1.deviceUpdateIsRunning || appManager1.deviceUpdateStatusText.length > 0
-            spacing: Kirigami.Units.smallSpacing
-            Controls.BusyIndicator {
-                running: appManager1.deviceUpdateIsRunning
-                visible: appManager1.deviceUpdateIsRunning
-                implicitWidth:  Kirigami.Units.gridUnit * 1.5
-                implicitHeight: Kirigami.Units.gridUnit * 1.5
-                Layout.leftMargin: Kirigami.Units.smallSpacing
-            }
-            Controls.Label {
-                Layout.fillWidth: true
-                Layout.margins: Kirigami.Units.smallSpacing
-                text: appManager1.deviceUpdateStatusText
-                elide: Text.ElideRight
-                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
-            }
-        }
+        // Update progress is reported by the global activity panel, next to
+        // the page area — see OperationQueueView.qml.
 
         PageDevicesView {
             id: pageDevicesView
@@ -1498,7 +1496,8 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
                 text: qsTr("Create")
                 icon.name: "document-save"
-                enabled: !appManager1.catalogIsCreating
+                // Always enabled: a creation requested while another operation
+                // runs is queued rather than refused (SpecOperationQueue.md).
                 onTriggered: pageCreate_formLayout_Create.triggerCreate()
             },
             Kirigami.Action {
@@ -1514,25 +1513,8 @@ Kirigami.ApplicationWindow {
             }
         ]
 
-        footer: RowLayout {
-            visible: appManager1.catalogIsCreating || appManager1.catalogStatusText.length > 0
-            spacing: Kirigami.Units.smallSpacing
-            Controls.BusyIndicator {
-                running: appManager1.catalogIsCreating
-                visible: appManager1.catalogIsCreating
-                implicitWidth:  Kirigami.Units.gridUnit * 1.5
-                implicitHeight: Kirigami.Units.gridUnit * 1.5
-                Layout.leftMargin: Kirigami.Units.smallSpacing
-            }
-            Controls.Label {
-                Layout.fillWidth: true
-                Layout.margins: Kirigami.Units.smallSpacing
-                text: appManager1.catalogStatusText
-                textFormat: Text.StyledText
-                elide: Text.ElideRight
-                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
-            }
-        }
+        // Creation progress is reported by the global activity panel in the
+        // window footer, alongside the queue — see OperationQueueView.qml.
 
         PageCreateForm {
             id: pageCreate_formLayout_Create

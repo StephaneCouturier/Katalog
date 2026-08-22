@@ -2502,8 +2502,17 @@ void CatalogJobStoppable::extractMetadataForChangedFiles(const QList<QVariantLis
     // per batch would spawn and tear down worker threads every 100 files.
     ParallelMetadataExtractor extractor;
 
-    // Process in batches of files (progressRefreshRate)
-    for (int batchStart = 0; batchStart < totalFiles; batchStart += progressRefreshRate) {
+    // Work batch for the metadata phase, deliberately separate from
+    // progressRefreshRate: that setting controls how often progress is reported,
+    // whereas this controls how long the UI waits between yields. The whole batch
+    // is extracted before QCoreApplication::processEvents() runs at the end of the
+    // loop, so the batch size *is* the input lag — 100 files of KFileMetaData work
+    // on video files is seconds. Keep it small enough to stay interactive while
+    // still filling the extractor's thread pool.
+    const int metadataBatchSize = 25;
+
+    // Process in batches of files
+    for (int batchStart = 0; batchStart < totalFiles; batchStart += metadataBatchSize) {
         // Check if stop requested between batches
         if (!shouldContinue()) {
             QString stopMsg = QString("Metadata extraction stopped: %1/%2 files processed")
@@ -2515,7 +2524,7 @@ void CatalogJobStoppable::extractMetadataForChangedFiles(const QList<QVariantLis
 
         waitIfPaused();
 
-        int batchEnd = qMin(batchStart + progressRefreshRate, totalFiles);
+        int batchEnd = qMin(batchStart + metadataBatchSize, totalFiles);
         int batchSize = batchEnd - batchStart;
 
 

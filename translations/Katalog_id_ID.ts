@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+142"/>
         <location line="+87"/>
         <location line="+14"/>
-        <location line="+3545"/>
+        <location line="+3750"/>
         <source>Search</source>
         <translation>Cari</translation>
     </message>
     <message>
-        <location line="-3642"/>
+        <location line="-3847"/>
         <source>Stopped</source>
         <translation>Dihentikan</translation>
     </message>
@@ -44,8 +44,9 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+58"/>
-        <location line="+1630"/>
-        <location line="+1515"/>
+        <location line="+1646"/>
+        <location line="+517"/>
+        <location line="+1187"/>
         <location line="+11"/>
         <location line="+60"/>
         <location line="+344"/>
@@ -53,14 +54,14 @@
         <translation>Sedang berlangsung</translation>
     </message>
     <message>
-        <location line="-3546"/>
-        <location line="+3183"/>
+        <location line="-3751"/>
+        <location line="+3388"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Selesai</translation>
     </message>
     <message>
-        <location line="-2868"/>
+        <location line="-3073"/>
         <source>Empty database path provided</source>
         <translation>Jalur basis data kosong diberikan</translation>
     </message>
@@ -146,12 +147,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2118"/>
+        <location line="+2323"/>
         <source>Size</source>
         <translation>Ukuran</translation>
     </message>
     <message>
-        <location line="-2117"/>
+        <location line="-2322"/>
         <source>Date</source>
         <translation>Tanggal</translation>
     </message>
@@ -206,7 +207,7 @@
         <translation>Koneksi terhosting gagal: %1</translation>
     </message>
     <message>
-        <location line="+174"/>
+        <location line="+178"/>
         <source>Provide a name for this new catalog.</source>
         <translation>Berikan nama untuk katalog baru ini.</translation>
     </message>
@@ -239,22 +240,22 @@ Choose a different name and try again.</source>
 Pilih nama lain dan coba lagi.</translation>
     </message>
     <message>
-        <location line="+46"/>
         <source>A device operation is already running.</source>
-        <translation>Operasi perangkat sudah berjalan.</translation>
+        <translation type="vanished">Operasi perangkat sudah berjalan.</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+64"/>
+        <location line="+516"/>
         <source>Create</source>
         <translation>Buat</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="-433"/>
         <source>Catalog creation was stopped.</source>
         <translation>Pembuatan katalog dihentikan.</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+34"/>
         <location line="+19"/>
         <source>The selected device cannot be deleted as long as it has sub-devices.</source>
         <translation>Perangkat yang dipilih tidak dapat dihapus selama masih memiliki subperangkat.</translation>
@@ -280,12 +281,12 @@ Pilih nama lain dan coba lagi.</translation>
         <translation>Penyimpanan</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+41"/>
         <source>Error: %1</source>
         <translation>Galat: %1</translation>
     </message>
     <message>
-        <location line="+275"/>
+        <location line="+442"/>
         <source>The selected device is not a catalog.</source>
         <translation>Perangkat yang dipilih bukan katalog.</translation>
     </message>
@@ -723,7 +724,7 @@ Pilih nama lain.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+671"/>
+        <location filename="../qt_quick/Main.qml" line="+684"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Apakah Anda ingin &lt;b&gt;menghapus&lt;/b&gt; perangkat %1 ini?&lt;br/&gt;&lt;br/&gt;Nama: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -740,13 +741,13 @@ Pilih nama lain.</translation>
         <location line="-361"/>
         <location line="+60"/>
         <location line="+162"/>
-        <location line="+695"/>
+        <location line="+668"/>
         <location line="+117"/>
         <source>Cancel</source>
         <translation>Batal</translation>
     </message>
     <message>
-        <location line="-1134"/>
+        <location line="-1107"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+158"/>
@@ -810,30 +811,30 @@ Pilih nama lain.</translation>
     </message>
     <message>
         <location line="-957"/>
-        <location line="+1065"/>
+        <location line="+1050"/>
         <source>Explore</source>
         <translation>Jelajahi</translation>
     </message>
     <message>
-        <location line="-1055"/>
-        <location line="+1290"/>
+        <location line="-1040"/>
+        <location line="+1263"/>
         <source>Backup</source>
         <translation>Cadangan</translation>
     </message>
     <message>
-        <location line="-1285"/>
-        <location line="+1249"/>
+        <location line="-1258"/>
+        <location line="+1222"/>
         <source>Statistics</source>
         <translation>Statistik</translation>
     </message>
     <message>
-        <location line="-1244"/>
-        <location line="+1264"/>
+        <location line="-1217"/>
+        <location line="+1237"/>
         <source>Tags</source>
         <translation>Tag</translation>
     </message>
     <message>
-        <location line="-1251"/>
+        <location line="-1224"/>
         <source>Documentation</source>
         <translation>Dokumentasi</translation>
     </message>
@@ -1125,13 +1126,13 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+132"/>
-        <location line="+178"/>
+        <location line="+133"/>
+        <location line="+167"/>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location line="-303"/>
+        <location line="-293"/>
         <source>Reset</source>
         <translation>Reset</translation>
     </message>
@@ -1144,17 +1145,17 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="-145"/>
         <location line="+152"/>
         <location line="+56"/>
-        <location line="+107"/>
-        <location line="+51"/>
-        <location line="+81"/>
-        <location line="+118"/>
+        <location line="+108"/>
+        <location line="+35"/>
+        <location line="+86"/>
+        <location line="+101"/>
         <location line="+18"/>
         <location line="+37"/>
         <source>Close</source>
         <translation>Tutup</translation>
     </message>
     <message>
-        <location line="-570"/>
+        <location line="-543"/>
         <source>Show device info</source>
         <translation>Tampilkan info perangkat</translation>
     </message>
@@ -1189,7 +1190,7 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <translation>Semua aktif</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+15"/>
         <source>Snapshot</source>
         <translation>Snapshot</translation>
     </message>
@@ -1208,24 +1209,24 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <translation type="vanished">Impor</translation>
     </message>
     <message>
-        <location line="+123"/>
+        <location line="+110"/>
         <source>Catalog created successfully.</source>
         <translation>Katalog berhasil dibuat.</translation>
     </message>
     <message>
-        <location line="+0"/>
+        <location line="+1"/>
         <source>Catalog creation failed: </source>
         <translation>Gagal membuat katalog: </translation>
     </message>
     <message>
-        <location line="-1116"/>
-        <location line="+1110"/>
-        <location line="+24"/>
+        <location line="-1105"/>
+        <location line="+1095"/>
+        <location line="+28"/>
         <source>Create</source>
         <translation>Buat</translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+31"/>
         <source>Edit Device</source>
         <translation>Edit perangkat</translation>
     </message>
@@ -2007,12 +2008,12 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1908"/>
-        <location filename="../core/deviceupdatemanager.cpp" line="+1010"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+1040"/>
         <source>Operation cancelled</source>
         <translation>Operasi dibatalkan</translation>
     </message>
     <message>
-        <location filename="../core/deviceupdatemanager.cpp" line="-48"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="-55"/>
         <source>Stopping after current catalog completes...</source>
         <translation>Menghentikan setelah katalog saat ini selesai...</translation>
     </message>
@@ -5751,6 +5752,39 @@ ke sampah?</translation>
     </message>
 </context>
 <context>
+    <name>OperationQueueView</name>
+    <message>
+        <location filename="../qt_quick/OperationQueueView.qml" line="+52"/>
+        <source>Stop</source>
+        <translation type="unfinished">Stop</translation>
+    </message>
+    <message>
+        <location line="+24"/>
+        <source>Queue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>%1 waiting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Clear</source>
+        <translation type="unfinished">Bersihkan</translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <source>Create</source>
+        <translation type="unfinished">Buat</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Update</source>
+        <translation type="unfinished">Perbarui</translation>
+    </message>
+</context>
+<context>
     <name>PageBackupForm</name>
     <message>
         <source>in sync</source>
@@ -6852,7 +6886,7 @@ ke sampah?</translation>
         <translation>Perbarui</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>Explore</source>
         <translation>Jelajahi</translation>
     </message>
@@ -7825,7 +7859,7 @@ Kesalahan: %3</translation>
         <translation>Perbarui</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+14"/>
         <source>Explore</source>
         <translation>Jelajahi</translation>
     </message>

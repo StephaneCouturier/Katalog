@@ -951,15 +951,28 @@ void DeviceUpdateManager::requestHardStop()
 
     // Delegate stop to underlying CatalogManager if active
     if (m_catalogManager && m_catalogManager->catalogOperationRunning()) {
+        // The catalog job is on the main thread stack at this very moment:
+        // processCatalog() pumps the event loop, which is how this stop request
+        // was delivered in the first place. So only ask it to stop and return —
+        // its termination comes back as onCatalogOperationCancelled(), which
+        // cancels the operation at a point where nothing of the job is left on
+        // the stack.
+        //
+        // Forcing the cancellation on a timer here instead would fire from
+        // inside the job's own processEvents(): the operation would be torn
+        // down (cleanupOperation() even deleteLater()s the job) while the job
+        // keeps running, leaving it orphaned — and anything started next would
+        // run nested inside it, only to be cancelled when the first job finally
+        // unwinds. This mirrors requestGentleStop(), which already defers to
+        // the running catalog rather than cancelling underneath it.
         m_catalogManager->requestHardStop();
+        return;
     }
 
-    // Immediately cancel any waiting operations
-    if (m_waitingForCatalogCompletion) {
-        m_waitingForCatalogCompletion = false;
-    }
+    // Nothing running underneath — stopped between devices, or during hierarchy
+    // analysis. There is no job termination to wait for, so cancel directly.
+    m_waitingForCatalogCompletion = false;
 
-    // Force immediate cleanup
     QTimer::singleShot(10, this, [this]() {
         handleOperationCancellation();
     });

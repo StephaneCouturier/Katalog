@@ -84,6 +84,7 @@ export default {
                 'SpecCollection',
                 'SpecDeviceStorageRoot',
                 'SpecDeviceActiveStatus',
+                'SpecOperationQueue',
                 'SpecSearchList',
                 'SpecDevicesSplit',
                 'SpecBackup'

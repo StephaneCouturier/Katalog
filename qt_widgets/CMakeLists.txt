@@ -93,6 +93,7 @@ set(K3_QML_FILES
     ${CMAKE_SOURCE_DIR}/qt_quick/DeviceTreeComboBox.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/SearchTermList.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/MetadataDialog.qml
+    ${CMAKE_SOURCE_DIR}/qt_quick/OperationQueueView.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/PageDeviceEditForm.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/PageBackupForm.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/PageBackupMappingForm.qml

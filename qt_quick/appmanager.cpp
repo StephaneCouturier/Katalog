@@ -1758,14 +1758,18 @@ void AppManager::setupDeviceUpdateManager()
     }
     disconnect(m_deviceUpdateManager, nullptr, this, nullptr);
 
-    if (!m_catalogProgressManager) {
+    if (!m_catalogProgressManager)
         m_catalogProgressManager = new CatalogProgressManager(this);
-        connect(m_catalogProgressManager, &CatalogProgressManager::statusMessageChanged,
-                this, [this](const QString &message, int /*timeout*/) {
-                    m_catalogStatusText = message;
-                    emit catalogStatusTextChanged();
-                });
-    }
+    // Reconnected on every setup, not only on creation: the devices variant of
+    // this setup points the same progress manager at m_deviceUpdateStatusText,
+    // so a creation started after an update would otherwise report its progress
+    // into the devices status text and leave the create text stale.
+    disconnect(m_catalogProgressManager, nullptr, this, nullptr);
+    connect(m_catalogProgressManager, &CatalogProgressManager::statusMessageChanged,
+            this, [this](const QString &message, int /*timeout*/) {
+                m_catalogStatusText = message;
+                emit catalogStatusTextChanged();
+            });
     m_deviceUpdateManager->setCatalogProgressManager(m_catalogProgressManager);
     m_deviceUpdateManager->setConnectionName(m_connectionName);
 
@@ -1846,13 +1850,25 @@ QString AppManager::createCatalog(const QString &name, const QString &path,
         collection->saveStorageTableToFile();
     }
 
-    // Setup manager and check for concurrent operation
-    setupDeviceUpdateManager();
-    if (m_deviceUpdateManager->operationRunning()) {
+    // Check for a concurrent operation BEFORE touching the manager: rewiring its
+    // handlers now would hand the operation already running to the wrong set,
+    // and its completion would be reported as this creation's.
+    if (m_deviceUpdateIsRunning
+        || (m_deviceUpdateManager && m_deviceUpdateManager->operationRunning())) {
+        // Busy: queue the scan instead of refusing. The device and catalog rows
+        // above are already written, so the entry only needs the device id — and
+        // the catalog is visible immediately, waiting to be filled. The handlers
+        // are wired when the entry actually starts, in startNextDeviceUpdate().
+        const int     queuedId   = newDevice->ID;
+        const QString queuedName = newDevice->name;
         delete newDevice;
-        return tr("A device operation is already running.");
+        enqueueOperation(queuedId, true, queuedName);
+        emit deviceListChanged();
+        refreshDeviceList();
+        return QString();
     }
 
+    setupDeviceUpdateManager();
     m_creatingDevice = newDevice;
     m_catalogIsCreating = true;
     m_catalogCreateStartTime = QDateTime::currentDateTime();
@@ -1893,6 +1909,8 @@ void AppManager::onCatalogCreationCompleted(const QList<qint64> &/*results*/)
     refreshDeviceList();
     emit catalogCreationCompleted(true, QString());
     m_creatingDevice = nullptr;
+
+    finishRunningOperation();
 }
 //----------------------------------------------------------------------
 void AppManager::onCatalogCreationError(const QString &error)
@@ -1907,6 +1925,9 @@ void AppManager::onCatalogCreationError(const QString &error)
     emit catalogStatusTextChanged();
     refreshDeviceList();
     emit catalogCreationCompleted(false, error);
+
+    // A failure does not abandon what is queued behind it (OPQ-F9).
+    finishRunningOperation();
 }
 //----------------------------------------------------------------------
 void AppManager::onCatalogCreationCancelled()
@@ -1935,6 +1956,10 @@ void AppManager::onCatalogCreationCancelled()
         emit catalogCreationCompleted(true, incompleteMessage);
     else
         emit catalogCreationCompleted(false, tr("Catalog creation was stopped."));
+
+    // Stopping this creation does not abandon what is queued behind it (OPQ-F7):
+    // carry on with the next entry.
+    finishRunningOperation();
 }
 //----------------------------------------------------------------------
 // Storage pre-selection for Create page (used by DeviceTreeComboBox storageOnly mode)
@@ -2146,22 +2171,23 @@ void AppManager::setupDeviceUpdateManagerForDevices()
             this, &AppManager::onDevicePageUpdateCompleted);
     connect(m_deviceUpdateManager, &DeviceUpdateManager::operationError,
             this, [this](const QString &err) {
-                m_deviceUpdateIsRunning = false;
                 m_deviceUpdateStatusText = tr("Error: %1").arg(err);
-                emit deviceUpdateStateChanged();
                 emit deviceUpdateStatusChanged();
-                startNextDeviceUpdate();
+                // A failure does not abandon the rest of the queue (OPQ-F9).
+                // The running flag is cleared by startNextDeviceUpdate() once the
+                // queue is found empty, so the panel does not blink out between
+                // two entries.
+                finishRunningOperation();
             });
     connect(m_deviceUpdateManager, &DeviceUpdateManager::operationCancelled,
             this, [this]() {
-                m_pendingDeviceUpdates.clear();
-                m_deviceUpdateIsRunning = false;
+                // Stop ends the running operation only; the queue carries on
+                // (OPQ-F7). Emptying the queue is the separate Clear action.
                 m_isBatchUpdate = false;
                 m_deviceUpdateStatusText.clear();
-                emit deviceUpdateStateChanged();
                 emit deviceUpdateStatusChanged();
                 emit deviceListChanged();
-                setupDeviceUpdateManager();
+                finishRunningOperation();
             });
 }
 //----------------------------------------------------------------------
@@ -2178,28 +2204,142 @@ void AppManager::onDevicePageUpdateCompleted(const QList<qint64> &results)
         if (!report.isEmpty())
             emit deviceUpdateReportReady(report);
 
-        m_deviceUpdateIsRunning = false;
-        m_isBatchUpdate         = false;
-        emit deviceUpdateStateChanged();
-        QTimer::singleShot(5000, this, [this]() {
-            m_deviceUpdateStatusText.clear();
-            emit deviceUpdateStatusChanged();
-        });
-        setupDeviceUpdateManager();
+        m_isBatchUpdate = false;
+        finishRunningOperation();
     } else {
         if (m_showEachUpdateReport) {
             QVariantMap report = buildUpdateReport(m_currentUpdateDeviceId, results);
             if (!report.isEmpty()) {
                 emit deviceUpdateReportReady(report);
                 if (!m_pendingDeviceUpdates.isEmpty()) {
-                    // More catalogs pending — pause until user acknowledges the report
+                    // More entries waiting — the queue holds until the user
+                    // acknowledges this report (OPQ-F10). The entry itself is
+                    // over, so it stops being shown as running right away.
                     m_waitingForReportAck = true;
+                    m_hasRunningOperation = false;
+                    emitQueueChanged();
                     return;
                 }
             }
         }
-        startNextDeviceUpdate();
+        finishRunningOperation();
     }
+}
+//----------------------------------------------------------------------
+QVariantList AppManager::getOperationQueue() const
+{
+    // The running entry first, then the waiting ones in run order.
+    QVariantList out;
+    if (m_hasRunningOperation) {
+        QVariantMap e;
+        e["deviceId"]   = m_runningOperation.deviceId;
+        e["deviceName"] = m_runningOperation.deviceName;
+        e["isCreate"]   = m_runningOperation.isCreate;
+        e["running"]    = true;
+        out.append(e);
+    }
+    for (const QueuedOperation &op : m_pendingDeviceUpdates) {
+        QVariantMap e;
+        e["deviceId"]   = op.deviceId;
+        e["deviceName"] = op.deviceName;
+        e["isCreate"]   = op.isCreate;
+        e["running"]    = false;
+        out.append(e);
+    }
+    return out;
+}
+//----------------------------------------------------------------------
+void AppManager::emitQueueChanged()
+{
+    emit operationQueueChanged();
+}
+//----------------------------------------------------------------------
+bool AppManager::isDeviceQueuedOrRunning(int deviceId) const
+{
+    if (m_hasRunningOperation && m_runningOperation.deviceId == deviceId)
+        return true;
+    for (const QueuedOperation &op : m_pendingDeviceUpdates)
+        if (op.deviceId == deviceId)
+            return true;
+    return false;
+}
+//----------------------------------------------------------------------
+void AppManager::enqueueOperation(int deviceId, bool isCreate, const QString &deviceName)
+{
+    // A device can appear once: re-requesting one already queued or running
+    // leaves the queue untouched rather than doubling the work.
+    if (isDeviceQueuedOrRunning(deviceId))
+        return;
+
+    QueuedOperation op;
+    op.deviceId   = deviceId;
+    op.isCreate   = isCreate;
+    op.deviceName = deviceName;
+    m_pendingDeviceUpdates.append(op);
+    emitQueueChanged();
+}
+//----------------------------------------------------------------------
+void AppManager::removeQueuedOperation(int index)
+{
+    if (index < 0 || index >= m_pendingDeviceUpdates.size())
+        return;
+
+    const QueuedOperation op = m_pendingDeviceUpdates.takeAt(index);
+
+    // A queued creation already has its device and catalog rows in the database
+    // (they are written before the operation is queued). Dropping the entry must
+    // remove them too, or an empty catalog is left behind.
+    if (op.isCreate) {
+        Device dev;
+        dev.ID = op.deviceId;
+        dev.loadDevice(m_connectionName);
+        dev.deleteDevice(false);
+        emit deviceListChanged();
+        refreshDeviceList();
+    }
+    emitQueueChanged();
+}
+//----------------------------------------------------------------------
+void AppManager::clearOperationQueue()
+{
+    while (!m_pendingDeviceUpdates.isEmpty())
+        removeQueuedOperation(0);
+}
+//----------------------------------------------------------------------
+void AppManager::finishRunningOperation()
+{
+    // The single ending for every way an operation can finish — completed,
+    // stopped or failed. The running entry is released and the queue carries on
+    // (OPQ-F7, OPQ-F9).
+    m_hasRunningOperation = false;
+    emitQueueChanged();
+    scheduleNextOperation();
+}
+//----------------------------------------------------------------------
+void AppManager::scheduleNextOperation()
+{
+    // The next entry must never start from inside a DeviceUpdateManager signal
+    // handler, because core is not finished with the previous operation when
+    // that signal arrives: CatalogManager::onJobResult() runs cleanupJob() as
+    // soon as the handlers return, and onCatalogOperationCompleted() arms
+    // cleanupOperation() on a short timer of its own. A job started before
+    // those run gets the previous operation's teardown applied to it — deleted
+    // job, manager reset to idle — and dies silently, or keeps running with no
+    // owner. So: wait past core's own deferred cleanup, then confirm the
+    // manager really is idle before starting anything (OPQ-C4).
+    if (m_nextOperationScheduled)
+        return;
+    m_nextOperationScheduled = true;
+    QTimer::singleShot(operationChainDelayMs, this, [this]() {
+        m_nextOperationScheduled = false;
+        if (!m_pendingDeviceUpdates.isEmpty()
+            && m_deviceUpdateManager && m_deviceUpdateManager->operationRunning()) {
+            // Still winding down — come back rather than start on top of it.
+            scheduleNextOperation();
+            return;
+        }
+        startNextDeviceUpdate();
+    });
 }
 //----------------------------------------------------------------------
 void AppManager::startNextDeviceUpdate()
@@ -2207,7 +2347,9 @@ void AppManager::startNextDeviceUpdate()
     if (m_pendingDeviceUpdates.isEmpty()) {
         m_deviceUpdateIsRunning = false;
         m_isBatchUpdate         = false;
-        m_pendingBatchTotal     = 0;
+        m_operationsStarted     = 0;
+        m_hasRunningOperation   = false;
+        emitQueueChanged();
         emit deviceUpdateStateChanged();
         // Status text lingers for 5 seconds then clears (K2 behaviour)
         QTimer::singleShot(5000, this, [this]() {
@@ -2217,18 +2359,53 @@ void AppManager::startNextDeviceUpdate()
         setupDeviceUpdateManager();
         return;
     }
-    int nextId = m_pendingDeviceUpdates.takeFirst();
-    m_currentUpdateDeviceId = nextId;
+    const QueuedOperation next = m_pendingDeviceUpdates.takeFirst();
+    m_runningOperation    = next;
+    m_hasRunningOperation = true;
+    m_operationsStarted++;
+    emitQueueChanged();
+
+    // Claim the running flag here rather than relying on whoever queued the work:
+    // this function is the only place an entry actually starts, so it owns the
+    // state. Without this, a path that cleared the flag before the queue advanced
+    // (a cancellation, an error) would leave a job running with the UI believing
+    // nothing is happening — no progress, no Stop button, no panel.
+    m_deviceUpdateIsRunning = true;
+    emit deviceUpdateStateChanged();
+
+    m_currentUpdateDeviceId = next.deviceId;
     Device *dev = new Device();
-    dev->ID = nextId;
+    dev->ID = next.deviceId;
     dev->loadDevice(m_connectionName);
+
+    if (next.isCreate) {
+        // Queued creation: the device and catalog rows already exist, so this
+        // only runs the scan. The create-specific handlers need m_creatingDevice.
+        // The handler set is wired per entry, here rather than by the caller: a
+        // creation has to end in onCatalogCreationCompleted(), or m_catalogIsCreating
+        // is never cleared and the activity panel stays busy for good.
+        setupDeviceUpdateManager();
+        m_creatingDevice         = dev;
+        m_catalogIsCreating      = true;
+        m_catalogCreateStartTime = QDateTime::currentDateTime();
+        m_catalogStatusText      = StatusBarMessageBuilder().setOperation(tr("Create"))
+                                                            .setStatus(tr("In Progress")).build();
+        emit catalogIsCreatingChanged();
+        emit catalogStatusTextChanged();
+        m_deviceUpdateManager->updateDeviceHierarchy(dev, collection->databaseMode, collection->folder, "create");
+        return;
+    }
+
+    setupDeviceUpdateManagerForDevices();
     m_deviceUpdateManager->updateDeviceHierarchy(dev, collection->databaseMode, collection->folder, "update");
     // Set batch context AFTER updateDeviceHierarchy (which internally calls cleanupOperation →
     // clearBatchContext), so the context survives into the async catalog job's progress signals.
-    if (m_pendingBatchTotal > 1 && m_catalogProgressManager) {
-        int current = m_pendingBatchTotal - m_pendingDeviceUpdates.size();
-        m_catalogProgressManager->setBatchContext(current, m_pendingBatchTotal);
-    }
+    // Counted from the queue as it stands rather than from a total fixed when the
+    // batch was requested: the queue can grow while it drains, and "3 of 5" has
+    // to become "3 of 6" when it does.
+    const int knownTotal = m_operationsStarted + m_pendingDeviceUpdates.size();
+    if (knownTotal > 1 && m_catalogProgressManager)
+        m_catalogProgressManager->setBatchContext(m_operationsStarted, knownTotal);
 }
 //----------------------------------------------------------------------
 QVariantMap AppManager::buildUpdateReport(int deviceId, const QList<qint64> &results)
@@ -2336,23 +2513,24 @@ QVariantMap AppManager::buildBatchUpdateReport(const QList<qint64> &results)
 //----------------------------------------------------------------------
 void AppManager::updateDevice(int deviceId)
 {
-    if (m_deviceUpdateIsRunning) return;
+    Device dev;
+    dev.ID = deviceId;
+    dev.loadDevice(m_connectionName);
+
+    // Already busy: queue it instead of dropping the request silently.
+    if (m_deviceUpdateIsRunning || (m_deviceUpdateManager && m_deviceUpdateManager->operationRunning())) {
+        enqueueOperation(deviceId, false, dev.name);
+        return;
+    }
+
     m_isBatchUpdate          = false;
     m_showEachUpdateReport   = true;  // single update always reports
-    m_pendingDeviceUpdates.clear();
-    m_pendingDeviceUpdates.append(deviceId);
-    m_deviceUpdateIsRunning = true;
-    emit deviceUpdateStateChanged();
-    setupDeviceUpdateManagerForDevices();
+    enqueueOperation(deviceId, false, dev.name);
     startNextDeviceUpdate();
 }
 //----------------------------------------------------------------------
 void AppManager::updateAllActiveDevices(bool showEachReport)
 {
-    if (m_deviceUpdateIsRunning) return;
-
-    m_showEachUpdateReport = showEachReport;
-
     const QString conn = m_connectionName;
 
     // Scope: catalogs under the currently selected device (same as what the Catalogs
@@ -2363,24 +2541,36 @@ void AppManager::updateAllActiveDevices(bool showEachReport)
     if (activeCatalogs.isEmpty())
         return;
 
-    m_deviceUpdateIsRunning = true;
+    if (m_deviceUpdateIsRunning
+        || (m_deviceUpdateManager && m_deviceUpdateManager->operationRunning())) {
+        // Busy: append every active catalog as its own entry rather than drop the
+        // request (OPQ-F1, OPQ-F4). The aggregate form cannot be queued — it runs
+        // the whole set as a single hierarchy — so work queued this way always
+        // reports per catalog. m_showEachUpdateReport is deliberately left alone:
+        // changing it now would change how the running operation reports itself.
+        for (Device *d : activeCatalogs)
+            enqueueOperation(d->ID, false, d->name);
+        qDeleteAll(activeCatalogs);
+        return;
+    }
+
+    m_showEachUpdateReport  = showEachReport;
     m_currentUpdateDeviceId = -1;
-    emit deviceUpdateStateChanged();
 
     if (showEachReport) {
-        // Process one catalog at a time so each report can pause for acknowledgement
+        // Process one catalog at a time so each report can pause for acknowledgement.
+        // Appends: anything already waiting keeps its place (OPQ-F4).
         m_isBatchUpdate = false;
-        m_pendingDeviceUpdates.clear();
         for (Device *d : activeCatalogs)
-            m_pendingDeviceUpdates.append(d->ID);
+            enqueueOperation(d->ID, false, d->name);
         qDeleteAll(activeCatalogs);
-        m_pendingBatchTotal = m_pendingDeviceUpdates.size();
 
-        setupDeviceUpdateManagerForDevices();
         startNextDeviceUpdate();
     } else {
         // Run all as a single hierarchy; show one aggregate report at the end
-        m_isBatchUpdate = true;
+        m_isBatchUpdate         = true;
+        m_deviceUpdateIsRunning = true;
+        emit deviceUpdateStateChanged();
 
         setupDeviceUpdateManagerForDevices();
 
@@ -2396,7 +2586,8 @@ void AppManager::stopDeviceUpdate()
 {
     m_waitingForReportAck = false;
     if (m_deviceUpdateManager && m_deviceUpdateManager->operationRunning()) {
-        m_pendingDeviceUpdates.clear();
+        // The queue is left intact: the cancellation handler starts the next
+        // entry. Use Clear to empty the queue.
         m_deviceUpdateManager->requestHardStop();
     }
 }
@@ -2405,7 +2596,7 @@ void AppManager::acknowledgeUpdateReport()
 {
     if (!m_waitingForReportAck) return;
     m_waitingForReportAck = false;
-    startNextDeviceUpdate();
+    scheduleNextOperation();
 }
 //----------------------------------------------------------------------
 void AppManager::gentleStopDeviceUpdate()

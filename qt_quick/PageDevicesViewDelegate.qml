@@ -66,7 +66,8 @@ Kirigami.AbstractCard {
             visible: (card.devType === "Catalog" && card.devActive)
                      || card.devType === "Storage"
                      || card.devType === "Virtual"
-            enabled: !appManager1.deviceUpdateIsRunning
+            // Always enabled: while an operation runs the request is queued
+            // rather than dropped (SpecOperationQueue.md).
             onTriggered: appManager1.updateDevice(card.devId)
         }
         Controls.MenuItem {

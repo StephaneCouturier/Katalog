@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+142"/>
         <location line="+87"/>
         <location line="+14"/>
-        <location line="+3545"/>
+        <location line="+3750"/>
         <source>Search</source>
         <translation>Buscar</translation>
     </message>
     <message>
-        <location line="-3642"/>
+        <location line="-3847"/>
         <source>Stopped</source>
         <translation>Detenido</translation>
     </message>
@@ -44,8 +44,9 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+58"/>
-        <location line="+1630"/>
-        <location line="+1515"/>
+        <location line="+1646"/>
+        <location line="+517"/>
+        <location line="+1187"/>
         <location line="+11"/>
         <location line="+60"/>
         <location line="+344"/>
@@ -53,14 +54,14 @@
         <translation>En progreso</translation>
     </message>
     <message>
-        <location line="-3546"/>
-        <location line="+3183"/>
+        <location line="-3751"/>
+        <location line="+3388"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Completado</translation>
     </message>
     <message>
-        <location line="-2868"/>
+        <location line="-3073"/>
         <source>Empty database path provided</source>
         <translation>Se proporcionó una ruta de base de datos vacía</translation>
     </message>
@@ -146,12 +147,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2118"/>
+        <location line="+2323"/>
         <source>Size</source>
         <translation>Tamaño</translation>
     </message>
     <message>
-        <location line="-2117"/>
+        <location line="-2322"/>
         <source>Date</source>
         <translation>Fecha</translation>
     </message>
@@ -206,7 +207,7 @@
         <translation>Falló la conexión alojada: %1</translation>
     </message>
     <message>
-        <location line="+174"/>
+        <location line="+178"/>
         <source>Provide a name for this new catalog.</source>
         <translation>Indique un nombre para este nuevo catálogo.</translation>
     </message>
@@ -239,22 +240,22 @@ Choose a different name and try again.</source>
 Elija un nombre diferente e inténtelo de nuevo.</translation>
     </message>
     <message>
-        <location line="+46"/>
         <source>A device operation is already running.</source>
-        <translation>Ya se está ejecutando una operación del dispositivo.</translation>
+        <translation type="vanished">Ya se está ejecutando una operación del dispositivo.</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+64"/>
+        <location line="+516"/>
         <source>Create</source>
         <translation>Crear</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="-433"/>
         <source>Catalog creation was stopped.</source>
         <translation>Se detuvo la creación del catálogo.</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+34"/>
         <location line="+19"/>
         <source>The selected device cannot be deleted as long as it has sub-devices.</source>
         <translation>El dispositivo seleccionado no se puede eliminar mientras tenga subdispositivos.</translation>
@@ -280,12 +281,12 @@ Elija un nombre diferente e inténtelo de nuevo.</translation>
         <translation>Almacenamiento</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+41"/>
         <source>Error: %1</source>
         <translation>Error: %1</translation>
     </message>
     <message>
-        <location line="+275"/>
+        <location line="+442"/>
         <source>The selected device is not a catalog.</source>
         <translation>El dispositivo seleccionado no es un catálogo.</translation>
     </message>
@@ -723,7 +724,7 @@ Elija un nombre diferente.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+671"/>
+        <location filename="../qt_quick/Main.qml" line="+684"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>¿Desea &lt;b&gt;eliminar&lt;/b&gt; este dispositivo %1?&lt;br/&gt;&lt;br/&gt;Nombre: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -740,13 +741,13 @@ Elija un nombre diferente.</translation>
         <location line="-361"/>
         <location line="+60"/>
         <location line="+162"/>
-        <location line="+695"/>
+        <location line="+668"/>
         <location line="+117"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location line="-1134"/>
+        <location line="-1107"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+158"/>
@@ -810,30 +811,30 @@ Elija un nombre diferente.</translation>
     </message>
     <message>
         <location line="-957"/>
-        <location line="+1065"/>
+        <location line="+1050"/>
         <source>Explore</source>
         <translation>Explorar</translation>
     </message>
     <message>
-        <location line="-1055"/>
-        <location line="+1290"/>
+        <location line="-1040"/>
+        <location line="+1263"/>
         <source>Backup</source>
         <translation>Copia de seguridad</translation>
     </message>
     <message>
-        <location line="-1285"/>
-        <location line="+1249"/>
+        <location line="-1258"/>
+        <location line="+1222"/>
         <source>Statistics</source>
         <translation>Estadísticas</translation>
     </message>
     <message>
-        <location line="-1244"/>
-        <location line="+1264"/>
+        <location line="-1217"/>
+        <location line="+1237"/>
         <source>Tags</source>
         <translation>Etiquetas</translation>
     </message>
     <message>
-        <location line="-1251"/>
+        <location line="-1224"/>
         <source>Documentation</source>
         <translation>Documentación</translation>
     </message>
@@ -1125,13 +1126,13 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     </message>
     <message>
         <location line="+7"/>
-        <location line="+132"/>
-        <location line="+178"/>
+        <location line="+133"/>
+        <location line="+167"/>
         <source>Stop</source>
         <translation>Detener</translation>
     </message>
     <message>
-        <location line="-303"/>
+        <location line="-293"/>
         <source>Reset</source>
         <translation>Restablecer</translation>
     </message>
@@ -1144,17 +1145,17 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location line="-145"/>
         <location line="+152"/>
         <location line="+56"/>
-        <location line="+107"/>
-        <location line="+51"/>
-        <location line="+81"/>
-        <location line="+118"/>
+        <location line="+108"/>
+        <location line="+35"/>
+        <location line="+86"/>
+        <location line="+101"/>
         <location line="+18"/>
         <location line="+37"/>
         <source>Close</source>
         <translation>Cerrar</translation>
     </message>
     <message>
-        <location line="-570"/>
+        <location line="-543"/>
         <source>Show device info</source>
         <translation>Mostrar información del dispositivo</translation>
     </message>
@@ -1189,7 +1190,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation>Todo activo</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+15"/>
         <source>Snapshot</source>
         <translation>Instantánea</translation>
     </message>
@@ -1208,24 +1209,24 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation type="vanished">Importar</translation>
     </message>
     <message>
-        <location line="+123"/>
+        <location line="+110"/>
         <source>Catalog created successfully.</source>
         <translation>Catálogo creado correctamente.</translation>
     </message>
     <message>
-        <location line="+0"/>
+        <location line="+1"/>
         <source>Catalog creation failed: </source>
         <translation>Error al crear el catálogo: </translation>
     </message>
     <message>
-        <location line="-1116"/>
-        <location line="+1110"/>
-        <location line="+24"/>
+        <location line="-1105"/>
+        <location line="+1095"/>
+        <location line="+28"/>
         <source>Create</source>
         <translation>Crear</translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+31"/>
         <source>Edit Device</source>
         <translation>Editar dispositivo</translation>
     </message>
@@ -2027,12 +2028,12 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1908"/>
-        <location filename="../core/deviceupdatemanager.cpp" line="+1010"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+1040"/>
         <source>Operation cancelled</source>
         <translation>Operación cancelada</translation>
     </message>
     <message>
-        <location filename="../core/deviceupdatemanager.cpp" line="-48"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="-55"/>
         <source>Stopping after current catalog completes...</source>
         <translation>Deteniendo después de que se complete el catálogo actual...</translation>
     </message>
@@ -5751,6 +5752,39 @@ a la papelera?</translation>
     </message>
 </context>
 <context>
+    <name>OperationQueueView</name>
+    <message>
+        <location filename="../qt_quick/OperationQueueView.qml" line="+52"/>
+        <source>Stop</source>
+        <translation type="unfinished">Detener</translation>
+    </message>
+    <message>
+        <location line="+24"/>
+        <source>Queue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>%1 waiting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Clear</source>
+        <translation type="unfinished">Limpiar</translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <source>Create</source>
+        <translation type="unfinished">Crear</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Update</source>
+        <translation type="unfinished">Actualizar</translation>
+    </message>
+</context>
+<context>
     <name>PageBackupForm</name>
     <message>
         <source>in sync</source>
@@ -6852,7 +6886,7 @@ a la papelera?</translation>
         <translation>Actualizar</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>Explore</source>
         <translation>Explorar</translation>
     </message>
@@ -7825,7 +7859,7 @@ Errores: %3</translation>
         <translation>Actualizar</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+14"/>
         <source>Explore</source>
         <translation>Explorar</translation>
     </message>

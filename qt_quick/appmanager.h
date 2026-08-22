@@ -93,6 +93,8 @@ class AppManager : public QObject
     Q_PROPERTY(bool canExpandDevices READ canExpandDevices NOTIFY deviceExpandLevelChanged)
     Q_PROPERTY(bool canCollapseDevices READ canCollapseDevices NOTIFY deviceExpandLevelChanged)
     Q_PROPERTY(bool showDeviceInfo READ getShowDeviceInfo WRITE setShowDeviceInfo NOTIFY showDeviceInfoChanged)
+    Q_PROPERTY(QVariantList operationQueue READ getOperationQueue NOTIFY operationQueueChanged)
+    Q_PROPERTY(int operationQueueWaitingCount READ getOperationQueueWaitingCount NOTIFY operationQueueChanged)
     Q_PROPERTY(bool refreshDeviceStatusOnActivation READ getRefreshDeviceStatusOnActivation WRITE setRefreshDeviceStatusOnActivation NOTIFY refreshDeviceStatusOnActivationChanged)
     Q_PROPERTY(bool showSelectionPage READ getShowSelectionPage WRITE setShowSelectionPage NOTIFY showSelectionPageChanged)
     Q_PROPERTY(bool deviceFilterFromSelection READ getDeviceFilterFromSelection WRITE setDeviceFilterFromSelection NOTIFY deviceFilterFromSelectionChanged)
@@ -325,6 +327,11 @@ public slots:
     Q_INVOKABLE int          addDeviceStorage(int parentId);
     Q_INVOKABLE void         updateDevice(int deviceId);
     Q_INVOKABLE void         updateAllActiveDevices(bool showEachReport = false);
+    // Operation queue (SpecOperationQueue.md)
+    QVariantList             getOperationQueue() const;
+    int                      getOperationQueueWaitingCount() const { return m_pendingDeviceUpdates.size(); }
+    Q_INVOKABLE void         removeQueuedOperation(int index);
+    Q_INVOKABLE void         clearOperationQueue();
     Q_INVOKABLE void         acknowledgeUpdateReport();
     Q_INVOKABLE void         stopDeviceUpdate();
     Q_INVOKABLE void         gentleStopDeviceUpdate();
@@ -452,6 +459,7 @@ signals:
     void deviceListModelChanged();
     void deviceExpandLevelChanged();
     void showDeviceInfoChanged();
+    void operationQueueChanged();
     void refreshDeviceStatusOnActivationChanged();
     void showSelectionPageChanged();
     void searchKeepsSelectionChanged();
@@ -566,9 +574,38 @@ private:
     // Devices page state
     bool    m_deviceUpdateIsRunning  = false;
     QString m_deviceUpdateStatusText;
-    QList<int> m_pendingDeviceUpdates;
+
+    // Operation queue (SpecOperationQueue.md). One entry per requested catalog
+    // create or device update; they run strictly one at a time, in order.
+    // A create's device and catalog rows already exist in the database by the
+    // time it is queued, so an entry only needs the device id.
+    struct QueuedOperation {
+        int     deviceId = 0;
+        bool    isCreate = false;
+        QString deviceName;
+    };
+    QList<QueuedOperation> m_pendingDeviceUpdates;
+    QueuedOperation        m_runningOperation;
+    bool                   m_hasRunningOperation = false;
+    void enqueueOperation(int deviceId, bool isCreate, const QString &deviceName);
+    bool isDeviceQueuedOrRunning(int deviceId) const;
+    void emitQueueChanged();
+    // Releases the entry that just ended and hands over to the next one; called
+    // from every completion, cancellation and error handler.
+    void finishRunningOperation();
+    // Starts the next entry once core has finished with the previous one.
+    void scheduleNextOperation();
+    bool    m_nextOperationScheduled = false;
+    // How long to wait before starting the next entry. Must outlast core's own
+    // deferred teardown of the operation that just ended — DeviceUpdateManager
+    // arms cleanupOperation() 10 ms after completion — and the wait is invisible
+    // next to operations that run for minutes.
+    static constexpr int operationChainDelayMs = 150;
+    // Entries started since the queue was last empty; with the entries still
+    // waiting it gives the "catalog N of M" batch context, which stays right
+    // when the queue grows mid-drain.
+    int     m_operationsStarted      = 0;
     int     m_currentUpdateDeviceId  = 0;
-    int     m_pendingBatchTotal      = 0;
     bool    m_isBatchUpdate          = false;
     bool    m_showEachUpdateReport   = false;
     bool    m_waitingForReportAck    = false;

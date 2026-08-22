@@ -60,7 +60,8 @@ Kirigami.AbstractCard {
             visible:   model.type === "Storage" || model.type === "Virtual"
                        || (model.type === "Catalog" && model.isActive)
             height:    visible ? implicitHeight : 0
-            enabled:   !appManager1.deviceUpdateIsRunning
+            // Always enabled: while an operation runs the request is queued
+            // rather than dropped (SpecOperationQueue.md).
             onTriggered: appManager1.updateDevice(model.deviceId)
         }
 
