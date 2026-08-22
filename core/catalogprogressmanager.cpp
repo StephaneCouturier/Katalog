@@ -181,6 +181,17 @@ void CatalogProgressManager::connectToCatalogManager(CatalogManager *catalogMana
                         );
                 }
 
+                // The catalog was created and kept, but its metadata and/or
+                // checksum scan was stopped. Say so, and for longer than the
+                // usual 5 s, since it tells the user work is still outstanding.
+                const QString incomplete = m_catalogManager->lastScanIncompleteMessage();
+                if (!incomplete.isEmpty()) {
+                    builder.setStatus(QCoreApplication::translate("MainWindow", "Stopped"));
+                    builder.setCurrentItem(incomplete);
+                    emit statusMessageChanged(builder.build(), 15000);
+                    return;
+                }
+
                 emit statusMessageChanged(builder.build(), 5000);
             });
 }

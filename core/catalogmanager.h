@@ -105,11 +105,19 @@ public:
     QString m_lastCatalogName;
     qint64 m_lastFilesProcessed = 0;
     qint64 m_lastTotalFiles = 0;
+    QString m_lastScanIncompleteMessage;
+    bool m_lastCatalogCommitted = false;
 
     CatalogJobStoppable::OperationType lastOperationType() const { return m_lastOperationType; }
     QString lastCatalogName() const { return m_lastCatalogName; }
     qint64 lastFilesProcessed() const { return m_lastFilesProcessed; }
     qint64 lastTotalFiles() const { return m_lastTotalFiles; }
+    // Non-empty when the created catalog was kept but its metadata/checksum
+    // scan was stopped; the completion message appends it.
+    QString lastScanIncompleteMessage() const { return m_lastScanIncompleteMessage; }
+    // True when the created catalog's file list was committed, so a cancellation
+    // must keep the catalog rather than delete it.
+    bool lastCatalogCommitted() const { return m_lastCatalogCommitted; }
 
     QString lastCurrentPath() const { return m_lastCurrentPath; }
 

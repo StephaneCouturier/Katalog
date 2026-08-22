@@ -1735,14 +1735,14 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+40"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-79"/>
         <location line="+76"/>
-        <location line="+61"/>
+        <location line="+72"/>
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-12"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="-92"/>
-        <location line="+143"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-103"/>
+        <location line="+154"/>
         <location filename="../core/searchjobstoppable.cpp" line="+430"/>
         <source>File Types Updated</source>
         <translation type="unfinished"></translation>
@@ -2001,9 +2001,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+209"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+172"/>
         <location line="+243"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="-190"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-201"/>
         <location line="+76"/>
-        <location line="+61"/>
+        <location line="+72"/>
         <source>Create</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4343,7 +4343,7 @@ Split was not performed.</translation>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-600"/>
         <location line="+109"/>
         <location line="+101"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="-132"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-143"/>
         <source>Cancelled</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4351,7 +4351,7 @@ Split was not performed.</translation>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+62"/>
         <location line="+21"/>
         <location filename="../core/catalogprogressmanager.cpp" line="+18"/>
-        <location line="+143"/>
+        <location line="+154"/>
         <location filename="../core/searchjobstoppable.cpp" line="+38"/>
         <source>Loaded</source>
         <translation type="unfinished"></translation>
@@ -5272,6 +5272,7 @@ to the trash?</source>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+101"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+41"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-60"/>
         <source>Stopped</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5283,7 +5284,7 @@ to the trash?</source>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-97"/>
         <location line="+15"/>
         <location line="+64"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="-24"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="+36"/>
         <location filename="../core/searchprogressmanager.cpp" line="-117"/>
         <source>In Progress</source>
         <translation type="unfinished"></translation>
@@ -5434,27 +5435,42 @@ to the trash?</source>
         <translation>Collection Update</translation>
     </message>
     <message>
-        <location filename="../core/catalogjobstoppable.cpp" line="+1439"/>
+        <location filename="../core/catalogjobstoppable.cpp" line="+260"/>
+        <source>The file list is saved. Metadata and checksum scanning is incomplete and continues when the catalog is updated.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The file list is saved. Metadata scanning is incomplete and continues when the catalog is updated.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The file list is saved. Checksum scanning is incomplete and continues when the catalog is updated.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1146"/>
         <location filename="../core/catalogprogressmanager.cpp" line="+56"/>
         <source>Saving</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-167"/>
-        <location line="+146"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-178"/>
+        <location line="+157"/>
         <source>Counted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-138"/>
+        <location line="-149"/>
         <location line="+67"/>
-        <location line="+140"/>
+        <location line="+151"/>
         <source>Indexed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-191"/>
-        <location line="+153"/>
+        <location line="-202"/>
+        <location line="+164"/>
         <source>Metadata Extracted</source>
         <translation type="unfinished"></translation>
     </message>

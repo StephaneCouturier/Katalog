@@ -1492,7 +1492,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location filename="../core/catalogprogressmanager.cpp" line="+127"/>
-        <location line="+153"/>
+        <location line="+164"/>
         <source>Metadata Extracted</source>
         <translation>Метаданни извлечени</translation>
     </message>
@@ -1602,29 +1602,44 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Профилът за резервно копие е създаден.</translation>
     </message>
     <message>
-        <location filename="../core/catalogjobstoppable.cpp" line="+1439"/>
+        <location filename="../core/catalogjobstoppable.cpp" line="+260"/>
+        <source>The file list is saved. Metadata and checksum scanning is incomplete and continues when the catalog is updated.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The file list is saved. Metadata scanning is incomplete and continues when the catalog is updated.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The file list is saved. Checksum scanning is incomplete and continues when the catalog is updated.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1146"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
         <translation>Записване</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-159"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-170"/>
         <location line="+67"/>
-        <location line="+140"/>
+        <location line="+151"/>
         <source>Indexed</source>
         <translation>Индексиран</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+313"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="-199"/>
-        <location line="+143"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-210"/>
+        <location line="+154"/>
         <location filename="../core/searchjobstoppable.cpp" line="+430"/>
         <source>File Types Updated</source>
         <translation>Файловите типове са актуализирани</translation>
     </message>
     <message>
-        <location filename="../core/catalogprogressmanager.cpp" line="-159"/>
-        <location line="+146"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-170"/>
+        <location line="+157"/>
         <source>Counted</source>
         <translation>Преброен</translation>
     </message>
@@ -1663,7 +1678,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+48"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+285"/>
         <location line="+36"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="-96"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-107"/>
         <location filename="../core/searchprogressmanager.cpp" line="-13"/>
         <source>Completed</source>
         <translation>Завършен</translation>
@@ -1685,7 +1700,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-19"/>
         <location line="+21"/>
         <location filename="../core/catalogprogressmanager.cpp" line="+18"/>
-        <location line="+143"/>
+        <location line="+154"/>
         <location filename="../core/searchjobstoppable.cpp" line="+38"/>
         <source>Loaded</source>
         <translation>Зареден</translation>
@@ -1706,6 +1721,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+72"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-127"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-36"/>
         <source>Stopped</source>
         <translation>Спрян</translation>
     </message>
@@ -2410,9 +2426,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-102"/>
         <location line="+36"/>
         <location line="+40"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="-140"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-115"/>
         <location line="+76"/>
-        <location line="+61"/>
+        <location line="+72"/>
         <source>Update</source>
         <translation>Обновяване</translation>
     </message>
@@ -2668,9 +2684,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+209"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-116"/>
         <location line="+243"/>
-        <location filename="../core/catalogprogressmanager.cpp" line="-139"/>
+        <location filename="../core/catalogprogressmanager.cpp" line="-150"/>
         <location line="+76"/>
-        <location line="+61"/>
+        <location line="+72"/>
         <source>Create</source>
         <translation>Създай</translation>
     </message>

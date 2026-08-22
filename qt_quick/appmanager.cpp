@@ -1911,16 +1911,30 @@ void AppManager::onCatalogCreationError(const QString &error)
 //----------------------------------------------------------------------
 void AppManager::onCatalogCreationCancelled()
 {
-    if (m_creatingDevice) {
+    // A stop during the metadata/checksum phase happens after the file list is
+    // committed. The catalog is complete as an index and is kept; only the
+    // optional scan is unfinished, and the next update finishes it. Deleting the
+    // device here would throw away a catalog the user just spent minutes building.
+    const bool keptCatalog = m_deviceUpdateManager && m_deviceUpdateManager->lastCatalogCommitted();
+    const QString incompleteMessage = m_deviceUpdateManager
+                                      ? m_deviceUpdateManager->lastScanIncompleteMessage()
+                                      : QString();
+
+    if (!keptCatalog && m_creatingDevice) {
         m_creatingDevice->deleteDevice(false);
-        m_creatingDevice = nullptr;
     }
+    m_creatingDevice = nullptr;
+
     m_catalogIsCreating = false;
     m_catalogStatusText.clear();
     emit catalogIsCreatingChanged();
     emit catalogStatusTextChanged();
     refreshDeviceList();
-    emit catalogCreationCompleted(false, tr("Catalog creation was stopped."));
+
+    if (keptCatalog)
+        emit catalogCreationCompleted(true, incompleteMessage);
+    else
+        emit catalogCreationCompleted(false, tr("Catalog creation was stopped."));
 }
 //----------------------------------------------------------------------
 // Storage pre-selection for Create page (used by DeviceTreeComboBox storageOnly mode)

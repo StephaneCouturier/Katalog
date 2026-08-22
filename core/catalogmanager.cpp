@@ -268,6 +268,16 @@ void CatalogManager::onJobResult(KJob *job)
 {
 
     try {
+        // Capture the engine's end state before branching: a stop during the
+        // metadata/checksum phase arrives here as KilledJobError, and the
+        // handlers still need to know the catalog was committed and kept.
+        m_lastScanIncompleteMessage.clear();
+        m_lastCatalogCommitted = false;
+        if (CatalogJobStoppable* endEngine = getCurrentCatalogEngine()) {
+            m_lastScanIncompleteMessage = endEngine->scanIncompleteMessage();
+            m_lastCatalogCommitted      = endEngine->catalogCommitted();
+        }
+
         if (job->error() == KJob::KilledJobError) {
             // Phase is already set correctly from where cancel was triggered
             // Don't change it - just emit signal so handlers can read lastPhase

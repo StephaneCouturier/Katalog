@@ -159,6 +159,20 @@ public:
     // on every batch.
     ParallelMetadataExtractor metadataExtractor;
 
+    // Set once the created catalog's file list is committed. After that the
+    // catalog is kept even if the user stops during metadata/checksum scanning.
+    bool m_catalogCommitted = false;
+
+    // Non-empty when the catalog was kept but its metadata and/or checksum scan
+    // did not finish; holds the ready-to-display explanation for the user.
+    QString m_scanIncompleteMessage;
+
+public:
+    QString scanIncompleteMessage() const { return m_scanIncompleteMessage; }
+    // True once a created catalog's file list is committed, so a stop after that
+    // point must keep the catalog instead of discarding it.
+    bool catalogCommitted() const { return m_catalogCommitted; }
+
     QList<qint64> getResults() const;
 
     void requestHardStop();

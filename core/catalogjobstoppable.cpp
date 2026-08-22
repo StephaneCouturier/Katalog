@@ -117,7 +117,11 @@ void CatalogJobStoppable::processCatalog()
         // Route to correct operation
         if (m_operationType == CreateCatalog) {
             createCatalogWithProgress();
-            if (shouldContinue()) {
+            // Complete whenever the file list was committed, even if the user
+            // stopped during metadata or checksum scanning. Completion writes the
+            // device statistics and, in Memory mode, the .idx files — skipping it
+            // would discard a catalog that is already committed to the database.
+            if (shouldContinue() || m_catalogCommitted) {
                 completeCatalogCreation();
             }
         } else if (m_operationType == VerifyMimeTypes) {
@@ -213,8 +217,24 @@ void CatalogJobStoppable::createCatalogWithProgress()
     // Commit transaction
     QSqlQuery commitQuery(QSqlDatabase::database(m_connectionName));
     Database::commitTransaction(m_connectionName);
+    m_catalogCommitted = true;
 
-    // Step: Calculate checksums for all files (if enabled)
+    // From here the catalog exists and is kept. The scanning phases below are
+    // optional and resumable: stopping in one of them leaves the file list
+    // intact, and the next catalog update finishes what was not scanned
+    // (both phases select on their extraction date being NULL).
+
+    // Phase 2: Extract metadata (if enabled)
+    if (catalog->includeMetadata != Catalog::METADATA_NONE) {
+        QList<QVariantList> filesToExtract = findFilesWithoutMetadata();
+        if (!filesToExtract.isEmpty()) {
+            extractMetadataForChangedFiles(filesToExtract);
+        }
+    }
+    const bool metadataIncomplete = (catalog->includeMetadata != Catalog::METADATA_NONE)
+                                    && !shouldContinue();
+
+    // Phase 3: Calculate checksums (if enabled)
     if (catalog->includeChecksum != Catalog::CHECKSUM_NONE) {
 
         QList<QVariantList> filesToChecksum = findFilesWithoutChecksum();
@@ -225,11 +245,29 @@ void CatalogJobStoppable::createCatalogWithProgress()
         }
     } else {
     }
+    const bool checksumIncomplete = (catalog->includeChecksum != Catalog::CHECKSUM_NONE)
+                                    && !shouldContinue();
 
     // Update catalog metadata
     catalog->updateFileCount();
     catalog->updateTotalFileSize();
     catalog->saveCatalog();
+
+    // Tell the user the catalog survived and how the unfinished scan completes.
+    if (metadataIncomplete || checksumIncomplete) {
+        QString detail;
+        if (metadataIncomplete && checksumIncomplete)
+            detail = QCoreApplication::translate("MainWindow",
+                        "The file list is saved. Metadata and checksum scanning is incomplete and continues when the catalog is updated.");
+        else if (metadataIncomplete)
+            detail = QCoreApplication::translate("MainWindow",
+                        "The file list is saved. Metadata scanning is incomplete and continues when the catalog is updated.");
+        else
+            detail = QCoreApplication::translate("MainWindow",
+                        "The file list is saved. Checksum scanning is incomplete and continues when the catalog is updated.");
+
+        m_scanIncompleteMessage = detail;
+    }
 
     // Final progress update
     //emitProgressUpdate(processedCount, countedTotalFiles, "temp_text_for_test2");
@@ -1158,74 +1196,9 @@ void CatalogJobStoppable::processBatch(QStringList& fileNames, QStringList& file
         }
 */
 
-        // Metadata extraction - PARALLEL for performance
-        if (catalog->includeMetadata != Catalog::METADATA_NONE) {
-            QElapsedTimer batchTimer;
-            batchTimer.start();
-
-            QStringList extractFilePaths;
-            QStringList extractFileNames;
-            QStringList extractFolderPaths;
-
-            for (int i = 0; i < fileFullPaths.size(); ++i) {
-                QString filePath = fileFullPaths[i];
-                if (!FileMetadata::isMetadataSupported(filePath)) {
-                    continue;
-                }
-
-                extractFilePaths << filePath;
-                extractFileNames << fileNames[i];
-                extractFolderPaths << fileFolderPaths[i];
-            }
-
-            if (!extractFilePaths.isEmpty()) {
-                QElapsedTimer extractTimer;
-                extractTimer.start();
-
-                // Determine thread count based on system and database mode
-                int optimalThreads = 4;  // Safe default
-
-                int availableCores = QThread::idealThreadCount();
-                if (availableCores > 0) {
-                    // Use formula: min(available_cores - 1, 8) for safety
-                    // Leave 1 core for UI thread and system
-                    optimalThreads = qMin(availableCores - 1, 8);
-
-                    // For file-based DBs, be more conservative (I/O bound)
-                    if (m_databaseMode != "Memory") {
-                        optimalThreads = qMin(optimalThreads, 4);
-                    }
-                }
-
-
-                QList<MetadataExtractionResult> results = metadataExtractor.extractBatch(
-                    extractFilePaths,
-                    extractFileNames,
-                    extractFolderPaths,
-                    catalog->includeMetadata,
-                    optimalThreads  // Use calculated nb of threads
-                    );
-
-                QStringList batchFileNames;
-                QStringList batchFolderPaths;
-                QList<QVariantMap> batchMetadata;
-
-                for (const auto& result : results) {
-                    if (!result.metadata.isEmpty()) {
-                        batchFileNames << result.fileName;
-                        batchFolderPaths << result.folderPath;
-                        batchMetadata << result.metadata;
-                    }
-                }
-
-                if (!batchFileNames.isEmpty()) {
-                    FileMetadata::batchUpdateFileMetadata(m_connectionName, catalog->ID,
-                                                          batchFileNames, batchFolderPaths,
-                                                          batchMetadata);
-                }
-
-            }
-        }
+        // Metadata is NOT extracted here. It runs as a separate phase after the
+        // catalog is committed (see createCatalogWithProgress), so stopping during
+        // the scan keeps the file list instead of discarding the whole catalog.
 
         // Insert folders from files
         QStringList uniqueFolders = fileFolderPaths;

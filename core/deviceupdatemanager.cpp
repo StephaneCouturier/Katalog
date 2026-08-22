@@ -495,6 +495,16 @@ void DeviceUpdateManager::startCatalogOperation(Device* device)
 
 }
 
+bool DeviceUpdateManager::lastCatalogCommitted() const
+{
+    return m_catalogManager && m_catalogManager->lastCatalogCommitted();
+}
+
+QString DeviceUpdateManager::lastScanIncompleteMessage() const
+{
+    return m_catalogManager ? m_catalogManager->lastScanIncompleteMessage() : QString();
+}
+
 void DeviceUpdateManager::setCatalogProgressManager(CatalogProgressManager* catalogProgressManager)
 {
     m_catalogProgressManager = catalogProgressManager;
@@ -987,6 +997,13 @@ void DeviceUpdateManager::requestGentleStop()
 
 void DeviceUpdateManager::handleOperationCancellation()
 {
+    // Called from several places for a single stop: stopOperation() runs it as
+    // soon as the user asks, and onCatalogOperationCancelled() runs it again
+    // when the job actually terminates. Without this guard the operation is
+    // cancelled twice and every handler — status message, notification — fires
+    // twice. m_operationRunning is cleared below, so the second call returns here.
+    if (!m_operationRunning)
+        return;
 
     // ENHANCED: For Storage batch operations, update counts properly
     if (m_currentStorageDevice) {

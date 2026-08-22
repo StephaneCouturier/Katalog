@@ -72,6 +72,18 @@ public:
 
     int getProcessedStorageDevices() const { return m_processedStorageDevices; }
 
+    /**
+     * @brief True when a cancelled catalog creation had already committed its
+     *        file list, so the catalog must be kept rather than deleted.
+     */
+    bool lastCatalogCommitted() const;
+
+    /**
+     * @brief Explanation to show when a catalog was kept with an unfinished
+     *        metadata/checksum scan; empty when the scan completed.
+     */
+    QString lastScanIncompleteMessage() const;
+
 signals:
     // Main operation lifecycle
     void operationStarted();

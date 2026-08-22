@@ -1473,9 +1473,13 @@ Kirigami.ApplicationWindow {
             target: appManager1
             function onCatalogCreationCompleted(success, report) {
                 if (pageCreate.visible) {
+                    // On success `report` is non-empty only when the catalog was
+                    // kept with an unfinished metadata/checksum scan; it already
+                    // explains what happened, so it replaces the generic text.
                     showPassiveNotification(
-                        success ? qsTr("Catalog created successfully.") : qsTr("Catalog creation failed: ") + report,
-                        success ? "short" : "long"
+                        success ? (report.length > 0 ? report : qsTr("Catalog created successfully."))
+                                : qsTr("Catalog creation failed: ") + report,
+                        (success && report.length === 0) ? "short" : "long"
                     )
                     if (success)
                         appManager1.refreshDeviceList()
