@@ -5733,7 +5733,7 @@ til papirkurven?</translation>
     <message>
         <location line="+8"/>
         <source>Copy JSON</source>
-        <translation type="unfinished">Kopier JSON</translation>
+        <translation>Kopier JSON</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -5748,7 +5748,7 @@ til papirkurven?</translation>
     <message>
         <location line="+14"/>
         <source>Value</source>
-        <translation type="unfinished">Verdi</translation>
+        <translation>Verdi</translation>
     </message>
 </context>
 <context>
@@ -5756,32 +5756,32 @@ til papirkurven?</translation>
     <message>
         <location filename="../qt_quick/OperationQueueView.qml" line="+52"/>
         <source>Stop</source>
-        <translation type="unfinished">Stopp</translation>
+        <translation>Stopp</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Kø</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>%1 waiting</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 venter</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Clear</source>
-        <translation type="unfinished">Tøm</translation>
+        <translation>Tøm</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Create</source>
-        <translation type="unfinished">Opprett</translation>
+        <translation>Opprett</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Update</source>
-        <translation type="unfinished">Oppdater</translation>
+        <translation>Oppdater</translation>
     </message>
 </context>
 <context>
@@ -7023,7 +7023,7 @@ til papirkurven?</translation>
     <message>
         <location line="+21"/>
         <source>Show extended metadata (JSON)</source>
-        <translation type="unfinished">Vis utvidet metadata (JSON)</translation>
+        <translation>Vis utvidet metadata (JSON)</translation>
     </message>
     <message>
         <location line="+22"/>

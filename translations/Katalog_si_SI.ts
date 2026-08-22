@@ -5734,7 +5734,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+8"/>
         <source>Copy JSON</source>
-        <translation type="unfinished">Kopiraj JSON</translation>
+        <translation>Kopiraj JSON</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -5749,7 +5749,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+14"/>
         <source>Value</source>
-        <translation type="unfinished">Vrednost</translation>
+        <translation>Vrednost</translation>
     </message>
 </context>
 <context>
@@ -5757,32 +5757,32 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location filename="../qt_quick/OperationQueueView.qml" line="+52"/>
         <source>Stop</source>
-        <translation type="unfinished">Ustavi</translation>
+        <translation>Ustavi</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Čakalna vrsta</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>%1 waiting</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 na čakanju</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Clear</source>
-        <translation type="unfinished">Počisti</translation>
+        <translation>Počisti</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Create</source>
-        <translation type="unfinished">Ustvari</translation>
+        <translation>Ustvari</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Update</source>
-        <translation type="unfinished">Posodobi</translation>
+        <translation>Posodobi</translation>
     </message>
 </context>
 <context>
@@ -7024,7 +7024,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+21"/>
         <source>Show extended metadata (JSON)</source>
-        <translation type="unfinished">Prikaži razširjene metapodatke (JSON)</translation>
+        <translation>Prikaži razširjene metapodatke (JSON)</translation>
     </message>
     <message>
         <location line="+22"/>

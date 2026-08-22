@@ -5732,7 +5732,7 @@ to the trash?</source>
     <message>
         <location line="+8"/>
         <source>Copy JSON</source>
-        <translation type="unfinished">Kopijuoti JSON</translation>
+        <translation>Kopijuoti JSON</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -5747,7 +5747,7 @@ to the trash?</source>
     <message>
         <location line="+14"/>
         <source>Value</source>
-        <translation type="unfinished">Reikšmė</translation>
+        <translation>Reikšmė</translation>
     </message>
 </context>
 <context>
@@ -5755,32 +5755,32 @@ to the trash?</source>
     <message>
         <location filename="../qt_quick/OperationQueueView.qml" line="+52"/>
         <source>Stop</source>
-        <translation type="unfinished">Sustabdyti</translation>
+        <translation>Sustabdyti</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Eilė</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>%1 waiting</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 laukia</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Clear</source>
-        <translation type="unfinished">Išvalyti</translation>
+        <translation>Išvalyti</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Create</source>
-        <translation type="unfinished">Sukurti</translation>
+        <translation>Sukurti</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Update</source>
-        <translation type="unfinished">Atnaujinti</translation>
+        <translation>Atnaujinti</translation>
     </message>
 </context>
 <context>
@@ -7022,7 +7022,7 @@ to the trash?</source>
     <message>
         <location line="+21"/>
         <source>Show extended metadata (JSON)</source>
-        <translation type="unfinished">Rodyti išplėstinius metaduomenis (JSON)</translation>
+        <translation>Rodyti išplėstinius metaduomenis (JSON)</translation>
     </message>
     <message>
         <location line="+22"/>

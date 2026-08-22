@@ -5733,7 +5733,7 @@ do kosza?</translation>
     <message>
         <location line="+8"/>
         <source>Copy JSON</source>
-        <translation type="unfinished">Kopiuj JSON</translation>
+        <translation>Kopiuj JSON</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -5748,7 +5748,7 @@ do kosza?</translation>
     <message>
         <location line="+14"/>
         <source>Value</source>
-        <translation type="unfinished">Wartość</translation>
+        <translation>Wartość</translation>
     </message>
 </context>
 <context>
@@ -5756,32 +5756,32 @@ do kosza?</translation>
     <message>
         <location filename="../qt_quick/OperationQueueView.qml" line="+52"/>
         <source>Stop</source>
-        <translation type="unfinished">Zatrzymaj</translation>
+        <translation>Zatrzymaj</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolejka</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>%1 waiting</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 oczekujących</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Clear</source>
-        <translation type="unfinished">Wyczyść</translation>
+        <translation>Wyczyść</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Create</source>
-        <translation type="unfinished">Utwórz</translation>
+        <translation>Utwórz</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Update</source>
-        <translation type="unfinished">Aktualizuj</translation>
+        <translation>Aktualizuj</translation>
     </message>
 </context>
 <context>
@@ -7023,7 +7023,7 @@ do kosza?</translation>
     <message>
         <location line="+21"/>
         <source>Show extended metadata (JSON)</source>
-        <translation type="unfinished">Pokaż rozszerzone metadane (JSON)</translation>
+        <translation>Pokaż rozszerzone metadane (JSON)</translation>
     </message>
     <message>
         <location line="+22"/>

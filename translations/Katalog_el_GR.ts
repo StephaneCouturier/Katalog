@@ -5734,7 +5734,7 @@ Split was not performed.</source>
     <message>
         <location line="+8"/>
         <source>Copy JSON</source>
-        <translation type="unfinished">Αντιγραφή JSON</translation>
+        <translation>Αντιγραφή JSON</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -5749,7 +5749,7 @@ Split was not performed.</source>
     <message>
         <location line="+14"/>
         <source>Value</source>
-        <translation type="unfinished">Τιμή</translation>
+        <translation>Τιμή</translation>
     </message>
 </context>
 <context>
@@ -5757,32 +5757,32 @@ Split was not performed.</source>
     <message>
         <location filename="../qt_quick/OperationQueueView.qml" line="+52"/>
         <source>Stop</source>
-        <translation type="unfinished">Διακοπή</translation>
+        <translation>Διακοπή</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Ουρά</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>%1 waiting</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 σε αναμονή</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Clear</source>
-        <translation type="unfinished">Εκκαθάριση</translation>
+        <translation>Εκκαθάριση</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Create</source>
-        <translation type="unfinished">Δημιουργία</translation>
+        <translation>Δημιουργία</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Update</source>
-        <translation type="unfinished">Ενημέρωση</translation>
+        <translation>Ενημέρωση</translation>
     </message>
 </context>
 <context>
@@ -7024,7 +7024,7 @@ Split was not performed.</source>
     <message>
         <location line="+21"/>
         <source>Show extended metadata (JSON)</source>
-        <translation type="unfinished">Εμφάνιση εκτεταμένων μεταδεδομένων (JSON)</translation>
+        <translation>Εμφάνιση εκτεταμένων μεταδεδομένων (JSON)</translation>
     </message>
     <message>
         <location line="+22"/>

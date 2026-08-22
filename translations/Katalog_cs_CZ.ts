@@ -1129,7 +1129,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <location line="+133"/>
         <location line="+167"/>
         <source>Stop</source>
-        <translation>Zastávka</translation>
+        <translation>Zastavit</translation>
     </message>
     <message>
         <location line="-293"/>
@@ -2969,7 +2969,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <location line="+4443"/>
         <location line="+2463"/>
         <source>Stop</source>
-        <translation>Zastávka</translation>
+        <translation>Zastavit</translation>
     </message>
     <message>
         <location line="-6272"/>
@@ -5733,7 +5733,7 @@ Rozdělení nebylo provedeno.</translation>
     <message>
         <location line="+8"/>
         <source>Copy JSON</source>
-        <translation type="unfinished">Kopírovat JSON</translation>
+        <translation>Kopírovat JSON</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -5748,7 +5748,7 @@ Rozdělení nebylo provedeno.</translation>
     <message>
         <location line="+14"/>
         <source>Value</source>
-        <translation type="unfinished">Hodnota</translation>
+        <translation>Hodnota</translation>
     </message>
 </context>
 <context>
@@ -5756,32 +5756,32 @@ Rozdělení nebylo provedeno.</translation>
     <message>
         <location filename="../qt_quick/OperationQueueView.qml" line="+52"/>
         <source>Stop</source>
-        <translation type="unfinished">Zastávka</translation>
+        <translation>Zastavit</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Fronta</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>%1 waiting</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 čekajících</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Clear</source>
-        <translation type="unfinished">Vymazat</translation>
+        <translation>Vymazat</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Create</source>
-        <translation type="unfinished">Vytvořit</translation>
+        <translation>Vytvořit</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Update</source>
-        <translation type="unfinished">Aktualizujte</translation>
+        <translation>Aktualizujte</translation>
     </message>
 </context>
 <context>
@@ -7023,7 +7023,7 @@ Rozdělení nebylo provedeno.</translation>
     <message>
         <location line="+21"/>
         <source>Show extended metadata (JSON)</source>
-        <translation type="unfinished">Zobrazit rozšířená metadata (JSON)</translation>
+        <translation>Zobrazit rozšířená metadata (JSON)</translation>
     </message>
     <message>
         <location line="+22"/>

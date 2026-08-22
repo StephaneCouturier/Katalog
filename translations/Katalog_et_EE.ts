@@ -5733,7 +5733,7 @@ Jagamist ei tehtud.</translation>
     <message>
         <location line="+8"/>
         <source>Copy JSON</source>
-        <translation type="unfinished">Kopeeri JSON</translation>
+        <translation>Kopeeri JSON</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -5748,7 +5748,7 @@ Jagamist ei tehtud.</translation>
     <message>
         <location line="+14"/>
         <source>Value</source>
-        <translation type="unfinished">Väärtus</translation>
+        <translation>Väärtus</translation>
     </message>
 </context>
 <context>
@@ -5756,32 +5756,32 @@ Jagamist ei tehtud.</translation>
     <message>
         <location filename="../qt_quick/OperationQueueView.qml" line="+52"/>
         <source>Stop</source>
-        <translation type="unfinished">Peata</translation>
+        <translation>Peata</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Järjekord</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>%1 waiting</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ootel</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Clear</source>
-        <translation type="unfinished">Tühjenda</translation>
+        <translation>Tühjenda</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Create</source>
-        <translation type="unfinished">Loo</translation>
+        <translation>Loo</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Update</source>
-        <translation type="unfinished">Värskenda</translation>
+        <translation>Värskenda</translation>
     </message>
 </context>
 <context>
@@ -7023,7 +7023,7 @@ Jagamist ei tehtud.</translation>
     <message>
         <location line="+21"/>
         <source>Show extended metadata (JSON)</source>
-        <translation type="unfinished">Kuva laiendatud metaandmed (JSON)</translation>
+        <translation>Kuva laiendatud metaandmed (JSON)</translation>
     </message>
     <message>
         <location line="+22"/>

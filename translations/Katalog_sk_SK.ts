@@ -5733,7 +5733,7 @@ do koša?</translation>
     <message>
         <location line="+8"/>
         <source>Copy JSON</source>
-        <translation type="unfinished">Kopírovať JSON</translation>
+        <translation>Kopírovať JSON</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -5748,7 +5748,7 @@ do koša?</translation>
     <message>
         <location line="+14"/>
         <source>Value</source>
-        <translation type="unfinished">Hodnota</translation>
+        <translation>Hodnota</translation>
     </message>
 </context>
 <context>
@@ -5756,32 +5756,32 @@ do koša?</translation>
     <message>
         <location filename="../qt_quick/OperationQueueView.qml" line="+52"/>
         <source>Stop</source>
-        <translation type="unfinished">Zastaviť</translation>
+        <translation>Zastaviť</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Front</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>%1 waiting</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 čakajúcich</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Clear</source>
-        <translation type="unfinished">Vymazať</translation>
+        <translation>Vymazať</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Create</source>
-        <translation type="unfinished">Vytvoriť</translation>
+        <translation>Vytvoriť</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Update</source>
-        <translation type="unfinished">Aktualizovať</translation>
+        <translation>Aktualizovať</translation>
     </message>
 </context>
 <context>
@@ -7023,7 +7023,7 @@ do koša?</translation>
     <message>
         <location line="+21"/>
         <source>Show extended metadata (JSON)</source>
-        <translation type="unfinished">Zobraziť rozšírené metadáta (JSON)</translation>
+        <translation>Zobraziť rozšírené metadáta (JSON)</translation>
     </message>
     <message>
         <location line="+22"/>

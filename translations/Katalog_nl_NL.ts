@@ -5732,7 +5732,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+8"/>
         <source>Copy JSON</source>
-        <translation type="unfinished">JSON kopiëren</translation>
+        <translation>JSON kopiëren</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -5747,7 +5747,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+14"/>
         <source>Value</source>
-        <translation type="unfinished">Waarde</translation>
+        <translation>Waarde</translation>
     </message>
 </context>
 <context>
@@ -5755,32 +5755,32 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location filename="../qt_quick/OperationQueueView.qml" line="+52"/>
         <source>Stop</source>
-        <translation type="unfinished">Stoppen</translation>
+        <translation>Stoppen</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Wachtrij</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>%1 waiting</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 wachtend</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Clear</source>
-        <translation type="unfinished">Wissen</translation>
+        <translation>Wissen</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Create</source>
-        <translation type="unfinished">Maken</translation>
+        <translation>Maken</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Update</source>
-        <translation type="unfinished">Bijwerken</translation>
+        <translation>Bijwerken</translation>
     </message>
 </context>
 <context>
@@ -7022,7 +7022,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+21"/>
         <source>Show extended metadata (JSON)</source>
-        <translation type="unfinished">Uitgebreide metadata tonen (JSON)</translation>
+        <translation>Uitgebreide metadata tonen (JSON)</translation>
     </message>
     <message>
         <location line="+22"/>

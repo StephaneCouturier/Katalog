@@ -5733,7 +5733,7 @@ uz miskasti?</translation>
     <message>
         <location line="+8"/>
         <source>Copy JSON</source>
-        <translation type="unfinished">Kopēt JSON</translation>
+        <translation>Kopēt JSON</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -5748,7 +5748,7 @@ uz miskasti?</translation>
     <message>
         <location line="+14"/>
         <source>Value</source>
-        <translation type="unfinished">Vērtība</translation>
+        <translation>Vērtība</translation>
     </message>
 </context>
 <context>
@@ -5756,32 +5756,32 @@ uz miskasti?</translation>
     <message>
         <location filename="../qt_quick/OperationQueueView.qml" line="+52"/>
         <source>Stop</source>
-        <translation type="unfinished">Apturēt</translation>
+        <translation>Apturēt</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Rinda</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>%1 waiting</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 gaida</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Clear</source>
-        <translation type="unfinished">Notīrīt</translation>
+        <translation>Notīrīt</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Create</source>
-        <translation type="unfinished">Izveidot</translation>
+        <translation>Izveidot</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Update</source>
-        <translation type="unfinished">Atjaunināt</translation>
+        <translation>Atjaunināt</translation>
     </message>
 </context>
 <context>
@@ -7023,7 +7023,7 @@ uz miskasti?</translation>
     <message>
         <location line="+21"/>
         <source>Show extended metadata (JSON)</source>
-        <translation type="unfinished">Rādīt paplašinātos metadatus (JSON)</translation>
+        <translation>Rādīt paplašinātos metadatus (JSON)</translation>
     </message>
     <message>
         <location line="+22"/>

@@ -5733,7 +5733,7 @@ u smeće?</translation>
     <message>
         <location line="+8"/>
         <source>Copy JSON</source>
-        <translation type="unfinished">Копирај JSON</translation>
+        <translation>Копирај JSON</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -5748,7 +5748,7 @@ u smeće?</translation>
     <message>
         <location line="+14"/>
         <source>Value</source>
-        <translation type="unfinished">Вредност</translation>
+        <translation>Вредност</translation>
     </message>
 </context>
 <context>
@@ -5756,32 +5756,32 @@ u smeće?</translation>
     <message>
         <location filename="../qt_quick/OperationQueueView.qml" line="+52"/>
         <source>Stop</source>
-        <translation type="unfinished">Zaustavi</translation>
+        <translation>Zaustavi</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Red čekanja</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>%1 waiting</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 na čekanju</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Clear</source>
-        <translation type="unfinished">Очисти</translation>
+        <translation>Očisti</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Create</source>
-        <translation type="unfinished">Kreiraj</translation>
+        <translation>Kreiraj</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Update</source>
-        <translation type="unfinished">Ažuriraj</translation>
+        <translation>Ažuriraj</translation>
     </message>
 </context>
 <context>
@@ -7023,7 +7023,7 @@ u smeće?</translation>
     <message>
         <location line="+21"/>
         <source>Show extended metadata (JSON)</source>
-        <translation type="unfinished">Прикажи проширене метаподатке (JSON)</translation>
+        <translation>Прикажи проширене метаподатке (JSON)</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -7224,7 +7224,7 @@ u smeće?</translation>
     <message>
         <location line="+5"/>
         <source>Clear</source>
-        <translation>Очисти</translation>
+        <translation>Očisti</translation>
     </message>
     <message>
         <location line="+5"/>

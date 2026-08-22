@@ -5732,7 +5732,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+8"/>
         <source>Copy JSON</source>
-        <translation type="unfinished">JSON másolása</translation>
+        <translation>JSON másolása</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -5747,7 +5747,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+14"/>
         <source>Value</source>
-        <translation type="unfinished">Érték</translation>
+        <translation>Érték</translation>
     </message>
 </context>
 <context>
@@ -5755,32 +5755,32 @@ lomtárba helyezése?</translation>
     <message>
         <location filename="../qt_quick/OperationQueueView.qml" line="+52"/>
         <source>Stop</source>
-        <translation type="unfinished">Leállítás</translation>
+        <translation>Leállítás</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Várólista</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>%1 waiting</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 várakozik</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Clear</source>
-        <translation type="unfinished">Törlés</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Create</source>
-        <translation type="unfinished">Létrehozás</translation>
+        <translation>Létrehozás</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Update</source>
-        <translation type="unfinished">Frissítés</translation>
+        <translation>Frissítés</translation>
     </message>
 </context>
 <context>
@@ -7022,7 +7022,7 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+21"/>
         <source>Show extended metadata (JSON)</source>
-        <translation type="unfinished">Bővített metaadatok megjelenítése (JSON)</translation>
+        <translation>Bővített metaadatok megjelenítése (JSON)</translation>
     </message>
     <message>
         <location line="+22"/>

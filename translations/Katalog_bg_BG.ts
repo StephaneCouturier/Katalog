@@ -5733,7 +5733,7 @@ to the trash?</source>
     <message>
         <location line="+8"/>
         <source>Copy JSON</source>
-        <translation type="unfinished">Копирай JSON</translation>
+        <translation>Копирай JSON</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -5748,7 +5748,7 @@ to the trash?</source>
     <message>
         <location line="+14"/>
         <source>Value</source>
-        <translation type="unfinished">Стойност</translation>
+        <translation>Стойност</translation>
     </message>
 </context>
 <context>
@@ -5756,32 +5756,32 @@ to the trash?</source>
     <message>
         <location filename="../qt_quick/OperationQueueView.qml" line="+52"/>
         <source>Stop</source>
-        <translation type="unfinished">Стоп</translation>
+        <translation>Стоп</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Опашка</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>%1 waiting</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 в изчакване</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Clear</source>
-        <translation type="unfinished">Изчисти</translation>
+        <translation>Изчисти</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Create</source>
-        <translation type="unfinished">Създай</translation>
+        <translation>Създай</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Update</source>
-        <translation type="unfinished">Обновяване</translation>
+        <translation>Обновяване</translation>
     </message>
 </context>
 <context>
@@ -7023,7 +7023,7 @@ to the trash?</source>
     <message>
         <location line="+21"/>
         <source>Show extended metadata (JSON)</source>
-        <translation type="unfinished">Покажи разширени метаданни (JSON)</translation>
+        <translation>Покажи разширени метаданни (JSON)</translation>
     </message>
     <message>
         <location line="+22"/>

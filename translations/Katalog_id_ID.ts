@@ -5733,7 +5733,7 @@ ke sampah?</translation>
     <message>
         <location line="+8"/>
         <source>Copy JSON</source>
-        <translation type="unfinished">Salin JSON</translation>
+        <translation>Salin JSON</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -5748,7 +5748,7 @@ ke sampah?</translation>
     <message>
         <location line="+14"/>
         <source>Value</source>
-        <translation type="unfinished">Nilai</translation>
+        <translation>Nilai</translation>
     </message>
 </context>
 <context>
@@ -5756,32 +5756,32 @@ ke sampah?</translation>
     <message>
         <location filename="../qt_quick/OperationQueueView.qml" line="+52"/>
         <source>Stop</source>
-        <translation type="unfinished">Stop</translation>
+        <translation>Stop</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Antrean</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>%1 waiting</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 menunggu</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Clear</source>
-        <translation type="unfinished">Bersihkan</translation>
+        <translation>Bersihkan</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Create</source>
-        <translation type="unfinished">Buat</translation>
+        <translation>Buat</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Update</source>
-        <translation type="unfinished">Perbarui</translation>
+        <translation>Perbarui</translation>
     </message>
 </context>
 <context>
@@ -7023,7 +7023,7 @@ ke sampah?</translation>
     <message>
         <location line="+21"/>
         <source>Show extended metadata (JSON)</source>
-        <translation type="unfinished">Tampilkan metadata yang diperluas (JSON)</translation>
+        <translation>Tampilkan metadata yang diperluas (JSON)</translation>
     </message>
     <message>
         <location line="+22"/>

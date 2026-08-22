@@ -5732,7 +5732,7 @@ to the trash?</source>
     <message>
         <location line="+8"/>
         <source>Copy JSON</source>
-        <translation type="unfinished">JSON कॉपी करें</translation>
+        <translation>JSON कॉपी करें</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -5747,7 +5747,7 @@ to the trash?</source>
     <message>
         <location line="+14"/>
         <source>Value</source>
-        <translation type="unfinished">मान</translation>
+        <translation>मान</translation>
     </message>
 </context>
 <context>
@@ -5755,32 +5755,32 @@ to the trash?</source>
     <message>
         <location filename="../qt_quick/OperationQueueView.qml" line="+52"/>
         <source>Stop</source>
-        <translation type="unfinished">रोकें</translation>
+        <translation>रोकें</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>कतार</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>%1 waiting</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 प्रतीक्षा में</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Clear</source>
-        <translation type="unfinished">साफ़ करें</translation>
+        <translation>साफ़ करें</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Create</source>
-        <translation type="unfinished">बनाएं</translation>
+        <translation>बनाएं</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Update</source>
-        <translation type="unfinished">अपडेट</translation>
+        <translation>अपडेट</translation>
     </message>
 </context>
 <context>
@@ -7022,7 +7022,7 @@ to the trash?</source>
     <message>
         <location line="+21"/>
         <source>Show extended metadata (JSON)</source>
-        <translation type="unfinished">विस्तारित मेटाडेटा दिखाएं (JSON)</translation>
+        <translation>विस्तारित मेटाडेटा दिखाएं (JSON)</translation>
     </message>
     <message>
         <location line="+22"/>

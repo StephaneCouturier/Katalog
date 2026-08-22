@@ -247,7 +247,7 @@ Wählen Sie einen anderen Namen und versuchen Sie es erneut.</translation>
         <location line="+64"/>
         <location line="+516"/>
         <source>Create</source>
-        <translation>Schaffen</translation>
+        <translation>Erstellen</translation>
     </message>
     <message>
         <location line="-433"/>
@@ -1223,7 +1223,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <location line="+1095"/>
         <location line="+28"/>
         <source>Create</source>
-        <translation>Schaffen</translation>
+        <translation>Erstellen</translation>
     </message>
     <message>
         <location line="+31"/>
@@ -3436,7 +3436,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <location line="+76"/>
         <location line="+72"/>
         <source>Create</source>
-        <translation>Schaffen</translation>
+        <translation>Erstellen</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -5733,7 +5733,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+8"/>
         <source>Copy JSON</source>
-        <translation type="unfinished">JSON kopieren</translation>
+        <translation>JSON kopieren</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -5748,7 +5748,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+14"/>
         <source>Value</source>
-        <translation type="unfinished">Wert</translation>
+        <translation>Wert</translation>
     </message>
 </context>
 <context>
@@ -5756,32 +5756,32 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location filename="../qt_quick/OperationQueueView.qml" line="+52"/>
         <source>Stop</source>
-        <translation type="unfinished">Stoppen</translation>
+        <translation>Stoppen</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Warteschlange</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>%1 waiting</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 wartend</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Clear</source>
-        <translation type="unfinished">Leeren</translation>
+        <translation>Leeren</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Create</source>
-        <translation type="unfinished">Schaffen</translation>
+        <translation>Erstellen</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Update</source>
-        <translation type="unfinished">Aktualisieren</translation>
+        <translation>Aktualisieren</translation>
     </message>
 </context>
 <context>
@@ -7023,7 +7023,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+21"/>
         <source>Show extended metadata (JSON)</source>
-        <translation type="unfinished">Erweiterte Metadaten anzeigen (JSON)</translation>
+        <translation>Erweiterte Metadaten anzeigen (JSON)</translation>
     </message>
     <message>
         <location line="+22"/>

@@ -5733,7 +5733,7 @@ la coșul de gunoi?</translation>
     <message>
         <location line="+8"/>
         <source>Copy JSON</source>
-        <translation type="unfinished">Copiază JSON</translation>
+        <translation>Copiază JSON</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -5748,7 +5748,7 @@ la coșul de gunoi?</translation>
     <message>
         <location line="+14"/>
         <source>Value</source>
-        <translation type="unfinished">Valoare</translation>
+        <translation>Valoare</translation>
     </message>
 </context>
 <context>
@@ -5756,32 +5756,32 @@ la coșul de gunoi?</translation>
     <message>
         <location filename="../qt_quick/OperationQueueView.qml" line="+52"/>
         <source>Stop</source>
-        <translation type="unfinished">Stop</translation>
+        <translation>Stop</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Coadă</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>%1 waiting</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 în așteptare</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Clear</source>
-        <translation type="unfinished">Golește</translation>
+        <translation>Golește</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Create</source>
-        <translation type="unfinished">Creează</translation>
+        <translation>Creează</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Update</source>
-        <translation type="unfinished">Actualizare</translation>
+        <translation>Actualizare</translation>
     </message>
 </context>
 <context>
@@ -7023,7 +7023,7 @@ la coșul de gunoi?</translation>
     <message>
         <location line="+21"/>
         <source>Show extended metadata (JSON)</source>
-        <translation type="unfinished">Afișează metadate extinse (JSON)</translation>
+        <translation>Afișează metadate extinse (JSON)</translation>
     </message>
     <message>
         <location line="+22"/>

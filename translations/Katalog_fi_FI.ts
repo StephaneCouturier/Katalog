@@ -5733,7 +5733,7 @@ roskakoriin?</translation>
     <message>
         <location line="+8"/>
         <source>Copy JSON</source>
-        <translation type="unfinished">Kopioi JSON</translation>
+        <translation>Kopioi JSON</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -5748,7 +5748,7 @@ roskakoriin?</translation>
     <message>
         <location line="+14"/>
         <source>Value</source>
-        <translation type="unfinished">Arvo</translation>
+        <translation>Arvo</translation>
     </message>
 </context>
 <context>
@@ -5756,32 +5756,32 @@ roskakoriin?</translation>
     <message>
         <location filename="../qt_quick/OperationQueueView.qml" line="+52"/>
         <source>Stop</source>
-        <translation type="unfinished">Pysäytä</translation>
+        <translation>Pysäytä</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Jono</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>%1 waiting</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 odottaa</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Clear</source>
-        <translation type="unfinished">Tyhjennä</translation>
+        <translation>Tyhjennä</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Create</source>
-        <translation type="unfinished">Luo</translation>
+        <translation>Luo</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Update</source>
-        <translation type="unfinished">Päivitä</translation>
+        <translation>Päivitä</translation>
     </message>
 </context>
 <context>
@@ -7023,7 +7023,7 @@ roskakoriin?</translation>
     <message>
         <location line="+21"/>
         <source>Show extended metadata (JSON)</source>
-        <translation type="unfinished">Näytä laajennetut metatiedot (JSON)</translation>
+        <translation>Näytä laajennetut metatiedot (JSON)</translation>
     </message>
     <message>
         <location line="+22"/>
