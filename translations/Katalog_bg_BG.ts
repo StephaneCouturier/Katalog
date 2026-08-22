@@ -1398,7 +1398,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Проверка на контролна сума</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1432"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1439"/>
         <source>Verifying checksum...</source>
         <translation>Проверяване на контролна сума...</translation>
     </message>
@@ -1485,7 +1485,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Вашите данни ще бъдат изпратени към тази мрежова база данни.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2173"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2180"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+1"/>
         <source>Continue?</source>
         <translation>Продължаване?</translation>
@@ -1602,7 +1602,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Профилът за резервно копие е създаден.</translation>
     </message>
     <message>
-        <location filename="../core/catalogjobstoppable.cpp" line="+1442"/>
+        <location filename="../core/catalogjobstoppable.cpp" line="+1439"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
         <translation>Записване</translation>
@@ -1643,7 +1643,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1431"/>
         <location line="+23"/>
-        <location line="+23"/>
+        <location line="+27"/>
         <location line="+21"/>
         <location filename="../core/searchprogressmanager.cpp" line="+27"/>
         <location line="+24"/>
@@ -1659,8 +1659,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+101"/>
         <location line="+139"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-37"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-45"/>
-        <location line="+44"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-49"/>
+        <location line="+48"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+285"/>
         <location line="+36"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-96"/>
@@ -1801,7 +1801,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-658"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-950"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-954"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Покажи разширени метаданни (JSON)</translation>
     </message>
@@ -3526,7 +3526,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+53"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1360"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1367"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+20"/>
         <location filename="../core/search.cpp" line="+2"/>
         <source>Date</source>
@@ -3761,8 +3761,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+963"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1067"/>
-        <location line="+587"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1074"/>
+        <location line="+591"/>
         <location line="+14"/>
         <location line="+20"/>
         <source>Include Metadata</source>
@@ -3819,7 +3819,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="-200"/>
         <location line="+3286"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2250"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+533"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+536"/>
         <location line="+117"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-157"/>
         <location line="+107"/>
@@ -3895,7 +3895,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="+359"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1963"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1970"/>
         <location line="+13"/>
         <source>Search history</source>
         <translation>История на търсенето</translation>
@@ -4687,7 +4687,7 @@ to the trash?</source>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+6"/>
         <location line="+399"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1396"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1403"/>
         <source>Catalog with results</source>
         <translation>Каталог с резултати</translation>
     </message>
@@ -4815,6 +4815,8 @@ to the trash?</source>
     <message>
         <location line="+1"/>
         <location line="+666"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-557"/>
+        <location line="+47"/>
         <source>Errors</source>
         <translation>Грешки</translation>
     </message>
@@ -5286,7 +5288,7 @@ to the trash?</source>
         <translation>Съхранение: &lt;b&gt;&apos;%1&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Папката-източник не съдържа никакви файлове:&lt;br/&gt;&lt;b&gt;&apos;%2&apos;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Това може да означава, че устройството не е монтирано в тази папка,&lt;br/&gt;или папката просто е празна.&lt;br/&gt;&lt;br/&gt;Принудително опитване да се получат стойности въпреки това?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1507"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1004"/>
         <source>Explore folder</source>
         <translation>Разгледай папка</translation>
     </message>
@@ -5418,7 +5420,32 @@ to the trash?</source>
         <translation>Изтриването на списък от папки не е налично.</translation>
     </message>
     <message>
-        <location line="+105"/>
+        <location line="+47"/>
+        <source>Matched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Mismatched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Calculated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <source>Updated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Skipped</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Create a catalog from these results?&lt;br/&gt;- Yes: create a &lt;b&gt;Catalog&lt;/b&gt; to store the results and use it to refine your search,&lt;br/&gt;- No:  export results to a &lt;b&gt;csv file&lt;/b&gt;.</source>
         <translation>Създай каталог от тези резултати?&lt;br/&gt;- Да: създай &lt;b&gt;каталог&lt;/b&gt; за съхранение на резултатите и го използвай за уточняване на търсенето,&lt;br/&gt;- Не: експортирай резултатите в &lt;b&gt;csv файл&lt;/b&gt;.</translation>
     </message>
@@ -5672,6 +5699,39 @@ to the trash?</source>
         <location line="+30"/>
         <source>%1 of %2 (%3%)</source>
         <translation>%1 от %2 (%3%)</translation>
+    </message>
+</context>
+<context>
+    <name>MetadataDialog</name>
+    <message>
+        <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
+        <source>No extended metadata available</source>
+        <translation type="unfinished">Няма налични разширени метаданни</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Extended Metadata</source>
+        <translation type="unfinished">Разширени метаданни</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Copy JSON</source>
+        <translation type="unfinished">Копирай JSON</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Metadata JSON copied to clipboard</source>
+        <translation type="unfinished">JSON с метаданни е копиран в клипборда</translation>
+    </message>
+    <message>
+        <location line="+41"/>
+        <source>Field</source>
+        <translation type="unfinished">Поле</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Value</source>
+        <translation type="unfinished">Стойност</translation>
     </message>
 </context>
 <context>
@@ -6912,6 +6972,11 @@ to the trash?</source>
     </message>
     <message>
         <location line="+21"/>
+        <source>Show extended metadata (JSON)</source>
+        <translation type="unfinished">Покажи разширени метаданни (JSON)</translation>
+    </message>
+    <message>
+        <location line="+22"/>
         <source>Copy folder path</source>
         <translation>Копирай път на папката</translation>
     </message>
@@ -7420,7 +7485,7 @@ to the trash?</source>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+795"/>
+        <location line="+646"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Проверка на контролни суми</translation>
@@ -7432,25 +7497,25 @@ to the trash?</source>
         <translation>Включи метаданни</translation>
     </message>
     <message>
-        <location line="-846"/>
+        <location line="-697"/>
         <location line="+486"/>
-        <location line="+305"/>
+        <location line="+156"/>
         <source>Move to Trash</source>
         <translation>Премести в кошчето</translation>
     </message>
     <message>
-        <location line="-792"/>
+        <location line="-643"/>
         <source>Extract Metadata</source>
         <translation>Извличане на метаданни</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+751"/>
+        <location line="+602"/>
         <source>Delete</source>
         <translation>Изтриване</translation>
     </message>
     <message>
-        <location line="-696"/>
+        <location line="-547"/>
         <source>Exported to: %1</source>
         <translation>Експортирано в: %1</translation>
     </message>
@@ -7552,12 +7617,12 @@ to the trash?</source>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+228"/>
+        <location line="+79"/>
         <source>Checksum copied to clipboard</source>
         <translation>Контролната сума е копирана в клипборда</translation>
     </message>
     <message>
-        <location line="-224"/>
+        <location line="-75"/>
         <source>Verify Checksum (SHA-256)</source>
         <translation>Проверка на контролна сума (SHA-256)</translation>
     </message>
@@ -7582,32 +7647,27 @@ to the trash?</source>
         <translation>Изтрий файла</translation>
     </message>
     <message>
-        <location line="+16"/>
         <source>Extended Metadata</source>
-        <translation>Разширени метаданни</translation>
+        <translation type="vanished">Разширени метаданни</translation>
     </message>
     <message>
-        <location line="+8"/>
         <source>Copy JSON</source>
-        <translation>Копирай JSON</translation>
+        <translation type="vanished">Копирай JSON</translation>
     </message>
     <message>
-        <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation>JSON с метаданни е копиран в клипборда</translation>
+        <translation type="vanished">JSON с метаданни е копиран в клипборда</translation>
     </message>
     <message>
-        <location line="+41"/>
         <source>Field</source>
-        <translation>Поле</translation>
+        <translation type="vanished">Поле</translation>
     </message>
     <message>
-        <location line="+14"/>
         <source>Value</source>
-        <translation>Стойност</translation>
+        <translation type="vanished">Стойност</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+17"/>
         <source>Checksum (SHA-256)</source>
         <translation>Контролна сума (SHA-256)</translation>
     </message>

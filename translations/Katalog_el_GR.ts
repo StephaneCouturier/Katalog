@@ -1398,7 +1398,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Επαλήθευση αθροίσματος ελέγχου</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1432"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1439"/>
         <source>Verifying checksum...</source>
         <translation>Επαλήθευση αθροίσματος ελέγχου...</translation>
     </message>
@@ -1485,7 +1485,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Τα δεδομένα σας θα σταλούν σε αυτή τη βάση δεδομένων δικτύου.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2173"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2180"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+1"/>
         <source>Continue?</source>
         <translation>Συνέχεια;</translation>
@@ -1607,7 +1607,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Το προφίλ αντιγράφου ασφαλείας δημιουργήθηκε.</translation>
     </message>
     <message>
-        <location filename="../core/catalogjobstoppable.cpp" line="+1442"/>
+        <location filename="../core/catalogjobstoppable.cpp" line="+1439"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
         <translation>Αποθήκευση</translation>
@@ -1648,7 +1648,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1431"/>
         <location line="+23"/>
-        <location line="+23"/>
+        <location line="+27"/>
         <location line="+21"/>
         <location filename="../core/searchprogressmanager.cpp" line="+27"/>
         <location line="+24"/>
@@ -1664,8 +1664,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+101"/>
         <location line="+139"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-37"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-45"/>
-        <location line="+44"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-49"/>
+        <location line="+48"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+285"/>
         <location line="+36"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-96"/>
@@ -1806,7 +1806,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-658"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-950"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-954"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Εμφάνιση εκτεταμένων μεταδεδομένων (JSON)</translation>
     </message>
@@ -2614,7 +2614,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+584"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+591"/>
         <source>Tag</source>
         <translation>Ετικέτα</translation>
     </message>
@@ -2625,7 +2625,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="+140"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-658"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-665"/>
         <source>Select...</source>
         <translation>Επιλογή...</translation>
     </message>
@@ -2696,7 +2696,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1076"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+862"/>
-        <location line="+587"/>
+        <location line="+591"/>
         <location line="+14"/>
         <location line="+20"/>
         <source>Include Metadata</source>
@@ -2758,7 +2758,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+16"/>
         <location line="+3286"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1285"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+533"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+536"/>
         <location line="+117"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-114"/>
         <location line="+107"/>
@@ -2795,7 +2795,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="+4071"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2133"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2140"/>
         <source>Keep last 10</source>
         <translation>Διατήρηση τελευταίων 10</translation>
     </message>
@@ -3990,7 +3990,7 @@ to the trash?</source>
         <location line="+53"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1107"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1114"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+95"/>
         <location filename="../core/search.cpp" line="+2"/>
         <source>Date</source>
@@ -4737,6 +4737,8 @@ Split was not performed.</source>
     <message>
         <location line="+1"/>
         <location line="+666"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-557"/>
+        <location line="+47"/>
         <source>Errors</source>
         <translation>Σφάλματα</translation>
     </message>
@@ -5171,7 +5173,7 @@ Split was not performed.</source>
         <translation>Αναζήτηση ολοκληρώθηκε | Αρχεία που βρέθηκαν: %1</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1507"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1004"/>
         <source>Explore folder</source>
         <translation>Εξερεύνηση φακέλου</translation>
     </message>
@@ -5303,7 +5305,32 @@ Split was not performed.</source>
         <translation>Η διαγραφή λίστας φακέλων δεν είναι διαθέσιμη.</translation>
     </message>
     <message>
-        <location line="+105"/>
+        <location line="+47"/>
+        <source>Matched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Mismatched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Calculated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <source>Updated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Skipped</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Create a catalog from these results?&lt;br/&gt;- Yes: create a &lt;b&gt;Catalog&lt;/b&gt; to store the results and use it to refine your search,&lt;br/&gt;- No:  export results to a &lt;b&gt;csv file&lt;/b&gt;.</source>
         <translation>Δημιουργία καταλόγου από αυτά τα αποτελέσματα;&lt;br/&gt;- Ναι: δημιουργία &lt;b&gt;καταλόγου&lt;/b&gt; για αποθήκευση των αποτελεσμάτων και χρήση του για βελτίωση της αναζήτησής σας,&lt;br/&gt;- Όχι:  εξαγωγή αποτελεσμάτων σε &lt;b&gt;αρχείο csv&lt;/b&gt;.</translation>
     </message>
@@ -5673,6 +5700,39 @@ Split was not performed.</source>
         <location line="+30"/>
         <source>%1 of %2 (%3%)</source>
         <translation>%1 από %2 (%3%)</translation>
+    </message>
+</context>
+<context>
+    <name>MetadataDialog</name>
+    <message>
+        <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
+        <source>No extended metadata available</source>
+        <translation type="unfinished">Δεν υπάρχουν διαθέσιμα εκτεταμένα μεταδεδομένα</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Extended Metadata</source>
+        <translation type="unfinished">Εκτεταμένα μεταδεδομένα</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Copy JSON</source>
+        <translation type="unfinished">Αντιγραφή JSON</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Metadata JSON copied to clipboard</source>
+        <translation type="unfinished">Το JSON μεταδεδομένων αντιγράφηκε στο πρόχειρο</translation>
+    </message>
+    <message>
+        <location line="+41"/>
+        <source>Field</source>
+        <translation type="unfinished">Πεδίο</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Value</source>
+        <translation type="unfinished">Τιμή</translation>
     </message>
 </context>
 <context>
@@ -6913,6 +6973,11 @@ Split was not performed.</source>
     </message>
     <message>
         <location line="+21"/>
+        <source>Show extended metadata (JSON)</source>
+        <translation type="unfinished">Εμφάνιση εκτεταμένων μεταδεδομένων (JSON)</translation>
+    </message>
+    <message>
+        <location line="+22"/>
         <source>Copy folder path</source>
         <translation>Αντιγραφή διαδρομής φακέλου</translation>
     </message>
@@ -7421,7 +7486,7 @@ Split was not performed.</source>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+795"/>
+        <location line="+646"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Επαλήθευση αθροισμάτων ελέγχου</translation>
@@ -7433,25 +7498,25 @@ Split was not performed.</source>
         <translation>Συμπερίληψη μεταδεδομένων</translation>
     </message>
     <message>
-        <location line="-846"/>
+        <location line="-697"/>
         <location line="+486"/>
-        <location line="+305"/>
+        <location line="+156"/>
         <source>Move to Trash</source>
         <translation>Μετακίνηση στα απορρίμματα</translation>
     </message>
     <message>
-        <location line="-792"/>
+        <location line="-643"/>
         <source>Extract Metadata</source>
         <translation>Εξαγωγή μεταδεδομένων</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+751"/>
+        <location line="+602"/>
         <source>Delete</source>
         <translation>Διαγραφή</translation>
     </message>
     <message>
-        <location line="-696"/>
+        <location line="-547"/>
         <source>Exported to: %1</source>
         <translation>Εξήχθη σε: %1</translation>
     </message>
@@ -7553,12 +7618,12 @@ Split was not performed.</source>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+228"/>
+        <location line="+79"/>
         <source>Checksum copied to clipboard</source>
         <translation>Το άθροισμα ελέγχου αντιγράφηκε στο πρόχειρο</translation>
     </message>
     <message>
-        <location line="-224"/>
+        <location line="-75"/>
         <source>Verify Checksum (SHA-256)</source>
         <translation>Επαλήθευση αθροίσματος ελέγχου (SHA-256)</translation>
     </message>
@@ -7583,32 +7648,27 @@ Split was not performed.</source>
         <translation>Διαγραφή αρχείου</translation>
     </message>
     <message>
-        <location line="+16"/>
         <source>Extended Metadata</source>
-        <translation>Εκτεταμένα μεταδεδομένα</translation>
+        <translation type="vanished">Εκτεταμένα μεταδεδομένα</translation>
     </message>
     <message>
-        <location line="+8"/>
         <source>Copy JSON</source>
-        <translation>Αντιγραφή JSON</translation>
+        <translation type="vanished">Αντιγραφή JSON</translation>
     </message>
     <message>
-        <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation>Το JSON μεταδεδομένων αντιγράφηκε στο πρόχειρο</translation>
+        <translation type="vanished">Το JSON μεταδεδομένων αντιγράφηκε στο πρόχειρο</translation>
     </message>
     <message>
-        <location line="+41"/>
         <source>Field</source>
-        <translation>Πεδίο</translation>
+        <translation type="vanished">Πεδίο</translation>
     </message>
     <message>
-        <location line="+14"/>
         <source>Value</source>
-        <translation>Τιμή</translation>
+        <translation type="vanished">Τιμή</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+17"/>
         <source>Checksum (SHA-256)</source>
         <translation>Άθροισμα ελέγχου (SHA-256)</translation>
     </message>

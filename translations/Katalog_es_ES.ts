@@ -1398,7 +1398,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation>Verificar suma de verificación</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1432"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1439"/>
         <source>Verifying checksum...</source>
         <translation>Verificando suma de verificación...</translation>
     </message>
@@ -1485,7 +1485,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation>Sus datos serán enviados a esta base de datos de red.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2173"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2180"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+1"/>
         <source>Continue?</source>
         <translation>¿Continuar?</translation>
@@ -1627,7 +1627,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation>Perfil de copia de seguridad creado.</translation>
     </message>
     <message>
-        <location filename="../core/catalogjobstoppable.cpp" line="+1442"/>
+        <location filename="../core/catalogjobstoppable.cpp" line="+1439"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
         <translation>Guardando</translation>
@@ -1668,7 +1668,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1431"/>
         <location line="+23"/>
-        <location line="+23"/>
+        <location line="+27"/>
         <location line="+21"/>
         <location filename="../core/searchprogressmanager.cpp" line="+27"/>
         <location line="+24"/>
@@ -1684,8 +1684,8 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location line="+101"/>
         <location line="+139"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-37"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-45"/>
-        <location line="+44"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-49"/>
+        <location line="+48"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+285"/>
         <location line="+36"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-96"/>
@@ -1826,7 +1826,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-658"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-950"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-954"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Mostrar metadatos extendidos (JSON)</translation>
     </message>
@@ -2845,7 +2845,7 @@ No se realizó la división.</translation>
         <location line="+53"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-3"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+2030"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+2037"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+20"/>
         <location filename="../core/search.cpp" line="+1"/>
         <source>Date</source>
@@ -2994,7 +2994,7 @@ No se realizó la división.</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-658"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-665"/>
         <source>Select...</source>
         <translation>Seleccionar...</translation>
     </message>
@@ -3160,7 +3160,7 @@ No se realizó la división.</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-19"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+862"/>
-        <location line="+587"/>
+        <location line="+591"/>
         <location line="+14"/>
         <location line="+20"/>
         <source>Include Metadata</source>
@@ -3176,7 +3176,7 @@ No se realizó la división.</translation>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-706"/>
         <location line="+694"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+22"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+446"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+449"/>
         <location filename="../core/search.cpp" line="+9"/>
         <source>File Type</source>
         <translation>Tipo de archivo</translation>
@@ -3351,7 +3351,7 @@ No se realizó la división.</translation>
     </message>
     <message>
         <location line="+4071"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2133"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2140"/>
         <source>Keep last 10</source>
         <translation>Conservar los últimos 10</translation>
     </message>
@@ -4373,7 +4373,7 @@ No se realizó la división.</translation>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-238"/>
         <location line="+399"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1511"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1518"/>
         <source>Catalog with results</source>
         <translation>Catálogo con resultados</translation>
     </message>
@@ -4563,6 +4563,8 @@ No se realizó la división.</translation>
     <message>
         <location line="+1"/>
         <location line="+666"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-557"/>
+        <location line="+47"/>
         <source>Errors</source>
         <translation>Errores</translation>
     </message>
@@ -4924,7 +4926,7 @@ No se realizó la división.</translation>
     <message>
         <location line="+81"/>
         <location line="+68"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1447"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-944"/>
         <source>Copy folder path</source>
         <translation>Copiar ruta de carpeta</translation>
     </message>
@@ -5302,7 +5304,32 @@ a la papelera?</translation>
         <translation>Eliminar una lista de carpetas no está disponible.</translation>
     </message>
     <message>
-        <location line="+105"/>
+        <location line="+47"/>
+        <source>Matched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Mismatched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Calculated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <source>Updated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Skipped</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Create a catalog from these results?&lt;br/&gt;- Yes: create a &lt;b&gt;Catalog&lt;/b&gt; to store the results and use it to refine your search,&lt;br/&gt;- No:  export results to a &lt;b&gt;csv file&lt;/b&gt;.</source>
         <translation>¿Crear un catálogo de estos resultados?&lt;br/&gt;- Sí: crear un &lt;b&gt;Catálogo&lt;/b&gt; para almacenar los resultados y usarlo para refinar su búsqueda,&lt;br/&gt;- No: exportar resultados a un &lt;b&gt;archivo csv&lt;/b&gt;.</translation>
     </message>
@@ -5672,6 +5699,39 @@ a la papelera?</translation>
         <location line="+30"/>
         <source>%1 of %2 (%3%)</source>
         <translation>%1 de %2 (%3 %)</translation>
+    </message>
+</context>
+<context>
+    <name>MetadataDialog</name>
+    <message>
+        <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
+        <source>No extended metadata available</source>
+        <translation type="unfinished">No hay metadatos extendidos disponibles</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Extended Metadata</source>
+        <translation type="unfinished">Metadatos extendidos</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Copy JSON</source>
+        <translation type="unfinished">Copiar JSON</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Metadata JSON copied to clipboard</source>
+        <translation type="unfinished">JSON de metadatos copiado al portapapeles</translation>
+    </message>
+    <message>
+        <location line="+41"/>
+        <source>Field</source>
+        <translation type="unfinished">Campo</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Value</source>
+        <translation type="unfinished">Valor</translation>
     </message>
 </context>
 <context>
@@ -6912,6 +6972,11 @@ a la papelera?</translation>
     </message>
     <message>
         <location line="+21"/>
+        <source>Show extended metadata (JSON)</source>
+        <translation type="unfinished">Mostrar metadatos extendidos (JSON)</translation>
+    </message>
+    <message>
+        <location line="+22"/>
         <source>Copy folder path</source>
         <translation>Copiar ruta de carpeta</translation>
     </message>
@@ -7420,7 +7485,7 @@ a la papelera?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+795"/>
+        <location line="+646"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Verificar sumas de verificación</translation>
@@ -7432,25 +7497,25 @@ a la papelera?</translation>
         <translation>Incluir metadatos</translation>
     </message>
     <message>
-        <location line="-846"/>
+        <location line="-697"/>
         <location line="+486"/>
-        <location line="+305"/>
+        <location line="+156"/>
         <source>Move to Trash</source>
         <translation>Mover a la papelera</translation>
     </message>
     <message>
-        <location line="-792"/>
+        <location line="-643"/>
         <source>Extract Metadata</source>
         <translation>Extraer metadatos</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+751"/>
+        <location line="+602"/>
         <source>Delete</source>
         <translation>Eliminar</translation>
     </message>
     <message>
-        <location line="-696"/>
+        <location line="-547"/>
         <source>Exported to: %1</source>
         <translation>Exportado a: %1</translation>
     </message>
@@ -7552,12 +7617,12 @@ a la papelera?</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+228"/>
+        <location line="+79"/>
         <source>Checksum copied to clipboard</source>
         <translation>Suma de comprobación copiada al portapapeles</translation>
     </message>
     <message>
-        <location line="-224"/>
+        <location line="-75"/>
         <source>Verify Checksum (SHA-256)</source>
         <translation>Verificar suma de comprobación (SHA-256)</translation>
     </message>
@@ -7582,32 +7647,27 @@ a la papelera?</translation>
         <translation>Eliminar archivo</translation>
     </message>
     <message>
-        <location line="+16"/>
         <source>Extended Metadata</source>
-        <translation>Metadatos extendidos</translation>
+        <translation type="vanished">Metadatos extendidos</translation>
     </message>
     <message>
-        <location line="+8"/>
         <source>Copy JSON</source>
-        <translation>Copiar JSON</translation>
+        <translation type="vanished">Copiar JSON</translation>
     </message>
     <message>
-        <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation>JSON de metadatos copiado al portapapeles</translation>
+        <translation type="vanished">JSON de metadatos copiado al portapapeles</translation>
     </message>
     <message>
-        <location line="+41"/>
         <source>Field</source>
-        <translation>Campo</translation>
+        <translation type="vanished">Campo</translation>
     </message>
     <message>
-        <location line="+14"/>
         <source>Value</source>
-        <translation>Valor</translation>
+        <translation type="vanished">Valor</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+17"/>
         <source>Checksum (SHA-256)</source>
         <translation>Suma de comprobación (SHA-256)</translation>
     </message>

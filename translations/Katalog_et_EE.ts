@@ -1398,7 +1398,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation>Kontrolli kontrollsummat</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1432"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1439"/>
         <source>Verifying checksum...</source>
         <translation>Kontrollsumma kontrollimine...</translation>
     </message>
@@ -1485,7 +1485,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation>Teie andmed saadetakse sellesse võrguandmebaasi.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2173"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2180"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+1"/>
         <source>Continue?</source>
         <translation>Jätka?</translation>
@@ -1572,7 +1572,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation>Varukoopia profiil loodud.</translation>
     </message>
     <message>
-        <location filename="../core/catalogjobstoppable.cpp" line="+1442"/>
+        <location filename="../core/catalogjobstoppable.cpp" line="+1439"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
         <translation>Salvestamine</translation>
@@ -1613,7 +1613,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1431"/>
         <location line="+23"/>
-        <location line="+23"/>
+        <location line="+27"/>
         <location line="+21"/>
         <location filename="../core/searchprogressmanager.cpp" line="+27"/>
         <location line="+24"/>
@@ -1629,8 +1629,8 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <location line="+101"/>
         <location line="+139"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-37"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-45"/>
-        <location line="+44"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-49"/>
+        <location line="+48"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+285"/>
         <location line="+36"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-96"/>
@@ -1771,7 +1771,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-658"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-950"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-954"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Kuva laiendatud metaandmed (JSON)</translation>
     </message>
@@ -2364,7 +2364,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <location line="+53"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-3"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+2030"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+2037"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+20"/>
         <location filename="../core/search.cpp" line="+1"/>
         <source>Date</source>
@@ -2513,7 +2513,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-658"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-665"/>
         <source>Select...</source>
         <translation>Vali...</translation>
     </message>
@@ -2679,7 +2679,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-19"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+862"/>
-        <location line="+587"/>
+        <location line="+591"/>
         <location line="+14"/>
         <location line="+20"/>
         <source>Include Metadata</source>
@@ -2695,7 +2695,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-706"/>
         <location line="+694"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+22"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+446"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+449"/>
         <location filename="../core/search.cpp" line="+9"/>
         <source>File Type</source>
         <translation>Faili tüüp</translation>
@@ -2870,7 +2870,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
     </message>
     <message>
         <location line="+4071"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2133"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2140"/>
         <source>Keep last 10</source>
         <translation>Hoia viimased 10</translation>
     </message>
@@ -4655,7 +4655,32 @@ Jagamist ei tehtud.</translation>
         <translation>Kaustade nimekirja kustutamine ei ole saadaval.</translation>
     </message>
     <message>
-        <location line="+105"/>
+        <location line="+47"/>
+        <source>Matched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Mismatched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Calculated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <source>Updated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Skipped</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Create a catalog from these results?&lt;br/&gt;- Yes: create a &lt;b&gt;Catalog&lt;/b&gt; to store the results and use it to refine your search,&lt;br/&gt;- No:  export results to a &lt;b&gt;csv file&lt;/b&gt;.</source>
         <translation>Loo nendest tulemustest kataloog?&lt;br/&gt;- Jah: loo &lt;b&gt;kataloog&lt;/b&gt; tulemuste salvestamiseks ja kasuta seda otsingu täpsustamiseks,&lt;br/&gt;- Ei: ekspordi tulemused &lt;b&gt;csv faili&lt;/b&gt;.</translation>
     </message>
@@ -5119,6 +5144,8 @@ Jagamist ei tehtud.</translation>
     <message>
         <location line="+1"/>
         <location line="+666"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-557"/>
+        <location line="+47"/>
         <source>Errors</source>
         <translation>Vead</translation>
     </message>
@@ -5672,6 +5699,39 @@ Jagamist ei tehtud.</translation>
         <location line="+30"/>
         <source>%1 of %2 (%3%)</source>
         <translation>%1 / %2 (%3%)</translation>
+    </message>
+</context>
+<context>
+    <name>MetadataDialog</name>
+    <message>
+        <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
+        <source>No extended metadata available</source>
+        <translation type="unfinished">Laiendatud metaandmeid pole saadaval</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Extended Metadata</source>
+        <translation type="unfinished">Laiendatud metaandmed</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Copy JSON</source>
+        <translation type="unfinished">Kopeeri JSON</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Metadata JSON copied to clipboard</source>
+        <translation type="unfinished">Metaandmete JSON kopeeriti lõikelauale</translation>
+    </message>
+    <message>
+        <location line="+41"/>
+        <source>Field</source>
+        <translation type="unfinished">Väli</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Value</source>
+        <translation type="unfinished">Väärtus</translation>
     </message>
 </context>
 <context>
@@ -6912,6 +6972,11 @@ Jagamist ei tehtud.</translation>
     </message>
     <message>
         <location line="+21"/>
+        <source>Show extended metadata (JSON)</source>
+        <translation type="unfinished">Kuva laiendatud metaandmed (JSON)</translation>
+    </message>
+    <message>
+        <location line="+22"/>
         <source>Copy folder path</source>
         <translation>Kopeeri kausta tee</translation>
     </message>
@@ -7420,7 +7485,7 @@ Jagamist ei tehtud.</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+795"/>
+        <location line="+646"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Kontrolli kontrollsummasid</translation>
@@ -7432,25 +7497,25 @@ Jagamist ei tehtud.</translation>
         <translation>Kaasa metaandmed</translation>
     </message>
     <message>
-        <location line="-846"/>
+        <location line="-697"/>
         <location line="+486"/>
-        <location line="+305"/>
+        <location line="+156"/>
         <source>Move to Trash</source>
         <translation>Liiguta prügikasti</translation>
     </message>
     <message>
-        <location line="-792"/>
+        <location line="-643"/>
         <source>Extract Metadata</source>
         <translation>Eralda metaandmed</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+751"/>
+        <location line="+602"/>
         <source>Delete</source>
         <translation>Kustuta</translation>
     </message>
     <message>
-        <location line="-696"/>
+        <location line="-547"/>
         <source>Exported to: %1</source>
         <translation>Eksporditud asukohta: %1</translation>
     </message>
@@ -7552,12 +7617,12 @@ Jagamist ei tehtud.</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+228"/>
+        <location line="+79"/>
         <source>Checksum copied to clipboard</source>
         <translation>Kontrollsumma kopeeriti lõikelauale</translation>
     </message>
     <message>
-        <location line="-224"/>
+        <location line="-75"/>
         <source>Verify Checksum (SHA-256)</source>
         <translation>Kontrolli kontrollsummat (SHA-256)</translation>
     </message>
@@ -7582,32 +7647,27 @@ Jagamist ei tehtud.</translation>
         <translation>Kustuta fail</translation>
     </message>
     <message>
-        <location line="+16"/>
         <source>Extended Metadata</source>
-        <translation>Laiendatud metaandmed</translation>
+        <translation type="vanished">Laiendatud metaandmed</translation>
     </message>
     <message>
-        <location line="+8"/>
         <source>Copy JSON</source>
-        <translation>Kopeeri JSON</translation>
+        <translation type="vanished">Kopeeri JSON</translation>
     </message>
     <message>
-        <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation>Metaandmete JSON kopeeriti lõikelauale</translation>
+        <translation type="vanished">Metaandmete JSON kopeeriti lõikelauale</translation>
     </message>
     <message>
-        <location line="+41"/>
         <source>Field</source>
-        <translation>Väli</translation>
+        <translation type="vanished">Väli</translation>
     </message>
     <message>
-        <location line="+14"/>
         <source>Value</source>
-        <translation>Väärtus</translation>
+        <translation type="vanished">Väärtus</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+17"/>
         <source>Checksum (SHA-256)</source>
         <translation>Kontrollsumma (SHA-256)</translation>
     </message>

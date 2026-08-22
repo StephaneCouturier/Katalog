@@ -1398,7 +1398,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <translation>Tarkista tarkistussumma</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1432"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1439"/>
         <source>Verifying checksum...</source>
         <translation>Tarkistetaan tarkistussummaa...</translation>
     </message>
@@ -1485,7 +1485,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <translation>Tietosi lähetetään tähän verkkotietokantaan.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2173"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2180"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+1"/>
         <source>Continue?</source>
         <translation>Jatka?</translation>
@@ -1607,7 +1607,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <translation>Varmuuskopiointi profiili luotu.</translation>
     </message>
     <message>
-        <location filename="../core/catalogjobstoppable.cpp" line="+1442"/>
+        <location filename="../core/catalogjobstoppable.cpp" line="+1439"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
         <translation>Tallennetaan</translation>
@@ -1648,7 +1648,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1431"/>
         <location line="+23"/>
-        <location line="+23"/>
+        <location line="+27"/>
         <location line="+21"/>
         <location filename="../core/searchprogressmanager.cpp" line="+27"/>
         <location line="+24"/>
@@ -1664,8 +1664,8 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <location line="+101"/>
         <location line="+139"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-37"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-45"/>
-        <location line="+44"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-49"/>
+        <location line="+48"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+285"/>
         <location line="+36"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-96"/>
@@ -1806,7 +1806,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-658"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-950"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-954"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Näytä laajennetut metatiedot (JSON)</translation>
     </message>
@@ -3480,7 +3480,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <location line="+53"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1360"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1367"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+20"/>
         <location filename="../core/search.cpp" line="+2"/>
         <source>Date</source>
@@ -4024,7 +4024,7 @@ Jakamista ei suoritettu.</translation>
         <translation>Säilytä tiedostojen ja koon tietueet tilastoja varten</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1062"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1069"/>
         <location line="+11"/>
         <location line="+35"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-115"/>
@@ -4156,7 +4156,32 @@ Jakamista ei suoritettu.</translation>
         <translation>Kansioiden listan poistaminen ei ole käytettävissä.</translation>
     </message>
     <message>
-        <location line="+105"/>
+        <location line="+47"/>
+        <source>Matched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Mismatched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Calculated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <source>Updated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Skipped</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Create a catalog from these results?&lt;br/&gt;- Yes: create a &lt;b&gt;Catalog&lt;/b&gt; to store the results and use it to refine your search,&lt;br/&gt;- No:  export results to a &lt;b&gt;csv file&lt;/b&gt;.</source>
         <translation>Luo katalogi näistä tuloksista?&lt;br/&gt;- Kyllä: luo &lt;b&gt;Katalogi&lt;/b&gt; tallentamaan tulokset ja käyttääksesi sitä haun tarkentamiseen,&lt;br/&gt;- Ei: vie tulokset &lt;b&gt;csv-tiedostoon&lt;/b&gt;.</translation>
     </message>
@@ -4526,7 +4551,7 @@ Jakamista ei suoritettu.</translation>
     </message>
     <message>
         <location line="+359"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1963"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1970"/>
         <location line="+13"/>
         <source>Search history</source>
         <translation>Hakuhistoria</translation>
@@ -4892,7 +4917,7 @@ roskakoriin?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1076"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+263"/>
-        <location line="+587"/>
+        <location line="+591"/>
         <location line="+14"/>
         <location line="+20"/>
         <source>Include Metadata</source>
@@ -4996,7 +5021,7 @@ roskakoriin?</translation>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+6"/>
         <location line="+399"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+512"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+515"/>
         <source>Catalog with results</source>
         <translation>Katalogi tulosten kanssa</translation>
     </message>
@@ -5119,6 +5144,8 @@ roskakoriin?</translation>
     <message>
         <location line="+1"/>
         <location line="+666"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-557"/>
+        <location line="+47"/>
         <source>Errors</source>
         <translation>Virheet</translation>
     </message>
@@ -5672,6 +5699,39 @@ roskakoriin?</translation>
         <location line="+30"/>
         <source>%1 of %2 (%3%)</source>
         <translation>%1/%2 (%3 %)</translation>
+    </message>
+</context>
+<context>
+    <name>MetadataDialog</name>
+    <message>
+        <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
+        <source>No extended metadata available</source>
+        <translation type="unfinished">Laajennettuja metatietoja ei ole saatavilla</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Extended Metadata</source>
+        <translation type="unfinished">Laajennetut metatiedot</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Copy JSON</source>
+        <translation type="unfinished">Kopioi JSON</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Metadata JSON copied to clipboard</source>
+        <translation type="unfinished">Metatietojen JSON kopioitu leikepöydälle</translation>
+    </message>
+    <message>
+        <location line="+41"/>
+        <source>Field</source>
+        <translation type="unfinished">Kenttä</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Value</source>
+        <translation type="unfinished">Arvo</translation>
     </message>
 </context>
 <context>
@@ -6912,6 +6972,11 @@ roskakoriin?</translation>
     </message>
     <message>
         <location line="+21"/>
+        <source>Show extended metadata (JSON)</source>
+        <translation type="unfinished">Näytä laajennetut metatiedot (JSON)</translation>
+    </message>
+    <message>
+        <location line="+22"/>
         <source>Copy folder path</source>
         <translation>Kopioi kansion polku</translation>
     </message>
@@ -7420,7 +7485,7 @@ roskakoriin?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+795"/>
+        <location line="+646"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Tarkista tarkistussummat</translation>
@@ -7432,25 +7497,25 @@ roskakoriin?</translation>
         <translation>Sisällytä metatiedot</translation>
     </message>
     <message>
-        <location line="-846"/>
+        <location line="-697"/>
         <location line="+486"/>
-        <location line="+305"/>
+        <location line="+156"/>
         <source>Move to Trash</source>
         <translation>Siirrä roskakoriin</translation>
     </message>
     <message>
-        <location line="-792"/>
+        <location line="-643"/>
         <source>Extract Metadata</source>
         <translation>Pura metatiedot</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+751"/>
+        <location line="+602"/>
         <source>Delete</source>
         <translation>Poista</translation>
     </message>
     <message>
-        <location line="-696"/>
+        <location line="-547"/>
         <source>Exported to: %1</source>
         <translation>Viety kohteeseen: %1</translation>
     </message>
@@ -7552,12 +7617,12 @@ roskakoriin?</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+228"/>
+        <location line="+79"/>
         <source>Checksum copied to clipboard</source>
         <translation>Tarkistussumma kopioitu leikepöydälle</translation>
     </message>
     <message>
-        <location line="-224"/>
+        <location line="-75"/>
         <source>Verify Checksum (SHA-256)</source>
         <translation>Tarkista tarkistussumma (SHA-256)</translation>
     </message>
@@ -7582,32 +7647,27 @@ roskakoriin?</translation>
         <translation>Poista tiedosto</translation>
     </message>
     <message>
-        <location line="+16"/>
         <source>Extended Metadata</source>
-        <translation>Laajennetut metatiedot</translation>
+        <translation type="vanished">Laajennetut metatiedot</translation>
     </message>
     <message>
-        <location line="+8"/>
         <source>Copy JSON</source>
-        <translation>Kopioi JSON</translation>
+        <translation type="vanished">Kopioi JSON</translation>
     </message>
     <message>
-        <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation>Metatietojen JSON kopioitu leikepöydälle</translation>
+        <translation type="vanished">Metatietojen JSON kopioitu leikepöydälle</translation>
     </message>
     <message>
-        <location line="+41"/>
         <source>Field</source>
-        <translation>Kenttä</translation>
+        <translation type="vanished">Kenttä</translation>
     </message>
     <message>
-        <location line="+14"/>
         <source>Value</source>
-        <translation>Arvo</translation>
+        <translation type="vanished">Arvo</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+17"/>
         <source>Checksum (SHA-256)</source>
         <translation>Tarkistussumma (SHA-256)</translation>
     </message>

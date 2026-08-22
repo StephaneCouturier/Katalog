@@ -1398,7 +1398,7 @@ Vil du lagre den likevel (katalogen blir tom)?</translation>
         <translation>Verifiser sjekksum</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1432"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1439"/>
         <source>Verifying checksum...</source>
         <translation>Verifiserer sjekksum...</translation>
     </message>
@@ -1485,7 +1485,7 @@ Vil du lagre den likevel (katalogen blir tom)?</translation>
         <translation>Dataene dine vil bli sendt til denne nettverksdatabasen.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2173"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2180"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+1"/>
         <source>Continue?</source>
         <translation>Fortsett?</translation>
@@ -1607,7 +1607,7 @@ Vil du lagre den likevel (katalogen blir tom)?</translation>
         <translation>Sikkerhetskopiprofil opprettet.</translation>
     </message>
     <message>
-        <location filename="../core/catalogjobstoppable.cpp" line="+1442"/>
+        <location filename="../core/catalogjobstoppable.cpp" line="+1439"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
         <translation>Lagrer</translation>
@@ -1648,7 +1648,7 @@ Vil du lagre den likevel (katalogen blir tom)?</translation>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1431"/>
         <location line="+23"/>
-        <location line="+23"/>
+        <location line="+27"/>
         <location line="+21"/>
         <location filename="../core/searchprogressmanager.cpp" line="+27"/>
         <location line="+24"/>
@@ -1664,8 +1664,8 @@ Vil du lagre den likevel (katalogen blir tom)?</translation>
         <location line="+101"/>
         <location line="+139"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-37"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-45"/>
-        <location line="+44"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-49"/>
+        <location line="+48"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+285"/>
         <location line="+36"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-96"/>
@@ -1806,7 +1806,7 @@ Vil du lagre den likevel (katalogen blir tom)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-658"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-950"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-954"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Vis utvidet metadata (JSON)</translation>
     </message>
@@ -3480,7 +3480,7 @@ Vil du lagre den likevel (katalogen blir tom)?</translation>
         <location line="+53"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1360"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1367"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+20"/>
         <location filename="../core/search.cpp" line="+2"/>
         <source>Date</source>
@@ -4024,7 +4024,7 @@ Deling ble ikke utført.</translation>
         <translation>Behold poster over filer og størrelse for statistikk</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1062"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1069"/>
         <location line="+11"/>
         <location line="+35"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-115"/>
@@ -4156,7 +4156,32 @@ Deling ble ikke utført.</translation>
         <translation>Sletting av en liste med mapper er ikke tilgjengelig.</translation>
     </message>
     <message>
-        <location line="+105"/>
+        <location line="+47"/>
+        <source>Matched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Mismatched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Calculated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <source>Updated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Skipped</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Create a catalog from these results?&lt;br/&gt;- Yes: create a &lt;b&gt;Catalog&lt;/b&gt; to store the results and use it to refine your search,&lt;br/&gt;- No:  export results to a &lt;b&gt;csv file&lt;/b&gt;.</source>
         <translation>Opprett en katalog fra disse resultatene?&lt;br/&gt;- Ja: opprett en &lt;b&gt;Katalog&lt;/b&gt; for å lagre resultatene og bruk den til å forfine søket ditt,&lt;br/&gt;- Nei: eksporter resultater til en &lt;b&gt;csv-fil&lt;/b&gt;.</translation>
     </message>
@@ -4526,7 +4551,7 @@ Deling ble ikke utført.</translation>
     </message>
     <message>
         <location line="+359"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1963"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1970"/>
         <location line="+13"/>
         <source>Search history</source>
         <translation>Søkehistorikk</translation>
@@ -4892,7 +4917,7 @@ til papirkurven?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1076"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+263"/>
-        <location line="+587"/>
+        <location line="+591"/>
         <location line="+14"/>
         <location line="+20"/>
         <source>Include Metadata</source>
@@ -4996,7 +5021,7 @@ til papirkurven?</translation>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+6"/>
         <location line="+399"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+512"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+515"/>
         <source>Catalog with results</source>
         <translation>Katalog med resultater</translation>
     </message>
@@ -5119,6 +5144,8 @@ til papirkurven?</translation>
     <message>
         <location line="+1"/>
         <location line="+666"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-557"/>
+        <location line="+47"/>
         <source>Errors</source>
         <translation>Feil</translation>
     </message>
@@ -5672,6 +5699,39 @@ til papirkurven?</translation>
         <location line="+30"/>
         <source>%1 of %2 (%3%)</source>
         <translation>%1 av %2 (%3 %)</translation>
+    </message>
+</context>
+<context>
+    <name>MetadataDialog</name>
+    <message>
+        <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
+        <source>No extended metadata available</source>
+        <translation type="unfinished">Ingen utvidede metadata tilgjengelig</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Extended Metadata</source>
+        <translation type="unfinished">Utvidede metadata</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Copy JSON</source>
+        <translation type="unfinished">Kopier JSON</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Metadata JSON copied to clipboard</source>
+        <translation type="unfinished">Metadata-JSON kopiert til utklippstavlen</translation>
+    </message>
+    <message>
+        <location line="+41"/>
+        <source>Field</source>
+        <translation type="unfinished">Felt</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Value</source>
+        <translation type="unfinished">Verdi</translation>
     </message>
 </context>
 <context>
@@ -6912,6 +6972,11 @@ til papirkurven?</translation>
     </message>
     <message>
         <location line="+21"/>
+        <source>Show extended metadata (JSON)</source>
+        <translation type="unfinished">Vis utvidet metadata (JSON)</translation>
+    </message>
+    <message>
+        <location line="+22"/>
         <source>Copy folder path</source>
         <translation>Kopier mappesti</translation>
     </message>
@@ -7420,7 +7485,7 @@ til papirkurven?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+795"/>
+        <location line="+646"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Verifiser sjekksummer</translation>
@@ -7432,25 +7497,25 @@ til papirkurven?</translation>
         <translation>Inkluder metadata</translation>
     </message>
     <message>
-        <location line="-846"/>
+        <location line="-697"/>
         <location line="+486"/>
-        <location line="+305"/>
+        <location line="+156"/>
         <source>Move to Trash</source>
         <translation>Flytt til papirkurv</translation>
     </message>
     <message>
-        <location line="-792"/>
+        <location line="-643"/>
         <source>Extract Metadata</source>
         <translation>Trekk ut metadata</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+751"/>
+        <location line="+602"/>
         <source>Delete</source>
         <translation>Slett</translation>
     </message>
     <message>
-        <location line="-696"/>
+        <location line="-547"/>
         <source>Exported to: %1</source>
         <translation>Eksportert til: %1</translation>
     </message>
@@ -7552,12 +7617,12 @@ til papirkurven?</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+228"/>
+        <location line="+79"/>
         <source>Checksum copied to clipboard</source>
         <translation>Sjekksum kopiert til utklippstavlen</translation>
     </message>
     <message>
-        <location line="-224"/>
+        <location line="-75"/>
         <source>Verify Checksum (SHA-256)</source>
         <translation>Verifiser sjekksum (SHA-256)</translation>
     </message>
@@ -7582,32 +7647,27 @@ til papirkurven?</translation>
         <translation>Slett fil</translation>
     </message>
     <message>
-        <location line="+16"/>
         <source>Extended Metadata</source>
-        <translation>Utvidede metadata</translation>
+        <translation type="vanished">Utvidede metadata</translation>
     </message>
     <message>
-        <location line="+8"/>
         <source>Copy JSON</source>
-        <translation>Kopier JSON</translation>
+        <translation type="vanished">Kopier JSON</translation>
     </message>
     <message>
-        <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation>Metadata-JSON kopiert til utklippstavlen</translation>
+        <translation type="vanished">Metadata-JSON kopiert til utklippstavlen</translation>
     </message>
     <message>
-        <location line="+41"/>
         <source>Field</source>
-        <translation>Felt</translation>
+        <translation type="vanished">Felt</translation>
     </message>
     <message>
-        <location line="+14"/>
         <source>Value</source>
-        <translation>Verdi</translation>
+        <translation type="vanished">Verdi</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+17"/>
         <source>Checksum (SHA-256)</source>
         <translation>Sjekksum (SHA-256)</translation>
     </message>

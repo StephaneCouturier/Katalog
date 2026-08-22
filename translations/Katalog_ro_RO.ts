@@ -1398,7 +1398,7 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <translation>Verificați suma de control</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1432"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1439"/>
         <source>Verifying checksum...</source>
         <translation>Se verifică suma de control...</translation>
     </message>
@@ -1485,7 +1485,7 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <translation>Datele dumneavoastră vor fi trimise către această bază de date de rețea.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2173"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2180"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+1"/>
         <source>Continue?</source>
         <translation>Continuați?</translation>
@@ -1607,7 +1607,7 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <translation>Profil de backup creat.</translation>
     </message>
     <message>
-        <location filename="../core/catalogjobstoppable.cpp" line="+1442"/>
+        <location filename="../core/catalogjobstoppable.cpp" line="+1439"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
         <translation>Salvare</translation>
@@ -1648,7 +1648,7 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1431"/>
         <location line="+23"/>
-        <location line="+23"/>
+        <location line="+27"/>
         <location line="+21"/>
         <location filename="../core/searchprogressmanager.cpp" line="+27"/>
         <location line="+24"/>
@@ -1664,8 +1664,8 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+101"/>
         <location line="+139"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-37"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-45"/>
-        <location line="+44"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-49"/>
+        <location line="+48"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+285"/>
         <location line="+36"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-96"/>
@@ -1806,7 +1806,7 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-658"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-950"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-954"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Afișează metadate extinse (JSON)</translation>
     </message>
@@ -3480,7 +3480,7 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+53"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1360"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1367"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+20"/>
         <location filename="../core/search.cpp" line="+2"/>
         <source>Date</source>
@@ -4024,7 +4024,7 @@ Split was not performed.</source>
         <translation>Păstrați înregistrările fișierelor și dimensiunile pentru statistici</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1062"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1069"/>
         <location line="+11"/>
         <location line="+35"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-115"/>
@@ -4156,7 +4156,32 @@ Split was not performed.</source>
         <translation>Ștergerea unei liste de dosare nu este disponibilă.</translation>
     </message>
     <message>
-        <location line="+105"/>
+        <location line="+47"/>
+        <source>Matched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Mismatched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Calculated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <source>Updated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Skipped</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Create a catalog from these results?&lt;br/&gt;- Yes: create a &lt;b&gt;Catalog&lt;/b&gt; to store the results and use it to refine your search,&lt;br/&gt;- No:  export results to a &lt;b&gt;csv file&lt;/b&gt;.</source>
         <translation>Creați un catalog din aceste rezultate?&lt;br/&gt;- Da: creați un &lt;b&gt;Catalog&lt;/b&gt; pentru a stoca rezultatele și utilizați-l pentru a vă rafina căutarea,&lt;br/&gt;- Nu: exportați rezultatele într-un &lt;b&gt;fișier csv&lt;/b&gt;.</translation>
     </message>
@@ -4526,7 +4551,7 @@ Split was not performed.</source>
     </message>
     <message>
         <location line="+359"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1963"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1970"/>
         <location line="+13"/>
         <source>Search history</source>
         <translation>Istoricul căutărilor</translation>
@@ -4892,7 +4917,7 @@ la coșul de gunoi?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1076"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+263"/>
-        <location line="+587"/>
+        <location line="+591"/>
         <location line="+14"/>
         <location line="+20"/>
         <source>Include Metadata</source>
@@ -4996,7 +5021,7 @@ la coșul de gunoi?</translation>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+6"/>
         <location line="+399"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+512"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+515"/>
         <source>Catalog with results</source>
         <translation>Catalog cu rezultate</translation>
     </message>
@@ -5119,6 +5144,8 @@ la coșul de gunoi?</translation>
     <message>
         <location line="+1"/>
         <location line="+666"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-557"/>
+        <location line="+47"/>
         <source>Errors</source>
         <translation>Erori</translation>
     </message>
@@ -5672,6 +5699,39 @@ la coșul de gunoi?</translation>
         <location line="+30"/>
         <source>%1 of %2 (%3%)</source>
         <translation>%1 din %2 (%3%)</translation>
+    </message>
+</context>
+<context>
+    <name>MetadataDialog</name>
+    <message>
+        <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
+        <source>No extended metadata available</source>
+        <translation type="unfinished">Niciun metadate extinse disponibile</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Extended Metadata</source>
+        <translation type="unfinished">Metadate extinse</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Copy JSON</source>
+        <translation type="unfinished">Copiază JSON</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Metadata JSON copied to clipboard</source>
+        <translation type="unfinished">JSON-ul metadatelor a fost copiat în clipboard</translation>
+    </message>
+    <message>
+        <location line="+41"/>
+        <source>Field</source>
+        <translation type="unfinished">Câmp</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Value</source>
+        <translation type="unfinished">Valoare</translation>
     </message>
 </context>
 <context>
@@ -6912,6 +6972,11 @@ la coșul de gunoi?</translation>
     </message>
     <message>
         <location line="+21"/>
+        <source>Show extended metadata (JSON)</source>
+        <translation type="unfinished">Afișează metadate extinse (JSON)</translation>
+    </message>
+    <message>
+        <location line="+22"/>
         <source>Copy folder path</source>
         <translation>Copiați calea dosarului</translation>
     </message>
@@ -7420,7 +7485,7 @@ la coșul de gunoi?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+795"/>
+        <location line="+646"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Verificați sumele de control</translation>
@@ -7432,25 +7497,25 @@ la coșul de gunoi?</translation>
         <translation>Include metadatele</translation>
     </message>
     <message>
-        <location line="-846"/>
+        <location line="-697"/>
         <location line="+486"/>
-        <location line="+305"/>
+        <location line="+156"/>
         <source>Move to Trash</source>
         <translation>Mutați la coșul de gunoi</translation>
     </message>
     <message>
-        <location line="-792"/>
+        <location line="-643"/>
         <source>Extract Metadata</source>
         <translation>Extrage metadate</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+751"/>
+        <location line="+602"/>
         <source>Delete</source>
         <translation>Șterge</translation>
     </message>
     <message>
-        <location line="-696"/>
+        <location line="-547"/>
         <source>Exported to: %1</source>
         <translation>Exportat în: %1</translation>
     </message>
@@ -7552,12 +7617,12 @@ la coșul de gunoi?</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+228"/>
+        <location line="+79"/>
         <source>Checksum copied to clipboard</source>
         <translation>Suma de control a fost copiată în clipboard</translation>
     </message>
     <message>
-        <location line="-224"/>
+        <location line="-75"/>
         <source>Verify Checksum (SHA-256)</source>
         <translation>Verifică suma de control (SHA-256)</translation>
     </message>
@@ -7582,32 +7647,27 @@ la coșul de gunoi?</translation>
         <translation>Șterge fișierul</translation>
     </message>
     <message>
-        <location line="+16"/>
         <source>Extended Metadata</source>
-        <translation>Metadate extinse</translation>
+        <translation type="vanished">Metadate extinse</translation>
     </message>
     <message>
-        <location line="+8"/>
         <source>Copy JSON</source>
-        <translation>Copiază JSON</translation>
+        <translation type="vanished">Copiază JSON</translation>
     </message>
     <message>
-        <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation>JSON-ul metadatelor a fost copiat în clipboard</translation>
+        <translation type="vanished">JSON-ul metadatelor a fost copiat în clipboard</translation>
     </message>
     <message>
-        <location line="+41"/>
         <source>Field</source>
-        <translation>Câmp</translation>
+        <translation type="vanished">Câmp</translation>
     </message>
     <message>
-        <location line="+14"/>
         <source>Value</source>
-        <translation>Valoare</translation>
+        <translation type="vanished">Valoare</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+17"/>
         <source>Checksum (SHA-256)</source>
         <translation>Sumă de control (SHA-256)</translation>
     </message>

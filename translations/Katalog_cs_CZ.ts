@@ -1398,7 +1398,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Ověřit kontrolní součet</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1432"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1439"/>
         <source>Verifying checksum...</source>
         <translation>Ověřování kontrolního součtu...</translation>
     </message>
@@ -1485,7 +1485,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Vaše data budou odeslána do této síťové databáze.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2173"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2180"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+1"/>
         <source>Continue?</source>
         <translation>Pokračovat?</translation>
@@ -1577,7 +1577,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Záložní profil vytvořen.</translation>
     </message>
     <message>
-        <location filename="../core/catalogjobstoppable.cpp" line="+1442"/>
+        <location filename="../core/catalogjobstoppable.cpp" line="+1439"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
         <translation>Ukládání</translation>
@@ -1618,7 +1618,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1431"/>
         <location line="+23"/>
-        <location line="+23"/>
+        <location line="+27"/>
         <location line="+21"/>
         <location filename="../core/searchprogressmanager.cpp" line="+27"/>
         <location line="+24"/>
@@ -1634,8 +1634,8 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <location line="+101"/>
         <location line="+139"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-37"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-45"/>
-        <location line="+44"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-49"/>
+        <location line="+48"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+285"/>
         <location line="+36"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-96"/>
@@ -1776,7 +1776,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-658"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-950"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-954"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Zobrazit rozšířená metadata (JSON)</translation>
     </message>
@@ -2688,7 +2688,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-431"/>
         <location line="+694"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+273"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+563"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+570"/>
         <location filename="../core/search.cpp" line="+8"/>
         <source>File Type</source>
         <translation>Typ souboru</translation>
@@ -2812,7 +2812,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     </message>
     <message>
         <location line="+359"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1963"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1970"/>
         <location line="+13"/>
         <source>Search history</source>
         <translation>Historie vyhledávání</translation>
@@ -2836,7 +2836,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <location line="+292"/>
         <location line="+3286"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2269"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+2016"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+2023"/>
         <location line="+117"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-176"/>
         <location line="+107"/>
@@ -2966,7 +2966,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     </message>
     <message>
         <location line="+465"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-841"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-848"/>
         <source>Select...</source>
         <translation>Vybrat...</translation>
     </message>
@@ -2994,7 +2994,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1970"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-459"/>
-        <location line="+587"/>
+        <location line="+591"/>
         <location line="+14"/>
         <location line="+20"/>
         <source>Include Metadata</source>
@@ -3514,7 +3514,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <location line="+53"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-5"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+437"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+440"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+20"/>
         <location filename="../core/search.cpp" line="-5"/>
         <source>Date</source>
@@ -3580,7 +3580,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     </message>
     <message>
         <location line="+4071"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1920"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1927"/>
         <source>Keep last 10</source>
         <translation>Ponechat posledních 10</translation>
     </message>
@@ -4228,7 +4228,32 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>%1 souborů bylo smazáno, z %2 souborů z výsledků.</translation>
     </message>
     <message>
-        <location line="+114"/>
+        <location line="+56"/>
+        <source>Matched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Mismatched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Calculated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <source>Updated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Skipped</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Create a catalog from these results?&lt;br/&gt;- Yes: create a &lt;b&gt;Catalog&lt;/b&gt; to store the results and use it to refine your search,&lt;br/&gt;- No:  export results to a &lt;b&gt;csv file&lt;/b&gt;.</source>
         <translation>Vytvořit katalog z těchto výsledků?&lt;br/&gt;- Ano: vytvořte &lt;b&gt;katalog&lt;/b&gt; k uložení výsledků a použijte jej k upřesnění vyhledávání,&lt;br/&gt;- Ne: exportujte výsledky do &lt;b&gt; csv&lt;/b&gt;.</translation>
     </message>
@@ -4432,7 +4457,7 @@ do koše?</translation>
         <translation>&lt;span style=&apos;color:red;&apos;&gt;SMAZAT&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1089"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1096"/>
         <location line="+11"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-4"/>
         <source>MiB</source>
@@ -4683,6 +4708,8 @@ do koše?</translation>
     <message>
         <location line="+1"/>
         <location line="+666"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+642"/>
+        <location line="+47"/>
         <source>Errors</source>
         <translation>Chyby</translation>
     </message>
@@ -5613,7 +5640,7 @@ Rozdělení nebylo provedeno.</translation>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+6"/>
         <location line="+399"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1192"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+510"/>
         <source>Catalog with results</source>
         <translation>Katalog s výsledky</translation>
     </message>
@@ -5672,6 +5699,39 @@ Rozdělení nebylo provedeno.</translation>
         <location line="+30"/>
         <source>%1 of %2 (%3%)</source>
         <translation>%1 z %2 (%3 %)</translation>
+    </message>
+</context>
+<context>
+    <name>MetadataDialog</name>
+    <message>
+        <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
+        <source>No extended metadata available</source>
+        <translation type="unfinished">Nejsou k dispozici žádná rozšířená metadata</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Extended Metadata</source>
+        <translation type="unfinished">Rozšířená metadata</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Copy JSON</source>
+        <translation type="unfinished">Kopírovat JSON</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Metadata JSON copied to clipboard</source>
+        <translation type="unfinished">JSON metadat zkopírován do schránky</translation>
+    </message>
+    <message>
+        <location line="+41"/>
+        <source>Field</source>
+        <translation type="unfinished">Pole</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Value</source>
+        <translation type="unfinished">Hodnota</translation>
     </message>
 </context>
 <context>
@@ -6912,6 +6972,11 @@ Rozdělení nebylo provedeno.</translation>
     </message>
     <message>
         <location line="+21"/>
+        <source>Show extended metadata (JSON)</source>
+        <translation type="unfinished">Zobrazit rozšířená metadata (JSON)</translation>
+    </message>
+    <message>
+        <location line="+22"/>
         <source>Copy folder path</source>
         <translation>Zkopírujte cestu ke složce</translation>
     </message>
@@ -7420,7 +7485,7 @@ Rozdělení nebylo provedeno.</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+795"/>
+        <location line="+646"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Ověřit kontrolní součty</translation>
@@ -7432,25 +7497,25 @@ Rozdělení nebylo provedeno.</translation>
         <translation>Zahrnout metadata</translation>
     </message>
     <message>
-        <location line="-846"/>
+        <location line="-697"/>
         <location line="+486"/>
-        <location line="+305"/>
+        <location line="+156"/>
         <source>Move to Trash</source>
         <translation>Přesunout do koše</translation>
     </message>
     <message>
-        <location line="-792"/>
+        <location line="-643"/>
         <source>Extract Metadata</source>
         <translation>Extrahovat metadata</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+751"/>
+        <location line="+602"/>
         <source>Delete</source>
         <translation>Vymazat</translation>
     </message>
     <message>
-        <location line="-696"/>
+        <location line="-547"/>
         <source>Exported to: %1</source>
         <translation>Exportováno do: %1</translation>
     </message>
@@ -7552,12 +7617,12 @@ Rozdělení nebylo provedeno.</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+228"/>
+        <location line="+79"/>
         <source>Checksum copied to clipboard</source>
         <translation>Kontrolní součet zkopírován do schránky</translation>
     </message>
     <message>
-        <location line="-224"/>
+        <location line="-75"/>
         <source>Verify Checksum (SHA-256)</source>
         <translation>Ověřit kontrolní součet (SHA-256)</translation>
     </message>
@@ -7582,32 +7647,27 @@ Rozdělení nebylo provedeno.</translation>
         <translation>Smazat soubor</translation>
     </message>
     <message>
-        <location line="+16"/>
         <source>Extended Metadata</source>
-        <translation>Rozšířená metadata</translation>
+        <translation type="vanished">Rozšířená metadata</translation>
     </message>
     <message>
-        <location line="+8"/>
         <source>Copy JSON</source>
-        <translation>Kopírovat JSON</translation>
+        <translation type="vanished">Kopírovat JSON</translation>
     </message>
     <message>
-        <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation>JSON metadat zkopírován do schránky</translation>
+        <translation type="vanished">JSON metadat zkopírován do schránky</translation>
     </message>
     <message>
-        <location line="+41"/>
         <source>Field</source>
-        <translation>Pole</translation>
+        <translation type="vanished">Pole</translation>
     </message>
     <message>
-        <location line="+14"/>
         <source>Value</source>
-        <translation>Hodnota</translation>
+        <translation type="vanished">Hodnota</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+17"/>
         <source>Checksum (SHA-256)</source>
         <translation>Kontrolní součet (SHA-256)</translation>
     </message>

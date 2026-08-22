@@ -1398,7 +1398,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <translation>Preveri nadzorno vsoto</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1432"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1439"/>
         <source>Verifying checksum...</source>
         <translation>Preverjanje nadzorne vsote...</translation>
     </message>
@@ -1485,7 +1485,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <translation>Vaši podatki bodo poslani v to omrežno podatkovno bazo.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2173"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2180"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+1"/>
         <source>Continue?</source>
         <translation>Nadaljuj?</translation>
@@ -1607,7 +1607,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <translation>Profil varnostne kopije ustvarjen.</translation>
     </message>
     <message>
-        <location filename="../core/catalogjobstoppable.cpp" line="+1442"/>
+        <location filename="../core/catalogjobstoppable.cpp" line="+1439"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
         <translation>Shranjevanje</translation>
@@ -1648,7 +1648,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1431"/>
         <location line="+23"/>
-        <location line="+23"/>
+        <location line="+27"/>
         <location line="+21"/>
         <location filename="../core/searchprogressmanager.cpp" line="+27"/>
         <location line="+24"/>
@@ -1664,8 +1664,8 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location line="+101"/>
         <location line="+139"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-37"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-45"/>
-        <location line="+44"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-49"/>
+        <location line="+48"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+285"/>
         <location line="+36"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-96"/>
@@ -1806,7 +1806,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-658"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-950"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-954"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Prikaži razširjene metapodatke (JSON)</translation>
     </message>
@@ -2599,7 +2599,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+584"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+591"/>
         <source>Tag</source>
         <translation>Oznaka</translation>
     </message>
@@ -2610,7 +2610,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
     </message>
     <message>
         <location line="+140"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-658"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-665"/>
         <source>Select...</source>
         <translation>Izberi...</translation>
     </message>
@@ -2681,7 +2681,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1076"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+862"/>
-        <location line="+587"/>
+        <location line="+591"/>
         <location line="+14"/>
         <location line="+20"/>
         <source>Include Metadata</source>
@@ -2743,7 +2743,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location line="+16"/>
         <location line="+3286"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1285"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+533"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+536"/>
         <location line="+117"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-114"/>
         <location line="+107"/>
@@ -2780,7 +2780,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
     </message>
     <message>
         <location line="+4071"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2133"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2140"/>
         <source>Keep last 10</source>
         <translation>Ohrani zadnjih 10</translation>
     </message>
@@ -3939,7 +3939,7 @@ v koš?</translation>
         <location line="+53"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1107"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1114"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+95"/>
         <location filename="../core/search.cpp" line="+2"/>
         <source>Date</source>
@@ -4578,7 +4578,7 @@ Razdelitev ni bila izvedena.</translation>
         <translation>Ohrani zapise datotek in velikosti za statistike</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1062"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1069"/>
         <location line="+11"/>
         <location line="+35"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-115"/>
@@ -4710,7 +4710,32 @@ Razdelitev ni bila izvedena.</translation>
         <translation>Brisanje seznama map ni na voljo.</translation>
     </message>
     <message>
-        <location line="+105"/>
+        <location line="+47"/>
+        <source>Matched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Mismatched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Calculated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <source>Updated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Skipped</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Create a catalog from these results?&lt;br/&gt;- Yes: create a &lt;b&gt;Catalog&lt;/b&gt; to store the results and use it to refine your search,&lt;br/&gt;- No:  export results to a &lt;b&gt;csv file&lt;/b&gt;.</source>
         <translation>Ustvari katalog iz teh rezultatov?&lt;br/&gt;- Da: ustvari &lt;b&gt;Katalog&lt;/b&gt; za shranitev rezultatov in ga uporabi za izboljšanje iskanja,&lt;br/&gt;- Ne: izvozi rezultate v &lt;b&gt;csv datoteko&lt;/b&gt;.</translation>
     </message>
@@ -5069,6 +5094,8 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+1"/>
         <location line="+666"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-557"/>
+        <location line="+47"/>
         <source>Errors</source>
         <translation>Napake</translation>
     </message>
@@ -5673,6 +5700,39 @@ Razdelitev ni bila izvedena.</translation>
         <location line="+30"/>
         <source>%1 of %2 (%3%)</source>
         <translation>%1 od %2 (%3 %)</translation>
+    </message>
+</context>
+<context>
+    <name>MetadataDialog</name>
+    <message>
+        <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
+        <source>No extended metadata available</source>
+        <translation type="unfinished">Razširjeni metapodatki niso na voljo</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Extended Metadata</source>
+        <translation type="unfinished">Razširjeni metapodatki</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Copy JSON</source>
+        <translation type="unfinished">Kopiraj JSON</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Metadata JSON copied to clipboard</source>
+        <translation type="unfinished">JSON metapodatkov kopiran v odložišče</translation>
+    </message>
+    <message>
+        <location line="+41"/>
+        <source>Field</source>
+        <translation type="unfinished">Polje</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Value</source>
+        <translation type="unfinished">Vrednost</translation>
     </message>
 </context>
 <context>
@@ -6913,6 +6973,11 @@ Razdelitev ni bila izvedena.</translation>
     </message>
     <message>
         <location line="+21"/>
+        <source>Show extended metadata (JSON)</source>
+        <translation type="unfinished">Prikaži razširjene metapodatke (JSON)</translation>
+    </message>
+    <message>
+        <location line="+22"/>
         <source>Copy folder path</source>
         <translation>Kopiraj pot mape</translation>
     </message>
@@ -7421,7 +7486,7 @@ Razdelitev ni bila izvedena.</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+795"/>
+        <location line="+646"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Preveri nadzorne vsote</translation>
@@ -7433,25 +7498,25 @@ Razdelitev ni bila izvedena.</translation>
         <translation>Vključi metapodatke</translation>
     </message>
     <message>
-        <location line="-846"/>
+        <location line="-697"/>
         <location line="+486"/>
-        <location line="+305"/>
+        <location line="+156"/>
         <source>Move to Trash</source>
         <translation>Premakni v smeti</translation>
     </message>
     <message>
-        <location line="-792"/>
+        <location line="-643"/>
         <source>Extract Metadata</source>
         <translation>Izvleci metapodatke</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+751"/>
+        <location line="+602"/>
         <source>Delete</source>
         <translation>Izbriši</translation>
     </message>
     <message>
-        <location line="-696"/>
+        <location line="-547"/>
         <source>Exported to: %1</source>
         <translation>Izvoženo v: %1</translation>
     </message>
@@ -7553,12 +7618,12 @@ Razdelitev ni bila izvedena.</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+228"/>
+        <location line="+79"/>
         <source>Checksum copied to clipboard</source>
         <translation>Nadzorna vsota kopirana v odložišče</translation>
     </message>
     <message>
-        <location line="-224"/>
+        <location line="-75"/>
         <source>Verify Checksum (SHA-256)</source>
         <translation>Preveri nadzorno vsoto (SHA-256)</translation>
     </message>
@@ -7583,32 +7648,27 @@ Razdelitev ni bila izvedena.</translation>
         <translation>Izbriši datoteko</translation>
     </message>
     <message>
-        <location line="+16"/>
         <source>Extended Metadata</source>
-        <translation>Razširjeni metapodatki</translation>
+        <translation type="vanished">Razširjeni metapodatki</translation>
     </message>
     <message>
-        <location line="+8"/>
         <source>Copy JSON</source>
-        <translation>Kopiraj JSON</translation>
+        <translation type="vanished">Kopiraj JSON</translation>
     </message>
     <message>
-        <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation>JSON metapodatkov kopiran v odložišče</translation>
+        <translation type="vanished">JSON metapodatkov kopiran v odložišče</translation>
     </message>
     <message>
-        <location line="+41"/>
         <source>Field</source>
-        <translation>Polje</translation>
+        <translation type="vanished">Polje</translation>
     </message>
     <message>
-        <location line="+14"/>
         <source>Value</source>
-        <translation>Vrednost</translation>
+        <translation type="vanished">Vrednost</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+17"/>
         <source>Checksum (SHA-256)</source>
         <translation>Nadzorna vsota (SHA-256)</translation>
     </message>

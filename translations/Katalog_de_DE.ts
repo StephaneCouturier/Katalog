@@ -1398,7 +1398,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Prüfsumme überprüfen</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1432"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1439"/>
         <source>Verifying checksum...</source>
         <translation>Prüfsumme wird überprüft...</translation>
     </message>
@@ -1485,7 +1485,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Ihre Daten werden an diese Netzwerkdatenbank gesendet.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2173"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2180"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+1"/>
         <source>Continue?</source>
         <translation>Fortfahren?</translation>
@@ -1577,7 +1577,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Sicherungsprofil erstellt.</translation>
     </message>
     <message>
-        <location filename="../core/catalogjobstoppable.cpp" line="+1442"/>
+        <location filename="../core/catalogjobstoppable.cpp" line="+1439"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
         <translation>Speichern</translation>
@@ -1618,7 +1618,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1431"/>
         <location line="+23"/>
-        <location line="+23"/>
+        <location line="+27"/>
         <location line="+21"/>
         <location filename="../core/searchprogressmanager.cpp" line="+27"/>
         <location line="+24"/>
@@ -1634,8 +1634,8 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <location line="+101"/>
         <location line="+139"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-37"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-45"/>
-        <location line="+44"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-49"/>
+        <location line="+48"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+285"/>
         <location line="+36"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-96"/>
@@ -1776,7 +1776,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-658"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-950"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-954"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Erweiterte Metadaten anzeigen (JSON)</translation>
     </message>
@@ -2072,7 +2072,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <location line="+53"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-2"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-371"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1386"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1393"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+95"/>
         <location filename="../core/search.cpp" line="-17"/>
         <source>Date</source>
@@ -2171,7 +2171,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
     </message>
     <message>
         <location line="+4071"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1920"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1927"/>
         <source>Keep last 10</source>
         <translation>Letzte 10 behalten</translation>
     </message>
@@ -3115,7 +3115,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-431"/>
         <location line="+694"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+273"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+563"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+570"/>
         <location filename="../core/search.cpp" line="+8"/>
         <source>File Type</source>
         <translation>Dateityp</translation>
@@ -3182,7 +3182,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
     </message>
     <message>
         <location line="+359"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1963"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1970"/>
         <location line="+13"/>
         <source>Search history</source>
         <translation>Suchverlauf</translation>
@@ -3203,7 +3203,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <location line="+292"/>
         <location line="+3286"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2269"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+2016"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+2023"/>
         <location line="+117"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-176"/>
         <location line="+107"/>
@@ -3307,7 +3307,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
     </message>
     <message>
         <location line="+465"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-841"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-848"/>
         <source>Select...</source>
         <translation>Wählen...</translation>
     </message>
@@ -3335,7 +3335,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1970"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-459"/>
-        <location line="+587"/>
+        <location line="+591"/>
         <location line="+14"/>
         <location line="+20"/>
         <source>Include Metadata</source>
@@ -3904,7 +3904,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Dies ist Version: v%1 &lt;br/&gt;&lt;br/&gt;Eine neue Version ist verfügbar: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Die Liste der neuen Funktionen finden Sie im &lt;a href=&apos;%3 &apos;&gt;Versionshinweise&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Möchten Sie es herunterladen?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-613"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-617"/>
         <location line="+11"/>
         <location line="+30"/>
         <source>Bytes</source>
@@ -4228,7 +4228,32 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>%1 Dateien wurden gelöscht, von %2 Dateien aus den Ergebnissen.</translation>
     </message>
     <message>
-        <location line="+114"/>
+        <location line="+56"/>
+        <source>Matched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Mismatched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Calculated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <source>Updated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Skipped</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Create a catalog from these results?&lt;br/&gt;- Yes: create a &lt;b&gt;Catalog&lt;/b&gt; to store the results and use it to refine your search,&lt;br/&gt;- No:  export results to a &lt;b&gt;csv file&lt;/b&gt;.</source>
         <translation>Aus diesen Ergebnissen einen Katalog erstellen?&lt;br/&gt;- Ja: Erstellen Sie einen &lt;b&gt;Katalog&lt;/b&gt;, um die Ergebnisse zu speichern und ihn zum Verfeinern Ihrer Suche zu verwenden.&lt;br/&gt;- Nein: Ergebnisse in ein &lt;b&gt; exportieren csv-Datei&lt;/b&gt;.</translation>
     </message>
@@ -4432,7 +4457,7 @@ in den Papierkorb?</translation>
         <translation>&lt;span style=&apos;color:red;&apos;&gt;LÖSCHEN&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1089"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1096"/>
         <location line="+11"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-4"/>
         <source>MiB</source>
@@ -4992,6 +5017,8 @@ Aufteilung wurde nicht durchgeführt.</translation>
     <message>
         <location line="+1"/>
         <location line="+666"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+642"/>
+        <location line="+47"/>
         <source>Errors</source>
         <translation>Fehler</translation>
     </message>
@@ -5613,7 +5640,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+6"/>
         <location line="+399"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1192"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+510"/>
         <source>Catalog with results</source>
         <translation>Katalog mit Ergebnissen</translation>
     </message>
@@ -5672,6 +5699,39 @@ Aufteilung wurde nicht durchgeführt.</translation>
         <location line="+30"/>
         <source>%1 of %2 (%3%)</source>
         <translation>%1 von %2 (%3 %)</translation>
+    </message>
+</context>
+<context>
+    <name>MetadataDialog</name>
+    <message>
+        <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
+        <source>No extended metadata available</source>
+        <translation type="unfinished">Keine erweiterten Metadaten verfügbar</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Extended Metadata</source>
+        <translation type="unfinished">Erweiterte Metadaten</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Copy JSON</source>
+        <translation type="unfinished">JSON kopieren</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Metadata JSON copied to clipboard</source>
+        <translation type="unfinished">Metadaten-JSON in die Zwischenablage kopiert</translation>
+    </message>
+    <message>
+        <location line="+41"/>
+        <source>Field</source>
+        <translation type="unfinished">Feld</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Value</source>
+        <translation type="unfinished">Wert</translation>
     </message>
 </context>
 <context>
@@ -6912,6 +6972,11 @@ Aufteilung wurde nicht durchgeführt.</translation>
     </message>
     <message>
         <location line="+21"/>
+        <source>Show extended metadata (JSON)</source>
+        <translation type="unfinished">Erweiterte Metadaten anzeigen (JSON)</translation>
+    </message>
+    <message>
+        <location line="+22"/>
         <source>Copy folder path</source>
         <translation>Ordnerpfad kopieren</translation>
     </message>
@@ -7420,7 +7485,7 @@ Aufteilung wurde nicht durchgeführt.</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+795"/>
+        <location line="+646"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Prüfsummen überprüfen</translation>
@@ -7432,25 +7497,25 @@ Aufteilung wurde nicht durchgeführt.</translation>
         <translation>Metadaten einschließen</translation>
     </message>
     <message>
-        <location line="-846"/>
+        <location line="-697"/>
         <location line="+486"/>
-        <location line="+305"/>
+        <location line="+156"/>
         <source>Move to Trash</source>
         <translation>Ab in den Müll</translation>
     </message>
     <message>
-        <location line="-792"/>
+        <location line="-643"/>
         <source>Extract Metadata</source>
         <translation>Metadaten extrahieren</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+751"/>
+        <location line="+602"/>
         <source>Delete</source>
         <translation>Löschen</translation>
     </message>
     <message>
-        <location line="-696"/>
+        <location line="-547"/>
         <source>Exported to: %1</source>
         <translation>Exportiert nach: %1</translation>
     </message>
@@ -7552,12 +7617,12 @@ Aufteilung wurde nicht durchgeführt.</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+228"/>
+        <location line="+79"/>
         <source>Checksum copied to clipboard</source>
         <translation>Prüfsumme in die Zwischenablage kopiert</translation>
     </message>
     <message>
-        <location line="-224"/>
+        <location line="-75"/>
         <source>Verify Checksum (SHA-256)</source>
         <translation>Prüfsumme überprüfen (SHA-256)</translation>
     </message>
@@ -7582,32 +7647,27 @@ Aufteilung wurde nicht durchgeführt.</translation>
         <translation>Datei löschen</translation>
     </message>
     <message>
-        <location line="+16"/>
         <source>Extended Metadata</source>
-        <translation>Erweiterte Metadaten</translation>
+        <translation type="vanished">Erweiterte Metadaten</translation>
     </message>
     <message>
-        <location line="+8"/>
         <source>Copy JSON</source>
-        <translation>JSON kopieren</translation>
+        <translation type="vanished">JSON kopieren</translation>
     </message>
     <message>
-        <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation>Metadaten-JSON in die Zwischenablage kopiert</translation>
+        <translation type="vanished">Metadaten-JSON in die Zwischenablage kopiert</translation>
     </message>
     <message>
-        <location line="+41"/>
         <source>Field</source>
-        <translation>Feld</translation>
+        <translation type="vanished">Feld</translation>
     </message>
     <message>
-        <location line="+14"/>
         <source>Value</source>
-        <translation>Wert</translation>
+        <translation type="vanished">Wert</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+17"/>
         <source>Checksum (SHA-256)</source>
         <translation>Prüfsumme (SHA-256)</translation>
     </message>

@@ -70,6 +70,7 @@ qt_add_qml_module(Katalog3
         PageSelectionView.qml
         DeviceTreeComboBox.qml
         SearchTermList.qml
+        MetadataDialog.qml
         PageExploreFolders.qml
         PageExploreFiles.qml
     SOURCES

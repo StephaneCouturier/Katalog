@@ -1698,7 +1698,11 @@
                 StatusBarMessageBuilder doneBuilder;
                 doneBuilder.setOperation(tr("Verify Checksums"))
                            .setStatus(tr("Completed"))
-                           .setProcess(tr("Evaluated"), total, total);
+                           .setProcess(tr("Evaluated"), total, total)
+                           .addResult(tr("Matched"),    matched)
+                           .addResult(tr("Mismatched"), mismatched)
+                           .addResult(tr("Calculated"), calculated)
+                           .addResult(tr("Errors"),     errors);
                 statusBarLabel->setText(doneBuilder.build());
                 statusBarTimer->start(5000);
 
@@ -1742,7 +1746,10 @@
                 StatusBarMessageBuilder doneBuilder;
                 doneBuilder.setOperation(tr("Include Metadata"))
                            .setStatus(tr("Completed"))
-                           .setProcess(tr("Evaluated"), total, total);
+                           .setProcess(tr("Evaluated"), total, total)
+                           .addResult(tr("Updated"), updated)
+                           .addResult(tr("Skipped"), skipped)
+                           .addResult(tr("Errors"),  errors);
                 statusBarLabel->setText(doneBuilder.build());
                 statusBarTimer->start(5000);
 

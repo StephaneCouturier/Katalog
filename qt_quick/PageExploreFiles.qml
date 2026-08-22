@@ -368,6 +368,28 @@ Item {
         Controls.MenuSeparator {}
 
         Controls.MenuItem {
+            text: qsTr("Show extended metadata (JSON)")
+            icon.name: "configure"
+            // Explore is always scoped to one catalog, so the level is read from
+            // that catalog rather than from a per-row column as in Search.
+            readonly property bool hasMetadata:
+                root._activeEntryType === "file" &&
+                root.catalogId > 0 &&
+                appManager1.catalogIncludesExtendedMetadata(root.catalogId)
+            visible: hasMetadata
+            height:  hasMetadata ? implicitHeight : 0
+            onTriggered: metadataDialog.showFor(root.catalogId,
+                                                root._activeFileName,
+                                                root._activeFolderPath)
+        }
+
+        Controls.MenuSeparator {
+            visible: root._activeEntryType === "file" && root.catalogId > 0
+                     && appManager1.catalogIncludesExtendedMetadata(root.catalogId)
+            height: visible ? implicitHeight : 0
+        }
+
+        Controls.MenuItem {
             text: qsTr("Copy folder path")
             icon.name: "edit-copy"
             onTriggered: appManager1.copyToClipboard(root._activeFolderPath)
@@ -588,4 +610,7 @@ Item {
             }
         }
     }
+
+    // ── Metadata dialog ───────────────────────────────────────────────────
+    MetadataDialog { id: metadataDialog }
 }
