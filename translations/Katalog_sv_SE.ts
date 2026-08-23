@@ -5723,12 +5723,12 @@ till papperskorgen?</translation>
     <message>
         <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished">Inga utökade metadata tillgängliga</translation>
+        <translation>Inga utökade metadata tillgängliga</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished">Utökade metadata</translation>
+        <translation>Utökade metadata</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -5738,12 +5738,12 @@ till papperskorgen?</translation>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished">Metadata-JSON kopierad till urklipp</translation>
+        <translation>Metadata-JSON kopierad till urklipp</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished">Fält</translation>
+        <translation>Fält</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -8114,7 +8114,7 @@ Fel: %3</translation>
     <message>
         <location line="+3"/>
         <source>Refresh device status when returning to the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Uppdatera enhetsstatus vid återgång till programmet</translation>
     </message>
     <message>
         <location line="+6"/>

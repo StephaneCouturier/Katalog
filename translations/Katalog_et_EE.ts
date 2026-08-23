@@ -5723,12 +5723,12 @@ Jagamist ei tehtud.</translation>
     <message>
         <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished">Laiendatud metaandmeid pole saadaval</translation>
+        <translation>Laiendatud metaandmeid pole saadaval</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished">Laiendatud metaandmed</translation>
+        <translation>Laiendatud metaandmed</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -5738,12 +5738,12 @@ Jagamist ei tehtud.</translation>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished">Metaandmete JSON kopeeriti lõikelauale</translation>
+        <translation>Metaandmete JSON kopeeriti lõikelauale</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished">Väli</translation>
+        <translation>Väli</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -8114,7 +8114,7 @@ Vigu: %3</translation>
     <message>
         <location line="+3"/>
         <source>Refresh device status when returning to the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Seadmete oleku värskendamine rakendusse naasmisel</translation>
     </message>
     <message>
         <location line="+6"/>

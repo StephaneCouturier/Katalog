@@ -5723,12 +5723,12 @@ Rozdělení nebylo provedeno.</translation>
     <message>
         <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished">Nejsou k dispozici žádná rozšířená metadata</translation>
+        <translation>Nejsou k dispozici žádná rozšířená metadata</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished">Rozšířená metadata</translation>
+        <translation>Rozšířená metadata</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -5738,12 +5738,12 @@ Rozdělení nebylo provedeno.</translation>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished">JSON metadat zkopírován do schránky</translation>
+        <translation>JSON metadat zkopírován do schránky</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished">Pole</translation>
+        <translation>Pole</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -8114,7 +8114,7 @@ Chyby: %3</translation>
     <message>
         <location line="+3"/>
         <source>Refresh device status when returning to the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Obnovit stav zařízení při návratu do aplikace</translation>
     </message>
     <message>
         <location line="+6"/>

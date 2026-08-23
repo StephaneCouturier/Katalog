@@ -5723,12 +5723,12 @@ nel cestino?</translation>
     <message>
         <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished">Nessun metadato esteso disponibile</translation>
+        <translation>Nessun metadato esteso disponibile</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished">Metadati estesi</translation>
+        <translation>Metadati estesi</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -5738,12 +5738,12 @@ nel cestino?</translation>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished">JSON dei metadati copiato negli appunti</translation>
+        <translation>JSON dei metadati copiato negli appunti</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished">Campo</translation>
+        <translation>Campo</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -8114,7 +8114,7 @@ Errori: %3</translation>
     <message>
         <location line="+3"/>
         <source>Refresh device status when returning to the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiorna lo stato dei dispositivi al ritorno nell’applicazione</translation>
     </message>
     <message>
         <location line="+6"/>

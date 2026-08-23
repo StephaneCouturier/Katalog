@@ -5724,12 +5724,12 @@ Split was not performed.</source>
     <message>
         <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished">Δεν υπάρχουν διαθέσιμα εκτεταμένα μεταδεδομένα</translation>
+        <translation>Δεν υπάρχουν διαθέσιμα εκτεταμένα μεταδεδομένα</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished">Εκτεταμένα μεταδεδομένα</translation>
+        <translation>Εκτεταμένα μεταδεδομένα</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -5739,12 +5739,12 @@ Split was not performed.</source>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished">Το JSON μεταδεδομένων αντιγράφηκε στο πρόχειρο</translation>
+        <translation>Το JSON μεταδεδομένων αντιγράφηκε στο πρόχειρο</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished">Πεδίο</translation>
+        <translation>Πεδίο</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -8115,7 +8115,7 @@ Errors: %3</source>
     <message>
         <location line="+3"/>
         <source>Refresh device status when returning to the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Ανανέωση κατάστασης συσκευών κατά την επιστροφή στην εφαρμογή</translation>
     </message>
     <message>
         <location line="+6"/>

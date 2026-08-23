@@ -5723,12 +5723,12 @@ do kosza?</translation>
     <message>
         <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished">Brak dostępnych rozszerzonych metadanych</translation>
+        <translation>Brak dostępnych rozszerzonych metadanych</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished">Rozszerzone metadane</translation>
+        <translation>Rozszerzone metadane</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -5738,12 +5738,12 @@ do kosza?</translation>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished">JSON metadanych skopiowany do schowka</translation>
+        <translation>JSON metadanych skopiowany do schowka</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished">Pole</translation>
+        <translation>Pole</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -8114,7 +8114,7 @@ Błędy: %3</translation>
     <message>
         <location line="+3"/>
         <source>Refresh device status when returning to the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Odśwież status urządzeń po powrocie do aplikacji</translation>
     </message>
     <message>
         <location line="+6"/>

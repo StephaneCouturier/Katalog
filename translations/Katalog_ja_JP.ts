@@ -5722,12 +5722,12 @@ to the trash?</source>
     <message>
         <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished">拡張メタデータはありません</translation>
+        <translation>拡張メタデータはありません</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished">拡張メタデータ</translation>
+        <translation>拡張メタデータ</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -5737,12 +5737,12 @@ to the trash?</source>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished">メタデータ JSON をクリップボードにコピーしました</translation>
+        <translation>メタデータ JSON をクリップボードにコピーしました</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished">フィールド</translation>
+        <translation>フィールド</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -8113,7 +8113,7 @@ Errors: %3</source>
     <message>
         <location line="+3"/>
         <source>Refresh device status when returning to the application</source>
-        <translation type="unfinished"></translation>
+        <translation>アプリケーションに戻ったときにデバイスのステータスを更新する</translation>
     </message>
     <message>
         <location line="+6"/>

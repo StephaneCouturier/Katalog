@@ -5722,12 +5722,12 @@ lomtárba helyezése?</translation>
     <message>
         <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished">Nincs elérhető bővített metaadat</translation>
+        <translation>Nincs elérhető bővített metaadat</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished">Bővített metaadatok</translation>
+        <translation>Bővített metaadatok</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -5737,12 +5737,12 @@ lomtárba helyezése?</translation>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished">A metaadatok JSON-ja a vágólapra másolva</translation>
+        <translation>A metaadatok JSON-ja a vágólapra másolva</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished">Mező</translation>
+        <translation>Mező</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -8113,7 +8113,7 @@ Hibák: %3</translation>
     <message>
         <location line="+3"/>
         <source>Refresh device status when returning to the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Eszközök állapotának frissítése az alkalmazásba való visszatéréskor</translation>
     </message>
     <message>
         <location line="+6"/>

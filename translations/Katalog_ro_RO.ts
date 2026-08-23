@@ -5723,12 +5723,12 @@ la coșul de gunoi?</translation>
     <message>
         <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished">Niciun metadate extinse disponibile</translation>
+        <translation>Niciun metadate extinse disponibile</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished">Metadate extinse</translation>
+        <translation>Metadate extinse</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -5738,12 +5738,12 @@ la coșul de gunoi?</translation>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished">JSON-ul metadatelor a fost copiat în clipboard</translation>
+        <translation>JSON-ul metadatelor a fost copiat în clipboard</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished">Câmp</translation>
+        <translation>Câmp</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -8114,7 +8114,7 @@ Erori: %3</translation>
     <message>
         <location line="+3"/>
         <source>Refresh device status when returning to the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualizează starea dispozitivelor la revenirea în aplicație</translation>
     </message>
     <message>
         <location line="+6"/>

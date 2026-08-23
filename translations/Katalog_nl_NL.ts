@@ -5722,12 +5722,12 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished">Geen uitgebreide metadata beschikbaar</translation>
+        <translation>Geen uitgebreide metadata beschikbaar</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished">Uitgebreide metadata</translation>
+        <translation>Uitgebreide metadata</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -5737,12 +5737,12 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished">Metadata-JSON gekopieerd naar klembord</translation>
+        <translation>Metadata-JSON gekopieerd naar klembord</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished">Veld</translation>
+        <translation>Veld</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -8113,7 +8113,7 @@ Fouten: %3</translation>
     <message>
         <location line="+3"/>
         <source>Refresh device status when returning to the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Apparaatstatus vernieuwen bij terugkeer naar de toepassing</translation>
     </message>
     <message>
         <location line="+6"/>

@@ -5723,12 +5723,12 @@ u smeće?</translation>
     <message>
         <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished">Нема доступних проширених метаподатака</translation>
+        <translation>Нема доступних проширених метаподатака</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished">Проширени метаподаци</translation>
+        <translation>Проширени метаподаци</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -5738,12 +5738,12 @@ u smeće?</translation>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished">JSON метаподатака копиран у оставу</translation>
+        <translation>JSON метаподатака копиран у оставу</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished">Поље</translation>
+        <translation>Поље</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -8114,7 +8114,7 @@ Errors: %3</source>
     <message>
         <location line="+3"/>
         <source>Refresh device status when returning to the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Osveži status uređaja pri povratku u aplikaciju</translation>
     </message>
     <message>
         <location line="+6"/>

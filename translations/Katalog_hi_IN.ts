@@ -5722,12 +5722,12 @@ to the trash?</source>
     <message>
         <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished">कोई विस्तारित मेटाडेटा उपलब्ध नहीं</translation>
+        <translation>कोई विस्तारित मेटाडेटा उपलब्ध नहीं</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished">विस्तारित मेटाडेटा</translation>
+        <translation>विस्तारित मेटाडेटा</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -5737,12 +5737,12 @@ to the trash?</source>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished">मेटाडेटा JSON क्लिपबोर्ड पर कॉपी किया गया</translation>
+        <translation>मेटाडेटा JSON क्लिपबोर्ड पर कॉपी किया गया</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished">फ़ील्ड</translation>
+        <translation>फ़ील्ड</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -8113,7 +8113,7 @@ Errors: %3</source>
     <message>
         <location line="+3"/>
         <source>Refresh device status when returning to the application</source>
-        <translation type="unfinished"></translation>
+        <translation>अनुप्रयोग पर लौटने पर डिवाइस स्थिति रीफ्रेश करें</translation>
     </message>
     <message>
         <location line="+6"/>

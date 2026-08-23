@@ -5722,12 +5722,12 @@ to the trash?</source>
     <message>
         <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished">Nėra išplėstinių metaduomenų</translation>
+        <translation>Nėra išplėstinių metaduomenų</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished">Išplėstiniai metaduomenys</translation>
+        <translation>Išplėstiniai metaduomenys</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -5737,12 +5737,12 @@ to the trash?</source>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished">Metaduomenų JSON nukopijuotas į iškarpinę</translation>
+        <translation>Metaduomenų JSON nukopijuotas į iškarpinę</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished">Laukas</translation>
+        <translation>Laukas</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -8113,7 +8113,7 @@ Klaidų: %3</translation>
     <message>
         <location line="+3"/>
         <source>Refresh device status when returning to the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Atnaujinti įrenginių būseną grįžus į programą</translation>
     </message>
     <message>
         <location line="+6"/>

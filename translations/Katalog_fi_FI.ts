@@ -5723,12 +5723,12 @@ roskakoriin?</translation>
     <message>
         <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished">Laajennettuja metatietoja ei ole saatavilla</translation>
+        <translation>Laajennettuja metatietoja ei ole saatavilla</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished">Laajennetut metatiedot</translation>
+        <translation>Laajennetut metatiedot</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -5738,12 +5738,12 @@ roskakoriin?</translation>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished">Metatietojen JSON kopioitu leikepöydälle</translation>
+        <translation>Metatietojen JSON kopioitu leikepöydälle</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished">Kenttä</translation>
+        <translation>Kenttä</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -8114,7 +8114,7 @@ Virheitä: %3</translation>
     <message>
         <location line="+3"/>
         <source>Refresh device status when returning to the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Päivitä laitteiden tila palattaessa sovellukseen</translation>
     </message>
     <message>
         <location line="+6"/>

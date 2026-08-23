@@ -5724,12 +5724,12 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished">Razširjeni metapodatki niso na voljo</translation>
+        <translation>Razširjeni metapodatki niso na voljo</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished">Razširjeni metapodatki</translation>
+        <translation>Razširjeni metapodatki</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -5739,12 +5739,12 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished">JSON metapodatkov kopiran v odložišče</translation>
+        <translation>JSON metapodatkov kopiran v odložišče</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished">Polje</translation>
+        <translation>Polje</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -8115,7 +8115,7 @@ Napake: %3</translation>
     <message>
         <location line="+3"/>
         <source>Refresh device status when returning to the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Osveži stanje naprav ob vrnitvi v program</translation>
     </message>
     <message>
         <location line="+6"/>

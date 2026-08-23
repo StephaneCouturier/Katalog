@@ -5723,12 +5723,12 @@ to the trash?</source>
     <message>
         <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished">Розширені метадані недоступні</translation>
+        <translation>Розширені метадані недоступні</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished">Розширені метадані</translation>
+        <translation>Розширені метадані</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -5738,12 +5738,12 @@ to the trash?</source>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished">JSON метаданих скопійовано в буфер обміну</translation>
+        <translation>JSON метаданих скопійовано в буфер обміну</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished">Поле</translation>
+        <translation>Поле</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -8114,7 +8114,7 @@ Errors: %3</source>
     <message>
         <location line="+3"/>
         <source>Refresh device status when returning to the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Оновлювати статус пристроїв при поверненні до програми</translation>
     </message>
     <message>
         <location line="+6"/>

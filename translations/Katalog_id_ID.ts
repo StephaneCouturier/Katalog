@@ -5723,12 +5723,12 @@ ke sampah?</translation>
     <message>
         <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
         <source>No extended metadata available</source>
-        <translation type="unfinished">Tidak ada metadata diperluas yang tersedia</translation>
+        <translation>Tidak ada metadata diperluas yang tersedia</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Extended Metadata</source>
-        <translation type="unfinished">Metadata Diperluas</translation>
+        <translation>Metadata Diperluas</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -5738,12 +5738,12 @@ ke sampah?</translation>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="unfinished">JSON metadata disalin ke papan klip</translation>
+        <translation>JSON metadata disalin ke papan klip</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Field</source>
-        <translation type="unfinished">Bidang</translation>
+        <translation>Bidang</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -8114,7 +8114,7 @@ Kesalahan: %3</translation>
     <message>
         <location line="+3"/>
         <source>Refresh device status when returning to the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Segarkan status perangkat saat kembali ke aplikasi</translation>
     </message>
     <message>
         <location line="+6"/>
