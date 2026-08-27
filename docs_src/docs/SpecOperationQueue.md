@@ -33,7 +33,7 @@ remains sluggish while one runs. That is a separate piece of work.
 
 | | |
 |---|---|
-| **In scope** | Accepting new create/update requests while one runs; a visible queue; removing entries; K3, plus the cancellation *timing* in `core/DeviceUpdateManager` where it makes OPQ-C4 unattainable |
+| **In scope** | Accepting new create/update requests while one runs; a visible queue; removing entries; the activity panel's visibility timing (when it appears, how long it stays); K3, plus the cancellation *timing* in `core/DeviceUpdateManager` where it makes OPQ-C4 unattainable |
 | **Out of scope** | Running operations off the main thread; parallel execution; scheduling; persisting the queue across restarts; K2 |
 | **Applies to** | K3 3.0 |
 | **Depends on** | The existing `m_pendingDeviceUpdates` / `startNextDeviceUpdate()` runner |
@@ -57,6 +57,7 @@ parallelism is deferred until measurement shows scanning dominates.
 | OPQ-O2 | A user is never silently ignored — every accepted request is visibly recorded, and anything refused says why. | [Planned] |
 | OPQ-O3 | A user can see what is running and what is waiting, so a busy application is recognisable as busy rather than broken. | [Planned] |
 | OPQ-O4 | A user can change their mind: waiting work can be removed without disturbing what is already running. | [Planned] |
+| OPQ-O5 | A user who runs a very short operation still sees that it ran and how it ended: the activity panel is never a flash too brief to be noticed, and the outcome stays readable before it disappears. | [Planned] |
 
 ## Functional requirements — *what the system does*
 
@@ -72,6 +73,8 @@ parallelism is deferred until measurement shows scanning dominates.
 | OPQ-F8 | Queued creations and queued updates share **one** queue, since they contend for the same single-operation-at-a-time constraint. | [Planned] |
 | OPQ-F9 | When an operation ends — completed, stopped, or failed — the next entry starts automatically; a failure does not abandon the rest of the queue. | [Planned] |
 | OPQ-F10 | Per-operation report acknowledgement continues to work: when a report awaits acknowledgement, the next entry starts only once it is acknowledged. | [Planned] |
+| OPQ-F11 | The activity panel, including its running indicator, is displayed and painted **before** the requested operation begins its work, so that an operation lasting a fraction of a second is still visibly acknowledged. | [Planned] |
+| OPQ-F12 | When an operation ends — completed, stopped, cancelled or failed — the activity panel stays visible for at least the linger duration (OPQ-C14) showing that operation's final status message, and only then hides if nothing is running and nothing is queued. The message is the one the progress manager already builds for that outcome; the linger is what makes it readable. Applies to catalog creation and to device updates alike. | [Planned] |
 
 ## Constructional requirements — *how it is built / limits / MUST-NOTs*
 
@@ -86,6 +89,9 @@ parallelism is deferred until measurement shows scanning dominates.
 | OPQ-C7 | K2 MUST NOT change; it keeps its current refuse-when-busy behaviour. | [Planned] |
 | OPQ-C8 | The queue MUST behave identically in Memory, File and Hosted database modes — it schedules operations and touches no database itself. | [Planned] |
 | OPQ-C11 | Where core's stop handling makes OPQ-C4 unattainable, this phase may change **only when** `DeviceUpdateManager` declares an operation cancelled — deferring it to the catalog job's own cancellation signal instead of a fixed timer that fires inside the running job. No core method may be added, removed or renamed, and the execution model MUST NOT change (OPQ-C3). | [Planned] |
+| OPQ-C12 | The busy indicator turns only while work is actually running. During the linger of OPQ-F12 it MUST NOT turn: a turning indicator never sits beside a *Completed* line. | [Planned] |
+| OPQ-C13 | The flag that marks an operation as running MUST be set synchronously at the moment the operation is *requested*, even when the start of the work is deferred to a later event-loop turn to let the panel paint (OPQ-F11). Deferring the start MUST NOT open a window in which a second operation can be admitted (OPQ-C4), and MUST NOT move work off the main thread (OPQ-C3). | [Planned] |
+| OPQ-C14 | The linger duration of OPQ-F12 is a **single named constant**, defined in one place and applied to every operation type. It MUST NOT be duplicated at each call site or varied per operation. | [Planned] |
 
 ### Note on placement (OPQ-C6)
 
@@ -94,6 +100,17 @@ should, and that this belongs in a future core manager. Extending the queue ther
 adds to that debt knowingly: the alternative — moving the runner into `core/`
 first — is a larger change that would block a small, high-value improvement.
 When the orchestration move happens, the queue moves with it.
+
+### Note on the linger duration (OPQ-C14)
+
+The chosen value is **5000 ms**. It was picked to match the delay K2 uses when it
+clears a completion message from the status bar — but that K2 delay is *implemented
+behaviour recorded in `SpecProgressReport.md`'s message-sources inventory, not a
+ratified requirement*. `SpecProgressReport.md` holds no requirement table and no
+requirement IDs, so 5000 ms has no spec ancestry: it is a free design choice, made
+here for familiarity, and it can be changed to any other value without contradicting
+anything. That is precisely why OPQ-C14 requires it to live in one named constant —
+changing the choice must stay a one-line edit.
 
 ---
 
@@ -145,6 +162,13 @@ For each row: set up the stated condition, perform the action, confirm the resul
 - **OPQ-F7 (abandon everything)** — Clear the queue, then stop the running operation. Nothing remains and nothing restarts.
 - **OPQ-F9** — Queue two devices and make the first fail (for example point it at a disconnected drive). The failure is reported and the second still runs.
 - **OPQ-F10** — With per-operation reports enabled, queue two updates. The second starts only after the first report is acknowledged.
+- **OPQ-F11** — Create a catalog on a device holding only a handful of files. The activity panel and its turning indicator appear and are actually seen before the scan runs; the operation is never a panel that flashes without painting. Repeat with an update on the same device.
+- **OPQ-F12 (completed)** — Repeat the very short creation. When it finishes, the panel stays on screen long enough to read `CREATE | Completed | Catalog 1 of 1 | <name> | Indexed: N of N (100%)`, then hides.
+- **OPQ-F12 (stopped / failed)** — Stop a running operation, and separately let one fail (point a device at a disconnected drive). In each case the panel lingers with that operation's final message before hiding.
+- **OPQ-F12 (update path)** — Repeat the completed and stopped cases on a device update, not a creation. The panel behaves identically.
+- **OPQ-C12** — During the linger, watch the indicator: it is stationary. It turns only while the operation is running.
+- **OPQ-C13** — Request a creation and immediately request a second operation before anything appears to have started. Only one is admitted; the other is queued or refused, and the two never run at once.
+- **OPQ-C14** — Time the linger after a creation and after a device update: they are the same length.
 - **OPQ-C4** — Throughout all of the above, confirm two operations never run at once.
 - **OPQ-C5** — Queue several entries and close the application. On restart the queue is empty and nothing resumes.
 - **OPQ-C8** — Repeat OPQ-F2 in Memory mode and in File mode; queue behaviour is identical.

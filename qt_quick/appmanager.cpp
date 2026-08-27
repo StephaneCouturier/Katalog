@@ -25,6 +25,15 @@
 
 namespace {
 
+// How long the start of a scan is held back so the activity panel reaches the
+// screen first (OPQ-F11). The scan runs on the GUI thread — CatalogJobStoppable
+// pumps the event loop by hand — so once it starts, nothing is painted until it
+// yields. A zero-delay timer is not enough: it can fire before the window's
+// pending update request is turned into a swapped frame, which leaves the panel
+// logically visible but never drawn. 50 ms is about three frames at 60 Hz, and
+// is imperceptible at the start of an operation that is about to do real work.
+constexpr int kStartDeferralMs = 50;
+
 // Render a stored search phrase or exclude string for a single-line display.
 // Terms are stored joined with '\n'; each is quoted separately and the quoted
 // terms are joined with ", ", so nothing but punctuation is added and the
@@ -1853,7 +1862,8 @@ QString AppManager::createCatalog(const QString &name, const QString &path,
     // Check for a concurrent operation BEFORE touching the manager: rewiring its
     // handlers now would hand the operation already running to the wrong set,
     // and its completion would be reported as this creation's.
-    if (m_deviceUpdateIsRunning
+    if (m_catalogIsCreating
+        || m_deviceUpdateIsRunning
         || (m_deviceUpdateManager && m_deviceUpdateManager->operationRunning())) {
         // Busy: queue the scan instead of refusing. The device and catalog rows
         // above are already written, so the entry only needs the device id — and
@@ -1876,10 +1886,20 @@ QString AppManager::createCatalog(const QString &name, const QString &path,
     emit catalogIsCreatingChanged();
     emit catalogStatusTextChanged();
 
-    m_deviceUpdateManager->updateDeviceHierarchy(newDevice,
-                                                  collection->databaseMode,
-                                                  collection->folder,
-                                                  "create");
+    // The scan runs synchronously on the GUI thread (CatalogJobStoppable pumps
+    // the event loop by hand), so calling it here would block before Qt Quick
+    // ever paints the activity panel — on a small catalog the panel would be
+    // shown for zero frames and its indicator never seen. One turn of the event
+    // loop first guarantees the panel is on screen, with the indicator running,
+    // before the scan takes the thread. The busy flags above are set
+    // synchronously, so the concurrency guard still closes at request time.
+    Device *deviceToScan = newDevice;
+    QTimer::singleShot(kStartDeferralMs, this, [this, deviceToScan]() {
+        m_deviceUpdateManager->updateDeviceHierarchy(deviceToScan,
+                                                     collection->databaseMode,
+                                                     collection->folder,
+                                                     "create");
+    });
     return QString();
 }
 //----------------------------------------------------------------------
@@ -2392,20 +2412,32 @@ void AppManager::startNextDeviceUpdate()
                                                             .setStatus(tr("In Progress")).build();
         emit catalogIsCreatingChanged();
         emit catalogStatusTextChanged();
-        m_deviceUpdateManager->updateDeviceHierarchy(dev, collection->databaseMode, collection->folder, "create");
+        // Deferred so the panel paints first (OPQ-F11). This function is not only
+        // the queue's continuation — it is also where a single request from an
+        // idle application starts, so the panel is not already on screen.
+        QTimer::singleShot(kStartDeferralMs, this, [this, dev]() {
+            m_deviceUpdateManager->updateDeviceHierarchy(dev, collection->databaseMode, collection->folder, "create");
+        });
         return;
     }
 
     setupDeviceUpdateManagerForDevices();
-    m_deviceUpdateManager->updateDeviceHierarchy(dev, collection->databaseMode, collection->folder, "update");
-    // Set batch context AFTER updateDeviceHierarchy (which internally calls cleanupOperation →
-    // clearBatchContext), so the context survives into the async catalog job's progress signals.
-    // Counted from the queue as it stands rather than from a total fixed when the
-    // batch was requested: the queue can grow while it drains, and "3 of 5" has
-    // to become "3 of 6" when it does.
-    const int knownTotal = m_operationsStarted + m_pendingDeviceUpdates.size();
-    if (knownTotal > 1 && m_catalogProgressManager)
-        m_catalogProgressManager->setBatchContext(m_operationsStarted, knownTotal);
+    // Deferred so the panel paints first (OPQ-F11) — this is the path a single
+    // update from an idle application takes, not just the queue's continuation.
+    // The batch context goes with it: it must still be set AFTER
+    // updateDeviceHierarchy (which internally calls cleanupOperation →
+    // clearBatchContext), so the context survives into the catalog job's
+    // progress signals. Leaving it here would set it before the deferred call
+    // and the call would then clear it.
+    QTimer::singleShot(kStartDeferralMs, this, [this, dev]() {
+        m_deviceUpdateManager->updateDeviceHierarchy(dev, collection->databaseMode, collection->folder, "update");
+        // Counted from the queue as it stands rather than from a total fixed when the
+        // batch was requested: the queue can grow while it drains, and "3 of 5" has
+        // to become "3 of 6" when it does.
+        const int knownTotal = m_operationsStarted + m_pendingDeviceUpdates.size();
+        if (knownTotal > 1 && m_catalogProgressManager)
+            m_catalogProgressManager->setBatchContext(m_operationsStarted, knownTotal);
+    });
 }
 //----------------------------------------------------------------------
 QVariantMap AppManager::buildUpdateReport(int deviceId, const QList<qint64> &results)
@@ -2575,7 +2607,11 @@ void AppManager::updateAllActiveDevices(bool showEachReport)
         setupDeviceUpdateManagerForDevices();
 
         Device *dummy = m_deviceUpdateManager->createDummyDeviceFromList(activeCatalogs);
-        m_deviceUpdateManager->updateDeviceHierarchy(dummy, collection->databaseMode, collection->folder, "update");
+        // Deferred one event-loop turn so the activity panel paints before the
+        // scan blocks the GUI thread — same reason as in createCatalog().
+        QTimer::singleShot(kStartDeferralMs, this, [this, dummy]() {
+            m_deviceUpdateManager->updateDeviceHierarchy(dummy, collection->databaseMode, collection->folder, "update");
+        });
         // activeCatalogs intentionally not deleted here — createDummyDeviceFromList copies Device
         // values but the copies share raw catalog*/storage* pointers with the originals.
         // Deleting the originals would create dangling pointers in dummy->subDevices (same pattern as K2).
@@ -2757,8 +2793,12 @@ void AppManager::splitCatalogByFileType(int deviceId, bool verifyFirst)
             });
 
     // Run MIME verification via DeviceUpdateManager (uses same CatalogJobStoppable internally)
-    // DeviceUpdateManager handles VerifyMimeTypes through its catalog job
-    m_deviceUpdateManager->updateDeviceHierarchy(dev, collection->databaseMode, collection->folder, "update");
+    // DeviceUpdateManager handles VerifyMimeTypes through its catalog job.
+    // Deferred one event-loop turn so the activity panel paints before the scan
+    // blocks the GUI thread — same reason as in createCatalog().
+    QTimer::singleShot(kStartDeferralMs, this, [this, dev]() {
+        m_deviceUpdateManager->updateDeviceHierarchy(dev, collection->databaseMode, collection->folder, "update");
+    });
 }
 //----------------------------------------------------------------------
 QVariantMap AppManager::verifyDeviceChecksums(int deviceId)

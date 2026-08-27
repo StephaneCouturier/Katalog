@@ -18,7 +18,38 @@ Controls.ToolBar {
                                          ? appManager1.catalogStatusText
                                          : appManager1.deviceUpdateStatusText
 
-    visible: busy || appManager1.operationQueue.length > 0
+    // How long the panel stays up after the work ends. The catalog job runs on
+    // the GUI thread and pumps the event loop by hand, so a small catalog can
+    // finish before Qt Quick paints a single frame: without a tail the panel is
+    // shown for zero frames and the completion message, which is built and
+    // emitted, is never seen. 5000 ms is what K2's status bar uses; it is a
+    // design choice, not a ratified rule.
+    readonly property int completionLinger: 5000
+
+    property bool lingering: false
+
+    Timer {
+        id: lingerTimer
+        interval: root.completionLinger
+        onTriggered: root.lingering = false
+    }
+
+    onBusyChanged: {
+        if (root.busy) {
+            // A new operation supersedes the previous one's tail.
+            root.lingering = false
+            lingerTimer.stop()
+        } else {
+            root.lingering = true
+            lingerTimer.restart()
+        }
+    }
+
+    // The tail only holds the panel open while there is something to read: a
+    // stopped or failed operation clears the status text, and an empty bar
+    // lingering for five seconds would say nothing.
+    visible: busy || (lingering && root.statusText.length > 0)
+             || appManager1.operationQueue.length > 0
     height: visible ? implicitHeight : 0
 
     // Positioned by the caller against the page area, so no drawer compensation
@@ -35,6 +66,9 @@ Controls.ToolBar {
             spacing: Kirigami.Units.smallSpacing
             visible: root.busy || root.statusText.length > 0
 
+            // Deliberately bound to the real running state, not to the linger
+            // tail: a turning indicator must never sit beside a "Completed"
+            // line. During the tail the row shows the message alone.
             Controls.BusyIndicator {
                 running: root.busy
                 visible: root.busy

@@ -6,7 +6,7 @@ description: Requirements for expanding and collapsing the directory tree of the
 
 # EXPLORE — DIRECTORY TREE
 
-![Status](https://img.shields.io/badge/Status-Draft-orange) ![Implementation](https://img.shields.io/badge/Implementation-planned-yellow)
+![Status](https://img.shields.io/badge/Status-Approved-brightgreen) ![Implementation](https://img.shields.io/badge/Implementation-complete-brightgreen)
 
 ## Context
 
@@ -14,8 +14,8 @@ The Explore screen shows a catalog's directory hierarchy in its left panel and
 the files of the selected directory on the right. K2 renders that hierarchy in a
 tree widget, which brings expansion and collapsing for free and opens the tree to
 its first rank on load. K3 renders the same hierarchy as a flat, depth-ordered
-list with indentation only: nothing can be folded away, and the whole hierarchy
-is shown at once whatever its size.
+list with indentation; before this spec nothing could be folded away and the
+whole hierarchy was shown at once whatever its size.
 
 This spec defines how much of the hierarchy is visible at any moment, and how the
 user changes it. It is the only source of requirements for that behaviour.
@@ -53,8 +53,8 @@ Goals in real use, independent of how they are built.
 
 | ID | Requirement | Status |
 |----|-------------|--------|
-| EXP-O1 | A user browsing a catalog opens only the branches of interest and keeps the rest of the hierarchy folded away, so a deep or wide directory tree stays readable. | [Planned] |
-| EXP-O2 | A user changes how much of the hierarchy is shown in one action — one rank at a time, or the whole tree at once — instead of clicking through every branch. | [Planned] |
+| EXP-O1 | A user browsing a catalog opens only the branches of interest and keeps the rest of the hierarchy folded away, so a deep or wide directory tree stays readable. | [Implemented] |
+| EXP-O2 | A user changes how much of the hierarchy is shown in one action — one rank at a time, or the whole tree at once — instead of clicking through every branch. | [Implemented] |
 
 ## Functional requirements — *what the system does*
 
@@ -62,15 +62,22 @@ Observable behaviour that can be triggered and watched.
 
 | ID | Requirement | Status |
 |----|-------------|--------|
-| EXP-F1 | A directory row that has sub-directories carries a disclosure control; activating it hides its descendants, activating it again shows them. A row without sub-directories has no control but reserves the same space, so row geometry and indentation never shift between rows. | [Planned] |
-| EXP-F2 | When the Explore directory tree loads a catalog, the root row, its children and its grandchildren are shown; every rank below the grandchildren starts collapsed. **Deliberate divergence from K2**, approved 2026-08-27: K2 opens the first rank only, K3 opens two. Rationale: a catalog's meaningful content usually starts a folder or two below the root, so opening a single rank made "expand" the first action on every catalog. This is no longer a parity requirement and MUST NOT be "corrected" back to K2's single-rank depth. | [Planned] |
-| EXP-F3 | **Collapse one level** collapses the deepest rank that is currently visible and open. | [Planned] |
-| EXP-F4 | **Expand one level** opens the shallowest rank that is currently collapsed. | [Planned] |
-| EXP-F5 | **Collapse all** collapses every row that has sub-directories, including the root row. | [Planned] |
-| EXP-F6 | **Expand all** clears all collapse state, so every directory of the catalog is visible. | [Planned] |
-| EXP-F7 | Each of the four controls is disabled whenever activating it would change nothing: the collapse controls when nothing further can be collapsed, the expand controls when nothing further can be expanded. | [Planned] |
-| EXP-F8 | When navigation originating outside the directory tree selects a directory whose row is hidden under a collapsed ancestor, the ancestors of that row are expanded so the selected row is visible. A selected row is never left hidden. | [Planned] |
-| EXP-F9 | The four header controls are icon-only and identified by tooltips. Their exact texts are `Collapse one level`, `Expand one level`, `Collapse all`, `Expand all`. The first two are reused verbatim from the Selection page's pair; the last two are new strings, approved on 2026-08-27. | [Planned] |
+| EXP-F1 | A directory row that has sub-directories carries a disclosure control; activating it hides its descendants, activating it again shows them. A row without sub-directories has no control but reserves the same space, so row geometry and indentation never shift between rows. | [Implemented] |
+| EXP-F2 | When the Explore directory tree loads a catalog, the root row, its children and its grandchildren are shown; every rank below the grandchildren starts collapsed. **Deliberate divergence from K2**, approved 2026-08-27: K2 opens the first rank only, K3 opens two. Rationale: a catalog's meaningful content usually starts a folder or two below the root, so opening a single rank made "expand" the first action on every catalog. This is no longer a parity requirement and MUST NOT be "corrected" back to K2's single-rank depth. | [Implemented] |
+| EXP-F3 | **Collapse one level** collapses the deepest rank that is currently visible and open. | [Implemented] |
+| EXP-F4 | **Expand one level** opens the shallowest rank that is currently collapsed. | [Implemented] |
+| EXP-F5 | **Collapse all** collapses every row that has sub-directories, including the root row. | [Implemented] |
+| EXP-F6 | **Expand all** clears all collapse state, so every directory of the catalog is visible. | [Implemented] |
+| EXP-F7 | Each of the four controls is disabled whenever activating it would change nothing: the collapse controls when nothing further can be collapsed, the expand controls when nothing further can be expanded. | [Implemented] |
+| EXP-F8 | When navigation originating outside the directory tree selects a directory whose row is hidden under a collapsed ancestor, the ancestors of that row are expanded so the selected row is visible. A selected row is never left hidden. | [Implemented] |
+| EXP-F9 | The four header controls are icon-only and identified by tooltips. Their exact texts are `Collapse one level`, `Expand one level`, `Collapse all`, `Expand all`. The first two are reused verbatim from the Selection page's pair; the last two are new strings, approved on 2026-08-27. | [Implemented] |
+
+> **Verification note (2026-08-27).** `EXP-F2` is marked `[Implemented]` on the
+> built code: the two-rank initial depth is in place and builds clean. The user
+> confirmed the Explore tree working in the running application *before* asking
+> for this depth change, so the two-rank state itself has not yet been seen in
+> use. Re-run the `EXP-F2` charter step at the next opportunity. Every other row
+> was confirmed working in the application.
 
 ## Constructional requirements — *how it is built / limits / MUST-NOTs*
 
@@ -78,11 +85,11 @@ Boundaries and implementation constraints, not user-visible behaviour.
 
 | ID | Requirement | Status |
 |----|-------------|--------|
-| EXP-C1 | Expansion state is held in the QML layer of the Explore folders view (`qt_quick/PageExploreFolders.qml`) as a set of collapsed folder paths, applied over the flat, depth-ordered folder list already provided by `AppManager::getExploreFolders()`. Whether a row has sub-directories is inferred from the depth of the following row. The `EXP-F2` initial depth is a single named constant of that view, so it can be re-tuned in one place; the root row is rank 0 and directories start at rank 1. | [Planned] |
-| EXP-C2 | Expansion state is transient UI state. It MUST NOT be persisted — not to the collection settings file, not to the application settings, not to the database. It is rebuilt from `EXP-F2` each time the Explore view loads a catalog. | [Planned] |
-| EXP-C3 | This feature MUST NOT require a change to `core/`, to the QML adapters, to the database schema, or to the folder data returned to QML. It MUST NOT introduce a new source file. | [Planned] |
-| EXP-C4 | **Accepted divergence.** The Selection page's device tree keeps its collapse state in C++ (`DeviceListModel`), while the Explore directory tree keeps its own in QML. This is a deliberate choice: Explore's expansion is purely visual and carries no domain meaning, so it does not justify a core or adapter change. The two trees behaving differently in code MUST NOT be reported as drift. | [Planned] |
-| EXP-C5 | The header controls MUST reuse the existing translated strings `Collapse one level` and `Expand one level` byte-for-byte rather than creating variants of them. | [Planned] |
+| EXP-C1 | Expansion state is held in the QML layer of the Explore folders view (`qt_quick/PageExploreFolders.qml`) as a set of collapsed folder paths, applied over the flat, depth-ordered folder list already provided by `AppManager::getExploreFolders()`. Whether a row has sub-directories is inferred from the depth of the following row. The `EXP-F2` initial depth is a single named constant of that view, so it can be re-tuned in one place; the root row is rank 0 and directories start at rank 1. | [Implemented] |
+| EXP-C2 | Expansion state is transient UI state. It MUST NOT be persisted — not to the collection settings file, not to the application settings, not to the database. It is rebuilt from `EXP-F2` each time the Explore view loads a catalog. | [Implemented] |
+| EXP-C3 | This feature MUST NOT require a change to `core/`, to the QML adapters, to the database schema, or to the folder data returned to QML. It MUST NOT introduce a new source file. | [Implemented] |
+| EXP-C4 | **Accepted divergence.** The Selection page's device tree keeps its collapse state in C++ (`DeviceListModel`), while the Explore directory tree keeps its own in QML. This is a deliberate choice: Explore's expansion is purely visual and carries no domain meaning, so it does not justify a core or adapter change. The two trees behaving differently in code MUST NOT be reported as drift. | [Implemented] |
+| EXP-C5 | The header controls MUST reuse the existing translated strings `Collapse one level` and `Expand one level` byte-for-byte rather than creating variants of them. | [Implemented] |
 
 ---
 
