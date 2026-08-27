@@ -7150,9 +7150,39 @@ Razdelitev ni bila izvedena.</translation>
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+68"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+266"/>
         <source>Directories</source>
         <translation>Imeniki</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Collapse one level</source>
+        <translation>Strni eno raven</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Expand one level</source>
+        <translation>Razširi eno raven</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Collapse all</source>
+        <translation>Strni vse</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Expand all</source>
+        <translation>Razširi vse</translation>
+    </message>
+    <message>
+        <location line="+51"/>
+        <source>Expand</source>
+        <translation>Razširi</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Collapse</source>
+        <translation>Strni</translation>
     </message>
 </context>
 <context>

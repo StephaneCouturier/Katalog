@@ -7149,9 +7149,39 @@ la coșul de gunoi?</translation>
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+68"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+266"/>
         <source>Directories</source>
         <translation>Directoare</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Collapse one level</source>
+        <translation>Restrânge cu un nivel</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Expand one level</source>
+        <translation>Extinde cu un nivel</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Collapse all</source>
+        <translation>Restrânge tot</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Expand all</source>
+        <translation>Extinde tot</translation>
+    </message>
+    <message>
+        <location line="+51"/>
+        <source>Expand</source>
+        <translation>Extinde</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Collapse</source>
+        <translation>Restrânge</translation>
     </message>
 </context>
 <context>

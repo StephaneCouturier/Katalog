@@ -7149,9 +7149,39 @@ para o lixo?</translation>
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+68"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+266"/>
         <source>Directories</source>
         <translation>Directórios</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Collapse one level</source>
+        <translation>Recolher um nível</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Expand one level</source>
+        <translation>Expandir um nível</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Collapse all</source>
+        <translation>Recolher tudo</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Expand all</source>
+        <translation>Expandir tudo</translation>
+    </message>
+    <message>
+        <location line="+51"/>
+        <source>Expand</source>
+        <translation>Expandir</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Collapse</source>
+        <translation>Recolher</translation>
     </message>
 </context>
 <context>

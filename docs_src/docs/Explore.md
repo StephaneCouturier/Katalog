@@ -1,8 +1,8 @@
 ---
-version: "2.12"
+version: "2.13"
 ---
 # Explore
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![2.13](https://img.shields.io/badge/Version-2.13-blue)
 
 ## Summary
 This page describes all the features of the **Explore** screen and how to use them.
@@ -21,6 +21,27 @@ The screen is split into two panels:
 - **Right panel** — file list for the selected directory.
 
 Clicking on a file in the right panel will try to open it with the system's default application, if the device is currently connected. Clicking on a folder entry will navigate into that folder.
+
+### Directory tree
+
+The left panel opens on the catalog root and its first two levels of directories; deeper levels start folded.
+
+A directory that contains sub-directories carries a small arrow: click it to fold or unfold that branch. Directories with no sub-directory have no arrow, and all rows stay aligned.
+
+Four buttons above the tree change how much of the hierarchy is shown at once:
+
+| Button | Effect |
+|--------|--------|
+| *Collapse one level* | Folds away the deepest level currently shown |
+| *Expand one level* | Unfolds one more level of the tree |
+| *Collapse all* | Folds everything back to the catalog root |
+| *Expand all* | Unfolds every directory of the catalog |
+
+A button is greyed out when it would have nothing left to fold or unfold.
+
+Navigating into a folder from the right panel unfolds the branch it belongs to, so the selected directory is always visible in the tree.
+
+The tree always reopens on the catalog root and its first two levels: the folded or unfolded state is not kept between visits.
 
 ### Display options
 

@@ -7149,9 +7149,39 @@ to the trash?</source>
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+68"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+266"/>
         <source>Directories</source>
         <translation>Каталоги</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Collapse one level</source>
+        <translation>Згорнути на один рівень</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Expand one level</source>
+        <translation>Розгорнути на один рівень</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Collapse all</source>
+        <translation>Згорнути все</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Expand all</source>
+        <translation>Розгорнути все</translation>
+    </message>
+    <message>
+        <location line="+51"/>
+        <source>Expand</source>
+        <translation>Розгорнути</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Collapse</source>
+        <translation>Згорнути</translation>
     </message>
 </context>
 <context>

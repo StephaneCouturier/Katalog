@@ -7148,9 +7148,39 @@ naar de prullenbak verplaatsen?</translation>
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+68"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+266"/>
         <source>Directories</source>
         <translation>Mappen</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Collapse one level</source>
+        <translation>Eén niveau inklappen</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Expand one level</source>
+        <translation>Eén niveau uitklappen</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Collapse all</source>
+        <translation>Alles inklappen</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Expand all</source>
+        <translation>Alles uitklappen</translation>
+    </message>
+    <message>
+        <location line="+51"/>
+        <source>Expand</source>
+        <translation>Uitklappen</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Collapse</source>
+        <translation>Inklappen</translation>
     </message>
 </context>
 <context>

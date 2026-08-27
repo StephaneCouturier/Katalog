@@ -1,8 +1,8 @@
 ---
-version: "2.12"
+version: "2.13"
 ---
 # Prozkoumat
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![2.13](https://img.shields.io/badge/Version-2.13-blue)
 
 ## Shrnutí
 Tato stránka popisuje všechny funkce obrazovky **Prozkoumat** a jak je používat.
@@ -21,6 +21,27 @@ Obrazovka je rozdělena do dvou panelů:
 - **Pravý panel** — seznam souborů pro vybraný adresář.
 
 Kliknutím na soubor v pravém panelu se aplikace pokusí otevřít jej výchozí aplikací systému, pokud je zařízení připojeno. Kliknutím na položku složky se přejde do této složky.
+
+### Stromové zobrazení adresářů
+
+Levý panel se otevře na kořenu katalogu a jeho prvních dvou úrovních adresářů; hlubší úrovně jsou zpočátku sbalené.
+
+Adresář, který obsahuje podadresáře, nese malou šipku: kliknutím na ni se daná větev sbalí nebo rozbalí. Adresáře bez podadresářů šipku nemají a všechny řádky zůstávají zarovnané.
+
+Čtyři tlačítka nad stromem mění, kolik hierarchie je zobrazeno najednou:
+
+| Tlačítko | Účinek |
+|----------|--------|
+| *Sbalit o jednu úroveň* | Sbalí nejhlubší aktuálně zobrazenou úroveň |
+| *Rozbalit o jednu úroveň* | Rozbalí o jednu úroveň stromu více |
+| *Sbalit vše* | Sbalí vše zpět na kořen katalogu |
+| *Rozbalit vše* | Rozbalí každý adresář katalogu |
+
+Tlačítko je zašedlé, pokud už nemá co sbalit nebo rozbalit.
+
+Přechod do složky z pravého panelu rozbalí větev, do které složka patří, takže vybraný adresář je ve stromu vždy viditelný.
+
+Strom se vždy znovu otevře na kořenu katalogu a jeho prvních dvou úrovních: sbalený nebo rozbalený stav se mezi návštěvami neuchovává.
 
 ### Možnosti zobrazení
 

@@ -87,7 +87,8 @@ export default {
                 'SpecOperationQueue',
                 'SpecSearchList',
                 'SpecDevicesSplit',
-                'SpecBackup'
+                'SpecBackup',
+                'SpecExplore'
                 ],
       },
        'Development-Repository',

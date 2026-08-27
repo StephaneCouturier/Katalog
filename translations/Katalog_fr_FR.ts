@@ -5762,7 +5762,7 @@ to the trash?</source>
     <message>
         <location line="+24"/>
         <source>Queue</source>
-        <translation>File d'attente</translation>
+        <translation>File d&apos;attente</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -7150,9 +7150,39 @@ to the trash?</source>
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+68"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+266"/>
         <source>Directories</source>
         <translation>Dossiers</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Collapse one level</source>
+        <translation>Réduire d'un niveau</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Expand one level</source>
+        <translation>Développer d'un niveau</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Collapse all</source>
+        <translation>Tout réduire</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Expand all</source>
+        <translation>Tout développer</translation>
+    </message>
+    <message>
+        <location line="+51"/>
+        <source>Expand</source>
+        <translation>Développer</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Collapse</source>
+        <translation>Réduire</translation>
     </message>
 </context>
 <context>

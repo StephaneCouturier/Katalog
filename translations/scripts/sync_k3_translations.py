@@ -3,10 +3,15 @@
 sync_k3_translations.py
 
 Adds K3 QML qsTr() strings to all .ts translation files.
-For each K3 string that already has a translation in a K2 context, that
-translation is copied automatically.  K3-specific strings are left as
-<translation type="unfinished"/> — lrelease with -nounfinished will
-skip them (they stay in English) until manually translated.
+For each K3 string that already has a *finished* translation elsewhere in the
+same file, that translation is copied automatically.  "Elsewhere" means any K2
+context first — K2 is the canonical owner and wins any disagreement — and then
+any other K3 context.  That second half matters because moving a component out
+into its own .qml file renames its Qt context, which would otherwise orphan
+every translation that component already had.
+Strings found nowhere are left as <translation type="unfinished"/> — lrelease
+with -nounfinished skips them (they stay in English) until they are translated,
+which is what fill_k3_translations.py is for.
 
 Workflow
 --------
@@ -51,22 +56,47 @@ def extract_qml_strings():
     return result
 
 
-def get_k2_translations(tree_root, k3_context_names):
-    """Build source -> translation map from all non-K3 (K2) contexts."""
-    k2_tr = {}
-    for ctx in tree_root.findall("context"):
-        name_el = ctx.find("name")
-        if name_el is None or name_el.text in k3_context_names:
-            continue
-        for msg in ctx.findall("message"):
-            src = msg.find("source")
-            tr  = msg.find("translation")
-            if (src is not None and src.text
-                    and tr  is not None and tr.text
-                    and tr.get("type") != "unfinished"
-                    and src.text not in k2_tr):
-                k2_tr[src.text] = tr.text
-    return k2_tr
+def get_known_translations(tree_root, k3_context_names):
+    """Build source -> translation map from every *finished* entry in the file.
+
+    Harvested in two passes so precedence is explicit:
+
+      1. K2 (non-K3) contexts — K2 is the canonical owner of Katalog's
+         translations, so it wins whenever the two disagree.
+      2. K3 contexts — so a string already translated on one K3 page can reach
+         a sibling page that has the same source.  Without this pass, moving a
+         component into its own .qml (which renames its Qt context) silently
+         orphans all of its translations, and every repeated label has to be
+         translated once per page.
+
+    Everything except `unfinished` is harvested — `unfinished` is by definition
+    not a translation yet, but `vanished`/`obsolete` entries are real human
+    translations whose source merely left the K2 code, and a string that moved
+    from K2 to K3 sits in exactly that state.  The first pass to supply a source
+    wins, hence K2 before K3.
+
+    Copying one context's wording into another is safe here because the caller
+    only ever fills entries that are still `unfinished`; a context that needs
+    different wording for the same English source (Qt contexts exist precisely
+    to allow that) keeps whatever finished translation it already has.
+    """
+    known = {}
+    for harvest_k3 in (False, True):
+        for ctx in tree_root.findall("context"):
+            name_el = ctx.find("name")
+            if name_el is None:
+                continue
+            if (name_el.text in k3_context_names) != harvest_k3:
+                continue
+            for msg in ctx.findall("message"):
+                src = msg.find("source")
+                tr  = msg.find("translation")
+                if (src is not None and src.text
+                        and tr  is not None and tr.text
+                        and tr.get("type") != "unfinished"
+                        and src.text not in known):
+                    known[src.text] = tr.text
+    return known
 
 
 def _esc(text):
@@ -76,14 +106,14 @@ def _esc(text):
             .replace(">", "&gt;"))
 
 
-def build_context_block(context_name, sources, k2_tr):
+def build_context_block(context_name, sources, known_tr):
     """Return the XML text for a new <context> element."""
     lines = [f"<context>", f"    <name>{context_name}</name>"]
     for src in sources:
         lines.append("    <message>")
         lines.append(f"        <source>{_esc(src)}</source>")
-        if src in k2_tr:
-            lines.append(f"        <translation>{_esc(k2_tr[src])}</translation>")
+        if src in known_tr:
+            lines.append(f"        <translation>{_esc(known_tr[src])}</translation>")
         else:
             lines.append('        <translation type="unfinished"></translation>')
         lines.append("    </message>")
@@ -91,10 +121,11 @@ def build_context_block(context_name, sources, k2_tr):
     return "\n".join(lines)
 
 
-def refresh_existing_contexts(content, k3_context_names, k2_tr):
-    """Fill `unfinished` translations in already-present K3 contexts from the K2
-    map.  Targeted text replacement (only unfinished entries with a K2 match) so
-    the rest of the file is untouched.  Returns (new_content, count)."""
+def refresh_existing_contexts(content, k3_context_names, known_tr):
+    """Fill `unfinished` translations in already-present K3 contexts from the
+    known-translations map.  Targeted text replacement (only unfinished entries
+    that have a match) so the rest of the file is untouched.  A finished entry is
+    never overwritten.  Returns (new_content, count)."""
     count = 0
 
     def repl_ctx(cmatch):
@@ -114,11 +145,12 @@ def refresh_existing_contexts(content, k3_context_names, k2_tr):
                          .replace("&amp;", "&")
                          .replace("&lt;", "<")
                          .replace("&gt;", ">"))
-            tr = k2_tr.get(src_plain)
+            tr = known_tr.get(src_plain)
             if not tr:
                 return msg
             # Finish the entry whether it is empty or already carries a
-            # lupdate suggestion (type="unfinished" with text). K2 is authoritative.
+            # lupdate same-text guess (type="unfinished" with text): the
+            # harvested translation is a real one and outranks the guess.
             new_msg, n = re.subn(
                 r'<translation type="unfinished">.*?</translation>'
                 r'|<translation type="unfinished"\s*/>',
@@ -135,7 +167,7 @@ def refresh_existing_contexts(content, k3_context_names, k2_tr):
 
 def process_ts(ts_path, k3_strings):
     """Add missing K3 contexts AND refresh unfinished entries in existing K3
-    contexts from K2 matches.  Returns True if modified."""
+    contexts.  Returns (added_contexts, refreshed_entries); (0, 0) = untouched."""
     content = ts_path.read_text(encoding="utf-8")
 
     tree = ET.parse(ts_path)
@@ -148,13 +180,13 @@ def process_ts(ts_path, k3_strings):
     }
 
     k3_context_names = set(k3_strings.keys())
-    k2_tr      = get_k2_translations(root, k3_context_names)
+    known_tr   = get_known_translations(root, k3_context_names)
     new_blocks = []
 
     for ctx_name, sources in k3_strings.items():
         if ctx_name in existing_contexts:
             continue
-        block = build_context_block(ctx_name, sources, k2_tr)
+        block = build_context_block(ctx_name, sources, known_tr)
         new_blocks.append(block)
 
     # 1. Append any brand-new K3 contexts (with K2 matches pre-filled).
@@ -163,14 +195,14 @@ def process_ts(ts_path, k3_strings):
         content   = content.replace("</TS>", insertion + "</TS>")
 
     # 2. Refresh already-present K3 contexts: fill unfinished entries that K2
-    #    now has a translation for (fixes the former add-only limitation).
-    content, refreshed = refresh_existing_contexts(content, k3_context_names, k2_tr)
+    #    a translation is now known for (fixes the former add-only limitation).
+    content, refreshed = refresh_existing_contexts(content, k3_context_names, known_tr)
 
     if not new_blocks and refreshed == 0:
-        return False
+        return 0, 0
 
     ts_path.write_text(content, encoding="utf-8")
-    return True
+    return len(new_blocks), refreshed
 
 
 def main():
@@ -180,20 +212,25 @@ def main():
 
     updated = 0
     skipped = 0
+    total_added     = 0
+    total_refreshed = 0
     for ts_file in sorted(TRANS_DIR.glob("Katalog_*.ts")):
-        if process_ts(ts_file, k3_strings):
-            print(f"  updated : {ts_file.name}")
+        added, refreshed = process_ts(ts_file, k3_strings)
+        if added or refreshed:
+            print(f"  updated : {ts_file.name}  "
+                  f"(+{added} context(s), {refreshed} entry(ies) filled)")
             updated += 1
+            total_added     += added
+            total_refreshed += refreshed
         else:
-            print(f"  skipped : {ts_file.name}  (K3 contexts already present)")
+            print(f"  skipped : {ts_file.name}  (nothing left to fill)")
             skipped += 1
 
-    auto_filled = sum(
-        1 for sources in k3_strings.values() for s in sources
-    )
     print(f"\n{updated} file(s) updated, {skipped} skipped.")
-    print(f"~50 strings were auto-filled from K2 translations; "
-          f"~57 K3-specific strings remain unfinished (will stay in English).")
+    print(f"{total_added} context(s) added, {total_refreshed} entry(ies) filled "
+          f"from translations already present in the same file.")
+    print("Anything still unfinished has no translation anywhere yet — "
+          "use fill_k3_translations.py.")
     print()
     print("Next steps:")
     print("  1. ninja translations_lrelease   (in K2 build directory)")

@@ -1,8 +1,8 @@
 ---
-version: "2.12"
+version: "2.13"
 ---
 # Explorer
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![2.13](https://img.shields.io/badge/Version-2.13-blue)
 
 ## Résumé
 Cette page décrit toutes les fonctionnalités de l'écran **Explorer** et comment les utiliser.
@@ -21,6 +21,27 @@ L'écran est divisé en deux panneaux :
 - **Panneau droit** — liste des fichiers du répertoire sélectionné.
 
 Cliquer sur un fichier dans le panneau de droite tentera de l'ouvrir avec l'application par défaut du système, si le périphérique est connecté. Cliquer sur un dossier navigue à l'intérieur de ce dossier.
+
+### Arborescence des répertoires
+
+Le panneau gauche s'ouvre sur la racine du catalogue et ses deux premiers niveaux de répertoires ; les niveaux plus profonds sont repliés au départ.
+
+Un répertoire qui contient des sous-répertoires porte une petite flèche : cliquer dessus replie ou déplie cette branche. Les répertoires sans sous-répertoire n'ont pas de flèche, et toutes les lignes restent alignées.
+
+Quatre boutons au-dessus de l'arborescence changent la quantité de hiérarchie affichée d'un seul coup :
+
+| Bouton | Effet |
+|--------|-------|
+| *Réduire d'un niveau* | Replie le niveau le plus profond actuellement affiché |
+| *Développer d'un niveau* | Déplie un niveau supplémentaire de l'arborescence |
+| *Tout réduire* | Replie tout jusqu'à la racine du catalogue |
+| *Tout développer* | Déplie tous les répertoires du catalogue |
+
+Un bouton est grisé lorsqu'il n'a plus rien à replier ou à déplier.
+
+Naviguer dans un dossier depuis le panneau de droite déplie la branche à laquelle il appartient, afin que le répertoire sélectionné soit toujours visible dans l'arborescence.
+
+L'arborescence se rouvre toujours sur la racine du catalogue et ses deux premiers niveaux : l'état replié ou déplié n'est pas conservé d'une visite à l'autre.
 
 ### Options d'affichage
 
