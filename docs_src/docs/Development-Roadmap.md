@@ -33,11 +33,9 @@ Active and planned work items are tracked in the [GitHub Backlog Major Features]
 
 ### Introduction
 
-**Katalog 3** is a new major version of Katalog, transitionning to a more modern UI, and fitting future tablets & smartphones use. It relies on QtQuick and Kirigami from KDE.
+**Katalog 3** is the new major version of Katalog, transitionning to a more modern UI. It relies on QtQuick and Kirigami from KDE (instead of QtWidgets).
 
-**Katalog 2** remains the current major version, until Katalog 3 covers all existing features. Katalog 2 may be maintained beyond Katalog 3 full release, as long as UI work is light.
-
-**Katalog 3.0** will therefore be the first complete release and will become then the main version. <br/>Until then, the main release will still be 2.x but will include binaries **Katalog 3.alpha.x**.
+**Katalog 2** will be maintained for some time: critical bugs & light features (when it uses the same core classes as Katalog 3).
 
 This is enabled by having done a full split of UI and backend, and the common use of `/core` (backend) means that **Collections will remain compatible to both versions**.
 
@@ -56,7 +54,7 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 |-------|--------------------------------------------------------------------|--------|-------------------|
 | 1     | READ ONLY, Search features, English Only                           |   ✅   | Katalog 3.alpha1  |
 | 2     | Full Featured except Themes & Translations                         |   ✅   | Katalog 3.alpha2  |
-| 3     | Translations, Documentation, Tests                                 |   🚧   | Katalog 3.0       |
+| 3     | Translations, Documentation, Tests                                 |   ✅   | Katalog 3.0       |
 
 | Platform |  Status | Notes                           |
 |----------|---------|---------------------------------|
@@ -84,7 +82,7 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 | Edit                | ✅ | ✅ | |
 | Update progress     | ✅ | ✅ | |
 | Update Stop         | ✅ | ✅ | |
-| **Explore**         | ✅ | 🚧 | Better folder browser |
+| **Explore**         | ✅ | ✅ | |
 | **Statistics**      | ✅ | ✅ | zoom in feature |
 | **Tags**            | ✅ | ✅ | |
 | **Backup**          | ✅ | ✅ | |
@@ -97,8 +95,8 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 | Image folder        | ✅ | ✅ | |
 | New & Import        | ✅ | ✅ | |
 | Themes              | ✅ | 🔲 | optional |
-| Languages           | ✅ | 🚧 | limit height of the selector for estetics only|
-| **About**             | ✅ | ✅ | |
+| Languages           | ✅ | ✅ | |
+| **About**           | ✅ | ✅ | |
 
 
 ### Feedback & Support

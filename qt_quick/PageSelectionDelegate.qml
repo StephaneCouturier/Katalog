@@ -11,6 +11,15 @@ Kirigami.AbstractCard {
     anchors.leftMargin: model.level * Kirigami.Units.gridUnit
     anchors.right: parent.right
 
+    // Tightened to fit more devices on screen. The vertical padding is what
+    // stacks up over a long list, so it is trimmed hardest; the horizontal
+    // padding is left alone, because narrowing the text against the card edge
+    // would look cramped without buying any rows.
+    topPadding:    Kirigami.Units.smallSpacing
+    bottomPadding: Kirigami.Units.smallSpacing
+    leftPadding:   Kirigami.Units.largeSpacing
+    rightPadding:  Kirigami.Units.largeSpacing
+
     property bool isSelected: appManager1.selectedDeviceId === model.deviceId
 
     TapHandler {
@@ -106,8 +115,8 @@ Kirigami.AbstractCard {
                 top: parent.top
                 right: parent.right
             }
-            rowSpacing: Kirigami.Units.largeSpacing
-            columnSpacing: Kirigami.Units.largeSpacing
+            rowSpacing: Kirigami.Units.smallSpacing
+            columnSpacing: Kirigami.Units.smallSpacing
             columns: root.wideScreen ? 4 : 2
 
             ColumnLayout {
@@ -116,6 +125,11 @@ Kirigami.AbstractCard {
                         source: model.type === "Virtual" ? "drive-multidisk" :
                                 model.type === "Storage" ? "drive-harddisk" :
                                 model.isActive ? "media-optical-blu-ray" : "media-optical"
+                        // Sized to the text beside it rather than to the icon
+                        // theme's default, which is taller than the name line
+                        // and would set the card height on its own.
+                        implicitWidth:  Kirigami.Units.iconSizes.small
+                        implicitHeight: Kirigami.Units.iconSizes.small
                     }
 
                     Kirigami.Heading {
@@ -144,6 +158,12 @@ Kirigami.AbstractCard {
             Controls.ToolButton {
                 icon.name: "go-up"
                 Layout.columnSpan: 1
+                // A ToolButton's default height is taller than the card's text,
+                // so left unbounded it, rather than the content, would set the
+                // card height.
+                implicitWidth:  Kirigami.Units.iconSizes.medium + Kirigami.Units.largeSpacing
+                implicitHeight: Kirigami.Units.iconSizes.medium + Kirigami.Units.smallSpacing
+                padding: 0
                 visible: model.hasChildren && !model.isCollapsed
                 onClicked: appManager1.collapseDevice(model.deviceId)
                 Controls.ToolTip.text: qsTr("Collapse")
@@ -152,6 +172,9 @@ Kirigami.AbstractCard {
             Controls.ToolButton {
                 icon.name: "go-down"
                 Layout.columnSpan: 2
+                implicitWidth:  Kirigami.Units.iconSizes.medium + Kirigami.Units.largeSpacing
+                implicitHeight: Kirigami.Units.iconSizes.medium + Kirigami.Units.smallSpacing
+                padding: 0
                 visible: model.hasChildren && model.isCollapsed
                 onClicked: appManager1.expandDevice(model.deviceId)
                 Controls.ToolTip.text: qsTr("Expand")
@@ -160,7 +183,10 @@ Kirigami.AbstractCard {
         }
         Rectangle {
             anchors.fill: parent
-            anchors.margins: -8  // Remove the negative margins
+            // Tracks the card's padding rather than a fixed 8px: with the
+            // padding trimmed, a fixed overhang would spill past the card edge
+            // onto the neighbouring card.
+            anchors.margins: -Kirigami.Units.smallSpacing
             color: Qt.rgba(Kirigami.Theme.highlightColor.r,
                            Kirigami.Theme.highlightColor.g,
                            Kirigami.Theme.highlightColor.b, 0.12)

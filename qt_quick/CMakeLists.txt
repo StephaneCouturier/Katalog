@@ -1,7 +1,7 @@
 project(Katalog3 VERSION 3.0 LANGUAGES CXX)
 
-set(KATALOG_VERSION_STRING "3.alpha2")
-set(KATALOG_RELEASE_DATE  "2026-03-31")
+set(KATALOG_VERSION_STRING "3.0.beta1")
+set(KATALOG_RELEASE_DATE  "2026-08-28")
 
 configure_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/version.h.in"

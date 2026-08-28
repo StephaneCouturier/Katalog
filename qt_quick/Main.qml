@@ -1145,6 +1145,9 @@ Kirigami.ApplicationWindow {
             model: appManager1.deviceFilterModel
             delegate: PageSelectionDelegate {}
             topMargin: Kirigami.Units.smallSpacing
+            // Tightened along with the card padding so more devices fit on
+            // screen; CardsListView's own default is a good deal airier.
+            spacing: Kirigami.Units.smallSpacing
         }
     }
 
