@@ -15,8 +15,8 @@ Kirigami.AbstractCard {
     // stacks up over a long list, so it is trimmed hardest; the horizontal
     // padding is left alone, because narrowing the text against the card edge
     // would look cramped without buying any rows.
-    topPadding:    Kirigami.Units.smallSpacing
-    bottomPadding: Kirigami.Units.smallSpacing
+    topPadding:    Kirigami.Units.mediumSpacing
+    bottomPadding: Kirigami.Units.mediumSpacing
     leftPadding:   Kirigami.Units.largeSpacing
     rightPadding:  Kirigami.Units.largeSpacing
 
@@ -120,6 +120,8 @@ Kirigami.AbstractCard {
             columns: root.wideScreen ? 4 : 2
 
             ColumnLayout {
+                Layout.fillWidth: true
+
                 RowLayout {
                     Kirigami.Icon {
                         source: model.type === "Virtual" ? "drive-multidisk" :
@@ -139,6 +141,28 @@ Kirigami.AbstractCard {
                         elide: Text.ElideRight
                         maximumLineCount: 1
                         font.pointSize: Kirigami.Theme.defaultFont.pointSize * root.cardScale
+
+                        // K2 devicetreeview.cpp — FontRole (:133-150) and
+                        // ForegroundRole (:199-218): Virtual is bold italic and
+                        // the most dimmed, Storage is bold and dimmed a little,
+                        // a Catalog is left plain so it reads as the leaf.
+                        // font.weight, not font.bold: Kirigami.Heading binds
+                        // font.weight from its own level, and that binding
+                        // overwrites whatever font.bold sets — the two are the
+                        // same underlying value. Overriding weight directly
+                        // replaces the base binding instead of racing it.
+                        font.weight: (model.type === "Virtual" || model.type === "Storage")
+                                     ? Font.Bold : Font.Normal
+                        font.italic: model.type === "Virtual"
+
+                        // K2 hardcodes #666/#999 and #444/#CCC, picking by
+                        // window lightness. Dimming the theme's own text colour
+                        // instead lands on the same contrast in both themes and
+                        // keeps working on themes that are neither plain light
+                        // nor plain dark.
+                        opacity: model.type === "Virtual" ? 0.60
+                               : model.type === "Storage" ? 0.78
+                               : 1.0
                     }
                 }
                 Kirigami.Separator {
@@ -155,38 +179,41 @@ Kirigami.AbstractCard {
                 }
             }
 
+            // One button, always in the layout, rather than two that come and
+            // go. A Catalog can never hold children, so its slot was simply
+            // absent and its card came out shorter than a Storage or Virtual
+            // one; reserving the space — as the Explore folder tree does —
+            // makes every card the same height. Both labels already existed.
             Controls.ToolButton {
-                icon.name: "go-up"
                 Layout.columnSpan: 1
-                // A ToolButton's default height is taller than the card's text,
-                // so left unbounded it, rather than the content, would set the
-                // card height.
-                implicitWidth:  Kirigami.Units.iconSizes.medium + Kirigami.Units.largeSpacing
-                implicitHeight: Kirigami.Units.iconSizes.medium + Kirigami.Units.smallSpacing
+                icon.name: model.isCollapsed ? "go-down" : "go-up"
+                icon.width:  Kirigami.Units.iconSizes.small
+                icon.height: Kirigami.Units.iconSizes.small
+                implicitWidth:  root.selectionButton
+                implicitHeight: root.selectionButton
                 padding: 0
-                visible: model.hasChildren && !model.isCollapsed
-                onClicked: appManager1.collapseDevice(model.deviceId)
-                Controls.ToolTip.text: qsTr("Collapse")
-                Controls.ToolTip.visible: hovered
-            }
-            Controls.ToolButton {
-                icon.name: "go-down"
-                Layout.columnSpan: 2
-                implicitWidth:  Kirigami.Units.iconSizes.medium + Kirigami.Units.largeSpacing
-                implicitHeight: Kirigami.Units.iconSizes.medium + Kirigami.Units.smallSpacing
-                padding: 0
-                visible: model.hasChildren && model.isCollapsed
-                onClicked: appManager1.expandDevice(model.deviceId)
-                Controls.ToolTip.text: qsTr("Expand")
+                opacity: model.hasChildren ? 1.0 : 0.0
+                enabled: model.hasChildren
+                onClicked: {
+                    if (model.isCollapsed)
+                        appManager1.expandDevice(model.deviceId)
+                    else
+                        appManager1.collapseDevice(model.deviceId)
+                }
+                Controls.ToolTip.text: model.isCollapsed ? qsTr("Expand") : qsTr("Collapse")
                 Controls.ToolTip.visible: hovered
             }
         }
         Rectangle {
             anchors.fill: parent
-            // Tracks the card's padding rather than a fixed 8px: with the
-            // padding trimmed, a fixed overhang would spill past the card edge
-            // onto the neighbouring card.
-            anchors.margins: -Kirigami.Units.smallSpacing
+            // The frame has to reach the card's own edges, and the card is not
+            // padded evenly — tight top and bottom, wider left and right. Each
+            // side therefore cancels the padding on that side; a single uniform
+            // margin left the frame short on the left and right.
+            anchors.topMargin:    -card.topPadding
+            anchors.bottomMargin: -card.bottomPadding
+            anchors.leftMargin:   -card.leftPadding
+            anchors.rightMargin:  -card.rightPadding
             color: Qt.rgba(Kirigami.Theme.highlightColor.r,
                            Kirigami.Theme.highlightColor.g,
                            Kirigami.Theme.highlightColor.b, 0.12)

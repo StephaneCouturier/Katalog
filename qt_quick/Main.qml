@@ -48,6 +48,12 @@ Kirigami.ApplicationWindow {
 
     signal searchTriggered()
     property real cardScale: 1.0
+
+    // One metric for every small icon button on the Selection page — the panel
+    // header and the device cards alike — so the two read as one set and the
+    // buttons never set the card height.
+    readonly property real selectionButton: Kirigami.Units.iconSizes.small
+                                            + Kirigami.Units.smallSpacing
     property bool _firstRunCreateNew: false
 
     // Selection ("Filters" panel in K2) can be collapsed beside an open feature
@@ -1125,6 +1131,11 @@ Kirigami.ApplicationWindow {
                 }
                 Controls.ToolButton {
                     icon.name: "go-up"
+                    icon.width:  Kirigami.Units.iconSizes.small
+                    icon.height: Kirigami.Units.iconSizes.small
+                    implicitWidth:  root.selectionButton
+                    implicitHeight: root.selectionButton
+                    padding: 0
                     enabled: appManager1.canCollapseDevices
                     onClicked: appManager1.collapseDevices()
                     Controls.ToolTip.text: qsTr("Collapse one level")
@@ -1132,6 +1143,11 @@ Kirigami.ApplicationWindow {
                 }
                 Controls.ToolButton {
                     icon.name: "go-down"
+                    icon.width:  Kirigami.Units.iconSizes.small
+                    icon.height: Kirigami.Units.iconSizes.small
+                    implicitWidth:  root.selectionButton
+                    implicitHeight: root.selectionButton
+                    padding: 0
                     enabled: appManager1.canExpandDevices
                     onClicked: appManager1.expandDevices()
                     Controls.ToolTip.text: qsTr("Expand one level")
@@ -1145,9 +1161,7 @@ Kirigami.ApplicationWindow {
             model: appManager1.deviceFilterModel
             delegate: PageSelectionDelegate {}
             topMargin: Kirigami.Units.smallSpacing
-            // Tightened along with the card padding so more devices fit on
-            // screen; CardsListView's own default is a good deal airier.
-            spacing: Kirigami.Units.smallSpacing
+            spacing: Kirigami.Units.largeSpacing
         }
     }
 
