@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+154"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+155"/>
         <location line="+87"/>
         <location line="+14"/>
-        <location line="+3823"/>
+        <location line="+3829"/>
         <source>Search</source>
         <translation>Søg</translation>
     </message>
     <message>
-        <location line="-3920"/>
+        <location line="-3926"/>
         <source>Stopped</source>
         <translation>Stoppet</translation>
     </message>
@@ -44,8 +44,8 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+58"/>
-        <location line="+1685"/>
-        <location line="+527"/>
+        <location line="+1690"/>
+        <location line="+528"/>
         <location line="+1211"/>
         <location line="+11"/>
         <location line="+60"/>
@@ -54,14 +54,14 @@
         <translation>I gang</translation>
     </message>
     <message>
-        <location line="-3824"/>
-        <location line="+3461"/>
+        <location line="-3830"/>
+        <location line="+3467"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Fuldført</translation>
     </message>
     <message>
-        <location line="-3146"/>
+        <location line="-3152"/>
         <source>Empty database path provided</source>
         <translation>Tom databasesti angivet</translation>
     </message>
@@ -81,7 +81,7 @@
         <translation>Kunne ikke åbne databasen: %1</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+16"/>
         <source>Could not create file: %1</source>
         <translation>Kunne ikke oprette filen: %1</translation>
     </message>
@@ -147,12 +147,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2358"/>
+        <location line="+2359"/>
         <source>Size</source>
         <translation>Størrelse</translation>
     </message>
     <message>
-        <location line="-2357"/>
+        <location line="-2358"/>
         <source>Date</source>
         <translation>Dato</translation>
     </message>
@@ -245,12 +245,12 @@ Vælg et andet navn, og prøv igen.</translation>
     </message>
     <message>
         <location line="+65"/>
-        <location line="+526"/>
+        <location line="+527"/>
         <source>Create</source>
         <translation>Opret</translation>
     </message>
     <message>
-        <location line="-433"/>
+        <location line="-434"/>
         <source>Catalog creation was stopped.</source>
         <translation>Oprettelsen af kataloget blev stoppet.</translation>
     </message>
@@ -271,7 +271,7 @@ Vælg et andet navn, og prøv igen.</translation>
         <translation>Sletning mislykkedes</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+72"/>
         <source>Virtual</source>
         <translation>Virtuel</translation>
     </message>
@@ -644,7 +644,7 @@ Vælg et andet navn.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2513"/>
+        <location filename="../core/collection.cpp" line="+2521"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Denne mappe indeholder samlingsfilter i hukommelsestilstand, men du er i øjeblikket i filtilstand.&lt;br/&gt;Skift til hukommelsestilstand eller vælg en anden mappe.</translation>
     </message>
@@ -680,7 +680,7 @@ Vælg et andet navn.</translation>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+223"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+219"/>
         <source>Collection</source>
         <translation>Samling</translation>
     </message>
@@ -874,16 +874,15 @@ Vælg et andet navn.</translation>
         <translation>Tekststørrelse for kort</translation>
     </message>
     <message>
-        <location line="+117"/>
         <source>This is an early alpha version of Katalog intended to support development and gather feedback.
 
 </source>
-        <translation>Dette er en tidlig alfaversion af Katalog, der har til formål at understøtte udviklingen og indsamle feedback.
+        <translation type="vanished">Dette er en tidlig alfaversion af Katalog, der har til formål at understøtte udviklingen og indsamle feedback.
 
 </translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+123"/>
         <source>Do not show again</source>
         <translation>Vis ikke igen</translation>
     </message>
@@ -1155,7 +1154,16 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <translation>Luk</translation>
     </message>
     <message>
-        <location line="-613"/>
+        <location line="-1107"/>
+        <source>This is a beta version of Katalog intended to support development and gather feedback.
+
+</source>
+        <translation>Dette er en betaversion af Katalog, der har til formål at understøtte udviklingen og indsamle feedback.
+
+</translation>
+    </message>
+    <message>
+        <location line="+494"/>
         <source>Copy version and system information</source>
         <translation>Kopiér versions- og systemoplysninger</translation>
     </message>
@@ -1471,7 +1479,7 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <translation type="vanished">Ugyldigt database-værtsnavn.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+123"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+124"/>
         <source>Invalid hostname.</source>
         <translation>Ugyldigt værtsnavn.</translation>
     </message>
@@ -1502,7 +1510,7 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <translation>Fortsæt?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+534"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+549"/>
         <source>This collection was created with Katalog version %1, which is no longer supported.&lt;br/&gt;&lt;br/&gt;To convert it, open it with Katalog 2.10 first.&lt;br/&gt;&lt;br/&gt;Please select a different collection folder.</source>
         <translation>Denne samling blev oprettet med Katalog version %1, som ikke længere understøttes.&lt;br/&gt;&lt;br/&gt;For at konvertere den skal du åbne den med Katalog 2.10 først.&lt;br/&gt;&lt;br/&gt;Vælg venligst en anden samlingsmappe.</translation>
     </message>
@@ -1567,7 +1575,7 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <location line="+52"/>
         <location line="+872"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+95"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+395"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+433"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+406"/>
         <location line="+176"/>
@@ -1910,7 +1918,7 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <translation>Værdi</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-415"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-430"/>
         <source>Invalid Collection Folder</source>
         <translation>Ugyldig samlingsmappe</translation>
     </message>
@@ -3199,7 +3207,7 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
     <message>
         <location line="+40"/>
         <location line="+486"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-310"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-347"/>
         <source>Settings</source>
         <translation>Indstillinger</translation>
     </message>
@@ -4510,7 +4518,7 @@ Opdeling blev ikke udført.</translation>
         <translation>Annuller</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+389"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+426"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Dette er version: v%1 &lt;br/&gt;&lt;br/&gt;En ny version er tilgængelig: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find listen over nye funktioner i &lt;a href=&apos;%3&apos;&gt;udgivelsesnoterne&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Vil du downloade den?</translation>
     </message>
@@ -4588,7 +4596,7 @@ Opdeling blev ikke udført.</translation>
         <translation type="vanished">&lt;br/&gt;&lt;br/&gt;På næste skærm skal du vælge en eksisterende samlingsmappe eller oprette en ny.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-382"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-419"/>
         <source>Open existing...</source>
         <translation>Åbn eksisterende...</translation>
     </message>
@@ -4598,7 +4606,7 @@ Opdeling blev ikke udført.</translation>
         <translation>Opret ny...</translation>
     </message>
     <message>
-        <location line="+85"/>
+        <location line="+90"/>
         <location line="+6"/>
         <source>Select or create a database file for this collection</source>
         <translation>Vælg eller opret en databasefil til denne samling</translation>
@@ -4610,12 +4618,14 @@ Opdeling blev ikke udført.</translation>
         <translation>Databasefiler (*.db)</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+36"/>
+        <location line="+22"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+126"/>
         <source>Failed to open the database file: %1</source>
         <translation>Kunne ikke åbne databasefilen: %1</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+12"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
         <translation>&lt;br/&gt;&lt;b&gt;Klar til at oprette et filkatalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
@@ -4951,12 +4961,12 @@ til papirkurven?</translation>
         <translation>Inkluder metadata</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+383"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+272"/>
         <source>Local disk</source>
         <translation>Lokal disk</translation>
     </message>
     <message>
-        <location line="-631"/>
+        <location line="-646"/>
         <source>The directory does not exist. Create it?</source>
         <translation>Mappen findes ikke. Opret den?</translation>
     </message>
@@ -5014,12 +5024,12 @@ til papirkurven?</translation>
         <translation type="vanished">Afslut applikation</translation>
     </message>
     <message>
-        <location line="+330"/>
+        <location line="+345"/>
         <source>Select the database to open:</source>
         <translation>Vælg databasen der skal åbnes:</translation>
     </message>
     <message>
-        <location line="-229"/>
+        <location line="-244"/>
         <source>Select the database to create and open:</source>
         <translation>Vælg databasen der skal oprettes og åbnes:</translation>
     </message>
@@ -5029,7 +5039,7 @@ til papirkurven?</translation>
         <translation>Nogle ændringer i lagerenheds-listen er ikke blevet gemt.&lt;br/&gt;Gem og afslut, forkast og afslut, eller annuller afslut?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+261"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+276"/>
         <source> Physical Group</source>
         <translation> Fysisk gruppe</translation>
     </message>
@@ -6977,7 +6987,7 @@ til papirkurven?</translation>
         <translation>Slet</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+73"/>
         <source>files</source>
         <translation>filer</translation>
     </message>
@@ -7025,7 +7035,7 @@ til papirkurven?</translation>
         <translation>Samlet størrelse</translation>
     </message>
     <message>
-        <location line="+222"/>
+        <location line="+227"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>Åbn mappe</translation>
@@ -7164,12 +7174,12 @@ til papirkurven?</translation>
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+270"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+278"/>
         <source>Directories</source>
         <translation>Mapper</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+32"/>
         <source>Collapse one level</source>
         <translation>Skjul ét niveau</translation>
     </message>
@@ -7919,7 +7929,7 @@ Fejl: %3</translation>
         <translation>Rediger</translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+107"/>
         <source>Collapse</source>
         <translation>Skjul</translation>
     </message>

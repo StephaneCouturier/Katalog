@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+154"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+155"/>
         <location line="+87"/>
         <location line="+14"/>
-        <location line="+3823"/>
+        <location line="+3829"/>
         <source>Search</source>
         <translation>搜索</translation>
     </message>
     <message>
-        <location line="-3920"/>
+        <location line="-3926"/>
         <source>Stopped</source>
         <translation>已停止</translation>
     </message>
@@ -44,8 +44,8 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+58"/>
-        <location line="+1685"/>
-        <location line="+527"/>
+        <location line="+1690"/>
+        <location line="+528"/>
         <location line="+1211"/>
         <location line="+11"/>
         <location line="+60"/>
@@ -54,14 +54,14 @@
         <translation>进行中</translation>
     </message>
     <message>
-        <location line="-3824"/>
-        <location line="+3461"/>
+        <location line="-3830"/>
+        <location line="+3467"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>已完成</translation>
     </message>
     <message>
-        <location line="-3146"/>
+        <location line="-3152"/>
         <source>Empty database path provided</source>
         <translation>提供的数据库路径为空</translation>
     </message>
@@ -81,7 +81,7 @@
         <translation>无法打开数据库：%1</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+16"/>
         <source>Could not create file: %1</source>
         <translation>无法创建文件：%1</translation>
     </message>
@@ -147,12 +147,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2358"/>
+        <location line="+2359"/>
         <source>Size</source>
         <translation>大小</translation>
     </message>
     <message>
-        <location line="-2357"/>
+        <location line="-2358"/>
         <source>Date</source>
         <translation>日期</translation>
     </message>
@@ -245,12 +245,12 @@ Choose a different name and try again.</source>
     </message>
     <message>
         <location line="+65"/>
-        <location line="+526"/>
+        <location line="+527"/>
         <source>Create</source>
         <translation>创建</translation>
     </message>
     <message>
-        <location line="-433"/>
+        <location line="-434"/>
         <source>Catalog creation was stopped.</source>
         <translation>目录创建已停止。</translation>
     </message>
@@ -271,7 +271,7 @@ Choose a different name and try again.</source>
         <translation>删除失败</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+72"/>
         <source>Virtual</source>
         <translation>虚拟</translation>
     </message>
@@ -644,7 +644,7 @@ Choose a different name.</source>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2513"/>
+        <location filename="../core/collection.cpp" line="+2521"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>此文件夹包含内存模式的收藏文件，但您当前处于文件模式。&lt;br/&gt;切换到内存模式或选择其他文件夹。</translation>
     </message>
@@ -680,7 +680,7 @@ Choose a different name.</source>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+223"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+219"/>
         <source>Collection</source>
         <translation>收藏</translation>
     </message>
@@ -874,16 +874,15 @@ Choose a different name.</source>
         <translation>卡片文字大小</translation>
     </message>
     <message>
-        <location line="+117"/>
         <source>This is an early alpha version of Katalog intended to support development and gather feedback.
 
 </source>
-        <translation>这是 Katalog 的早期 Alpha 版本，旨在支持开发并收集反馈。
+        <translation type="vanished">这是 Katalog 的早期 Alpha 版本，旨在支持开发并收集反馈。
 
 </translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+123"/>
         <source>Do not show again</source>
         <translation>不再显示</translation>
     </message>
@@ -1155,7 +1154,16 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location line="-613"/>
+        <location line="-1107"/>
+        <source>This is a beta version of Katalog intended to support development and gather feedback.
+
+</source>
+        <translation>这是 Katalog 的 Beta 版本，旨在支持开发并收集反馈。
+
+</translation>
+    </message>
+    <message>
+        <location line="+494"/>
         <source>Copy version and system information</source>
         <translation>复制版本和系统信息</translation>
     </message>
@@ -1471,7 +1479,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation type="vanished">无效的数据库主机名。</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+123"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+124"/>
         <source>Invalid hostname.</source>
         <translation>无效的主机名。</translation>
     </message>
@@ -1502,7 +1510,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>继续？</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+534"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+549"/>
         <source>This collection was created with Katalog version %1, which is no longer supported.&lt;br/&gt;&lt;br/&gt;To convert it, open it with Katalog 2.10 first.&lt;br/&gt;&lt;br/&gt;Please select a different collection folder.</source>
         <translation>此收藏集使用 Katalog 版本 %1 创建，该版本已不再受支持。&lt;br/&gt;&lt;br/&gt;若要转换，请先使用 Katalog 2.10 打开它。&lt;br/&gt;&lt;br/&gt;请选择其他收藏集文件夹。</translation>
     </message>
@@ -1567,7 +1575,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+52"/>
         <location line="+872"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+95"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+395"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+433"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+406"/>
         <location line="+176"/>
@@ -1910,7 +1918,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>值</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-415"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-430"/>
         <source>Invalid Collection Folder</source>
         <translation>无效的收藏夹</translation>
     </message>
@@ -3199,7 +3207,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+40"/>
         <location line="+486"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-310"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-347"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
@@ -4510,7 +4518,7 @@ Split was not performed.</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+389"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+426"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>当前版本：v%1 &lt;br/&gt;&lt;br/&gt;有新版本可用：&lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; 在&lt;a href=&apos;%3&apos;&gt;发布说明&lt;/a&gt;中查找新功能列表&lt;br/&gt;&lt;br/&gt;您想要下载吗？</translation>
     </message>
@@ -4588,7 +4596,7 @@ Split was not performed.</source>
         <translation type="vanished">&lt;br/&gt;&lt;br/&gt;在下一个屏幕上，选择现有的集合文件夹或创建一个新的。</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-382"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-419"/>
         <source>Open existing...</source>
         <translation>打开现有...</translation>
     </message>
@@ -4598,7 +4606,7 @@ Split was not performed.</source>
         <translation>新建...</translation>
     </message>
     <message>
-        <location line="+85"/>
+        <location line="+90"/>
         <location line="+6"/>
         <source>Select or create a database file for this collection</source>
         <translation>为此集合选择或创建数据库文件</translation>
@@ -4610,12 +4618,14 @@ Split was not performed.</source>
         <translation>数据库文件 (*.db)</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+36"/>
+        <location line="+22"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+126"/>
         <source>Failed to open the database file: %1</source>
         <translation>无法打开数据库文件：%1</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+12"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
         <translation>&lt;br/&gt;&lt;b&gt;准备创建文件目录：&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
@@ -4951,12 +4961,12 @@ to the trash?</source>
         <translation>包括元数据</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+383"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+272"/>
         <source>Local disk</source>
         <translation>本地磁盘</translation>
     </message>
     <message>
-        <location line="-631"/>
+        <location line="-646"/>
         <source>The directory does not exist. Create it?</source>
         <translation>目录不存在。创建它？</translation>
     </message>
@@ -5014,12 +5024,12 @@ to the trash?</source>
         <translation type="vanished">退出应用程序</translation>
     </message>
     <message>
-        <location line="+330"/>
+        <location line="+345"/>
         <source>Select the database to open:</source>
         <translation>选择要打开的数据库：</translation>
     </message>
     <message>
-        <location line="-229"/>
+        <location line="-244"/>
         <source>Select the database to create and open:</source>
         <translation>选择要创建和打开的数据库：</translation>
     </message>
@@ -5029,7 +5039,7 @@ to the trash?</source>
         <translation>存储设备列表中的某些更改尚未保存。&lt;br/&gt;保存并退出、丢弃并退出，还是取消退出？</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+261"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+276"/>
         <source> Physical Group</source>
         <translation>物理组</translation>
     </message>
@@ -6977,7 +6987,7 @@ to the trash?</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+73"/>
         <source>files</source>
         <translation>文件</translation>
     </message>
@@ -7025,7 +7035,7 @@ to the trash?</source>
         <translation>总大小</translation>
     </message>
     <message>
-        <location line="+222"/>
+        <location line="+227"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>打开文件夹</translation>
@@ -7164,12 +7174,12 @@ to the trash?</source>
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+270"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+278"/>
         <source>Directories</source>
         <translation>目录</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+32"/>
         <source>Collapse one level</source>
         <translation>折叠一级</translation>
     </message>
@@ -7919,7 +7929,7 @@ Errors: %3</source>
         <translation>编辑</translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+107"/>
         <source>Collapse</source>
         <translation>折叠</translation>
     </message>

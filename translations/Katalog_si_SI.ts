@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+154"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+155"/>
         <location line="+87"/>
         <location line="+14"/>
-        <location line="+3823"/>
+        <location line="+3829"/>
         <source>Search</source>
         <translation>Iskanje</translation>
     </message>
     <message>
-        <location line="-3920"/>
+        <location line="-3926"/>
         <source>Stopped</source>
         <translation>Ustavljeno</translation>
     </message>
@@ -44,8 +44,8 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+58"/>
-        <location line="+1685"/>
-        <location line="+527"/>
+        <location line="+1690"/>
+        <location line="+528"/>
         <location line="+1211"/>
         <location line="+11"/>
         <location line="+60"/>
@@ -54,14 +54,14 @@
         <translation>V teku</translation>
     </message>
     <message>
-        <location line="-3824"/>
-        <location line="+3461"/>
+        <location line="-3830"/>
+        <location line="+3467"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Končano</translation>
     </message>
     <message>
-        <location line="-3146"/>
+        <location line="-3152"/>
         <source>Empty database path provided</source>
         <translation>Podana prazna pot do zbirke podatkov</translation>
     </message>
@@ -81,7 +81,7 @@
         <translation>Zbirke podatkov ni bilo mogoče odpreti: %1</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+16"/>
         <source>Could not create file: %1</source>
         <translation>Datoteke ni mogoče ustvariti: %1</translation>
     </message>
@@ -147,12 +147,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2358"/>
+        <location line="+2359"/>
         <source>Size</source>
         <translation>Velikost</translation>
     </message>
     <message>
-        <location line="-2357"/>
+        <location line="-2358"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
@@ -245,12 +245,12 @@ Izberite drugo ime in poskusite znova.</translation>
     </message>
     <message>
         <location line="+65"/>
-        <location line="+526"/>
+        <location line="+527"/>
         <source>Create</source>
         <translation>Ustvari</translation>
     </message>
     <message>
-        <location line="-433"/>
+        <location line="-434"/>
         <source>Catalog creation was stopped.</source>
         <translation>Ustvarjanje kataloga je bilo ustavljeno.</translation>
     </message>
@@ -271,7 +271,7 @@ Izberite drugo ime in poskusite znova.</translation>
         <translation>Brisanje neuspešno</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+72"/>
         <source>Virtual</source>
         <translation>Navidezno</translation>
     </message>
@@ -644,7 +644,7 @@ Izberite drugo ime.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2513"/>
+        <location filename="../core/collection.cpp" line="+2521"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Ta mapa vsebuje datoteke zbirke v načinu pomnilnika, vendar ste trenutno v načinu datoteke.&lt;br/&gt;Preklopite v način pomnilnika ali izberite drugo mapo.</translation>
     </message>
@@ -680,7 +680,7 @@ Izberite drugo ime.</translation>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+223"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+219"/>
         <source>Collection</source>
         <translation>Zbirka</translation>
     </message>
@@ -874,16 +874,15 @@ Izberite drugo ime.</translation>
         <translation>Velikost besedila kartice</translation>
     </message>
     <message>
-        <location line="+117"/>
         <source>This is an early alpha version of Katalog intended to support development and gather feedback.
 
 </source>
-        <translation>To je zgodnja različica alfa programa Katalog, namenjena podpori razvoja in zbiranju povratnih informacij.
+        <translation type="vanished">To je zgodnja različica alfa programa Katalog, namenjena podpori razvoja in zbiranju povratnih informacij.
 
 </translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+123"/>
         <source>Do not show again</source>
         <translation>Ne prikaži več</translation>
     </message>
@@ -1155,7 +1154,16 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <translation>Zapri</translation>
     </message>
     <message>
-        <location line="-613"/>
+        <location line="-1107"/>
+        <source>This is a beta version of Katalog intended to support development and gather feedback.
+
+</source>
+        <translation>To je različica beta programa Katalog, namenjena podpori razvoja in zbiranju povratnih informacij.
+
+</translation>
+    </message>
+    <message>
+        <location line="+494"/>
         <source>Copy version and system information</source>
         <translation>Kopiraj podatke o različici in sistemu</translation>
     </message>
@@ -1471,7 +1479,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <translation type="vanished">Neveljavno ime gostitelja podatkovne baze.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+123"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+124"/>
         <source>Invalid hostname.</source>
         <translation>Neveljavno ime gostitelja.</translation>
     </message>
@@ -1502,7 +1510,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <translation>Nadaljuj?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+534"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+549"/>
         <source>This collection was created with Katalog version %1, which is no longer supported.&lt;br/&gt;&lt;br/&gt;To convert it, open it with Katalog 2.10 first.&lt;br/&gt;&lt;br/&gt;Please select a different collection folder.</source>
         <translation>Ta zbirka je bila ustvarjena s Katalog različico %1, ki ni več podprta.&lt;br/&gt;&lt;br/&gt;Za pretvorbo jo najprej odprite s Katalog 2.10.&lt;br/&gt;&lt;br/&gt;Izberite drugo mapo zbirke.</translation>
     </message>
@@ -1567,7 +1575,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location line="+52"/>
         <location line="+872"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+95"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+395"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+433"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+406"/>
         <location line="+176"/>
@@ -1910,7 +1918,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <translation>Vrednost</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-415"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-430"/>
         <source>Invalid Collection Folder</source>
         <translation>Neveljavna Mapa Zbirke</translation>
     </message>
@@ -3446,7 +3454,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
     <message>
         <location line="+40"/>
         <location line="+486"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-310"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-347"/>
         <source>Settings</source>
         <translation>Nastavitve</translation>
     </message>
@@ -4050,7 +4058,7 @@ v koš?</translation>
         <translation>Izberi imenik za to zbirko</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+75"/>
         <location line="+6"/>
         <source>Select or create a database file for this collection</source>
         <translation>Izberite ali ustvarite datoteko baze podatkov za to zbirko</translation>
@@ -4062,12 +4070,14 @@ v koš?</translation>
         <translation>Datoteke baze podatkov (*.db)</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+36"/>
+        <location line="+22"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+212"/>
         <source>Failed to open the database file: %1</source>
         <translation>Ni bilo mogoče odpreti datoteke baze podatkov: %1</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+12"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
         <translation>&lt;br/&gt;&lt;b&gt;Pripravljeno za ustvarjanje kataloga datotek:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
@@ -5557,7 +5567,7 @@ Razdelitev ni bila izvedena.</translation>
         <translation>Iskanje končano | Najdenih datotek: %1</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-162"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-374"/>
         <source>The directory does not exist. Create it?</source>
         <translation>Imenik ne obstaja. Ga ustvarim?</translation>
     </message>
@@ -5620,7 +5630,7 @@ Razdelitev ni bila izvedena.</translation>
         <translation type="vanished">Zapri aplikacijo</translation>
     </message>
     <message>
-        <location line="+229"/>
+        <location line="+244"/>
         <source>Select the database to open:</source>
         <translation>Izberi podatkovno bazo za odpiranje:</translation>
     </message>
@@ -6978,7 +6988,7 @@ Razdelitev ni bila izvedena.</translation>
         <translation>Izbriši</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+73"/>
         <source>files</source>
         <translation>datoteke</translation>
     </message>
@@ -7026,7 +7036,7 @@ Razdelitev ni bila izvedena.</translation>
         <translation>Skupna velikost</translation>
     </message>
     <message>
-        <location line="+222"/>
+        <location line="+227"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>Odpri mapo</translation>
@@ -7165,12 +7175,12 @@ Razdelitev ni bila izvedena.</translation>
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+270"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+278"/>
         <source>Directories</source>
         <translation>Imeniki</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+32"/>
         <source>Collapse one level</source>
         <translation>Strni eno raven</translation>
     </message>
@@ -7920,7 +7930,7 @@ Napake: %3</translation>
         <translation>Uredi</translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+107"/>
         <source>Collapse</source>
         <translation>Strni</translation>
     </message>

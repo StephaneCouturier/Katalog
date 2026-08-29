@@ -1,10 +1,10 @@
 ---
 sidebar_position: 1
-version: "2.12"
+version: "2.13"
 ---
 
 # Tutorial
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![2.13](https://img.shields.io/badge/Version-2.13-blue)
 
 Let's discover **Katalog in less than 5 minutes**.
 
@@ -24,6 +24,7 @@ A portable version for Windows is also available in the [Katalog files](https://
 - For the first start, the application will ask to select the **[Collection folder](/Katalog/docs/Settings#collection)** , which is where all data of a collection are stored.
 - Therefore a folder in your user directory is usually the best place.
 - Note: after the first start, it is possible switch to a different data management mode.
+- The dialog can also be dismissed: the application starts without a collection, and one can be chosen later from the **[Settings](/Katalog/docs/Settings)** screen.
 ### Create a catalog
 - The application then start on the **[Create](/Katalog/docs/Create)** screen.
 - Just select a folder to be scanned to catalog the files (here, the directory */home* is selected),

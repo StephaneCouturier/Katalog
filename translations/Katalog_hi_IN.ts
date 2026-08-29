@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+154"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+155"/>
         <location line="+87"/>
         <location line="+14"/>
-        <location line="+3823"/>
+        <location line="+3829"/>
         <source>Search</source>
         <translation>खोज</translation>
     </message>
     <message>
-        <location line="-3920"/>
+        <location line="-3926"/>
         <source>Stopped</source>
         <translation>रोका गया</translation>
     </message>
@@ -44,8 +44,8 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+58"/>
-        <location line="+1685"/>
-        <location line="+527"/>
+        <location line="+1690"/>
+        <location line="+528"/>
         <location line="+1211"/>
         <location line="+11"/>
         <location line="+60"/>
@@ -54,14 +54,14 @@
         <translation>प्रगति में</translation>
     </message>
     <message>
-        <location line="-3824"/>
-        <location line="+3461"/>
+        <location line="-3830"/>
+        <location line="+3467"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>पूर्ण हुआ</translation>
     </message>
     <message>
-        <location line="-3146"/>
+        <location line="-3152"/>
         <source>Empty database path provided</source>
         <translation>रिक्त डेटाबेस पथ प्रदान किया गया</translation>
     </message>
@@ -81,7 +81,7 @@
         <translation>डेटाबेस खोलने में विफल: %1</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+16"/>
         <source>Could not create file: %1</source>
         <translation>फ़ाइल नहीं बनाई जा सकी: %1</translation>
     </message>
@@ -147,12 +147,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2358"/>
+        <location line="+2359"/>
         <source>Size</source>
         <translation>आकार</translation>
     </message>
     <message>
-        <location line="-2357"/>
+        <location line="-2358"/>
         <source>Date</source>
         <translation>दिनांक</translation>
     </message>
@@ -245,12 +245,12 @@ Choose a different name and try again.</source>
     </message>
     <message>
         <location line="+65"/>
-        <location line="+526"/>
+        <location line="+527"/>
         <source>Create</source>
         <translation>बनाएं</translation>
     </message>
     <message>
-        <location line="-433"/>
+        <location line="-434"/>
         <source>Catalog creation was stopped.</source>
         <translation>कैटलॉग निर्माण रोक दिया गया।</translation>
     </message>
@@ -271,7 +271,7 @@ Choose a different name and try again.</source>
         <translation>डिलीट असफल</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+72"/>
         <source>Virtual</source>
         <translation>वर्चुअल</translation>
     </message>
@@ -644,7 +644,7 @@ Choose a different name.</source>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2513"/>
+        <location filename="../core/collection.cpp" line="+2521"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>इस फ़ोल्डर में मेमोरी मोड संग्रह फ़ाइलें हैं, लेकिन आप वर्तमान में फ़ाइल मोड में हैं।&lt;br/&gt;मेमोरी मोड पर स्विच करें या कोई भिन्न फ़ोल्डर चुनें।</translation>
     </message>
@@ -680,7 +680,7 @@ Choose a different name.</source>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+223"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+219"/>
         <source>Collection</source>
         <translation>संग्रह</translation>
     </message>
@@ -874,16 +874,15 @@ Choose a different name.</source>
         <translation>कार्ड पाठ आकार</translation>
     </message>
     <message>
-        <location line="+117"/>
         <source>This is an early alpha version of Katalog intended to support development and gather feedback.
 
 </source>
-        <translation>यह Katalog का प्रारंभिक अल्फा संस्करण है, जो विकास में सहायता और प्रतिक्रिया एकत्र करने के लिए है।
+        <translation type="vanished">यह Katalog का प्रारंभिक अल्फा संस्करण है, जो विकास में सहायता और प्रतिक्रिया एकत्र करने के लिए है।
 
 </translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+123"/>
         <source>Do not show again</source>
         <translation>फिर से न दिखाएँ</translation>
     </message>
@@ -1155,7 +1154,16 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>बंद करें</translation>
     </message>
     <message>
-        <location line="-613"/>
+        <location line="-1107"/>
+        <source>This is a beta version of Katalog intended to support development and gather feedback.
+
+</source>
+        <translation>यह Katalog का बीटा संस्करण है, जो विकास में सहायता और प्रतिक्रिया एकत्र करने के लिए है।
+
+</translation>
+    </message>
+    <message>
+        <location line="+494"/>
         <source>Copy version and system information</source>
         <translation>संस्करण और सिस्टम जानकारी कॉपी करें</translation>
     </message>
@@ -1471,7 +1479,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation type="vanished">अमान्य डेटाबेस होस्टनाम।</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+123"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+124"/>
         <source>Invalid hostname.</source>
         <translation>अमान्य होस्टनाम।</translation>
     </message>
@@ -1502,7 +1510,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>जारी रखें?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+534"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+549"/>
         <source>This collection was created with Katalog version %1, which is no longer supported.&lt;br/&gt;&lt;br/&gt;To convert it, open it with Katalog 2.10 first.&lt;br/&gt;&lt;br/&gt;Please select a different collection folder.</source>
         <translation>यह संग्रह Katalog संस्करण %1 के साथ बनाया गया था, जो अब समर्थित नहीं है।&lt;br/&gt;&lt;br/&gt;इसे परिवर्तित करने के लिए, पहले इसे Katalog 2.10 के साथ खोलें।&lt;br/&gt;&lt;br/&gt;कृपया कोई भिन्न संग्रह फ़ोल्डर चुनें।</translation>
     </message>
@@ -1567,7 +1575,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+52"/>
         <location line="+872"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+95"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+395"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+433"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+406"/>
         <location line="+176"/>
@@ -1910,7 +1918,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>मान</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-415"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-430"/>
         <source>Invalid Collection Folder</source>
         <translation>अमान्य संग्रह फ़ोल्डर</translation>
     </message>
@@ -3199,7 +3207,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+40"/>
         <location line="+486"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-310"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-347"/>
         <source>Settings</source>
         <translation>सेटिंग्स</translation>
     </message>
@@ -4510,7 +4518,7 @@ Split was not performed.</source>
         <translation>रद्द करें</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+389"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+426"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>यह संस्करण है: v%1 &lt;br/&gt;&lt;br/&gt;एक नया संस्करण उपलब्ध है: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; नई सुविधाओं की सूची &lt;a href=&apos;%3&apos;&gt;रिलीज़ नोट्स&lt;/a&gt; में देखें&lt;br/&gt;&lt;br/&gt;क्या आप इसे डाउनलोड करना चाहते हैं?</translation>
     </message>
@@ -4588,7 +4596,7 @@ Split was not performed.</source>
         <translation type="vanished">&lt;br/&gt;&lt;br/&gt;अगली स्क्रीन पर, एक मौजूदा संग्रह फ़ोल्डर चुनें या नया बनाएं।</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-382"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-419"/>
         <source>Open existing...</source>
         <translation>मौजूदा खोलें...</translation>
     </message>
@@ -4598,7 +4606,7 @@ Split was not performed.</source>
         <translation>नया बनाएं...</translation>
     </message>
     <message>
-        <location line="+85"/>
+        <location line="+90"/>
         <location line="+6"/>
         <source>Select or create a database file for this collection</source>
         <translation>इस संग्रह के लिए डेटाबेस फ़ाइल चुनें या बनाएं</translation>
@@ -4610,12 +4618,14 @@ Split was not performed.</source>
         <translation>डेटाबेस फ़ाइलें (*.db)</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+36"/>
+        <location line="+22"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+126"/>
         <source>Failed to open the database file: %1</source>
         <translation>डेटाबेस फ़ाइल खोलने में विफल: %1</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+12"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
         <translation>&lt;br/&gt;&lt;b&gt;फ़ाइल कैटलॉग बनाने के लिए तैयार:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
@@ -4950,12 +4960,12 @@ to the trash?</source>
         <translation>मेटाडेटा शामिल करें</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+383"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+272"/>
         <source>Local disk</source>
         <translation>स्थानीय डिस्क</translation>
     </message>
     <message>
-        <location line="-631"/>
+        <location line="-646"/>
         <source>The directory does not exist. Create it?</source>
         <translation>डायरेक्टरी मौजूद नहीं है। इसे बनाएं?</translation>
     </message>
@@ -5013,12 +5023,12 @@ to the trash?</source>
         <translation type="vanished">एप्लिकेशन बंद करें</translation>
     </message>
     <message>
-        <location line="+330"/>
+        <location line="+345"/>
         <source>Select the database to open:</source>
         <translation>खोलने के लिए डेटाबेस चुनें:</translation>
     </message>
     <message>
-        <location line="-229"/>
+        <location line="-244"/>
         <source>Select the database to create and open:</source>
         <translation>बनाने और खोलने के लिए डेटाबेस चुनें:</translation>
     </message>
@@ -5028,7 +5038,7 @@ to the trash?</source>
         <translation>स्टोरेज डिवाइस सूची में कुछ परिवर्तन सेव नहीं किए गए हैं।&lt;br/&gt;सेव करके बाहर निकलें, छोड़कर बाहर निकलें, या बाहर निकलना रद्द करें?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+261"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+276"/>
         <source> Physical Group</source>
         <translation> फिजिकल ग्रुप</translation>
     </message>
@@ -6976,7 +6986,7 @@ to the trash?</source>
         <translation>डिलीट</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+73"/>
         <source>files</source>
         <translation>फ़ाइलें</translation>
     </message>
@@ -7024,7 +7034,7 @@ to the trash?</source>
         <translation>कुल आकार</translation>
     </message>
     <message>
-        <location line="+222"/>
+        <location line="+227"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>फ़ोल्डर खोलें</translation>
@@ -7163,12 +7173,12 @@ to the trash?</source>
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+270"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+278"/>
         <source>Directories</source>
         <translation>डायरेक्टरियां</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+32"/>
         <source>Collapse one level</source>
         <translation>एक स्तर संक्षिप्त करें</translation>
     </message>
@@ -7918,7 +7928,7 @@ Errors: %3</source>
         <translation>संपादन</translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+107"/>
         <source>Collapse</source>
         <translation>संक्षिप्त करें</translation>
     </message>

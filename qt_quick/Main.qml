@@ -579,7 +579,7 @@ Kirigami.ApplicationWindow {
 
     Controls.Dialog {
         id: alphaWarningDialog
-        title: "Katalog 3 - Alpha3 Version"
+        title: "Katalog 3 - Beta1 Version"
         modal: true
         anchors.centerIn: parent
         width: Math.min(520, parent.width - Kirigami.Units.largeSpacing * 4)
@@ -587,7 +587,7 @@ Kirigami.ApplicationWindow {
         Controls.Label {
             width: parent.width
             wrapMode: Text.WordWrap
-            text: qsTr("This is an early alpha version of Katalog intended to support development and gather feedback.\n\n")
+            text: qsTr("This is a beta version of Katalog intended to support development and gather feedback.\n\n")
         }
 
         footer: Controls.DialogButtonBox {

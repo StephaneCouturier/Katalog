@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+154"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+155"/>
         <location line="+87"/>
         <location line="+14"/>
-        <location line="+3823"/>
+        <location line="+3829"/>
         <source>Search</source>
         <translation>Zoeken</translation>
     </message>
     <message>
-        <location line="-3920"/>
+        <location line="-3926"/>
         <source>Stopped</source>
         <translation>Gestopt</translation>
     </message>
@@ -44,8 +44,8 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+58"/>
-        <location line="+1685"/>
-        <location line="+527"/>
+        <location line="+1690"/>
+        <location line="+528"/>
         <location line="+1211"/>
         <location line="+11"/>
         <location line="+60"/>
@@ -54,14 +54,14 @@
         <translation>Bezig</translation>
     </message>
     <message>
-        <location line="-3824"/>
-        <location line="+3461"/>
+        <location line="-3830"/>
+        <location line="+3467"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Voltooid</translation>
     </message>
     <message>
-        <location line="-3146"/>
+        <location line="-3152"/>
         <source>Empty database path provided</source>
         <translation>Leeg databasepad opgegeven</translation>
     </message>
@@ -81,7 +81,7 @@
         <translation>Kan database niet openen: %1</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+16"/>
         <source>Could not create file: %1</source>
         <translation>Kan bestand niet aanmaken: %1</translation>
     </message>
@@ -147,12 +147,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2358"/>
+        <location line="+2359"/>
         <source>Size</source>
         <translation>Grootte</translation>
     </message>
     <message>
-        <location line="-2357"/>
+        <location line="-2358"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
@@ -245,12 +245,12 @@ Kies een andere naam en probeer het opnieuw.</translation>
     </message>
     <message>
         <location line="+65"/>
-        <location line="+526"/>
+        <location line="+527"/>
         <source>Create</source>
         <translation>Maken</translation>
     </message>
     <message>
-        <location line="-433"/>
+        <location line="-434"/>
         <source>Catalog creation was stopped.</source>
         <translation>Het aanmaken van de catalogus is gestopt.</translation>
     </message>
@@ -271,7 +271,7 @@ Kies een andere naam en probeer het opnieuw.</translation>
         <translation>Verwijderen mislukt</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+72"/>
         <source>Virtual</source>
         <translation>Virtueel</translation>
     </message>
@@ -644,7 +644,7 @@ Kies een andere naam.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2513"/>
+        <location filename="../core/collection.cpp" line="+2521"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Deze map bevat collectiebestanden in geheugenmodus, maar u bent momenteel in bestandsmodus.&lt;br/&gt;Schakel over naar geheugenmodus of selecteer een andere map.</translation>
     </message>
@@ -680,7 +680,7 @@ Kies een andere naam.</translation>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+223"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+219"/>
         <source>Collection</source>
         <translation>Verzameling</translation>
     </message>
@@ -874,16 +874,15 @@ Kies een andere naam.</translation>
         <translation>Tekstgrootte van kaart</translation>
     </message>
     <message>
-        <location line="+117"/>
         <source>This is an early alpha version of Katalog intended to support development and gather feedback.
 
 </source>
-        <translation>Dit is een vroege alfaversie van Katalog, bedoeld om de ontwikkeling te ondersteunen en feedback te verzamelen.
+        <translation type="vanished">Dit is een vroege alfaversie van Katalog, bedoeld om de ontwikkeling te ondersteunen en feedback te verzamelen.
 
 </translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+123"/>
         <source>Do not show again</source>
         <translation>Niet meer tonen</translation>
     </message>
@@ -1155,7 +1154,16 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Sluiten</translation>
     </message>
     <message>
-        <location line="-613"/>
+        <location line="-1107"/>
+        <source>This is a beta version of Katalog intended to support development and gather feedback.
+
+</source>
+        <translation>Dit is een bètaversie van Katalog, bedoeld om de ontwikkeling te ondersteunen en feedback te verzamelen.
+
+</translation>
+    </message>
+    <message>
+        <location line="+494"/>
         <source>Copy version and system information</source>
         <translation>Versie- en systeeminformatie kopiëren</translation>
     </message>
@@ -1471,7 +1479,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation type="vanished">Ongeldige database-hostnaam.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+123"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+124"/>
         <source>Invalid hostname.</source>
         <translation>Ongeldige hostnaam.</translation>
     </message>
@@ -1502,7 +1510,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Doorgaan?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+534"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+549"/>
         <source>This collection was created with Katalog version %1, which is no longer supported.&lt;br/&gt;&lt;br/&gt;To convert it, open it with Katalog 2.10 first.&lt;br/&gt;&lt;br/&gt;Please select a different collection folder.</source>
         <translation>Deze collectie is aangemaakt met Katalog versie %1, die niet meer wordt ondersteund.&lt;br/&gt;&lt;br/&gt;Om deze te converteren, opent u deze eerst met Katalog 2.10.&lt;br/&gt;&lt;br/&gt;Selecteer een andere collectiemap.</translation>
     </message>
@@ -1567,7 +1575,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <location line="+52"/>
         <location line="+872"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+95"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+395"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+433"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+406"/>
         <location line="+176"/>
@@ -1910,7 +1918,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Waarde</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-415"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-430"/>
         <source>Invalid Collection Folder</source>
         <translation>Ongeldige collectiemap</translation>
     </message>
@@ -3199,7 +3207,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
     <message>
         <location line="+40"/>
         <location line="+486"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-310"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-347"/>
         <source>Settings</source>
         <translation>Instellingen</translation>
     </message>
@@ -4510,7 +4518,7 @@ Splitsen is niet uitgevoerd.</translation>
         <translation>Annuleren</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+389"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+426"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Dit is versie: v%1 &lt;br/&gt;&lt;br/&gt;Een nieuwe versie is beschikbaar: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Vind de lijst met nieuwe functies in de &lt;a href=&apos;%3&apos;&gt;Versienotities&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Wilt u deze downloaden?</translation>
     </message>
@@ -4588,7 +4596,7 @@ Splitsen is niet uitgevoerd.</translation>
         <translation type="vanished">&lt;br/&gt;&lt;br/&gt;Kies op het volgende scherm een bestaande collectiemap of maak een nieuwe aan.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-382"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-419"/>
         <source>Open existing...</source>
         <translation>Bestaande openen...</translation>
     </message>
@@ -4598,7 +4606,7 @@ Splitsen is niet uitgevoerd.</translation>
         <translation>Nieuwe maken...</translation>
     </message>
     <message>
-        <location line="+85"/>
+        <location line="+90"/>
         <location line="+6"/>
         <source>Select or create a database file for this collection</source>
         <translation>Selecteer of maak een databasebestand voor deze collectie</translation>
@@ -4610,12 +4618,14 @@ Splitsen is niet uitgevoerd.</translation>
         <translation>Databasebestanden (*.db)</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+36"/>
+        <location line="+22"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+126"/>
         <source>Failed to open the database file: %1</source>
         <translation>Kan het databasebestand niet openen: %1</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+12"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
         <translation>&lt;br/&gt;&lt;b&gt;Klaar om een bestandscatalogus te maken:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
@@ -4950,12 +4960,12 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Metadata opnemen</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+383"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+272"/>
         <source>Local disk</source>
         <translation>Lokale schijf</translation>
     </message>
     <message>
-        <location line="-631"/>
+        <location line="-646"/>
         <source>The directory does not exist. Create it?</source>
         <translation>De map bestaat niet. Aanmaken?</translation>
     </message>
@@ -5013,12 +5023,12 @@ naar de prullenbak verplaatsen?</translation>
         <translation type="vanished">Applicatie afsluiten</translation>
     </message>
     <message>
-        <location line="+330"/>
+        <location line="+345"/>
         <source>Select the database to open:</source>
         <translation>Selecteer de database om te openen:</translation>
     </message>
     <message>
-        <location line="-229"/>
+        <location line="-244"/>
         <source>Select the database to create and open:</source>
         <translation>Selecteer de database om te maken en openen:</translation>
     </message>
@@ -5028,7 +5038,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Sommige wijzigingen in de lijst met opslagapparaten zijn niet opgeslagen.&lt;br/&gt;Opslaan en afsluiten, verwijderen en afsluiten, of afsluiten annuleren?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+261"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+276"/>
         <source> Physical Group</source>
         <translation> Fysieke groep</translation>
     </message>
@@ -6976,7 +6986,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Verwijderen</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+73"/>
         <source>files</source>
         <translation>bestanden</translation>
     </message>
@@ -7024,7 +7034,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Totale grootte</translation>
     </message>
     <message>
-        <location line="+222"/>
+        <location line="+227"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>Map openen</translation>
@@ -7163,12 +7173,12 @@ naar de prullenbak verplaatsen?</translation>
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+270"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+278"/>
         <source>Directories</source>
         <translation>Mappen</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+32"/>
         <source>Collapse one level</source>
         <translation>Eén niveau inklappen</translation>
     </message>
@@ -7918,7 +7928,7 @@ Fouten: %3</translation>
         <translation>Bewerken</translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+107"/>
         <source>Collapse</source>
         <translation>Inklappen</translation>
     </message>

@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+154"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+155"/>
         <location line="+87"/>
         <location line="+14"/>
-        <location line="+3823"/>
+        <location line="+3829"/>
         <source>Search</source>
         <translation>Căutare</translation>
     </message>
     <message>
-        <location line="-3920"/>
+        <location line="-3926"/>
         <source>Stopped</source>
         <translation>Oprit</translation>
     </message>
@@ -44,8 +44,8 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+58"/>
-        <location line="+1685"/>
-        <location line="+527"/>
+        <location line="+1690"/>
+        <location line="+528"/>
         <location line="+1211"/>
         <location line="+11"/>
         <location line="+60"/>
@@ -54,14 +54,14 @@
         <translation>În curs</translation>
     </message>
     <message>
-        <location line="-3824"/>
-        <location line="+3461"/>
+        <location line="-3830"/>
+        <location line="+3467"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Finalizat</translation>
     </message>
     <message>
-        <location line="-3146"/>
+        <location line="-3152"/>
         <source>Empty database path provided</source>
         <translation>Cale de bază de date goală furnizată</translation>
     </message>
@@ -81,7 +81,7 @@
         <translation>Deschiderea bazei de date a eșuat: %1</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+16"/>
         <source>Could not create file: %1</source>
         <translation>Nu s-a putut crea fișierul: %1</translation>
     </message>
@@ -147,12 +147,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2358"/>
+        <location line="+2359"/>
         <source>Size</source>
         <translation>Dimensiune</translation>
     </message>
     <message>
-        <location line="-2357"/>
+        <location line="-2358"/>
         <source>Date</source>
         <translation>Dată</translation>
     </message>
@@ -245,12 +245,12 @@ Alegeți alt nume și încercați din nou.</translation>
     </message>
     <message>
         <location line="+65"/>
-        <location line="+526"/>
+        <location line="+527"/>
         <source>Create</source>
         <translation>Creează</translation>
     </message>
     <message>
-        <location line="-433"/>
+        <location line="-434"/>
         <source>Catalog creation was stopped.</source>
         <translation>Crearea catalogului a fost oprită.</translation>
     </message>
@@ -271,7 +271,7 @@ Alegeți alt nume și încercați din nou.</translation>
         <translation>Ștergerea a eșuat</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+72"/>
         <source>Virtual</source>
         <translation>Virtual</translation>
     </message>
@@ -644,7 +644,7 @@ Alegeți alt nume.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2513"/>
+        <location filename="../core/collection.cpp" line="+2521"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Acest folder conține fișiere de colecție în modul Memorie, dar sunteți în prezent în modul Fișier.&lt;br/&gt;Comutați la modul Memorie sau selectați un alt folder.</translation>
     </message>
@@ -680,7 +680,7 @@ Alegeți alt nume.</translation>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+223"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+219"/>
         <source>Collection</source>
         <translation>Colecție</translation>
     </message>
@@ -874,16 +874,15 @@ Alegeți alt nume.</translation>
         <translation>Dimensiunea textului cardului</translation>
     </message>
     <message>
-        <location line="+117"/>
         <source>This is an early alpha version of Katalog intended to support development and gather feedback.
 
 </source>
-        <translation>Aceasta este o versiune alpha timpurie a Katalog, destinată să sprijine dezvoltarea și să colecteze feedback.
+        <translation type="vanished">Aceasta este o versiune alpha timpurie a Katalog, destinată să sprijine dezvoltarea și să colecteze feedback.
 
 </translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+123"/>
         <source>Do not show again</source>
         <translation>Nu mai afișa</translation>
     </message>
@@ -1155,7 +1154,16 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <translation>Închide</translation>
     </message>
     <message>
-        <location line="-613"/>
+        <location line="-1107"/>
+        <source>This is a beta version of Katalog intended to support development and gather feedback.
+
+</source>
+        <translation>Aceasta este o versiune beta a Katalog, destinată să sprijine dezvoltarea și să colecteze feedback.
+
+</translation>
+    </message>
+    <message>
+        <location line="+494"/>
         <source>Copy version and system information</source>
         <translation>Copiază informațiile despre versiune și sistem</translation>
     </message>
@@ -1471,7 +1479,7 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <translation type="vanished">Nume de gazdă al bazei de date invalid.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+123"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+124"/>
         <source>Invalid hostname.</source>
         <translation>Nume de gazdă invalid.</translation>
     </message>
@@ -1502,7 +1510,7 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <translation>Continuați?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+534"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+549"/>
         <source>This collection was created with Katalog version %1, which is no longer supported.&lt;br/&gt;&lt;br/&gt;To convert it, open it with Katalog 2.10 first.&lt;br/&gt;&lt;br/&gt;Please select a different collection folder.</source>
         <translation>Această colecție a fost creată cu Katalog versiunea %1, care nu mai este acceptată.&lt;br/&gt;&lt;br/&gt;Pentru a o converti, deschideți-o mai întâi cu Katalog 2.10.&lt;br/&gt;&lt;br/&gt;Selectați un alt folder de colecție.</translation>
     </message>
@@ -1567,7 +1575,7 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+52"/>
         <location line="+872"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+95"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+395"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+433"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+406"/>
         <location line="+176"/>
@@ -1910,7 +1918,7 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <translation>Valoare</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-415"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-430"/>
         <source>Invalid Collection Folder</source>
         <translation>Dosar Colecție Invalid</translation>
     </message>
@@ -3199,7 +3207,7 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location line="+40"/>
         <location line="+486"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-310"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-347"/>
         <source>Settings</source>
         <translation>Setări</translation>
     </message>
@@ -4510,7 +4518,7 @@ Split was not performed.</source>
         <translation>Anulare</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+389"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+426"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Aceasta este versiunea: v%1 &lt;br/&gt;&lt;br/&gt;O nouă versiune este disponibilă: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Găsiți lista de funcții noi în &lt;a href=&apos;%3&apos;&gt;Notele de lansare&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Doriți să o descărcați?</translation>
     </message>
@@ -4588,7 +4596,7 @@ Split was not performed.</source>
         <translation type="vanished">&lt;br/&gt;&lt;br/&gt;Pe ecranul următor, alegeți un dosar de colecție existent sau creați unul nou.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-382"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-419"/>
         <source>Open existing...</source>
         <translation>Deschide existent...</translation>
     </message>
@@ -4598,7 +4606,7 @@ Split was not performed.</source>
         <translation>Creează nou...</translation>
     </message>
     <message>
-        <location line="+85"/>
+        <location line="+90"/>
         <location line="+6"/>
         <source>Select or create a database file for this collection</source>
         <translation>Selectați sau creați un fișier de baze de date pentru această colecție</translation>
@@ -4610,12 +4618,14 @@ Split was not performed.</source>
         <translation>Fișiere de baze de date (*.db)</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+36"/>
+        <location line="+22"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+126"/>
         <source>Failed to open the database file: %1</source>
         <translation>Eroare la deschiderea fișierului de baze de date: %1</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+12"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
         <translation>&lt;br/&gt;&lt;b&gt;Gata să creați un catalog de fișiere:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
@@ -4951,12 +4961,12 @@ la coșul de gunoi?</translation>
         <translation>Include metadatele</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+383"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+272"/>
         <source>Local disk</source>
         <translation>Disc local</translation>
     </message>
     <message>
-        <location line="-631"/>
+        <location line="-646"/>
         <source>The directory does not exist. Create it?</source>
         <translation>Directorul nu există. Îl creați?</translation>
     </message>
@@ -5014,12 +5024,12 @@ la coșul de gunoi?</translation>
         <translation type="vanished">Ieșiți din aplicație</translation>
     </message>
     <message>
-        <location line="+330"/>
+        <location line="+345"/>
         <source>Select the database to open:</source>
         <translation>Selectați baza de date de deschis:</translation>
     </message>
     <message>
-        <location line="-229"/>
+        <location line="-244"/>
         <source>Select the database to create and open:</source>
         <translation>Selectați baza de date de creat și deschis:</translation>
     </message>
@@ -5029,7 +5039,7 @@ la coșul de gunoi?</translation>
         <translation>Unele modificări în lista dispozitivelor de stocare nu au fost salvate.&lt;br/&gt;Salvați și ieșiți, renunțați și ieșiți, sau anulați ieșirea?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+261"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+276"/>
         <source> Physical Group</source>
         <translation> Grup fizic</translation>
     </message>
@@ -6977,7 +6987,7 @@ la coșul de gunoi?</translation>
         <translation>Șterge</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+73"/>
         <source>files</source>
         <translation>fișiere</translation>
     </message>
@@ -7025,7 +7035,7 @@ la coșul de gunoi?</translation>
         <translation>Dimensiunea totală</translation>
     </message>
     <message>
-        <location line="+222"/>
+        <location line="+227"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>Deschide dosarul</translation>
@@ -7164,12 +7174,12 @@ la coșul de gunoi?</translation>
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+270"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+278"/>
         <source>Directories</source>
         <translation>Directoare</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+32"/>
         <source>Collapse one level</source>
         <translation>Restrânge cu un nivel</translation>
     </message>
@@ -7919,7 +7929,7 @@ Erori: %3</translation>
         <translation>Editare</translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+107"/>
         <source>Collapse</source>
         <translation>Restrânge</translation>
     </message>

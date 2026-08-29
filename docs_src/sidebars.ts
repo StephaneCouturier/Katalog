@@ -90,7 +90,8 @@ export default {
                 'SpecBackup',
                 'SpecExplore',
                 'SpecAbout',
-                'SpecDeviceComment'
+                'SpecDeviceComment',
+                'SpecCollectionOpen'
                 ],
       },
        'Development-Repository',

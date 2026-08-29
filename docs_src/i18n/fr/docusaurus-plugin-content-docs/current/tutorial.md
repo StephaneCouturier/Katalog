@@ -1,10 +1,10 @@
 ---
 sidebar_position: 1
-version: "2.12"
+version: "2.13"
 ---
 
 # Tutoriel
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![2.13](https://img.shields.io/badge/Version-2.13-blue)
 
 Découvrons **Katalog en moins de 5 minutes**.
 
@@ -23,6 +23,7 @@ Pour Linux, la meilleure option est [Flatpak depuis Flathub](https://flathub.org
 - Au premier démarrage, l'application vous demandera de sélectionner le **[dossier de collection](/Katalog/fr/docs/Settings#collection)**, où sont stockées toutes les données d'une collection.
 - Par conséquent, un dossier dans votre répertoire utilisateur est généralement le meilleur emplacement.
 - Remarque : après le premier démarrage, il est possible de passer à un autre mode de gestion des données.
+- La boîte de dialogue peut aussi être fermée : l'application démarre sans collection, et il est possible d'en choisir une plus tard depuis l'écran **[Paramètres](/Katalog/fr/docs/Settings)**.
 
 ### Créer un catalogue
 - L'application démarre sur l'écran **[Créer](/Katalog/fr/docs/Create)**.

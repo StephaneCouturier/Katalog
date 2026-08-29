@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+154"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+155"/>
         <location line="+87"/>
         <location line="+14"/>
-        <location line="+3823"/>
+        <location line="+3829"/>
         <source>Search</source>
         <translation>Meklēt</translation>
     </message>
     <message>
-        <location line="-3920"/>
+        <location line="-3926"/>
         <source>Stopped</source>
         <translation>Apstādināts</translation>
     </message>
@@ -44,8 +44,8 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+58"/>
-        <location line="+1685"/>
-        <location line="+527"/>
+        <location line="+1690"/>
+        <location line="+528"/>
         <location line="+1211"/>
         <location line="+11"/>
         <location line="+60"/>
@@ -54,14 +54,14 @@
         <translation>Procesā</translation>
     </message>
     <message>
-        <location line="-3824"/>
-        <location line="+3461"/>
+        <location line="-3830"/>
+        <location line="+3467"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Pabeigts</translation>
     </message>
     <message>
-        <location line="-3146"/>
+        <location line="-3152"/>
         <source>Empty database path provided</source>
         <translation>Norādīts tukšs datubāzes ceļš</translation>
     </message>
@@ -81,7 +81,7 @@
         <translation>Neizdevās atvērt datubāzi: %1</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+16"/>
         <source>Could not create file: %1</source>
         <translation>Neizdevās izveidot failu: %1</translation>
     </message>
@@ -147,12 +147,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2358"/>
+        <location line="+2359"/>
         <source>Size</source>
         <translation>Izmērs</translation>
     </message>
     <message>
-        <location line="-2357"/>
+        <location line="-2358"/>
         <source>Date</source>
         <translation>Datums</translation>
     </message>
@@ -245,12 +245,12 @@ Izvēlieties citu nosaukumu un mēģiniet vēlreiz.</translation>
     </message>
     <message>
         <location line="+65"/>
-        <location line="+526"/>
+        <location line="+527"/>
         <source>Create</source>
         <translation>Izveidot</translation>
     </message>
     <message>
-        <location line="-433"/>
+        <location line="-434"/>
         <source>Catalog creation was stopped.</source>
         <translation>Kataloga izveide tika apturēta.</translation>
     </message>
@@ -271,7 +271,7 @@ Izvēlieties citu nosaukumu un mēģiniet vēlreiz.</translation>
         <translation>Dzēšana neizdevās</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+72"/>
         <source>Virtual</source>
         <translation>Virtuāls</translation>
     </message>
@@ -644,7 +644,7 @@ Izvēlieties citu nosaukumu.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2513"/>
+        <location filename="../core/collection.cpp" line="+2521"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Šī mape satur atmiņas režīma kolekcijas failus, bet pašlaik esat failu režīmā.&lt;br/&gt;Pārslēdzieties uz atmiņas režīmu vai izvēlieties citu mapi.</translation>
     </message>
@@ -680,7 +680,7 @@ Izvēlieties citu nosaukumu.</translation>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+223"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+219"/>
         <source>Collection</source>
         <translation>Kolekcija</translation>
     </message>
@@ -874,16 +874,15 @@ Izvēlieties citu nosaukumu.</translation>
         <translation>Kartītes teksta izmērs</translation>
     </message>
     <message>
-        <location line="+117"/>
         <source>This is an early alpha version of Katalog intended to support development and gather feedback.
 
 </source>
-        <translation>Šī ir Katalog agrīna alfa versija, kas paredzēta izstrādes atbalstam un atsauksmju vākšanai.
+        <translation type="vanished">Šī ir Katalog agrīna alfa versija, kas paredzēta izstrādes atbalstam un atsauksmju vākšanai.
 
 </translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+123"/>
         <source>Do not show again</source>
         <translation>Vairs nerādīt</translation>
     </message>
@@ -1155,7 +1154,16 @@ Vai tomēr vēlaties to saglabāt (katalogs būs tukšs)?</translation>
         <translation>Aizvērt</translation>
     </message>
     <message>
-        <location line="-613"/>
+        <location line="-1107"/>
+        <source>This is a beta version of Katalog intended to support development and gather feedback.
+
+</source>
+        <translation>Šī ir Katalog beta versija, kas paredzēta izstrādes atbalstam un atsauksmju vākšanai.
+
+</translation>
+    </message>
+    <message>
+        <location line="+494"/>
         <source>Copy version and system information</source>
         <translation>Kopēt versijas un sistēmas informāciju</translation>
     </message>
@@ -1471,7 +1479,7 @@ Vai tomēr vēlaties to saglabāt (katalogs būs tukšs)?</translation>
         <translation type="vanished">Nederīgs datubāzes resursdatora nosaukums.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+123"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+124"/>
         <source>Invalid hostname.</source>
         <translation>Nederīgs resursdatora nosaukums.</translation>
     </message>
@@ -1502,7 +1510,7 @@ Vai tomēr vēlaties to saglabāt (katalogs būs tukšs)?</translation>
         <translation>Turpināt?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+534"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+549"/>
         <source>This collection was created with Katalog version %1, which is no longer supported.&lt;br/&gt;&lt;br/&gt;To convert it, open it with Katalog 2.10 first.&lt;br/&gt;&lt;br/&gt;Please select a different collection folder.</source>
         <translation>Šī kolekcija tika izveidota ar Katalog versiju %1, kas vairs netiek atbalstīta.&lt;br/&gt;&lt;br/&gt;Lai to pārveidotu, vispirms atveriet to ar Katalog 2.10.&lt;br/&gt;&lt;br/&gt;Lūdzu, atlasiet citu kolekcijas mapi.</translation>
     </message>
@@ -1567,7 +1575,7 @@ Vai tomēr vēlaties to saglabāt (katalogs būs tukšs)?</translation>
         <location line="+52"/>
         <location line="+872"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+95"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+395"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+433"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+406"/>
         <location line="+176"/>
@@ -1910,7 +1918,7 @@ Vai tomēr vēlaties to saglabāt (katalogs būs tukšs)?</translation>
         <translation>Vērtība</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-415"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-430"/>
         <source>Invalid Collection Folder</source>
         <translation>Nederīga kolekcijas mape</translation>
     </message>
@@ -3199,7 +3207,7 @@ Vai tomēr vēlaties to saglabāt (katalogs būs tukšs)?</translation>
     <message>
         <location line="+40"/>
         <location line="+486"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-310"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-347"/>
         <source>Settings</source>
         <translation>Iestatījumi</translation>
     </message>
@@ -4510,7 +4518,7 @@ Sadalīšana netika veikta.</translation>
         <translation>Atcelt</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+389"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+426"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Šī ir versija: v%1 &lt;br/&gt;&lt;br/&gt;Ir pieejama jauna versija: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Atrodiet jauno funkciju sarakstu &lt;a href=&apos;%3&apos;&gt;Laidiena piezīmēs&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Vai vēlaties to lejupielādēt?</translation>
     </message>
@@ -4588,7 +4596,7 @@ Sadalīšana netika veikta.</translation>
         <translation type="vanished">&lt;br/&gt;&lt;br/&gt;Nākamajā ekrānā izvēlieties esošu kolekcijas mapi vai izveidojiet jaunu.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-382"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-419"/>
         <source>Open existing...</source>
         <translation>Atvērt esošo...</translation>
     </message>
@@ -4598,7 +4606,7 @@ Sadalīšana netika veikta.</translation>
         <translation>Izveidot jaunu...</translation>
     </message>
     <message>
-        <location line="+85"/>
+        <location line="+90"/>
         <location line="+6"/>
         <source>Select or create a database file for this collection</source>
         <translation>Atlasīt vai izveidot datu bāzes failu šai kolekcijai</translation>
@@ -4610,12 +4618,14 @@ Sadalīšana netika veikta.</translation>
         <translation>Datu bāzes faili (*.db)</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+36"/>
+        <location line="+22"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+126"/>
         <source>Failed to open the database file: %1</source>
         <translation>Neizdevās atvērt datu bāzes failu: %1</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+12"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
         <translation>&lt;br/&gt;&lt;b&gt;Gatavs izveidot failu katalogu:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
@@ -4951,12 +4961,12 @@ uz miskasti?</translation>
         <translation>Iekļaut metadatus</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+383"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+272"/>
         <source>Local disk</source>
         <translation>Lokālais disks</translation>
     </message>
     <message>
-        <location line="-631"/>
+        <location line="-646"/>
         <source>The directory does not exist. Create it?</source>
         <translation>Direktorija neeksistē. Izveidot to?</translation>
     </message>
@@ -5014,12 +5024,12 @@ uz miskasti?</translation>
         <translation type="vanished">Iziet no lietotnes</translation>
     </message>
     <message>
-        <location line="+330"/>
+        <location line="+345"/>
         <source>Select the database to open:</source>
         <translation>Izvēlēties datubāzi, ko atvērt:</translation>
     </message>
     <message>
-        <location line="-229"/>
+        <location line="-244"/>
         <source>Select the database to create and open:</source>
         <translation>Izvēlēties datubāzi, ko izveidot un atvērt:</translation>
     </message>
@@ -5029,7 +5039,7 @@ uz miskasti?</translation>
         <translation>Dažas izmaiņas krātuves ierīču sarakstā nav saglabātas.&lt;br/&gt;Saglabāt un iziet, atmest un iziet, vai atcelt iziešanu?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+261"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+276"/>
         <source> Physical Group</source>
         <translation> Fiziskā grupa</translation>
     </message>
@@ -6977,7 +6987,7 @@ uz miskasti?</translation>
         <translation>Dzēst</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+73"/>
         <source>files</source>
         <translation>faili</translation>
     </message>
@@ -7025,7 +7035,7 @@ uz miskasti?</translation>
         <translation>Kopējais izmērs</translation>
     </message>
     <message>
-        <location line="+222"/>
+        <location line="+227"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>Atvērt mapi</translation>
@@ -7164,12 +7174,12 @@ uz miskasti?</translation>
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+270"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+278"/>
         <source>Directories</source>
         <translation>Direktorijas</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+32"/>
         <source>Collapse one level</source>
         <translation>Sakļaut vienu līmeni</translation>
     </message>
@@ -7919,7 +7929,7 @@ Kļūdas: %3</translation>
         <translation>Rediģēt</translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+107"/>
         <source>Collapse</source>
         <translation>Sakļaut</translation>
     </message>

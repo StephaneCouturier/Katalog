@@ -1582,13 +1582,13 @@ void AppManager::setStatisticsSetting(const QString &key, const QVariant &value)
 bool AppManager::shouldShowAlphaWarning() const
 {
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
-    return settings.value("Settings/ShowAlphaWarning", true).toBool();
+    return settings.value("Settings/ShowBetaVersion", true).toBool();
 }
 
 void AppManager::setAlphaWarningShown()
 {
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
-    settings.setValue("Settings/ShowAlphaWarning", false);
+    settings.setValue("Settings/ShowBetaVersion", false);
     settings.sync();
 }
 //----------------------------------------------------------------------

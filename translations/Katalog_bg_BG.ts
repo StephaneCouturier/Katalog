@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+154"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+155"/>
         <location line="+87"/>
         <location line="+14"/>
-        <location line="+3823"/>
+        <location line="+3829"/>
         <source>Search</source>
         <translation>Търсене</translation>
     </message>
     <message>
-        <location line="-3920"/>
+        <location line="-3926"/>
         <source>Stopped</source>
         <translation>Спрян</translation>
     </message>
@@ -44,8 +44,8 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+58"/>
-        <location line="+1685"/>
-        <location line="+527"/>
+        <location line="+1690"/>
+        <location line="+528"/>
         <location line="+1211"/>
         <location line="+11"/>
         <location line="+60"/>
@@ -54,14 +54,14 @@
         <translation>В процес</translation>
     </message>
     <message>
-        <location line="-3824"/>
-        <location line="+3461"/>
+        <location line="-3830"/>
+        <location line="+3467"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Завършен</translation>
     </message>
     <message>
-        <location line="-3146"/>
+        <location line="-3152"/>
         <source>Empty database path provided</source>
         <translation>Предоставен е празен път до базата данни</translation>
     </message>
@@ -81,7 +81,7 @@
         <translation>Неуспешно отваряне на базата данни: %1</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+16"/>
         <source>Could not create file: %1</source>
         <translation>Файлът не може да бъде създаден: %1</translation>
     </message>
@@ -147,12 +147,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2358"/>
+        <location line="+2359"/>
         <source>Size</source>
         <translation>Размер</translation>
     </message>
     <message>
-        <location line="-2357"/>
+        <location line="-2358"/>
         <source>Date</source>
         <translation>Дата</translation>
     </message>
@@ -245,12 +245,12 @@ Choose a different name and try again.</source>
     </message>
     <message>
         <location line="+65"/>
-        <location line="+526"/>
+        <location line="+527"/>
         <source>Create</source>
         <translation>Създай</translation>
     </message>
     <message>
-        <location line="-433"/>
+        <location line="-434"/>
         <source>Catalog creation was stopped.</source>
         <translation>Създаването на каталога беше спряно.</translation>
     </message>
@@ -271,7 +271,7 @@ Choose a different name and try again.</source>
         <translation>Изтриването неуспешно</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+72"/>
         <source>Virtual</source>
         <translation>Виртуален</translation>
     </message>
@@ -644,7 +644,7 @@ Choose a different name.</source>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2513"/>
+        <location filename="../core/collection.cpp" line="+2521"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Тази папка съдържа файлове на колекция в режим Памет, но в момента сте в режим Файл.&lt;br/&gt;Превключете в режим Памет или изберете друга папка.</translation>
     </message>
@@ -680,7 +680,7 @@ Choose a different name.</source>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+223"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+219"/>
         <source>Collection</source>
         <translation>Колекция</translation>
     </message>
@@ -874,16 +874,15 @@ Choose a different name.</source>
         <translation>Размер на текста на картата</translation>
     </message>
     <message>
-        <location line="+117"/>
         <source>This is an early alpha version of Katalog intended to support development and gather feedback.
 
 </source>
-        <translation>Това е ранна алфа версия на Katalog, предназначена да подпомага разработката и да събира обратна връзка.
+        <translation type="vanished">Това е ранна алфа версия на Katalog, предназначена да подпомага разработката и да събира обратна връзка.
 
 </translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+123"/>
         <source>Do not show again</source>
         <translation>Да не се показва отново</translation>
     </message>
@@ -1155,7 +1154,16 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Затвори</translation>
     </message>
     <message>
-        <location line="-613"/>
+        <location line="-1107"/>
+        <source>This is a beta version of Katalog intended to support development and gather feedback.
+
+</source>
+        <translation>Това е бета версия на Katalog, предназначена да подпомага разработката и да събира обратна връзка.
+
+</translation>
+    </message>
+    <message>
+        <location line="+494"/>
         <source>Copy version and system information</source>
         <translation>Копиране на информация за версията и системата</translation>
     </message>
@@ -1471,7 +1479,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation type="vanished">Невалидно име на хост на база данни.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+123"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+124"/>
         <source>Invalid hostname.</source>
         <translation>Невалидно име на хост.</translation>
     </message>
@@ -1562,7 +1570,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+52"/>
         <location line="+872"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+95"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+395"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+433"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+406"/>
         <location line="+176"/>
@@ -3230,7 +3238,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+40"/>
         <location line="+486"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-310"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-347"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
@@ -3637,7 +3645,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Избери директорията за тази колекция</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+75"/>
         <location line="+6"/>
         <source>Select or create a database file for this collection</source>
         <translation>Изберете или създайте файл с база данни за тази колекция</translation>
@@ -3649,12 +3657,14 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Файлове с база данни (*.db)</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+36"/>
+        <location line="+22"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+212"/>
         <source>Failed to open the database file: %1</source>
         <translation>Неуспешно отваряне на файла с база данни: %1</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+12"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
         <translation>&lt;br/&gt;&lt;b&gt;Готов за създаване на каталог с файлове:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
@@ -3848,7 +3858,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2250"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+536"/>
         <location line="+117"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-157"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-369"/>
         <location line="+107"/>
         <location line="+9"/>
         <location line="+127"/>
@@ -4589,12 +4599,12 @@ to the trash?</source>
         <translation>Избраният каталог съдържа повече от %1 файла.&lt;br/&gt;Може да отнеме няколко минути за отваряне.&lt;br/&gt;Продължи?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+383"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+398"/>
         <source>Local disk</source>
         <translation>Локален диск</translation>
     </message>
     <message>
-        <location line="-631"/>
+        <location line="-646"/>
         <source>The directory does not exist. Create it?</source>
         <translation>Директорията не съществува. Създай ли я?</translation>
     </message>
@@ -4652,17 +4662,17 @@ to the trash?</source>
         <translation type="vanished">Изход от приложението</translation>
     </message>
     <message>
-        <location line="+330"/>
+        <location line="+345"/>
         <source>Select the database to open:</source>
         <translation>Избери базата данни за отваряне:</translation>
     </message>
     <message>
-        <location line="-229"/>
+        <location line="-244"/>
         <source>Select the database to create and open:</source>
         <translation>Избери базата данни за създаване и отваряне:</translation>
     </message>
     <message>
-        <location line="+158"/>
+        <location line="+173"/>
         <source>This collection was created with Katalog version %1, which is no longer supported.&lt;br/&gt;&lt;br/&gt;To convert it, open it with Katalog 2.10 first.&lt;br/&gt;&lt;br/&gt;Please select a different collection folder.</source>
         <translation>Тази колекция е създадена с Katalog версия %1, която вече не се поддържа.&lt;br/&gt;&lt;br/&gt;За да я конвертирате, отворете я първо с Katalog 2.10.&lt;br/&gt;&lt;br/&gt;Моля, изберете различна папка за колекция.</translation>
     </message>
@@ -6977,7 +6987,7 @@ to the trash?</source>
         <translation>Изтриване</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+73"/>
         <source>files</source>
         <translation>файлове</translation>
     </message>
@@ -7025,7 +7035,7 @@ to the trash?</source>
         <translation>Общ размер</translation>
     </message>
     <message>
-        <location line="+222"/>
+        <location line="+227"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>Отвори папка</translation>
@@ -7164,12 +7174,12 @@ to the trash?</source>
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+270"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+278"/>
         <source>Directories</source>
         <translation>Директории</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+32"/>
         <source>Collapse one level</source>
         <translation>Свиване с едно ниво</translation>
     </message>
@@ -7919,7 +7929,7 @@ Errors: %3</source>
         <translation>Редактиране</translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+107"/>
         <source>Collapse</source>
         <translation>Свиване</translation>
     </message>

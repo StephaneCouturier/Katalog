@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+154"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+155"/>
         <location line="+87"/>
         <location line="+14"/>
-        <location line="+3823"/>
+        <location line="+3829"/>
         <source>Search</source>
         <translation>検索</translation>
     </message>
     <message>
-        <location line="-3920"/>
+        <location line="-3926"/>
         <source>Stopped</source>
         <translation>停止</translation>
     </message>
@@ -44,8 +44,8 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+58"/>
-        <location line="+1685"/>
-        <location line="+527"/>
+        <location line="+1690"/>
+        <location line="+528"/>
         <location line="+1211"/>
         <location line="+11"/>
         <location line="+60"/>
@@ -54,14 +54,14 @@
         <translation>進行中</translation>
     </message>
     <message>
-        <location line="-3824"/>
-        <location line="+3461"/>
+        <location line="-3830"/>
+        <location line="+3467"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>完了</translation>
     </message>
     <message>
-        <location line="-3146"/>
+        <location line="-3152"/>
         <source>Empty database path provided</source>
         <translation>空のデータベースパスが指定されました</translation>
     </message>
@@ -81,7 +81,7 @@
         <translation>データベースを開けませんでした: %1</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+16"/>
         <source>Could not create file: %1</source>
         <translation>ファイルを作成できませんでした: %1</translation>
     </message>
@@ -147,12 +147,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2358"/>
+        <location line="+2359"/>
         <source>Size</source>
         <translation>サイズ</translation>
     </message>
     <message>
-        <location line="-2357"/>
+        <location line="-2358"/>
         <source>Date</source>
         <translation>日付</translation>
     </message>
@@ -245,12 +245,12 @@ Choose a different name and try again.</source>
     </message>
     <message>
         <location line="+65"/>
-        <location line="+526"/>
+        <location line="+527"/>
         <source>Create</source>
         <translation>作成</translation>
     </message>
     <message>
-        <location line="-433"/>
+        <location line="-434"/>
         <source>Catalog creation was stopped.</source>
         <translation>カタログの作成が停止されました。</translation>
     </message>
@@ -271,7 +271,7 @@ Choose a different name and try again.</source>
         <translation>削除に失敗しました</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+72"/>
         <source>Virtual</source>
         <translation>仮想</translation>
     </message>
@@ -644,7 +644,7 @@ Choose a different name.</source>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2513"/>
+        <location filename="../core/collection.cpp" line="+2521"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>このフォルダにはメモリモードのコレクションファイルが含まれていますが、現在ファイルモードです。&lt;br/&gt;メモリモードに切り替えるか、別のフォルダを選択してください。</translation>
     </message>
@@ -680,7 +680,7 @@ Choose a different name.</source>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+223"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+219"/>
         <source>Collection</source>
         <translation>コレクション</translation>
     </message>
@@ -874,16 +874,15 @@ Choose a different name.</source>
         <translation>カードの文字サイズ</translation>
     </message>
     <message>
-        <location line="+117"/>
         <source>This is an early alpha version of Katalog intended to support development and gather feedback.
 
 </source>
-        <translation>これは、開発を支援しフィードバックを収集することを目的とした Katalog の初期アルファ版です。
+        <translation type="vanished">これは、開発を支援しフィードバックを収集することを目的とした Katalog の初期アルファ版です。
 
 </translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+123"/>
         <source>Do not show again</source>
         <translation>今後表示しない</translation>
     </message>
@@ -1155,7 +1154,16 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>閉じる</translation>
     </message>
     <message>
-        <location line="-613"/>
+        <location line="-1107"/>
+        <source>This is a beta version of Katalog intended to support development and gather feedback.
+
+</source>
+        <translation>これは、開発を支援しフィードバックを収集することを目的とした Katalog のベータ版です。
+
+</translation>
+    </message>
+    <message>
+        <location line="+494"/>
         <source>Copy version and system information</source>
         <translation>バージョンとシステム情報をコピー</translation>
     </message>
@@ -1471,7 +1479,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation type="vanished">データベースのホスト名が無効です。</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+123"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+124"/>
         <source>Invalid hostname.</source>
         <translation>ホスト名が無効です。</translation>
     </message>
@@ -1502,7 +1510,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>続行しますか?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+534"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+549"/>
         <source>This collection was created with Katalog version %1, which is no longer supported.&lt;br/&gt;&lt;br/&gt;To convert it, open it with Katalog 2.10 first.&lt;br/&gt;&lt;br/&gt;Please select a different collection folder.</source>
         <translation>このコレクションは Katalog バージョン %1 で作成されましたが、このバージョンはサポートされなくなりました。&lt;br/&gt;&lt;br/&gt;変換するには、まず Katalog 2.10 で開いてください。&lt;br/&gt;&lt;br/&gt;別のコレクションフォルダーを選択してください。</translation>
     </message>
@@ -1567,7 +1575,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+52"/>
         <location line="+872"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+95"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+395"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+433"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+406"/>
         <location line="+176"/>
@@ -1910,7 +1918,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>値</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-415"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-430"/>
         <source>Invalid Collection Folder</source>
         <translation>無効なコレクションフォルダ</translation>
     </message>
@@ -3199,7 +3207,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+40"/>
         <location line="+486"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-310"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-347"/>
         <source>Settings</source>
         <translation>設定</translation>
     </message>
@@ -4510,7 +4518,7 @@ Split was not performed.</source>
         <translation>キャンセル</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+389"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+426"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>現在のバージョン: v%1 &lt;br/&gt;&lt;br/&gt;新しいバージョンが利用可能です: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; 新機能のリストは&lt;a href=&apos;%3&apos;&gt;リリースノート&lt;/a&gt;をご覧ください&lt;br/&gt;&lt;br/&gt;ダウンロードしますか？</translation>
     </message>
@@ -4588,7 +4596,7 @@ Split was not performed.</source>
         <translation type="vanished">&lt;br/&gt;&lt;br/&gt;次の画面で、既存のコレクションフォルダを選択するか、新しく作成してください。</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-382"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-419"/>
         <source>Open existing...</source>
         <translation>既存を開く...</translation>
     </message>
@@ -4598,7 +4606,7 @@ Split was not performed.</source>
         <translation>新規作成...</translation>
     </message>
     <message>
-        <location line="+85"/>
+        <location line="+90"/>
         <location line="+6"/>
         <source>Select or create a database file for this collection</source>
         <translation>このコレクションのデータベースファイルを選択または作成</translation>
@@ -4610,12 +4618,14 @@ Split was not performed.</source>
         <translation>データベースファイル (*.db)</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+36"/>
+        <location line="+22"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+126"/>
         <source>Failed to open the database file: %1</source>
         <translation>データベースファイルを開けませんでした：%1</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+12"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
         <translation>&lt;br/&gt;&lt;b&gt;ファイルカタログを作成する準備ができました：&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
@@ -4950,12 +4960,12 @@ to the trash?</source>
         <translation>メタデータを含める</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+383"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+272"/>
         <source>Local disk</source>
         <translation>ローカルディスク</translation>
     </message>
     <message>
-        <location line="-631"/>
+        <location line="-646"/>
         <source>The directory does not exist. Create it?</source>
         <translation>ディレクトリが存在しません。作成しますか？</translation>
     </message>
@@ -5013,12 +5023,12 @@ to the trash?</source>
         <translation type="vanished">アプリケーションを終了</translation>
     </message>
     <message>
-        <location line="+330"/>
+        <location line="+345"/>
         <source>Select the database to open:</source>
         <translation>開くデータベースを選択：</translation>
     </message>
     <message>
-        <location line="-229"/>
+        <location line="-244"/>
         <source>Select the database to create and open:</source>
         <translation>作成して開くデータベースを選択：</translation>
     </message>
@@ -5028,7 +5038,7 @@ to the trash?</source>
         <translation>ストレージデバイスリストの一部の変更が保存されていません。&lt;br/&gt;保存して終了、破棄して終了、または終了をキャンセルしますか？</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+261"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+276"/>
         <source> Physical Group</source>
         <translation> 物理グループ</translation>
     </message>
@@ -6976,7 +6986,7 @@ to the trash?</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+73"/>
         <source>files</source>
         <translation>ファイル</translation>
     </message>
@@ -7024,7 +7034,7 @@ to the trash?</source>
         <translation>総サイズ</translation>
     </message>
     <message>
-        <location line="+222"/>
+        <location line="+227"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>フォルダを開く</translation>
@@ -7163,12 +7173,12 @@ to the trash?</source>
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+270"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+278"/>
         <source>Directories</source>
         <translation>ディレクトリ</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+32"/>
         <source>Collapse one level</source>
         <translation>1階層折りたたむ</translation>
     </message>
@@ -7918,7 +7928,7 @@ Errors: %3</source>
         <translation>編集</translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+107"/>
         <source>Collapse</source>
         <translation>折りたたむ</translation>
     </message>

@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+154"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+155"/>
         <location line="+87"/>
         <location line="+14"/>
-        <location line="+3823"/>
+        <location line="+3829"/>
         <source>Search</source>
         <translation>Sök</translation>
     </message>
     <message>
-        <location line="-3920"/>
+        <location line="-3926"/>
         <source>Stopped</source>
         <translation>Stoppad</translation>
     </message>
@@ -44,8 +44,8 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+58"/>
-        <location line="+1685"/>
-        <location line="+527"/>
+        <location line="+1690"/>
+        <location line="+528"/>
         <location line="+1211"/>
         <location line="+11"/>
         <location line="+60"/>
@@ -54,14 +54,14 @@
         <translation>Pågår</translation>
     </message>
     <message>
-        <location line="-3824"/>
-        <location line="+3461"/>
+        <location line="-3830"/>
+        <location line="+3467"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Slutförd</translation>
     </message>
     <message>
-        <location line="-3146"/>
+        <location line="-3152"/>
         <source>Empty database path provided</source>
         <translation>Tom databassökväg angiven</translation>
     </message>
@@ -81,7 +81,7 @@
         <translation>Det gick inte att öppna databasen: %1</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+16"/>
         <source>Could not create file: %1</source>
         <translation>Kunde inte skapa filen: %1</translation>
     </message>
@@ -147,12 +147,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2358"/>
+        <location line="+2359"/>
         <source>Size</source>
         <translation>Storlek</translation>
     </message>
     <message>
-        <location line="-2357"/>
+        <location line="-2358"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
@@ -245,12 +245,12 @@ Välj ett annat namn och försök igen.</translation>
     </message>
     <message>
         <location line="+65"/>
-        <location line="+526"/>
+        <location line="+527"/>
         <source>Create</source>
         <translation>Skapa</translation>
     </message>
     <message>
-        <location line="-433"/>
+        <location line="-434"/>
         <source>Catalog creation was stopped.</source>
         <translation>Skapandet av katalogen stoppades.</translation>
     </message>
@@ -271,7 +271,7 @@ Välj ett annat namn och försök igen.</translation>
         <translation>Borttagning misslyckades</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+72"/>
         <source>Virtual</source>
         <translation>Virtuell</translation>
     </message>
@@ -644,7 +644,7 @@ Välj ett annat namn.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2513"/>
+        <location filename="../core/collection.cpp" line="+2521"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Denna mapp innehåller samlingar i minnesläge, men du är för närvarande i filläge.&lt;br/&gt;Byt till minnesläge eller välj en annan mapp.</translation>
     </message>
@@ -680,7 +680,7 @@ Välj ett annat namn.</translation>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+223"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+219"/>
         <source>Collection</source>
         <translation>Samling</translation>
     </message>
@@ -874,16 +874,15 @@ Välj ett annat namn.</translation>
         <translation>Textstorlek för kort</translation>
     </message>
     <message>
-        <location line="+117"/>
         <source>This is an early alpha version of Katalog intended to support development and gather feedback.
 
 </source>
-        <translation>Detta är en tidig alfaversion av Katalog avsedd att stödja utvecklingen och samla in feedback.
+        <translation type="vanished">Detta är en tidig alfaversion av Katalog avsedd att stödja utvecklingen och samla in feedback.
 
 </translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+123"/>
         <source>Do not show again</source>
         <translation>Visa inte igen</translation>
     </message>
@@ -1155,7 +1154,16 @@ Vill du spara den ändå (katalogen blir tom)?</translation>
         <translation>Stäng</translation>
     </message>
     <message>
-        <location line="-613"/>
+        <location line="-1107"/>
+        <source>This is a beta version of Katalog intended to support development and gather feedback.
+
+</source>
+        <translation>Detta är en betaversion av Katalog avsedd att stödja utvecklingen och samla in feedback.
+
+</translation>
+    </message>
+    <message>
+        <location line="+494"/>
         <source>Copy version and system information</source>
         <translation>Kopiera versions- och systeminformation</translation>
     </message>
@@ -1471,7 +1479,7 @@ Vill du spara den ändå (katalogen blir tom)?</translation>
         <translation type="vanished">Ogiltigt databasvärdnamn.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+123"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+124"/>
         <source>Invalid hostname.</source>
         <translation>Ogiltigt värdnamn.</translation>
     </message>
@@ -1502,7 +1510,7 @@ Vill du spara den ändå (katalogen blir tom)?</translation>
         <translation>Fortsätt?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+534"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+549"/>
         <source>This collection was created with Katalog version %1, which is no longer supported.&lt;br/&gt;&lt;br/&gt;To convert it, open it with Katalog 2.10 first.&lt;br/&gt;&lt;br/&gt;Please select a different collection folder.</source>
         <translation>Den här samlingen skapades med Katalog version %1, som inte längre stöds.&lt;br/&gt;&lt;br/&gt;För att konvertera den, öppna den med Katalog 2.10 först.&lt;br/&gt;&lt;br/&gt;Välj en annan samlingskatalog.</translation>
     </message>
@@ -1567,7 +1575,7 @@ Vill du spara den ändå (katalogen blir tom)?</translation>
         <location line="+52"/>
         <location line="+872"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+95"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+395"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+433"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+406"/>
         <location line="+176"/>
@@ -1910,7 +1918,7 @@ Vill du spara den ändå (katalogen blir tom)?</translation>
         <translation>Värde</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-415"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-430"/>
         <source>Invalid Collection Folder</source>
         <translation>Ogiltig Samplingsmapp</translation>
     </message>
@@ -3199,7 +3207,7 @@ Vill du spara den ändå (katalogen blir tom)?</translation>
     <message>
         <location line="+40"/>
         <location line="+486"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-310"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-347"/>
         <source>Settings</source>
         <translation>Inställningar</translation>
     </message>
@@ -4510,7 +4518,7 @@ Delning utfördes inte.</translation>
         <translation>Avbryt</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+389"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+426"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Detta är version: v%1 &lt;br/&gt;&lt;br/&gt;En ny version är tillgänglig: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Hitta listan över nya funktioner i &lt;a href=&apos;%3&apos;&gt;Versionsanteckningarna&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Vill du ladda ner den?</translation>
     </message>
@@ -4588,7 +4596,7 @@ Delning utfördes inte.</translation>
         <translation type="vanished">&lt;br/&gt;&lt;br/&gt;På nästa skärm, välj en befintlig samlingsmapp eller skapa en ny.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-382"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-419"/>
         <source>Open existing...</source>
         <translation>Öppna befintlig...</translation>
     </message>
@@ -4598,7 +4606,7 @@ Delning utfördes inte.</translation>
         <translation>Skapa ny...</translation>
     </message>
     <message>
-        <location line="+85"/>
+        <location line="+90"/>
         <location line="+6"/>
         <source>Select or create a database file for this collection</source>
         <translation>Välj eller skapa en databasfil för denna samling</translation>
@@ -4610,12 +4618,14 @@ Delning utfördes inte.</translation>
         <translation>Databasfiler (*.db)</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+36"/>
+        <location line="+22"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+126"/>
         <source>Failed to open the database file: %1</source>
         <translation>Det gick inte att öppna databasfilen: %1</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+12"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
         <translation>&lt;br/&gt;&lt;b&gt;Redo att skapa en filkatalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
@@ -4951,12 +4961,12 @@ till papperskorgen?</translation>
         <translation>Inkludera metadata</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+383"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+272"/>
         <source>Local disk</source>
         <translation>Lokal disk</translation>
     </message>
     <message>
-        <location line="-631"/>
+        <location line="-646"/>
         <source>The directory does not exist. Create it?</source>
         <translation>Katalogen existerar inte. Skapa den?</translation>
     </message>
@@ -5014,12 +5024,12 @@ till papperskorgen?</translation>
         <translation type="vanished">Avsluta applikation</translation>
     </message>
     <message>
-        <location line="+330"/>
+        <location line="+345"/>
         <source>Select the database to open:</source>
         <translation>Välj databasen att öppna:</translation>
     </message>
     <message>
-        <location line="-229"/>
+        <location line="-244"/>
         <source>Select the database to create and open:</source>
         <translation>Välj databasen att skapa och öppna:</translation>
     </message>
@@ -5029,7 +5039,7 @@ till papperskorgen?</translation>
         <translation>Vissa ändringar i lagringsenhetslistam har inte sparats.&lt;br/&gt;Spara och avsluta, kasta och avsluta, eller avbryt avslutning?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+261"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+276"/>
         <source> Physical Group</source>
         <translation> Fysisk grupp</translation>
     </message>
@@ -6977,7 +6987,7 @@ till papperskorgen?</translation>
         <translation>Ta bort</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+73"/>
         <source>files</source>
         <translation>filer</translation>
     </message>
@@ -7025,7 +7035,7 @@ till papperskorgen?</translation>
         <translation>Total storlek</translation>
     </message>
     <message>
-        <location line="+222"/>
+        <location line="+227"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>Öppna mapp</translation>
@@ -7164,12 +7174,12 @@ till papperskorgen?</translation>
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+270"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+278"/>
         <source>Directories</source>
         <translation>Kataloger</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+32"/>
         <source>Collapse one level</source>
         <translation>Fäll ihop en nivå</translation>
     </message>
@@ -7919,7 +7929,7 @@ Fel: %3</translation>
         <translation>Redigera</translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+107"/>
         <source>Collapse</source>
         <translation>Fäll ihop</translation>
     </message>

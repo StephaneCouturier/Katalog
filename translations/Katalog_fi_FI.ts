@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+154"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+155"/>
         <location line="+87"/>
         <location line="+14"/>
-        <location line="+3823"/>
+        <location line="+3829"/>
         <source>Search</source>
         <translation>Haku</translation>
     </message>
     <message>
-        <location line="-3920"/>
+        <location line="-3926"/>
         <source>Stopped</source>
         <translation>Pysäytetty</translation>
     </message>
@@ -44,8 +44,8 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+58"/>
-        <location line="+1685"/>
-        <location line="+527"/>
+        <location line="+1690"/>
+        <location line="+528"/>
         <location line="+1211"/>
         <location line="+11"/>
         <location line="+60"/>
@@ -54,14 +54,14 @@
         <translation>Käynnissä</translation>
     </message>
     <message>
-        <location line="-3824"/>
-        <location line="+3461"/>
+        <location line="-3830"/>
+        <location line="+3467"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Valmis</translation>
     </message>
     <message>
-        <location line="-3146"/>
+        <location line="-3152"/>
         <source>Empty database path provided</source>
         <translation>Tyhjä tietokantapolku annettu</translation>
     </message>
@@ -81,7 +81,7 @@
         <translation>Tietokannan avaaminen epäonnistui: %1</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+16"/>
         <source>Could not create file: %1</source>
         <translation>Tiedostoa ei voitu luoda: %1</translation>
     </message>
@@ -147,12 +147,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2358"/>
+        <location line="+2359"/>
         <source>Size</source>
         <translation>Koko</translation>
     </message>
     <message>
-        <location line="-2357"/>
+        <location line="-2358"/>
         <source>Date</source>
         <translation>Päivämäärä</translation>
     </message>
@@ -245,12 +245,12 @@ Valitse toinen nimi ja yritä uudelleen.</translation>
     </message>
     <message>
         <location line="+65"/>
-        <location line="+526"/>
+        <location line="+527"/>
         <source>Create</source>
         <translation>Luo</translation>
     </message>
     <message>
-        <location line="-433"/>
+        <location line="-434"/>
         <source>Catalog creation was stopped.</source>
         <translation>Katalogin luonti pysäytettiin.</translation>
     </message>
@@ -271,7 +271,7 @@ Valitse toinen nimi ja yritä uudelleen.</translation>
         <translation>Poisto epäonnistui</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+72"/>
         <source>Virtual</source>
         <translation>Virtuaalinen</translation>
     </message>
@@ -644,7 +644,7 @@ Valitse toinen nimi.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2513"/>
+        <location filename="../core/collection.cpp" line="+2521"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Tämä kansio sisältää muistitilan kokoelmatiedostoja, mutta olet tällä hetkellä tiedostotilassa.&lt;br/&gt;Vaihda muistitilaan tai valitse toinen kansio.</translation>
     </message>
@@ -680,7 +680,7 @@ Valitse toinen nimi.</translation>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+223"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+219"/>
         <source>Collection</source>
         <translation>Kokoelma</translation>
     </message>
@@ -874,16 +874,15 @@ Valitse toinen nimi.</translation>
         <translation>Kortin tekstin koko</translation>
     </message>
     <message>
-        <location line="+117"/>
         <source>This is an early alpha version of Katalog intended to support development and gather feedback.
 
 </source>
-        <translation>Tämä on Katalogin varhainen alfaversio, joka on tarkoitettu tukemaan kehitystä ja keräämään palautetta.
+        <translation type="vanished">Tämä on Katalogin varhainen alfaversio, joka on tarkoitettu tukemaan kehitystä ja keräämään palautetta.
 
 </translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+123"/>
         <source>Do not show again</source>
         <translation>Älä näytä uudelleen</translation>
     </message>
@@ -1155,7 +1154,16 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <translation>Sulje</translation>
     </message>
     <message>
-        <location line="-613"/>
+        <location line="-1107"/>
+        <source>This is a beta version of Katalog intended to support development and gather feedback.
+
+</source>
+        <translation>Tämä on Katalogin beetaversio, joka on tarkoitettu tukemaan kehitystä ja keräämään palautetta.
+
+</translation>
+    </message>
+    <message>
+        <location line="+494"/>
         <source>Copy version and system information</source>
         <translation>Kopioi versio- ja järjestelmätiedot</translation>
     </message>
@@ -1471,7 +1479,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <translation type="vanished">Virheellinen tietokannan isäntänimi.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+123"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+124"/>
         <source>Invalid hostname.</source>
         <translation>Virheellinen isäntänimi.</translation>
     </message>
@@ -1502,7 +1510,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <translation>Jatka?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+534"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+549"/>
         <source>This collection was created with Katalog version %1, which is no longer supported.&lt;br/&gt;&lt;br/&gt;To convert it, open it with Katalog 2.10 first.&lt;br/&gt;&lt;br/&gt;Please select a different collection folder.</source>
         <translation>Tämä kokoelma on luotu Katalog-versiolla %1, jota ei enää tueta.&lt;br/&gt;&lt;br/&gt;Muuntaaksesi sen, avaa se ensin Katalog 2.10:llä.&lt;br/&gt;&lt;br/&gt;Valitse eri kokoelmakansio.</translation>
     </message>
@@ -1567,7 +1575,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <location line="+52"/>
         <location line="+872"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+95"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+395"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+433"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+406"/>
         <location line="+176"/>
@@ -1910,7 +1918,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <translation>Arvo</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-415"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-430"/>
         <source>Invalid Collection Folder</source>
         <translation>Virheellinen kokoelmakansio</translation>
     </message>
@@ -3199,7 +3207,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
     <message>
         <location line="+40"/>
         <location line="+486"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-310"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-347"/>
         <source>Settings</source>
         <translation>Asetukset</translation>
     </message>
@@ -4510,7 +4518,7 @@ Jakamista ei suoritettu.</translation>
         <translation>Peruuta</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+389"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+426"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Tämä on versio: v%1 &lt;br/&gt;&lt;br/&gt;Uusi versio on saatavilla: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Löydä lista uusista ominaisuuksista &lt;a href=&apos;%3&apos;&gt;julkaisumuistiinpanoista&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Haluatko ladata sen?</translation>
     </message>
@@ -4588,7 +4596,7 @@ Jakamista ei suoritettu.</translation>
         <translation type="vanished">&lt;br/&gt;&lt;br/&gt;Valitse seuraavassa näytössä olemassa oleva kokoelman kansio tai luo uusi.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-382"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-419"/>
         <source>Open existing...</source>
         <translation>Avaa olemassa oleva...</translation>
     </message>
@@ -4598,7 +4606,7 @@ Jakamista ei suoritettu.</translation>
         <translation>Luo uusi...</translation>
     </message>
     <message>
-        <location line="+85"/>
+        <location line="+90"/>
         <location line="+6"/>
         <source>Select or create a database file for this collection</source>
         <translation>Valitse tai luo tietokantatiedosto tälle kokoelmalle</translation>
@@ -4610,12 +4618,14 @@ Jakamista ei suoritettu.</translation>
         <translation>Tietokantatiedostot (*.db)</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+36"/>
+        <location line="+22"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+126"/>
         <source>Failed to open the database file: %1</source>
         <translation>Tietokantatiedoston avaaminen epäonnistui: %1</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+12"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
         <translation>&lt;br/&gt;&lt;b&gt;Valmis luomaan tiedostokatalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
@@ -4951,12 +4961,12 @@ roskakoriin?</translation>
         <translation>Sisällytä metatiedot</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+383"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+272"/>
         <source>Local disk</source>
         <translation>Paikallinen levy</translation>
     </message>
     <message>
-        <location line="-631"/>
+        <location line="-646"/>
         <source>The directory does not exist. Create it?</source>
         <translation>Hakemistoa ei ole olemassa. Luodaanko se?</translation>
     </message>
@@ -5014,12 +5024,12 @@ roskakoriin?</translation>
         <translation type="vanished">Poistu sovelluksesta</translation>
     </message>
     <message>
-        <location line="+330"/>
+        <location line="+345"/>
         <source>Select the database to open:</source>
         <translation>Valitse avattava tietokanta:</translation>
     </message>
     <message>
-        <location line="-229"/>
+        <location line="-244"/>
         <source>Select the database to create and open:</source>
         <translation>Valitse luotava ja avattava tietokanta:</translation>
     </message>
@@ -5029,7 +5039,7 @@ roskakoriin?</translation>
         <translation>Joitakin muutoksia tallennuslaitteiden listassa ei ole tallennettu.&lt;br/&gt;Tallenna ja poistu, hylkää ja poistu, vai peruuta poistuminen?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+261"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+276"/>
         <source> Physical Group</source>
         <translation> Fyysinen ryhmä</translation>
     </message>
@@ -6977,7 +6987,7 @@ roskakoriin?</translation>
         <translation>Poista</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+73"/>
         <source>files</source>
         <translation>tiedostot</translation>
     </message>
@@ -7025,7 +7035,7 @@ roskakoriin?</translation>
         <translation>Kokonaiskoko</translation>
     </message>
     <message>
-        <location line="+222"/>
+        <location line="+227"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>Avaa kansio</translation>
@@ -7164,12 +7174,12 @@ roskakoriin?</translation>
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+270"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+278"/>
         <source>Directories</source>
         <translation>Hakemistot</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+32"/>
         <source>Collapse one level</source>
         <translation>Tiivistä yksi taso</translation>
     </message>
@@ -7919,7 +7929,7 @@ Virheitä: %3</translation>
         <translation>Muokkaa</translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+107"/>
         <source>Collapse</source>
         <translation>Tiivistä</translation>
     </message>

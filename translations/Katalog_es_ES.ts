@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+154"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+155"/>
         <location line="+87"/>
         <location line="+14"/>
-        <location line="+3823"/>
+        <location line="+3829"/>
         <source>Search</source>
         <translation>Buscar</translation>
     </message>
     <message>
-        <location line="-3920"/>
+        <location line="-3926"/>
         <source>Stopped</source>
         <translation>Detenido</translation>
     </message>
@@ -44,8 +44,8 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+58"/>
-        <location line="+1685"/>
-        <location line="+527"/>
+        <location line="+1690"/>
+        <location line="+528"/>
         <location line="+1211"/>
         <location line="+11"/>
         <location line="+60"/>
@@ -54,14 +54,14 @@
         <translation>En progreso</translation>
     </message>
     <message>
-        <location line="-3824"/>
-        <location line="+3461"/>
+        <location line="-3830"/>
+        <location line="+3467"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Completado</translation>
     </message>
     <message>
-        <location line="-3146"/>
+        <location line="-3152"/>
         <source>Empty database path provided</source>
         <translation>Se proporcionó una ruta de base de datos vacía</translation>
     </message>
@@ -81,7 +81,7 @@
         <translation>Error al abrir la base de datos: %1</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+16"/>
         <source>Could not create file: %1</source>
         <translation>No se pudo crear el archivo: %1</translation>
     </message>
@@ -147,12 +147,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2358"/>
+        <location line="+2359"/>
         <source>Size</source>
         <translation>Tamaño</translation>
     </message>
     <message>
-        <location line="-2357"/>
+        <location line="-2358"/>
         <source>Date</source>
         <translation>Fecha</translation>
     </message>
@@ -245,12 +245,12 @@ Elija un nombre diferente e inténtelo de nuevo.</translation>
     </message>
     <message>
         <location line="+65"/>
-        <location line="+526"/>
+        <location line="+527"/>
         <source>Create</source>
         <translation>Crear</translation>
     </message>
     <message>
-        <location line="-433"/>
+        <location line="-434"/>
         <source>Catalog creation was stopped.</source>
         <translation>Se detuvo la creación del catálogo.</translation>
     </message>
@@ -271,7 +271,7 @@ Elija un nombre diferente e inténtelo de nuevo.</translation>
         <translation>Error al eliminar</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+72"/>
         <source>Virtual</source>
         <translation>Virtual</translation>
     </message>
@@ -644,7 +644,7 @@ Elija un nombre diferente.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2513"/>
+        <location filename="../core/collection.cpp" line="+2521"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Esta carpeta contiene archivos de colección en modo Memoria, pero actualmente está en modo Archivo.&lt;br/&gt;Cambie al modo Memoria o seleccione otra carpeta.</translation>
     </message>
@@ -680,7 +680,7 @@ Elija un nombre diferente.</translation>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+223"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+219"/>
         <source>Collection</source>
         <translation>Colección</translation>
     </message>
@@ -874,16 +874,15 @@ Elija un nombre diferente.</translation>
         <translation>Tamaño del texto de la tarjeta</translation>
     </message>
     <message>
-        <location line="+117"/>
         <source>This is an early alpha version of Katalog intended to support development and gather feedback.
 
 </source>
-        <translation>Esta es una versión alfa temprana de Katalog destinada a apoyar el desarrollo y recopilar comentarios.
+        <translation type="vanished">Esta es una versión alfa temprana de Katalog destinada a apoyar el desarrollo y recopilar comentarios.
 
 </translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+123"/>
         <source>Do not show again</source>
         <translation>No mostrar de nuevo</translation>
     </message>
@@ -1155,7 +1154,16 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation>Cerrar</translation>
     </message>
     <message>
-        <location line="-613"/>
+        <location line="-1107"/>
+        <source>This is a beta version of Katalog intended to support development and gather feedback.
+
+</source>
+        <translation>Esta es una versión beta de Katalog destinada a apoyar el desarrollo y recopilar comentarios.
+
+</translation>
+    </message>
+    <message>
+        <location line="+494"/>
         <source>Copy version and system information</source>
         <translation>Copiar información de versión y sistema</translation>
     </message>
@@ -1471,7 +1479,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation type="vanished">Nombre de host de base de datos no válido.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+123"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+124"/>
         <source>Invalid hostname.</source>
         <translation>Nombre de host no válido.</translation>
     </message>
@@ -1502,7 +1510,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation>¿Continuar?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+534"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+549"/>
         <source>This collection was created with Katalog version %1, which is no longer supported.&lt;br/&gt;&lt;br/&gt;To convert it, open it with Katalog 2.10 first.&lt;br/&gt;&lt;br/&gt;Please select a different collection folder.</source>
         <translation>Esta colección fue creada con Katalog versión %1, que ya no es compatible.&lt;br/&gt;&lt;br/&gt;Para convertirla, ábrala primero con Katalog 2.10.&lt;br/&gt;&lt;br/&gt;Seleccione una carpeta de colección diferente.</translation>
     </message>
@@ -1587,7 +1595,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location line="+52"/>
         <location line="+872"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+95"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+395"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+433"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+406"/>
         <location line="+176"/>
@@ -1930,7 +1938,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation>Valor</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-415"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-430"/>
         <source>Invalid Collection Folder</source>
         <translation>Carpeta de colección no válida</translation>
     </message>
@@ -4058,7 +4066,7 @@ No se realizó la división.</translation>
     <message>
         <location line="+40"/>
         <location line="+486"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-310"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-347"/>
         <source>Settings</source>
         <translation>Configuración</translation>
     </message>
@@ -4440,7 +4448,7 @@ No se realizó la división.</translation>
         <translation>Seleccionar el directorio para esta colección</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+75"/>
         <location line="+6"/>
         <source>Select or create a database file for this collection</source>
         <translation>Seleccionar o crear un archivo de base de datos para esta colección</translation>
@@ -4452,12 +4460,14 @@ No se realizó la división.</translation>
         <translation>Archivos de base de datos (*.db)</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+36"/>
+        <location line="+22"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+212"/>
         <source>Failed to open the database file: %1</source>
         <translation>Error al abrir el archivo de base de datos: %1</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+12"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
         <translation>&lt;br/&gt;&lt;b&gt;Listo para crear un catálogo de archivos:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
@@ -5546,7 +5556,7 @@ a la papelera?</translation>
         <translation>Lista de ID de dispositivo seleccionado</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-162"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-374"/>
         <source>The directory does not exist. Create it?</source>
         <translation>El directorio no existe. ¿Crearlo?</translation>
     </message>
@@ -5609,7 +5619,7 @@ a la papelera?</translation>
         <translation type="vanished">Salir de la aplicación</translation>
     </message>
     <message>
-        <location line="+229"/>
+        <location line="+244"/>
         <source>Select the database to open:</source>
         <translation>Seleccione la base de datos a abrir:</translation>
     </message>
@@ -6977,7 +6987,7 @@ a la papelera?</translation>
         <translation>Eliminar</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+73"/>
         <source>files</source>
         <translation>archivos</translation>
     </message>
@@ -7025,7 +7035,7 @@ a la papelera?</translation>
         <translation>Tamaño total</translation>
     </message>
     <message>
-        <location line="+222"/>
+        <location line="+227"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>Abrir carpeta</translation>
@@ -7164,12 +7174,12 @@ a la papelera?</translation>
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+270"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+278"/>
         <source>Directories</source>
         <translation>Directorios</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+32"/>
         <source>Collapse one level</source>
         <translation>Contraer un nivel</translation>
     </message>
@@ -7919,7 +7929,7 @@ Errores: %3</translation>
         <translation>Editar</translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+107"/>
         <source>Collapse</source>
         <translation>Contraer</translation>
     </message>

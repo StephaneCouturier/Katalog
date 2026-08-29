@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+154"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+155"/>
         <location line="+87"/>
         <location line="+14"/>
-        <location line="+3823"/>
+        <location line="+3829"/>
         <source>Search</source>
         <translation>Vyhledávání</translation>
     </message>
     <message>
-        <location line="-3920"/>
+        <location line="-3926"/>
         <source>Stopped</source>
         <translation>Zastaveno</translation>
     </message>
@@ -44,8 +44,8 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+58"/>
-        <location line="+1685"/>
-        <location line="+527"/>
+        <location line="+1690"/>
+        <location line="+528"/>
         <location line="+1211"/>
         <location line="+11"/>
         <location line="+60"/>
@@ -54,14 +54,14 @@
         <translation>Probíhá</translation>
     </message>
     <message>
-        <location line="-3824"/>
-        <location line="+3461"/>
+        <location line="-3830"/>
+        <location line="+3467"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Dokončeno</translation>
     </message>
     <message>
-        <location line="-3146"/>
+        <location line="-3152"/>
         <source>Empty database path provided</source>
         <translation>Byla zadána prázdná cesta k databázi</translation>
     </message>
@@ -81,7 +81,7 @@
         <translation>Nepodařilo se otevřít databázi: %1</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+16"/>
         <source>Could not create file: %1</source>
         <translation>Soubor se nepodařilo vytvořit: %1</translation>
     </message>
@@ -147,12 +147,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2358"/>
+        <location line="+2359"/>
         <source>Size</source>
         <translation>Velikost</translation>
     </message>
     <message>
-        <location line="-2357"/>
+        <location line="-2358"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
@@ -245,12 +245,12 @@ Zvolte jiný název a zkuste to znovu.</translation>
     </message>
     <message>
         <location line="+65"/>
-        <location line="+526"/>
+        <location line="+527"/>
         <source>Create</source>
         <translation>Vytvořit</translation>
     </message>
     <message>
-        <location line="-433"/>
+        <location line="-434"/>
         <source>Catalog creation was stopped.</source>
         <translation>Vytváření katalogu bylo zastaveno.</translation>
     </message>
@@ -271,7 +271,7 @@ Zvolte jiný název a zkuste to znovu.</translation>
         <translation>Smazání se nezdařilo</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+72"/>
         <source>Virtual</source>
         <translation>Virtuální</translation>
     </message>
@@ -644,7 +644,7 @@ Zvolte jiný název.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2513"/>
+        <location filename="../core/collection.cpp" line="+2521"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Tato složka obsahuje soubory kolekce v režimu Paměť, ale aktuálně jste v režimu Soubor.&lt;br/&gt;Přepněte do režimu Paměť nebo vyberte jinou složku.</translation>
     </message>
@@ -680,7 +680,7 @@ Zvolte jiný název.</translation>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+223"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+219"/>
         <source>Collection</source>
         <translation>Kolekce</translation>
     </message>
@@ -874,16 +874,15 @@ Zvolte jiný název.</translation>
         <translation>Velikost textu karty</translation>
     </message>
     <message>
-        <location line="+117"/>
         <source>This is an early alpha version of Katalog intended to support development and gather feedback.
 
 </source>
-        <translation>Toto je raná alfa verze aplikace Katalog určená k podpoře vývoje a získávání zpětné vazby.
+        <translation type="vanished">Toto je raná alfa verze aplikace Katalog určená k podpoře vývoje a získávání zpětné vazby.
 
 </translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+123"/>
         <source>Do not show again</source>
         <translation>Příště nezobrazovat</translation>
     </message>
@@ -1155,7 +1154,16 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Zavřít</translation>
     </message>
     <message>
-        <location line="-613"/>
+        <location line="-1107"/>
+        <source>This is a beta version of Katalog intended to support development and gather feedback.
+
+</source>
+        <translation>Toto je beta verze aplikace Katalog určená k podpoře vývoje a získávání zpětné vazby.
+
+</translation>
+    </message>
+    <message>
+        <location line="+494"/>
         <source>Copy version and system information</source>
         <translation>Kopírovat informace o verzi a systému</translation>
     </message>
@@ -1471,7 +1479,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation type="vanished">Neplatný název hostitele databáze.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+123"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+124"/>
         <source>Invalid hostname.</source>
         <translation>Neplatný název hostitele.</translation>
     </message>
@@ -1502,7 +1510,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Pokračovat?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+534"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+549"/>
         <source>This collection was created with Katalog version %1, which is no longer supported.&lt;br/&gt;&lt;br/&gt;To convert it, open it with Katalog 2.10 first.&lt;br/&gt;&lt;br/&gt;Please select a different collection folder.</source>
         <translation>Tato kolekce byla vytvořena v Katalog verzi %1, která již není podporována.&lt;br/&gt;&lt;br/&gt;Pro převod ji nejprve otevřete v Katalog 2.10.&lt;br/&gt;&lt;br/&gt;Vyberte prosím jinou složku kolekce.</translation>
     </message>
@@ -1880,7 +1888,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Hodnota</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-415"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-430"/>
         <source>Invalid Collection Folder</source>
         <translation>Neplatná složka kolekce</translation>
     </message>
@@ -2349,7 +2357,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     </message>
     <message>
         <location line="+7197"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+394"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+432"/>
         <location line="+158"/>
         <location line="+8"/>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-33"/>
@@ -3520,7 +3528,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     <message>
         <location line="+9691"/>
         <location line="+486"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-462"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-499"/>
         <source>Settings</source>
         <translation>Nastavení</translation>
     </message>
@@ -3652,7 +3660,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <location line="+52"/>
         <location line="+872"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="-8"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+297"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+334"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1038"/>
         <location line="+176"/>
@@ -3880,7 +3888,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Otevřeno</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-313"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-350"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
         <translation>&lt;br/&gt; &lt;b&gt; Vítejte v Katalogu! &lt;/b&gt; &lt;br/&gt; &lt;br/&gt; Zdá se, že toto je první spuštění. &lt;br/&gt; &lt;br/&gt; Byla použita následující nastavení: &lt;br/&gt; - Jazyk: &lt;b&gt;%1 &lt;/b&gt; &lt;br/&gt; - Téma: &lt;b&gt;%2 &lt;/b&gt; &lt;br/&gt; &lt;br/&gt; Tyto údaje můžete změnit na kartě%3.</translation>
     </message>
@@ -3899,7 +3907,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Vytvořit nový...</translation>
     </message>
     <message>
-        <location line="+85"/>
+        <location line="+90"/>
         <location line="+6"/>
         <source>Select or create a database file for this collection</source>
         <translation>Vybrat nebo vytvořit soubor databáze pro tuto sbírku</translation>
@@ -3911,12 +3919,14 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Soubory databáze (*.db)</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+36"/>
+        <location line="+22"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+128"/>
         <source>Failed to open the database file: %1</source>
         <translation>Nepodařilo se otevřít soubor databáze: %1</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+12"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
         <translation>&lt;br/&gt;&lt;b&gt;Připraveno k vytvoření katalogu souborů:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
@@ -4583,8 +4593,8 @@ do koše?</translation>
         <translation>Vyberte jiné jméno a zkuste to znovu.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-366"/>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-84"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-403"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-212"/>
         <source>Select the directory for this collection</source>
         <translation>Vyberte adresář pro tuto kolekci</translation>
     </message>
@@ -5527,12 +5537,12 @@ Rozdělení nebylo provedeno.</translation>
         <translation>ID rodiče</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+469"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+484"/>
         <source>Local disk</source>
         <translation>Locální disk</translation>
     </message>
     <message>
-        <location line="-631"/>
+        <location line="-646"/>
         <source>The directory does not exist. Create it?</source>
         <translation>Adresář neexistuje. Vytvořit to?</translation>
     </message>
@@ -5618,12 +5628,12 @@ Rozdělení nebylo provedeno.</translation>
         <translation type="vanished">Ukončete aplikaci</translation>
     </message>
     <message>
-        <location line="+330"/>
+        <location line="+345"/>
         <source>Select the database to open:</source>
         <translation>Vyberte databázi, kterou chcete otevřít:</translation>
     </message>
     <message>
-        <location line="-229"/>
+        <location line="-244"/>
         <source>Select the database to create and open:</source>
         <translation>Vyberte databázi, kterou chcete vytvořit a otevřete:</translation>
     </message>
@@ -5638,7 +5648,7 @@ Rozdělení nebylo provedeno.</translation>
         <translation>Zrušit přiřazení tohoto katalogu</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+261"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+276"/>
         <source> Physical Group</source>
         <translation> Fyzická skupina</translation>
     </message>
@@ -5673,7 +5683,7 @@ Rozdělení nebylo provedeno.</translation>
     </message>
     <message>
         <location filename="../qt_widgets/devicemappingview.cpp" line="-10"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+286"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+323"/>
         <source>Strict</source>
         <translation>Přesný</translation>
     </message>
@@ -6977,7 +6987,7 @@ Rozdělení nebylo provedeno.</translation>
         <translation>Vymazat</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+73"/>
         <source>files</source>
         <translation>soubory</translation>
     </message>
@@ -7025,7 +7035,7 @@ Rozdělení nebylo provedeno.</translation>
         <translation>Celková velikost</translation>
     </message>
     <message>
-        <location line="+222"/>
+        <location line="+227"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>Otevřená složka</translation>
@@ -7164,12 +7174,12 @@ Rozdělení nebylo provedeno.</translation>
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+270"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+278"/>
         <source>Directories</source>
         <translation>Složku</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+32"/>
         <source>Collapse one level</source>
         <translation>Sbalit o jednu úroveň</translation>
     </message>
@@ -7919,7 +7929,7 @@ Chyby: %3</translation>
         <translation>Upravit</translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+107"/>
         <source>Collapse</source>
         <translation>Sbalit</translation>
     </message>

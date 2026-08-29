@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+154"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+155"/>
         <location line="+87"/>
         <location line="+14"/>
-        <location line="+3823"/>
+        <location line="+3829"/>
         <source>Search</source>
         <translation>Αναζήτηση</translation>
     </message>
     <message>
-        <location line="-3920"/>
+        <location line="-3926"/>
         <source>Stopped</source>
         <translation>Σταμάτησε</translation>
     </message>
@@ -44,8 +44,8 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+58"/>
-        <location line="+1685"/>
-        <location line="+527"/>
+        <location line="+1690"/>
+        <location line="+528"/>
         <location line="+1211"/>
         <location line="+11"/>
         <location line="+60"/>
@@ -54,14 +54,14 @@
         <translation>Σε εξέλιξη</translation>
     </message>
     <message>
-        <location line="-3824"/>
-        <location line="+3461"/>
+        <location line="-3830"/>
+        <location line="+3467"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Ολοκληρωμένο</translation>
     </message>
     <message>
-        <location line="-3146"/>
+        <location line="-3152"/>
         <source>Empty database path provided</source>
         <translation>Δόθηκε κενή διαδρομή βάσης δεδομένων</translation>
     </message>
@@ -81,7 +81,7 @@
         <translation>Αποτυχία ανοίγματος βάσης δεδομένων: %1</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+16"/>
         <source>Could not create file: %1</source>
         <translation>Δεν ήταν δυνατή η δημιουργία του αρχείου: %1</translation>
     </message>
@@ -147,12 +147,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2358"/>
+        <location line="+2359"/>
         <source>Size</source>
         <translation>Μέγεθος</translation>
     </message>
     <message>
-        <location line="-2357"/>
+        <location line="-2358"/>
         <source>Date</source>
         <translation>Ημερομηνία</translation>
     </message>
@@ -245,12 +245,12 @@ Choose a different name and try again.</source>
     </message>
     <message>
         <location line="+65"/>
-        <location line="+526"/>
+        <location line="+527"/>
         <source>Create</source>
         <translation>Δημιουργία</translation>
     </message>
     <message>
-        <location line="-433"/>
+        <location line="-434"/>
         <source>Catalog creation was stopped.</source>
         <translation>Η δημιουργία του καταλόγου διακόπηκε.</translation>
     </message>
@@ -271,7 +271,7 @@ Choose a different name and try again.</source>
         <translation>Αποτυχία διαγραφής</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+72"/>
         <source>Virtual</source>
         <translation>Εικονική</translation>
     </message>
@@ -644,7 +644,7 @@ Choose a different name.</source>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2513"/>
+        <location filename="../core/collection.cpp" line="+2521"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Αυτός ο φάκελος περιέχει αρχεία συλλογής λειτουργίας μνήμης, αλλά βρίσκεστε αυτήν τη στιγμή σε λειτουργία αρχείου.&lt;br/&gt;Μεταβείτε στη λειτουργία μνήμης ή επιλέξτε διαφορετικό φάκελο.</translation>
     </message>
@@ -680,7 +680,7 @@ Choose a different name.</source>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+223"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+219"/>
         <source>Collection</source>
         <translation>Συλλογή</translation>
     </message>
@@ -874,16 +874,15 @@ Choose a different name.</source>
         <translation>Μέγεθος κειμένου κάρτας</translation>
     </message>
     <message>
-        <location line="+117"/>
         <source>This is an early alpha version of Katalog intended to support development and gather feedback.
 
 </source>
-        <translation>Αυτή είναι μια πρώιμη έκδοση alpha του Katalog, που προορίζεται για την υποστήριξη της ανάπτυξης και τη συλλογή σχολίων.
+        <translation type="vanished">Αυτή είναι μια πρώιμη έκδοση alpha του Katalog, που προορίζεται για την υποστήριξη της ανάπτυξης και τη συλλογή σχολίων.
 
 </translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+123"/>
         <source>Do not show again</source>
         <translation>Να μην εμφανιστεί ξανά</translation>
     </message>
@@ -1155,7 +1154,16 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Κλείσιμο</translation>
     </message>
     <message>
-        <location line="-613"/>
+        <location line="-1107"/>
+        <source>This is a beta version of Katalog intended to support development and gather feedback.
+
+</source>
+        <translation>Αυτή είναι μια έκδοση beta του Katalog, που προορίζεται για την υποστήριξη της ανάπτυξης και τη συλλογή σχολίων.
+
+</translation>
+    </message>
+    <message>
+        <location line="+494"/>
         <source>Copy version and system information</source>
         <translation>Αντιγραφή πληροφοριών έκδοσης και συστήματος</translation>
     </message>
@@ -1471,7 +1479,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation type="vanished">Μη έγκυρο όνομα κεντρικού υπολογιστή βάσης δεδομένων.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+123"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+124"/>
         <source>Invalid hostname.</source>
         <translation>Μη έγκυρο όνομα κεντρικού υπολογιστή.</translation>
     </message>
@@ -1502,7 +1510,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Συνέχεια;</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+534"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+549"/>
         <source>This collection was created with Katalog version %1, which is no longer supported.&lt;br/&gt;&lt;br/&gt;To convert it, open it with Katalog 2.10 first.&lt;br/&gt;&lt;br/&gt;Please select a different collection folder.</source>
         <translation>Αυτή η συλλογή δημιουργήθηκε με Katalog έκδοση %1, η οποία δεν υποστηρίζεται πλέον.&lt;br/&gt;&lt;br/&gt;Για να τη μετατρέψετε, ανοίξτε την πρώτα με Katalog 2.10.&lt;br/&gt;&lt;br/&gt;Επιλέξτε διαφορετικό φάκελο συλλογής.</translation>
     </message>
@@ -1567,7 +1575,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+52"/>
         <location line="+872"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+95"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+395"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+433"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+406"/>
         <location line="+176"/>
@@ -1910,7 +1918,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Τιμή</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-415"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-430"/>
         <source>Invalid Collection Folder</source>
         <translation>Μη έγκυρος φάκελος συλλογής</translation>
     </message>
@@ -3487,7 +3495,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+40"/>
         <location line="+486"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-310"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-347"/>
         <source>Settings</source>
         <translation>Ρυθμίσεις</translation>
     </message>
@@ -4101,7 +4109,7 @@ to the trash?</source>
         <translation>Επιλογή καταλόγου για αυτή τη συλλογή</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+75"/>
         <location line="+6"/>
         <source>Select or create a database file for this collection</source>
         <translation>Επιλέξτε ή δημιουργήστε αρχείο βάσης δεδομένων για αυτή τη συλλογή</translation>
@@ -4113,12 +4121,14 @@ to the trash?</source>
         <translation>Αρχεία βάσης δεδομένων (*.db)</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+36"/>
+        <location line="+22"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+212"/>
         <source>Failed to open the database file: %1</source>
         <translation>Αποτυχία ανοίγματος αρχείου βάσης δεδομένων: %1</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+12"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
         <translation>&lt;br/&gt;&lt;b&gt;Έτοιμοι για δημιουργία καταλόγου αρχείων:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
@@ -5547,7 +5557,7 @@ Split was not performed.</source>
         <translation>Λίστα επιλεγμένων ID συσκευής</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-162"/>
+        <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-374"/>
         <source>The directory does not exist. Create it?</source>
         <translation>Ο κατάλογος δεν υπάρχει. Δημιουργία του;</translation>
     </message>
@@ -5610,7 +5620,7 @@ Split was not performed.</source>
         <translation type="vanished">Έξοδος από την εφαρμογή</translation>
     </message>
     <message>
-        <location line="+229"/>
+        <location line="+244"/>
         <source>Select the database to open:</source>
         <translation>Επιλογή βάσης δεδομένων για άνοιγμα:</translation>
     </message>
@@ -6978,7 +6988,7 @@ Split was not performed.</source>
         <translation>Διαγραφή</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+73"/>
         <source>files</source>
         <translation>αρχεία</translation>
     </message>
@@ -7026,7 +7036,7 @@ Split was not performed.</source>
         <translation>Συνολικό μέγεθος</translation>
     </message>
     <message>
-        <location line="+222"/>
+        <location line="+227"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>Άνοιγμα φακέλου</translation>
@@ -7165,12 +7175,12 @@ Split was not performed.</source>
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+270"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+278"/>
         <source>Directories</source>
         <translation>Κατάλογοι</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+32"/>
         <source>Collapse one level</source>
         <translation>Σύμπτυξη ενός επιπέδου</translation>
     </message>
@@ -7920,7 +7930,7 @@ Errors: %3</source>
         <translation>Επεξεργασία</translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+107"/>
         <source>Collapse</source>
         <translation>Σύμπτυξη</translation>
     </message>

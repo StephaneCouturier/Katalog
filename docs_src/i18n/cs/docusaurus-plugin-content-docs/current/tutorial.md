@@ -1,10 +1,10 @@
 ---
 sidebar_position: 1
-version: "2.12"
+version: "2.13"
 ---
 
 # Tutoriál
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![2.13](https://img.shields.io/badge/Version-2.13-blue)
 
 Pojďme objevit **Katalog za méně než 5 minut**.
 
@@ -23,6 +23,7 @@ Pro Linux je nejlepší volbou [Flatpak z Flathub](https://flathub.org/en/apps/i
 - Při prvním spuštění se aplikace zeptá na výběr **[složka sbírky](/Katalog/cs/docs/Settings#collection)**, kde jsou uložena všechna data sbírky.
 - Proto je obvykle nejlepším místem složka ve vašem uživatelském adresáři.
 - Poznámka: po prvním spuštění je možné přepnout do jiného režimu správy dat.
+- Dialog lze také zavřít: aplikace se spustí bez sbírky a tu lze vybrat později na obrazovce **[Nastavení](/Katalog/cs/docs/Settings)**.
 
 ### Vytvořte katalog
 - Aplikace se spustí na obrazovce **[Vytvořit](/Katalog/cs/docs/Create)**.
