@@ -395,6 +395,8 @@ public slots:
     Q_INVOKABLE void    openFile(const QString &filePath);
     Q_INVOKABLE void    openFolder(const QString &folderPath);
     Q_INVOKABLE void    copyToClipboard(const QString &text);
+    // Version and environment facts for pasting into a bug report (SpecAbout.md).
+    Q_INVOKABLE QString systemInformation();
     Q_INVOKABLE QString exportSearchResultsToCSV();
     Q_INVOKABLE QString exportSearchResultsAsCatalog();
     Q_INVOKABLE int          batchMoveSearchResultsToTrash();

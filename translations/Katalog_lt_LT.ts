@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+142"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+154"/>
         <location line="+87"/>
         <location line="+14"/>
-        <location line="+3750"/>
+        <location line="+3819"/>
         <source>Search</source>
         <translation>Paieška</translation>
     </message>
     <message>
-        <location line="-3847"/>
+        <location line="-3916"/>
         <source>Stopped</source>
         <translation>Sustabdyta</translation>
     </message>
@@ -44,9 +44,9 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+58"/>
-        <location line="+1646"/>
-        <location line="+517"/>
-        <location line="+1187"/>
+        <location line="+1685"/>
+        <location line="+527"/>
+        <location line="+1207"/>
         <location line="+11"/>
         <location line="+60"/>
         <location line="+344"/>
@@ -54,14 +54,14 @@
         <translation>Vykdoma</translation>
     </message>
     <message>
-        <location line="-3751"/>
-        <location line="+3388"/>
+        <location line="-3820"/>
+        <location line="+3457"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Užbaigta</translation>
     </message>
     <message>
-        <location line="-3073"/>
+        <location line="-3142"/>
         <source>Empty database path provided</source>
         <translation>Pateiktas tuščias duomenų bazės kelias</translation>
     </message>
@@ -101,7 +101,7 @@
         <translation>Vietinis diskas</translation>
     </message>
     <message>
-        <location line="+308"/>
+        <location line="+346"/>
         <source>search_results</source>
         <translation>paieškos_rezultatai</translation>
     </message>
@@ -147,12 +147,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2323"/>
+        <location line="+2354"/>
         <source>Size</source>
         <translation>Dydis</translation>
     </message>
     <message>
-        <location line="-2322"/>
+        <location line="-2353"/>
         <source>Date</source>
         <translation>Data</translation>
     </message>
@@ -244,8 +244,8 @@ Pasirinkite kitą pavadinimą ir bandykite dar kartą.</translation>
         <translation type="vanished">Įrenginio operacija jau vykdoma.</translation>
     </message>
     <message>
-        <location line="+64"/>
-        <location line="+516"/>
+        <location line="+65"/>
+        <location line="+526"/>
         <source>Create</source>
         <translation>Sukurti</translation>
     </message>
@@ -286,7 +286,7 @@ Pasirinkite kitą pavadinimą ir bandykite dar kartą.</translation>
         <translation>Klaida: %1</translation>
     </message>
     <message>
-        <location line="+442"/>
+        <location line="+458"/>
         <source>The selected device is not a catalog.</source>
         <translation>Pasirinktas įrenginys nėra katalogas.</translation>
     </message>
@@ -312,7 +312,7 @@ Pasirinkite kitą pavadinimą ir bandykite dar kartą.</translation>
         <translation>Tikrinami MIME tipai: %1…</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+32"/>
         <source>Device has no catalog.</source>
         <translation>Įrenginys neturi katalogo.</translation>
     </message>
@@ -724,7 +724,7 @@ Pasirinkite kitą pavadinimą.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+684"/>
+        <location filename="../qt_quick/Main.qml" line="+690"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Ar norite &lt;b&gt;ištrinti&lt;/b&gt; šį %1 įrenginį?&lt;br/&gt;&lt;br/&gt;Pavadinimas: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -741,13 +741,13 @@ Pasirinkite kitą pavadinimą.</translation>
         <location line="-361"/>
         <location line="+60"/>
         <location line="+162"/>
-        <location line="+668"/>
+        <location line="+693"/>
         <location line="+117"/>
         <source>Cancel</source>
         <translation>Atšaukti</translation>
     </message>
     <message>
-        <location line="-1107"/>
+        <location line="-1132"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+158"/>
@@ -799,42 +799,42 @@ Pasirinkite kitą pavadinimą.</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+730"/>
+        <location line="+744"/>
         <source>Selection</source>
         <translation>Pасirinkimas</translation>
     </message>
     <message>
-        <location line="-720"/>
-        <location line="+962"/>
+        <location line="-734"/>
+        <location line="+987"/>
         <source>Devices</source>
         <translation>Įrenginiai</translation>
     </message>
     <message>
-        <location line="-957"/>
-        <location line="+1050"/>
+        <location line="-982"/>
+        <location line="+1075"/>
         <source>Explore</source>
         <translation>Naršyti</translation>
     </message>
     <message>
-        <location line="-1040"/>
-        <location line="+1263"/>
+        <location line="-1065"/>
+        <location line="+1288"/>
         <source>Backup</source>
         <translation>Atsarginė kopija</translation>
     </message>
     <message>
-        <location line="-1258"/>
-        <location line="+1222"/>
+        <location line="-1283"/>
+        <location line="+1247"/>
         <source>Statistics</source>
         <translation>Statistika</translation>
     </message>
     <message>
-        <location line="-1217"/>
-        <location line="+1237"/>
+        <location line="-1242"/>
+        <location line="+1262"/>
         <source>Tags</source>
         <translation>Žymos</translation>
     </message>
     <message>
-        <location line="-1224"/>
+        <location line="-1249"/>
         <source>Documentation</source>
         <translation>Dokumentacija</translation>
     </message>
@@ -1109,7 +1109,7 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
     </message>
     <message>
         <location line="-692"/>
-        <location line="+795"/>
+        <location line="+820"/>
         <location line="+36"/>
         <source>Search</source>
         <translation>Paieška</translation>
@@ -1142,8 +1142,8 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
         <translation>Istorija</translation>
     </message>
     <message>
-        <location line="-145"/>
-        <location line="+152"/>
+        <location line="-156"/>
+        <location line="+163"/>
         <location line="+56"/>
         <location line="+108"/>
         <location line="+35"/>
@@ -1155,22 +1155,32 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
         <translation>Uždaryti</translation>
     </message>
     <message>
-        <location line="-543"/>
+        <location line="-613"/>
+        <source>Copy version and system information</source>
+        <translation>Kopijuoti versijos ir sistemos informaciją</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Version and system information copied to clipboard</source>
+        <translation>Versijos ir sistemos informacija nukopijuota į iškarpinę</translation>
+    </message>
+    <message>
+        <location line="+54"/>
         <source>Show device info</source>
         <translation>Rodyti įrenginio informaciją</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+12"/>
         <source>Collapse one level</source>
         <translation>Suskleisti vieną lygį</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+12"/>
         <source>Expand one level</source>
         <translation>Išskleisti vieną lygį</translation>
     </message>
     <message>
-        <location line="+135"/>
+        <location line="+136"/>
         <source>Duplicates (%1)</source>
         <translation>Dublikatai (%1)</translation>
     </message>
@@ -1219,8 +1229,8 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
         <translation>Nepavyko sukurti katalogo: </translation>
     </message>
     <message>
-        <location line="-1105"/>
-        <location line="+1095"/>
+        <location line="-1130"/>
+        <location line="+1120"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Sukurti</translation>
@@ -5753,7 +5763,7 @@ to the trash?</source>
 <context>
     <name>OperationQueueView</name>
     <message>
-        <location filename="../qt_quick/OperationQueueView.qml" line="+52"/>
+        <location filename="../qt_quick/OperationQueueView.qml" line="+86"/>
         <source>Stop</source>
         <translation>Sustabdyti</translation>
     </message>
@@ -7148,7 +7158,7 @@ to the trash?</source>
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+266"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+270"/>
         <source>Directories</source>
         <translation>Katalogai</translation>
     </message>
@@ -7878,7 +7888,7 @@ Klaidų: %3</translation>
 <context>
     <name>PageSelectionDelegate</name>
     <message>
-        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+43"/>
+        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+52"/>
         <source>Search</source>
         <translation>Paieška</translation>
     </message>
@@ -7903,12 +7913,12 @@ Klaidų: %3</translation>
         <translation>Redaguoti</translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+107"/>
         <source>Collapse</source>
         <translation>Suskleisti</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+0"/>
         <source>Expand</source>
         <translation>Išskleisti</translation>
     </message>

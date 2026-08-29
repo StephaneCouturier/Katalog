@@ -88,7 +88,8 @@ export default {
                 'SpecSearchList',
                 'SpecDevicesSplit',
                 'SpecBackup',
-                'SpecExplore'
+                'SpecExplore',
+                'SpecAbout'
                 ],
       },
        'Development-Repository',

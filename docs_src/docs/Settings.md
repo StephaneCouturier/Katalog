@@ -1,8 +1,8 @@
 ---
-version: "2.12"
+version: "2.13"
 ---
 # Settings
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![2.13](https://img.shields.io/badge/Version-2.13-blue)
 
 ## Summary
 This page describes all the features of the **Settings** screen and how to use them.
@@ -185,3 +185,10 @@ Examples:
 * Option to check for a new version at start up.
 * Button to open this Documentation site.
 * Button to open the Release Notes.
+* Button **Copy version and system information**: copies, in one step, the Katalog version and your environment details to the clipboard, ready to paste into a bug report. A confirmation message *Version and system information copied to clipboard* is shown.
+
+The copied text contains: the Katalog version and release date, the Qt and KDE Frameworks versions, the operating system, the kernel and the CPU architecture, the interface language, and the database mode with its schema version.
+
+It deliberately contains nothing that identifies you or your data, so it can be pasted publicly with confidence: no file or folder path, no collection name, no computer name or user name, and nothing about a hosted database connection — no address, no database name, no user, no password.
+
+The copied text itself is always in English, whatever the language of the interface: English field names keep every bug report readable for the developers. Only the button and its confirmation message are translated.

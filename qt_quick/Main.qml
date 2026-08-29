@@ -1075,6 +1075,20 @@ Kirigami.ApplicationWindow {
         Kirigami.AboutPage {
             aboutData: About
             actions: [
+                // Filing a bug means quoting versions the user would otherwise
+                // have to hunt for; one action puts them all on the clipboard.
+                // The block itself is assembled in AppManager and deliberately
+                // carries no paths, no host, and no credentials — see
+                // SpecAbout.md.
+                Kirigami.Action {
+                    text: qsTr("Copy version and system information")
+                    icon.name: "edit-copy"
+                    onTriggered: {
+                        appManager1.copyToClipboard(appManager1.systemInformation())
+                        showPassiveNotification(
+                            qsTr("Version and system information copied to clipboard"))
+                    }
+                },
                 Kirigami.Action {
                     text: qsTr("Close")
                     icon.name: "view-close"

@@ -22,6 +22,9 @@
 #include <QCoreApplication>
 #include <QCryptographicHash>
 #include <QTimer>
+#include <QSysInfo>
+#include <QLocale>
+#include <kcoreaddons_version.h>
 
 namespace {
 
@@ -953,6 +956,44 @@ void AppManager::openFolder(const QString &folderPath)
 void AppManager::copyToClipboard(const QString &text)
 {
     QGuiApplication::clipboard()->setText(text);
+}
+//----------------------------------------------------------------------
+QString AppManager::systemInformation()
+{
+    // Assembled for pasting into a public bug report (SpecAbout.md).
+    //
+    // Every field is named and read one at a time. Nothing here iterates the
+    // settings or dumps a config object, so a value added elsewhere in the
+    // application can never find its way into this block by accident (ABT-C2).
+    //
+    // Deliberately absent (ABT-C1): machine hostname, user name, every
+    // filesystem path, the collection name, and the hosted database's host,
+    // port, name, user and password — the password is stored in plain text in
+    // the .ini, and this text is written to the clipboard to be pasted in
+    // public.
+    //
+    // Not translated, by intent: the block is read by a maintainer triaging a
+    // report, so English field names keep every report legible whatever the
+    // reporter's UI language. Only the button and the confirmation notification
+    // that produce it are translated.
+    QStringList lines;
+
+    lines << QStringLiteral("Katalog %1 (%2)")
+                 .arg(QLatin1String(KATALOG_VERSION_STRING),
+                      QLatin1String(KATALOG_RELEASE_DATE));
+    lines << QStringLiteral("Qt %1 (built against %2)")
+                 .arg(QLatin1String(qVersion()), QLatin1String(QT_VERSION_STR));
+    lines << QStringLiteral("KDE Frameworks %1")
+                 .arg(QLatin1String(KCOREADDONS_VERSION_STRING));
+    lines << QStringLiteral("OS: %1").arg(QSysInfo::prettyProductName());
+    lines << QStringLiteral("Kernel: %1 %2")
+                 .arg(QSysInfo::kernelType(), QSysInfo::kernelVersion());
+    lines << QStringLiteral("Architecture: %1").arg(QSysInfo::currentCpuArchitecture());
+    lines << QStringLiteral("Language: %1").arg(QLocale().name());
+    lines << QStringLiteral("Database mode: %1 (schema %2)")
+                 .arg(getDatabaseMode(), getDatabaseSchemaVersion());
+
+    return lines.join(QLatin1Char('\n'));
 }
 //----------------------------------------------------------------------
 QString AppManager::exportSearchResultsToCSV()

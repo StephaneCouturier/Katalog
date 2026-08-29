@@ -1,8 +1,8 @@
 ---
-version: "2.12"
+version: "2.13"
 ---
 # Nastavení
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![2.13](https://img.shields.io/badge/Version-2.13-blue)
 
 ## Shrnutí
 Tato stránka popisuje všechny funkce obrazovky **Nastavení** a jak je používat.
@@ -185,3 +185,10 @@ Příklady:
 * Možnost zkontrolovat novou verzi při spuštění.
 * Tlačítko pro otevření tohoto webu s dokumentací.
 * Tlačítko pro otevření poznámek k vydání.
+* Tlačítko **„Kopírovat informace o verzi a systému“**: jedním krokem zkopíruje verzi Katalogu a údaje o vašem prostředí do schránky, připravené k vložení do hlášení chyby. Zobrazí se potvrzovací zpráva „Informace o verzi a systému zkopírovány do schránky“.
+
+Zkopírovaný text obsahuje: verzi a datum vydání Katalogu, verze Qt a KDE Frameworks, operační systém, jádro a architekturu procesoru, jazyk rozhraní a režim databáze s verzí jejího schématu.
+
+Záměrně neobsahuje nic, co by identifikovalo vás nebo vaše data, takže jej můžete bez obav zveřejnit: žádné cesty k souborům ani složkám, žádný název kolekce, žádný název počítače ani uživatelské jméno a nic o připojení k hostované databázi — žádnou adresu, název databáze, uživatele ani heslo.
+
+Samotný zkopírovaný text je vždy v angličtině bez ohledu na jazyk rozhraní: anglické názvy polí zajišťují, že vývojáři přečtou každé hlášení chyby. Přeložené je pouze tlačítko a jeho potvrzovací zpráva.

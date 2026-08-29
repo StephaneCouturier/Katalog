@@ -1,8 +1,8 @@
 ---
-version: "2.12"
+version: "2.13"
 ---
 # Paramètres
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![2.13](https://img.shields.io/badge/Version-2.13-blue)
 
 ## Résumé
 Cette page décrit toutes les fonctionnalités de l'écran **Paramètres** et comment les utiliser.
@@ -185,3 +185,10 @@ Exemples :
 * Option pour rechercher une nouvelle version au démarrage.
 * Bouton pour ouvrir ce site de documentation.
 * Bouton pour ouvrir les notes de version.
+* Bouton **« Copier les informations de version et de système »** : copie en une seule étape la version de Katalog et les informations sur votre environnement dans le presse-papiers, prêtes à être collées dans un rapport de bogue. Un message de confirmation « Informations de version et de système copiées dans le presse-papiers » s'affiche.
+
+Le texte copié contient : la version et la date de publication de Katalog, les versions de Qt et de KDE Frameworks, le système d'exploitation, le noyau et l'architecture du processeur, la langue de l'interface, ainsi que le mode de base de données et sa version de schéma.
+
+Il ne contient volontairement rien qui puisse vous identifier ou identifier vos données, afin que vous puissiez le publier en toute confiance : aucun chemin de fichier ou de dossier, aucun nom de collection, aucun nom d'ordinateur ni d'utilisateur, et aucune information sur une connexion à une base de données hébergée — ni adresse, ni nom de base de données, ni utilisateur, ni mot de passe.
+
+Le texte copié est toujours en anglais, quelle que soit la langue de l'interface : des noms de champs en anglais permettent aux développeurs de lire tous les rapports de bogue. Seuls le bouton et son message de confirmation sont traduits.
