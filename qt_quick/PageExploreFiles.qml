@@ -295,8 +295,13 @@ Item {
                         }
                         text: {
                             if (display === undefined || display === null) return ""
-                            if (column === 1) return (Number(display) > 0 && entryType === "file")
-                                                     ? appManager1.formatDataSize(Number(display)) : ""
+                            // Folder rows carry their recursive total, so the
+                            // cell is no longer suppressed by entry type
+                            // (EXP-C11); and a folder holding nothing at any
+                            // depth must read as a zero rather than as a blank
+                            // that looks like missing data (EXP-F10). The same
+                            // now applies to an empty file.
+                            if (column === 1) return appManager1.formatDataSizeDelta(Number(display))
                             if (column === 3) return entryType === "file" ? String(display) : ""
                             return String(display)
                         }

@@ -2147,6 +2147,69 @@ QList<Catalog::ExploreFileEntry> Catalog::getExploreEntries(
         e.checksumSha256       = q.value(13).toString();
         result.append(e);
     }
+
+    // Folder rows arrive with a NULL size. Fill each with the RECURSIVE total of
+    // the files beneath it (SpecExplore.md EXP-F10).
+    //
+    // One grouped statement for the whole listing, then a single pass that adds
+    // each group into every listed folder containing it. A correlated subquery
+    // would read as "one statement" but would still execute once per row, which
+    // is the shape EXP-C6 forbids.
+    if (showFolders) {
+        QHash<QString, int> folderRowByPath;   // folder full path -> index in result
+        for (int i = 0; i < result.size(); ++i) {
+            if (result[i].entryType == QLatin1String("folder")) {
+                result[i].size = 0;            // a folder with nothing in it reads 0, never blank
+                folderRowByPath.insert(result[i].folderPath, i);
+            }
+        }
+
+        if (!folderRowByPath.isEmpty()) {
+            // Range comparison rather than LIKE, so idx_file_catalog_folder is
+            // used on every backend (EXP-C7): SQLite only turns a prefix LIKE
+            // into a range scan under particular collation settings, and MariaDB
+            // differs again. '0' is the next character after '/'.
+            const QString lowerBound = folderPath + QLatin1Char('/');
+            const QString upperBound = folderPath + QLatin1Char('0');
+
+            QSqlQuery agg(db);
+            agg.prepare(QLatin1String(
+                "SELECT file_folder_path, SUM(file_size) FROM file "
+                "WHERE file_catalog_id = :catalogId "
+                "AND file_folder_path >= :lowerBound AND file_folder_path < :upperBound "
+                "GROUP BY file_folder_path"));
+            agg.bindValue(":catalogId",  catalogId);
+            agg.bindValue(":lowerBound", lowerBound);
+            agg.bindValue(":upperBound", upperBound);
+
+            if (!agg.exec()) {
+                qWarning() << "Catalog::getExploreEntries folder size aggregate failed:"
+                           << agg.lastError().text();
+            } else {
+                while (agg.next()) {
+                    const QString groupPath = agg.value(0).toString();
+                    const qint64  groupSize = agg.value(1).toLongLong();
+
+                    // Walk up from the group's folder to the open folder, adding
+                    // into every listed ancestor. With "and all sub-folders" on
+                    // several listed rows legitimately contain the same files, so
+                    // the column overlaps by design and does not partition
+                    // (EXP-F12).
+                    QString walker = groupPath;
+                    while (walker.size() > folderPath.size()) {
+                        const auto it = folderRowByPath.constFind(walker);
+                        if (it != folderRowByPath.constEnd())
+                            result[it.value()].size += groupSize;
+                        const int cut = walker.lastIndexOf(QLatin1Char('/'));
+                        if (cut < 0)
+                            break;
+                        walker.truncate(cut);
+                    }
+                }
+            }
+        }
+    }
+
     return result;
 }
 //----------------------------------------------------------------------
@@ -2167,12 +2230,20 @@ Catalog::ExploreFolderStats Catalog::getExploreFolderStats(
     ExploreFolderStats stats;
     QSqlDatabase db = QSqlDatabase::database(connectionName);
     if (!db.isOpen()) return stats;
+    // An empty folder path means the whole catalog rather than one folder,
+    // mirroring K2's conditional in mainwindow_tab_explore.cpp (SpecExplore.md).
+    // Computed live rather than read from Device::totalFileSize, which is only
+    // refreshed at catalog update and could disagree with the file records.
+    QString sql = QLatin1String("SELECT COUNT(*), SUM(file_size) FROM file "
+                                "WHERE file_catalog_id = :catalogId");
+    if (!folderPath.isEmpty())
+        sql += QLatin1String(" AND file_folder_path = :folderPath");
+
     QSqlQuery q(db);
-    q.prepare(QLatin1String(
-        "SELECT COUNT(*), SUM(file_size) FROM file "
-        "WHERE file_catalog_id = :catalogId AND file_folder_path = :folderPath"));
+    q.prepare(sql);
     q.bindValue(":catalogId",  catalogId);
-    q.bindValue(":folderPath", folderPath);
+    if (!folderPath.isEmpty())
+        q.bindValue(":folderPath", folderPath);
     if (q.exec() && q.next()) {
         stats.fileCount  = q.value(0).toLongLong();
         stats.totalSize  = q.value(1).toLongLong();

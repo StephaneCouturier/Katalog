@@ -22,6 +22,8 @@ The screen is split into two panels:
 
 Clicking on a file in the right panel will try to open it with the system's default application, if the device is currently connected. Clicking on a folder entry will navigate into that folder.
 
+When folders are listed, each one shows its total size — the files it holds plus everything in the folders below it — so the biggest folders can be spotted without connecting the device. The total size of the whole catalog is shown at the top, next to the folder path.
+
 ### Directory tree
 
 The left panel opens on the catalog root and its first two levels of directories; deeper levels start folded.

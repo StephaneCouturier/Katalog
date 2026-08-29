@@ -14,6 +14,12 @@ Item {
     property string catalogName: ""
     property string catalogPath: ""
     property int    folderCount: 0
+
+    // Total size of the whole catalog, computed live from the file records — an
+    // empty folder path means "the whole catalog" — so it always reconciles with
+    // the per-folder figures in the file list rather than drifting from a stored
+    // total refreshed only at catalog update (SpecExplore.md EXP-F13/F14).
+    property real   catalogTotalSize: 0
     property string selectedFolderPath: ""
 
     // Row buttons are sized to sit inside the height the text already needs, so
@@ -51,6 +57,7 @@ Item {
             root.catalogName = ""
             root.catalogPath = ""
             root.folderCount = 0
+            root.catalogTotalSize = 0
             root.allFolders  = []
             root.collapsedPaths = ({})
             folderListModel.clear()
@@ -61,6 +68,7 @@ Item {
         root.catalogName        = info.name
         root.catalogPath        = info.path
         root.folderCount        = info.folderCount
+        root.catalogTotalSize   = appManager1.getExploreFolderStats("").totalSize
         root.selectedFolderPath = info.path
 
         // The catalog itself is the root of the tree; the folders hang under it,
@@ -273,6 +281,18 @@ Item {
                 text: root.folderCount.toLocaleString(Qt.locale(), "f", 0)
                 font.bold: true
             }
+
+            Item { Layout.preferredWidth: Kirigami.Units.largeSpacing }
+
+            // The catalog's total size, beside the catalog-wide directory count
+            // that is already here. No label of its own: a formatted data size
+            // names its own unit.
+            Controls.Label {
+                text: appManager1.formatDataSizeDelta(root.catalogTotalSize)
+                font.bold: true
+                visible: root.catalogTotalSize > 0
+            }
+
             Item { Layout.fillWidth: true }
         }
 

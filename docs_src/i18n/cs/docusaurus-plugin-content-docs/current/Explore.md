@@ -22,6 +22,8 @@ Obrazovka je rozdělena do dvou panelů:
 
 Kliknutím na soubor v pravém panelu se aplikace pokusí otevřít jej výchozí aplikací systému, pokud je zařízení připojeno. Kliknutím na položku složky se přejde do této složky.
 
+Jsou-li složky zobrazeny, u každé se uvádí její celková velikost — soubory v ní obsažené plus vše ve složkách pod ní — takže lze největší složky odhalit bez připojení zařízení. Celková velikost celého katalogu se zobrazuje nahoře vedle cesty ke složce.
+
 ### Stromové zobrazení adresářů
 
 Levý panel se otevře na kořenu katalogu a jeho prvních dvou úrovních adresářů; hlubší úrovně jsou zpočátku sbalené.

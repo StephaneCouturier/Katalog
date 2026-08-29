@@ -22,6 +22,8 @@ L'écran est divisé en deux panneaux :
 
 Cliquer sur un fichier dans le panneau de droite tentera de l'ouvrir avec l'application par défaut du système, si le périphérique est connecté. Cliquer sur un dossier navigue à l'intérieur de ce dossier.
 
+Lorsque les dossiers sont affichés, chacun indique sa taille totale — les fichiers qu'il contient plus tout ce que contiennent les dossiers en dessous — afin de repérer les dossiers les plus volumineux sans connecter le périphérique. La taille totale du catalogue est affichée en haut, à côté du chemin du dossier.
+
 ### Arborescence des répertoires
 
 Le panneau gauche s'ouvre sur la racine du catalogue et ses deux premiers niveaux de répertoires ; les niveaux plus profonds sont repliés au départ.
