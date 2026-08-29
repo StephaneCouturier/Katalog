@@ -2,6 +2,7 @@
 #include "core/catalog.h"
 #include "core/language.h"
 #include "core/database.h"
+#include <QDir>
 #include "core/databasemanager.h"
 #include "core/device.h"
 #include "core/filechecksum.h"
@@ -662,6 +663,11 @@ void AppManager::setDatabaseFilePath(const QString &path)
 void AppManager::createNewSQLiteCollection(const QString &path)
 {
     if (path.isEmpty()) return;
+
+    // Create the containing folder first: the file dialog returns a path without
+    // creating anything, so a folder the user typed rather than picked does not
+    // exist yet and the file below could not be written.
+    QDir().mkpath(QFileInfo(path).absolutePath());
 
     // Create an empty file — SQLite will write the schema on first connection.
     QFile dbFile(path);

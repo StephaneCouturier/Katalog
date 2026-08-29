@@ -32,6 +32,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "core/database.h"
+#include <QDir>
 #include "core/databasemanager.h"
 #include "core/language.h"
 #include <QTimer>
@@ -120,9 +121,11 @@
                                                                                    QFileDialog::ShowDirsOnly
                                                                                        | QFileDialog::DontResolveSymlinks);
 
-                        //Handle user cancellation: re-prompt rather than silently falling back
+                        //Cancel ends the dialog. Re-prompting trapped the user with no
+                        //way out, exactly as in the File-mode branch below.
                         if (selectedFolder.isEmpty()) {
-                            continue;
+                            collection->folder.clear();
+                            break;
                         }
 
                         // Validate the selected folder
@@ -174,7 +177,10 @@
                     }
 
                     //save setting
+                    collection->databaseMode = "Memory";
+                    settings.setValue("Settings/databaseMode", collection->databaseMode);
                     settings.setValue("LastCollectionFolder", collection->folder);
+                    settings.sync();
 
                 } else {
                     // File mode: open existing or create a new database file
@@ -197,8 +203,13 @@
                         }
 
                         if (selectedFile.isEmpty()) {
-                            // User cancelled — loop again to re-prompt
-                            continue;
+                            // Cancel must end the dialog. Re-prompting here trapped the
+                            // user in a loop with no way out on first run. Leaving the
+                            // path empty is handled: Database::initialize() treats an
+                            // unset path as "not configured yet", so the application
+                            // starts and the collection can be chosen from Settings.
+                            collection->databaseFilePath.clear();
+                            break;
                         }
 
                         if (!selectedFile.endsWith(".db", Qt::CaseInsensitive))
@@ -208,17 +219,41 @@
                         collection->folder = QFileInfo(selectedFile).absolutePath();
 
                         if (!openExisting) {
+                            // Create the containing folder first: the save dialog returns
+                            // a path without creating anything, so a folder the user typed
+                            // rather than picked does not exist yet, and the touch below
+                            // would fail silently — leaving Database::initialize() to
+                            // report "Database file not found" for a file we never wrote.
+                            QDir().mkpath(collection->folder);
+
                             // Touch the file so Database::initialize() can open it
                             // (QFileDialog::getSaveFileName returns a path but does not create the file)
                             QFile newFile(collection->databaseFilePath);
-                            if (newFile.open(QFile::WriteOnly))
+                            if (newFile.open(QFile::WriteOnly)) {
                                 newFile.close();
+                            } else {
+                                // Say so instead of continuing to a confusing
+                                // "not found" from the connection attempt.
+                                QMessageBox::critical(this, "Katalog",
+                                    tr("Failed to open the database file: %1").arg(newFile.errorString()));
+                                collection->databaseFilePath.clear();
+                                continue;
+                            }
                         }
 
                         fileSelected = true;
                     }
 
+                    // Record the mode alongside the path. Database::initialize()
+                    // reloads databaseMode from settings, and first run had never
+                    // written it: the mode stayed empty, matched none of
+                    // Memory/File/Hosted, and the connection failed however valid
+                    // the file was. Settings was the only place that set it, which
+                    // is why going there afterwards appeared to fix it.
+                    collection->databaseMode = "File";
+                    settings.setValue("Settings/databaseMode", collection->databaseMode);
                     settings.setValue("Settings/DatabaseFilePath", collection->databaseFilePath);
+                    settings.sync();
                     QSqlError dbErr = DatabaseManager::reconnect(m_connectionName, collection);
                     if (dbErr.type() != QSqlError::NoError) {
                         QMessageBox::critical(this, "Katalog",
@@ -228,7 +263,10 @@
                 }
 
                 //Go to Create screen
-                if (!openExisting) {
+                const bool collectionConfigured = (collection->databaseMode == "Memory")
+                                                      ? !collection->folder.isEmpty()
+                                                      : !collection->databaseFilePath.isEmpty();
+                if (!openExisting && collectionConfigured) {
                     QMessageBox msgBox2;
                     msgBox2.setWindowTitle("Katalog");
                     msgBox2.setText(tr("<br/><b>Ready to create a file catalog:</b><br/><br/>")

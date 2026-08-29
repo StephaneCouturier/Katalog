@@ -32,6 +32,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "core/database.h"
+#include <QDir>
 #include "core/databasemanager.h"
 #include <QVersionNumber>
 
@@ -516,7 +517,16 @@
         //Unless the selection was cancelled, set the new collection folder, and refresh all data
         if ( newDatabaseFilePath !=""){
 
+            // Match the first-run path, which appends the extension: without this
+            // the two ways of creating a database disagree on the file name.
+            if (!newDatabaseFilePath.endsWith(".db", Qt::CaseInsensitive))
+                newDatabaseFilePath += ".db";
+
             collection->databaseFilePath = newDatabaseFilePath;
+
+            // The save dialog creates nothing, so a folder the user typed rather
+            // than picked does not exist yet and the write below would fail.
+            QDir().mkpath(QFileInfo(collection->databaseFilePath).absolutePath());
 
             QFile fileOut(collection->databaseFilePath);
             if (fileOut.open(QFile::WriteOnly | QFile::Text)) {
@@ -526,8 +536,14 @@
                 db.setDatabaseName(collection->databaseFilePath);
                 if (!db.open())
                     qWarning()<< db.lastError();
+                fileOut.close();
+            } else {
+                // Report it rather than carrying on to reconnect against a file
+                // that was never created.
+                QMessageBox::critical(this, "Katalog",
+                    tr("Failed to open the database file: %1").arg(fileOut.errorString()));
+                return;
             }
-            fileOut.close();
 
             //Save Settings for the new collection folder value;
             QSettings settings(collection->settingsFilePath, QSettings:: IniFormat);
