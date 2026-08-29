@@ -37,6 +37,7 @@ ColumnLayout {
         originalPath  = d.path
 
         edit_lineEdit_Name.text = d.name
+        edit_lineEdit_Comment.text = d.comment
         // Only offer parents in the same group, and never the device itself —
         // re-parenting can reorganise within a group but never cross groups.
         // _groupId is set above first so storageOnly is correct before selectById().
@@ -106,7 +107,8 @@ ColumnLayout {
         var path     = (deviceType !== "Virtual") ? appManager1.normalizeSourcePath(edit_lineEdit_Path.text) : ""
         var parentId = edit_storageComboBox.selectedDeviceId
 
-        var err = appManager1.saveDeviceBasicFields(deviceId, name, parentId, path)
+        var err = appManager1.saveDeviceBasicFields(deviceId, name, parentId, path,
+                                                   edit_lineEdit_Comment.text)
         if (err !== "") { saveError(err); return }
 
         if (deviceType === "Catalog") {
@@ -235,6 +237,14 @@ ColumnLayout {
             // Device id 1 is the reserved " Physical Group" root — it is the
             // structural top of the Physical hierarchy and must never be re-parented.
             enabled: root.deviceId !== 1
+            Layout.fillWidth: true
+        }
+
+        // A free-text note available on every device type. Storage keeps its own
+        // Comment 1/2/3 in addition to this one (SpecDeviceComment.md DCM-F5).
+        Controls.Label { text: qsTr("Comment"); opacity: 0.7 }
+        Controls.TextField {
+            id: edit_lineEdit_Comment
             Layout.fillWidth: true
         }
 

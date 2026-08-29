@@ -2151,6 +2151,7 @@ QVariantList AppManager::getDeviceList(const QString &viewFilter, int scopeDevic
         item[QStringLiteral("parentType")]    = typeById.value(n.parentId);
         item[QStringLiteral("groupId")]       = n.groupId;
         item[QStringLiteral("externalId")]    = n.externalId;
+        item[QStringLiteral("comment")]       = n.comment;
         result.append(item);
     }
     return result;
@@ -3086,6 +3087,7 @@ QVariantMap AppManager::getDeviceDetails(int deviceId) const
     r["path"]     = dev.path;
     r["deviceId"] = dev.ID;
     r["groupId"]  = dev.groupID;
+    r["comment"]  = dev.comment;
 
     if (dev.type == "Catalog") {
         r["fileType"]        = dev.catalog->fileType;
@@ -3114,7 +3116,7 @@ QVariantMap AppManager::getDeviceDetails(int deviceId) const
     return r;
 }
 //----------------------------------------------------------------------
-QString AppManager::saveDeviceBasicFields(int deviceId, const QString &name, int parentId, const QString &path)
+QString AppManager::saveDeviceBasicFields(int deviceId, const QString &name, int parentId, const QString &path, const QString &comment)
 {
     const QString conn = m_connectionName;
     Device dev;
@@ -3140,6 +3142,9 @@ QString AppManager::saveDeviceBasicFields(int deviceId, const QString &name, int
     }
 
     dev.name = name;
+    // loadDevice() above populated the comment, so the full-row UPDATE in
+    // saveDevice() cannot blank it (SpecDeviceComment.md DCM-C2).
+    dev.comment = comment;
     dev.path = Catalog::normalizeSourcePath(path);
     dev.catalog->sourcePath = dev.path;
 

@@ -1,8 +1,8 @@
 ---
-version: "2.12"
+version: "2.13"
 ---
 # Périphériques
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![2.13](https://img.shields.io/badge/Version-2.13-blue)
 
 ## Résumé
 Cette page décrit le concept de **Périphérique** dans Katalog et la partie supérieure de l'écran **Périphériques**.
@@ -28,6 +28,8 @@ Cela permet de rechercher uniquement dans ces éléments et fournit le total du 
     * Le **Groupe Physique** est un groupe unique et réservé à la hiérarchie des périphériques physiques (ordinateur, téléphone, disque, etc.).
 
     * Tout autre groupe est un **Groupe Virtuel** auquel des catalogues existants peuvent être attribués pour faciliter la recherche et les statistiques.
+
+* Tout périphérique peut avoir un **Commentaire** : une note en texte libre, saisie dans le formulaire d'édition du périphérique et affichée à côté de son nom dans la liste des périphériques.
 
 ### Hiérarchie
 

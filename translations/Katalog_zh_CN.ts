@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+154"/>
         <location line="+87"/>
         <location line="+14"/>
-        <location line="+3819"/>
+        <location line="+3823"/>
         <source>Search</source>
         <translation>搜索</translation>
     </message>
     <message>
-        <location line="-3916"/>
+        <location line="-3920"/>
         <source>Stopped</source>
         <translation>已停止</translation>
     </message>
@@ -46,7 +46,7 @@
         <location line="+58"/>
         <location line="+1685"/>
         <location line="+527"/>
-        <location line="+1207"/>
+        <location line="+1211"/>
         <location line="+11"/>
         <location line="+60"/>
         <location line="+344"/>
@@ -54,14 +54,14 @@
         <translation>进行中</translation>
     </message>
     <message>
-        <location line="-3820"/>
-        <location line="+3457"/>
+        <location line="-3824"/>
+        <location line="+3461"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>已完成</translation>
     </message>
     <message>
-        <location line="-3142"/>
+        <location line="-3146"/>
         <source>Empty database path provided</source>
         <translation>提供的数据库路径为空</translation>
     </message>
@@ -147,12 +147,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2354"/>
+        <location line="+2358"/>
         <source>Size</source>
         <translation>大小</translation>
     </message>
     <message>
-        <location line="-2353"/>
+        <location line="-2357"/>
         <source>Date</source>
         <translation>日期</translation>
     </message>
@@ -347,14 +347,14 @@ Choose a different name and try again.</source>
         <translation>无法打开文件：%1</translation>
     </message>
     <message>
-        <location line="+152"/>
+        <location line="+153"/>
         <source>There is already a catalog with this name: %1
 Choose a different name.</source>
         <translation>已存在同名目录：%1
 请选择其他名称。</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+18"/>
         <source>A Catalog in the Physical group can only be set under a Storage device.</source>
         <translation>物理组中的目录只能设置在存储设备下。</translation>
     </message>
@@ -644,7 +644,7 @@ Choose a different name.</source>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2479"/>
+        <location filename="../core/collection.cpp" line="+2513"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>此文件夹包含内存模式的收藏文件，但您当前处于文件模式。&lt;br/&gt;切换到内存模式或选择其他文件夹。</translation>
     </message>
@@ -680,7 +680,7 @@ Choose a different name.</source>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+219"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+223"/>
         <source>Collection</source>
         <translation>收藏</translation>
     </message>
@@ -1972,7 +1972,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>完整扩展</translation>
     </message>
     <message>
-        <location filename="../core/device.cpp" line="+651"/>
+        <location filename="../core/device.cpp" line="+660"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
         <translation>您要&lt;span style=&apos;color: red&apos;;&gt;删除&lt;/span&gt;这个 %1 设备吗？</translation>
     </message>
@@ -6467,12 +6467,12 @@ to the trash?</source>
 <context>
     <name>PageDeviceEditForm</name>
     <message>
-        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+102"/>
+        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+103"/>
         <source>Provide a name for this device.</source>
         <translation>为此设备提供一个名称。</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+23"/>
         <source>Source path: %1 → %2</source>
         <translation>源路径：%1 → %2</translation>
     </message>
@@ -6483,12 +6483,12 @@ to the trash?</source>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+249"/>
+        <location line="+257"/>
         <source>Type</source>
         <translation>类型</translation>
     </message>
     <message>
-        <location line="-246"/>
+        <location line="-254"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
@@ -6498,7 +6498,12 @@ to the trash?</source>
         <translation>父设备</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+20"/>
+        <source>Comment</source>
+        <translation>注释</translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>Location</source>
         <translation>位置</translation>
     </message>
@@ -7914,7 +7919,7 @@ Errors: %3</source>
         <translation>编辑</translation>
     </message>
     <message>
-        <location line="+107"/>
+        <location line="+122"/>
         <source>Collapse</source>
         <translation>折叠</translation>
     </message>

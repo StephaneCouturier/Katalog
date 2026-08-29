@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+154"/>
         <location line="+87"/>
         <location line="+14"/>
-        <location line="+3819"/>
+        <location line="+3823"/>
         <source>Search</source>
         <translation>Søg</translation>
     </message>
     <message>
-        <location line="-3916"/>
+        <location line="-3920"/>
         <source>Stopped</source>
         <translation>Stoppet</translation>
     </message>
@@ -46,7 +46,7 @@
         <location line="+58"/>
         <location line="+1685"/>
         <location line="+527"/>
-        <location line="+1207"/>
+        <location line="+1211"/>
         <location line="+11"/>
         <location line="+60"/>
         <location line="+344"/>
@@ -54,14 +54,14 @@
         <translation>I gang</translation>
     </message>
     <message>
-        <location line="-3820"/>
-        <location line="+3457"/>
+        <location line="-3824"/>
+        <location line="+3461"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Fuldført</translation>
     </message>
     <message>
-        <location line="-3142"/>
+        <location line="-3146"/>
         <source>Empty database path provided</source>
         <translation>Tom databasesti angivet</translation>
     </message>
@@ -147,12 +147,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2354"/>
+        <location line="+2358"/>
         <source>Size</source>
         <translation>Størrelse</translation>
     </message>
     <message>
-        <location line="-2353"/>
+        <location line="-2357"/>
         <source>Date</source>
         <translation>Dato</translation>
     </message>
@@ -347,14 +347,14 @@ Vælg et andet navn, og prøv igen.</translation>
         <translation>Kunne ikke åbne filen: %1</translation>
     </message>
     <message>
-        <location line="+152"/>
+        <location line="+153"/>
         <source>There is already a catalog with this name: %1
 Choose a different name.</source>
         <translation>Der findes allerede et katalog med dette navn: %1
 Vælg et andet navn.</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+18"/>
         <source>A Catalog in the Physical group can only be set under a Storage device.</source>
         <translation>Et katalog i gruppen Fysisk kan kun placeres under en lagerenhed.</translation>
     </message>
@@ -644,7 +644,7 @@ Vælg et andet navn.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2479"/>
+        <location filename="../core/collection.cpp" line="+2513"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Denne mappe indeholder samlingsfilter i hukommelsestilstand, men du er i øjeblikket i filtilstand.&lt;br/&gt;Skift til hukommelsestilstand eller vælg en anden mappe.</translation>
     </message>
@@ -680,7 +680,7 @@ Vælg et andet navn.</translation>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+219"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+223"/>
         <source>Collection</source>
         <translation>Samling</translation>
     </message>
@@ -1972,7 +1972,7 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <translation>Fuld udvidet</translation>
     </message>
     <message>
-        <location filename="../core/device.cpp" line="+651"/>
+        <location filename="../core/device.cpp" line="+660"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
         <translation>Vil du &lt;span style=&apos;color: red&apos;;&gt;slette&lt;/span&gt; denne %1 enhed?</translation>
     </message>
@@ -6467,12 +6467,12 @@ til papirkurven?</translation>
 <context>
     <name>PageDeviceEditForm</name>
     <message>
-        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+102"/>
+        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+103"/>
         <source>Provide a name for this device.</source>
         <translation>Angiv et navn til denne enhed.</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+23"/>
         <source>Source path: %1 → %2</source>
         <translation>Kildesti: %1 → %2</translation>
     </message>
@@ -6483,12 +6483,12 @@ til papirkurven?</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+249"/>
+        <location line="+257"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
     <message>
-        <location line="-246"/>
+        <location line="-254"/>
         <source>Name</source>
         <translation>Navn</translation>
     </message>
@@ -6498,7 +6498,12 @@ til papirkurven?</translation>
         <translation>Overordnet enhed</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+20"/>
+        <source>Comment</source>
+        <translation>Kommentar</translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>Location</source>
         <translation>Placering</translation>
     </message>
@@ -7914,7 +7919,7 @@ Fejl: %3</translation>
         <translation>Rediger</translation>
     </message>
     <message>
-        <location line="+107"/>
+        <location line="+122"/>
         <source>Collapse</source>
         <translation>Skjul</translation>
     </message>

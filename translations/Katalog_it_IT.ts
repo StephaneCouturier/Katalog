@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+154"/>
         <location line="+87"/>
         <location line="+14"/>
-        <location line="+3819"/>
+        <location line="+3823"/>
         <source>Search</source>
         <translation>Cerca</translation>
     </message>
     <message>
-        <location line="-3916"/>
+        <location line="-3920"/>
         <source>Stopped</source>
         <translation>Interrotto</translation>
     </message>
@@ -46,7 +46,7 @@
         <location line="+58"/>
         <location line="+1685"/>
         <location line="+527"/>
-        <location line="+1207"/>
+        <location line="+1211"/>
         <location line="+11"/>
         <location line="+60"/>
         <location line="+344"/>
@@ -54,14 +54,14 @@
         <translation>In corso</translation>
     </message>
     <message>
-        <location line="-3820"/>
-        <location line="+3457"/>
+        <location line="-3824"/>
+        <location line="+3461"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Completato</translation>
     </message>
     <message>
-        <location line="-3142"/>
+        <location line="-3146"/>
         <source>Empty database path provided</source>
         <translation>Percorso del database vuoto fornito</translation>
     </message>
@@ -147,12 +147,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2354"/>
+        <location line="+2358"/>
         <source>Size</source>
         <translation>Dimensione</translation>
     </message>
     <message>
-        <location line="-2353"/>
+        <location line="-2357"/>
         <source>Date</source>
         <translation>Data</translation>
     </message>
@@ -347,14 +347,14 @@ Scegliere un nome diverso e riprovare.</translation>
         <translation>Impossibile aprire il file: %1</translation>
     </message>
     <message>
-        <location line="+152"/>
+        <location line="+153"/>
         <source>There is already a catalog with this name: %1
 Choose a different name.</source>
         <translation>Esiste già un catalogo con questo nome: %1
 Scegliere un nome diverso.</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+18"/>
         <source>A Catalog in the Physical group can only be set under a Storage device.</source>
         <translation>Un catalogo del gruppo Fisico può essere posizionato solo sotto un dispositivo di archiviazione.</translation>
     </message>
@@ -644,7 +644,7 @@ Scegliere un nome diverso.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2479"/>
+        <location filename="../core/collection.cpp" line="+2513"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Questa cartella contiene file di raccolta in modalità Memoria, ma sei attualmente in modalità File.&lt;br/&gt;Passa alla modalità Memoria o seleziona una cartella diversa.</translation>
     </message>
@@ -680,7 +680,7 @@ Scegliere un nome diverso.</translation>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+219"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+223"/>
         <source>Collection</source>
         <translation>Raccolta</translation>
     </message>
@@ -1992,7 +1992,7 @@ Vuoi salvarlo comunque (il catalogo sarebbe vuoto)?</translation>
         <translation>Completo esteso</translation>
     </message>
     <message>
-        <location filename="../core/device.cpp" line="+651"/>
+        <location filename="../core/device.cpp" line="+660"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
         <translation>Vuoi &lt;span style=&apos;color: red&apos;;&gt;eliminare&lt;/span&gt; questo dispositivo %1?</translation>
     </message>
@@ -6467,12 +6467,12 @@ nel cestino?</translation>
 <context>
     <name>PageDeviceEditForm</name>
     <message>
-        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+102"/>
+        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+103"/>
         <source>Provide a name for this device.</source>
         <translation>Fornisci un nome per questo dispositivo.</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+23"/>
         <source>Source path: %1 → %2</source>
         <translation>Percorso di origine: %1 → %2</translation>
     </message>
@@ -6483,12 +6483,12 @@ nel cestino?</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+249"/>
+        <location line="+257"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
     <message>
-        <location line="-246"/>
+        <location line="-254"/>
         <source>Name</source>
         <translation>Nome</translation>
     </message>
@@ -6498,7 +6498,12 @@ nel cestino?</translation>
         <translation>Dispositivo padre</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+20"/>
+        <source>Comment</source>
+        <translation>Commento</translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>Location</source>
         <translation>Posizione</translation>
     </message>
@@ -7914,7 +7919,7 @@ Errori: %3</translation>
         <translation>Modifica</translation>
     </message>
     <message>
-        <location line="+107"/>
+        <location line="+122"/>
         <source>Collapse</source>
         <translation>Comprimi</translation>
     </message>

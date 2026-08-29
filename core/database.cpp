@@ -59,7 +59,8 @@ QString Database::getSQLCreateTableDevice(DatabaseType dbType)
                     device_active              %1,
                     device_group_id            %1,
                     device_date_updated        TEXT,
-                    device_order               %1)
+                    device_order               %1,
+                    device_comment             TEXT)
             )").arg(largeNumeric);
 }
 
@@ -1259,6 +1260,26 @@ QSqlError Database::runMigration_2_13(const QString &connectionName)
         QSqlError err = executeSql(connectionName, "UPDATE device SET device_order = 0");
         if (err.type() != QSqlError::NoError) {
             qWarning() << "WARNING: Failed to normalize device_order:" << err.text();
+            return err;
+        }
+    }
+    return QSqlError();
+}
+//----------------------------------------------------------------------
+
+QSqlError Database::ensureDeviceCommentColumn(const QString &connectionName)
+{
+    // Unconditional column guard, not a step inside runMigration_2_13: the field
+    // was added to the 2.13 cycle after databases had already been stamped 2.13,
+    // so the versioned migration no longer runs for them and the column would
+    // never appear. Same situation, and same remedy, as
+    // ensureMappingSourceCollectionColumn below (SpecDeviceComment.md).
+    QStringList deviceColumns = getTableColumns(connectionName, "device");
+    if (!deviceColumns.contains("device_comment")) {
+        QSqlError err = executeSql(connectionName,
+            "ALTER TABLE device ADD COLUMN device_comment TEXT");
+        if (err.type() != QSqlError::NoError) {
+            qWarning() << "WARNING: Failed to add device_comment column:" << err.text();
             return err;
         }
     }

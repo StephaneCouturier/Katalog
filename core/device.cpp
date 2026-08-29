@@ -63,7 +63,8 @@ void Device::loadDevice(QString connectionName){
                                     device_total_space,
                                     device_free_space,
                                     device_group_id,
-                                    device_order
+                                    device_order,
+                                    device_comment
                             FROM  device
                             WHERE device_id =:device_id
                         )");
@@ -87,6 +88,7 @@ void Device::loadDevice(QString connectionName){
             freeSpace   = query.value(9).toLongLong();
             groupID     = query.value(10).toInt();
             order       = query.value(11).toInt();
+            comment     = query.value(12).toString();
         } else if (ID !=0){
             qWarning() << "WARNING: DEBUG: loadDevice query failed, no record found for device_id" << ID;
         }
@@ -259,7 +261,8 @@ void Device::insertDevice()
                                         device_total_space,
                                         device_free_space,
                                         device_group_id,
-                                        device_order)
+                                        device_order,
+                                        device_comment)
                             VALUES(
                                         :device_id,
                                         :device_parent_id,
@@ -272,7 +275,8 @@ void Device::insertDevice()
                                         :device_total_space,
                                         :device_free_space,
                                         :device_group_id,
-                                        :device_order)
+                                        :device_order,
+                                        :device_comment)
                                 )");
     queryInsertDevice.prepare(queryInsertDeviceSQL);
     queryInsertDevice.bindValue(":device_id", ID);
@@ -287,6 +291,7 @@ void Device::insertDevice()
     queryInsertDevice.bindValue(":device_free_space", freeSpace);
     queryInsertDevice.bindValue(":device_group_id", groupID);
     queryInsertDevice.bindValue(":device_order", order);
+    queryInsertDevice.bindValue(":device_comment", comment);
     queryInsertDevice.exec();
 }
 
@@ -437,7 +442,8 @@ void Device::saveDevice()
                                     device_free_space =:device_free_space,
                                     device_group_id =:device_group_id,
                                     device_date_updated =:device_date_updated,
-                                    device_order=:device_order
+                                    device_order=:device_order,
+                                    device_comment=:device_comment
                             WHERE   device_id=:device_id
                         )");
     query.prepare(querySQL);
@@ -454,6 +460,9 @@ void Device::saveDevice()
     query.bindValue(":device_group_id", groupID);
     query.bindValue(":device_date_updated", dateTimeUpdated.toString("yyyy-MM-dd hh:mm:ss"));
     query.bindValue(":device_order", order);
+    // Full-row UPDATE: a caller that saves a Device it did not fully load would
+    // blank the comment. Every caller must loadDevice() first (SpecDeviceComment.md).
+    query.bindValue(":device_comment", comment);
     query.exec();
 }
 
@@ -1053,6 +1062,7 @@ QList<Device::DeviceTreeNode> Device::loadDeviceTree(const QString &connectionNa
                     device_date_updated,
                     device_group_id,
                     device_external_id,
+                    device_comment,
                     0 AS level,
                     )") + anchorSortPath + QLatin1String(R"( AS sort_path
             FROM device
@@ -1071,6 +1081,7 @@ QList<Device::DeviceTreeNode> Device::loadDeviceTree(const QString &connectionNa
                     c.device_date_updated,
                     c.device_group_id,
                     c.device_external_id,
+                    c.device_comment,
                     p.level + 1,
                     )") + recursiveSortPath + QLatin1String(R"(
             FROM device c
@@ -1089,7 +1100,8 @@ QList<Device::DeviceTreeNode> Device::loadDeviceTree(const QString &connectionNa
                 device_date_updated,
                 device_group_id,
                 level,
-                device_external_id
+                device_external_id,
+                device_comment
         FROM device_tree
         ORDER BY sort_path
     )");
@@ -1120,6 +1132,7 @@ QList<Device::DeviceTreeNode> Device::loadDeviceTree(const QString &connectionNa
         node.groupId        = query.value(11).toInt();
         node.level          = query.value(12).toInt();
         node.externalId     = query.value(13).toInt();
+        node.comment        = query.value(14).toString();
         result.append(node);
     }
 

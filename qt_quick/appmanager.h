@@ -301,7 +301,7 @@ public slots:
 
     // Device edit
     Q_INVOKABLE QVariantMap  getDeviceDetails(int deviceId) const;
-    Q_INVOKABLE QString      saveDeviceBasicFields(int deviceId, const QString &name, int parentId, const QString &path);
+    Q_INVOKABLE QString      saveDeviceBasicFields(int deviceId, const QString &name, int parentId, const QString &path, const QString &comment);
     Q_INVOKABLE QVariantMap  checkCatalogOptionChanges(int deviceId, const QString &fileType, bool includeSubDir,
                                                        bool includeHidden,
                                                        const QString &includeMetadata, const QString &includeChecksum,

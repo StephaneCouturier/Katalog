@@ -193,13 +193,33 @@ Kirigami.AbstractCard {
                 Layout.fillWidth: true
                 spacing: Kirigami.Units.smallSpacing
 
-                Kirigami.Heading {
+                RowLayout {
                     Layout.fillWidth: true
-                    level: 2
-                    text: card.devName
-                    elide: Text.ElideRight
-                    maximumLineCount: 1
-                    font.pointSize: Kirigami.Theme.defaultFont.pointSize * card.delegateCardScale
+                    spacing: Kirigami.Units.smallSpacing
+
+                    Kirigami.Heading {
+                        Layout.fillWidth: true
+                        level: 2
+                        text: card.devName
+                        elide: Text.ElideRight
+                        maximumLineCount: 1
+                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * card.delegateCardScale
+                    }
+
+                    // The user's own note, beside the name when there is one.
+                    // Sized like the detail line below the name rather than like
+                    // the heading, so it annotates the name without competing
+                    // with it (SpecDeviceComment.md).
+                    Controls.Label {
+                        Layout.maximumWidth: parent.width * 0.5
+                        visible: text.length > 0
+                        text: card.modelData.comment !== undefined
+                              ? card.modelData.comment : ""
+                        elide: Text.ElideRight
+                        maximumLineCount: 1
+                        opacity: 0.7
+                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * card.delegateCardScale * 0.8
+                    }
                 }
 
                 Controls.Label {

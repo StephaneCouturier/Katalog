@@ -86,6 +86,9 @@ public:
         qint64 freeSpace = 0;
         int groupID = 0;
         int order = 0;
+        // Free-text note the user can attach to any device type (SpecDeviceComment.md).
+        // Storage keeps its own Comment 1/2/3 in addition to this one.
+        QString comment;
         QDateTime dateTimeUpdated;
 
         //Contents
@@ -180,6 +183,7 @@ public:
             qint64  freeSpace      = 0;
             bool    isActive       = false;
             QString dateUpdated;
+            QString comment;
         };
         static QList<DeviceTreeNode> loadDeviceTree(const QString &connectionName,
                                                     int scopeDeviceId = 0);

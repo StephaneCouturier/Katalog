@@ -35,6 +35,7 @@
 #include "catalog.h"
 #include <QMutex>
 #include <QStorageInfo>
+#include <QSet>
 
 namespace {
 
@@ -454,7 +455,7 @@ void Collection::loadDeviceFileToTable()
                 QTextStream stream(&newDeviceFile);
                 stream << "ID\tParent ID\tName\tType\tExternalID\tPath\t"
                        << "total_file_size\ttotal_file_count\ttotal_space\t"
-                       << "free_space\tactive\tgroupID\tdate updated\torder\n";
+                       << "free_space\tactive\tgroupID\tdate updated\torder\tcomment\n";
                 newDeviceFile.close();
             } else {
                 qWarning() << "WARNING: DEBUG: Failed to create device file:" << newDeviceFile.errorString();
@@ -462,14 +463,23 @@ void Collection::loadDeviceFileToTable()
             }
         }
 
-        // Load Device lines to table
+        // Load Device lines to table.
+        // The header tells us which format this file is in: one written before
+        // the comment column existed had its free-text fields written raw, and
+        // unescaping it would turn a device literally named "Backup\test" into
+        // one with a tab in its name. Only a file that declares the comment
+        // column is unescaped (SpecDeviceComment.md).
+        bool escapedFormat = false;
         while (true)
         {
             QString line = textStream.readLine();
             if (line.isNull())
                 break;
             else
-                if (line.left(2)!="ID"){ // Skip header line
+                if (line.left(2)=="ID"){ // Header line
+                    escapedFormat = line.split('\t').contains(QLatin1String("comment"));
+                }
+                else {
 
                     // Split the string with tabulation into a list
                     QStringList fieldList = line.split('\t');
@@ -494,7 +504,8 @@ void Collection::loadDeviceFileToTable()
                                         device_active,
                                         device_group_id,
                                         device_date_updated,
-                                        device_order )
+                                        device_order,
+                                        device_comment )
                         VALUES(
                                         :device_id,
                                         :device_parent_id,
@@ -509,16 +520,20 @@ void Collection::loadDeviceFileToTable()
                                         :device_active,
                                         :device_group_id,
                                         :device_date_updated,
-                                        :device_order )
+                                        :device_order,
+                                        :device_comment )
                     )");
                     insertQuery.prepare(querySQL);
                     insertQuery.bindValue(":device_id", fieldList[0].toInt());
                     insertQuery.bindValue(":device_parent_id", fieldList[1].toInt());
-                    insertQuery.bindValue(":device_name", fieldList[2]);
+                    const auto readField = [escapedFormat](const QString &raw) {
+                        return escapedFormat ? unescapeHistoryField(raw) : raw;
+                    };
+                    insertQuery.bindValue(":device_name", readField(fieldList[2]));
                     if(fieldList.size() > 3){ // Prevent issues with old files
                         insertQuery.bindValue(":device_type", fieldList[3]);
                         insertQuery.bindValue(":device_external_id", fieldList[4].toInt());
-                        insertQuery.bindValue(":device_path", fieldList[5]);
+                        insertQuery.bindValue(":device_path", readField(fieldList[5]));
                         insertQuery.bindValue(":device_total_file_size", fieldList[6].toLongLong());
                         insertQuery.bindValue(":device_total_file_count", fieldList[7].toLongLong());
                         insertQuery.bindValue(":device_total_space", fieldList[8].toLongLong());
@@ -535,6 +550,11 @@ void Collection::loadDeviceFileToTable()
                         insertQuery.bindValue(":device_date_updated", fieldList[12]);
                         insertQuery.bindValue(":device_order", fieldList[13].toInt());
                     }
+                    // Absent from every legacy file, so bound separately and
+                    // defaulted to empty rather than assumed present.
+                    insertQuery.bindValue(":device_comment",
+                                          fieldList.size() > 14 ? readField(fieldList[14])
+                                                                : QString());
                     insertQuery.exec();
                 }
         }
@@ -1301,11 +1321,20 @@ void Collection::saveDeviceTableToFile()
                                             device_active              ,
                                             device_group_id            ,
                                             device_date_updated        ,
-                                            device_order
+                                            device_order               ,
+                                            device_comment
                                     FROM device
                             )");
         query.prepare(querySQL);
-        query.exec();
+        if (!query.exec()) {
+            // Opening the file below truncates it. Bailing out here keeps the
+            // previous contents: a failed SELECT — a column missing after an
+            // incomplete migration, for instance — would otherwise replace every
+            // device with a header-only file.
+            qWarning() << "WARNING: Collection::saveDeviceTableToFile() / device query failed, "
+                          "keeping the existing file:" << query.lastError().text();
+            return;
+        }
 
         //Write data
         if (deviceFile.open(QFile::WriteOnly | QFile::Text)) {
@@ -1326,16 +1355,29 @@ void Collection::saveDeviceTableToFile()
                              << "active"     << "\t"
                              << "groupID"    << "\t"
                              << "date updated"    << "\t"
-                             << "order"
+                             << "order"      << "\t"
+                             // The presence of this column is the file-format
+                             // marker: a header without it is a legacy file whose
+                             // free-text fields were written raw and MUST be read
+                             // back raw (SpecDeviceComment.md).
+                             << "comment"
                              << '\n';
 
             //Iterate the records and generate lines
+            // Free-text columns are escaped: the file is tab-separated and
+            // newline-terminated with no quoting, so a tab or newline in a name,
+            // a path or a comment would split the record and corrupt every
+            // record after it.
+            const QSet<int> freeTextColumns = { 2 /*name*/, 5 /*path*/, 14 /*comment*/ };
             while (query.next()) {
                 const QSqlRecord record = query.record();
                 for (int i=0, recCount = record.count() ; i<recCount ; ++i){
                     if (i>0)
                         textStreamToFile << '\t';
-                    textStreamToFile << record.value(i).toString();
+                    const QString value = record.value(i).toString();
+                    textStreamToFile << (freeTextColumns.contains(i)
+                                             ? escapeHistoryField(value)
+                                             : value);
                 }
                 //Write the result in the file
                 textStreamToFile << '\n';

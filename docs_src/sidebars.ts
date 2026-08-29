@@ -89,7 +89,8 @@ export default {
                 'SpecDevicesSplit',
                 'SpecBackup',
                 'SpecExplore',
-                'SpecAbout'
+                'SpecAbout',
+                'SpecDeviceComment'
                 ],
       },
        'Development-Repository',

@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+154"/>
         <location line="+87"/>
         <location line="+14"/>
-        <location line="+3819"/>
+        <location line="+3823"/>
         <source>Search</source>
         <translation>Пошук</translation>
     </message>
     <message>
-        <location line="-3916"/>
+        <location line="-3920"/>
         <source>Stopped</source>
         <translation>Зупинено</translation>
     </message>
@@ -46,7 +46,7 @@
         <location line="+58"/>
         <location line="+1685"/>
         <location line="+527"/>
-        <location line="+1207"/>
+        <location line="+1211"/>
         <location line="+11"/>
         <location line="+60"/>
         <location line="+344"/>
@@ -54,14 +54,14 @@
         <translation>Виконується</translation>
     </message>
     <message>
-        <location line="-3820"/>
-        <location line="+3457"/>
+        <location line="-3824"/>
+        <location line="+3461"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Завершено</translation>
     </message>
     <message>
-        <location line="-3142"/>
+        <location line="-3146"/>
         <source>Empty database path provided</source>
         <translation>Вказано порожній шлях до бази даних</translation>
     </message>
@@ -147,12 +147,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2354"/>
+        <location line="+2358"/>
         <source>Size</source>
         <translation>Розмір</translation>
     </message>
     <message>
-        <location line="-2353"/>
+        <location line="-2357"/>
         <source>Date</source>
         <translation>Дата</translation>
     </message>
@@ -347,14 +347,14 @@ Choose a different name and try again.</source>
         <translation>Не вдалося відкрити файл: %1</translation>
     </message>
     <message>
-        <location line="+152"/>
+        <location line="+153"/>
         <source>There is already a catalog with this name: %1
 Choose a different name.</source>
         <translation>Каталог із такою назвою вже існує: %1
 Виберіть іншу назву.</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+18"/>
         <source>A Catalog in the Physical group can only be set under a Storage device.</source>
         <translation>Каталог із групи «Фізичні» можна розмістити лише під пристроєм сховища.</translation>
     </message>
@@ -644,7 +644,7 @@ Choose a different name.</source>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2479"/>
+        <location filename="../core/collection.cpp" line="+2513"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Ця тека містить файли колекції в режимі пам&apos;яті, але ви зараз у режимі файлів.&lt;br/&gt;Перейдіть до режиму пам&apos;яті або виберіть іншу теку.</translation>
     </message>
@@ -680,7 +680,7 @@ Choose a different name.</source>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+219"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+223"/>
         <source>Collection</source>
         <translation>Колекція</translation>
     </message>
@@ -1972,7 +1972,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Повний Розширений</translation>
     </message>
     <message>
-        <location filename="../core/device.cpp" line="+651"/>
+        <location filename="../core/device.cpp" line="+660"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
         <translation>Чи хочете &lt;span style=&apos;color: red&apos;;&gt;видалити&lt;/span&gt; цей %1 пристрій?</translation>
     </message>
@@ -6467,12 +6467,12 @@ to the trash?</source>
 <context>
     <name>PageDeviceEditForm</name>
     <message>
-        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+102"/>
+        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+103"/>
         <source>Provide a name for this device.</source>
         <translation>Вкажіть назву цього пристрою.</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+23"/>
         <source>Source path: %1 → %2</source>
         <translation>Шлях джерела: %1 → %2</translation>
     </message>
@@ -6483,12 +6483,12 @@ to the trash?</source>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+249"/>
+        <location line="+257"/>
         <source>Type</source>
         <translation>Тип</translation>
     </message>
     <message>
-        <location line="-246"/>
+        <location line="-254"/>
         <source>Name</source>
         <translation>Назва</translation>
     </message>
@@ -6498,7 +6498,12 @@ to the trash?</source>
         <translation>Батьківський пристрій</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+20"/>
+        <source>Comment</source>
+        <translation>Коментар</translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>Location</source>
         <translation>Розташування</translation>
     </message>
@@ -7914,7 +7919,7 @@ Errors: %3</source>
         <translation>Редагувати</translation>
     </message>
     <message>
-        <location line="+107"/>
+        <location line="+122"/>
         <source>Collapse</source>
         <translation>Згорнути</translation>
     </message>

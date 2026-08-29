@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+154"/>
         <location line="+87"/>
         <location line="+14"/>
-        <location line="+3819"/>
+        <location line="+3823"/>
         <source>Search</source>
         <translation>खोज</translation>
     </message>
     <message>
-        <location line="-3916"/>
+        <location line="-3920"/>
         <source>Stopped</source>
         <translation>रोका गया</translation>
     </message>
@@ -46,7 +46,7 @@
         <location line="+58"/>
         <location line="+1685"/>
         <location line="+527"/>
-        <location line="+1207"/>
+        <location line="+1211"/>
         <location line="+11"/>
         <location line="+60"/>
         <location line="+344"/>
@@ -54,14 +54,14 @@
         <translation>प्रगति में</translation>
     </message>
     <message>
-        <location line="-3820"/>
-        <location line="+3457"/>
+        <location line="-3824"/>
+        <location line="+3461"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>पूर्ण हुआ</translation>
     </message>
     <message>
-        <location line="-3142"/>
+        <location line="-3146"/>
         <source>Empty database path provided</source>
         <translation>रिक्त डेटाबेस पथ प्रदान किया गया</translation>
     </message>
@@ -147,12 +147,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2354"/>
+        <location line="+2358"/>
         <source>Size</source>
         <translation>आकार</translation>
     </message>
     <message>
-        <location line="-2353"/>
+        <location line="-2357"/>
         <source>Date</source>
         <translation>दिनांक</translation>
     </message>
@@ -347,14 +347,14 @@ Choose a different name and try again.</source>
         <translation>फ़ाइल नहीं खोली जा सकी: %1</translation>
     </message>
     <message>
-        <location line="+152"/>
+        <location line="+153"/>
         <source>There is already a catalog with this name: %1
 Choose a different name.</source>
         <translation>इस नाम का कैटलॉग पहले से मौजूद है: %1
 कोई दूसरा नाम चुनें।</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+18"/>
         <source>A Catalog in the Physical group can only be set under a Storage device.</source>
         <translation>भौतिक समूह का कैटलॉग केवल किसी स्टोरेज डिवाइस के अंतर्गत सेट किया जा सकता है।</translation>
     </message>
@@ -644,7 +644,7 @@ Choose a different name.</source>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2479"/>
+        <location filename="../core/collection.cpp" line="+2513"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>इस फ़ोल्डर में मेमोरी मोड संग्रह फ़ाइलें हैं, लेकिन आप वर्तमान में फ़ाइल मोड में हैं।&lt;br/&gt;मेमोरी मोड पर स्विच करें या कोई भिन्न फ़ोल्डर चुनें।</translation>
     </message>
@@ -680,7 +680,7 @@ Choose a different name.</source>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+219"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+223"/>
         <source>Collection</source>
         <translation>संग्रह</translation>
     </message>
@@ -1972,7 +1972,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>पूर्ण विस्तारित</translation>
     </message>
     <message>
-        <location filename="../core/device.cpp" line="+651"/>
+        <location filename="../core/device.cpp" line="+660"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
         <translation>क्या आप इस %1 डिवाइस को &lt;span style=&apos;color: red&apos;;&gt;डिलीट&lt;/span&gt; करना चाहते हैं?</translation>
     </message>
@@ -6466,12 +6466,12 @@ to the trash?</source>
 <context>
     <name>PageDeviceEditForm</name>
     <message>
-        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+102"/>
+        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+103"/>
         <source>Provide a name for this device.</source>
         <translation>इस डिवाइस के लिए एक नाम दें।</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+23"/>
         <source>Source path: %1 → %2</source>
         <translation>स्रोत पथ: %1 → %2</translation>
     </message>
@@ -6482,12 +6482,12 @@ to the trash?</source>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+249"/>
+        <location line="+257"/>
         <source>Type</source>
         <translation>प्रकार</translation>
     </message>
     <message>
-        <location line="-246"/>
+        <location line="-254"/>
         <source>Name</source>
         <translation>नाम</translation>
     </message>
@@ -6497,7 +6497,12 @@ to the trash?</source>
         <translation>मूल डिवाइस</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+20"/>
+        <source>Comment</source>
+        <translation>टिप्पणी</translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>Location</source>
         <translation>स्थान</translation>
     </message>
@@ -7913,7 +7918,7 @@ Errors: %3</source>
         <translation>संपादन</translation>
     </message>
     <message>
-        <location line="+107"/>
+        <location line="+122"/>
         <source>Collapse</source>
         <translation>संक्षिप्त करें</translation>
     </message>

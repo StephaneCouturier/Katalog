@@ -1,8 +1,8 @@
 ---
-version: "2.12"
+version: "2.13"
 ---
 # Devices
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![2.13](https://img.shields.io/badge/Version-2.13-blue)
 
 ## Summary
 This page describes the concept of **Device** in Katalog and the top part of the **Devices** screen.
@@ -28,6 +28,8 @@ This gives a way to search in these only, and provides totals of number and size
     * The **Physical group** is a unique and reserved group for the hierarchy of physical devices (computer, phone, disk, etc.).
 
     * Any other is a **Virtual group** to which existing catalogs can be assigned to facilitate searching and statistics.
+
+* Any device can have a **Comment**: a free text note, entered on the device edit form and shown next to the device name in the Devices list.
 
 ### Hierarchy
 

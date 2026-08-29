@@ -1,8 +1,8 @@
 ---
-version: "2.12"
+version: "2.13"
 ---
 # Zařízení
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![2.13](https://img.shields.io/badge/Version-2.13-blue)
 
 ## Souhrn
 Tato stránka popisuje koncept **Zařízení** v Katalogu a horní část obrazovky **Zařízení**.
@@ -28,6 +28,8 @@ To umožňuje vyhledávat pouze v nich a poskytuje celkový počet a velikost fo
     * **Fyzická skupina** je jedinečná a vyhrazená skupina pro hierarchii fyzických zařízení (počítač, telefon, disk atd.).
 
     * Jakákoli jiná je **Virtuální skupina**, ke které lze přiřadit existující katalogy pro usnadnění vyhledávání a statistiky.
+
+* Každé zařízení může mít **Komentář**: volný textový popisek, který se zadává ve formuláři úprav zařízení a zobrazuje se vedle názvu zařízení v seznamu zařízení.
 
 ### Hierarchie
 

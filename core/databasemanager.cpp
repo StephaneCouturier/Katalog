@@ -131,5 +131,12 @@ QSqlError DatabaseManager::runMigrations(const QString &connectionName, Collecti
         if (err.type() != QSqlError::NoError) return err;
     }
 
+    // Same reason: device_comment joined the 2.13 cycle after collections had
+    // already been stamped 2.13, so runMigration_2_13 no longer runs for them.
+    {
+        QSqlError err = Database::ensureDeviceCommentColumn(connectionName);
+        if (err.type() != QSqlError::NoError) return err;
+    }
+
     return QSqlError();
 }
