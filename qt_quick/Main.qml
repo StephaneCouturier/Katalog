@@ -1217,6 +1217,10 @@ Kirigami.ApplicationWindow {
             id: selectionListView1
             model: appManager1.deviceFilterModel
             delegate: PageSelectionDelegate {}
+            // Without this, delegates keep painting outside the viewport while
+            // the list scrolls — which is how card icons ended up drawn over the
+            // search history dialog.
+            clip: true
             topMargin: Kirigami.Units.smallSpacing
             spacing: Kirigami.Units.largeSpacing
         }

@@ -209,6 +209,7 @@ ColumnLayout {
 
     function _refreshHistoryModel() {
         historyListModel.clear()
+        historyListView.widestRow = 0
         var hist = appManager1.getSearchHistory()
         for (var i = 0; i < hist.length; ++i)
             historyListModel.append(hist[i])
@@ -464,40 +465,92 @@ ColumnLayout {
             }
         ]
 
+        // Kept within the Search page's own column, never over the Selection
+        // panel beside it. Selection cards drawn under this dialog composite on
+        // top of it on any repaint — a Qt Quick layering fault we cannot correct
+        // from here, so the dialog stays clear of that area instead. Anything
+        // that lets it cover Selection again brings the artifact back.
+        //
+        // The popup's parent is the window overlay, so its coordinates are
+        // window coordinates and the page origin has to be mapped into them.
+        // width and applicationWindow().width are read inside the binding so it
+        // re-evaluates when the window or the column layout changes.
+        // Recomputed on every open rather than bound: mapToItem() is not a
+        // reactive expression, so after the page stack changed — running a search
+        // and closing Results — a bound origin kept the position the page had had
+        // before, and the dialog drifted back over Selection.
+        onAboutToShow: {
+            width  = Math.min(applicationWindow().width * 0.8, pageSearchForm.width)
+            height = applicationWindow().height * 0.8
+            var origin = pageSearchForm.mapToItem(searchHistoryDialog.parent, 0, 0)
+            x = origin.x + (pageSearchForm.width - width) / 2
+            y = (applicationWindow().height - height) / 2
+        }
+
         contentItem: ListView {
             id: historyListView
-            implicitWidth: Kirigami.Units.gridUnit * 30
-            implicitHeight: Math.min(contentHeight, Kirigami.Units.gridUnit * 20)
             clip: true
             model: ListModel { id: historyListModel }
 
-            delegate: Controls.ItemDelegate {
-                width: historyListView.width
-                contentItem: ColumnLayout {
-                    spacing: Kirigami.Units.smallSpacing / 2
-                    // Date and the device the search covered, on one line, so the
-                    // scope is visible before an entry is chosen (SEL-F2).
-                    RowLayout {
-                        Layout.fillWidth: true
-                        spacing: Kirigami.Units.smallSpacing
+            // Widest row seen so far, reported by the delegates as they are
+            // created. Rows are laid out at their natural width and the list
+            // scrolls sideways to reach them, so no name or criteria list is
+            // ever shortened to fit.
+            property real widestRow: 0
 
-                        Controls.Label {
-                            text: model.dateTime
-                            color: Kirigami.Theme.disabledTextColor
-                        }
-                        Controls.Label {
-                            // Empty means the search covered every device; the
-                            // wording comes from the existing "All" in this file,
-                            // so nothing new needs translating.
-                            text: model.deviceName.length > 0 ? model.deviceName : qsTr("All")
-                            Layout.fillWidth: true
-                            elide: Text.ElideRight
-                            color: Kirigami.Theme.disabledTextColor
-                        }
-                    }
+            contentWidth: Math.max(width, widestRow)
+            flickableDirection: Flickable.AutoFlickDirection
+
+            // A long history scrolls rather than running past the dialog.
+            Controls.ScrollBar.vertical: Controls.ScrollBar {
+                policy: Controls.ScrollBar.AsNeeded
+            }
+            Controls.ScrollBar.horizontal: Controls.ScrollBar {
+                policy: Controls.ScrollBar.AsNeeded
+            }
+
+            delegate: Controls.ItemDelegate {
+                id: historyDelegate
+
+                // Natural width when the content needs more than the viewport,
+                // so the row is never squeezed into an ellipsis.
+                width: Math.max(historyListView.width,
+                                historyRow.implicitWidth + leftPadding + rightPadding)
+                onWidthChanged: historyListView.widestRow =
+                                Math.max(historyListView.widestRow, width)
+                // One line per entry: when, on what, with what criteria — read
+                // left to right, each group set off by a rule so the eye can
+                // scan a column at a time (SEL-F2).
+                contentItem: RowLayout {
+                    id: historyRow
+                    spacing: Kirigami.Units.largeSpacing
+
                     Controls.Label {
+                        text: model.dateTime
+                        color: Kirigami.Theme.disabledTextColor
+                    }
+
+                    Kirigami.Separator {
+                        Layout.preferredHeight: Kirigami.Units.gridUnit
+                        Layout.alignment: Qt.AlignVCenter
+                    }
+
+                    Controls.Label {
+                        // Empty means the search covered every device; the wording
+                        // comes from the existing "All" in this file, so nothing
+                        // new needs translating.
+                        text: model.deviceName.length > 0 ? model.deviceName : qsTr("All")
+                    }
+
+                    Kirigami.Separator {
+                        Layout.preferredHeight: Kirigami.Units.gridUnit
+                        Layout.alignment: Qt.AlignVCenter
+                    }
+
+                    Controls.Label {
+                        // Shown in full on one line; the list scrolls sideways
+                        // rather than cutting the criteria short.
                         text: model.summary.length > 0 ? model.summary : qsTr("(no text filter)")
-                        wrapMode: Text.WordWrap
                         Layout.fillWidth: true
                         font.bold: true
                         font.italic: model.summary.length === 0
