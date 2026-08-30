@@ -235,6 +235,18 @@ void AppManager::executeSearch()
     // Capture device path at search time so Results page shows the right device
     searchObject->devicePath = Device::getDevicePath(selectedDevice->ID, m_connectionName);
 
+    // Record the device the search is about to run against. K2 does this in
+    // saveSearchCriteria (mainwindow_tab_search_pr.cpp:288-314); K3 never did, so
+    // the field kept whatever a previous history restore had left in it and every
+    // entry was saved against the same stale device (SpecSelection.md SEL-F1).
+    // 0 is the "All devices" convention, as in K2.
+    searchObject->selectedDeviceIDList.clear();
+    if (searchObject->searchInCatalogsChecked)
+        searchObject->selectedDeviceIDList.append(
+            (selectedDevice->type == QLatin1String("All")) ? 0 : selectedDevice->ID);
+    else
+        searchObject->selectedDeviceIDList.append(0);
+
     // Save criteria to history table before search (mirrors SearchManager::startSearchJobStoppable)
     searchObject->saveSearchHistoryToTable(m_connectionName);
 
@@ -1407,6 +1419,9 @@ QVariantList AppManager::getSearchHistory() const
     // 24 folder_criteria_checked  25 show_folders  26 tag_checked  27 tag
 
     QVariantList result;
+    // One lookup per distinct device rather than per row: a long history is
+    // usually a handful of devices searched repeatedly.
+    QHash<int, QString> deviceNameById;
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
     query.prepare(QLatin1String(R"(
         SELECT date_time,
@@ -1418,7 +1433,8 @@ QVariantList AppManager::getSearchHistory() const
                metadata_checked,
                duplicates_checked, duplicates_name, duplicates_size, duplicates_date_modified, duplicates_checksum,
                differences_checked,
-               folder_criteria_checked, show_folders, tag_checked, tag
+               folder_criteria_checked, show_folders, tag_checked, tag,
+               selected_device_ID_list
         FROM search ORDER BY date_time DESC
     )"));
     if (!query.exec())
@@ -1488,9 +1504,32 @@ QVariantList AppManager::getSearchHistory() const
             }
         }
 
+        // Device the search was run against (SpecSelection.md SEL-F2). Only the
+        // stored id comes from this query; the name is resolved through the
+        // ordinary Device accessor rather than by joining the device table here
+        // (SEL-C5). Empty means "all devices" — QML supplies the wording, so no
+        // new translatable string is introduced (SEL-C4).
+        QString deviceName;
+        const QString storedIds = query.value(28).toString();
+        const int scopeId = storedIds.section(QLatin1Char(','), 0, 0).toInt();
+        if (scopeId > 0) {
+            auto cached = deviceNameById.constFind(scopeId);
+            if (cached != deviceNameById.constEnd()) {
+                deviceName = cached.value();
+            } else {
+                Device dev;
+                dev.setConnectionName(m_connectionName);
+                dev.ID = scopeId;
+                dev.loadDevice(m_connectionName);
+                deviceName = dev.name;
+                deviceNameById.insert(scopeId, deviceName);
+            }
+        }
+
         QVariantMap entry;
-        entry["dateTime"] = query.value(0).toString();
-        entry["summary"]  = parts.join(QLatin1String("  |  "));
+        entry["dateTime"]   = query.value(0).toString();
+        entry["deviceName"] = deviceName;
+        entry["summary"]    = parts.join(QLatin1String("  |  "));
         result.append(entry);
     }
     return result;

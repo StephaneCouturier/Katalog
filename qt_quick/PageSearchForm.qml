@@ -475,10 +475,25 @@ ColumnLayout {
                 width: historyListView.width
                 contentItem: ColumnLayout {
                     spacing: Kirigami.Units.smallSpacing / 2
-                    Controls.Label {
-                        text: model.dateTime
+                    // Date and the device the search covered, on one line, so the
+                    // scope is visible before an entry is chosen (SEL-F2).
+                    RowLayout {
                         Layout.fillWidth: true
-                        color: Kirigami.Theme.disabledTextColor
+                        spacing: Kirigami.Units.smallSpacing
+
+                        Controls.Label {
+                            text: model.dateTime
+                            color: Kirigami.Theme.disabledTextColor
+                        }
+                        Controls.Label {
+                            // Empty means the search covered every device; the
+                            // wording comes from the existing "All" in this file,
+                            // so nothing new needs translating.
+                            text: model.deviceName.length > 0 ? model.deviceName : qsTr("All")
+                            Layout.fillWidth: true
+                            elide: Text.ElideRight
+                            color: Kirigami.Theme.disabledTextColor
+                        }
                     }
                     Controls.Label {
                         text: model.summary.length > 0 ? model.summary : qsTr("(no text filter)")

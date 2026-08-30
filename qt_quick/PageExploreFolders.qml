@@ -71,15 +71,18 @@ Item {
         root.catalogTotalSize   = appManager1.getExploreFolderStats("").totalSize
         root.selectedFolderPath = info.path
 
-        // The catalog itself is the root of the tree; the folders hang under it,
-        // so every folder level is pushed down by one.
-        var rows = [{ name: info.name, fullPath: info.path, level: 0 }]
+        // No synthetic root row for the device. The loader already returns the
+        // catalog's own directory as the tree's root — folder paths are made
+        // relative to the catalog's PARENT — so adding a device row on top gave
+        // two rows for the same thing and cost a level of indent. The selected
+        // device is named above the list anyway.
+        var rows = []
         var folders = appManager1.getExploreFolders()
         for (var i = 0; i < folders.length; i++) {
             rows.push({
                 name:     folders[i].name,
                 fullPath: folders[i].fullPath,
-                level:    folders[i].level + 1
+                level:    folders[i].level
             })
         }
         root.allFolders = rows
@@ -104,7 +107,9 @@ Item {
     // its immediate children only (expandToDepth(0)); Katalog 3 opens one rank
     // more, because a catalog's real content usually starts a folder or two
     // below the root and the first thing one did with the K2 tree was open it.
-    readonly property int initialOpenDepth: 2
+    // Dropped from 2 to 1 when the synthetic device row was removed: every level
+    // shifted up by one, so 1 keeps exactly the same folders open as before.
+    readonly property int initialOpenDepth: 1
 
     function _collapseToInitialDepth() {
         var collapsed = ({})
