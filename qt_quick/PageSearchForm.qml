@@ -312,6 +312,17 @@ ColumnLayout {
             search_comboBox_DifferencesDevice2._applyDevice(map.differencesDeviceID2)
         else
             search_comboBox_DifferencesDevice2.resetSelection()
+
+        // Device scope. Restoring every criterion but the scope re-ran the search
+        // against whatever happened to be selected, which silently produced
+        // different results (SpecSelection.md SEL-F1). Only the first id is used:
+        // the Selection page holds one device, as in K2 (SEL-C3). A device that no
+        // longer exists falls back to All rather than selecting nothing.
+        var scopeIds = map.selectedDeviceIDList ?? []
+        var scopeId  = scopeIds.length > 0 ? scopeIds[0] : 0
+        if (scopeId > 0 && !appManager1.getDeviceDetails(scopeId).name)
+            scopeId = 0
+        appManager1.selectDeviceById(scopeId)
     }
 
     Kirigami.Dialog {

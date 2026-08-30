@@ -52,10 +52,13 @@ Item {
         anchors.fill: parent
         spacing: 0
 
-        // Header: current folder path + options
+        // Header: current folder path + options. Fixed height, matching the
+        // Selection page and the Explore directory tree.
         RowLayout {
             Layout.fillWidth: true
-            Layout.margins: Kirigami.Units.smallSpacing
+            Layout.leftMargin:  Kirigami.Units.smallSpacing
+            Layout.rightMargin: Kirigami.Units.smallSpacing
+            Layout.preferredHeight: applicationWindow().headerRowHeight
             spacing: Kirigami.Units.smallSpacing
 
             Kirigami.Icon {
@@ -115,8 +118,7 @@ Item {
             Layout.fillWidth: true
             Layout.leftMargin:   Kirigami.Units.smallSpacing
             Layout.rightMargin:  Kirigami.Units.smallSpacing
-            Layout.topMargin:    Kirigami.Units.smallSpacing
-            Layout.bottomMargin: Kirigami.Units.smallSpacing
+            Layout.preferredHeight: applicationWindow().headerRowHeight
             spacing: Kirigami.Units.smallSpacing
 
             Controls.Label { text: qsTr("Number of Files") }

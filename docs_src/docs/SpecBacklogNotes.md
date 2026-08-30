@@ -95,3 +95,62 @@ them needs an approved requirement first, and (a) and (c) both change what K2
 displays.
 
 ---
+
+## Search history — raw SQL in the K3 UI layer
+
+**Identified:** 2026-08-30
+**Affects:** K3 (`qt_quick/appmanager.cpp`)
+**Related requirements:** `SpecSelection.md` — see `SEL-C5`
+
+This is a **note, not a requirement.** Nothing below is authorised work, and the
+maintainer has not ruled on it.
+
+`AppManager::getSearchHistory()` (`qt_quick/appmanager.cpp:1357`) builds and
+executes a `QSqlQuery` directly against the `search` table and formats the
+result into the history summary. The UI/core boundary rule is that `qt_quick/`
+files must not contain raw `QSqlQuery` and must delegate to a core method; this
+one does not. It predates the Selection work and was found while judging it.
+
+`SpecSelection.md` `SEL-C5` forbids **deepening** the departure — the device
+name required by `SEL-F2` must come from an existing device accessor, not from a
+new `device` join added to this query — but `SEL-C5` does not authorise moving
+the existing query, and this note does not either.
+
+**Options if this is ever taken up:** (a) move the query and the summary's data
+retrieval behind a core method on `Search` or `Collection`, leaving only the
+`tr()` fragments and the joining in `AppManager`, or (b) accept it as recorded
+drift. Either way a requirement has to be approved and written first, and (a)
+touches `core/`, which needs its own prior approval.
+
+---
+
+## Selection — *Open folder* context item is always visible in K3
+
+**Identified:** 2026-08-30
+**Affects:** K3 (`qt_quick/PageSelectionDelegate.qml`)
+**Related requirements:** `SpecSelection.md` — Scope section (the context menu's
+item set is not governed by that spec)
+
+This is a **note, not a requirement.** Nothing below is authorised work, and the
+maintainer has not ruled on it.
+
+The *Open folder* item of the Selection card context menu carries no `visible:`
+guard, so it is offered for every device of every type and whether or not a
+source path exists. The user page `Selection.md` documents it under **Catalog
+devices** only, and as "shown only when a source path is defined". K2 matches the
+documentation: `qt_widgets/mainwindow_tab_filters.cpp:317-323` builds the action
+inside the Catalog branch only, and only when `selectedDevice->path` is not
+empty. K2 also uses the icon `document-open-folder` where K3 uses
+`document-open`.
+
+The code is therefore doing something no requirement authorises and the user
+documentation contradicts. It was found while judging the Selection work of
+2026-08-30 and is outside that work's scope.
+
+**Options if this is ever taken up:** (a) add the two guards so K3 matches
+`Selection.md` and K2, (b) approve a requirement that K3 deliberately offers the
+item for every device, and correct `Selection.md` and its translations to match,
+or (c) leave it recorded. The behaviour must not be enshrined as a requirement
+merely because it exists.
+
+---

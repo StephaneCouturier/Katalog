@@ -266,12 +266,13 @@ Item {
         anchors.fill: parent
         spacing: 0
 
-        // Directories count header
+        // Directories count header. Fixed height, matching the Selection page and
+        // the Explore file list so the three line up when shown together.
         RowLayout {
             Layout.fillWidth: true
             Layout.leftMargin:  Kirigami.Units.smallSpacing
             Layout.rightMargin: Kirigami.Units.smallSpacing
-            Layout.topMargin:   Kirigami.Units.smallSpacing
+            Layout.preferredHeight: applicationWindow().headerRowHeight
             spacing: Kirigami.Units.smallSpacing
 
             Controls.Label {
@@ -302,7 +303,7 @@ Item {
             Layout.fillWidth: true
             Layout.leftMargin:  Kirigami.Units.smallSpacing
             Layout.rightMargin: Kirigami.Units.smallSpacing
-            Layout.bottomMargin: Kirigami.Units.smallSpacing
+            Layout.preferredHeight: applicationWindow().headerRowHeight
             spacing: 0
 
             Controls.ToolButton {

@@ -55,6 +55,7 @@ qt_add_qml_module(Katalog3
     QML_FILES
         Main.qml
         PageSearchForm.qml
+        DeviceIdentity.qml
         PageSelectionDelegate.qml
         PageSearchResultsForm.qml
         PageSettings.qml

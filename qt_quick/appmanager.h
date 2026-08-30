@@ -86,6 +86,7 @@ class AppManager : public QObject
     Q_PROPERTY(QString selectedDeviceName READ getSelectedDeviceName NOTIFY selectedDeviceChanged)
     Q_PROPERTY(QString selectedDeviceType READ getSelectedDeviceType NOTIFY selectedDeviceChanged)
     Q_PROPERTY(QString selectedDevicePath READ getSelectedDevicePath NOTIFY selectedDeviceChanged)
+    Q_PROPERTY(bool    selectedDeviceIsActive READ getSelectedDeviceIsActive NOTIFY selectedDeviceChanged)
     Q_PROPERTY(QString databaseMode           READ getDatabaseMode           NOTIFY databaseModeChanged)
     Q_PROPERTY(QString appReleaseDate         READ getAppReleaseDate         CONSTANT)
     Q_PROPERTY(QString databaseSchemaVersion  READ getDatabaseSchemaVersion  NOTIFY databaseModeChanged FINAL)
@@ -225,6 +226,7 @@ public slots:
     QString getSelectedDeviceName() const;
     int     getSelectedDeviceId()   const;
     QString getSelectedDeviceType() const;
+    bool    getSelectedDeviceIsActive() const;
 
     Q_INVOKABLE QStringList  getTagNames() const;
 
@@ -394,6 +396,10 @@ public slots:
     // File / folder operations from results
     Q_INVOKABLE void    openFile(const QString &filePath);
     Q_INVOKABLE void    openFolder(const QString &folderPath);
+    // Row of a device in the filtered Selection list, or -1 when it is not shown.
+    // Lets the UI scroll to a device without hardcoding a role number.
+    Q_INVOKABLE int     selectionRowForDevice(int deviceId) const;
+
     Q_INVOKABLE void    copyToClipboard(const QString &text);
     // Version and environment facts for pasting into a bug report (SpecAbout.md).
     Q_INVOKABLE QString systemInformation();

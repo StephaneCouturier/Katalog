@@ -124,6 +124,14 @@ public:
             map["searchInCatalogsChecked"]  = searchInCatalogsChecked;
             map["searchInConnectedChecked"] = searchInConnectedChecked;
             map["connectedDirectory"]       = connectedDirectory;
+        //Device scope the search was run against. core/ already restores this
+        //(Search::loadSearchHistoryCriteria, core/search.cpp:903-911, column 44);
+        //omitting it here was the reason restoring a history entry brought back
+        //every criterion except the scope (SpecSelection.md SEL-F1/SEL-C2).
+            QVariantList deviceIds;
+            for (int id : selectedDeviceIDList)
+                deviceIds.append(id);
+            map["selectedDeviceIDList"]     = deviceIds;
 
         return map;
     }

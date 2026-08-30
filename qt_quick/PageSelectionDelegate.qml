@@ -54,7 +54,11 @@ Kirigami.AbstractCard {
             visible:   root.openFeaturePage !== pageSearch
                        && root.openFeaturePage !== pageSearchResults
             height:    visible ? implicitHeight : 0
+            // Select first, so the highlighted card and the action agree
+            // (SpecSelection.md SEL-F3). Update, Open folder and Edit below
+            // deliberately do NOT select (SEL-F4).
             onTriggered: {
+                appManager1.selectDeviceById(model.deviceId)
                 appManager1.setLastPage("Search")
                 root.showPage(pageSearch)
             }
@@ -79,7 +83,9 @@ Kirigami.AbstractCard {
             icon.name: "view-list-tree"
             visible: model.type === "Catalog"
             height: visible ? implicitHeight : 0
+            // Selects first, as Search does (SEL-F3).
             onTriggered: {
+                appManager1.selectDeviceById(model.deviceId)
                 appManager1.setLastPage("Explore")
                 exploreFolders.openByDeviceId(model.deviceId)
                 root.showPage(pageExplore)
@@ -122,48 +128,15 @@ Kirigami.AbstractCard {
             ColumnLayout {
                 Layout.fillWidth: true
 
-                RowLayout {
-                    Kirigami.Icon {
-                        source: model.type === "Virtual" ? "drive-multidisk" :
-                                model.type === "Storage" ? "drive-harddisk" :
-                                model.isActive ? "media-optical-blu-ray" : "media-optical"
-                        // Sized to the text beside it rather than to the icon
-                        // theme's default, which is taller than the name line
-                        // and would set the card height on its own.
-                        implicitWidth:  Kirigami.Units.iconSizes.small
-                        implicitHeight: Kirigami.Units.iconSizes.small
-                    }
-
-                    Kirigami.Heading {
-                        Layout.fillWidth: true
-                        level: 2
-                        text: model.name
-                        elide: Text.ElideRight
-                        maximumLineCount: 1
-                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * root.cardScale
-
-                        // K2 devicetreeview.cpp — FontRole (:133-150) and
-                        // ForegroundRole (:199-218): Virtual is bold italic and
-                        // the most dimmed, Storage is bold and dimmed a little,
-                        // a Catalog is left plain so it reads as the leaf.
-                        // font.weight, not font.bold: Kirigami.Heading binds
-                        // font.weight from its own level, and that binding
-                        // overwrites whatever font.bold sets — the two are the
-                        // same underlying value. Overriding weight directly
-                        // replaces the base binding instead of racing it.
-                        font.weight: (model.type === "Virtual" || model.type === "Storage")
-                                     ? Font.Bold : Font.Normal
-                        font.italic: model.type === "Virtual"
-
-                        // K2 hardcodes #666/#999 and #444/#CCC, picking by
-                        // window lightness. Dimming the theme's own text colour
-                        // instead lands on the same contrast in both themes and
-                        // keeps working on themes that are neither plain light
-                        // nor plain dark.
-                        opacity: model.type === "Virtual" ? 0.60
-                               : model.type === "Storage" ? 0.78
-                               : 1.0
-                    }
+                // Icon and name come from the shared component, so this card and
+                // the selected-device reminder above the list cannot drift apart
+                // (SpecSelection.md SEL-C1).
+                DeviceIdentity {
+                    Layout.fillWidth: true
+                    deviceType:     model.type
+                    deviceName:     model.name
+                    deviceIsActive: model.isActive
+                    fontScale:      root.cardScale
                 }
                 Kirigami.Separator {
                     Layout.fillWidth: true

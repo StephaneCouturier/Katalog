@@ -84,7 +84,8 @@ set(K3_QML_FILES
     ${CMAKE_SOURCE_DIR}/qt_quick/Main.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/PageSearchForm.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/PageSearchResultsForm.qml
-    ${CMAKE_SOURCE_DIR}/qt_quick/PageSelectionDelegate.qml
+    ${CMAKE_SOURCE_DIR}/qt_quick/DeviceIdentity.qml
+    qt_quick/PageSelectionDelegate.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/PageSelectionView.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/PageSettings.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/PageDevicesView.qml

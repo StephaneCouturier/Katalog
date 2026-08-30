@@ -49,6 +49,11 @@ Kirigami.ApplicationWindow {
     signal searchTriggered()
     property real cardScale: 1.0
 
+    // Height of a header strip row. Selection, the Explore directory tree and the
+    // Explore file list each have two of them, and they are defined here rather
+    // than per page so the three line up when they share the screen.
+    readonly property real headerRowHeight: Kirigami.Units.gridUnit * 2
+
     // One metric for every small icon button on the Selection page — the panel
     // header and the device cards alike — so the two read as one set and the
     // buttons never set the card height.
@@ -1120,9 +1125,46 @@ Kirigami.ApplicationWindow {
             }
         }
 
-        header: Item {
+        header: ColumnLayout {
             width: parent.width
-            height: deviceSearchField.implicitHeight + Kirigami.Units.smallSpacing * 5
+            spacing: 0
+
+            // A reminder of what is currently selected, at the very top and with
+            // no label of its own — the icon and type styling say what it is
+            // (SpecSelection.md SEL-F5). Always present, including the All state,
+            // so the rows below never shift as the selection changes.
+            Controls.ItemDelegate {
+                Layout.fillWidth: true
+                Layout.leftMargin:  Kirigami.Units.gridUnit
+                Layout.rightMargin: Kirigami.Units.gridUnit
+                Layout.preferredHeight: root.headerRowHeight
+                topPadding: 0
+                bottomPadding: 0
+
+                // Scrolls the list to the selected card — the "where is it?" half
+                // of the problem this reminder solves. It deliberately does NOT
+                // change or clear the selection: it sits directly above the filter
+                // field, and a misclick that widened the search scope would be
+                // silent (SEL-F6, SEL-C7).
+                onClicked: {
+                    var row = appManager1.selectionRowForDevice(appManager1.selectedDeviceId)
+                    if (row >= 0)
+                        selectionListView1.positionViewAtIndex(row, ListView.Contain)
+                }
+
+                contentItem: DeviceIdentity {
+                    deviceType: appManager1.selectedDeviceId > 0
+                                ? appManager1.selectedDeviceType : "All"
+                    deviceName: appManager1.selectedDeviceId > 0
+                                ? appManager1.selectedDeviceName : qsTr("All")
+                    deviceIsActive: appManager1.selectedDeviceIsActive
+                    fontScale:  root.cardScale
+                }
+            }
+
+            Item {
+            Layout.fillWidth: true
+            Layout.preferredHeight: root.headerRowHeight
             RowLayout {
                 anchors {
                     left: parent.left
@@ -1167,6 +1209,7 @@ Kirigami.ApplicationWindow {
                     Controls.ToolTip.text: qsTr("Expand one level")
                     Controls.ToolTip.visible: hovered
                 }
+            }
             }
         }
 

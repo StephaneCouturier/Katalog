@@ -855,6 +855,15 @@ QString AppManager::getSelectedDeviceType() const
     return QString();
 }
 //----------------------------------------------------------------------
+bool AppManager::getSelectedDeviceIsActive() const
+{
+    // Drives the Catalog icon: an active catalog shows a different disc than an
+    // inactive one, the same rule the Selection cards use.
+    if (selectedDevice)
+        return selectedDevice->active;
+    return false;
+}
+//----------------------------------------------------------------------
 QString AppManager::getSelectedDevicePath() const
 {
     if (selectedDevice)
@@ -957,6 +966,33 @@ void AppManager::openFile(const QString &filePath)
 void AppManager::openFolder(const QString &folderPath)
 {
     QDesktopServices::openUrl(QUrl::fromLocalFile(folderPath));
+}
+//----------------------------------------------------------------------
+int AppManager::selectionRowForDevice(int deviceId) const
+{
+    if (!m_deviceFilterModel || deviceId <= 0)
+        return -1;
+
+    // Resolve the role by name rather than by number: DeviceListModel's enum is
+    // an implementation detail and inserting an enumerator would silently shift
+    // any hardcoded Qt::UserRole + N (SpecSelection.md SEL-F6).
+    const QHash<int, QByteArray> roles = m_deviceFilterModel->roleNames();
+    int deviceIdRole = -1;
+    for (auto it = roles.constBegin(); it != roles.constEnd(); ++it) {
+        if (it.value() == QByteArrayLiteral("deviceId")) {
+            deviceIdRole = it.key();
+            break;
+        }
+    }
+    if (deviceIdRole < 0)
+        return -1;
+
+    for (int row = 0, count = m_deviceFilterModel->rowCount(); row < count; ++row) {
+        const QModelIndex idx = m_deviceFilterModel->index(row, 0);
+        if (m_deviceFilterModel->data(idx, deviceIdRole).toInt() == deviceId)
+            return row;
+    }
+    return -1;
 }
 //----------------------------------------------------------------------
 void AppManager::copyToClipboard(const QString &text)
