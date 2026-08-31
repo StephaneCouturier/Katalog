@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file alias="images/Appname_Logo_v3.png">../assets/Appname_Logo_v3.png</file>
         <file alias="images/flags/bg.png">../assets/flags/bg.png</file>
         <file alias="images/flags/cn.png">../assets/flags/cn.png</file>
         <file alias="images/flags/cz.png">../assets/flags/cz.png</file>

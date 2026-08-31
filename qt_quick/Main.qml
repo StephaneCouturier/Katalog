@@ -247,28 +247,63 @@ Kirigami.ApplicationWindow {
         modal: !windowSettings.drawerPinned
         width: 200
 
-        header: Item {
-            implicitHeight: Kirigami.Units.iconSizes.smallMedium + Kirigami.Units.largeSpacing * 2.5
+        header: ColumnLayout {
+            spacing: 0
 
-            RowLayout {
-                anchors {
-                    left: parent.left; right: parent.right
-                    verticalCenter: parent.verticalCenter
-                    leftMargin: Kirigami.Units.largeSpacing
-                    rightMargin: Kirigami.Units.largeSpacing
+            // Application identity: the logo alone, since the artwork already
+            // carries the name. Same row height as the pages' header strips
+            // (root.headerRowHeight) so the drawer lines up with the page beside
+            // it, on the Katalog blue the logo is drawn for.
+            Rectangle {
+                Layout.fillWidth: true
+                // A little taller than a page's header strip: this band lines up
+                // with the page toolbar above it, which carries buttons and so
+                // stands higher than a plain row.
+                Layout.preferredHeight: root.headerRowHeight + Kirigami.Units.smallSpacing * 2.5
+                color: "#0D79A6"
+
+                Image {
+                    source: "qrc:/images/Appname_Logo_v3.png"
+                    fillMode: Image.PreserveAspectFit
+                    anchors {
+                        left: parent.left
+                        verticalCenter: parent.verticalCenter
+                        leftMargin: Kirigami.Units.largeSpacing
+                    }
+                    height: parent.height - Kirigami.Units.smallSpacing * 2
+                    // Width follows the artwork's aspect ratio rather than being
+                    // fixed, so a wordmark is not squeezed.
+                    width: Math.min(implicitWidth * (height / Math.max(1, implicitHeight)),
+                                    parent.width - Kirigami.Units.largeSpacing * 2)
                 }
-                Kirigami.Icon {
-                    source: appManager1.currentCollectionIconName
-                    Layout.preferredWidth:  Kirigami.Units.iconSizes.smallMedium
-                    Layout.preferredHeight: Kirigami.Units.iconSizes.smallMedium
-                    Layout.alignment: Qt.AlignVCenter
-                }
-                Controls.Label {
-                    text: appManager1.currentCollectionDisplayName
-                    font.bold: true
-                    elide: Text.ElideRight
-                    Layout.fillWidth: true
-                    Layout.alignment: Qt.AlignVCenter
+            }
+
+            Kirigami.Separator { Layout.fillWidth: true }
+
+            Item {
+                Layout.fillWidth: true
+                Layout.preferredHeight: root.headerRowHeight
+
+                RowLayout {
+                    anchors {
+                        left: parent.left; right: parent.right
+                        verticalCenter: parent.verticalCenter
+                        leftMargin: Kirigami.Units.largeSpacing
+                        rightMargin: Kirigami.Units.largeSpacing
+                    }
+                    Kirigami.Icon {
+                        source: appManager1.currentCollectionIconName
+                        Layout.preferredWidth:  Kirigami.Units.iconSizes.smallMedium
+                        Layout.preferredHeight: Kirigami.Units.iconSizes.smallMedium
+                        Layout.alignment: Qt.AlignVCenter
+                    }
+                    Controls.Label {
+                        text: appManager1.currentCollectionDisplayName
+                        font.bold: true
+                        elide: Text.ElideRight
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignVCenter
+                    }
                 }
             }
         }
