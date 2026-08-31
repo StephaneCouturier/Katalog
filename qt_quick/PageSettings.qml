@@ -433,6 +433,11 @@ Kirigami.ScrollablePage {
                 checked: appManager1.refreshDeviceStatusOnActivation
                 onCheckedChanged: appManager1.refreshDeviceStatusOnActivation = checked
             }
+            Controls.CheckBox {
+                text: qsTr("Allow deleting files from Katalog")
+                checked: appManager1.allowFileDeletion
+                onCheckedChanged: appManager1.allowFileDeletion = checked
+            }
         }
 
         Controls.Label { text: qsTr("Language"); opacity: 0.7; Layout.topMargin: Kirigami.Units.largeSpacing * 2; Layout.alignment: Qt.AlignTop }

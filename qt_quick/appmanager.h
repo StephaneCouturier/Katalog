@@ -102,6 +102,10 @@ class AppManager : public QObject
     Q_PROPERTY(bool searchKeepsSelection READ getSearchKeepsSelection WRITE setSearchKeepsSelection NOTIFY searchKeepsSelectionChanged)
     Q_PROPERTY(bool checkVersionChoice READ getCheckVersionChoice WRITE setCheckVersionChoice NOTIFY checkVersionChoiceChanged)
     Q_PROPERTY(bool fileSortCaseSensitive READ getFileSortCaseSensitive WRITE setFileSortCaseSensitive NOTIFY fileSortCaseSensitiveChanged)
+    // Permanent file deletion is off until the user asks for it. Gates the
+    // Delete actions on Search Results and Explore; Move to Trash is not gated,
+    // being recoverable.
+    Q_PROPERTY(bool allowFileDeletion READ getAllowFileDeletion WRITE setAllowFileDeletion NOTIFY allowFileDeletionChanged)
     Q_PROPERTY(QVariantList recentCollections READ getRecentCollections NOTIFY recentCollectionsChanged)
     Q_PROPERTY(QString currentCollectionDisplayName READ getCurrentCollectionDisplayName NOTIFY recentCollectionsChanged)
     Q_PROPERTY(QString currentCollectionIconName    READ getCurrentCollectionIconName    NOTIFY recentCollectionsChanged)
@@ -200,6 +204,8 @@ public slots:
     void setShowDeviceInfo(bool value);
     bool getRefreshDeviceStatusOnActivation() const;
     void setRefreshDeviceStatusOnActivation(bool value);
+    bool getAllowFileDeletion() const;
+    void setAllowFileDeletion(bool value);
     // Called when the application becomes active. Does nothing unless the
     // setting above is on; then skips cheaply when nothing was mounted or
     // unmounted, or when a probe already ran in the last 30 seconds.
@@ -469,6 +475,7 @@ signals:
     void showDeviceInfoChanged();
     void operationQueueChanged();
     void refreshDeviceStatusOnActivationChanged();
+    void allowFileDeletionChanged();
     void showSelectionPageChanged();
     void searchKeepsSelectionChanged();
     void deviceFilterFromSelectionChanged();

@@ -525,10 +525,42 @@ Item {
             icon.name: "edit-delete"
             visible: root._activeEntryType === "file"
             height: visible ? implicitHeight : 0
-            onTriggered: {
-                if (appManager1.deleteSingleFile(root._activeFilePath))
-                    appManager1.exploreRemoveRow(exploreTableView.selectedRow)
+            // Greyed rather than hidden while permanent deletion is switched off,
+            // so the action stays discoverable and the setting can be found.
+            enabled: appManager1.allowFileDeletion
+            onTriggered: exploreDeleteFileDialog.open()
+        }
+    }
+
+    // Permanent deletion asks first, as the Search Results one does. Without this
+    // the Explore menu destroyed a file on a single click, unrecoverably.
+    Kirigami.Dialog {
+        id: exploreDeleteFileDialog
+        title: qsTr("Delete File")
+        standardButtons: Kirigami.Dialog.Cancel
+        preferredWidth: Kirigami.Units.gridUnit * 28
+        padding: Kirigami.Units.largeSpacing
+
+        customFooterActions: [
+            Kirigami.Action {
+                text: qsTr("Delete")
+                icon.name: "edit-delete"
+                onTriggered: {
+                    if (appManager1.deleteSingleFile(root._activeFilePath)) {
+                        appManager1.exploreRemoveRow(exploreTableView.selectedRow)
+                        showPassiveNotification(qsTr("File deleted"))
+                    } else {
+                        showPassiveNotification(qsTr("Could not delete file"))
+                    }
+                    exploreDeleteFileDialog.close()
+                }
             }
+        ]
+
+        contentItem: Controls.Label {
+            text: qsTr("Permanently delete this file? This cannot be undone.\n\n%1")
+                      .arg(root._activeFilePath)
+            wrapMode: Text.WordWrap
         }
     }
 

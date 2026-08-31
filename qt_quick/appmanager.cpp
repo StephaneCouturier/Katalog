@@ -450,6 +450,25 @@ void AppManager::setRefreshDeviceStatusOnActivation(bool value)
     emit refreshDeviceStatusOnActivationChanged();
 }
 //----------------------------------------------------------------------
+bool AppManager::getAllowFileDeletion() const
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    // Off unless asked for: a user who never opens Settings cannot delete a file
+    // from a context menu by accident. This gates availability only — the
+    // confirmation dialogs still stand behind it. Stored application-wide, like
+    // every other Application setting: settingsFilePath is a Collection member
+    // but points at one file for the whole app, so the choice is made once.
+    return settings.value("Settings/AllowFileDeletion", false).toBool();
+}
+//----------------------------------------------------------------------
+void AppManager::setAllowFileDeletion(bool value)
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("Settings/AllowFileDeletion", value);
+    settings.sync();
+    emit allowFileDeletionChanged();
+}
+//----------------------------------------------------------------------
 void AppManager::refreshDeviceActiveOnActivation()
 {
     if (!getRefreshDeviceStatusOnActivation())
@@ -1260,6 +1279,13 @@ int AppManager::batchMoveSearchResultsToTrash()
 //----------------------------------------------------------------------
 int AppManager::batchDeleteSearchResults()
 {
+    // The authoritative gate. The QML binding that greys the action out is only
+    // its visual expression: a caller that forgot the binding would otherwise
+    // delete files the user never permitted.
+    if (!getAllowFileDeletion()) {
+        qWarning() << "AppManager::batchDeleteSearchResults: refused, file deletion is not enabled";
+        return 0;
+    }
     if (!searchObject || searchObject->fileNames.isEmpty())
         return 0;
     int count = 0;
@@ -1353,6 +1379,12 @@ bool AppManager::moveFileToTrash(const QString &fullPath)
 //----------------------------------------------------------------------
 bool AppManager::deleteSingleFile(const QString &fullPath)
 {
+    // The authoritative gate — see batchDeleteSearchResults(). Both Explore and
+    // Search Results reach permanent deletion through here.
+    if (!getAllowFileDeletion()) {
+        qWarning() << "AppManager::deleteSingleFile: refused, file deletion is not enabled";
+        return false;
+    }
     return QFile::remove(fullPath);
 }
 //----------------------------------------------------------------------

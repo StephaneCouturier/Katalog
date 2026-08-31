@@ -180,7 +180,10 @@ ColumnLayout {
                     text:      modelData.value === "---" ? "" : modelData.text
                     icon.name: modelData.value === "---" ? "" : modelData.iconName
                     highlighted: batchActionCombo.highlightedIndex === index
+                    // Permanent deletion is greyed unless enabled in Settings.
+                    // "trash" is deliberately not gated: it is recoverable.
                     enabled: modelData.value !== "---"
+                             && (modelData.value !== "delete" || appManager1.allowFileDeletion)
                     background: Rectangle {
                         color: modelData.value === "---"
                                ? Kirigami.Theme.backgroundColor
@@ -670,7 +673,9 @@ ColumnLayout {
         Controls.MenuItem {
             text: qsTr("Delete file")
             icon.name: "edit-delete"
-            enabled: resultContextMenu.fileName !== ""
+            // Greyed rather than hidden while permanent deletion is switched off,
+            // so the action stays discoverable and the setting can be found.
+            enabled: resultContextMenu.fileName !== "" && appManager1.allowFileDeletion
             onTriggered: {
                 deleteFileDialog.open()
             }
