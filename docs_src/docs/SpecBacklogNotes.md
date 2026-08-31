@@ -154,3 +154,56 @@ or (c) leave it recorded. The behaviour must not be enshrined as a requirement
 merely because it exists.
 
 ---
+
+## Backup — K3 run progress does not use the standard message builder
+
+**Identified:** 2026-08-31
+**Affects:** K3 (`qt_quick/PageBackupForm.qml`)
+**Related requirements:** `SpecBackup.md` — see `BKP-F9`
+
+This is a **note, not a requirement.** Nothing below is authorised work, and the
+maintainer has not ruled on it.
+
+`BKP-F9` is marked `[Implemented]` and requires that backup progress and outcome
+be "reported via the standard status-bar message builder". `SpecBackup.md`
+applies to K2 and K3 alike. On the K3 Backup page the running mapping's progress
+is a `ProgressBar` plus a label assembled in QML from raw numbers
+(`PageBackupForm.qml:445-473`: percent, files done over total, speed, ETA,
+current file), not a `StatusBarMessageBuilder` message. `BKP-F9` may well be
+satisfied on the K2 side; only the K3 surface was examined.
+
+Found while judging the activity-panel work of 2026-08-31, and outside that
+work's scope. Note that `SpecOperationQueue.md` `OPQ-C16` is deliberately scoped
+to creation, update and search, so it does not reach this screen either.
+
+**Options if this is ever taken up:** (a) build the K3 backup progress text with
+the standard builder, keeping the progress bar as an addition rather than a
+replacement, (b) qualify `BKP-F9` per version if the builder is genuinely not the
+right vehicle for a byte-and-ETA progress bar, or (c) leave it recorded.
+
+---
+
+## Activity panel — duplicated five-second delays
+
+**Identified:** 2026-08-31 (revised the same day, after the search timer was removed)
+**Affects:** K3 (`qt_quick/OperationQueueView.qml`, `qt_quick/appmanager.cpp`)
+**Related requirements:** `SpecOperationQueue.md` — see `OPQ-C14`, `OPQ-F15`
+
+This is a **note, not a requirement.** Nothing below is authorised work, and the
+maintainer has not ruled on it.
+
+`OPQ-C14` requires the panel's linger to be a single named constant defined in one
+place. It is `[Planned]` and is **not** satisfied today. Two hard-coded `5000`
+values remain:
+
+- `OperationQueueView.qml` — the panel's own `completionLinger`;
+- `AppManager::startNextDeviceUpdate()` — a `QTimer::singleShot(5000, ...)` that
+  clears `m_deviceUpdateStatusText` when the queue empties.
+
+The two race on the same message for the device-update path, which is the exact
+situation `OPQ-C14` exists to prevent. The equivalent timer on the search path was
+removed when `OPQ-F15` was implemented, so search is now clean; the update path is
+not. Satisfying `OPQ-C14` means the update timer goes the same way and the constant
+gets a single definition.
+
+---

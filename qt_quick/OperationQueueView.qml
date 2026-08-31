@@ -13,10 +13,15 @@ import org.kde.kirigami as Kirigami
 Controls.ToolBar {
     id: root
 
-    readonly property bool busy: appManager1.catalogIsCreating || appManager1.deviceUpdateIsRunning
+    // Creation, update and search all report here and nowhere else (OPQ-C16).
+    readonly property bool busy: appManager1.catalogIsCreating
+                                 || appManager1.deviceUpdateIsRunning
+                                 || appManager1.searchIsRunning
     readonly property string statusText: appManager1.catalogIsCreating
                                          ? appManager1.catalogStatusText
-                                         : appManager1.deviceUpdateStatusText
+                                         : appManager1.searchIsRunning
+                                           ? appManager1.searchStatusText
+                                           : appManager1.deviceUpdateStatusText
 
     // How long the panel stays up after the work ends. The catalog job runs on
     // the GUI thread and pumps the event loop by hand, so a small catalog can
@@ -70,7 +75,10 @@ Controls.ToolBar {
             // tail: a turning indicator must never sit beside a "Completed"
             // line. During the tail the row shows the message alone.
             Controls.BusyIndicator {
-                running: root.busy
+                // Not simply `busy`: a paused search is still "running", and an
+                // indicator that keeps turning would say work is happening when
+                // none is (OPQ-C12).
+                running: root.busy && !appManager1.searchIsPaused
                 visible: root.busy
                 implicitWidth:  Kirigami.Units.gridUnit * 1.2
                 implicitHeight: Kirigami.Units.gridUnit * 1.2
@@ -90,6 +98,8 @@ Controls.ToolBar {
                 onClicked: {
                     if (appManager1.catalogIsCreating)
                         appManager1.stopCatalogCreation()
+                    else if (appManager1.searchIsRunning)
+                        appManager1.stopSearch()
                     else
                         appManager1.stopDeviceUpdate()
                 }

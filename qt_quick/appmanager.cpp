@@ -229,6 +229,17 @@ void AppManager::executeSearch()
         return;
     }
 
+    // A catalog update or creation is a blocking call on this same thread that
+    // keeps the UI alive by pumping the event loop, so a search can be requested
+    // while one runs. Running it here would nest inside that job's call stack and
+    // share its database connection. The UI also refuses this (Main.qml
+    // runSearch), but the guard belongs where the damage would be done.
+    if (m_deviceUpdateIsRunning || m_catalogIsCreating
+        || (m_deviceUpdateManager && m_deviceUpdateManager->operationRunning())) {
+        qWarning() << "AppManager::executeSearch: refused, a catalog operation is running";
+        return;
+    }
+
     // Memory mode requires CSV loading during search
     searchObject->setMemoryModeEnabled(collection->databaseMode == "Memory");
 
@@ -273,11 +284,10 @@ void AppManager::executeSearch()
         QString resultTitle = searchObject->showFoldersOnly ? tr("Folders found") : tr("Files found");
         builder.setResult(resultTitle, searchObject->fileNames.size());
         m_searchStatusText = builder.build();
+        // Deliberately not cleared on a timer here. The activity panel owns how
+        // long a completed message stays up, under its own single constant; a
+        // second five-second timer would race it on the same message (OPQ-C14).
         emit searchStatusTextChanged();
-        QTimer::singleShot(5000, this, [this]() {
-            m_searchStatusText.clear();
-            emit searchStatusTextChanged();
-        });
     }
 
     // Persist history to CSV file (no-op for File/Hosted modes — guarded inside the method)
@@ -1921,6 +1931,13 @@ QString AppManager::createCatalog(const QString &name, const QString &path,
                                    const QString &includeChecksum,
                                    const QStringList &perCatalogExcludes)
 {
+    // A search is a blocking call on this same thread that keeps the UI alive by
+    // pumping the event loop, so Create stays reachable while one runs. Starting
+    // here would nest inside the search's call stack on the same database
+    // connection. The UI also disables the action; this is the guard that matters.
+    if (m_searchIsRunning)
+        return tr("A device operation is already running.");
+
     // Validation
     if (name.trimmed().isEmpty())
         return tr("Provide a name for this new catalog.");
@@ -2668,6 +2685,14 @@ QVariantMap AppManager::buildBatchUpdateReport(const QList<qint64> &results)
 //----------------------------------------------------------------------
 void AppManager::updateDevice(int deviceId)
 {
+    // Refused, not queued, while a search runs: nothing drains the queue when a
+    // search ends, so a queued entry would be stranded. Queuing across operation
+    // types is a separate decision that has not been taken.
+    if (m_searchIsRunning) {
+        qWarning() << "AppManager::updateDevice: refused, a search is running";
+        return;
+    }
+
     Device dev;
     dev.ID = deviceId;
     dev.loadDevice(m_connectionName);

@@ -1,8 +1,8 @@
 ---
-version: "2.12"
+version: "2.13"
 ---
 # Rechercher
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![2.13](https://img.shields.io/badge/Version-2.13-blue)
 
 ## Résumé
 Cette page décrit toutes les fonctionnalités de l'écran **Rechercher** et comment les utiliser.
@@ -197,6 +197,8 @@ Au moins un champ doit être sélectionné. *Trouver les différences* ne peut p
 
 ### Bouton Rechercher
 Cliquer sur *Rechercher* pour démarrer. Le bouton change d'état selon l'opération :
+
+Une recherche ne peut pas être lancée pendant la création d'un catalogue ou la mise à jour d'un périphérique, et celles-ci ne peuvent pas être lancées pendant une recherche : le bouton *Rechercher* est alors désactivé. La progression est affichée dans le panneau d'activité, avec toutes les autres opérations.
 
 | État | Libellé du bouton | Bouton Arrêter |
 |------|------------------|----------------|

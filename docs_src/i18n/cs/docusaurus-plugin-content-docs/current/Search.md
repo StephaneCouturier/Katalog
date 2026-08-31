@@ -1,8 +1,8 @@
 ---
-version: "2.12"
+version: "2.13"
 ---
 # Vyhledávání
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![2.13](https://img.shields.io/badge/Version-2.13-blue)
 
 ## Shrnutí
 Tato stránka popisuje všechny funkce obrazovky **Vyhledávání** a jak je používat.
@@ -197,6 +197,8 @@ Musí být vybráno alespoň jedno pole. *Najít rozdíly* nelze kombinovat s *Z
 
 ### Tlačítko Vyhledat
 Kliknutím na *Vyhledat* spustíte vyhledávání. Tlačítko mění stav podle operace:
+
+Vyhledávání nelze spustit během vytváření katalogu nebo aktualizace zařízení a ty nelze spustit během vyhledávání – tlačítko *Vyhledat* je mezitím zakázáno. Průběh se zobrazuje v panelu aktivit společně se všemi ostatními operacemi.
 
 | Stav | Popisek tlačítka | Tlačítko Zastavit |
 |------|-----------------|-------------------|

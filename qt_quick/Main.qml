@@ -1236,6 +1236,13 @@ Kirigami.ApplicationWindow {
         function runSearch() {
             if (appManager1.searchIsRunning)
                 return
+            // A catalog update or creation runs synchronously on this thread and
+            // keeps the UI alive by pumping the event loop, so the Search action
+            // stays clickable while one is in progress. Starting a search there
+            // would run it nested inside that job's call stack, re-entrantly, on
+            // the same database connection. Refuse instead.
+            if (appManager1.deviceUpdateIsRunning || appManager1.catalogIsCreating)
+                return
             root.searchTriggered()
             pageSearchForm.executeSearch()
             // If the results page is already the top of the stack, do NOT remove and
@@ -1269,6 +1276,8 @@ Kirigami.ApplicationWindow {
                 icon.name:   "edit-find"
                 displayHint: Kirigami.DisplayHint.KeepVisible
                 enabled:     !appManager1.searchIsRunning
+                             && !appManager1.deviceUpdateIsRunning
+                             && !appManager1.catalogIsCreating
                 onTriggered: pageSearch.runSearch()
             },
             Kirigami.Action {
@@ -1314,25 +1323,6 @@ Kirigami.ApplicationWindow {
             }
         ]
 
-        footer: RowLayout {
-            visible: appManager1.searchIsRunning || appManager1.searchStatusText.length > 0
-            spacing: Kirigami.Units.smallSpacing
-            Controls.BusyIndicator {
-                running: appManager1.searchIsRunning && !appManager1.searchIsPaused
-                visible: appManager1.searchIsRunning
-                implicitWidth:  Kirigami.Units.gridUnit * 1.5
-                implicitHeight: Kirigami.Units.gridUnit * 1.5
-                Layout.leftMargin: Kirigami.Units.smallSpacing
-            }
-            Controls.Label {
-                Layout.fillWidth: true
-                Layout.margins: Kirigami.Units.smallSpacing
-                text: appManager1.searchStatusText
-                textFormat: Text.StyledText
-                elide: Text.ElideRight
-                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
-            }
-        }
 
         PageSearchForm {
             id: pageSearchForm
@@ -1369,18 +1359,6 @@ Kirigami.ApplicationWindow {
             }
         ]
 
-        footer: RowLayout {
-            visible: appManager1.searchStatusText.length > 0
-            spacing: Kirigami.Units.smallSpacing
-            Controls.Label {
-                Layout.fillWidth: true
-                Layout.margins: Kirigami.Units.smallSpacing
-                text: appManager1.searchStatusText
-                textFormat: Text.StyledText
-                elide: Text.ElideRight
-                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
-            }
-        }
 
         PageSearchResultsForm {
             id: pageSearchResultsForm
@@ -1421,7 +1399,7 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
                 text: qsTr("Snapshot")
                 icon.name: "camera-photo"
-                enabled: !appManager1.deviceUpdateIsRunning
+                enabled: !appManager1.deviceUpdateIsRunning && !appManager1.searchIsRunning
                 onTriggered: {
                     var result = appManager1.recordDevicesSnapshot()
                     devSnapshotDialog.data = result
@@ -1431,7 +1409,7 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
                 text: qsTr("Insert Virtual Group")
                 icon.name: "folder-new"
-                enabled: !appManager1.deviceUpdateIsRunning
+                enabled: !appManager1.deviceUpdateIsRunning && !appManager1.searchIsRunning
                 onTriggered: {
                     var newId = appManager1.addDeviceVirtual(0)
                     if (newId > 0) {
@@ -1445,7 +1423,7 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
                 text: qsTr("Add Storage")
                 icon.name: "drive-harddisk"
-                enabled: !appManager1.deviceUpdateIsRunning
+                enabled: !appManager1.deviceUpdateIsRunning && !appManager1.searchIsRunning
                 onTriggered: {
                     var newId = appManager1.addDeviceStorage(0)
                     if (newId > 0) {

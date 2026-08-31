@@ -1,8 +1,8 @@
 ---
-version: "2.12"
+version: "2.13"
 ---
 # Search
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![2.13](https://img.shields.io/badge/Version-2.13-blue)
 
 ## Summary
 This page describes all the features of the **Search** screen and how to use them.
@@ -197,6 +197,8 @@ At least one field must be selected. *Find Differences* cannot be combined with 
 
 ### Search button
 Click *Search* to start. The button changes state depending on the operation:
+
+A search cannot be started while a catalog is being created or a device updated, and those cannot be started while a search runs — the *Search* button is disabled in the meantime. Progress is shown in the activity panel, together with all other operations.
 
 | State | Button label | Stop button |
 |-------|-------------|-------------|
