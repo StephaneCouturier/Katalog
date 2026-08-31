@@ -469,6 +469,27 @@ void AppManager::setAllowFileDeletion(bool value)
     emit allowFileDeletionChanged();
 }
 //----------------------------------------------------------------------
+int AppManager::getThemeId() const
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    // Same key, same numbering and the same fallback as K2
+    // (mainwindow_setup.cpp:370-374), so a user who already chose a theme there
+    // keeps it here without touching Settings again. Default is Katalog Colors.
+    int themeId = settings.value("Settings/Theme", 1).toInt();
+    if (themeId != 0 && themeId != 1)
+        themeId = 1;
+    return themeId;
+}
+//----------------------------------------------------------------------
+void AppManager::setThemeId(int value)
+{
+    const int themeId = (value == 0) ? 0 : 1;
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("Settings/Theme", themeId);
+    settings.sync();
+    emit themeIdChanged();
+}
+//----------------------------------------------------------------------
 void AppManager::refreshDeviceActiveOnActivation()
 {
     if (!getRefreshDeviceStatusOnActivation())

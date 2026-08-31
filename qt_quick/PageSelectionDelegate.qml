@@ -137,6 +137,10 @@ Kirigami.AbstractCard {
                     deviceName:     model.name
                     deviceIsActive: model.isActive
                     fontScale:      root.cardScale
+                    // The selected card is filled with the highlight colour, so
+                    // the name needs the colour meant to sit on it.
+                    nameColor:      card.isSelected ? Kirigami.Theme.highlightedTextColor
+                                                    : Kirigami.Theme.textColor
                 }
                 Kirigami.Separator {
                     Layout.fillWidth: true
@@ -149,6 +153,8 @@ Kirigami.AbstractCard {
                     text: model.description
                     visible: appManager1.showDeviceInfo && model.description.length > 0
                     font.pointSize: Kirigami.Theme.defaultFont.pointSize * root.cardScale * 0.8
+                    color: card.isSelected ? Kirigami.Theme.highlightedTextColor
+                                           : Kirigami.Theme.textColor
                 }
             }
 
@@ -187,14 +193,17 @@ Kirigami.AbstractCard {
             anchors.bottomMargin: -card.bottomPadding
             anchors.leftMargin:   -card.leftPadding
             anchors.rightMargin:  -card.rightPadding
-            color: Qt.rgba(Kirigami.Theme.highlightColor.r,
-                           Kirigami.Theme.highlightColor.g,
-                           Kirigami.Theme.highlightColor.b, 0.12)
+            // Filled with the border's own blue rather than a 12% wash: at that
+            // strength it was indistinguishable from the tinted page behind it.
+            color: Kirigami.Theme.highlightColor
             border.color: Kirigami.Theme.highlightColor
             border.width: 2
             radius: Kirigami.Units.cornerRadius
             visible: card.isSelected
-            z: 999
+            // Behind the content, not over it. As an overlay at z: 999 a solid
+            // fill would simply hide the card; only the old 12% alpha let the
+            // name show through.
+            z: -1
         }
     }
 }

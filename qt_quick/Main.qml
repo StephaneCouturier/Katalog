@@ -54,6 +54,19 @@ Kirigami.ApplicationWindow {
     // than per page so the three line up when they share the screen.
     readonly property real headerRowHeight: Kirigami.Units.gridUnit * 2
 
+    // Katalog's own palette, as used by K2's Katalog Colors theme
+    // (qt_widgets/mainwindow_setup.cpp). These are brand colours, so they are
+    // fixed rather than derived from Kirigami.Theme.highlightColor — that is the
+    // desktop accent, which is not blue on every theme and turned the tinted
+    // page greenish under a dark desktop.
+    readonly property color katalogBlueLight:   "#39b2e5"
+    readonly property color katalogBlue:        "#10a2df"
+    readonly property color katalogBlueDark:    "#0D79A6"
+    readonly property color katalogBlueDarkest: "#095676"
+
+    // The desktop's own background tells us which way round we are.
+    readonly property bool darkDesktop: Kirigami.Theme.backgroundColor.hslLightness < 0.5
+
     // One metric for every small icon button on the Selection page — the panel
     // header and the device cards alike — so the two read as one set and the
     // buttons never set the card height.
@@ -260,7 +273,7 @@ Kirigami.ApplicationWindow {
                 // with the page toolbar above it, which carries buttons and so
                 // stands higher than a plain row.
                 Layout.preferredHeight: root.headerRowHeight + Kirigami.Units.smallSpacing * 2.5
-                color: "#0D79A6"
+                color: root.katalogBlueDark
 
                 Image {
                     source: "qrc:/images/Appname_Logo_v3.png"
@@ -1141,6 +1154,23 @@ Kirigami.ApplicationWindow {
     //Pages - Selection
     Kirigami.ScrollablePage {
         id: pageSelection
+
+        // Tinted rather than plain: white cards on a white page gave no contrast.
+        // Only under Katalog Colors — Desktop Theme leaves the page as the
+        // desktop styles it. Derived from the theme's highlight colour rather
+        // than a literal blue, so it follows the user's accent and dark mode.
+        background: Rectangle {
+            color: !appManager1.katalogTheme
+                   ? Kirigami.Theme.backgroundColor
+                   : root.darkDesktop
+                     // The darkest brand blue: dark enough to sit under white
+                     // text and cards without competing with them.
+                     ? root.katalogBlueDarkest
+                     // A wash of the brand blue, not a solid one — the cards on
+                     // top of it stay the lightest thing on the page.
+                     : Qt.rgba(root.katalogBlue.r, root.katalogBlue.g,
+                               root.katalogBlue.b, 0.12)
+        }
         title: qsTr("Selection")
         property string deviceType: "Storage"
 

@@ -21,6 +21,10 @@ RowLayout {
     // Scales with the Selection page's card-size setting.
     property real fontScale: 1.0
 
+    // Overridden when the name sits on a filled highlight, where the ordinary
+    // text colour would have too little contrast.
+    property color nameColor: Kirigami.Theme.textColor
+
     // Font rules ported from K2's device tree (qt_widgets/devicetreeview.cpp,
     // FontRole :133-150 and ForegroundRole :199-218): Virtual is bold italic and
     // the most dimmed, Storage is bold and dimmed a little, a Catalog is left
@@ -58,5 +62,6 @@ RowLayout {
         font.weight: identity.nameWeight
         font.italic: identity.nameItalic
         opacity:     identity.nameOpacity
+        color:       identity.nameColor
     }
 }

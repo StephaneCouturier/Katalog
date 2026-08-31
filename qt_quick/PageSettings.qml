@@ -438,6 +438,19 @@ Kirigami.ScrollablePage {
                 checked: appManager1.allowFileDeletion
                 onCheckedChanged: appManager1.allowFileDeletion = checked
             }
+            RowLayout {
+                spacing: Kirigami.Units.largeSpacing
+                Controls.Label { text: qsTr("Theme"); opacity: 0.7 }
+                Controls.ComboBox {
+                    id: themeComboBox
+                    // Index is the stored value: 0 Desktop Theme, 1 Katalog
+                    // Colors — the same numbering K2 writes to Settings/Theme.
+                    model: [qsTr("Desktop Theme"), qsTr("Katalog Colors")]
+                    currentIndex: appManager1.themeId
+                    onActivated: appManager1.themeId = currentIndex
+                    Layout.preferredWidth: Kirigami.Units.gridUnit * 12
+                }
+            }
         }
 
         Controls.Label { text: qsTr("Language"); opacity: 0.7; Layout.topMargin: Kirigami.Units.largeSpacing * 2; Layout.alignment: Qt.AlignTop }
