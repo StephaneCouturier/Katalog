@@ -327,7 +327,17 @@ ColumnLayout {
 
         TableView {
             id: tableView
-            anchors { top: headerSep.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
+            // Stops above the horizontal bar rather than running under it. The
+            // attached ScrollBar.horizontal anchors itself to this view's own
+            // bottom, so it always floats over the last row whatever margin is
+            // applied; the bar therefore lives outside the view, below it.
+            anchors { top: headerSep.bottom; left: parent.left; right: parent.right
+                      bottom: horizontalScrollBar.top }
+                // Without this the view paints rows past its own bottom edge, and
+                // the scroll bar below — a later sibling, so drawn on top — cut
+                // through the row hanging over it. Only visible mid-list: at the
+                // end of the content there is no overhanging row.
+                clip: true
                 columnSpacing: 0
                 rowSpacing: 0
                 model: appManager1.searchSortModel
@@ -335,7 +345,6 @@ ColumnLayout {
                 property int selectedRow: -1
 
                 ScrollBar.vertical:   ScrollBar { policy: ScrollBar.AsNeeded }
-                ScrollBar.horizontal: ScrollBar { policy: ScrollBar.AsNeeded }
 
                 rowHeightProvider: function(row) { return 30 }
 
@@ -488,6 +497,26 @@ ColumnLayout {
                         }
                     }
                 }
+        }
+
+        // Its own item along the bottom edge, so it occupies space instead of
+        // floating over the table. Driven by the table rather than attached to
+        // it, and collapsed to nothing when the columns already fit.
+        ScrollBar {
+            id: horizontalScrollBar
+            orientation: Qt.Horizontal
+            anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
+
+            readonly property bool overflowing: tableView.contentWidth > tableView.width
+            visible: overflowing
+            height: overflowing ? implicitHeight : 0
+
+            size:     tableView.width / Math.max(1, tableView.contentWidth)
+            position: tableView.contentX / Math.max(1, tableView.contentWidth)
+            onPositionChanged: {
+                if (pressed)
+                    tableView.contentX = position * tableView.contentWidth
+            }
         }
     }
 
