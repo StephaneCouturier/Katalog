@@ -75,12 +75,23 @@ void AppManager::initiateApp()
     QString applicationDirPath = QCoreApplication::applicationDirPath();
 
     //Define Setting file path and name
+    // A pre-release build keeps its own settings file. Testers then start as a
+    // new user — no inherited theme, language, recent list or last collection —
+    // and, more to the point, the build has no stored path to reopen, so it
+    // cannot land on a real collection at startup. Opening one is still possible,
+    // it just has to be deliberate. Keyed off the version string so it lapses on
+    // its own: the suffix goes away at release, and with it this branch.
+    const bool preRelease = currentVersion.contains(QLatin1String("beta"), Qt::CaseInsensitive)
+                            || currentVersion.contains(QLatin1String("alpha"), Qt::CaseInsensitive);
+    const QString settingsFileName = preRelease ? QStringLiteral("katalog3_prerelease_settings.ini")
+                                                : QStringLiteral("katalog_settings.ini");
+
     //For portable mode, check if there is a settings file located with the executable
-    collection->settingsFilePath = applicationDirPath + "/katalog_settings.ini";
+    collection->settingsFilePath = applicationDirPath + "/" + settingsFileName;
     QFile settingsFile(collection->settingsFilePath);
     if(!settingsFile.exists()) {
         //otherwise fall back to default katalog_settings path
-        collection->settingsFilePath = homePath + "/.config/katalog_settings.ini";
+        collection->settingsFilePath = homePath + "/.config/" + settingsFileName;
     }
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
 

@@ -509,9 +509,11 @@ Kirigami.ApplicationWindow {
                     // the only page — there is nothing to collapse to.
                     icon.name: appManager1.showSelectionPage ? "window-unpin" : "window-pin"
                     checkable: true
-                    checked: !appManager1.showSelectionPage
+                    // Pressed while Selection is shown, matching the drawer button
+                    // above: both read "this panel is held open".
+                    checked: appManager1.showSelectionPage
                     enabled: root.featureOpen
-                    onToggled: appManager1.showSelectionPage = !checked
+                    onToggled: appManager1.showSelectionPage = checked
                 }
 
                 Controls.Label {
