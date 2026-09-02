@@ -199,8 +199,8 @@ Kirigami.AbstractCard {
             anchors.rightMargin:  -card.rightPadding
             // Filled with the border's own blue rather than a 12% wash: at that
             // strength it was indistinguishable from the tinted page behind it.
-            color: Kirigami.Theme.highlightColor
-            border.color: Kirigami.Theme.highlightColor
+            color: applicationWindow().selectionHighlightColor
+            border.color: applicationWindow().selectionHighlightColor
             border.width: 2
             radius: Kirigami.Units.cornerRadius
             visible: card.isSelected

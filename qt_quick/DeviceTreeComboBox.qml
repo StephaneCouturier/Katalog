@@ -195,7 +195,7 @@ Controls.Button {
 
                     background: Rectangle {
                         color: control.selectedDeviceId === deviceId
-                               ? Kirigami.Theme.highlightColor
+                               ? applicationWindow().selectionHighlightColor
                                : hovered ? Kirigami.Theme.alternateBackgroundColor : "transparent"
                         radius: 3
                     }

@@ -247,12 +247,13 @@ Item {
 
                     readonly property string checksum: checksumSha256
 
-                    readonly property bool darkTheme: Kirigami.Theme.backgroundColor.hslLightness < 0.5
+                    // Selected row and the alternating stripe both follow the
+                    // theme now — see applicationWindow() for the definitions.
                     color: exploreTableView.selectedRow === row
-                           ? Kirigami.Theme.highlightColor
+                           ? applicationWindow().selectionHighlightColor
                            : (row % 2 === 0
-                              ? (darkTheme ? Kirigami.Theme.backgroundColor : "#ffffff")
-                              : (darkTheme ? "#161b1d" : "#e9f7fc"))
+                              ? Kirigami.Theme.backgroundColor
+                              : applicationWindow().rowStripeColor)
 
                     // Column separator
                     Rectangle {

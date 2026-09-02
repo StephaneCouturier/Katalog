@@ -108,6 +108,25 @@ Kirigami.ApplicationWindow {
                                         Kirigami.Theme.highlightColor.g,
                                         Kirigami.Theme.highlightColor.b, 0.12))
 
+    // Selection highlight. Katalog Colors owns it too, so a selected row or card
+    // is brand blue rather than the desktop accent; both Desktop themes hand it
+    // back to the desktop. One definition for every list in the application —
+    // Selection cards, search results, explore files and folders, device combos.
+    readonly property color selectionHighlightColor:
+        appManager1.themeId === 1 ? root.katalogBlue
+                                  : Kirigami.Theme.highlightColor
+
+    // Alternating row stripe. Was a hardcoded pale blue that stayed put under
+    // the desktop themes, which is the same inconsistency in reverse: brand tint
+    // under Katalog Colors, a neutral step off the desktop background otherwise.
+    readonly property color rowStripeColor:
+        appManager1.themeId === 1
+        ? (root.isDarkDesktop() ? Qt.darker(root.katalogBlueDarkest, 2.2)
+                                : Qt.rgba(root.katalogBlue.r, root.katalogBlue.g,
+                                          root.katalogBlue.b, 0.07))
+        : (root.isDarkDesktop() ? Qt.lighter(Kirigami.Theme.backgroundColor, 1.18)
+                                : Qt.darker(Kirigami.Theme.backgroundColor, 1.04))
+
     // Always at least as dark as a selected card, and always darker than the
     // page beneath it. On a light desktop that is the full accent — the very
     // colour a selected card is filled with; on a dark one the page is already a
