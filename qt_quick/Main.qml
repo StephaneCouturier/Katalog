@@ -65,7 +65,16 @@ Kirigami.ApplicationWindow {
     readonly property color katalogBlueDarkest: "#095676"
 
     // The desktop's own background tells us which way round we are.
-    readonly property bool darkDesktop: Kirigami.Theme.backgroundColor.hslLightness < 0.5
+    //
+    // Read inside each colour binding rather than through a shared property. As
+    // its own property it was a second hop: changing the Plasma scheme updated
+    // highlightColor, which re-ran the colour bindings before this had caught up
+    // with the new backgroundColor, so they used the previous light/dark answer
+    // and nothing re-triggered them — the band stayed wrong until a restart.
+    // Called from a binding, it makes both colours a direct dependency.
+    function isDarkDesktop() {
+        return Kirigami.Theme.backgroundColor.hslLightness < 0.5
+    }
 
     // The two tinted surfaces, defined once for every theme so they always agree.
     // Katalog Colors forces the brand blues; Desktop Theme derives both from the
@@ -84,10 +93,10 @@ Kirigami.ApplicationWindow {
     // the pair either way.
     readonly property color selectionPageColor:
         appManager1.katalogTheme
-        ? (root.darkDesktop ? root.katalogBlueDarkest
+        ? (root.isDarkDesktop() ? root.katalogBlueDarkest
                             : Qt.rgba(root.katalogBlue.r, root.katalogBlue.g,
                                       root.katalogBlue.b, 0.12))
-        : (root.darkDesktop ? Qt.darker(Kirigami.Theme.highlightColor, 2.6)
+        : (root.isDarkDesktop() ? Qt.darker(Kirigami.Theme.highlightColor, 2.6)
                             : Qt.rgba(Kirigami.Theme.highlightColor.r,
                                       Kirigami.Theme.highlightColor.g,
                                       Kirigami.Theme.highlightColor.b, 0.12))
@@ -101,9 +110,9 @@ Kirigami.ApplicationWindow {
         // #0D79A6 is darker than the page's 12% wash on a light desktop, but
         // LIGHTER than the #095676 the page uses on a dark one — hence the
         // darkened form there rather than the mid blue.
-        ? (root.darkDesktop ? Qt.darker(root.katalogBlueDarkest, 1.6)
+        ? (root.isDarkDesktop() ? Qt.darker(root.katalogBlueDarkest, 1.6)
                             : root.katalogBlueDark)
-        : (root.darkDesktop ? Qt.darker(Kirigami.Theme.highlightColor, 3.8)
+        : (root.isDarkDesktop() ? Qt.darker(Kirigami.Theme.highlightColor, 3.8)
                             : Kirigami.Theme.highlightColor)
 
     // One metric for every small icon button on the Selection page — the panel
