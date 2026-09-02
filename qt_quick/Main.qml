@@ -1522,10 +1522,12 @@ Kirigami.ApplicationWindow {
             id: pageDevicesView
             cardScale: root.cardScale
             onEditDeviceRequested: (deviceId) => {
+                console.log("Main: onEditDeviceRequested deviceId=" + deviceId)
                 pageDeviceEdit.fromDevicesPage = true
                 pageDeviceEdit_form.deviceId = deviceId
                 pageDeviceEdit_form.loadDevice()
                 root.showPage(pageDeviceEdit)
+                console.log("Main: showPage(pageDeviceEdit) done")
             }
             onExploreDeviceRequested: (deviceId) => {
                 appManager1.setLastPage("Explore")

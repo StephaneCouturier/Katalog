@@ -32,6 +32,7 @@
 #include "storage.h"
 #include <QSqlError>
 #include <QDebug>
+#include <QCoreApplication>
 
 //storage data operation
 
@@ -202,14 +203,19 @@ Storage::UpdateResult Storage::updateStorageInfo()
     // Check if path is provided
     if (path.isEmpty()) {
         result.errorCode = ErrorNoPath;
-        result.errorMessage = QString("No Path was provided for the Storage: %1. Edit the device to provide one and try again.").arg(name);
+        // Translated: these reach the user directly — K3 shows them when a disk
+        // refresh fails. Storage has no Q_OBJECT, so translate() with the
+        // MainWindow context, as elsewhere in core/.
+        result.errorMessage = QCoreApplication::translate("MainWindow",
+            "No Path was provided for the Storage: %1. Edit the device to provide one and try again.").arg(name);
         return result;
     }
 
     // Check if directory is empty
     if (isDirectoryEmpty(path)) {
         result.errorCode = ErrorEmptyDirectory;
-        result.errorMessage = QString("Storage: '%1'\n\nThe source folder does not contain any file: '%2'\n\nThis could mean that the device is not mounted to this folder, or the folder is simply empty.").arg(name, path);
+        result.errorMessage = QCoreApplication::translate("MainWindow",
+            "Storage: '%1'\n\nThe source folder does not contain any file: '%2'\n\nThis could mean that the device is not mounted to this folder, or the folder is simply empty.").arg(name, path);
         return result;
     }
 
@@ -222,7 +228,8 @@ Storage::UpdateResult Storage::updateStorageInfo()
     // Get device information
     if (!getStorageInfo()) {
         result.errorCode = ErrorCannotGetValues;
-        result.errorMessage = QString("Katalog could not get values.\n\nCheck that the source folder (%1) is correct, or that the device is mounted to the source folder.").arg(path);
+        result.errorMessage = QCoreApplication::translate("MainWindow",
+            "Katalog could not get values.\n\nCheck that the source folder (%1) is correct, or that the device is mounted to the source folder.").arg(path);
         return result;
     }
 

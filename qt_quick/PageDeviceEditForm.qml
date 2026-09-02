@@ -159,6 +159,13 @@ ColumnLayout {
                 storagePathChangeNeeded(originalPath, path)
                 return
             }
+
+            // A path set for the first time: no old indexes to repair, so no
+            // dialog — just update the device, which is what fills in its space
+            // figures. K2 does the same (mainwindow_tab_device_pr.cpp:769-776).
+            if (path !== originalPath && originalPath === "" && path !== "") {
+                appManager1.updateDevice(deviceId)
+            }
         }
 
         finalizeSave()
@@ -522,6 +529,10 @@ ColumnLayout {
             visible: root.deviceType === "Storage"
             text: qsTr("Refresh from disk")
             icon.name: "view-refresh"
+            // Reads the device from the database, so a path only typed into the
+            // form is invisible to it. Disabled until the path has been saved,
+            // rather than being clickable and appearing to do nothing.
+            enabled: root.originalPath !== ""
             onClicked: {
                 var updated = appManager1.refreshStorageFromDisk(root.deviceId)
                 if (updated.error === "") {
@@ -530,6 +541,8 @@ ColumnLayout {
                     edit_lineEdit_StorageType.text  = updated.storageType
                     edit_lineEdit_StorageLabel.text = updated.storageLabel
                     edit_lineEdit_StorageFS.text    = updated.fileSystem
+                } else {
+                    showPassiveNotification(updated.error)
                 }
             }
         }

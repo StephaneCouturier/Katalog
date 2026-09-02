@@ -22,6 +22,21 @@ Item {
         devices = appManager1.getDeviceList(viewFilter, scope)
     }
 
+    // Create a child device and open it for editing, as K2 does
+    // (mainwindow_tab_device_pr.cpp addDeviceVirtual/addDeviceStorage, both
+    // ending in editDevice()). Lives on the page rather than in the card's
+    // handler: creating a device refreshes the list and destroys that card.
+    function createChildAndEdit(parentId, kind) {
+        var newId = (kind === "Storage") ? appManager1.addDeviceStorage(parentId)
+                                         : appManager1.addDeviceVirtual(parentId)
+        console.log("createChildAndEdit: kind=" + kind + " parentId=" + parentId
+                    + " newId=" + newId)
+        if (newId > 0)
+            root.editDeviceRequested(newId)
+        else
+            console.warn("createChildAndEdit: no device created, editor not opened")
+    }
+
     Connections {
         target: appManager1
         function onDeviceListChanged()    { root.refreshDevices() }
@@ -478,15 +493,12 @@ Item {
                     deleteConfirmDialog.open()
                 }
 
-                onAddVirtualChildRequested: (parentId) => {
-                    var newId = appManager1.addDeviceVirtual(parentId)
-                    if (newId > 0) root.editDeviceRequested(newId)
-                }
-
-                onAddStorageChildRequested: (parentId) => {
-                    var newId = appManager1.addDeviceStorage(parentId)
-                    if (newId > 0) root.editDeviceRequested(newId)
-                }
+                // The work is done by a function on the page, not here: adding a
+                // device refreshes the list and destroys this delegate, and any
+                // statement left in a handler running on it is abandoned. The
+                // page's own frame survives that.
+                onAddVirtualChildRequested: (parentId) => root.createChildAndEdit(parentId, "Virtual")
+                onAddStorageChildRequested: (parentId) => root.createChildAndEdit(parentId, "Storage")
 
                 onAssignCatalogRequested: (virtualId) => {
                     var err = appManager1.assignCatalogToDevice(appManager1.selectedDeviceId, virtualId)
