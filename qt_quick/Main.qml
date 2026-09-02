@@ -67,6 +67,30 @@ Kirigami.ApplicationWindow {
     // The desktop's own background tells us which way round we are.
     readonly property bool darkDesktop: Kirigami.Theme.backgroundColor.hslLightness < 0.5
 
+    // The two tinted surfaces, defined once for every theme so they always agree.
+    // Katalog Colors forces the brand blues; Desktop Theme derives both from the
+    // desktop's own palette. In both cases the logo band is the darker of the
+    // two, so it reads as a header above the page.
+    readonly property color selectionPageColor:
+        appManager1.katalogTheme
+        ? (root.darkDesktop ? root.katalogBlueDarkest
+                            : Qt.rgba(root.katalogBlue.r, root.katalogBlue.g,
+                                      root.katalogBlue.b, 0.12))
+        // Desktop: a step away from the window background, in whichever
+        // direction the theme leaves room — lighter on a dark desktop, darker
+        // on a light one.
+        : (root.darkDesktop ? Qt.lighter(Kirigami.Theme.backgroundColor, 1.25)
+                            : Qt.darker(Kirigami.Theme.backgroundColor, 1.06))
+
+    readonly property color logoBandColor:
+        appManager1.katalogTheme
+        ? root.katalogBlueDark
+        // Darker than the page in both desktop modes: on a dark desktop the page
+        // was lightened, so the band stays at the plain background; on a light
+        // one it steps further down than the page did.
+        : (root.darkDesktop ? Kirigami.Theme.backgroundColor
+                            : Qt.darker(Kirigami.Theme.backgroundColor, 1.18))
+
     // One metric for every small icon button on the Selection page — the panel
     // header and the device cards alike — so the two read as one set and the
     // buttons never set the card height.
@@ -266,14 +290,15 @@ Kirigami.ApplicationWindow {
             // Application identity: the logo alone, since the artwork already
             // carries the name. Same row height as the pages' header strips
             // (root.headerRowHeight) so the drawer lines up with the page beside
-            // it, on the Katalog blue the logo is drawn for.
+            // it. Always the darker of the two tinted surfaces — see
+            // root.logoBandColor.
             Rectangle {
                 Layout.fillWidth: true
                 // A little taller than a page's header strip: this band lines up
                 // with the page toolbar above it, which carries buttons and so
                 // stands higher than a plain row.
                 Layout.preferredHeight: root.headerRowHeight + Kirigami.Units.smallSpacing * 2.5
-                color: root.katalogBlueDark
+                color: root.logoBandColor
 
                 Image {
                     source: "qrc:/images/Appname_Logo_v3.png"
@@ -1158,20 +1183,11 @@ Kirigami.ApplicationWindow {
         id: pageSelection
 
         // Tinted rather than plain: white cards on a white page gave no contrast.
-        // Only under Katalog Colors — Desktop Theme leaves the page as the
-        // desktop styles it. Derived from the theme's highlight colour rather
-        // than a literal blue, so it follows the user's accent and dark mode.
+        // Under either theme — Katalog Colors forces the brand blue, Desktop
+        // Theme steps away from the desktop's own background. See
+        // root.selectionPageColor, which keeps this in step with the logo band.
         background: Rectangle {
-            color: !appManager1.katalogTheme
-                   ? Kirigami.Theme.backgroundColor
-                   : root.darkDesktop
-                     // The darkest brand blue: dark enough to sit under white
-                     // text and cards without competing with them.
-                     ? root.katalogBlueDarkest
-                     // A wash of the brand blue, not a solid one — the cards on
-                     // top of it stay the lightest thing on the page.
-                     : Qt.rgba(root.katalogBlue.r, root.katalogBlue.g,
-                               root.katalogBlue.b, 0.12)
+            color: root.selectionPageColor
         }
         title: qsTr("Selection")
         property string deviceType: "Storage"
