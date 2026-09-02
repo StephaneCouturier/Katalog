@@ -149,6 +149,10 @@ Kirigami.AbstractCard {
 
                 Controls.Label {
                     Layout.fillWidth: true
+                    // Lined up with the device name above, not with its icon:
+                    // the icon's width plus the gap after it.
+                    Layout.leftMargin: Kirigami.Units.iconSizes.small
+                                       + Kirigami.Units.smallSpacing
                     wrapMode: Text.WordWrap
                     text: model.description
                     visible: appManager1.showDeviceInfo && model.description.length > 0
