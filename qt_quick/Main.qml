@@ -71,25 +71,40 @@ Kirigami.ApplicationWindow {
     // Katalog Colors forces the brand blues; Desktop Theme derives both from the
     // desktop's own palette. In both cases the logo band is the darker of the
     // two, so it reads as a header above the page.
+    // Under Desktop Theme both surfaces are built from the desktop's ACCENT
+    // (Kirigami.Theme.highlightColor), not from its background. The background is
+    // a grey, so lightening or darkening it only ever yields more grey; the
+    // accent is what carries the desktop's hue — blue under Breeze, green under
+    // the openSUSE set — and that is what should show through here.
+    //
+    // Light desktop: the accent is laid over a near-white background at two
+    // strengths, so more accent reads as deeper. Dark desktop: alpha over
+    // near-black would make more accent read as *lighter*, so the two are
+    // darkened solids of the accent instead, which keeps the band the darker of
+    // the pair either way.
     readonly property color selectionPageColor:
         appManager1.katalogTheme
         ? (root.darkDesktop ? root.katalogBlueDarkest
                             : Qt.rgba(root.katalogBlue.r, root.katalogBlue.g,
                                       root.katalogBlue.b, 0.12))
-        // Desktop: a step away from the window background, in whichever
-        // direction the theme leaves room — lighter on a dark desktop, darker
-        // on a light one.
-        : (root.darkDesktop ? Qt.lighter(Kirigami.Theme.backgroundColor, 1.25)
-                            : Qt.darker(Kirigami.Theme.backgroundColor, 1.06))
+        : (root.darkDesktop ? Qt.darker(Kirigami.Theme.highlightColor, 2.6)
+                            : Qt.rgba(Kirigami.Theme.highlightColor.r,
+                                      Kirigami.Theme.highlightColor.g,
+                                      Kirigami.Theme.highlightColor.b, 0.12))
 
+    // Always at least as dark as a selected card, and always darker than the
+    // page beneath it. On a light desktop that is the full accent — the very
+    // colour a selected card is filled with; on a dark one the page is already a
+    // darkened accent, so the band is darkened further still.
     readonly property color logoBandColor:
         appManager1.katalogTheme
-        ? root.katalogBlueDark
-        // Darker than the page in both desktop modes: on a dark desktop the page
-        // was lightened, so the band stays at the plain background; on a light
-        // one it steps further down than the page did.
-        : (root.darkDesktop ? Kirigami.Theme.backgroundColor
-                            : Qt.darker(Kirigami.Theme.backgroundColor, 1.18))
+        // #0D79A6 is darker than the page's 12% wash on a light desktop, but
+        // LIGHTER than the #095676 the page uses on a dark one — hence the
+        // darkened form there rather than the mid blue.
+        ? (root.darkDesktop ? Qt.darker(root.katalogBlueDarkest, 1.6)
+                            : root.katalogBlueDark)
+        : (root.darkDesktop ? Qt.darker(Kirigami.Theme.highlightColor, 3.8)
+                            : Kirigami.Theme.highlightColor)
 
     // One metric for every small icon button on the Selection page — the panel
     // header and the device cards alike — so the two read as one set and the
