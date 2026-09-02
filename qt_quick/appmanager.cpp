@@ -486,15 +486,16 @@ int AppManager::getThemeId() const
     // Same key, same numbering and the same fallback as K2
     // (mainwindow_setup.cpp:370-374), so a user who already chose a theme there
     // keeps it here without touching Settings again. Default is Katalog Colors.
+    // 2 is K3-only: K2 knows 0 and 1, and coerces anything else back to 1.
     int themeId = settings.value("Settings/Theme", 1).toInt();
-    if (themeId != 0 && themeId != 1)
+    if (themeId < 0 || themeId > 2)
         themeId = 1;
     return themeId;
 }
 //----------------------------------------------------------------------
 void AppManager::setThemeId(int value)
 {
-    const int themeId = (value == 0) ? 0 : 1;
+    const int themeId = (value >= 0 && value <= 2) ? value : 1;
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
     settings.setValue("Settings/Theme", themeId);
     settings.sync();

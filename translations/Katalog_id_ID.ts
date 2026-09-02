@@ -4,49 +4,49 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+155"/>
-        <location line="+87"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+166"/>
+        <location line="+110"/>
         <location line="+14"/>
-        <location line="+3829"/>
+        <location line="+3960"/>
         <source>Search</source>
         <translation>Cari</translation>
     </message>
     <message>
-        <location line="-3926"/>
+        <location line="-4080"/>
         <source>Stopped</source>
         <translation>Dihentikan</translation>
     </message>
     <message>
         <location line="+4"/>
         <location line="+24"/>
-        <location line="+73"/>
+        <location line="+96"/>
         <source>Evaluated</source>
         <translation>Dievaluasi</translation>
     </message>
     <message>
-        <location line="-95"/>
+        <location line="-118"/>
         <location line="+16"/>
         <location line="+8"/>
-        <location line="+72"/>
+        <location line="+95"/>
         <source>Folders found</source>
         <translation>Folder ditemukan</translation>
     </message>
     <message>
-        <location line="-96"/>
+        <location line="-119"/>
         <location line="+16"/>
         <location line="+8"/>
-        <location line="+72"/>
+        <location line="+95"/>
         <source>Files found</source>
         <translation>File ditemukan</translation>
     </message>
     <message>
-        <location line="-93"/>
+        <location line="-116"/>
         <location line="+9"/>
         <location line="+7"/>
-        <location line="+58"/>
-        <location line="+1690"/>
+        <location line="+81"/>
+        <location line="+1813"/>
         <location line="+528"/>
-        <location line="+1211"/>
+        <location line="+1219"/>
         <location line="+11"/>
         <location line="+60"/>
         <location line="+344"/>
@@ -54,14 +54,14 @@
         <translation>Sedang berlangsung</translation>
     </message>
     <message>
-        <location line="-3830"/>
-        <location line="+3467"/>
+        <location line="-3961"/>
+        <location line="+3598"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Selesai</translation>
     </message>
     <message>
-        <location line="-3152"/>
+        <location line="-3243"/>
         <source>Empty database path provided</source>
         <translation>Jalur basis data kosong diberikan</translation>
     </message>
@@ -101,7 +101,7 @@
         <translation>Disk lokal</translation>
     </message>
     <message>
-        <location line="+346"/>
+        <location line="+382"/>
         <source>search_results</source>
         <translation>hasil_pencarian</translation>
     </message>
@@ -111,7 +111,7 @@
         <translation>Hasil Pencarian</translation>
     </message>
     <message>
-        <location line="+356"/>
+        <location line="+373"/>
         <source>Case sensitive</source>
         <translation>Peka huruf besar/kecil</translation>
     </message>
@@ -147,12 +147,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2359"/>
+        <location line="+2397"/>
         <source>Size</source>
         <translation>Ukuran</translation>
     </message>
     <message>
-        <location line="-2358"/>
+        <location line="-2396"/>
         <source>Date</source>
         <translation>Tanggal</translation>
     </message>
@@ -187,7 +187,7 @@
         <translation>Tag: %1</translation>
     </message>
     <message>
-        <location line="+199"/>
+        <location line="+222"/>
         <source>Memory collection opened: %1</source>
         <translation>Koleksi memori dibuka: %1</translation>
     </message>
@@ -207,7 +207,7 @@
         <translation>Koneksi terhosting gagal: %1</translation>
     </message>
     <message>
-        <location line="+178"/>
+        <location line="+185"/>
         <source>Provide a name for this new catalog.</source>
         <translation>Berikan nama untuk katalog baru ini.</translation>
     </message>
@@ -240,11 +240,12 @@ Choose a different name and try again.</source>
 Pilih nama lain dan coba lagi.</translation>
     </message>
     <message>
+        <location line="-20"/>
         <source>A device operation is already running.</source>
-        <translation type="vanished">Operasi perangkat sudah berjalan.</translation>
+        <translation>Operasi perangkat sudah berjalan.</translation>
     </message>
     <message>
-        <location line="+65"/>
+        <location line="+85"/>
         <location line="+527"/>
         <source>Create</source>
         <translation>Buat</translation>
@@ -286,7 +287,7 @@ Pilih nama lain dan coba lagi.</translation>
         <translation>Galat: %1</translation>
     </message>
     <message>
-        <location line="+458"/>
+        <location line="+466"/>
         <source>The selected device is not a catalog.</source>
         <translation>Perangkat yang dipilih bukan katalog.</translation>
     </message>
@@ -724,7 +725,7 @@ Pilih nama lain.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+690"/>
+        <location filename="../qt_quick/Main.qml" line="+806"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Apakah Anda ingin &lt;b&gt;menghapus&lt;/b&gt; perangkat %1 ini?&lt;br/&gt;&lt;br/&gt;Nama: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -741,13 +742,13 @@ Pilih nama lain.</translation>
         <location line="-361"/>
         <location line="+60"/>
         <location line="+162"/>
-        <location line="+693"/>
+        <location line="+723"/>
         <location line="+117"/>
         <source>Cancel</source>
         <translation>Batal</translation>
     </message>
     <message>
-        <location line="-1132"/>
+        <location line="-1162"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+158"/>
@@ -766,13 +767,13 @@ Pilih nama lain.</translation>
         <translation>Sistem</translation>
     </message>
     <message>
-        <location line="-224"/>
-        <location line="+225"/>
+        <location line="-226"/>
+        <location line="+227"/>
         <source>Settings</source>
         <translation>Pengaturan</translation>
     </message>
     <message>
-        <location line="-349"/>
+        <location line="-351"/>
         <source>Open...</source>
         <translation>Buka...</translation>
     </message>
@@ -799,42 +800,42 @@ Pilih nama lain.</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+744"/>
+        <location line="+754"/>
         <source>Selection</source>
         <translation>Seleksi</translation>
     </message>
     <message>
-        <location line="-734"/>
-        <location line="+987"/>
+        <location line="-744"/>
+        <location line="+1017"/>
         <source>Devices</source>
         <translation>Perangkat</translation>
     </message>
     <message>
-        <location line="-982"/>
-        <location line="+1075"/>
+        <location line="-1012"/>
+        <location line="+1107"/>
         <source>Explore</source>
         <translation>Jelajahi</translation>
     </message>
     <message>
-        <location line="-1065"/>
-        <location line="+1288"/>
+        <location line="-1097"/>
+        <location line="+1320"/>
         <source>Backup</source>
         <translation>Cadangan</translation>
     </message>
     <message>
-        <location line="-1283"/>
-        <location line="+1247"/>
+        <location line="-1315"/>
+        <location line="+1279"/>
         <source>Statistics</source>
         <translation>Statistik</translation>
     </message>
     <message>
-        <location line="-1242"/>
-        <location line="+1262"/>
+        <location line="-1274"/>
+        <location line="+1294"/>
         <source>Tags</source>
         <translation>Tag</translation>
     </message>
     <message>
-        <location line="-1249"/>
+        <location line="-1281"/>
         <source>Documentation</source>
         <translation>Dokumentasi</translation>
     </message>
@@ -859,7 +860,7 @@ Pilih nama lain.</translation>
         <translation>Laci mengambang</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+25"/>
         <source>Selection shown</source>
         <translation>Pilihan ditampilkan</translation>
     </message>
@@ -1107,14 +1108,14 @@ Ini bisa berarti sumber kosong atau perangkat tidak terpasang ke folder ini.
 Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     </message>
     <message>
-        <location line="-692"/>
-        <location line="+820"/>
-        <location line="+36"/>
+        <location line="-694"/>
+        <location line="+872"/>
+        <location line="+43"/>
         <source>Search</source>
         <translation>Cari</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+9"/>
         <source>Resume</source>
         <translation>Lanjutkan</translation>
     </message>
@@ -1125,13 +1126,13 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+133"/>
-        <location line="+167"/>
+        <location line="+102"/>
+        <location line="+169"/>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location line="-293"/>
+        <location line="-264"/>
         <source>Reset</source>
         <translation>Reset</translation>
     </message>
@@ -1141,11 +1142,11 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <translation>Riwayat</translation>
     </message>
     <message>
-        <location line="-156"/>
-        <location line="+163"/>
-        <location line="+56"/>
-        <location line="+108"/>
-        <location line="+35"/>
+        <location line="-215"/>
+        <location line="+222"/>
+        <location line="+37"/>
+        <location line="+96"/>
+        <location line="+37"/>
         <location line="+86"/>
         <location line="+101"/>
         <location line="+18"/>
@@ -1154,7 +1155,7 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <translation>Tutup</translation>
     </message>
     <message>
-        <location line="-1107"/>
+        <location line="-1137"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1173,7 +1174,12 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <translation>Informasi versi dan sistem disalin ke papan klip</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+73"/>
+        <source>All</source>
+        <translation>Semua</translation>
+    </message>
+    <message>
+        <location line="+26"/>
         <source>Show device info</source>
         <translation>Tampilkan info perangkat</translation>
     </message>
@@ -1188,7 +1194,7 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <translation>Perluas satu tingkat</translation>
     </message>
     <message>
-        <location line="+136"/>
+        <location line="+131"/>
         <source>Duplicates (%1)</source>
         <translation>Duplikat (%1)</translation>
     </message>
@@ -1203,7 +1209,7 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <translation>Hasil</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+42"/>
         <source>All active</source>
         <translation>Semua aktif</translation>
     </message>
@@ -1227,7 +1233,7 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <translation type="vanished">Impor</translation>
     </message>
     <message>
-        <location line="+110"/>
+        <location line="+112"/>
         <source>Catalog created successfully.</source>
         <translation>Katalog berhasil dibuat.</translation>
     </message>
@@ -1237,8 +1243,8 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <translation>Gagal membuat katalog: </translation>
     </message>
     <message>
-        <location line="-1130"/>
-        <location line="+1120"/>
+        <location line="-1162"/>
+        <location line="+1152"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Buat</translation>
@@ -1575,7 +1581,7 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <location line="+52"/>
         <location line="+872"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+95"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+433"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+448"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+406"/>
         <location line="+176"/>
@@ -3207,7 +3213,7 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     <message>
         <location line="+40"/>
         <location line="+486"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-347"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-362"/>
         <source>Settings</source>
         <translation>Pengaturan</translation>
     </message>
@@ -4518,7 +4524,7 @@ Pembagian tidak dilakukan.</translation>
         <translation>Batal</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+426"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+441"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Ini adalah versi: v%1 &lt;br/&gt;&lt;br/&gt;Versi baru tersedia: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Temukan daftar fitur baru di &lt;a href=&apos;%3&apos;&gt;Catatan Rilis&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Apakah Anda ingin mengunduhnya?</translation>
     </message>
@@ -4596,7 +4602,7 @@ Pembagian tidak dilakukan.</translation>
         <translation type="vanished">&lt;br/&gt;&lt;br/&gt;Pada layar berikutnya, pilih folder Koleksi yang ada atau buat yang baru.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-419"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-434"/>
         <source>Open existing...</source>
         <translation>Buka yang sudah ada...</translation>
     </message>
@@ -5683,7 +5689,7 @@ ke sampah?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/devicemappingview.cpp" line="-10"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+169"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+184"/>
         <source>Strict</source>
         <translation>Ketat</translation>
     </message>
@@ -5737,6 +5743,27 @@ ke sampah?</translation>
         <source>%1 of %2 (%3%)</source>
         <translation>%1 dari %2 (%3%)</translation>
     </message>
+    <message>
+        <location filename="../core/storage.cpp" line="+209"/>
+        <source>No Path was provided for the Storage: %1. Edit the device to provide one and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Storage: &apos;%1&apos;
+
+The source folder does not contain any file: &apos;%2&apos;
+
+This could mean that the device is not mounted to this folder, or the folder is simply empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Katalog could not get values.
+
+Check that the source folder (%1) is correct, or that the device is mounted to the source folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MetadataDialog</name>
@@ -5774,12 +5801,12 @@ ke sampah?</translation>
 <context>
     <name>OperationQueueView</name>
     <message>
-        <location filename="../qt_quick/OperationQueueView.qml" line="+86"/>
+        <location filename="../qt_quick/OperationQueueView.qml" line="+94"/>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+26"/>
         <source>Queue</source>
         <translation>Antrean</translation>
     </message>
@@ -6487,7 +6514,7 @@ ke sampah?</translation>
         <translation>Jalur sumber: %1 → %2</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+91"/>
         <source>Device</source>
         <translation>Perangkat</translation>
     </message>
@@ -6674,7 +6701,7 @@ ke sampah?</translation>
         <translation>Segarkan dari disk</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+20"/>
         <source>Brand</source>
         <translation>Merek</translation>
     </message>
@@ -6722,7 +6749,7 @@ ke sampah?</translation>
 <context>
     <name>PageDevicesView</name>
     <message>
-        <location filename="../qt_quick/PageDevicesView.qml" line="+47"/>
+        <location filename="../qt_quick/PageDevicesView.qml" line="+62"/>
         <location line="+37"/>
         <source>Split Catalog</source>
         <translation>Pisah katalog</translation>
@@ -7005,7 +7032,7 @@ ke sampah?</translation>
 <context>
     <name>PageExploreFiles</name>
     <message>
-        <location filename="../qt_quick/PageExploreFiles.qml" line="+67"/>
+        <location filename="../qt_quick/PageExploreFiles.qml" line="+70"/>
         <source>No folder selected</source>
         <translation>Tidak ada folder dipilih</translation>
     </message>
@@ -7025,7 +7052,7 @@ ke sampah?</translation>
         <translation>Urutkan folder terlebih dahulu</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+21"/>
         <source>Number of Files</source>
         <translation>Jumlah File</translation>
     </message>
@@ -7116,7 +7143,36 @@ ke sampah?</translation>
         <translation>Hapus file</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+15"/>
+        <source>Delete File</source>
+        <translation>Hapus Berkas</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Delete</source>
+        <translation>Hapus</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>File deleted</source>
+        <translation>Berkas dihapus</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Could not delete file</source>
+        <translation>Tidak dapat menghapus berkas</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Permanently delete this file? This cannot be undone.
+
+%1</source>
+        <translation>Hapus berkas ini secara permanen? Ini tidak dapat dibatalkan.
+
+%1</translation>
+    </message>
+    <message>
+        <location line="+13"/>
         <source>Checksum (SHA-256)</source>
         <translation>Checksum (SHA-256)</translation>
     </message>
@@ -7174,7 +7230,7 @@ ke sampah?</translation>
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+278"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+284"/>
         <source>Directories</source>
         <translation>Direktori</translation>
     </message>
@@ -7212,7 +7268,7 @@ ke sampah?</translation>
 <context>
     <name>PageSearchForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchForm.qml" line="+320"/>
+        <location filename="../qt_quick/PageSearchForm.qml" line="+332"/>
         <source>Select a date</source>
         <translation>Pilih tanggal</translation>
     </message>
@@ -7287,12 +7343,12 @@ ke sampah?</translation>
         <translation>Batal</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+91"/>
         <source>(no text filter)</source>
         <translation>(tanpa filter teks)</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+27"/>
         <source>Catalogs</source>
         <translation>Katalog</translation>
     </message>
@@ -7391,7 +7447,8 @@ ke sampah?</translation>
         <translation>Tipe</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="-221"/>
+        <location line="+232"/>
         <source>All</source>
         <translation>Semua</translation>
     </message>
@@ -7590,7 +7647,7 @@ ke sampah?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+646"/>
+        <location line="+680"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Verifikasi checksum</translation>
@@ -7602,25 +7659,25 @@ ke sampah?</translation>
         <translation>Sertakan Metadata</translation>
     </message>
     <message>
-        <location line="-697"/>
-        <location line="+486"/>
-        <location line="+156"/>
+        <location line="-731"/>
+        <location line="+518"/>
+        <location line="+158"/>
         <source>Move to Trash</source>
         <translation>Pindah ke Sampah</translation>
     </message>
     <message>
-        <location line="-643"/>
+        <location line="-677"/>
         <source>Extract Metadata</source>
         <translation>Ekstrak Metadata</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+602"/>
+        <location line="+636"/>
         <source>Delete</source>
         <translation>Hapus</translation>
     </message>
     <message>
-        <location line="-547"/>
+        <location line="-578"/>
         <source>Exported to: %1</source>
         <translation>Diekspor ke: %1</translation>
     </message>
@@ -7640,7 +7697,7 @@ ke sampah?</translation>
         <translation>Ekspor gagal — tidak ada hasil atau kesalahan basis data</translation>
     </message>
     <message>
-        <location line="+274"/>
+        <location line="+303"/>
         <source>(no selection)</source>
         <translation>(tidak ada pilihan)</translation>
     </message>
@@ -7722,12 +7779,12 @@ ke sampah?</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+79"/>
+        <location line="+81"/>
         <source>Checksum copied to clipboard</source>
         <translation>Checksum disalin ke papan klip</translation>
     </message>
     <message>
-        <location line="-75"/>
+        <location line="-77"/>
         <source>Verify Checksum (SHA-256)</source>
         <translation>Verifikasi Checksum (SHA-256)</translation>
     </message>
@@ -7772,7 +7829,7 @@ ke sampah?</translation>
         <translation type="vanished">Nilai</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+19"/>
         <source>Checksum (SHA-256)</source>
         <translation>Checksum (SHA-256)</translation>
     </message>
@@ -7904,39 +7961,32 @@ Kesalahan: %3</translation>
 <context>
     <name>PageSelectionDelegate</name>
     <message>
-        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+52"/>
         <source>Search</source>
-        <translation>Cari</translation>
+        <translation type="vanished">Cari</translation>
     </message>
     <message>
-        <location line="+12"/>
         <source>Update</source>
-        <translation>Perbarui</translation>
+        <translation type="vanished">Perbarui</translation>
     </message>
     <message>
-        <location line="+14"/>
         <source>Explore</source>
-        <translation>Jelajahi</translation>
+        <translation type="vanished">Jelajahi</translation>
     </message>
     <message>
-        <location line="+12"/>
         <source>Open folder</source>
-        <translation>Buka folder</translation>
+        <translation type="vanished">Buka folder</translation>
     </message>
     <message>
-        <location line="+6"/>
         <source>Edit</source>
-        <translation>Edit</translation>
+        <translation type="vanished">Edit</translation>
     </message>
     <message>
-        <location line="+107"/>
         <source>Collapse</source>
-        <translation>Ciutkan</translation>
+        <translation type="vanished">Ciutkan</translation>
     </message>
     <message>
-        <location line="+0"/>
         <source>Expand</source>
-        <translation>Perluas</translation>
+        <translation type="vanished">Perluas</translation>
     </message>
 </context>
 <context>
@@ -7986,12 +8036,12 @@ Kesalahan: %3</translation>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+397"/>
+        <location line="+437"/>
         <source>(none)</source>
         <translation>(tidak ada)</translation>
     </message>
     <message>
-        <location line="-389"/>
+        <location line="-429"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8172,7 +8222,32 @@ Kesalahan: %3</translation>
         <translation>Segarkan status perangkat saat kembali ke aplikasi</translation>
     </message>
     <message>
+        <location line="+5"/>
+        <source>Allow deleting files from Katalog</source>
+        <translation>Izinkan Katalog menghapus file</translation>
+    </message>
+    <message>
         <location line="+6"/>
+        <source>Theme</source>
+        <translation>Tema</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Desktop Theme</source>
+        <translation>Tema Desktop</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Desktop Theme (gray)</source>
+        <translation>Tema Desktop (abu-abu)</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Katalog Colors</source>
+        <translation>Warna Katalog</translation>
+    </message>
+    <message>
+        <location line="+24"/>
         <source>Language</source>
         <translation>Bahasa</translation>
     </message>

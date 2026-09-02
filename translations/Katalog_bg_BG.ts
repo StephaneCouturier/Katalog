@@ -4,49 +4,49 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+155"/>
-        <location line="+87"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+166"/>
+        <location line="+110"/>
         <location line="+14"/>
-        <location line="+3829"/>
+        <location line="+3960"/>
         <source>Search</source>
         <translation>Търсене</translation>
     </message>
     <message>
-        <location line="-3926"/>
+        <location line="-4080"/>
         <source>Stopped</source>
         <translation>Спрян</translation>
     </message>
     <message>
         <location line="+4"/>
         <location line="+24"/>
-        <location line="+73"/>
+        <location line="+96"/>
         <source>Evaluated</source>
         <translation>Оценен</translation>
     </message>
     <message>
-        <location line="-95"/>
+        <location line="-118"/>
         <location line="+16"/>
         <location line="+8"/>
-        <location line="+72"/>
+        <location line="+95"/>
         <source>Folders found</source>
         <translation>Намерени папки</translation>
     </message>
     <message>
-        <location line="-96"/>
+        <location line="-119"/>
         <location line="+16"/>
         <location line="+8"/>
-        <location line="+72"/>
+        <location line="+95"/>
         <source>Files found</source>
         <translation>Намерени файлове</translation>
     </message>
     <message>
-        <location line="-93"/>
+        <location line="-116"/>
         <location line="+9"/>
         <location line="+7"/>
-        <location line="+58"/>
-        <location line="+1690"/>
+        <location line="+81"/>
+        <location line="+1813"/>
         <location line="+528"/>
-        <location line="+1211"/>
+        <location line="+1219"/>
         <location line="+11"/>
         <location line="+60"/>
         <location line="+344"/>
@@ -54,14 +54,14 @@
         <translation>В процес</translation>
     </message>
     <message>
-        <location line="-3830"/>
-        <location line="+3467"/>
+        <location line="-3961"/>
+        <location line="+3598"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Завършен</translation>
     </message>
     <message>
-        <location line="-3152"/>
+        <location line="-3243"/>
         <source>Empty database path provided</source>
         <translation>Предоставен е празен път до базата данни</translation>
     </message>
@@ -101,7 +101,7 @@
         <translation>Локален диск</translation>
     </message>
     <message>
-        <location line="+346"/>
+        <location line="+382"/>
         <source>search_results</source>
         <translation>резултати_от_търсене</translation>
     </message>
@@ -111,7 +111,7 @@
         <translation>Резултати от търсенето</translation>
     </message>
     <message>
-        <location line="+356"/>
+        <location line="+373"/>
         <source>Case sensitive</source>
         <translation>Чувствителен към регистъра</translation>
     </message>
@@ -147,12 +147,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2359"/>
+        <location line="+2397"/>
         <source>Size</source>
         <translation>Размер</translation>
     </message>
     <message>
-        <location line="-2358"/>
+        <location line="-2396"/>
         <source>Date</source>
         <translation>Дата</translation>
     </message>
@@ -187,7 +187,7 @@
         <translation>Етикет: %1</translation>
     </message>
     <message>
-        <location line="+199"/>
+        <location line="+222"/>
         <source>Memory collection opened: %1</source>
         <translation>Колекцията в паметта е отворена: %1</translation>
     </message>
@@ -207,7 +207,7 @@
         <translation>Хостваната връзка е неуспешна: %1</translation>
     </message>
     <message>
-        <location line="+178"/>
+        <location line="+185"/>
         <source>Provide a name for this new catalog.</source>
         <translation>Посочете име за този нов каталог.</translation>
     </message>
@@ -240,11 +240,12 @@ Choose a different name and try again.</source>
 Изберете друго име и опитайте отново.</translation>
     </message>
     <message>
+        <location line="-20"/>
         <source>A device operation is already running.</source>
-        <translation type="vanished">Вече се изпълнява операция с устройство.</translation>
+        <translation>Вече се изпълнява операция с устройство.</translation>
     </message>
     <message>
-        <location line="+65"/>
+        <location line="+85"/>
         <location line="+527"/>
         <source>Create</source>
         <translation>Създай</translation>
@@ -286,7 +287,7 @@ Choose a different name and try again.</source>
         <translation>Грешка: %1</translation>
     </message>
     <message>
-        <location line="+458"/>
+        <location line="+466"/>
         <source>The selected device is not a catalog.</source>
         <translation>Избраното устройство не е каталог.</translation>
     </message>
@@ -724,7 +725,7 @@ Choose a different name.</source>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+690"/>
+        <location filename="../qt_quick/Main.qml" line="+806"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Искате ли да &lt;b&gt;изтриете&lt;/b&gt; това устройство %1?&lt;br/&gt;&lt;br/&gt;Име: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -741,13 +742,13 @@ Choose a different name.</source>
         <location line="-361"/>
         <location line="+60"/>
         <location line="+162"/>
-        <location line="+693"/>
+        <location line="+723"/>
         <location line="+117"/>
         <source>Cancel</source>
         <translation>Отказ</translation>
     </message>
     <message>
-        <location line="-1132"/>
+        <location line="-1162"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+158"/>
@@ -758,7 +759,7 @@ Choose a different name.</source>
     <message>
         <location line="-407"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
-        <translation>&lt;br/&gt;&lt;b&gt;Добре дошли в Каталог!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Изглежда това е първото стартиране.&lt;br/&gt;&lt;br/&gt;Бяха приложени следните настройки:&lt;br/&gt; - Език: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Тема: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Можеш да ги промениш в раздела %3.</translation>
+        <translation>&lt;br/&gt;&lt;b&gt;Добре дошли в Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Изглежда това е първото стартиране.&lt;br/&gt;&lt;br/&gt;Бяха приложени следните настройки:&lt;br/&gt; - Език: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Тема: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Можеш да ги промениш в раздела %3.</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -766,13 +767,13 @@ Choose a different name.</source>
         <translation>Система</translation>
     </message>
     <message>
-        <location line="-224"/>
-        <location line="+225"/>
+        <location line="-226"/>
+        <location line="+227"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location line="-349"/>
+        <location line="-351"/>
         <source>Open...</source>
         <translation>Отваряне...</translation>
     </message>
@@ -799,42 +800,42 @@ Choose a different name.</source>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+744"/>
+        <location line="+754"/>
         <source>Selection</source>
         <translation>Избор</translation>
     </message>
     <message>
-        <location line="-734"/>
-        <location line="+987"/>
+        <location line="-744"/>
+        <location line="+1017"/>
         <source>Devices</source>
         <translation>Устройства</translation>
     </message>
     <message>
-        <location line="-982"/>
-        <location line="+1075"/>
+        <location line="-1012"/>
+        <location line="+1107"/>
         <source>Explore</source>
         <translation>Разглеждане</translation>
     </message>
     <message>
-        <location line="-1065"/>
-        <location line="+1288"/>
+        <location line="-1097"/>
+        <location line="+1320"/>
         <source>Backup</source>
         <translation>Резервно копие</translation>
     </message>
     <message>
-        <location line="-1283"/>
-        <location line="+1247"/>
+        <location line="-1315"/>
+        <location line="+1279"/>
         <source>Statistics</source>
         <translation>Статистики</translation>
     </message>
     <message>
-        <location line="-1242"/>
-        <location line="+1262"/>
+        <location line="-1274"/>
+        <location line="+1294"/>
         <source>Tags</source>
         <translation>Етикети</translation>
     </message>
     <message>
-        <location line="-1249"/>
+        <location line="-1281"/>
         <source>Documentation</source>
         <translation>Документация</translation>
     </message>
@@ -859,7 +860,7 @@ Choose a different name.</source>
         <translation>Панелът е плаващ</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+25"/>
         <source>Selection shown</source>
         <translation>Изборът е показан</translation>
     </message>
@@ -1107,14 +1108,14 @@ Do you want to save it anyway (the catalog would be empty)?</source>
 Искате ли все пак да го запазите (каталогът ще е празен)?</translation>
     </message>
     <message>
-        <location line="-692"/>
-        <location line="+820"/>
-        <location line="+36"/>
+        <location line="-694"/>
+        <location line="+872"/>
+        <location line="+43"/>
         <source>Search</source>
         <translation>Търсене</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+9"/>
         <source>Resume</source>
         <translation>Възобнови</translation>
     </message>
@@ -1125,13 +1126,13 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+133"/>
-        <location line="+167"/>
+        <location line="+102"/>
+        <location line="+169"/>
         <source>Stop</source>
         <translation>Стоп</translation>
     </message>
     <message>
-        <location line="-293"/>
+        <location line="-264"/>
         <source>Reset</source>
         <translation>Възстанови</translation>
     </message>
@@ -1141,11 +1142,11 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>История</translation>
     </message>
     <message>
-        <location line="-156"/>
-        <location line="+163"/>
-        <location line="+56"/>
-        <location line="+108"/>
-        <location line="+35"/>
+        <location line="-215"/>
+        <location line="+222"/>
+        <location line="+37"/>
+        <location line="+96"/>
+        <location line="+37"/>
         <location line="+86"/>
         <location line="+101"/>
         <location line="+18"/>
@@ -1154,7 +1155,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Затвори</translation>
     </message>
     <message>
-        <location line="-1107"/>
+        <location line="-1137"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1173,7 +1174,12 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Информацията за версията и системата е копирана в клипборда</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+73"/>
+        <source>All</source>
+        <translation>Всички</translation>
+    </message>
+    <message>
+        <location line="+26"/>
         <source>Show device info</source>
         <translation>Показване на информация за устройството</translation>
     </message>
@@ -1188,7 +1194,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Разгъване с едно ниво</translation>
     </message>
     <message>
-        <location line="+136"/>
+        <location line="+131"/>
         <source>Duplicates (%1)</source>
         <translation>Дубликати (%1)</translation>
     </message>
@@ -1203,7 +1209,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Резултати</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+42"/>
         <source>All active</source>
         <translation>Всички активни</translation>
     </message>
@@ -1227,7 +1233,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation type="vanished">Внасяне</translation>
     </message>
     <message>
-        <location line="+110"/>
+        <location line="+112"/>
         <source>Catalog created successfully.</source>
         <translation>Каталогът е създаден успешно.</translation>
     </message>
@@ -1237,8 +1243,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Създаването на каталога е неуспешно: </translation>
     </message>
     <message>
-        <location line="-1130"/>
-        <location line="+1120"/>
+        <location line="-1162"/>
+        <location line="+1152"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Създай</translation>
@@ -1570,7 +1576,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+52"/>
         <location line="+872"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+95"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+433"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="+448"/>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+406"/>
         <location line="+176"/>
@@ -2035,7 +2041,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+926"/>
         <location line="+6"/>
         <source>Katalog</source>
-        <translation>Каталог</translation>
+        <translation>Katalog</translation>
     </message>
     <message>
         <location line="+667"/>
@@ -3238,7 +3244,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+40"/>
         <location line="+486"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-347"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-362"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
@@ -3622,7 +3628,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-3"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
-        <translation>&lt;br/&gt;&lt;b&gt;Добре дошли в Каталог!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Изглежда това е първото стартиране.&lt;br/&gt;&lt;br/&gt;Бяха приложени следните настройки:&lt;br/&gt; - Език: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Тема: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Можеш да ги промениш в раздела %3.</translation>
+        <translation>&lt;br/&gt;&lt;b&gt;Добре дошли в Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Изглежда това е първото стартиране.&lt;br/&gt;&lt;br/&gt;Бяха приложени следните настройки:&lt;br/&gt; - Език: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Тема: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Можеш да ги промениш в раздела %3.</translation>
     </message>
     <message>
         <source>&lt;br/&gt;&lt;br/&gt;On the next screen, pick an existing Collection folder or create a new one.</source>
@@ -3674,7 +3680,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>1- Избери цял диск или директория, &lt;br/&gt;2- избери опции, и &lt;br/&gt;3- кликни &apos;Създай&apos;&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+249"/>
+        <location line="+264"/>
         <source>This is version: v%1 &lt;br/&gt;&lt;br/&gt;A new version is available: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Find the list of new features in the &lt;a href=&apos;%3&apos;&gt;Release Notes&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Do you want to download it?</source>
         <translation>Това е версия: v%1 &lt;br/&gt;&lt;br/&gt;Налична е нова версия: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Намери списъка с нови функции в &lt;a href=&apos;%3&apos;&gt;бележките към изданието&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Искаш ли да я изтеглиш?</translation>
     </message>
@@ -3907,7 +3913,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+8077"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
-        <translation>Провери дали е налична нова версия на Каталог при стартиране на приложението.</translation>
+        <translation>Провери дали е налична нова версия на Katalog при стартиране на приложението.</translation>
     </message>
     <message>
         <location line="-6026"/>
@@ -4023,7 +4029,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+5483"/>
         <source>Katalog Colors</source>
         <extracomment>With some custom colors, for desktop light or dark theme.</extracomment>
-        <translation>Цветове на Каталог</translation>
+        <translation>Цветове на Katalog</translation>
     </message>
     <message>
         <location line="+107"/>
@@ -4619,7 +4625,7 @@ to the trash?</source>
     </message>
     <message>
         <source>This application of &apos;Katalog&apos; is in version: </source>
-        <translation type="vanished">Това приложение на &apos;Каталог&apos; е във версия: </translation>
+        <translation type="vanished">Това приложение на &apos;Katalog&apos; е във версия: </translation>
     </message>
     <message>
         <source>Current collection version: </source>
@@ -5737,6 +5743,27 @@ to the trash?</source>
         <source>%1 of %2 (%3%)</source>
         <translation>%1 от %2 (%3%)</translation>
     </message>
+    <message>
+        <location filename="../core/storage.cpp" line="+209"/>
+        <source>No Path was provided for the Storage: %1. Edit the device to provide one and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Storage: &apos;%1&apos;
+
+The source folder does not contain any file: &apos;%2&apos;
+
+This could mean that the device is not mounted to this folder, or the folder is simply empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Katalog could not get values.
+
+Check that the source folder (%1) is correct, or that the device is mounted to the source folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MetadataDialog</name>
@@ -5774,12 +5801,12 @@ to the trash?</source>
 <context>
     <name>OperationQueueView</name>
     <message>
-        <location filename="../qt_quick/OperationQueueView.qml" line="+86"/>
+        <location filename="../qt_quick/OperationQueueView.qml" line="+94"/>
         <source>Stop</source>
         <translation>Стоп</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+26"/>
         <source>Queue</source>
         <translation>Опашка</translation>
     </message>
@@ -6487,7 +6514,7 @@ to the trash?</source>
         <translation>Изходен път: %1 → %2</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+91"/>
         <source>Device</source>
         <translation>Устройство</translation>
     </message>
@@ -6674,7 +6701,7 @@ to the trash?</source>
         <translation>Опресняване от диска</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+20"/>
         <source>Brand</source>
         <translation>Марка</translation>
     </message>
@@ -6722,7 +6749,7 @@ to the trash?</source>
 <context>
     <name>PageDevicesView</name>
     <message>
-        <location filename="../qt_quick/PageDevicesView.qml" line="+47"/>
+        <location filename="../qt_quick/PageDevicesView.qml" line="+62"/>
         <location line="+37"/>
         <source>Split Catalog</source>
         <translation>Разделяне на каталога</translation>
@@ -7005,7 +7032,7 @@ to the trash?</source>
 <context>
     <name>PageExploreFiles</name>
     <message>
-        <location filename="../qt_quick/PageExploreFiles.qml" line="+67"/>
+        <location filename="../qt_quick/PageExploreFiles.qml" line="+70"/>
         <source>No folder selected</source>
         <translation>Няма избрана папка</translation>
     </message>
@@ -7025,7 +7052,7 @@ to the trash?</source>
         <translation>Подреди папките първо</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+21"/>
         <source>Number of Files</source>
         <translation>Брой файлове</translation>
     </message>
@@ -7116,7 +7143,36 @@ to the trash?</source>
         <translation>Изтрий файла</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+15"/>
+        <source>Delete File</source>
+        <translation>Изтриване на файл</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Delete</source>
+        <translation>Изтриване</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>File deleted</source>
+        <translation>Файлът е изтрит</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Could not delete file</source>
+        <translation>Файлът не може да бъде изтрит</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Permanently delete this file? This cannot be undone.
+
+%1</source>
+        <translation>Да се изтрие ли този файл завинаги? Това действие не може да бъде отменено.
+
+%1</translation>
+    </message>
+    <message>
+        <location line="+13"/>
         <source>Checksum (SHA-256)</source>
         <translation>Контролна сума (SHA-256)</translation>
     </message>
@@ -7174,7 +7230,7 @@ to the trash?</source>
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+278"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+284"/>
         <source>Directories</source>
         <translation>Директории</translation>
     </message>
@@ -7212,7 +7268,7 @@ to the trash?</source>
 <context>
     <name>PageSearchForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchForm.qml" line="+320"/>
+        <location filename="../qt_quick/PageSearchForm.qml" line="+332"/>
         <source>Select a date</source>
         <translation>Изберете дата</translation>
     </message>
@@ -7287,12 +7343,12 @@ to the trash?</source>
         <translation>Отказ</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+91"/>
         <source>(no text filter)</source>
         <translation>(без текстов филтър)</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+27"/>
         <source>Catalogs</source>
         <translation>Каталози</translation>
     </message>
@@ -7391,7 +7447,8 @@ to the trash?</source>
         <translation>Тип</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="-221"/>
+        <location line="+232"/>
         <source>All</source>
         <translation>Всички</translation>
     </message>
@@ -7590,7 +7647,7 @@ to the trash?</source>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+646"/>
+        <location line="+680"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Проверка на контролни суми</translation>
@@ -7602,25 +7659,25 @@ to the trash?</source>
         <translation>Включи метаданни</translation>
     </message>
     <message>
-        <location line="-697"/>
-        <location line="+486"/>
-        <location line="+156"/>
+        <location line="-731"/>
+        <location line="+518"/>
+        <location line="+158"/>
         <source>Move to Trash</source>
         <translation>Премести в кошчето</translation>
     </message>
     <message>
-        <location line="-643"/>
+        <location line="-677"/>
         <source>Extract Metadata</source>
         <translation>Извличане на метаданни</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+602"/>
+        <location line="+636"/>
         <source>Delete</source>
         <translation>Изтриване</translation>
     </message>
     <message>
-        <location line="-547"/>
+        <location line="-578"/>
         <source>Exported to: %1</source>
         <translation>Експортирано в: %1</translation>
     </message>
@@ -7640,7 +7697,7 @@ to the trash?</source>
         <translation>Експортирането не бе успешно — няма резултати или грешка в базата данни</translation>
     </message>
     <message>
-        <location line="+274"/>
+        <location line="+303"/>
         <source>(no selection)</source>
         <translation>(няма избор)</translation>
     </message>
@@ -7722,12 +7779,12 @@ to the trash?</source>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+79"/>
+        <location line="+81"/>
         <source>Checksum copied to clipboard</source>
         <translation>Контролната сума е копирана в клипборда</translation>
     </message>
     <message>
-        <location line="-75"/>
+        <location line="-77"/>
         <source>Verify Checksum (SHA-256)</source>
         <translation>Проверка на контролна сума (SHA-256)</translation>
     </message>
@@ -7772,7 +7829,7 @@ to the trash?</source>
         <translation type="vanished">Стойност</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+19"/>
         <source>Checksum (SHA-256)</source>
         <translation>Контролна сума (SHA-256)</translation>
     </message>
@@ -7904,39 +7961,32 @@ Errors: %3</source>
 <context>
     <name>PageSelectionDelegate</name>
     <message>
-        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+52"/>
         <source>Search</source>
-        <translation>Търсене</translation>
+        <translation type="vanished">Търсене</translation>
     </message>
     <message>
-        <location line="+12"/>
         <source>Update</source>
-        <translation>Обновяване</translation>
+        <translation type="vanished">Обновяване</translation>
     </message>
     <message>
-        <location line="+14"/>
         <source>Explore</source>
-        <translation>Разглеждане</translation>
+        <translation type="vanished">Разглеждане</translation>
     </message>
     <message>
-        <location line="+12"/>
         <source>Open folder</source>
-        <translation>Отвори папка</translation>
+        <translation type="vanished">Отвори папка</translation>
     </message>
     <message>
-        <location line="+6"/>
         <source>Edit</source>
-        <translation>Редактиране</translation>
+        <translation type="vanished">Редактиране</translation>
     </message>
     <message>
-        <location line="+107"/>
         <source>Collapse</source>
-        <translation>Свиване</translation>
+        <translation type="vanished">Свиване</translation>
     </message>
     <message>
-        <location line="+0"/>
         <source>Expand</source>
-        <translation>Разгъване</translation>
+        <translation type="vanished">Разгъване</translation>
     </message>
 </context>
 <context>
@@ -7986,12 +8036,12 @@ Errors: %3</source>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+397"/>
+        <location line="+437"/>
         <source>(none)</source>
         <translation>(няма)</translation>
     </message>
     <message>
-        <location line="-389"/>
+        <location line="-429"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8172,7 +8222,32 @@ Errors: %3</source>
         <translation>Опресняване на статуса на устройствата при връщане в приложението</translation>
     </message>
     <message>
+        <location line="+5"/>
+        <source>Allow deleting files from Katalog</source>
+        <translation>Разрешаване на Katalog да изтрива файлове</translation>
+    </message>
+    <message>
         <location line="+6"/>
+        <source>Theme</source>
+        <translation>Тема</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Desktop Theme</source>
+        <translation>Тема на работния плот</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Desktop Theme (gray)</source>
+        <translation>Тема на работния плот (сива)</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Katalog Colors</source>
+        <translation>Цветове на Katalog</translation>
+    </message>
+    <message>
+        <location line="+24"/>
         <source>Language</source>
         <translation>Език</translation>
     </message>

@@ -443,11 +443,33 @@ Kirigami.ScrollablePage {
                 Controls.Label { text: qsTr("Theme"); opacity: 0.7 }
                 Controls.ComboBox {
                     id: themeComboBox
-                    // Index is the stored value: 0 Desktop Theme, 1 Katalog
-                    // Colors — the same numbering K2 writes to Settings/Theme.
-                    model: [qsTr("Desktop Theme"), qsTr("Katalog Colors")]
-                    currentIndex: appManager1.themeId
-                    onActivated: appManager1.themeId = currentIndex
+                    // Listed with the two desktop variants together, but the
+                    // stored numbers are unchanged: 0 Desktop Theme, 1 Katalog
+                    // Colors, 2 Desktop Theme (gray). 0 and 1 are K2's own
+                    // values in Settings/Theme, so a choice made there still
+                    // means the same thing here.
+                    model: [
+                        { text: qsTr("Desktop Theme"),        value: 0 },
+                        { text: qsTr("Desktop Theme (gray)"), value: 2 },
+                        { text: qsTr("Katalog Colors"),       value: 1 }
+                    ]
+                    textRole: "text"
+                    valueRole: "value"
+                    // Set once the model exists rather than bound: as a binding,
+                    // indexOfValue() ran before the model was ready and returned
+                    // -1, leaving the box blank. Same approach as the language
+                    // combo below.
+                    Component.onCompleted: currentIndex = indexOfValue(appManager1.themeId)
+                    onActivated: appManager1.themeId = currentValue
+
+                    // Follow the setting if it changes elsewhere.
+                    Connections {
+                        target: appManager1
+                        function onThemeIdChanged() {
+                            themeComboBox.currentIndex =
+                                themeComboBox.indexOfValue(appManager1.themeId)
+                        }
+                    }
                     Layout.preferredWidth: Kirigami.Units.gridUnit * 12
                 }
             }

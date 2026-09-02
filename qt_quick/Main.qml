@@ -91,29 +91,41 @@ Kirigami.ApplicationWindow {
     // near-black would make more accent read as *lighter*, so the two are
     // darkened solids of the accent instead, which keeps the band the darker of
     // the pair either way.
+    // Theme 2, "Desktop Theme (gray)", takes the same two surfaces from the
+    // desktop's BACKGROUND rather than its accent: no hue at all, just a step
+    // away from the window colour, for anyone who finds the tinted version too
+    // strong.
     readonly property color selectionPageColor:
-        appManager1.katalogTheme
+        appManager1.themeId === 1
         ? (root.isDarkDesktop() ? root.katalogBlueDarkest
                             : Qt.rgba(root.katalogBlue.r, root.katalogBlue.g,
                                       root.katalogBlue.b, 0.12))
-        : (root.isDarkDesktop() ? Qt.darker(Kirigami.Theme.highlightColor, 2.6)
-                            : Qt.rgba(Kirigami.Theme.highlightColor.r,
-                                      Kirigami.Theme.highlightColor.g,
-                                      Kirigami.Theme.highlightColor.b, 0.12))
+        : appManager1.themeId === 2
+          ? (root.isDarkDesktop() ? Qt.lighter(Kirigami.Theme.backgroundColor, 1.25)
+                                  : Qt.darker(Kirigami.Theme.backgroundColor, 1.06))
+          : (root.isDarkDesktop() ? Qt.darker(Kirigami.Theme.highlightColor, 2.6)
+                              : Qt.rgba(Kirigami.Theme.highlightColor.r,
+                                        Kirigami.Theme.highlightColor.g,
+                                        Kirigami.Theme.highlightColor.b, 0.12))
 
     // Always at least as dark as a selected card, and always darker than the
     // page beneath it. On a light desktop that is the full accent — the very
     // colour a selected card is filled with; on a dark one the page is already a
     // darkened accent, so the band is darkened further still.
     readonly property color logoBandColor:
-        appManager1.katalogTheme
+        appManager1.themeId === 1
         // #0D79A6 is darker than the page's 12% wash on a light desktop, but
         // LIGHTER than the #095676 the page uses on a dark one — hence the
         // darkened form there rather than the mid blue.
         ? (root.isDarkDesktop() ? Qt.darker(root.katalogBlueDarkest, 1.6)
                             : root.katalogBlueDark)
-        : (root.isDarkDesktop() ? Qt.darker(Kirigami.Theme.highlightColor, 3.8)
-                            : Kirigami.Theme.highlightColor)
+        : appManager1.themeId === 2
+          // Grey: on a dark desktop the page was lightened, so the band stays at
+          // the plain background; on a light one it steps further down.
+          ? (root.isDarkDesktop() ? Kirigami.Theme.backgroundColor
+                                  : Qt.darker(Kirigami.Theme.backgroundColor, 1.18))
+          : (root.isDarkDesktop() ? Qt.darker(Kirigami.Theme.highlightColor, 3.8)
+                              : Kirigami.Theme.highlightColor)
 
     // One metric for every small icon button on the Selection page — the panel
     // header and the device cards alike — so the two read as one set and the

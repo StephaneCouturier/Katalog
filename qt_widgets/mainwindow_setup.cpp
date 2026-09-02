@@ -367,8 +367,16 @@
             deviceTreeExpandState = settings.value("Devices/deviceTreeExpandState").toInt();
 
             //General settings
-            themeID = settings.value("Settings/Theme").toInt();
-            if (themeID !=0 and themeID !=1){
+            const int storedThemeID = settings.value("Settings/Theme").toInt();
+            themeID = storedThemeID;
+            if (themeID == 2){
+                //Katalog 3 offers a third theme, "Desktop Theme (gray)", which
+                //this version has no equivalent for. Treat it as the desktop
+                //theme rather than as an unknown value, so a user who chose it
+                //there does not land on Katalog Colors here.
+                themeID = 0;
+            }
+            else if (themeID !=0 and themeID !=1){
                 //fallback on default theme
                 themeID=1;
             }
@@ -380,6 +388,13 @@
             ui->Settings_checkBox_PreloadCatalogs->setChecked(settings.value("Settings/PreloadCatalogs", false).toBool());
             ui->Settings_checkBox_LoadLastCatalog->setChecked(settings.value("Settings/LoadLastCatalog", false).toBool());
             ui->Settings_comboBox_Theme->setCurrentIndex(themeID);
+            if (storedThemeID == 2){
+                //Setting the combo above may have written the mapped value back
+                //over the user's choice. Katalog 3 owns theme 2; this version
+                //only borrows a rendering for it, and must not silently discard
+                //it from the shared settings file.
+                settings.setValue("Settings/Theme", 2);
+            }
 
             //Restore last statistics values
             ui->Statistics_comboBox_SelectSource->setCurrentText(settings.value("Statistics/SelectedSource").toString());

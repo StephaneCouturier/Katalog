@@ -106,8 +106,9 @@ class AppManager : public QObject
     // Delete actions on Search Results and Explore; Move to Trash is not gated,
     // being recoverable.
     Q_PROPERTY(bool allowFileDeletion READ getAllowFileDeletion WRITE setAllowFileDeletion NOTIFY allowFileDeletionChanged)
-    // 0 = Desktop Theme, 1 = Katalog Colors. Same Settings/Theme key and same
-    // numbering as K2, so a user's existing choice carries over untouched.
+    // 0 = Desktop Theme, 1 = Katalog Colors, 2 = Desktop Theme (gray). Same
+    // Settings/Theme key and numbering as K2 for 0 and 1, so a user's existing
+    // choice carries over untouched; 2 is K3-only and K2 will coerce it to 1.
     Q_PROPERTY(int  themeId READ getThemeId WRITE setThemeId NOTIFY themeIdChanged)
     Q_PROPERTY(bool katalogTheme READ getKatalogTheme NOTIFY themeIdChanged)
     Q_PROPERTY(QVariantList recentCollections READ getRecentCollections NOTIFY recentCollectionsChanged)
@@ -212,7 +213,9 @@ public slots:
     void setAllowFileDeletion(bool value);
     int  getThemeId() const;
     void setThemeId(int value);
-    bool getKatalogTheme() const { return getThemeId() > 0; }
+    // Only Katalog Colors forces the brand palette; both Desktop variants follow
+    // the desktop, one from its accent and one from its greys.
+    bool getKatalogTheme() const { return getThemeId() == 1; }
     // Called when the application becomes active. Does nothing unless the
     // setting above is on; then skips cheaply when nothing was mounted or
     // unmounted, or when a probe already ran in the last 30 seconds.
