@@ -82,7 +82,11 @@ ColumnLayout {
         newSearch1.properties = {"searchOnFolderCriteria":  search_checkBox_FolderCriteria.checked};
         newSearch1.properties = {"showFoldersOnly":         search_checkBox_ShowFoldersOnly.checked};
         newSearch1.properties = {"searchOnTags":            search_checkBox_SearchOnTags.checked};
-        newSearch1.properties = {"selectedTagName":         search_comboBox_FolderTag.currentIndex === 0 ? "" : search_comboBox_FolderTag.currentText};
+        // Every entry is a real tag: getTagNames() returns no "All" placeholder,
+        // unlike the Tags page combo this guard was copied from. Treating index 0
+        // as "none" sent an empty name, and the search then skipped the tag
+        // filter altogether and returned everything.
+        newSearch1.properties = {"selectedTagName":         search_comboBox_FolderTag.currentText};
 
         //Duplicates
         newSearch1.properties = {"searchOnDuplicates":             search_checkBox_Duplicates.checked};

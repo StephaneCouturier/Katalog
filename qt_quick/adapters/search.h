@@ -120,6 +120,14 @@ public:
             map["filesFoundMaxSize"]        = filesFoundMaxSize;
             map["filesFoundMinDate"]        = filesFoundMinDate;
             map["filesFoundMaxDate"]        = filesFoundMaxDate;
+        //Folder criteria — accepted by setProperties() but never returned here,
+        //so restoring a search from history brought back the tag name while the
+        //two checkboxes that switch the filter on fell back to false and the
+        //search silently ran unfiltered.
+            map["searchOnFolderCriteria"]   = searchOnFolderCriteria;
+            map["showFoldersOnly"]          = showFoldersOnly;
+            map["searchOnTags"]             = searchOnTags;
+            map["selectedTagName"]          = selectedTagName;
         //Global search options
             map["searchInCatalogsChecked"]  = searchInCatalogsChecked;
             map["searchInConnectedChecked"] = searchInConnectedChecked;
