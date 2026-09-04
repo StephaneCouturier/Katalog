@@ -68,21 +68,29 @@ QString DeviceListModel::formatDescription(const DeviceItem &device) const
     QLocale locale;
     QStringList lines;
 
-    // Files line — shown for all types that have file data
+    // Built from whichever parts the device actually has, rather than only when
+    // it holds files: a Storage with no catalog under it still knows its own
+    // space, and used to show an empty second line because the file count gated
+    // everything below it.
+    QStringList parts;
+
     if (device.totalFileCount > 0) {
-        QString filesLine = QString("%1 files").arg(locale.toString(device.totalFileCount));
+        QString filesPart = QString("%1 files").arg(locale.toString(device.totalFileCount));
         if (device.totalFileSize > 0)
-            filesLine += QString(" · %1").arg(locale.formattedDataSize(device.totalFileSize));
-        // Space details — Storage and Virtual only
-        if ((device.type == "Storage" || device.type == "Virtual") && device.totalSpace > 0) {
-            qint64 usedSpace = device.totalSpace - device.freeSpace;
-            filesLine += QString("  · %1 · %2")
-                             .arg(locale.formattedDataSize(usedSpace))
-                             //.arg(locale.formattedDataSize(device.freeSpace))
-                             .arg(locale.formattedDataSize(device.totalSpace));
-        }
-        lines << filesLine;
+            filesPart += QString(" · %1").arg(locale.formattedDataSize(device.totalFileSize));
+        parts << filesPart;
     }
+
+    // Space details — Storage and Virtual only, and independent of the file count.
+    if ((device.type == "Storage" || device.type == "Virtual") && device.totalSpace > 0) {
+        qint64 usedSpace = device.totalSpace - device.freeSpace;
+        parts << QString("%1 · %2")
+                     .arg(locale.formattedDataSize(usedSpace))
+                     .arg(locale.formattedDataSize(device.totalSpace));
+    }
+
+    if (!parts.isEmpty())
+        lines << parts.join(QStringLiteral("  · "));
 
     return lines.join("\n");
 }
