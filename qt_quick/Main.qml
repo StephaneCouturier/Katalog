@@ -939,7 +939,14 @@ Kirigami.ApplicationWindow {
             }
             onAccepted: {
                 editCatalogUpdateDialog.close()
-                appManager1.triggerDeviceRescan(pageDeviceEdit_form.deviceId)
+                // Let the dialog actually disappear before the update starts.
+                // Run inline, all of this — the close, the rescan, the page
+                // change — happened in one pass with no frame painted between,
+                // so the dialog appeared to hang until the work began.
+                var deviceId = pageDeviceEdit_form.deviceId
+                Qt.callLater(function() {
+                    appManager1.triggerDeviceRescan(deviceId)
+                })
                 pageDeviceEdit_form.finalizeSave()
             }
             onRejected: { editCatalogUpdateDialog.close(); pageDeviceEdit_form.finalizeSave() }

@@ -2627,6 +2627,20 @@ void AppManager::startNextDeviceUpdate()
     }
 
     setupDeviceUpdateManagerForDevices();
+
+    // Say what is starting straight away. Only the create branch above did this,
+    // so an update showed an empty activity panel until the catalog job emitted
+    // its first progress line — seconds, on a large catalog, during which the
+    // panel said nothing at all. Both strings already exist.
+    m_deviceUpdateStatusText = StatusBarMessageBuilder()
+                                   .setOperation(tr("Update"))
+                                   .setStatus(tr("In Progress"))
+                                   .setDeviceContext(m_operationsStarted,
+                                                     m_operationsStarted + m_pendingDeviceUpdates.size(),
+                                                     dev->name)
+                                   .build();
+    emit deviceUpdateStatusChanged();
+
     // Deferred so the panel paints first (OPQ-F11) — this is the path a single
     // update from an idle application takes, not just the queue's continuation.
     // The batch context goes with it: it must still be set AFTER
