@@ -920,6 +920,16 @@ Kirigami.ApplicationWindow {
     Controls.Dialog {
         id: editCatalogUpdateDialog
         title: "Katalog"
+
+        // Set when the user accepts; consumed once the dialog is off screen.
+        property int pendingRescanDeviceId: 0
+        onClosed: {
+            if (pendingRescanDeviceId > 0) {
+                var id = pendingRescanDeviceId
+                pendingRescanDeviceId = 0
+                appManager1.triggerDeviceRescan(id)
+            }
+        }
         modal: true
         anchors.centerIn: parent
         width: Math.min(460, root.width - Kirigami.Units.largeSpacing * 4)
@@ -938,15 +948,12 @@ Kirigami.ApplicationWindow {
                 Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.RejectRole
             }
             onAccepted: {
+                // Started from onClosed, not here. The scan blocks the GUI thread
+                // for as long as it runs, so anything begun before the dialog has
+                // finished closing leaves it frozen on screen. callLater was not
+                // enough — one turn does not cover the close animation.
+                editCatalogUpdateDialog.pendingRescanDeviceId = pageDeviceEdit_form.deviceId
                 editCatalogUpdateDialog.close()
-                // Let the dialog actually disappear before the update starts.
-                // Run inline, all of this — the close, the rescan, the page
-                // change — happened in one pass with no frame painted between,
-                // so the dialog appeared to hang until the work began.
-                var deviceId = pageDeviceEdit_form.deviceId
-                Qt.callLater(function() {
-                    appManager1.triggerDeviceRescan(deviceId)
-                })
                 pageDeviceEdit_form.finalizeSave()
             }
             onRejected: { editCatalogUpdateDialog.close(); pageDeviceEdit_form.finalizeSave() }
