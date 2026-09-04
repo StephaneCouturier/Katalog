@@ -49,6 +49,22 @@ Kirigami.ApplicationWindow {
     signal searchTriggered()
     property real cardScale: 1.0
 
+    // The height the platform's own toolbar takes, measured rather than assumed:
+    // Breeze and Fusion pad differently, so any fixed number is right on one
+    // platform and wrong on the other. Used by the drawer's collection row so it
+    // matches the page toolbar beside it on every platform.
+    readonly property real toolBarHeight: toolBarProbe.implicitHeight
+
+    Controls.ToolBar {
+        id: toolBarProbe
+        visible: false
+        enabled: false
+        Controls.ToolButton {
+            icon.name: "go-up"
+            display: Controls.AbstractButton.IconOnly
+        }
+    }
+
     // Height of a header strip row. Selection, the Explore directory tree and the
     // Explore file list each have two of them, and they are defined here rather
     // than per page so the three line up when they share the screen.
@@ -342,40 +358,22 @@ Kirigami.ApplicationWindow {
         header: ColumnLayout {
             spacing: 0
 
-            // Application identity: the logo alone, since the artwork already
-            // carries the name. Same row height as the pages' header strips
-            // (root.headerRowHeight) so the drawer lines up with the page beside
-            // it. Always the darker of the two tinted surfaces — see
-            // root.logoBandColor.
+            // The collection is the first thing in the drawer. No application logo
+            // above it: the window already carries one, and the band's height was
+            // styled differently by each platform's controls. Its colour is kept
+            // here, so the drawer still opens on the brand surface.
             Rectangle {
                 Layout.fillWidth: true
-                // A little taller than a page's header strip: this band lines up
-                // with the page toolbar above it, which carries buttons and so
-                // stands higher than a plain row.
-                Layout.preferredHeight: root.headerRowHeight + Kirigami.Units.smallSpacing * 2.5
-                color: root.logoBandColor
-
-                Image {
-                    source: "qrc:/images/Appname_Logo_v3.png"
-                    fillMode: Image.PreserveAspectFit
-                    anchors {
-                        left: parent.left
-                        verticalCenter: parent.verticalCenter
-                        leftMargin: Kirigami.Units.largeSpacing
-                    }
-                    height: parent.height - Kirigami.Units.smallSpacing * 2
-                    // Width follows the artwork's aspect ratio rather than being
-                    // fixed, so a wordmark is not squeezed.
-                    width: Math.min(implicitWidth * (height / Math.max(1, implicitHeight)),
-                                    parent.width - Kirigami.Units.largeSpacing * 2)
+                // Kirigami's own global-toolbar height, which is the number the
+                // page toolbar beside this drawer is actually laid out with —
+                // authoritative on every platform. The measured probe is only a
+                // fallback for the case where that property is unset.
+                Layout.preferredHeight: {
+                    var h = 0
+                    try { h = pageStack.globalToolBar.preferredHeight } catch (e) { h = 0 }
+                    return h > 0 ? h : root.toolBarHeight
                 }
-            }
-
-            Kirigami.Separator { Layout.fillWidth: true }
-
-            Item {
-                Layout.fillWidth: true
-                Layout.preferredHeight: root.headerRowHeight
+                color: root.logoBandColor
 
                 RowLayout {
                     anchors {
@@ -384,8 +382,13 @@ Kirigami.ApplicationWindow {
                         leftMargin: Kirigami.Units.largeSpacing
                         rightMargin: Kirigami.Units.largeSpacing
                     }
+                    // Both take the colour meant to sit on a filled surface: the
+                    // row is painted with the brand band colour, so the ordinary
+                    // text colour would be unreadable on it.
                     Kirigami.Icon {
                         source: appManager1.currentCollectionIconName
+                        color: Kirigami.Theme.highlightedTextColor
+                        isMask: true
                         Layout.preferredWidth:  Kirigami.Units.iconSizes.smallMedium
                         Layout.preferredHeight: Kirigami.Units.iconSizes.smallMedium
                         Layout.alignment: Qt.AlignVCenter
@@ -394,6 +397,7 @@ Kirigami.ApplicationWindow {
                         text: appManager1.currentCollectionDisplayName
                         font.bold: true
                         elide: Text.ElideRight
+                        color: Kirigami.Theme.highlightedTextColor
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignVCenter
                     }
@@ -402,9 +406,9 @@ Kirigami.ApplicationWindow {
         }
 
         actions: [
-            Kirigami.Action {
-                separator: true
-            },
+            // Kirigami.Action {
+            //     separator: true
+            // },
             Kirigami.Action {
                 text: qsTr("Open...")
                 icon.name: "document-open"
@@ -689,6 +693,15 @@ Kirigami.ApplicationWindow {
             alphaWarningDialog.open()
 
         pageSearchForm.restoreLastSearch()
+
+        console.warn("PROBE toolBarProbe.implicitHeight =", toolBarProbe.implicitHeight)
+        console.warn("PROBE gridUnit =", Kirigami.Units.gridUnit)
+        console.warn("PROBE headerRowHeight =", root.headerRowHeight)
+        try {
+            console.warn("PROBE gtb.preferredHeight =", pageStack.globalToolBar.preferredHeight)
+            console.warn("PROBE gtb.minimumHeight   =", pageStack.globalToolBar.minimumHeight)
+            console.warn("PROBE gtb.maximumHeight   =", pageStack.globalToolBar.maximumHeight)
+        } catch (e) { console.warn("PROBE gtb unavailable:", e) }
 
         // Restore last active page
         var last = appManager1.getLastPage()
