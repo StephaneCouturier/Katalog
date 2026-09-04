@@ -220,7 +220,7 @@ ColumnLayout {
                 }
             }
 
-            Controls.Button {
+            IconButton {
                 //text: qsTr("Run")
                 icon.name: "document-export"
                 enabled: (newSearch1.properties.filesFoundNumber ?? 0) > 0

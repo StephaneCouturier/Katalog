@@ -605,7 +605,7 @@ ColumnLayout {
             Layout.fillWidth: true
             placeholderText: qsTr("Path to connected drive or folder")
         }
-        Controls.Button {
+        IconButton {
             icon.name: "folder-open"
             onClicked: connectedDirectoryDialog.open()
         }
@@ -641,17 +641,17 @@ ColumnLayout {
             RowLayout {
                 Layout.alignment: Qt.AlignTop
                 spacing: Kirigami.Units.smallSpacing
-                Controls.Button {
+                IconButton {
                     id: search_Button_ClearSearchText
                     icon.name: "edit-clear"
                     onClicked: search_TextField_FileNameText.clearAll()
                 }
-                Controls.Button {
+                IconButton {
                     id: search_Button_PasteClipboard
                     icon.name: "edit-paste"
                     onClicked: search_TextField_FileNameText.pasteReplaceAll()
                 }
-                Controls.Button {
+                IconButton {
                     id: search_Button_CleanText
                     icon.name: "edit-clear-history"
                     onClicked: search_TextField_FileNameText.cleanAll()
@@ -721,12 +721,12 @@ ColumnLayout {
             RowLayout {
                 Layout.alignment: Qt.AlignTop
                 spacing: Kirigami.Units.smallSpacing
-                Controls.Button {
+                IconButton {
                     id: search_Button_ExcludePasteClipboard
                     icon.name: "edit-paste"
                     onClicked: search_TextField_FileNameExclude.pasteReplaceAll()
                 }
-                Controls.Button {
+                IconButton {
                     id: search_Button_ExcludeCleanText
                     icon.name: "edit-clear-history"
                     onClicked: search_TextField_FileNameExclude.cleanAll()
@@ -893,7 +893,7 @@ ColumnLayout {
                         text: "1970/01/01 00:00:00"
                         implicitWidth: 150
                     }
-                    Controls.Button {
+                    IconButton {
                         id: search_button_ShowMinDateCalendar
                         enabled: false
                         icon.name: "view-calendar"
@@ -910,7 +910,7 @@ ColumnLayout {
                         text: "2030/01/01 00:00:00"
                         implicitWidth: 150
                     }
-                    Controls.Button {
+                    IconButton {
                         id: search_button_ShowMaxDateCalendar
                         enabled: false
                         icon.name: "view-calendar"
@@ -968,12 +968,12 @@ ColumnLayout {
                     TapHandler { id: metaClearTap; onTapped: search_lineEdit_MetadataText.clear() }
                 }
             }
-            Controls.Button {
+            IconButton {
                 icon.name: "edit-paste"
                 enabled: search_checkBox_MetadataText.checked
                 onClicked: search_lineEdit_MetadataText.text = pageSearch1.returnClipboard()
             }
-            Controls.Button {
+            IconButton {
                 icon.name: "edit-clear-history"
                 enabled: search_checkBox_MetadataText.checked
                 onClicked: search_lineEdit_MetadataText.text = pageSearch1.returnCleanedText(search_lineEdit_MetadataText.text)

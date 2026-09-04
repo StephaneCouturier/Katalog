@@ -279,7 +279,7 @@ ColumnLayout {
                 Layout.fillWidth: true
                 onEditingFinished: text = appManager1.normalizeSourcePath(text)
             }
-            Controls.Button {
+            IconButton {
                 icon.name: "folder-open"
                 onClicked: {
                     var p = edit_lineEdit_Path.text.trim()
@@ -414,7 +414,7 @@ ColumnLayout {
                 placeholderText: qsTr("Path or name to exclude")
                 onEditingFinished: text = appManager1.normalizeSourcePath(text)
             }
-            Controls.Button {
+            IconButton {
                 icon.name: "folder-open"
                 onClicked: {
                     var p = edit_lineEdit_Path.text.trim()
@@ -448,7 +448,7 @@ ColumnLayout {
                 delegate: RowLayout {
                     Layout.fillWidth: true
                     Controls.Label { text: folderPath; elide: Text.ElideMiddle; Layout.fillWidth: true }
-                    Controls.Button {
+                    IconButton {
                         icon.name: "edit-delete"; flat: true
                         onClicked: {
                             appManager1.removeDeviceExcludeFolder(deviceId, folderPath)
@@ -584,7 +584,7 @@ ColumnLayout {
                 Layout.fillWidth: true
                 model: root.storagePictureList
             }
-            Controls.Button {
+            IconButton {
                 icon.name: "view-refresh"
                 Controls.ToolTip.text: qsTr("Reload pictures")
                 Controls.ToolTip.visible: hovered

@@ -197,11 +197,11 @@ ColumnLayout {
                 readOnly: true
                 implicitWidth: 100
             }
-            Controls.Button {
+            IconButton {
                 icon.name: "view-calendar"
                 onClicked: statsDateDialog.open()
             }
-            Controls.Button {
+            IconButton {
                 icon.name: "edit-clear-history"
                 onClicked: {
                     startDateField.text = ""

@@ -165,7 +165,7 @@ Controls.ToolBar {
                     opacity: 0.8
                     font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
                 }
-                Controls.Button {
+                IconButton {
                     icon.name: "list-remove"
                     flat: true
                     // Waiting entries only; the running one is stopped above.

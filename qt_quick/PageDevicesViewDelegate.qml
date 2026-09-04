@@ -243,7 +243,7 @@ Kirigami.AbstractCard {
                 }
             }
 
-            Controls.ToolButton {
+            IconButton { flat: true;
                 icon.name: "application-menu"
                 onClicked: contextMenu.popup()
                 Controls.ToolTip.text: qsTr("Actions")

@@ -145,7 +145,7 @@ ColumnLayout {
                 onTextChanged: createValidationMessage.visible = false
                 onEditingFinished: text = appManager1.normalizeSourcePath(text)
             }
-            Controls.Button {
+            IconButton {
                 icon.name: "folder-open"
                 onClicked: {
                     var p = create_lineEdit_NewCatalogPath.text.trim()
@@ -172,7 +172,7 @@ ColumnLayout {
                 placeholderText: qsTr("New catalog name")
                 onTextChanged: createValidationMessage.visible = false
             }
-            Controls.Button {
+            IconButton {
                 icon.name: "tools-wizard"
                 Controls.ToolTip.text: qsTr("Generate name from path")
                 Controls.ToolTip.visible: hovered
@@ -297,7 +297,7 @@ ColumnLayout {
                 placeholderText: qsTr("Path or name to exclude")
                 onEditingFinished: text = appManager1.normalizeSourcePath(text)
             }
-            Controls.Button {
+            IconButton {
                 icon.name: "folder-open"
                 onClicked: {
                     var p = create_lineEdit_NewCatalogPath.text.trim()
@@ -333,7 +333,7 @@ ColumnLayout {
                         elide: Text.ElideMiddle
                         Layout.fillWidth: true
                     }
-                    Controls.Button {
+                    IconButton {
                         icon.name: "edit-delete"
                         flat: true
                         onClicked: pendingExcludesModel.remove(index)
@@ -357,7 +357,7 @@ ColumnLayout {
                 color: Kirigami.Theme.linkColor
                 Layout.fillWidth: true
             }
-            Controls.Button {
+            IconButton {
                 id: create_button_ToggleGlobalParams
                 icon.name: globalParamsExpanded ? "go-up" : "go-down"
                 flat: true
@@ -379,7 +379,7 @@ ColumnLayout {
                 placeholderText: qsTr("Path to exclude globally")
                 onEditingFinished: text = appManager1.normalizeSourcePath(text)
             }
-            Controls.Button {
+            IconButton {
                 icon.name: "folder-open"
                 onClicked: {
                     var p = create_lineEdit_NewCatalogPath.text.trim()
@@ -418,7 +418,7 @@ ColumnLayout {
                         elide: Text.ElideMiddle
                         Layout.fillWidth: true
                     }
-                    Controls.Button {
+                    IconButton {
                         icon.name: "edit-delete"
                         flat: true
                         onClicked: appManager1.removeExcludeDirectory(modelData)

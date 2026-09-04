@@ -65,7 +65,7 @@ ColumnLayout {
                 placeholderText: qsTr("Folder path")
                 onTextChanged: tagValidationMessage.visible = false
             }
-            Controls.Button {
+            IconButton {
                 icon.name: "folder-open"
                 onClicked: {
                     var p = folderPathField.text.trim()
@@ -174,7 +174,7 @@ ColumnLayout {
                         Layout.preferredWidth: 120
                         horizontalAlignment: Text.AlignLeft
                     }
-                    Controls.Button {
+                    IconButton {
                         icon.name: "edit-delete"
                         flat: true
                         onClicked: appManager1.deleteTag(modelData.tagId)

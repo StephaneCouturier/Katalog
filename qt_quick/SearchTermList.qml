@@ -293,7 +293,7 @@ ColumnLayout {
                         }
                     }
 
-                    Controls.Button {
+                    IconButton {
                         icon.name: "list-remove"
                         flat: true
                         // Hidden on a single-row list, so the last row can never be
@@ -306,7 +306,7 @@ ColumnLayout {
         }
     }
 
-    Controls.Button {
+    IconButton {
         icon.name: "list-add"
         flat: true
         Layout.alignment: Qt.AlignLeft

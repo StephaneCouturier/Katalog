@@ -105,7 +105,7 @@ Kirigami.ScrollablePage {
                     placeholderText: qsTr("e.g. Docs → NAS_Docs")
                     Layout.preferredWidth: Kirigami.Units.gridUnit * 20
                 }
-                Controls.Button {
+                IconButton {
                     icon.name: "system-run"
                     Controls.ToolTip.text: qsTr("Auto-generate name")
                     Controls.ToolTip.visible: hovered

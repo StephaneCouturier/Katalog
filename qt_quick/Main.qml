@@ -564,7 +564,7 @@ Kirigami.ApplicationWindow {
                 width: parent.width - Kirigami.Units.largeSpacing * 2
                 spacing: Kirigami.Units.smallSpacing
 
-                Controls.ToolButton {
+                IconButton { flat: true;
                     icon.name: windowSettings.drawerPinned ? "window-unpin" : "window-pin"
                     checkable: true
                     checked: windowSettings.drawerPinned
@@ -583,7 +583,7 @@ Kirigami.ApplicationWindow {
                 width: parent.width - Kirigami.Units.largeSpacing * 2
                 spacing: Kirigami.Units.smallSpacing
 
-                Controls.ToolButton {
+                IconButton { flat: true;
                     // Collapse/restore the Selection column beside the open feature
                     // page (K2 ShowHideFilters portage). Disabled when Selection is
                     // the only page — there is nothing to collapse to.
