@@ -3536,12 +3536,12 @@ QString AppManager::saveStorageDetails(int deviceId, const QVariantMap &fields)
 //----------------------------------------------------------------------
 void AppManager::triggerDeviceRescan(int deviceId)
 {
-    Device *dev = new Device();
-    dev->ID = deviceId;
-    dev->loadDevice(m_connectionName);
-    if (!m_deviceUpdateManager)
-        setupDeviceUpdateManager();
-    m_deviceUpdateManager->updateDeviceHierarchy(dev, collection->databaseMode, collection->folder, "update");
+    // Delegate rather than drive the manager directly. Calling
+    // updateDeviceHierarchy() here set no running flag, so the activity panel
+    // never showed the work and nothing reported its progress or completion;
+    // it also bypassed the queue, so a rescan could start on top of another
+    // operation. updateDevice() is the one entry point that does all of that.
+    updateDevice(deviceId);
 }
 //----------------------------------------------------------------------
 void AppManager::triggerStoragePathReplace(int deviceId, const QString &previousPath, const QString &newPath)

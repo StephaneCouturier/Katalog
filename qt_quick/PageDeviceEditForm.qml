@@ -16,6 +16,10 @@ ColumnLayout {
     property int    _groupId:   -1
     property string originalPath: ""
     property bool   _originalIsFullDevice: false
+    // Excludes are written to the database the moment one is added or removed,
+    // so they never reach checkCatalogOptionChanges like the other options do.
+    // Remembering that they changed lets Save offer the same re-scan.
+    property bool   _excludesChanged: false
     property var    storagePictureList:    [""]
 
     // Signals - dialogs live in Main.qml
@@ -70,6 +74,7 @@ ColumnLayout {
             }
 
             excludeFoldersModel.clear()
+            root._excludesChanged = false
             var folders = d.excludeFolders
             for (var f = 0; f < folders.length; f++)
                 excludeFoldersModel.append({ folderPath: folders[f] })
@@ -125,8 +130,15 @@ ColumnLayout {
                 if (message !== "") message += "\n"
                 message += qsTr("Source path: %1 → %2").arg(originalPath).arg(path)
             }
-            var rescanNeeded = check.rescanNeeded || pathChanged
-            if (check.needsConfirmation || pathChanged) {
+            // Listed without an old → new pair: the others are single values, this
+            // is a list, and what matters is that the catalog no longer matches
+            // what is on disk.
+            if (root._excludesChanged) {
+                if (message !== "") message += "\n"
+                message += qsTr("Excluded folders or files changed")
+            }
+            var rescanNeeded = check.rescanNeeded || pathChanged || root._excludesChanged
+            if (check.needsConfirmation || pathChanged || root._excludesChanged) {
                 catalogConfirmNeeded(message, rescanNeeded, pathChanged)
                 return
             }
@@ -432,6 +444,7 @@ ColumnLayout {
                         for (var i = 0; i < excludeFoldersModel.count; i++)
                             if (excludeFoldersModel.get(i).folderPath === p) return
                         excludeFoldersModel.append({ folderPath: p })
+                        root._excludesChanged = true
                         edit_lineEdit_NewExcludeFolder.text = ""
                     }
                 }
@@ -451,6 +464,11 @@ ColumnLayout {
                     IconButton {
                         icon.name: "edit-delete"; flat: true
                         onClicked: {
+                            // Set before removing: remove() destroys this very
+                            // delegate, and anything after it in the handler is
+                            // abandoned with it — which is why removing an
+                            // exclusion offered no re-scan.
+                            root._excludesChanged = true
                             appManager1.removeDeviceExcludeFolder(deviceId, folderPath)
                             excludeFoldersModel.remove(index)
                         }

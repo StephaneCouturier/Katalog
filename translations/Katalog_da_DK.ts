@@ -681,7 +681,7 @@ Vælg et andet navn.</translation>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+219"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+227"/>
         <source>Collection</source>
         <translation>Samling</translation>
     </message>
@@ -725,7 +725,7 @@ Vælg et andet navn.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+806"/>
+        <location filename="../qt_quick/Main.qml" line="+838"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Vil du &lt;b&gt;slette&lt;/b&gt; denne %1-enhed?&lt;br/&gt;&lt;br/&gt;Navn: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -767,13 +767,13 @@ Vælg et andet navn.</translation>
         <translation>System</translation>
     </message>
     <message>
-        <location line="-226"/>
-        <location line="+227"/>
+        <location line="-235"/>
+        <location line="+236"/>
         <source>Settings</source>
         <translation>Indstillinger</translation>
     </message>
     <message>
-        <location line="-351"/>
+        <location line="-360"/>
         <source>Open...</source>
         <translation>Åbn...</translation>
     </message>
@@ -800,42 +800,42 @@ Vælg et andet navn.</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+754"/>
+        <location line="+763"/>
         <source>Selection</source>
         <translation>Udvælgelse</translation>
     </message>
     <message>
-        <location line="-744"/>
-        <location line="+1017"/>
+        <location line="-753"/>
+        <location line="+1026"/>
         <source>Devices</source>
         <translation>Enheder</translation>
     </message>
     <message>
-        <location line="-1012"/>
-        <location line="+1107"/>
+        <location line="-1021"/>
+        <location line="+1116"/>
         <source>Explore</source>
         <translation>Udforsk</translation>
     </message>
     <message>
-        <location line="-1097"/>
-        <location line="+1320"/>
+        <location line="-1106"/>
+        <location line="+1329"/>
         <source>Backup</source>
         <translation>Sikkerhedskopi</translation>
     </message>
     <message>
-        <location line="-1315"/>
-        <location line="+1279"/>
+        <location line="-1324"/>
+        <location line="+1288"/>
         <source>Statistics</source>
         <translation>Statistik</translation>
     </message>
     <message>
-        <location line="-1274"/>
-        <location line="+1294"/>
+        <location line="-1283"/>
+        <location line="+1303"/>
         <source>Tags</source>
         <translation>Tags</translation>
     </message>
     <message>
-        <location line="-1281"/>
+        <location line="-1290"/>
         <source>Documentation</source>
         <translation>Dokumentation</translation>
     </message>
@@ -883,7 +883,7 @@ Vælg et andet navn.</translation>
 </translation>
     </message>
     <message>
-        <location line="+123"/>
+        <location line="+132"/>
         <source>Do not show again</source>
         <translation>Vis ikke igen</translation>
     </message>
@@ -1108,8 +1108,8 @@ Det kan betyde, at kilden er tom, eller at enheden ikke er monteret til denne ma
 Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
     </message>
     <message>
-        <location line="-694"/>
-        <location line="+872"/>
+        <location line="-703"/>
+        <location line="+881"/>
         <location line="+43"/>
         <source>Search</source>
         <translation>Søg</translation>
@@ -1243,8 +1243,8 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <translation>Oprettelse af katalog mislykkedes: </translation>
     </message>
     <message>
-        <location line="-1162"/>
-        <location line="+1152"/>
+        <location line="-1171"/>
+        <location line="+1161"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Opret</translation>
@@ -6504,7 +6504,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDeviceEditForm</name>
     <message>
-        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+103"/>
+        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+108"/>
         <source>Provide a name for this device.</source>
         <translation>Angiv et navn til denne enhed.</translation>
     </message>
@@ -6514,18 +6514,23 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Kildesti: %1 → %2</translation>
     </message>
     <message>
+        <location line="+7"/>
+        <source>Excluded folders or files changed</source>
+        <translation>Udeladte mapper eller filer er ændret</translation>
+    </message>
+    <message>
         <location line="+91"/>
         <source>Device</source>
         <translation>Enhed</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+257"/>
+        <location line="+263"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
     <message>
-        <location line="-254"/>
+        <location line="-260"/>
         <source>Name</source>
         <translation>Navn</translation>
     </message>
@@ -6666,7 +6671,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Tilføj</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+49"/>
         <source>Storage details</source>
         <translation>Lagerdetaljer</translation>
     </message>
@@ -7062,7 +7067,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Samlet størrelse</translation>
     </message>
     <message>
-        <location line="+227"/>
+        <location line="+228"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>Åbn mappe</translation>
@@ -7268,7 +7273,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageSearchForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchForm.qml" line="+332"/>
+        <location filename="../qt_quick/PageSearchForm.qml" line="+336"/>
         <source>Select a date</source>
         <translation>Vælg en dato</translation>
     </message>
@@ -7647,7 +7652,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+680"/>
+        <location line="+681"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Verificer kontrolsummer</translation>
@@ -7659,25 +7664,25 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Inkluder metadata</translation>
     </message>
     <message>
-        <location line="-731"/>
-        <location line="+518"/>
+        <location line="-732"/>
+        <location line="+519"/>
         <location line="+158"/>
         <source>Move to Trash</source>
         <translation>Flyt til papirkurv</translation>
     </message>
     <message>
-        <location line="-677"/>
+        <location line="-678"/>
         <source>Extract Metadata</source>
         <translation>Udtræk metadata</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+636"/>
+        <location line="+637"/>
         <source>Delete</source>
         <translation>Slet</translation>
     </message>
     <message>
-        <location line="-578"/>
+        <location line="-579"/>
         <source>Exported to: %1</source>
         <translation>Eksporteret til: %1</translation>
     </message>
@@ -7697,7 +7702,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Eksport mislykkedes — ingen resultater eller databasefejl</translation>
     </message>
     <message>
-        <location line="+303"/>
+        <location line="+304"/>
         <source>(no selection)</source>
         <translation>(intet valg)</translation>
     </message>
@@ -7961,32 +7966,39 @@ Fejl: %3</translation>
 <context>
     <name>PageSelectionDelegate</name>
     <message>
+        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+52"/>
         <source>Search</source>
-        <translation type="vanished">Søg</translation>
+        <translation>Søg</translation>
     </message>
     <message>
+        <location line="+16"/>
         <source>Update</source>
-        <translation type="vanished">Opdater</translation>
+        <translation>Opdater</translation>
     </message>
     <message>
+        <location line="+14"/>
         <source>Explore</source>
-        <translation type="vanished">Udforsk</translation>
+        <translation>Udforsk</translation>
     </message>
     <message>
+        <location line="+14"/>
         <source>Open folder</source>
-        <translation type="vanished">Åbn mappe</translation>
+        <translation>Åbn mappe</translation>
     </message>
     <message>
+        <location line="+6"/>
         <source>Edit</source>
-        <translation type="vanished">Rediger</translation>
+        <translation>Rediger</translation>
     </message>
     <message>
+        <location line="+84"/>
         <source>Collapse</source>
-        <translation type="vanished">Skjul</translation>
+        <translation>Skjul</translation>
     </message>
     <message>
+        <location line="+0"/>
         <source>Expand</source>
-        <translation type="vanished">Udvid</translation>
+        <translation>Udvid</translation>
     </message>
 </context>
 <context>

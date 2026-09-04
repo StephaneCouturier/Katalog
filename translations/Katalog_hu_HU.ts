@@ -681,7 +681,7 @@ Válasszon másik nevet.</translation>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+219"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+227"/>
         <source>Collection</source>
         <translation>Gyűjtemény</translation>
     </message>
@@ -725,7 +725,7 @@ Válasszon másik nevet.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+806"/>
+        <location filename="../qt_quick/Main.qml" line="+838"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Biztosan &lt;b&gt;törli&lt;/b&gt; ezt a(z) %1 eszközt?&lt;br/&gt;&lt;br/&gt;Név: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -767,13 +767,13 @@ Válasszon másik nevet.</translation>
         <translation>Rendszer</translation>
     </message>
     <message>
-        <location line="-226"/>
-        <location line="+227"/>
+        <location line="-235"/>
+        <location line="+236"/>
         <source>Settings</source>
         <translation>Beállítások</translation>
     </message>
     <message>
-        <location line="-351"/>
+        <location line="-360"/>
         <source>Open...</source>
         <translation>Megnyitás...</translation>
     </message>
@@ -800,42 +800,42 @@ Válasszon másik nevet.</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+754"/>
+        <location line="+763"/>
         <source>Selection</source>
         <translation>Kiválasztás</translation>
     </message>
     <message>
-        <location line="-744"/>
-        <location line="+1017"/>
+        <location line="-753"/>
+        <location line="+1026"/>
         <source>Devices</source>
         <translation>Eszközök</translation>
     </message>
     <message>
-        <location line="-1012"/>
-        <location line="+1107"/>
+        <location line="-1021"/>
+        <location line="+1116"/>
         <source>Explore</source>
         <translation>Tallózás</translation>
     </message>
     <message>
-        <location line="-1097"/>
-        <location line="+1320"/>
+        <location line="-1106"/>
+        <location line="+1329"/>
         <source>Backup</source>
         <translation>Biztonsági mentés</translation>
     </message>
     <message>
-        <location line="-1315"/>
-        <location line="+1279"/>
+        <location line="-1324"/>
+        <location line="+1288"/>
         <source>Statistics</source>
         <translation>Statisztikák</translation>
     </message>
     <message>
-        <location line="-1274"/>
-        <location line="+1294"/>
+        <location line="-1283"/>
+        <location line="+1303"/>
         <source>Tags</source>
         <translation>Címkék</translation>
     </message>
     <message>
-        <location line="-1281"/>
+        <location line="-1290"/>
         <source>Documentation</source>
         <translation>Dokumentáció</translation>
     </message>
@@ -883,7 +883,7 @@ Válasszon másik nevet.</translation>
 </translation>
     </message>
     <message>
-        <location line="+123"/>
+        <location line="+132"/>
         <source>Do not show again</source>
         <translation>Ne jelenjen meg újra</translation>
     </message>
@@ -1108,8 +1108,8 @@ Ez azt jelentheti, hogy a forrás üres, vagy az eszköz nincs csatolva ehhez a 
 Mindenképpen menti (a katalógus üres lesz)?</translation>
     </message>
     <message>
-        <location line="-694"/>
-        <location line="+872"/>
+        <location line="-703"/>
+        <location line="+881"/>
         <location line="+43"/>
         <source>Search</source>
         <translation>Keresés</translation>
@@ -1243,8 +1243,8 @@ Mindenképpen menti (a katalógus üres lesz)?</translation>
         <translation>A katalógus létrehozása sikertelen: </translation>
     </message>
     <message>
-        <location line="-1162"/>
-        <location line="+1152"/>
+        <location line="-1171"/>
+        <location line="+1161"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Létrehozás</translation>
@@ -6503,7 +6503,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDeviceEditForm</name>
     <message>
-        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+103"/>
+        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+108"/>
         <source>Provide a name for this device.</source>
         <translation>Adjon meg egy nevet ehhez az eszközhöz.</translation>
     </message>
@@ -6513,18 +6513,23 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Forrásútvonal: %1 → %2</translation>
     </message>
     <message>
+        <location line="+7"/>
+        <source>Excluded folders or files changed</source>
+        <translation>A kizárt mappák vagy fájlok megváltoztak</translation>
+    </message>
+    <message>
         <location line="+91"/>
         <source>Device</source>
         <translation>Eszköz</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+257"/>
+        <location line="+263"/>
         <source>Type</source>
         <translation>Típus</translation>
     </message>
     <message>
-        <location line="-254"/>
+        <location line="-260"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
@@ -6665,7 +6670,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Hozzáad</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+49"/>
         <source>Storage details</source>
         <translation>Tároló részletei</translation>
     </message>
@@ -7061,7 +7066,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Összes méret</translation>
     </message>
     <message>
-        <location line="+227"/>
+        <location line="+228"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>Mappa megnyitása</translation>
@@ -7267,7 +7272,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageSearchForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchForm.qml" line="+332"/>
+        <location filename="../qt_quick/PageSearchForm.qml" line="+336"/>
         <source>Select a date</source>
         <translation>Válasszon dátumot</translation>
     </message>
@@ -7646,7 +7651,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+680"/>
+        <location line="+681"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Ellenőrző összegek ellenőrzése</translation>
@@ -7658,25 +7663,25 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Metaadatok befoglalása</translation>
     </message>
     <message>
-        <location line="-731"/>
-        <location line="+518"/>
+        <location line="-732"/>
+        <location line="+519"/>
         <location line="+158"/>
         <source>Move to Trash</source>
         <translation>Lomtárba helyezés</translation>
     </message>
     <message>
-        <location line="-677"/>
+        <location line="-678"/>
         <source>Extract Metadata</source>
         <translation>Metaadatok kinyerése</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+636"/>
+        <location line="+637"/>
         <source>Delete</source>
         <translation>Törlés</translation>
     </message>
     <message>
-        <location line="-578"/>
+        <location line="-579"/>
         <source>Exported to: %1</source>
         <translation>Exportálva ide: %1</translation>
     </message>
@@ -7696,7 +7701,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Az exportálás sikertelen — nincs eredmény vagy adatbázishiba</translation>
     </message>
     <message>
-        <location line="+303"/>
+        <location line="+304"/>
         <source>(no selection)</source>
         <translation>(nincs kijelölés)</translation>
     </message>
@@ -7960,32 +7965,39 @@ Hibák: %3</translation>
 <context>
     <name>PageSelectionDelegate</name>
     <message>
+        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+52"/>
         <source>Search</source>
-        <translation type="vanished">Keresés</translation>
+        <translation>Keresés</translation>
     </message>
     <message>
+        <location line="+16"/>
         <source>Update</source>
-        <translation type="vanished">Frissítés</translation>
+        <translation>Frissítés</translation>
     </message>
     <message>
+        <location line="+14"/>
         <source>Explore</source>
-        <translation type="vanished">Tallózás</translation>
+        <translation>Tallózás</translation>
     </message>
     <message>
+        <location line="+14"/>
         <source>Open folder</source>
-        <translation type="vanished">Mappa megnyitása</translation>
+        <translation>Mappa megnyitása</translation>
     </message>
     <message>
+        <location line="+6"/>
         <source>Edit</source>
-        <translation type="vanished">Szerkesztés</translation>
+        <translation>Szerkesztés</translation>
     </message>
     <message>
+        <location line="+84"/>
         <source>Collapse</source>
-        <translation type="vanished">Összecsukás</translation>
+        <translation>Összecsukás</translation>
     </message>
     <message>
+        <location line="+0"/>
         <source>Expand</source>
-        <translation type="vanished">Kibontás</translation>
+        <translation>Kibontás</translation>
     </message>
 </context>
 <context>

@@ -681,7 +681,7 @@ Zvoľte iný názov.</translation>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+219"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+227"/>
         <source>Collection</source>
         <translation>Kolekcia</translation>
     </message>
@@ -725,7 +725,7 @@ Zvoľte iný názov.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+806"/>
+        <location filename="../qt_quick/Main.qml" line="+838"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Chcete &lt;b&gt;odstrániť&lt;/b&gt; toto zariadenie %1?&lt;br/&gt;&lt;br/&gt;Názov: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -767,13 +767,13 @@ Zvoľte iný názov.</translation>
         <translation>Systém</translation>
     </message>
     <message>
-        <location line="-226"/>
-        <location line="+227"/>
+        <location line="-235"/>
+        <location line="+236"/>
         <source>Settings</source>
         <translation>Nastavenia</translation>
     </message>
     <message>
-        <location line="-351"/>
+        <location line="-360"/>
         <source>Open...</source>
         <translation>Otvoriť...</translation>
     </message>
@@ -800,42 +800,42 @@ Zvoľte iný názov.</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+754"/>
+        <location line="+763"/>
         <source>Selection</source>
         <translation>Výber</translation>
     </message>
     <message>
-        <location line="-744"/>
-        <location line="+1017"/>
+        <location line="-753"/>
+        <location line="+1026"/>
         <source>Devices</source>
         <translation>Zariadenia</translation>
     </message>
     <message>
-        <location line="-1012"/>
-        <location line="+1107"/>
+        <location line="-1021"/>
+        <location line="+1116"/>
         <source>Explore</source>
         <translation>Prehliadať</translation>
     </message>
     <message>
-        <location line="-1097"/>
-        <location line="+1320"/>
+        <location line="-1106"/>
+        <location line="+1329"/>
         <source>Backup</source>
         <translation>Záloha</translation>
     </message>
     <message>
-        <location line="-1315"/>
-        <location line="+1279"/>
+        <location line="-1324"/>
+        <location line="+1288"/>
         <source>Statistics</source>
         <translation>Štatistiky</translation>
     </message>
     <message>
-        <location line="-1274"/>
-        <location line="+1294"/>
+        <location line="-1283"/>
+        <location line="+1303"/>
         <source>Tags</source>
         <translation>Značky</translation>
     </message>
     <message>
-        <location line="-1281"/>
+        <location line="-1290"/>
         <source>Documentation</source>
         <translation>Dokumentácia</translation>
     </message>
@@ -883,7 +883,7 @@ Zvoľte iný názov.</translation>
 </translation>
     </message>
     <message>
-        <location line="+123"/>
+        <location line="+132"/>
         <source>Do not show again</source>
         <translation>Nabudúce nezobrazovať</translation>
     </message>
@@ -1108,8 +1108,8 @@ Môže to znamenať, že zdroj je prázdny alebo zariadenie nie je pripojené k 
 Chcete ho aj tak uložiť (katalóg by bol prázdny)?</translation>
     </message>
     <message>
-        <location line="-694"/>
-        <location line="+872"/>
+        <location line="-703"/>
+        <location line="+881"/>
         <location line="+43"/>
         <source>Search</source>
         <translation>Hľadať</translation>
@@ -1243,8 +1243,8 @@ Chcete ho aj tak uložiť (katalóg by bol prázdny)?</translation>
         <translation>Vytvorenie katalógu zlyhalo: </translation>
     </message>
     <message>
-        <location line="-1162"/>
-        <location line="+1152"/>
+        <location line="-1171"/>
+        <location line="+1161"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Vytvoriť</translation>
@@ -6504,7 +6504,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDeviceEditForm</name>
     <message>
-        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+103"/>
+        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+108"/>
         <source>Provide a name for this device.</source>
         <translation>Zadajte názov tohto zariadenia.</translation>
     </message>
@@ -6514,18 +6514,23 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Zdrojová cesta: %1 → %2</translation>
     </message>
     <message>
+        <location line="+7"/>
+        <source>Excluded folders or files changed</source>
+        <translation>Vylúčené priečinky alebo súbory sa zmenili</translation>
+    </message>
+    <message>
         <location line="+91"/>
         <source>Device</source>
         <translation>Zariadenie</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+257"/>
+        <location line="+263"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
     <message>
-        <location line="-254"/>
+        <location line="-260"/>
         <source>Name</source>
         <translation>Názov</translation>
     </message>
@@ -6666,7 +6671,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Pridať</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+49"/>
         <source>Storage details</source>
         <translation>Podrobnosti úložiska</translation>
     </message>
@@ -7062,7 +7067,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Celková veľkosť</translation>
     </message>
     <message>
-        <location line="+227"/>
+        <location line="+228"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>Otvoriť priečinok</translation>
@@ -7268,7 +7273,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageSearchForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchForm.qml" line="+332"/>
+        <location filename="../qt_quick/PageSearchForm.qml" line="+336"/>
         <source>Select a date</source>
         <translation>Vyberte dátum</translation>
     </message>
@@ -7647,7 +7652,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+680"/>
+        <location line="+681"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Overiť kontrolné súčty</translation>
@@ -7659,25 +7664,25 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Zahrnúť metadáta</translation>
     </message>
     <message>
-        <location line="-731"/>
-        <location line="+518"/>
+        <location line="-732"/>
+        <location line="+519"/>
         <location line="+158"/>
         <source>Move to Trash</source>
         <translation>Presunúť do koša</translation>
     </message>
     <message>
-        <location line="-677"/>
+        <location line="-678"/>
         <source>Extract Metadata</source>
         <translation>Extrahovať metadáta</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+636"/>
+        <location line="+637"/>
         <source>Delete</source>
         <translation>Zmazať</translation>
     </message>
     <message>
-        <location line="-578"/>
+        <location line="-579"/>
         <source>Exported to: %1</source>
         <translation>Exportované do: %1</translation>
     </message>
@@ -7697,7 +7702,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Export zlyhal — žiadne výsledky alebo chyba databázy</translation>
     </message>
     <message>
-        <location line="+303"/>
+        <location line="+304"/>
         <source>(no selection)</source>
         <translation>(žiadny výber)</translation>
     </message>
@@ -7961,32 +7966,39 @@ Chyby: %3</translation>
 <context>
     <name>PageSelectionDelegate</name>
     <message>
+        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+52"/>
         <source>Search</source>
-        <translation type="vanished">Hľadať</translation>
+        <translation>Hľadať</translation>
     </message>
     <message>
+        <location line="+16"/>
         <source>Update</source>
-        <translation type="vanished">Aktualizovať</translation>
+        <translation>Aktualizovať</translation>
     </message>
     <message>
+        <location line="+14"/>
         <source>Explore</source>
-        <translation type="vanished">Prehliadať</translation>
+        <translation>Prehliadať</translation>
     </message>
     <message>
+        <location line="+14"/>
         <source>Open folder</source>
-        <translation type="vanished">Otvoriť priečinok</translation>
+        <translation>Otvoriť priečinok</translation>
     </message>
     <message>
+        <location line="+6"/>
         <source>Edit</source>
-        <translation type="vanished">Upraviť</translation>
+        <translation>Upraviť</translation>
     </message>
     <message>
+        <location line="+84"/>
         <source>Collapse</source>
-        <translation type="vanished">Zbaliť</translation>
+        <translation>Zbaliť</translation>
     </message>
     <message>
+        <location line="+0"/>
         <source>Expand</source>
-        <translation type="vanished">Rozbaliť</translation>
+        <translation>Rozbaliť</translation>
     </message>
 </context>
 <context>
