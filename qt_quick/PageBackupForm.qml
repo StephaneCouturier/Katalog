@@ -181,70 +181,83 @@ ColumnLayout {
     }
 
     // ─── Filter bar ───────────────────────────────────────────────────────────
-    RowLayout {
+    // A Flow, not a RowLayout: every control here has a fixed minimum width, so as a
+    // RowLayout the bar set a floor for the whole page. The cards fill that width, and
+    // the ScrollablePage clipped whatever ran past the window - which read as the right
+    // hand side of every card being hidden. Wrapping keeps the page shrinkable, the
+    // same reason the card's action buttons already use a Flow. Each cluster is a
+    // RowLayout so it wraps as a unit rather than splitting mid-group.
+    Flow {
         Layout.fillWidth:   true
         Layout.topMargin:   Kirigami.Units.largeSpacing
         Layout.leftMargin:  Kirigami.Units.largeSpacing
         Layout.rightMargin: Kirigami.Units.largeSpacing
         spacing: Kirigami.Units.largeSpacing
 
-        Controls.Label { text: qsTr("Type"); opacity: 0.7 }
-        Controls.ComboBox {
-            id: typeFilterCombo
-            textRole:  "text"
-            valueRole: "value"
-            model: [
-                { value: "All",     text: qsTr("All")     },
-                { value: "Backup",  text: qsTr("Backup")  },
-                { value: "Archive", text: qsTr("Archive") }
-            ]
-            onActivated: {
-                root.mappingTypeFilter = currentValue
-                appManager1.setBackupSetting("MappingTypeFilter", currentValue)
-                root.refresh()
+        RowLayout {
+            spacing: Kirigami.Units.smallSpacing
+            Controls.Label { text: qsTr("Type"); opacity: 0.7 }
+            Controls.ComboBox {
+                id: typeFilterCombo
+                textRole:  "text"
+                valueRole: "value"
+                model: [
+                    { value: "All",     text: qsTr("All")     },
+                    { value: "Backup",  text: qsTr("Backup")  },
+                    { value: "Archive", text: qsTr("Archive") }
+                ]
+                onActivated: {
+                    root.mappingTypeFilter = currentValue
+                    appManager1.setBackupSetting("MappingTypeFilter", currentValue)
+                    root.refresh()
+                }
             }
         }
 
-        Controls.Label { text: qsTr("Filter"); opacity: 0.7 }
         RowLayout {
-            spacing: 2
-            Repeater {
-                model: [
-                    { value: "None",   label: qsTr("All")    },
-                    { value: "Source", label: qsTr("Source") },
-                    { value: "Target", label: qsTr("Target") }
-                ]
-                delegate: Controls.Button {
-                    required property var modelData
-                    text:      modelData.label
-                    flat:      root.filterType !== modelData.value
-                    checked:   root.filterType === modelData.value
-                    checkable: true
-                    onClicked: {
-                        root.filterType = modelData.value
-                        appManager1.setBackupSetting("FilterType", modelData.value)
-                        root.refresh()
+            spacing: Kirigami.Units.smallSpacing
+            Controls.Label { text: qsTr("Filter"); opacity: 0.7 }
+            RowLayout {
+                spacing: 2
+                Repeater {
+                    model: [
+                        { value: "None",   label: qsTr("All")    },
+                        { value: "Source", label: qsTr("Source") },
+                        { value: "Target", label: qsTr("Target") }
+                    ]
+                    delegate: Controls.Button {
+                        required property var modelData
+                        text:      modelData.label
+                        flat:      root.filterType !== modelData.value
+                        checked:   root.filterType === modelData.value
+                        checkable: true
+                        onClicked: {
+                            root.filterType = modelData.value
+                            appManager1.setBackupSetting("FilterType", modelData.value)
+                            root.refresh()
+                        }
                     }
                 }
             }
         }
 
-        Item { Layout.fillWidth: true }
+        RowLayout {
+            spacing: Kirigami.Units.smallSpacing
+            Controls.Button {
+                text:      qsTr("Run listed links")
+                icon.name: "media-playback-start"
+                enabled:   root.runningMappingId === -1
+                           && !appManager1.catalogUpdateForBackupRunning
+                           && !appManager1.backupPreviewRunning
+                           && root.runnableListedIds().length > 0
+                onClicked: runListedDialog.open()
+            }
 
-        Controls.Button {
-            text:      qsTr("Run listed links")
-            icon.name: "media-playback-start"
-            enabled:   root.runningMappingId === -1
-                       && !appManager1.catalogUpdateForBackupRunning
-                       && !appManager1.backupPreviewRunning
-                       && root.runnableListedIds().length > 0
-            onClicked: runListedDialog.open()
-        }
-
-        Controls.CheckBox {
-            text:    qsTr("Update catalogs")
-            checked: appManager1.updateBeforeBackup
-            onToggled: appManager1.updateBeforeBackup = checked
+            Controls.CheckBox {
+                text:    qsTr("Update catalogs")
+                checked: appManager1.updateBeforeBackup
+                onToggled: appManager1.updateBeforeBackup = checked
+            }
         }
     }
 
@@ -403,6 +416,11 @@ ColumnLayout {
 
             property bool isRunning: root.runningMappingId === modelData.mappingId
 
+            // Below this the detail rows stack their two halves instead of eliding both
+            // to nothing. Scaled by cardScale because the slider grows the text but not
+            // the card, so a size that fits at 1.0 does not fit at 1.5.
+            readonly property bool narrow: width < Kirigami.Units.gridUnit * 28 * root.cardScale
+
             ColumnLayout {
                 id: cardContent
                 anchors {
@@ -455,7 +473,10 @@ ColumnLayout {
                         text:    qsTr("Source")
                         opacity: 0.7
                         font.pointSize: mappingCard.cardFontSize
+                        // A floor, not a fixed width: gridUnit * 4 is too narrow for a
+                        // longer translation, or for any label at a large card scale.
                         Layout.preferredWidth: Kirigami.Units.gridUnit * 4
+                        Layout.minimumWidth: implicitWidth
                     }
                     Rectangle {
                         implicitWidth:  Kirigami.Units.iconSizes.small * 0.55
@@ -464,17 +485,34 @@ ColumnLayout {
                         color: modelData.sourceActive ? Kirigami.Theme.positiveTextColor
                                                       : Kirigami.Theme.disabledTextColor
                     }
-                    Controls.Label {
-                        text:  modelData.sourceName
-                        font.pointSize: mappingCard.cardFontSize
-                        elide: Text.ElideRight
+                    // Two halves that stack when the card is narrow. Both are flexible
+                    // with a zero minimum: a trailing label that only sets `elide` is
+                    // not shrinkable in a RowLayout, so the row used to overflow the
+                    // card and the right-hand text was clipped away rather than elided.
+                    GridLayout {
                         Layout.fillWidth: true
-                    }
-                    Controls.Label {
-                        text:    modelData.sourceSizeStr + " · " + modelData.sourceFileCount + " " + qsTr("files")
-                        opacity: 0.7
-                        font.pointSize: mappingCard.cardFontSize
-                        elide:   Text.ElideRight
+                        columns:   mappingCard.narrow ? 1 : 2
+                        rowSpacing:    0
+                        columnSpacing: Kirigami.Units.smallSpacing
+
+                        Controls.Label {
+                            text:  modelData.sourceName
+                            font.pointSize: mappingCard.cardFontSize
+                            elide: Text.ElideRight
+                            Layout.fillWidth: true
+                            Layout.minimumWidth: 0
+                            Layout.preferredWidth: implicitWidth
+                        }
+                        Controls.Label {
+                            text:    modelData.sourceSizeStr + " · " + modelData.sourceFileCount + " " + qsTr("files")
+                            opacity: 0.7
+                            font.pointSize: mappingCard.cardFontSize
+                            elide:   Text.ElideRight
+                            Layout.fillWidth: true
+                            Layout.minimumWidth: 0
+                            Layout.preferredWidth: implicitWidth
+                            horizontalAlignment: mappingCard.narrow ? Text.AlignLeft : Text.AlignRight
+                        }
                     }
                 }
 
@@ -486,7 +524,10 @@ ColumnLayout {
                         text:    qsTr("Target")
                         opacity: 0.7
                         font.pointSize: mappingCard.cardFontSize
+                        // A floor, not a fixed width: gridUnit * 4 is too narrow for a
+                        // longer translation, or for any label at a large card scale.
                         Layout.preferredWidth: Kirigami.Units.gridUnit * 4
+                        Layout.minimumWidth: implicitWidth
                     }
                     Rectangle {
                         implicitWidth:  Kirigami.Units.iconSizes.small * 0.55
@@ -495,17 +536,30 @@ ColumnLayout {
                         color: modelData.targetActive ? Kirigami.Theme.positiveTextColor
                                                       : Kirigami.Theme.disabledTextColor
                     }
-                    Controls.Label {
-                        text:  modelData.targetName
-                        font.pointSize: mappingCard.cardFontSize
-                        elide: Text.ElideRight
+                    GridLayout {
                         Layout.fillWidth: true
-                    }
-                    Controls.Label {
-                        text:    modelData.targetSizeStr + " · " + modelData.targetFileCount + " " + qsTr("files")
-                        opacity: 0.7
-                        font.pointSize: mappingCard.cardFontSize
-                        elide:   Text.ElideRight
+                        columns:   mappingCard.narrow ? 1 : 2
+                        rowSpacing:    0
+                        columnSpacing: Kirigami.Units.smallSpacing
+
+                        Controls.Label {
+                            text:  modelData.targetName
+                            font.pointSize: mappingCard.cardFontSize
+                            elide: Text.ElideRight
+                            Layout.fillWidth: true
+                            Layout.minimumWidth: 0
+                            Layout.preferredWidth: implicitWidth
+                        }
+                        Controls.Label {
+                            text:    modelData.targetSizeStr + " · " + modelData.targetFileCount + " " + qsTr("files")
+                            opacity: 0.7
+                            font.pointSize: mappingCard.cardFontSize
+                            elide:   Text.ElideRight
+                            Layout.fillWidth: true
+                            Layout.minimumWidth: 0
+                            Layout.preferredWidth: implicitWidth
+                            horizontalAlignment: mappingCard.narrow ? Text.AlignLeft : Text.AlignRight
+                        }
                     }
                 }
 
@@ -519,47 +573,65 @@ ColumnLayout {
                         text:    modelData.mappingType === "Archive" ? qsTr("To move") : qsTr("Diff")
                         opacity: 0.7
                         font.pointSize: mappingCard.cardFontSize
+                        // A floor, not a fixed width: gridUnit * 4 is too narrow for a
+                        // longer translation, or for any label at a large card scale.
                         Layout.preferredWidth: Kirigami.Units.gridUnit * 4
+                        Layout.minimumWidth: implicitWidth
                     }
-                    Controls.Label {
+                    // Same two-half treatment as the Source and Target rows: the
+                    // trailing label was not shrinkable, so it was clipped off the
+                    // card instead of eliding.
+                    GridLayout {
                         Layout.fillWidth: true
-                        elide: Text.ElideRight
-                        font.pointSize: mappingCard.cardFontSize
-                        text: {
-                            if (modelData.mappingType === "Archive") {
-                                if (modelData.sourceFileCount === 0)
-                                    return qsTr("Nothing to move")
-                                return modelData.sourceFileCount + " " + qsTr("files")
+                        columns:   mappingCard.narrow ? 1 : 2
+                        rowSpacing:    0
+                        columnSpacing: Kirigami.Units.smallSpacing
+
+                        Controls.Label {
+                            Layout.fillWidth: true
+                            Layout.minimumWidth: 0
+                            Layout.preferredWidth: implicitWidth
+                            elide: Text.ElideRight
+                            font.pointSize: mappingCard.cardFontSize
+                            text: {
+                                if (modelData.mappingType === "Archive") {
+                                    if (modelData.sourceFileCount === 0)
+                                        return qsTr("Nothing to move")
+                                    return modelData.sourceFileCount + " " + qsTr("files")
+                                }
+                                var sizeSign  = modelData.sizeDiff       > 0 ? "+" : (modelData.sizeDiff       < 0 ? "−" : "")
+                                var filesSign = modelData.fileCountDiff   > 0 ? "+" : (modelData.fileCountDiff   < 0 ? "−" : "")
+                                if (modelData.sizeDiff === 0 && modelData.fileCountDiff === 0)
+                                    return qsTr("Up to date")
+                                return sizeSign + modelData.sizeDiffStr
+                                    + " · " + filesSign + Math.abs(modelData.fileCountDiff) + " " + qsTr("files")
+                                    + (modelData.sourceDateUpdated ? " · " + modelData.sourceDateUpdated : "")
                             }
-                            var sizeSign  = modelData.sizeDiff       > 0 ? "+" : (modelData.sizeDiff       < 0 ? "−" : "")
-                            var filesSign = modelData.fileCountDiff   > 0 ? "+" : (modelData.fileCountDiff   < 0 ? "−" : "")
-                            if (modelData.sizeDiff === 0 && modelData.fileCountDiff === 0)
-                                return qsTr("Up to date")
-                            return sizeSign + modelData.sizeDiffStr
-                                + " · " + filesSign + Math.abs(modelData.fileCountDiff) + " " + qsTr("files")
-                                + (modelData.sourceDateUpdated ? " · " + modelData.sourceDateUpdated : "")
+                            // Archive: highlight when there are files to move (source not empty).
+                            // Backup: highlight when the source is larger than the target.
+                            color: (modelData.mappingType === "Archive"
+                                        ? modelData.sourceFileCount > 0
+                                        : modelData.sizeDiff > 0)
+                                   ? Kirigami.Theme.neutralTextColor
+                                   : Kirigami.Theme.textColor
                         }
-                        // Archive: highlight when there are files to move (source not empty).
-                        // Backup: highlight when the source is larger than the target.
-                        color: (modelData.mappingType === "Archive"
-                                    ? modelData.sourceFileCount > 0
-                                    : modelData.sizeDiff > 0)
-                               ? Kirigami.Theme.neutralTextColor
-                               : Kirigami.Theme.textColor
-                    }
-                    // Last run info, right-aligned under the file counts (saves a line).
-                    // "Last archive" for Archive links, "Last backup" otherwise.
-                    Controls.Label {
-                        elide:   Text.ElideRight
-                        opacity: 0.7
-                        font.pointSize: mappingCard.cardFontSize
-                        horizontalAlignment: Text.AlignRight
-                        text: (modelData.mappingType === "Archive" ? qsTr("Last archive")
-                                                                   : qsTr("Last backup"))
-                              + ": "
-                              + (modelData.lastBackupDate
-                                 ? modelData.lastBackupDate + " · " + modelData.lastBackupSizeStr
-                                 : qsTr("never"))
+                        // Last run info, right-aligned under the file counts (saves a line).
+                        // "Last archive" for Archive links, "Last backup" otherwise.
+                        Controls.Label {
+                            elide:   Text.ElideRight
+                            opacity: 0.7
+                            font.pointSize: mappingCard.cardFontSize
+                            Layout.fillWidth: true
+                            Layout.minimumWidth: 0
+                            Layout.preferredWidth: implicitWidth
+                            horizontalAlignment: mappingCard.narrow ? Text.AlignLeft : Text.AlignRight
+                            text: (modelData.mappingType === "Archive" ? qsTr("Last archive")
+                                                                       : qsTr("Last backup"))
+                                  + ": "
+                                  + (modelData.lastBackupDate
+                                     ? modelData.lastBackupDate + " · " + modelData.lastBackupSizeStr
+                                     : qsTr("never"))
+                        }
                     }
                 }
 
