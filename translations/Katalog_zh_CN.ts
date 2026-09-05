@@ -517,20 +517,20 @@ Choose a different name.</source>
     <message>
         <location line="+86"/>
         <location line="+2"/>
-        <location line="+301"/>
+        <location line="+358"/>
         <source>Link not found.</source>
         <translation>未找到链接。</translation>
     </message>
     <message>
-        <location line="-288"/>
+        <location line="-345"/>
         <location line="+2"/>
-        <location line="+119"/>
-        <location line="+179"/>
+        <location line="+162"/>
+        <location line="+193"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>源和目标都必须是目录设备。</translation>
     </message>
     <message>
-        <location line="-260"/>
+        <location line="-317"/>
         <location line="+7"/>
         <source>Move</source>
         <translation>移动</translation>
@@ -548,14 +548,14 @@ Choose a different name.</source>
         <translation>冲突</translation>
     </message>
     <message>
-        <location line="+65"/>
-        <location line="+178"/>
+        <location line="+109"/>
+        <location line="+191"/>
         <source>Source not available: %1</source>
         <translation>源不可用：%1</translation>
     </message>
     <message>
-        <location line="-174"/>
-        <location line="+178"/>
+        <location line="-186"/>
+        <location line="+190"/>
         <source>Target not available: %1</source>
         <translation>目标不可用：%1</translation>
     </message>
@@ -1653,7 +1653,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1146"/>
+        <location line="+1156"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
         <translation>正在保存</translation>
@@ -5850,7 +5850,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="vanished">已同步</translation>
     </message>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+109"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+144"/>
         <source>Cancelled</source>
         <translation>已取消</translation>
     </message>
@@ -5881,12 +5881,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+437"/>
+        <location line="+514"/>
         <source>Errors: %1</source>
         <translation>错误：%1</translation>
     </message>
     <message>
-        <location line="-418"/>
+        <location line="-474"/>
         <source>Type</source>
         <translation>类型</translation>
     </message>
@@ -5898,37 +5898,68 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="-15"/>
-        <location line="+171"/>
+        <location line="+236"/>
         <source>Backup</source>
         <translation>备份</translation>
     </message>
     <message>
-        <location line="-170"/>
-        <location line="+170"/>
+        <location line="-235"/>
+        <location line="+235"/>
         <source>Archive</source>
         <translation>存档</translation>
     </message>
     <message>
-        <location line="-161"/>
+        <location line="-226"/>
         <source>Filter</source>
         <translation>筛选</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+176"/>
+        <location line="+241"/>
         <source>Source</source>
         <translation>源</translation>
     </message>
     <message>
-        <location line="-175"/>
-        <location line="+206"/>
+        <location line="-240"/>
+        <location line="+271"/>
         <source>Target</source>
         <translation>目标</translation>
     </message>
     <message>
-        <location line="-186"/>
+        <location line="-251"/>
+        <location line="+18"/>
+        <source>Run listed links</source>
+        <translation>运行列出的链接</translation>
+    </message>
+    <message>
+        <location line="-8"/>
         <source>Update catalogs</source>
         <translation>更新目录</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Continue</source>
+        <translation>继续</translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>%1 link(s) will run, one after another.</source>
+        <translation>%1 个链接将逐个运行。</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>%1 archive link(s) - up to %2 moved out of the source.</source>
+        <translation>%1 个存档链接 - 最多 %2 将移出源。</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>%1 backup link(s) - roughly %2 to copy.</source>
+        <translation>%1 个备份链接 - 约 %2 需复制。</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>%1 listed link(s) will be skipped: source or target not available.</source>
+        <translation>%1 个列出的链接将被跳过：源或目标不可用。</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -6014,7 +6045,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>执行备份</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+14"/>
         <source>Pause</source>
         <translation>暂停</translation>
     </message>
@@ -6024,7 +6055,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>恢复</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-358"/>
+        <location line="+364"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -6172,7 +6204,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>选项</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+46"/>
         <source>Strict copy</source>
         <translation>严格复制</translation>
     </message>
@@ -6207,7 +6239,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>直接扫描源驱动器（需要已连接的源）</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-26"/>
         <source>Directories</source>
         <translation>目录</translation>
     </message>

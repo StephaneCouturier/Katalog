@@ -157,6 +157,16 @@ La liste des liens peut être filtrée pour n'afficher que les liens pertinents 
 - Menu déroulant **Type** — filtre par *BackUp* ou *Archive*.
 - Case à cocher **Afficher le tableau complet** — affiche ou masque les colonnes de détail supplémentaires.
 
+### Exécuter plusieurs liens à la fois
+
+Le bouton **Lancer les liens listés** exécute les liens actuellement affichés dans la liste, l'un après l'autre : un ensemble de sauvegardes peut ainsi être lancé en une seule fois, puis laissé se terminer.
+
+- Les filtres de la liste *constituent* la sélection : ce que les filtres Source/Cible et Type laissent à l'écran est ce qui sera exécuté. Pour exécuter un autre ensemble, modifier d'abord les filtres.
+- Seuls les liens dont la source **et** la cible sont disponibles sont réellement exécutés. Les liens affichés dont le périphérique est hors ligne sont ignorés, et la confirmation en indique le nombre.
+- Une confirmation apparaît d'abord, résumant le nombre de liens à exécuter, le volume à copier et — pour les liens *Archive* — le volume qui sera **déplacé hors de la source**. Ces volumes sont des estimations issues des totaux du catalogue, et non d'une comparaison calculée : le chiffre d'archivage est une borne supérieure et celui de sauvegarde est approximatif. Pour un chiffre exact, utiliser *Aperçu* sur un lien.
+- **Arrêter** met fin à l'exécution complète, et pas seulement au lien en cours : les liens encore en attente sont abandonnés. *Pause* et *Reprendre* agissent sur le lien en cours d'exécution.
+- Chaque lien se comporte exactement comme s'il avait été lancé depuis sa propre carte, y compris la mise à jour des catalogues avant et après lorsque *Mettre à jour les catalogues* est coché.
+
 ### Menu contextuel d'un lien
 
 Un clic droit sur un lien dans la liste ouvre un menu contextuel avec les actions suivantes :

@@ -4399,6 +4399,11 @@ void AppManager::runBackup(int mappingId)
 {
     if (m_backupJob) return;
 
+    // Claimed here rather than in executeBackupJob() so the card is marked running for
+    // the catalog-update phase too, which is when the page's own click handler used to
+    // set it. executeBackupJob() releases it again on every refusal (BKP-C10).
+    setRunningBackupMappingId(mappingId);
+
     // If "update before" is on, update both catalogs first then call executeBackupJob()
     if (updateBeforeBackup() && !m_catalogUpdateForBackupRunning) {
         m_pendingBackupAfterUpdate = mappingId;
@@ -4409,11 +4414,48 @@ void AppManager::runBackup(int mappingId)
     executeBackupJob(mappingId);
 }
 //----------------------------------------------------------------------
+void AppManager::setRunningBackupMappingId(int mappingId)
+{
+    if (m_runningBackupMappingId == mappingId)
+        return;
+    m_runningBackupMappingId = mappingId;
+    emit runningBackupMappingIdChanged();
+}
+//----------------------------------------------------------------------
+void AppManager::runListedBackups(const QVariantList &mappingIds)
+{
+    // One sequence at a time; a second request while one runs is ignored rather than
+    // appended, so the confirmed list is always the list that runs (SpecBackup.md BKP-F18).
+    if (m_backupJob || !m_pendingBackupMappings.isEmpty())
+        return;
+
+    for (const QVariant &id : mappingIds)
+        m_pendingBackupMappings.append(id.toInt());
+
+    startNextListedBackup();
+}
+//----------------------------------------------------------------------
+void AppManager::startNextListedBackup()
+{
+    if (m_pendingBackupMappings.isEmpty())
+        return;
+
+    const int next = m_pendingBackupMappings.takeFirst();
+    // Through runBackup(), never executeBackupJob(): each link keeps its own
+    // update-before-backup phase (BKP-F7) and its own last-run record (BKP-F10).
+    // Deferred by a turn of the event loop so the finished job's thread has been
+    // deleteLater'd before the next one is built (BKP-C10).
+    QTimer::singleShot(0, this, [this, next]() { runBackup(next); });
+}
+//----------------------------------------------------------------------
 void AppManager::executeBackupJob(int mappingId)
 {
     BackupMappingManager manager(m_connectionName);
     MappingInfo mapping = manager.getMappingById(mappingId);
-    if (mapping.mappingId < 0) return;
+    if (mapping.mappingId < 0) {
+        setRunningBackupMappingId(-1);
+        return;
+    }
 
     Device sourceDevice;
     sourceDevice.ID = mapping.sourceDeviceId;
@@ -4423,6 +4465,7 @@ void AppManager::executeBackupJob(int mappingId)
     targetDevice.loadDevice(m_connectionName);
 
     if (sourceDevice.type != QLatin1String("Catalog") || targetDevice.type != QLatin1String("Catalog")) {
+        setRunningBackupMappingId(-1);
         emit backupNotification(tr("Both source and target must be Catalog devices."), true);
         return;
     }
@@ -4430,17 +4473,19 @@ void AppManager::executeBackupJob(int mappingId)
     sourceDevice.updateActiveState(m_connectionName);
     targetDevice.updateActiveState(m_connectionName);
     if (!sourceDevice.active) {
+        setRunningBackupMappingId(-1);
         emit backupNotification(tr("Source not available: %1").arg(sourceDevice.name), true);
         return;
     }
     if (!targetDevice.active) {
+        setRunningBackupMappingId(-1);
         emit backupNotification(tr("Target not available: %1").arg(targetDevice.name), true);
         return;
     }
 
     m_backupSourceDevice     = sourceDevice;
     m_backupTargetDevice     = targetDevice;
-    m_runningBackupMappingId = mappingId;
+    setRunningBackupMappingId(mappingId);
 
     if (collection->databaseMode == QLatin1String("Memory")) {
         QMutex mutex;
@@ -4465,8 +4510,9 @@ void AppManager::executeBackupJob(int mappingId)
     CatalogDifferenceEngine cmpEngine(m_connectionName);
     const BackupCompareResult cmp = cmpEngine.compareForBackup(sourceDevice, targetDevice, mapping.strictCopy, mapping.sourceDrive);
     if (cmp.filesToCopy.isEmpty() && cmp.fileConflicts.isEmpty()) {
-        m_runningBackupMappingId = -1;
+        setRunningBackupMappingId(-1);
         emit backupFinished(0, 0, 0, 0, 0, 0, false);
+        startNextListedBackup();
         return;
     }
 
@@ -4497,6 +4543,9 @@ void AppManager::executeBackupJob(int mappingId)
 //----------------------------------------------------------------------
 void AppManager::stopBackup()
 {
+    // Stop ends the whole sequence, not just this link. The waiting links are not shown
+    // anywhere, so letting them fire on after a Stop would be a surprise (BKP-F20).
+    m_pendingBackupMappings.clear();
     if (m_backupJob) m_backupJob->stopBackup();
 }
 //----------------------------------------------------------------------
@@ -4521,7 +4570,7 @@ void AppManager::onBackupFinishedInternal(const BackupReport &report)
     const int finishedMappingId = m_runningBackupMappingId;
     m_backupJob              = nullptr;
     m_backupThread           = nullptr;
-    m_runningBackupMappingId = -1;
+    setRunningBackupMappingId(-1);
     emit backupFinished(
         report.copiedCount(),
         report.movedCount(),
@@ -4555,13 +4604,21 @@ void AppManager::onBackupFinishedInternal(const BackupReport &report)
         // singleShot guard used in onCatalogUpdateForBackupStep) so the update runs
         // against a fully idle manager rather than erroring out.
         QTimer::singleShot(60, this, [this]() { runNextPostBackupUpdate(); });
+        return;   // the next link starts once those updates have drained
     }
+
+    if (report.wasCancelled)
+        m_pendingBackupMappings.clear();
+    startNextListedBackup();
 }
 //----------------------------------------------------------------------
 void AppManager::runNextPostBackupUpdate()
 {
     if (m_postBackupUpdateQueue.isEmpty()) {
         emit backupMappingsChanged();
+        // Only now is the device-update manager idle again, so this is where the next
+        // link of a "Run listed links" sequence can safely start (BKP-C11).
+        startNextListedBackup();
         return;
     }
     const int id = m_postBackupUpdateQueue.takeFirst();

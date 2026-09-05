@@ -128,6 +128,7 @@ class AppManager : public QObject
     Q_PROPERTY(QString catalogUpdateForBackupStatusText READ getCatalogUpdateForBackupStatusText NOTIFY catalogUpdateForBackupStatusChanged)
     Q_PROPERTY(bool backupPreviewRunning READ backupPreviewRunning NOTIFY backupPreviewRunningChanged)
     Q_PROPERTY(QString backupPreviewStatusText READ getBackupPreviewStatusText NOTIFY backupPreviewStatusChanged)
+    Q_PROPERTY(int runningBackupMappingId READ runningBackupMappingId NOTIFY runningBackupMappingIdChanged)
     Q_PROPERTY(bool    deviceUpdateIsRunning  READ getDeviceUpdateIsRunning  NOTIFY deviceUpdateStateChanged)
     Q_PROPERTY(QString deviceUpdateStatusText READ getDeviceUpdateStatusText NOTIFY deviceUpdateStatusChanged)
     Q_PROPERTY(bool    isFirstRun             READ isFirstRun                NOTIFY firstRunChanged)
@@ -262,6 +263,9 @@ public slots:
     Q_INVOKABLE void         stopBackupPreview();
     Q_INVOKABLE QVariantMap  lastBackupPreviewSummary() const { return m_lastPreviewSummary; }
     Q_INVOKABLE void         runBackup(int mappingId);
+    // Run several links one after another (SpecBackup.md BKP-F18). The eligible ids are
+    // chosen on the page, from the links currently listed under its filters.
+    Q_INVOKABLE void         runListedBackups(const QVariantList &mappingIds);
     Q_INVOKABLE void         stopBackup();
     Q_INVOKABLE void         pauseBackup();
     Q_INVOKABLE void         resumeBackup();
@@ -277,6 +281,7 @@ public slots:
     bool catalogUpdateForBackupRunning() const { return m_catalogUpdateForBackupRunning; }
     QString getCatalogUpdateForBackupStatusText() const { return m_catalogUpdateForBackupStatusText; }
     bool backupPreviewRunning() const { return m_backupPreviewRunning; }
+    int runningBackupMappingId() const { return m_runningBackupMappingId; }
     QString getBackupPreviewStatusText() const { return m_backupPreviewStatusText; }
     Q_INVOKABLE void prepareCatalogsForMapping(int mappingId);
 
@@ -516,6 +521,7 @@ signals:
     void catalogUpdateForBackupRunningChanged();
     void catalogUpdateForBackupStatusChanged();
     void catalogsForMappingPrepared(int mappingId, bool success, const QString &error);
+    void runningBackupMappingIdChanged();
     void backupPreviewRunningChanged();
     void backupPreviewStatusChanged();
     void backupPreviewReady(int mappingId, bool success, bool cancelled);
@@ -561,6 +567,8 @@ private:
     // backupPreviewReady.
     void runPreviewCompare(int mappingId);
     void executeBackupJob(int mappingId);
+    void setRunningBackupMappingId(int mappingId);
+    void startNextListedBackup();
     void onBackupProgressInternal(int filesDone, int totalFiles, qint64 bytesCopied, qint64 totalBytes, const QString &currentFile);
     void onBackupFinishedInternal(const BackupReport &report);
 
@@ -571,6 +579,8 @@ private:
     Device                  m_backupSourceDevice;
     Device                  m_backupTargetDevice;
     int                     m_runningBackupMappingId = -1;
+    // Links still waiting in a "Run listed links" sequence (SpecBackup.md BKP-C10).
+    QList<int>              m_pendingBackupMappings;
     QList<BackupPreviewRow> m_lastPreviewRows;
 
     // Async, cancellable preview state (BKP-F16/BKP-C8)

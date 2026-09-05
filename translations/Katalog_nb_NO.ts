@@ -517,20 +517,20 @@ Velg et annet navn.</translation>
     <message>
         <location line="+86"/>
         <location line="+2"/>
-        <location line="+301"/>
+        <location line="+358"/>
         <source>Link not found.</source>
         <translation>Lenken ble ikke funnet.</translation>
     </message>
     <message>
-        <location line="-288"/>
+        <location line="-345"/>
         <location line="+2"/>
-        <location line="+119"/>
-        <location line="+179"/>
+        <location line="+162"/>
+        <location line="+193"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>Kilde og mål må begge være katalogenheter.</translation>
     </message>
     <message>
-        <location line="-260"/>
+        <location line="-317"/>
         <location line="+7"/>
         <source>Move</source>
         <translation>Flytt</translation>
@@ -548,14 +548,14 @@ Velg et annet navn.</translation>
         <translation>Konflikt</translation>
     </message>
     <message>
-        <location line="+65"/>
-        <location line="+178"/>
+        <location line="+109"/>
+        <location line="+191"/>
         <source>Source not available: %1</source>
         <translation>Kilde ikke tilgjengelig: %1</translation>
     </message>
     <message>
-        <location line="-174"/>
-        <location line="+178"/>
+        <location line="-186"/>
+        <location line="+190"/>
         <source>Target not available: %1</source>
         <translation>Mål ikke tilgjengelig: %1</translation>
     </message>
@@ -1653,7 +1653,7 @@ Vil du lagre den likevel (katalogen blir tom)?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1146"/>
+        <location line="+1156"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
         <translation>Lagrer</translation>
@@ -5850,7 +5850,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="vanished">synkronisert</translation>
     </message>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+109"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+144"/>
         <source>Cancelled</source>
         <translation>Avbrutt</translation>
     </message>
@@ -5881,12 +5881,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+437"/>
+        <location line="+514"/>
         <source>Errors: %1</source>
         <translation>Feil: %1</translation>
     </message>
     <message>
-        <location line="-418"/>
+        <location line="-474"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
@@ -5898,37 +5898,68 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="-15"/>
-        <location line="+171"/>
+        <location line="+236"/>
         <source>Backup</source>
         <translation>Sikkerhetskopi</translation>
     </message>
     <message>
-        <location line="-170"/>
-        <location line="+170"/>
+        <location line="-235"/>
+        <location line="+235"/>
         <source>Archive</source>
         <translation>Arkiv</translation>
     </message>
     <message>
-        <location line="-161"/>
+        <location line="-226"/>
         <source>Filter</source>
         <translation>Filter</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+176"/>
+        <location line="+241"/>
         <source>Source</source>
         <translation>Kilde</translation>
     </message>
     <message>
-        <location line="-175"/>
-        <location line="+206"/>
+        <location line="-240"/>
+        <location line="+271"/>
         <source>Target</source>
         <translation>Mål</translation>
     </message>
     <message>
-        <location line="-186"/>
+        <location line="-251"/>
+        <location line="+18"/>
+        <source>Run listed links</source>
+        <translation>Kjør oppførte lenker</translation>
+    </message>
+    <message>
+        <location line="-8"/>
         <source>Update catalogs</source>
         <translation>Oppdater kataloger</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Continue</source>
+        <translation>Fortsett</translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>%1 link(s) will run, one after another.</source>
+        <translation>%1 lenke(r) vil kjøre, én etter én.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>%1 archive link(s) - up to %2 moved out of the source.</source>
+        <translation>%1 arkivlenke(r) - opptil %2 flyttet ut av kilden.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>%1 backup link(s) - roughly %2 to copy.</source>
+        <translation>%1 sikkerhetskopilenke(r) - omtrent %2 å kopiere.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>%1 listed link(s) will be skipped: source or target not available.</source>
+        <translation>%1 oppført lenke(r) vil bli hoppet over: kilde eller mål ikke tilgjengelig.</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -6014,7 +6045,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Kjør sikkerhetskopi</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+14"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
@@ -6024,7 +6055,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Gjenoppta</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-358"/>
+        <location line="+364"/>
         <source>Cancel</source>
         <translation>Avbryt</translation>
     </message>
@@ -6172,7 +6204,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Alternativer</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+46"/>
         <source>Strict copy</source>
         <translation>Streng kopiering</translation>
     </message>
@@ -6207,7 +6239,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Skann kildestasjonen direkte (krever tilkoblet kilde)</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-26"/>
         <source>Directories</source>
         <translation>Kataloger</translation>
     </message>

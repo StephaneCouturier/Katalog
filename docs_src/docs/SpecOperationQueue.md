@@ -132,6 +132,26 @@ outside this rule:
 Neither is a violation of OPQ-C16. Whether the panel should eventually be the
 single place for those as well is an open question that nothing here settles.
 
+### Note on the backup sequencer (OPQ-C1)
+
+`SpecBackup.md` `BKP-F18`–`BKP-F21` add a K3 control that runs the currently
+listed backup/archive links one after another. That is a **second, separate
+sequential runner**, and it is not a violation of OPQ-C1: OPQ-C1 forbids a
+parallel mechanism *for the create/update queue*, and a backup run is neither a
+creation nor an update. It also runs on its own `QThread`, so OPQ-C3
+(main-thread execution) and OPQ-C4 (one operation at a time) do not reach it
+either — those govern creations, updates and, via OPQ-C15, searches.
+
+Two contact points remain and are stated in `BKP-C11`: the per-link catalog
+update that a backup may perform first **is** a device update and stays under
+OPQ-C4; and backup progress stays on the Backup page, already carved out by the
+note on the reach of OPQ-C16 above.
+
+`BKP-F20` deliberately departs from OPQ-F7: stopping a multi-link backup run
+abandons the remaining links, where stopping a queued create/update leaves its
+queue intact. The difference is the visibility of the queue — the operation
+queue is shown (OPQ-F5), the backup pending list is not.
+
 ### Note on refusing rather than queuing (OPQ-F13, OPQ-F14)
 
 Both guards *refuse*. Queuing the refused work instead — so that it runs once the

@@ -517,20 +517,20 @@ Choose a different name.</source>
     <message>
         <location line="+86"/>
         <location line="+2"/>
-        <location line="+301"/>
+        <location line="+358"/>
         <source>Link not found.</source>
         <translation>लिंक नहीं मिला।</translation>
     </message>
     <message>
-        <location line="-288"/>
+        <location line="-345"/>
         <location line="+2"/>
-        <location line="+119"/>
-        <location line="+179"/>
+        <location line="+162"/>
+        <location line="+193"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>स्रोत और लक्ष्य दोनों कैटलॉग डिवाइस होने चाहिए।</translation>
     </message>
     <message>
-        <location line="-260"/>
+        <location line="-317"/>
         <location line="+7"/>
         <source>Move</source>
         <translation>स्थानांतरित करें</translation>
@@ -548,14 +548,14 @@ Choose a different name.</source>
         <translation>विरोध</translation>
     </message>
     <message>
-        <location line="+65"/>
-        <location line="+178"/>
+        <location line="+109"/>
+        <location line="+191"/>
         <source>Source not available: %1</source>
         <translation>स्रोत उपलब्ध नहीं है: %1</translation>
     </message>
     <message>
-        <location line="-174"/>
-        <location line="+178"/>
+        <location line="-186"/>
+        <location line="+190"/>
         <source>Target not available: %1</source>
         <translation>लक्ष्य उपलब्ध नहीं है: %1</translation>
     </message>
@@ -1653,7 +1653,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1146"/>
+        <location line="+1156"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
         <translation>सहेज रहा है</translation>
@@ -5849,7 +5849,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="vanished">सिंक में</translation>
     </message>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+109"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+144"/>
         <source>Cancelled</source>
         <translation>रद्द किया गया</translation>
     </message>
@@ -5880,12 +5880,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+437"/>
+        <location line="+514"/>
         <source>Errors: %1</source>
         <translation>त्रुटियाँ: %1</translation>
     </message>
     <message>
-        <location line="-418"/>
+        <location line="-474"/>
         <source>Type</source>
         <translation>प्रकार</translation>
     </message>
@@ -5897,37 +5897,68 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="-15"/>
-        <location line="+171"/>
+        <location line="+236"/>
         <source>Backup</source>
         <translation>बैकअप</translation>
     </message>
     <message>
-        <location line="-170"/>
-        <location line="+170"/>
+        <location line="-235"/>
+        <location line="+235"/>
         <source>Archive</source>
         <translation>आर्काइव</translation>
     </message>
     <message>
-        <location line="-161"/>
+        <location line="-226"/>
         <source>Filter</source>
         <translation>फ़िल्टर</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+176"/>
+        <location line="+241"/>
         <source>Source</source>
         <translation>स्रोत</translation>
     </message>
     <message>
-        <location line="-175"/>
-        <location line="+206"/>
+        <location line="-240"/>
+        <location line="+271"/>
         <source>Target</source>
         <translation>लक्ष्य</translation>
     </message>
     <message>
-        <location line="-186"/>
+        <location line="-251"/>
+        <location line="+18"/>
+        <source>Run listed links</source>
+        <translation>सूचीबद्ध लिंक चलाएँ</translation>
+    </message>
+    <message>
+        <location line="-8"/>
         <source>Update catalogs</source>
         <translation>कैटलॉग अपडेट करें</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Continue</source>
+        <translation>जारी रखें</translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>%1 link(s) will run, one after another.</source>
+        <translation>%1 लिंक एक के बाद एक चलेंगे।</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>%1 archive link(s) - up to %2 moved out of the source.</source>
+        <translation>%1 आर्काइव लिंक - स्रोत से %2 तक हटाया जाएगा।</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>%1 backup link(s) - roughly %2 to copy.</source>
+        <translation>%1 बैकअप लिंक - लगभग %2 कॉपी करने के लिए।</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>%1 listed link(s) will be skipped: source or target not available.</source>
+        <translation>%1 सूचीबद्ध लिंक छोड़ दिए जाएँगे: स्रोत या लक्ष्य उपलब्ध नहीं है।</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -6013,7 +6044,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>बैकअप चलाएँ</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+14"/>
         <source>Pause</source>
         <translation>रोकें</translation>
     </message>
@@ -6023,7 +6054,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>फिर से शुरू करें</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-358"/>
+        <location line="+364"/>
         <source>Cancel</source>
         <translation>रद्द करें</translation>
     </message>
@@ -6171,7 +6203,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>विकल्प</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+46"/>
         <source>Strict copy</source>
         <translation>सख्त प्रतिलिपि</translation>
     </message>
@@ -6206,7 +6238,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>स्रोत ड्राइव को सीधे स्कैन करें (कनेक्टेड स्रोत आवश्यक)</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-26"/>
         <source>Directories</source>
         <translation>डायरेक्टरियां</translation>
     </message>

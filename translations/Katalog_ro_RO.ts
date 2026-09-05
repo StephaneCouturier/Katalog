@@ -517,20 +517,20 @@ Alegeți alt nume.</translation>
     <message>
         <location line="+86"/>
         <location line="+2"/>
-        <location line="+301"/>
+        <location line="+358"/>
         <source>Link not found.</source>
         <translation>Legătura nu a fost găsită.</translation>
     </message>
     <message>
-        <location line="-288"/>
+        <location line="-345"/>
         <location line="+2"/>
-        <location line="+119"/>
-        <location line="+179"/>
+        <location line="+162"/>
+        <location line="+193"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>Sursa și destinația trebuie să fie dispozitive de catalog.</translation>
     </message>
     <message>
-        <location line="-260"/>
+        <location line="-317"/>
         <location line="+7"/>
         <source>Move</source>
         <translation>Mută</translation>
@@ -548,14 +548,14 @@ Alegeți alt nume.</translation>
         <translation>Conflict</translation>
     </message>
     <message>
-        <location line="+65"/>
-        <location line="+178"/>
+        <location line="+109"/>
+        <location line="+191"/>
         <source>Source not available: %1</source>
         <translation>Sursă indisponibilă: %1</translation>
     </message>
     <message>
-        <location line="-174"/>
-        <location line="+178"/>
+        <location line="-186"/>
+        <location line="+190"/>
         <source>Target not available: %1</source>
         <translation>Destinație indisponibilă: %1</translation>
     </message>
@@ -1653,7 +1653,7 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1146"/>
+        <location line="+1156"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
         <translation>Salvare</translation>
@@ -5850,7 +5850,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="vanished">sincronizat</translation>
     </message>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+109"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+144"/>
         <source>Cancelled</source>
         <translation>Anulat</translation>
     </message>
@@ -5881,12 +5881,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+437"/>
+        <location line="+514"/>
         <source>Errors: %1</source>
         <translation>Erori: %1</translation>
     </message>
     <message>
-        <location line="-418"/>
+        <location line="-474"/>
         <source>Type</source>
         <translation>Tip</translation>
     </message>
@@ -5898,37 +5898,68 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="-15"/>
-        <location line="+171"/>
+        <location line="+236"/>
         <source>Backup</source>
         <translation>Copie de rezervă</translation>
     </message>
     <message>
-        <location line="-170"/>
-        <location line="+170"/>
+        <location line="-235"/>
+        <location line="+235"/>
         <source>Archive</source>
         <translation>Arhivă</translation>
     </message>
     <message>
-        <location line="-161"/>
+        <location line="-226"/>
         <source>Filter</source>
         <translation>Filtru</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+176"/>
+        <location line="+241"/>
         <source>Source</source>
         <translation>Sursă</translation>
     </message>
     <message>
-        <location line="-175"/>
-        <location line="+206"/>
+        <location line="-240"/>
+        <location line="+271"/>
         <source>Target</source>
         <translation>Ținta</translation>
     </message>
     <message>
-        <location line="-186"/>
+        <location line="-251"/>
+        <location line="+18"/>
+        <source>Run listed links</source>
+        <translation>Rulează legăturile listate</translation>
+    </message>
+    <message>
+        <location line="-8"/>
         <source>Update catalogs</source>
         <translation>Actualizează cataloagele</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Continue</source>
+        <translation>Continuă</translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>%1 link(s) will run, one after another.</source>
+        <translation>%1 legătură(i) vor rula, una după alta.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>%1 archive link(s) - up to %2 moved out of the source.</source>
+        <translation>%1 legătură(i) de arhivare - până la %2 mutate din sursă.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>%1 backup link(s) - roughly %2 to copy.</source>
+        <translation>%1 legătură(i) de copie de rezervă - aproximativ %2 de copiat.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>%1 listed link(s) will be skipped: source or target not available.</source>
+        <translation>%1 legătură(i) listată(e) vor fi omise: sursa sau ținta nu este disponibilă.</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -6014,7 +6045,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Rulează copia de rezervă</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+14"/>
         <source>Pause</source>
         <translation>Pauză</translation>
     </message>
@@ -6024,7 +6055,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Reluare</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-358"/>
+        <location line="+364"/>
         <source>Cancel</source>
         <translation>Anulare</translation>
     </message>
@@ -6172,7 +6204,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Opțiuni</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+46"/>
         <source>Strict copy</source>
         <translation>Copiere strictă</translation>
     </message>
@@ -6207,7 +6239,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Scanează direct unitatea sursă (necesită sursă conectată)</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-26"/>
         <source>Directories</source>
         <translation>Directoare</translation>
     </message>

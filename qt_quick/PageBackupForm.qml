@@ -29,6 +29,41 @@ ColumnLayout {
     property string progressEtaStr:    ""      // e.g. "2:30"
     property double runStartMs:         0       // Date.now() when the run started
 
+    // The listed links that can actually run: same condition the per-card Run button
+    // uses. Filtering the page IS the selection (SpecBackup.md BKP-F18).
+    function runnableListedIds() {
+        var ids = []
+        for (var i = 0; i < root.mappings.length; i++) {
+            var m = root.mappings[i]
+            if (m.sourceActive && m.targetActive)
+                ids.push(m.mappingId)
+        }
+        return ids
+    }
+
+    // Figures for the confirmation. Deliberately built from the totals already on the
+    // cards, not from a compare: an exact volume is what Preview computes (BKP-F16), and
+    // running it for every link would double the work. The archive figure is a sound
+    // upper bound; the backup figure is only approximate, and BKP-F19 requires both to
+    // be worded that way.
+    function listedRunSummary() {
+        var r = { total: 0, backupCount: 0, archiveCount: 0,
+                  backupBytes: 0, archiveBytes: 0, skipped: 0 }
+        for (var i = 0; i < root.mappings.length; i++) {
+            var m = root.mappings[i]
+            if (!m.sourceActive || !m.targetActive) { r.skipped++; continue }
+            r.total++
+            if (m.mappingType === "Archive") {
+                r.archiveCount++
+                r.archiveBytes += m.sourceSize
+            } else {
+                r.backupCount++
+                if (m.sizeDiff > 0) r.backupBytes += m.sizeDiff
+            }
+        }
+        return r
+    }
+
     // Signals for sub-page navigation (connected in Main.qml)
     signal requestAddMapping()
     signal requestPreviewMapping(int mappingId)
@@ -116,6 +151,27 @@ ColumnLayout {
                 + (errorCount    > 0 ? " · " + qsTr("Errors: %1").arg(errorCount)        : "")
             root.refresh()
         }
+        // The running link is now decided in AppManager, so a link started by the
+        // sequencer highlights its card exactly as a clicked one does (BKP-C10).
+        function onRunningBackupMappingIdChanged() {
+            var id = appManager1.runningBackupMappingId
+            if (id === -1)
+                return
+            root.runningMappingId   = id
+            root.runningIsArchive   = false
+            for (var i = 0; i < root.mappings.length; i++)
+                if (root.mappings[i].mappingId === id)
+                    root.runningIsArchive = (root.mappings[i].mappingType === "Archive")
+            root.isPaused           = false
+            root.progressFraction   = 0
+            root.progressFilesDone  = 0
+            root.progressTotalFiles = 0
+            root.progressFile       = ""
+            root.progressSpeedStr   = ""
+            root.progressEtaStr     = ""
+            root.runStartMs         = Date.now()
+            root.lastReportSummary  = ""
+        }
         function onBackupNotification(message, isError) {
             root.lastReportIsError = isError
             root.lastReportSummary = message
@@ -175,10 +231,75 @@ ColumnLayout {
 
         Item { Layout.fillWidth: true }
 
+        Controls.Button {
+            text:      qsTr("Run listed links")
+            icon.name: "media-playback-start"
+            enabled:   root.runningMappingId === -1
+                       && !appManager1.catalogUpdateForBackupRunning
+                       && !appManager1.backupPreviewRunning
+                       && root.runnableListedIds().length > 0
+            onClicked: runListedDialog.open()
+        }
+
         Controls.CheckBox {
             text:    qsTr("Update catalogs")
             checked: appManager1.updateBeforeBackup
             onToggled: appManager1.updateBeforeBackup = checked
+        }
+    }
+
+    Kirigami.PromptDialog {
+        id: runListedDialog
+        title: qsTr("Run listed links")
+        standardButtons: Kirigami.Dialog.NoButton
+        customFooterActions: [
+            Kirigami.Action {
+                text: qsTr("Continue")
+                icon.name: "media-playback-start"
+                onTriggered: {
+                    appManager1.runListedBackups(root.runnableListedIds())
+                    runListedDialog.close()
+                }
+            },
+            Kirigami.Action {
+                text: qsTr("Cancel")
+                icon.name: "dialog-cancel"
+                onTriggered: runListedDialog.close()
+            }
+        ]
+
+        ColumnLayout {
+            spacing: Kirigami.Units.smallSpacing
+            property var summary: runListedDialog.visible ? root.listedRunSummary() : ({})
+
+            Controls.Label {
+                Layout.fillWidth: true
+                wrapMode: Text.WordWrap
+                text: qsTr("%1 link(s) will run, one after another.").arg(parent.summary.total || 0)
+            }
+            Controls.Label {
+                Layout.fillWidth: true
+                wrapMode: Text.WordWrap
+                visible: (parent.summary.archiveCount || 0) > 0
+                text: qsTr("%1 archive link(s) - up to %2 moved out of the source.")
+                        .arg(parent.summary.archiveCount || 0)
+                        .arg(appManager1.formatDataSize(parent.summary.archiveBytes || 0))
+            }
+            Controls.Label {
+                Layout.fillWidth: true
+                wrapMode: Text.WordWrap
+                visible: (parent.summary.backupCount || 0) > 0
+                text: qsTr("%1 backup link(s) - roughly %2 to copy.")
+                        .arg(parent.summary.backupCount || 0)
+                        .arg(appManager1.formatDataSize(parent.summary.backupBytes || 0))
+            }
+            Controls.Label {
+                Layout.fillWidth: true
+                wrapMode: Text.WordWrap
+                visible: (parent.summary.skipped || 0) > 0
+                text: qsTr("%1 listed link(s) will be skipped: source or target not available.")
+                        .arg(parent.summary.skipped || 0)
+            }
         }
     }
 
@@ -486,17 +607,8 @@ ColumnLayout {
                                    && !appManager1.catalogUpdateForBackupRunning
                                    && !appManager1.backupPreviewRunning
                         onClicked: {
-                            root.runningMappingId   = modelData.mappingId
-                            root.runningIsArchive   = (modelData.mappingType === "Archive")
-                            root.isPaused           = false
-                            root.progressFraction   = 0
-                            root.progressFilesDone  = 0
-                            root.progressTotalFiles = 0
-                            root.progressFile       = ""
-                            root.progressSpeedStr   = ""
-                            root.progressEtaStr     = ""
-                            root.runStartMs         = Date.now()
-                            root.lastReportSummary  = ""
+                            // State is set by onRunningBackupMappingIdChanged, which
+                            // covers both this click and the sequencer (BKP-C10).
                             appManager1.runBackup(modelData.mappingId)
                         }
                     }

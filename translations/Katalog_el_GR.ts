@@ -517,20 +517,20 @@ Choose a different name.</source>
     <message>
         <location line="+86"/>
         <location line="+2"/>
-        <location line="+301"/>
+        <location line="+358"/>
         <source>Link not found.</source>
         <translation>Ο σύνδεσμος δεν βρέθηκε.</translation>
     </message>
     <message>
-        <location line="-288"/>
+        <location line="-345"/>
         <location line="+2"/>
-        <location line="+119"/>
-        <location line="+179"/>
+        <location line="+162"/>
+        <location line="+193"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>Η πηγή και ο προορισμός πρέπει να είναι συσκευές καταλόγου.</translation>
     </message>
     <message>
-        <location line="-260"/>
+        <location line="-317"/>
         <location line="+7"/>
         <source>Move</source>
         <translation>Μετακίνηση</translation>
@@ -548,14 +548,14 @@ Choose a different name.</source>
         <translation>Σύγκρουση</translation>
     </message>
     <message>
-        <location line="+65"/>
-        <location line="+178"/>
+        <location line="+109"/>
+        <location line="+191"/>
         <source>Source not available: %1</source>
         <translation>Η πηγή δεν είναι διαθέσιμη: %1</translation>
     </message>
     <message>
-        <location line="-174"/>
-        <location line="+178"/>
+        <location line="-186"/>
+        <location line="+190"/>
         <source>Target not available: %1</source>
         <translation>Ο προορισμός δεν είναι διαθέσιμος: %1</translation>
     </message>
@@ -1653,7 +1653,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1146"/>
+        <location line="+1156"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
         <translation>Αποθήκευση</translation>
@@ -5851,7 +5851,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="vanished">συγχρονισμένο</translation>
     </message>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+109"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+144"/>
         <source>Cancelled</source>
         <translation>Ακυρώθηκε</translation>
     </message>
@@ -5882,12 +5882,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+437"/>
+        <location line="+514"/>
         <source>Errors: %1</source>
         <translation>Σφάλματα: %1</translation>
     </message>
     <message>
-        <location line="-418"/>
+        <location line="-474"/>
         <source>Type</source>
         <translation>Τύπος</translation>
     </message>
@@ -5899,37 +5899,68 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="-15"/>
-        <location line="+171"/>
+        <location line="+236"/>
         <source>Backup</source>
         <translation>Αντίγραφο ασφαλείας</translation>
     </message>
     <message>
-        <location line="-170"/>
-        <location line="+170"/>
+        <location line="-235"/>
+        <location line="+235"/>
         <source>Archive</source>
         <translation>Αρχείο</translation>
     </message>
     <message>
-        <location line="-161"/>
+        <location line="-226"/>
         <source>Filter</source>
         <translation>Φίλτρο</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+176"/>
+        <location line="+241"/>
         <source>Source</source>
         <translation>Πηγή</translation>
     </message>
     <message>
-        <location line="-175"/>
-        <location line="+206"/>
+        <location line="-240"/>
+        <location line="+271"/>
         <source>Target</source>
         <translation>Προορισμός</translation>
     </message>
     <message>
-        <location line="-186"/>
+        <location line="-251"/>
+        <location line="+18"/>
+        <source>Run listed links</source>
+        <translation>Εκτέλεση εμφανιζόμενων συνδέσμων</translation>
+    </message>
+    <message>
+        <location line="-8"/>
         <source>Update catalogs</source>
         <translation>Ενημέρωση καταλόγων</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Continue</source>
+        <translation>Συνέχεια</translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>%1 link(s) will run, one after another.</source>
+        <translation>%1 σύνδεσμος(οι) θα εκτελεστούν, ο ένας μετά τον άλλο.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>%1 archive link(s) - up to %2 moved out of the source.</source>
+        <translation>%1 σύνδεσμος(οι) αρχειοθέτησης - έως %2 μετακινούνται εκτός της πηγής.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>%1 backup link(s) - roughly %2 to copy.</source>
+        <translation>%1 σύνδεσμος(οι) αντιγράφου ασφαλείας - περίπου %2 προς αντιγραφή.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>%1 listed link(s) will be skipped: source or target not available.</source>
+        <translation>%1 εμφανιζόμενος(οι) σύνδεσμος(οι) θα παραλειφθούν: η πηγή ή ο προορισμός δεν είναι διαθέσιμος.</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -6015,7 +6046,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Εκτέλεση αντιγράφου ασφαλείας</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+14"/>
         <source>Pause</source>
         <translation>Παύση</translation>
     </message>
@@ -6025,7 +6056,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Συνέχεια</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-358"/>
+        <location line="+364"/>
         <source>Cancel</source>
         <translation>Ακύρωση</translation>
     </message>
@@ -6173,7 +6205,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Επιλογές</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+46"/>
         <source>Strict copy</source>
         <translation>Αυστηρή αντιγραφή</translation>
     </message>
@@ -6208,7 +6240,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Άμεση σάρωση δίσκου προέλευσης (απαιτεί συνδεδεμένη προέλευση)</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-26"/>
         <source>Directories</source>
         <translation>Κατάλογοι</translation>
     </message>

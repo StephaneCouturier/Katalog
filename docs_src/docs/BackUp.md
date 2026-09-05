@@ -164,6 +164,16 @@ The links list can be filtered to show only relevant links:
 - **Type** dropdown — filter by *BackUp* or *Archive*.
 - **Display full table** checkbox — toggles additional detail columns in the list.
 
+### Run several links at once
+
+The **Run listed links** button runs the links currently shown in the list, one after another, so a set of backups can be started in one gesture and left to finish.
+
+- The list filters *are* the selection: whatever the Source/Target and Type filters leave on screen is what runs. To run a different set, change the filters first.
+- Only links whose source **and** target are both available actually run. Listed links whose device is offline are skipped, and the confirmation says how many.
+- A confirmation appears first, summarising how many links will run, how much will be copied, and — for *Archive* links — how much will be **moved out of the source**. These volumes are estimates taken from the catalog totals, not a computed comparison: the archive figure is an upper bound and the backup figure is approximate. For an exact figure, use *Preview* on a link.
+- **Stop** ends the whole run, not just the link in progress: the links still waiting are abandoned. *Pause* and *Resume* act on the link currently running.
+- Each link behaves exactly as if it had been started from its own card, including the catalog update before and after when *Update catalogs* is ticked.
+
 ### Context menu on a link
 
 Right-clicking a link in the list opens a context menu with the following actions:

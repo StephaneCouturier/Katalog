@@ -157,6 +157,16 @@ Seznam propojení lze filtrovat pro zobrazení pouze relevantních propojení:
 - Rozbalovací nabídka **Typ** — filtruje podle *BackUp* nebo *Archive*.
 - Zaškrtávací políčko **Zobrazit celou tabulku** — přepíná zobrazení dalších sloupců s podrobnostmi.
 
+### Spuštění více propojení najednou
+
+Tlačítko **Spustit uvedené odkazy** spustí propojení aktuálně zobrazená v seznamu, jedno po druhém, takže lze sadu záloh spustit jedním gestem a nechat ji doběhnout.
+
+- Filtry seznamu *jsou* výběrem: spustí se to, co filtry Zdroj/Cíl a Typ ponechají na obrazovce. Pro spuštění jiné sady je třeba nejprve změnit filtry.
+- Skutečně se spustí pouze propojení, jejichž zdroj **i** cíl jsou dostupné. Zobrazená propojení s nedostupným zařízením jsou přeskočena a potvrzení uvádí jejich počet.
+- Nejprve se zobrazí potvrzení se shrnutím, kolik propojení se spustí, kolik dat se zkopíruje a — u propojení typu *Archive* — kolik dat bude **přesunuto ze zdroje**. Tyto objemy jsou odhady vycházející z celkových hodnot katalogu, nikoli z vypočteného porovnání: hodnota pro archivaci je horní mez a hodnota pro zálohu je přibližná. Přesnou hodnotu poskytne *Náhled* na propojení.
+- **Zastavit** ukončí celý běh, nejen probíhající propojení: propojení, která ještě čekají, jsou opuštěna. *Pozastavit* a *Pokračovat* působí na právě probíhající propojení.
+- Každé propojení se chová přesně tak, jako by bylo spuštěno ze své vlastní karty, včetně aktualizace katalogů před a po, pokud je zaškrtnuto *Aktualizovat katalogy*.
+
 ### Kontextové menu propojení
 
 Kliknutím pravým tlačítkem na propojení v seznamu se otevře kontextové menu s následujícími akcemi:
