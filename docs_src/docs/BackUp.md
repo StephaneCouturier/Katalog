@@ -1,8 +1,8 @@
 ---
-version: "2.12"
+version: "2.13"
 ---
 # BackUp
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![2.13](https://img.shields.io/badge/Version-2.13-blue)
 
 ## Summary
 This page describes all the features of the **BackUp** screen and how to use them.<br/>
@@ -46,6 +46,9 @@ Katalog's backup will copy files from a **source catalog** to a **target catalog
 
 Options "Strict copy"
 - <i>Strict copy</i> (default): Katalog will copy files even if they are present once already in the target. If unticked, there will likely be no duplicates on Name, Size, Date in the target.
+
+Options "Directories"
+- <i>Include empty</i> (default: ticked): the directory structure of the source is recreated on the target before any file is copied. When ticked, a directory that holds nothing at all — no file and no sub-directory — is recreated as well. When unticked, such a directory is not created, while every directory that holds something still is. Unticking it never removes a directory already present on the target.
 
 Options of Conflict Resolution Modes
 - <i>On Conflict</i> (default is <i>Rename oldest</i>)
@@ -127,6 +130,7 @@ The *Create Link* panel can be collapsed or expanded using the toggle button at 
 | Strict copy | If enabled (default), copies files by path — even if the file already exists elsewhere on the target. If disabled, skips files already present anywhere on the target (de-duplication mode). Not applicable for *Archive* links (automatically disabled). |
 | On conflict | What to do when a file exists at the same path on both source and target but differs. Default: `RenameOldest`. See [Conflict Resolution Modes](#available-modes). |
 | Source mode | `Catalog` (default) or `Drive`. Controls whether the source is read from the catalog index or by walking the filesystem directly. See [Source Mode](#source-mode). |
+| Directories - Include empty | If enabled (default), directories that hold no file and no sub-directory are recreated on the target. If disabled, only directories that hold something are created. |
 
 #### Example & Catalogs
 Goal: create a link between the source on local disk and the target on external drive.
@@ -143,6 +147,7 @@ Goal: create a link between the source on local disk and the target on external 
 #### Set the Name, options, and create
 - Generate a name: source catalog name + " -> " + target katalog name
 - Define the "Strict copy" option
+- Define the "Directories" option
 - Define behavior on Conflict detection
 - Create link
 

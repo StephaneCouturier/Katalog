@@ -63,6 +63,9 @@ public:
      * @param catalogIds        Catalog IDs (catalog.ID / folder.folder_catalog_id)
      * @param sourcePath        Source catalog root path (to compute relative paths)
      * @param targetPath        Target root path where directories will be created
+     * @param includeEmptyDirs  If false, directories that hold no entry at all in the
+     *                          catalog index - no file and no subdirectory - are not
+     *                          created (SpecBackup.md BKP-F17)
      * @param dryRun            If true, compute what would happen without creating anything
      * @return ReplicationResult with created, skipped, and error lists
      */
@@ -70,6 +73,7 @@ public:
         const QList<int> &catalogIds,
         const QString &sourcePath,
         const QString &targetPath,
+        bool includeEmptyDirs = true,
         bool dryRun = false
     );
 
@@ -83,12 +87,16 @@ public:
      *
      * @param sourcePath        Source root path to walk
      * @param targetPath        Target root path where directories will be created
+     * @param includeEmptyDirs  If false, directories that hold no entry at all on disk -
+     *                          no file and no subdirectory, hidden entries counted - are
+     *                          not created (SpecBackup.md BKP-F17)
      * @param dryRun            If true, compute without creating anything
      * @return ReplicationResult with created, skipped, and error lists
      */
     ReplicationResult replicateFromDrive(
         const QString &sourcePath,
         const QString &targetPath,
+        bool includeEmptyDirs = true,
         bool dryRun = false
     );
 
@@ -106,6 +114,20 @@ private:
      * @return List of relative paths (e.g. "Photos/2024" from "/mnt/drive/Photos/2024").
      */
     static QStringList toRelativePaths(const QStringList &absolutePaths, const QString &sourcePath);
+
+    /**
+     * @brief Drop the folders that hold no entry at all, per SpecBackup.md BKP-F17.
+     *
+     * A folder counts as empty when the catalog index shows neither a file directly
+     * in it nor a subdirectory under it. The index is authoritative for what the
+     * catalog knows: a folder whose only content is a hidden file reads as empty
+     * when the source catalog was scanned with hidden entries excluded.
+     *
+     * @param catalogIds        Catalog IDs whose file rows decide "holds a file"
+     * @param absoluteFolders   All folder paths of those catalogs
+     * @return The subset of absoluteFolders that hold at least one entry.
+     */
+    QStringList removeEmptyFolders(const QList<int> &catalogIds, const QStringList &absoluteFolders);
 };
 
 #endif // DIRECTORYREPLICATOR_H

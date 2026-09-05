@@ -337,9 +337,14 @@ void CatalogJobStoppable::processDirectoryWithProgress(const QString &directory,
     QDirIterator::IteratorFlags iteratorFlags = catalog->includeSubDir
                                                 ? QDirIterator::Subdirectories
                                                 : QDirIterator::NoIteratorFlags;
-    if (catalog->includeSymblinks) {
-        iteratorFlags |= QDirIterator::FollowSymlinks;
-    }
+    // Deliberately disabled, not removed. The "Follow symbolic links" checkbox is
+    // hidden in K2 (mainwindow_setup.cpp) and K3 passes false, so includeSymblinks
+    // can only become true by editing catalog_include_symblinks in the database by
+    // hand - and following links would then let a scan reach, and an Archive
+    // mapping move, files outside the source tree. Uncomment to test the feature.
+    //if (catalog->includeSymblinks) {
+    //    iteratorFlags |= QDirIterator::FollowSymlinks;
+    //}
 
     QDirIterator it(directory, extensions, filters, iteratorFlags);
 
@@ -472,9 +477,14 @@ qint64 CatalogJobStoppable::countTotalFiles(const QString &directory, Catalog *c
     QDirIterator::IteratorFlags iteratorFlags = catalog->includeSubDir
                                                 ? QDirIterator::Subdirectories
                                                 : QDirIterator::NoIteratorFlags;
-    if (catalog->includeSymblinks) {
-        iteratorFlags |= QDirIterator::FollowSymlinks;
-    }
+    // Deliberately disabled, not removed. The "Follow symbolic links" checkbox is
+    // hidden in K2 (mainwindow_setup.cpp) and K3 passes false, so includeSymblinks
+    // can only become true by editing catalog_include_symblinks in the database by
+    // hand - and following links would then let a scan reach, and an Archive
+    // mapping move, files outside the source tree. Uncomment to test the feature.
+    //if (catalog->includeSymblinks) {
+    //    iteratorFlags |= QDirIterator::FollowSymlinks;
+    //}
 
     QDirIterator it(directory, extensions, filters, iteratorFlags);
 
@@ -1952,9 +1962,14 @@ void CatalogJobStoppable::scanDirectoryIntoFiletemp(const QString &directory,
     QDirIterator::IteratorFlags iteratorFlags = catalog->includeSubDir
                                                 ? QDirIterator::Subdirectories
                                                 : QDirIterator::NoIteratorFlags;
-    if (catalog->includeSymblinks) {
-        iteratorFlags |= QDirIterator::FollowSymlinks;
-    }
+    // Deliberately disabled, not removed. The "Follow symbolic links" checkbox is
+    // hidden in K2 (mainwindow_setup.cpp) and K3 passes false, so includeSymblinks
+    // can only become true by editing catalog_include_symblinks in the database by
+    // hand - and following links would then let a scan reach, and an Archive
+    // mapping move, files outside the source tree. Uncomment to test the feature.
+    //if (catalog->includeSymblinks) {
+    //    iteratorFlags |= QDirIterator::FollowSymlinks;
+    //}
 
     QDirIterator it(directory, extensions, filters, iteratorFlags);
 

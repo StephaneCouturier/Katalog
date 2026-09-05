@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+166"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+3960"/>
+        <location line="+3975"/>
         <source>Search</source>
         <translation>Suche</translation>
     </message>
     <message>
-        <location line="-4080"/>
+        <location line="-4095"/>
         <source>Stopped</source>
         <translation>Gestoppt</translation>
     </message>
@@ -46,22 +46,23 @@
         <location line="+81"/>
         <location line="+1813"/>
         <location line="+528"/>
-        <location line="+1219"/>
+        <location line="+20"/>
+        <location line="+1213"/>
         <location line="+11"/>
         <location line="+60"/>
-        <location line="+344"/>
+        <location line="+345"/>
         <source>In Progress</source>
         <translation>In Bearbeitung</translation>
     </message>
     <message>
-        <location line="-3961"/>
-        <location line="+3598"/>
+        <location line="-3976"/>
+        <location line="+3612"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Abgeschlossen</translation>
     </message>
     <message>
-        <location line="-3243"/>
+        <location line="-3257"/>
         <source>Empty database path provided</source>
         <translation>Leerer Datenbankpfad angegeben</translation>
     </message>
@@ -147,12 +148,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2397"/>
+        <location line="+2411"/>
         <source>Size</source>
         <translation>Größe</translation>
     </message>
     <message>
-        <location line="-2396"/>
+        <location line="-2410"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
@@ -287,7 +288,12 @@ Wählen Sie einen anderen Namen und versuchen Sie es erneut.</translation>
         <translation>Fehler: %1</translation>
     </message>
     <message>
-        <location line="+466"/>
+        <location line="+237"/>
+        <source>Update</source>
+        <translation type="unfinished">Aktualisieren</translation>
+    </message>
+    <message>
+        <location line="+243"/>
         <source>The selected device is not a catalog.</source>
         <translation>Das ausgewählte Gerät ist kein Katalog.</translation>
     </message>
@@ -475,7 +481,7 @@ Wählen Sie einen anderen Namen.</translation>
         <translation>Kein Speichergerät.</translation>
     </message>
     <message>
-        <location line="+168"/>
+        <location line="+169"/>
         <location line="+22"/>
         <source>Provide a link name.</source>
         <translation>Geben Sie einen Linknamen an.</translation>
@@ -612,7 +618,7 @@ Wählen Sie einen anderen Namen.</translation>
         <translation>Katalog</translation>
     </message>
     <message>
-        <location line="+1548"/>
+        <location line="+1566"/>
         <source>root</source>
         <translation>Stamm</translation>
     </message>
@@ -645,7 +651,7 @@ Wählen Sie einen anderen Namen.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2521"/>
+        <location filename="../core/collection.cpp" line="+2530"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Dieser Ordner enthält Sammlungsdateien im Speichermodus, aber Sie befinden sich derzeit im Dateimodus.&lt;br/&gt;Wechseln Sie in den Speichermodus oder wählen Sie einen anderen Ordner.</translation>
     </message>
@@ -663,7 +669,7 @@ Wählen Sie einen anderen Namen.</translation>
 <context>
     <name>CollectionImporter</name>
     <message>
-        <location filename="../core/collectionimporter.cpp" line="+1653"/>
+        <location filename="../core/collectionimporter.cpp" line="+1656"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
@@ -681,7 +687,7 @@ Wählen Sie einen anderen Namen.</translation>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+227"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+228"/>
         <source>Collection</source>
         <translation>Sammlung</translation>
     </message>
@@ -732,32 +738,32 @@ Wählen Sie einen anderen Namen.</translation>
     <message>
         <location line="+6"/>
         <location line="+60"/>
-        <location line="+29"/>
-        <location line="+127"/>
+        <location line="+39"/>
+        <location line="+131"/>
         <location line="+149"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
     <message>
-        <location line="-361"/>
+        <location line="-375"/>
         <location line="+60"/>
-        <location line="+162"/>
+        <location line="+176"/>
         <location line="+723"/>
         <location line="+117"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location line="-1162"/>
+        <location line="-1176"/>
         <location line="+65"/>
         <location line="+69"/>
-        <location line="+158"/>
+        <location line="+172"/>
         <location line="+137"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location line="-407"/>
+        <location line="-421"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
         <translation>&lt;br/&gt;&lt;b&gt;Willkommen im Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Dies scheint der erste Lauf zu sein.&lt;br/&gt;&lt;br/&gt;Die folgenden Einstellungen wurden angewendet:&lt;br/&gt; - Sprache: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Thema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Diese können Sie im Reiter %3 ändern.</translation>
     </message>
@@ -800,42 +806,42 @@ Wählen Sie einen anderen Namen.</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+763"/>
+        <location line="+777"/>
         <source>Selection</source>
         <translation>Auswahl</translation>
     </message>
     <message>
-        <location line="-753"/>
-        <location line="+1026"/>
+        <location line="-767"/>
+        <location line="+1040"/>
         <source>Devices</source>
         <translation>Geräte</translation>
     </message>
     <message>
-        <location line="-1021"/>
-        <location line="+1116"/>
+        <location line="-1035"/>
+        <location line="+1130"/>
         <source>Explore</source>
         <translation>Entdecken</translation>
     </message>
     <message>
-        <location line="-1106"/>
-        <location line="+1329"/>
+        <location line="-1120"/>
+        <location line="+1343"/>
         <source>Backup</source>
         <translation>Datensicherung</translation>
     </message>
     <message>
-        <location line="-1324"/>
-        <location line="+1288"/>
+        <location line="-1338"/>
+        <location line="+1302"/>
         <source>Statistics</source>
         <translation>Statistiken</translation>
     </message>
     <message>
-        <location line="-1283"/>
-        <location line="+1303"/>
+        <location line="-1297"/>
+        <location line="+1317"/>
         <source>Tags</source>
         <translation>Stichworte</translation>
     </message>
     <message>
-        <location line="-1290"/>
+        <location line="-1304"/>
         <source>Documentation</source>
         <translation>Dokumentation</translation>
     </message>
@@ -908,13 +914,13 @@ Wählen Sie einen anderen Namen.</translation>
         <translation>1- Wählen Sie ein ganzes Laufwerk oder Verzeichnis aus, &lt;br/&gt;2- wählen Sie Optionen aus und &lt;br/&gt;3- klicken Sie auf &quot;Erstellen&quot;.&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+120"/>
+        <location line="+130"/>
         <source>Update the catalog content with the new criteria?</source>
         <translation>Kataloginhalt mit den neuen Kriterien aktualisieren?</translation>
     </message>
     <message>
         <location line="+8"/>
-        <location line="+128"/>
+        <location line="+132"/>
         <location line="+148"/>
         <source>No</source>
         <translation>Nein</translation>
@@ -1108,8 +1114,8 @@ Dies kann bedeuten, dass die Quelle leer ist oder das Gerät nicht in diesem Ord
 Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
     </message>
     <message>
-        <location line="-703"/>
-        <location line="+881"/>
+        <location line="-717"/>
+        <location line="+895"/>
         <location line="+43"/>
         <source>Search</source>
         <translation>Suche</translation>
@@ -1155,7 +1161,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="-1137"/>
+        <location line="-1151"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1164,7 +1170,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
 </translation>
     </message>
     <message>
-        <location line="+494"/>
+        <location line="+508"/>
         <source>Copy version and system information</source>
         <translation>Versions- und Systeminformationen kopieren</translation>
     </message>
@@ -1243,8 +1249,8 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Katalogerstellung fehlgeschlagen: </translation>
     </message>
     <message>
-        <location line="-1171"/>
-        <location line="+1161"/>
+        <location line="-1185"/>
+        <location line="+1175"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Erstellen</translation>
@@ -1591,7 +1597,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation type="vanished">Datei-Prüfsumme kopieren</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+1163"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+1166"/>
         <location line="+29"/>
         <source>No backup links found.</source>
         <translation>Keine Sicherungslinks gefunden.</translation>
@@ -2064,12 +2070,12 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Linkname</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+108"/>
         <source>Create link</source>
         <translation>Verknüpfung erstellen</translation>
     </message>
     <message>
-        <location line="-578"/>
+        <location line="-595"/>
         <source>Catalog Links</source>
         <translation>Kataloglinks</translation>
     </message>
@@ -2090,7 +2096,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>ohne Links</translation>
     </message>
     <message>
-        <location line="+149"/>
+        <location line="+166"/>
         <location line="+486"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+99"/>
         <source>Settings</source>
@@ -2108,8 +2114,8 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Ausführung</translation>
     </message>
     <message>
-        <location line="-9098"/>
-        <location line="+9029"/>
+        <location line="-9115"/>
+        <location line="+9046"/>
         <location line="+53"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-2"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-371"/>
@@ -2145,7 +2151,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Bewahren Sie von jedem Katalog immer eine Rückseite auf</translation>
     </message>
     <message>
-        <location line="-3806"/>
+        <location line="-3823"/>
         <source>Apply options to the Selection device tree.</source>
         <translation>Wenden Sie Optionen auf den Geräteauswahlbaum an.</translation>
     </message>
@@ -2162,7 +2168,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation type="vanished">Zielkataloge laden</translation>
     </message>
     <message>
-        <location line="+3409"/>
+        <location line="+3426"/>
         <source>File list display</source>
         <translation>Anzeige der Dateiliste</translation>
     </message>
@@ -2201,7 +2207,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation type="vanished">Aus diesem Katalog ausgeschlossene Ordner</translation>
     </message>
     <message>
-        <location line="-9743"/>
+        <location line="-9760"/>
         <source>Clear the search text</source>
         <translation>Suchtext löschen</translation>
     </message>
@@ -2305,22 +2311,22 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-712"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-715"/>
         <source>Replicate directories</source>
         <translation>Verzeichnisse replizieren</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-6"/>
-        <location line="+1273"/>
+        <location line="+1276"/>
         <location line="+16"/>
         <source>Preview Backup</source>
         <translation>Vorschau Datensicherung</translation>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1294"/>
-        <location line="+280"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1297"/>
+        <location line="+283"/>
         <location line="+997"/>
         <location line="+14"/>
         <source>Run Backup</source>
@@ -2341,6 +2347,11 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <location line="+10"/>
         <source>Scan source drive directly</source>
         <translation>Quelllaufwerk direkt scannen</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Include empty</source>
+        <translation>Leere einschließen</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -2432,8 +2443,8 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Pforte</translation>
     </message>
     <message>
-        <location line="-2494"/>
-        <location line="+2481"/>
+        <location line="-2511"/>
+        <location line="+2498"/>
         <source>Password</source>
         <translation>Passwort</translation>
     </message>
@@ -2454,14 +2465,14 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Wählen Sie einen anderen Sammlungsordner</translation>
     </message>
     <message>
-        <location line="-10201"/>
+        <location line="-10218"/>
         <location line="+5540"/>
         <location line="+200"/>
         <location line="+2083"/>
         <location line="+134"/>
         <location line="+294"/>
         <location line="+479"/>
-        <location line="+2360"/>
+        <location line="+2377"/>
         <location line="+89"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+62"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-112"/>
@@ -2471,13 +2482,13 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Auswählen</translation>
     </message>
     <message>
-        <location line="-2802"/>
+        <location line="-2819"/>
         <location line="+287"/>
         <source>Reload</source>
         <translation>Neu laden</translation>
     </message>
     <message>
-        <location line="+1220"/>
+        <location line="+1237"/>
         <location line="+152"/>
         <location line="+187"/>
         <source>Open the collection folder</source>
@@ -2489,7 +2500,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Offen</translation>
     </message>
     <message>
-        <location line="-9644"/>
+        <location line="-9661"/>
         <location line="+360"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="-94"/>
         <location line="+37"/>
@@ -2508,14 +2519,14 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Suche</translation>
     </message>
     <message>
-        <location line="+9808"/>
+        <location line="+9825"/>
         <location line="+753"/>
         <location filename="../qt_widgets/mainwindow.cpp" line="+306"/>
         <source>Memory</source>
         <translation>Speicher</translation>
     </message>
     <message>
-        <location line="-10918"/>
+        <location line="-10935"/>
         <source>Search for files or folders</source>
         <translation>Nach Dateien oder Ordnern suchen</translation>
     </message>
@@ -2676,7 +2687,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Date de début du graphique</translation>
     </message>
     <message>
-        <location line="+1774"/>
+        <location line="+1791"/>
         <location line="+23"/>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
         <translation>Laden Sie die zuletzt ausgewählten Kataloge beim Start vorab, um die nächste Suche zu beschleunigen</translation>
@@ -2687,12 +2698,12 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Öffnen Sie die Einstellungsdatei</translation>
     </message>
     <message>
-        <location line="-8778"/>
+        <location line="-8795"/>
         <source>case sensitive</source>
         <translation>Groß- und Kleinschreibung beachten</translation>
     </message>
     <message>
-        <location line="+9357"/>
+        <location line="+9374"/>
         <location line="+748"/>
         <source>Data mode</source>
         <translation>Datenmodus</translation>
@@ -2706,7 +2717,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Datei</translation>
     </message>
     <message>
-        <location line="-9766"/>
+        <location line="-9783"/>
         <location line="+652"/>
         <location line="+709"/>
         <location line="+725"/>
@@ -3026,7 +3037,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Zielkatalog auswählen</translation>
     </message>
     <message>
-        <location line="+364"/>
+        <location line="+381"/>
         <location line="+184"/>
         <source>Apply</source>
         <translation>Anwenden</translation>
@@ -3092,7 +3103,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Bearbeiten</translation>
     </message>
     <message>
-        <location line="-5072"/>
+        <location line="-5089"/>
         <location line="+991"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aktualisieren Sie die Dateien des ausgewählten Katalogs, wenn das Gerät verfügbar ist&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -3100,7 +3111,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
     <message>
         <location line="-988"/>
         <location line="+991"/>
-        <location line="+5255"/>
+        <location line="+5272"/>
         <location line="+20"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-269"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-216"/>
@@ -3116,7 +3127,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Aktualisieren</translation>
     </message>
     <message>
-        <location line="-6085"/>
+        <location line="-6102"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update all the catalogs that are active, if the device is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aktualisieren Sie alle aktiven Kataloge, wenn das Gerät verfügbar ist.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -3127,7 +3138,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
     </message>
     <message>
         <location line="-492"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1167"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1170"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+69"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+68"/>
         <source>Delete</source>
@@ -3145,14 +3156,14 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location line="+4701"/>
+        <location line="+4718"/>
         <location line="+55"/>
         <location line="+10"/>
         <source>Import</source>
         <translation>Importieren</translation>
     </message>
     <message>
-        <location line="-5595"/>
+        <location line="-5612"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-431"/>
         <location line="+694"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+273"/>
@@ -3180,12 +3191,12 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Name</translation>
     </message>
     <message>
-        <location line="+8109"/>
+        <location line="+8126"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
         <translation>Überprüfen Sie beim Starten der App, ob eine neue Version des Katalogs verfügbar ist.</translation>
     </message>
     <message>
-        <location line="-6026"/>
+        <location line="-6043"/>
         <source>Show/Hide search history</source>
         <translation>Suchverlauf anzeigen/ausblenden</translation>
     </message>
@@ -3268,8 +3279,8 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
     </message>
     <message>
         <location line="+1152"/>
-        <location line="+3246"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+730"/>
+        <location line="+3263"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+733"/>
         <location line="+143"/>
         <location line="+301"/>
         <location line="+7"/>
@@ -3282,12 +3293,13 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Weg</translation>
     </message>
     <message>
-        <location line="-4342"/>
+        <location line="-4359"/>
+        <location line="+2915"/>
         <source>Directories</source>
         <translation>Verzeichnisse</translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="-2825"/>
         <location line="+1559"/>
         <location line="+845"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-101"/>
@@ -3313,12 +3325,12 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
     </message>
     <message>
         <location line="-7049"/>
-        <location line="+11307"/>
+        <location line="+11324"/>
         <source>Show/Hide Filters</source>
         <translation>Filter ein-/ausblenden</translation>
     </message>
     <message>
-        <location line="-11687"/>
+        <location line="-11704"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1252"/>
         <source>Virtual</source>
         <translation>Virtuell</translation>
@@ -3615,7 +3627,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Gerätebild</translation>
     </message>
     <message>
-        <location line="+5179"/>
+        <location line="+5196"/>
         <source>Icons</source>
         <translation>Ikony</translation>
     </message>
@@ -3661,7 +3673,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Datenmanagement</translation>
     </message>
     <message>
-        <location line="-10383"/>
+        <location line="-10400"/>
         <location line="+5740"/>
         <location line="+2083"/>
         <location line="+134"/>
@@ -3670,7 +3682,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Wählen Sie den Pfad</translation>
     </message>
     <message>
-        <location line="+1810"/>
+        <location line="+1827"/>
         <source>New</source>
         <translation>Neu</translation>
     </message>
@@ -3681,7 +3693,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Filelight</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-5102"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-5119"/>
         <location line="+261"/>
         <source>Devices</source>
         <translation>Geräte</translation>
@@ -3763,20 +3775,20 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Abdeckung</translation>
     </message>
     <message>
-        <location line="+2045"/>
+        <location line="+2062"/>
         <source>Katalog Colors</source>
         <extracomment>With some custom colors, for desktop light or dark theme.</extracomment>
         <translation>Katalog-Farben</translation>
     </message>
     <message>
-        <location line="-2634"/>
+        <location line="-2651"/>
         <source>View collection statistics</source>
         <translation>Sammlungsstatistiken anzeigen</translation>
     </message>
     <message>
         <location line="+93"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-669"/>
-        <location line="+344"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-672"/>
+        <location line="+347"/>
         <location line="+768"/>
         <source>Source</source>
         <translation>Quelle</translation>
@@ -3975,7 +3987,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Datei öffnen</translation>
     </message>
     <message>
-        <location line="+1581"/>
+        <location line="+1598"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-111"/>
         <location line="+103"/>
         <location line="+71"/>
@@ -4017,7 +4029,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Dateinamen ohne Erweiterung kopieren</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-5572"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-5589"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+35"/>
         <location line="+732"/>
         <source>Move to Trash</source>
@@ -4990,59 +5002,59 @@ Aufteilung wurde nicht durchgeführt.</translation>
         <translation>Ziel-ID</translation>
     </message>
     <message>
-        <location line="-1117"/>
-        <location line="+344"/>
+        <location line="-1120"/>
+        <location line="+347"/>
         <location line="+774"/>
         <source>Target</source>
         <translation>Ziel</translation>
     </message>
     <message>
-        <location line="-1222"/>
-        <location line="+1291"/>
+        <location line="-1225"/>
+        <location line="+1294"/>
         <source>Run Archive</source>
         <translation>Archivierung starten</translation>
     </message>
     <message>
-        <location line="-1286"/>
-        <location line="+1289"/>
+        <location line="-1289"/>
+        <location line="+1292"/>
         <source>Preview Archive</source>
         <translation>Vorschau Archivierung</translation>
     </message>
     <message>
-        <location line="-1274"/>
+        <location line="-1277"/>
         <source>Invert (swap source and target)</source>
         <translation>Umkehren (Quelle und Ziel tauschen)</translation>
     </message>
     <message>
         <location line="+43"/>
-        <location line="+111"/>
+        <location line="+114"/>
         <location line="+236"/>
         <location line="+467"/>
         <source>Select a mapping first.</source>
         <translation>Wählen Sie zuerst eine Zuordnung aus.</translation>
     </message>
     <message>
-        <location line="-792"/>
-        <location line="+108"/>
+        <location line="-795"/>
+        <location line="+111"/>
         <location line="+236"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>Quelle und Ziel müssen Kataloggeräte sein.</translation>
     </message>
     <message>
-        <location line="-332"/>
-        <location line="+62"/>
+        <location line="-335"/>
+        <location line="+65"/>
         <source>Replicate</source>
         <translation>Replizieren</translation>
     </message>
     <message>
-        <location line="-61"/>
-        <location line="+344"/>
+        <location line="-64"/>
+        <location line="+347"/>
         <source>%1 not available</source>
         <translation>%1 nicht verfügbar</translation>
     </message>
     <message>
-        <location line="-333"/>
-        <location line="+90"/>
+        <location line="-336"/>
+        <location line="+93"/>
         <location line="+255"/>
         <source>A catalog update is already in progress. Please wait and try again.</source>
         <translation>Eine Katalogaktualisierung läuft bereits. Bitte warten und erneut versuchen.</translation>
@@ -6095,7 +6107,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Verknüpfung bearbeiten</translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+61"/>
         <source>Save</source>
         <translation>Speichern</translation>
     </message>
@@ -6105,7 +6117,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+56"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
@@ -6135,7 +6147,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Archiv</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="-54"/>
         <source>Source</source>
         <translation>Quelle</translation>
     </message>
@@ -6160,7 +6172,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Optionen</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+39"/>
         <source>Strict copy</source>
         <translation>Strenge Kopie</translation>
     </message>
@@ -6193,6 +6205,16 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <location line="+1"/>
         <source>Scan source drive directly (requires connected source)</source>
         <translation>Quelllaufwerk direkt scannen (erfordert verbundene Quelle)</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Directories</source>
+        <translation>Verzeichnisse</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Include empty</source>
+        <translation>Leere einschließen</translation>
     </message>
 </context>
 <context>

@@ -1,8 +1,8 @@
 ---
-version: "2.12"
+version: "2.13"
 ---
 # Záloha
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![2.13](https://img.shields.io/badge/Version-2.13-blue)
 
 ## Shrnutí
 Tato stránka popisuje všechny funkce obrazovky **BackUp** a jejich použití.<br/>
@@ -46,6 +46,9 @@ Záloha Katalog kopíruje soubory ze **zdrojového katalogu** do **cílového ka
 
 Možnosti „Přísné kopírování"
 - <i>Přísné kopírování</i> (výchozí): Katalog zkopíruje soubory, i když jsou již v cíli přítomny. Pokud není zaškrtnuto, soubory již přítomné v cíli (podle názvu, velikosti a data) nebudou znovu kopírovány.
+
+Možnosti „Adresáře"
+- <i>Zahrnout prázdné</i> (výchozí: zaškrtnuto): struktura adresářů zdroje je v cíli vytvořena před zkopírováním jakéhokoli souboru. Pokud je zaškrtnuto, je vytvořen i adresář, který neobsahuje vůbec nic — žádný soubor ani podadresář. Pokud není zaškrtnuto, takový adresář vytvořen není, zatímco každý adresář, který něco obsahuje, vytvořen je. Zrušení zaškrtnutí nikdy neodstraní adresář, který je již v cíli přítomen.
 
 Možnosti řešení konfliktů
 - <i>Při konfliktu</i> (výchozí: <i>Přejmenovat nejstarší</i>)
@@ -120,6 +123,7 @@ Panel *Vytvořit propojení* lze sbalit nebo rozbalit pomocí přepínacího tla
 | Přísné kopírování | Pokud je povoleno (výchozí), kopíruje soubory podle cesty — i když soubor již existuje jinde v cíli. Pokud je zakázáno, přeskočí soubory již přítomné v cíli (režim deduplikace). Nelze použít pro propojení *Archive* (automaticky zakázáno). |
 | Při konfliktu | Co dělat, pokud soubor existuje na stejné cestě ve zdroji i cíli, ale liší se. Výchozí: `PřejmenovatNejstarší`. Viz [Dostupné režimy](#available-modes). |
 | Zdrojový režim | `Katalog` (výchozí) nebo `Disk`. Určuje, zda je zdroj čten z indexu katalogu nebo přímým procházením souborového systému. Viz [Zdrojový režim](#source-mode). |
+| Adresáře - Zahrnout prázdné | Pokud je povoleno (výchozí), adresáře, které neobsahují žádný soubor ani podadresář, jsou vytvořeny v cíli. Pokud je zakázáno, jsou vytvořeny pouze adresáře, které něco obsahují. |
 
 #### Příklad a katalogy
 Cíl: vytvořit propojení mezi zdrojem na místním disku a cílem na externím disku.
@@ -136,6 +140,7 @@ Cíl: vytvořit propojení mezi zdrojem na místním disku a cílem na externím
 #### Nastavení názvu, možností a vytvoření
 - Vygenerovat název: název zdrojového katalogu + „ -> " + název cílového katalogu
 - Nastavit možnost „Přísné kopírování"
+- Nastavit možnost „Adresáře"
 - Nastavit chování při detekci konfliktu
 - Vytvořit propojení
 

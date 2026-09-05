@@ -38,6 +38,7 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QDebug>
+#include <QSet>
 #include <algorithm>
 
 //----------------------------------------------------------------------
@@ -51,6 +52,7 @@ ReplicationResult DirectoryReplicator::replicate(
     const QList<int> &catalogIds,
     const QString &sourcePath,
     const QString &targetPath,
+    bool includeEmptyDirs,
     bool dryRun)
 {
     ReplicationResult result;
@@ -67,6 +69,8 @@ ReplicationResult DirectoryReplicator::replicate(
 
     // Load folder paths from the database
     QStringList absoluteFolders = loadSourceFolders(catalogIds);
+    if (!includeEmptyDirs)
+        absoluteFolders = removeEmptyFolders(catalogIds, absoluteFolders);
     QStringList relativePaths = toRelativePaths(absoluteFolders, sourcePath);
 
 
@@ -105,6 +109,7 @@ ReplicationResult DirectoryReplicator::replicate(
 ReplicationResult DirectoryReplicator::replicateFromDrive(
     const QString &sourcePath,
     const QString &targetPath,
+    bool includeEmptyDirs,
     bool dryRun)
 {
     ReplicationResult result;
@@ -126,8 +131,19 @@ ReplicationResult DirectoryReplicator::replicateFromDrive(
     while (it.hasNext()) {
         const QString absPath = it.next();
         const QString relative = absPath.mid(sourceLen + 1); // strip "sourceNorm/"
-        if (!relative.isEmpty())
-            relativePaths.append(relative);
+        if (relative.isEmpty())
+            continue;
+
+        // Drive mode walks the real filesystem, so emptiness is read straight off
+        // disk and hidden entries count as entries (SpecBackup.md BKP-F17). A
+        // directory holding only a subdirectory is not empty and is still created.
+        if (!includeEmptyDirs
+            && QDir(absPath).isEmpty(QDir::AllEntries | QDir::NoDotAndDotDot
+                                     | QDir::Hidden | QDir::System)) {
+            continue;
+        }
+
+        relativePaths.append(relative);
     }
 
     std::sort(relativePaths.begin(), relativePaths.end());
@@ -217,5 +233,60 @@ QStringList DirectoryReplicator::toRelativePaths(const QStringList &absolutePath
     }
 
     return relativePaths;
+}
+
+//----------------------------------------------------------------------
+QStringList DirectoryReplicator::removeEmptyFolders(const QList<int> &catalogIds,
+                                                    const QStringList &absoluteFolders)
+{
+    if (absoluteFolders.isEmpty())
+        return absoluteFolders;
+
+    // A folder holds a subdirectory when it is the parent of another catalogued
+    // folder. Taken from the folder list itself rather than by re-querying per
+    // folder: the scan records every intermediate directory, so every parent of a
+    // catalogued folder is itself catalogued.
+    QSet<QString> foldersWithSubdirectory;
+    for (const QString &folder : absoluteFolders) {
+        const int lastSeparator = folder.lastIndexOf('/');
+        if (lastSeparator > 0)
+            foldersWithSubdirectory.insert(folder.left(lastSeparator));
+    }
+
+    // A folder holds a file when a file row names it as its direct parent.
+    QSet<QString> foldersWithFile;
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+
+    QStringList placeholders;
+    for (int i = 0; i < catalogIds.size(); ++i)
+        placeholders << QString(":id%1").arg(i);
+
+    QString sql = QString("SELECT DISTINCT file_folder_path FROM file "
+                          "WHERE file_catalog_id IN (%1)")
+                      .arg(placeholders.join(","));
+
+    query.prepare(sql);
+    for (int i = 0; i < catalogIds.size(); ++i)
+        query.bindValue(QString(":id%1").arg(i), catalogIds.at(i));
+
+    if (!query.exec()) {
+        // Without the file list every folder would read as empty and the whole tree
+        // would be dropped. Replicating too much is recoverable, replicating nothing
+        // is not, so fall back on the full list (SpecBackup.md BKP-C1).
+        qWarning() << "DirectoryReplicator::removeEmptyFolders - query error:"
+                   << query.lastError().text();
+        return absoluteFolders;
+    }
+
+    while (query.next())
+        foldersWithFile.insert(query.value(0).toString());
+
+    QStringList nonEmptyFolders;
+    for (const QString &folder : absoluteFolders) {
+        if (foldersWithFile.contains(folder) || foldersWithSubdirectory.contains(folder))
+            nonEmptyFolders.append(folder);
+    }
+
+    return nonEmptyFolders;
 }
 //----------------------------------------------------------------------

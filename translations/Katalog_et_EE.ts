@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+166"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+3960"/>
+        <location line="+3975"/>
         <source>Search</source>
         <translation>Otsing</translation>
     </message>
     <message>
-        <location line="-4080"/>
+        <location line="-4095"/>
         <source>Stopped</source>
         <translation>Peatatud</translation>
     </message>
@@ -46,22 +46,23 @@
         <location line="+81"/>
         <location line="+1813"/>
         <location line="+528"/>
-        <location line="+1219"/>
+        <location line="+20"/>
+        <location line="+1213"/>
         <location line="+11"/>
         <location line="+60"/>
-        <location line="+344"/>
+        <location line="+345"/>
         <source>In Progress</source>
         <translation>Pooleli</translation>
     </message>
     <message>
-        <location line="-3961"/>
-        <location line="+3598"/>
+        <location line="-3976"/>
+        <location line="+3612"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Lõpetatud</translation>
     </message>
     <message>
-        <location line="-3243"/>
+        <location line="-3257"/>
         <source>Empty database path provided</source>
         <translation>Sisestati tühi andmebaasi tee</translation>
     </message>
@@ -147,12 +148,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2397"/>
+        <location line="+2411"/>
         <source>Size</source>
         <translation>Suurus</translation>
     </message>
     <message>
-        <location line="-2396"/>
+        <location line="-2410"/>
         <source>Date</source>
         <translation>Kuupäev</translation>
     </message>
@@ -287,7 +288,12 @@ Vali teine nimi ja proovi uuesti.</translation>
         <translation>Viga: %1</translation>
     </message>
     <message>
-        <location line="+466"/>
+        <location line="+237"/>
+        <source>Update</source>
+        <translation type="unfinished">Värskenda</translation>
+    </message>
+    <message>
+        <location line="+243"/>
         <source>The selected device is not a catalog.</source>
         <translation>Valitud seade ei ole kataloog.</translation>
     </message>
@@ -475,7 +481,7 @@ Vali teine nimi.</translation>
         <translation>Ei ole salvestusseade.</translation>
     </message>
     <message>
-        <location line="+168"/>
+        <location line="+169"/>
         <location line="+22"/>
         <source>Provide a link name.</source>
         <translation>Sisesta lingi nimi.</translation>
@@ -612,7 +618,7 @@ Vali teine nimi.</translation>
         <translation>Kataloog</translation>
     </message>
     <message>
-        <location line="+1548"/>
+        <location line="+1566"/>
         <source>root</source>
         <translation>juur</translation>
     </message>
@@ -645,7 +651,7 @@ Vali teine nimi.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2521"/>
+        <location filename="../core/collection.cpp" line="+2530"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>See kaust sisaldab mälu režiimi kogumisfaile, kuid olete praegu faili režiimis.&lt;br/&gt;Lülituge mälu režiimi või valige teine kaust.</translation>
     </message>
@@ -663,7 +669,7 @@ Vali teine nimi.</translation>
 <context>
     <name>CollectionImporter</name>
     <message>
-        <location filename="../core/collectionimporter.cpp" line="+1653"/>
+        <location filename="../core/collectionimporter.cpp" line="+1656"/>
         <source>Name</source>
         <translation>Nimi</translation>
     </message>
@@ -681,7 +687,7 @@ Vali teine nimi.</translation>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+227"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+228"/>
         <source>Collection</source>
         <translation>Kogu</translation>
     </message>
@@ -732,32 +738,32 @@ Vali teine nimi.</translation>
     <message>
         <location line="+6"/>
         <location line="+60"/>
-        <location line="+29"/>
-        <location line="+127"/>
+        <location line="+39"/>
+        <location line="+131"/>
         <location line="+149"/>
         <source>Yes</source>
         <translation>Jah</translation>
     </message>
     <message>
-        <location line="-361"/>
+        <location line="-375"/>
         <location line="+60"/>
-        <location line="+162"/>
+        <location line="+176"/>
         <location line="+723"/>
         <location line="+117"/>
         <source>Cancel</source>
         <translation>Tühista</translation>
     </message>
     <message>
-        <location line="-1162"/>
+        <location line="-1176"/>
         <location line="+65"/>
         <location line="+69"/>
-        <location line="+158"/>
+        <location line="+172"/>
         <location line="+137"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location line="-407"/>
+        <location line="-421"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
         <translation>&lt;br/&gt;&lt;b&gt;Tere tulemast Katalogi!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Tundub, et see on esimene käivitus.&lt;br/&gt;&lt;br/&gt;Järgmised seaded on rakendatud:&lt;br/&gt; - Keel: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Teema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Saad neid muuta vahekaardil %3.</translation>
     </message>
@@ -800,42 +806,42 @@ Vali teine nimi.</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+763"/>
+        <location line="+777"/>
         <source>Selection</source>
         <translation>Valik</translation>
     </message>
     <message>
-        <location line="-753"/>
-        <location line="+1026"/>
+        <location line="-767"/>
+        <location line="+1040"/>
         <source>Devices</source>
         <translation>Seadmed</translation>
     </message>
     <message>
-        <location line="-1021"/>
-        <location line="+1116"/>
+        <location line="-1035"/>
+        <location line="+1130"/>
         <source>Explore</source>
         <translation>Sirvi</translation>
     </message>
     <message>
-        <location line="-1106"/>
-        <location line="+1329"/>
+        <location line="-1120"/>
+        <location line="+1343"/>
         <source>Backup</source>
         <translation>Varundus</translation>
     </message>
     <message>
-        <location line="-1324"/>
-        <location line="+1288"/>
+        <location line="-1338"/>
+        <location line="+1302"/>
         <source>Statistics</source>
         <translation>Statistika</translation>
     </message>
     <message>
-        <location line="-1283"/>
-        <location line="+1303"/>
+        <location line="-1297"/>
+        <location line="+1317"/>
         <source>Tags</source>
         <translation>Sildid</translation>
     </message>
     <message>
-        <location line="-1290"/>
+        <location line="-1304"/>
         <source>Documentation</source>
         <translation>Dokumentatsioon</translation>
     </message>
@@ -908,13 +914,13 @@ Vali teine nimi.</translation>
         <translation>1- Vali terve ketas või kaust, &lt;br/&gt;2- vali suvandid, ja &lt;br/&gt;3- klõpsa &apos;Loo&apos;&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+120"/>
+        <location line="+130"/>
         <source>Update the catalog content with the new criteria?</source>
         <translation>Kas uuendada kataloogi sisu uute kriteeriumitega?</translation>
     </message>
     <message>
         <location line="+8"/>
-        <location line="+128"/>
+        <location line="+132"/>
         <location line="+148"/>
         <source>No</source>
         <translation>Ei</translation>
@@ -1108,8 +1114,8 @@ See võib tähendada, et lähe on tühi või seade pole sellesse kausta ühendat
 Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
     </message>
     <message>
-        <location line="-703"/>
-        <location line="+881"/>
+        <location line="-717"/>
+        <location line="+895"/>
         <location line="+43"/>
         <source>Search</source>
         <translation>Otsing</translation>
@@ -1155,7 +1161,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation>Sulge</translation>
     </message>
     <message>
-        <location line="-1137"/>
+        <location line="-1151"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1164,7 +1170,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
 </translation>
     </message>
     <message>
-        <location line="+494"/>
+        <location line="+508"/>
         <source>Copy version and system information</source>
         <translation>Kopeeri versiooni- ja süsteemiteave</translation>
     </message>
@@ -1243,8 +1249,8 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation>Kataloogi loomine ebaõnnestus: </translation>
     </message>
     <message>
-        <location line="-1171"/>
-        <location line="+1161"/>
+        <location line="-1185"/>
+        <location line="+1175"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Loo</translation>
@@ -1586,7 +1592,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation type="vanished">Kopeeri faili kontrollsumma</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+1163"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+1166"/>
         <location line="+29"/>
         <source>No backup links found.</source>
         <translation>Varukoopia linke ei leitud.</translation>
@@ -2015,12 +2021,12 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
     </message>
     <message>
         <location line="+476"/>
-        <location line="+11307"/>
+        <location line="+11324"/>
         <source>Show/Hide Filters</source>
         <translation>Näita/Peida filtrid</translation>
     </message>
     <message>
-        <location line="-11687"/>
+        <location line="-11704"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2588"/>
         <source>Virtual</source>
         <translation>Virtuaalne</translation>
@@ -2084,7 +2090,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <location line="+134"/>
         <location line="+294"/>
         <location line="+479"/>
-        <location line="+2360"/>
+        <location line="+2377"/>
         <location line="+89"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+62"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-334"/>
@@ -2094,7 +2100,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation>Vali</translation>
     </message>
     <message>
-        <location line="-11101"/>
+        <location line="-11118"/>
         <source>Selection</source>
         <translation>Valik</translation>
     </message>
@@ -2401,7 +2407,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-1617"/>
-        <location line="+9029"/>
+        <location line="+9046"/>
         <location line="+53"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-3"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
@@ -2412,7 +2418,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation>Kuupäev</translation>
     </message>
     <message>
-        <location line="-8858"/>
+        <location line="-8875"/>
         <location line="+706"/>
         <source>Choose to search duplicates based on the next criteria</source>
         <translation>Vali duplikaatide otsing järgmiste kriteeriumide alusel</translation>
@@ -2579,7 +2585,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1167"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1170"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-199"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+39"/>
         <source>Delete</source>
@@ -2675,7 +2681,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
     </message>
     <message>
         <location line="-1962"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+1261"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+1264"/>
         <source>Device Name</source>
         <translation>Seadme nimi</translation>
     </message>
@@ -2789,7 +2795,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
     <message>
         <location line="-988"/>
         <location line="+991"/>
-        <location line="+5255"/>
+        <location line="+5272"/>
         <location line="+20"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+685"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-260"/>
@@ -2805,7 +2811,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation>Värskenda</translation>
     </message>
     <message>
-        <location line="-5219"/>
+        <location line="-5236"/>
         <location line="+28"/>
         <source>Free Space</source>
         <translation>Vaba ruum</translation>
@@ -2949,14 +2955,14 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location line="+4701"/>
+        <location line="+4718"/>
         <location line="+55"/>
         <location line="+10"/>
         <source>Import</source>
         <translation>Impordi</translation>
     </message>
     <message>
-        <location line="-4721"/>
+        <location line="-4738"/>
         <source>Apply options to the Selection device tree.</source>
         <translation>Rakenda suvandid valiku seadmepuule.</translation>
     </message>
@@ -3039,11 +3045,12 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
     </message>
     <message>
         <location line="+56"/>
+        <location line="+2915"/>
         <source>Directories</source>
         <translation>Kataloogid</translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="-2825"/>
         <location line="+1559"/>
         <location line="+845"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-101"/>
@@ -3083,7 +3090,12 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation>Vali sisu suvandid</translation>
     </message>
     <message>
-        <location line="+3468"/>
+        <location line="+2140"/>
+        <source>Include empty</source>
+        <translation>Kaasa tühjad</translation>
+    </message>
+    <message>
+        <location line="+1345"/>
         <source>Images folder</source>
         <translation>Piltide kaust</translation>
     </message>
@@ -3104,7 +3116,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation type="vanished">Lisa välja jäetav kaust</translation>
     </message>
     <message>
-        <location line="-3789"/>
+        <location line="-3806"/>
         <source>3- </source>
         <translation>3- </translation>
     </message>
@@ -3166,7 +3178,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
     </message>
     <message>
         <location line="+44"/>
-        <location line="+3246"/>
+        <location line="+3263"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-530"/>
         <location line="+143"/>
         <location line="+301"/>
@@ -3193,7 +3205,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation>Uus</translation>
     </message>
     <message>
-        <location line="-1681"/>
+        <location line="-1698"/>
         <location line="+287"/>
         <source>Reload</source>
         <translation>Lae uuesti</translation>
@@ -3374,22 +3386,22 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-712"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-715"/>
         <source>Replicate directories</source>
         <translation>Replitseeri kataloogid</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-6"/>
-        <location line="+1273"/>
+        <location line="+1276"/>
         <location line="+16"/>
         <source>Preview Backup</source>
         <translation>Varunduse eelvaade</translation>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1294"/>
-        <location line="+280"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1297"/>
+        <location line="+283"/>
         <location line="+997"/>
         <location line="+14"/>
         <source>Run Backup</source>
@@ -3417,7 +3429,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation>Skaneeri lähtedraiv otse</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+27"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-78"/>
         <source>On conflict</source>
         <translation>Konflikti korral</translation>
@@ -3444,7 +3456,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation>Loo link</translation>
     </message>
     <message>
-        <location line="-578"/>
+        <location line="-595"/>
         <source>Catalog Links</source>
         <translation>Kataloogi lingid</translation>
     </message>
@@ -3529,7 +3541,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation type="vanished">Lae sihtmärk kataloogid</translation>
     </message>
     <message>
-        <location line="+274"/>
+        <location line="+291"/>
         <source>File list display</source>
         <translation>Failinimekirja kuvamine</translation>
     </message>
@@ -3544,7 +3556,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation>Failide järjestamine on tõstutundlik</translation>
     </message>
     <message>
-        <location line="-2847"/>
+        <location line="-2864"/>
         <source>Display folders</source>
         <translation>Kuva kaustad</translation>
     </message>
@@ -3559,7 +3571,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation>ja kõik alamkaustad</translation>
     </message>
     <message>
-        <location line="+3673"/>
+        <location line="+3690"/>
         <source>Documentation</source>
         <translation>Dokumentatsioon</translation>
     </message>
@@ -3642,8 +3654,8 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation>Port</translation>
     </message>
     <message>
-        <location line="-2494"/>
-        <location line="+2481"/>
+        <location line="-2511"/>
+        <location line="+2498"/>
         <source>Password</source>
         <translation>Parool</translation>
     </message>
@@ -3678,7 +3690,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation>Fail</translation>
     </message>
     <message>
-        <location line="-4068"/>
+        <location line="-4085"/>
         <location line="+964"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-4"/>
         <location filename="../core/search.cpp" line="-4"/>
@@ -3693,7 +3705,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation>Ava fail</translation>
     </message>
     <message>
-        <location line="+1581"/>
+        <location line="+1598"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-167"/>
         <location line="+103"/>
         <location line="+71"/>
@@ -3793,7 +3805,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation>Ava seadete fail</translation>
     </message>
     <message>
-        <location line="-1843"/>
+        <location line="-1860"/>
         <source>Type of source</source>
         <translation>Allika tüüp</translation>
     </message>
@@ -3872,7 +3884,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation>Kokku</translation>
     </message>
     <message>
-        <location line="+1798"/>
+        <location line="+1815"/>
         <source>About</source>
         <translation>Teave</translation>
     </message>
@@ -5091,9 +5103,9 @@ Jagamist ei tehtud.</translation>
         <translation>Allika ID</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-1890"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1111"/>
-        <location line="+344"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-1907"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1114"/>
+        <location line="+347"/>
         <location line="+768"/>
         <source>Source</source>
         <translation>Allikas</translation>
@@ -5117,59 +5129,59 @@ Jagamist ei tehtud.</translation>
         <translation>Sihtmärgi ID</translation>
     </message>
     <message>
-        <location line="-1117"/>
-        <location line="+344"/>
+        <location line="-1120"/>
+        <location line="+347"/>
         <location line="+774"/>
         <source>Target</source>
         <translation>Sihtmärk</translation>
     </message>
     <message>
-        <location line="-1222"/>
-        <location line="+1291"/>
+        <location line="-1225"/>
+        <location line="+1294"/>
         <source>Run Archive</source>
         <translation>Käivita arhiveerimine</translation>
     </message>
     <message>
-        <location line="-1286"/>
-        <location line="+1289"/>
+        <location line="-1289"/>
+        <location line="+1292"/>
         <source>Preview Archive</source>
         <translation>Arhiivi eelvaade</translation>
     </message>
     <message>
-        <location line="-1274"/>
+        <location line="-1277"/>
         <source>Invert (swap source and target)</source>
         <translation>Inverteeri (vaheta lähte ja sihtkoht)</translation>
     </message>
     <message>
         <location line="+43"/>
-        <location line="+111"/>
+        <location line="+114"/>
         <location line="+236"/>
         <location line="+467"/>
         <source>Select a mapping first.</source>
         <translation>Valige esmalt link.</translation>
     </message>
     <message>
-        <location line="-792"/>
-        <location line="+108"/>
+        <location line="-795"/>
+        <location line="+111"/>
         <location line="+236"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>Nii lähte- kui ka sihtseade peavad olema kataloogiseadmed.</translation>
     </message>
     <message>
-        <location line="-332"/>
-        <location line="+62"/>
+        <location line="-335"/>
+        <location line="+65"/>
         <source>Replicate</source>
         <translation>Replitseeri</translation>
     </message>
     <message>
-        <location line="-61"/>
-        <location line="+344"/>
+        <location line="-64"/>
+        <location line="+347"/>
         <source>%1 not available</source>
         <translation>%1 pole saadaval</translation>
     </message>
     <message>
-        <location line="-333"/>
-        <location line="+90"/>
+        <location line="-336"/>
+        <location line="+93"/>
         <location line="+255"/>
         <source>A catalog update is already in progress. Please wait and try again.</source>
         <translation>Kataloogi uuendamine on juba käimas. Palun oodake ja proovige uuesti.</translation>
@@ -6095,7 +6107,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Muuda linki</translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+61"/>
         <source>Save</source>
         <translation>Salvesta</translation>
     </message>
@@ -6105,7 +6117,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Tühista</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+56"/>
         <source>Name</source>
         <translation>Nimi</translation>
     </message>
@@ -6135,7 +6147,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Arhiiv</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="-54"/>
         <source>Source</source>
         <translation>Allikas</translation>
     </message>
@@ -6160,7 +6172,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Valikud</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+39"/>
         <source>Strict copy</source>
         <translation>Range kopeerimine</translation>
     </message>
@@ -6193,6 +6205,16 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <location line="+1"/>
         <source>Scan source drive directly (requires connected source)</source>
         <translation>Skanni lähteketast otse (vajab ühendatud lähet)</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Directories</source>
+        <translation>Kataloogid</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Include empty</source>
+        <translation>Kaasa tühjad</translation>
     </message>
 </context>
 <context>

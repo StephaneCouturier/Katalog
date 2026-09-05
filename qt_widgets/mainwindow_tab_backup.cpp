@@ -255,6 +255,7 @@ void MainWindow::on_BackUp_pushButton_ReplicateDirectories_clicked()
         m_pendingBackupSourceDevice = sourceDevice;
         m_pendingBackupTargetDevice = targetDevice;
         m_pendingBackupSourceDrive  = mapping.sourceDrive;
+        m_pendingBackupIncludeEmptyDirs = mapping.includeEmptyDirs;
         m_backupUpdatePhase         = BackupUpdatePhase::UpdatingSource;
         m_pendingBackupOperation    = PendingBackupOperation::ReplicateDirectories;
 
@@ -267,10 +268,10 @@ void MainWindow::on_BackUp_pushButton_ReplicateDirectories_clicked()
         return;
     }
 
-    executeReplicate(sourceDevice, targetDevice, mapping.sourceDrive);
+    executeReplicate(sourceDevice, targetDevice, mapping.sourceDrive, mapping.includeEmptyDirs);
 }
 
-void MainWindow::executeReplicate(const Device &sourceDevice, const Device &targetDevice, bool sourceDrive)
+void MainWindow::executeReplicate(const Device &sourceDevice, const Device &targetDevice, bool sourceDrive, bool includeEmptyDirs)
 {
     DirectoryReplicator replicator(m_connectionName);
     ReplicationResult result;
@@ -279,7 +280,8 @@ void MainWindow::executeReplicate(const Device &sourceDevice, const Device &targ
         //Drive mode: walk the source filesystem directly (includes excluded folders)
         result = replicator.replicateFromDrive(
             sourceDevice.path,
-            targetDevice.path
+            targetDevice.path,
+            includeEmptyDirs
         );
     } else {
         //Catalog mode: replicate from the folder table in the catalog index
@@ -289,7 +291,8 @@ void MainWindow::executeReplicate(const Device &sourceDevice, const Device &targ
         result = replicator.replicate(
             {sourceDevice.externalID},
             sourceDevice.path,
-            targetDevice.path
+            targetDevice.path,
+            includeEmptyDirs
         );
     }
 
@@ -689,7 +692,7 @@ void MainWindow::continueBackupAfterCatalogUpdate()
             break;
         case PendingBackupOperation::ReplicateDirectories:
             ui->BackUp_pushButton_ReplicateDirectories->setEnabled(true);
-            executeReplicate(m_pendingBackupSourceDevice, m_pendingBackupTargetDevice, m_pendingBackupSourceDrive);
+            executeReplicate(m_pendingBackupSourceDevice, m_pendingBackupTargetDevice, m_pendingBackupSourceDrive, m_pendingBackupIncludeEmptyDirs);
             break;
         default:
             break;
@@ -715,13 +718,13 @@ void MainWindow::executeBackup(Device sourceDevice, Device targetDevice, Mapping
     if (mapping.sourceDrive) {
         //Drive mode: walk the source filesystem directly
         DirectoryReplicator replicator(m_connectionName);
-        replicator.replicateFromDrive(sourceDevice.path, targetDevice.path);
+        replicator.replicateFromDrive(sourceDevice.path, targetDevice.path, mapping.includeEmptyDirs);
     } else {
         //Catalog mode: replicate from the folder table (includes empty directories)
         if (collection->databaseMode == "Memory")
             sourceDevice.catalog->loadFoldersToTable();
         DirectoryReplicator replicator(m_connectionName);
-        replicator.replicate({sourceDevice.externalID}, sourceDevice.path, targetDevice.path);
+        replicator.replicate({sourceDevice.externalID}, sourceDevice.path, targetDevice.path, mapping.includeEmptyDirs);
     }
 
     //Run comparison (respects strictCopy setting)
@@ -1637,7 +1640,8 @@ void MainWindow::saveNewMapping()
                                 mapping_device_target_id,
                                 mapping_strict_copy,
                                 mapping_conflict_mode,
-                                mapping_source_mode
+                                mapping_source_mode,
+                                mapping_include_empty_dirs
                             )
                             VALUES
                             (   :mapping_name,
@@ -1646,7 +1650,8 @@ void MainWindow::saveNewMapping()
                                 :mapping_device_target_id,
                                 :mapping_strict_copy,
                                 :mapping_conflict_mode,
-                                :mapping_source_mode
+                                :mapping_source_mode,
+                                :mapping_include_empty_dirs
                             )
                         )");
     query.prepare(querySQL);
@@ -1663,6 +1668,8 @@ void MainWindow::saveNewMapping()
                         ui->BackUp_comboBox_ConflictMode->currentIndex())));
     query.bindValue(":mapping_source_mode",
                     ui->BackUp_checkBox_SourceMode->isChecked() ? QStringLiteral("Drive") : QStringLiteral("Catalog"));
+    query.bindValue(":mapping_include_empty_dirs",
+                    ui->BackUp_checkBox_IncludeEmptyDirs->isChecked() ? 1 : 0);
 
     if (!query.exec())
     {

@@ -873,7 +873,25 @@ void Catalog::loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested)
 void Catalog::loadFoldersToTable()
 {//Load catalog folders from file, if latest version is not already in memory
 
-    if ( dateLoaded < dateUpdated ){
+    //The folder table is checked directly rather than trusting dateLoaded alone:
+    //dateLoaded tracks the *file* list, and loadCatalogFileListToTable() stamps it
+    //with the current time when it finishes. A backup run loads the file list
+    //first, so by the time it asked for the folders the date gate was already
+    //closed and this method returned without loading anything - leaving
+    //DirectoryReplicator with an empty folder table and no directory replicated
+    //(SpecBackup.md BKP-F2, BKP-C5).
+    bool folderTableEmpty = true;
+    QSqlQuery countFolderQuery(QSqlDatabase::database(m_connectionName));
+    countFolderQuery.prepare(QLatin1String(R"(
+                                    SELECT COUNT(*)
+                                    FROM folder
+                                    WHERE folder_catalog_id=:folder_catalog_id
+                                )"));
+    countFolderQuery.bindValue(":folder_catalog_id", ID);
+    if (countFolderQuery.exec() && countFolderQuery.next())
+        folderTableEmpty = (countFolderQuery.value(0).toInt() == 0);
+
+    if ( dateLoaded < dateUpdated || folderTableEmpty ){
 
         //Prepare inputs and insert query for folder
         QString folderFilePath = filePath;

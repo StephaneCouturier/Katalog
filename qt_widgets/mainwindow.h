@@ -512,7 +512,7 @@ class MainWindow : public KXmlGuiWindow
             void setupDeviceUpdateManagerForBackup();
             void continueBackupAfterCatalogUpdate();
             void executeBackup(Device sourceDevice, Device targetDevice, MappingInfo mapping);
-            void executeReplicate(const Device &sourceDevice, const Device &targetDevice, bool sourceDrive = false);
+            void executeReplicate(const Device &sourceDevice, const Device &targetDevice, bool sourceDrive = false, bool includeEmptyDirs = true);
             enum class BackupUpdatePhase { None, UpdatingSource, UpdatingTarget };
             BackupUpdatePhase m_backupUpdatePhase = BackupUpdatePhase::None;
             enum class PendingBackupOperation { None, RunBackup, Preview, ReplicateDirectories };
@@ -522,6 +522,7 @@ class MainWindow : public KXmlGuiWindow
             int     m_pendingBackupMappingId = -1;
             int     m_currentBackupMappingId = -1;  // mapping of the run in progress (for onBackupFinished)
             bool    m_pendingBackupSourceDrive = false;
+            bool    m_pendingBackupIncludeEmptyDirs = true;
 
             bool    m_currentBackupIsArchive    = false;
             BackupJobStoppable *m_backupJob    = nullptr;

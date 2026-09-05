@@ -204,6 +204,7 @@ public:
     static QSqlError runMigration_2_12(const QString &connectionName);
     static QSqlError runMigration_2_13(const QString &connectionName);
     static QSqlError ensureMappingSourceCollectionColumn(const QString &connectionName);
+    static QSqlError ensureMappingIncludeEmptyDirsColumn(const QString &connectionName);
     static QSqlError ensureDeviceCommentColumn(const QString &connectionName);
 
 private:

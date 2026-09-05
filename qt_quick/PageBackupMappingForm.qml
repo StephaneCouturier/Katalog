@@ -24,6 +24,7 @@ Kirigami.ScrollablePage {
             var ci = conflictModeCombo.indexOfValue(mappingData.conflictMode)
             if (ci >= 0) conflictModeCombo.currentIndex = ci
             sourceDriveCheck.checked = mappingData.sourceDrive
+            includeEmptyDirsCheck.checked = mappingData.includeEmptyDirs
         }
     }
 
@@ -45,7 +46,8 @@ Kirigami.ScrollablePage {
                 targetCombo.selectedDeviceId,
                 strict,
                 conflictModeCombo.currentValue,
-                sourceDriveCheck.checked)
+                sourceDriveCheck.checked,
+                includeEmptyDirsCheck.checked)
             : appManager1.updateBackupMapping(
                 editMappingId,
                 nameField.text.trim(),
@@ -54,7 +56,8 @@ Kirigami.ScrollablePage {
                 targetCombo.selectedDeviceId,
                 strict,
                 conflictModeCombo.currentValue,
-                sourceDriveCheck.checked)
+                sourceDriveCheck.checked,
+                includeEmptyDirsCheck.checked)
         if (err) {
             errorMessage.text    = err
             errorMessage.visible = true
@@ -97,6 +100,38 @@ Kirigami.ScrollablePage {
         Kirigami.FormLayout {
             Layout.fillWidth: true
 
+            // Source
+            Kirigami.Separator {
+                Kirigami.FormData.label: qsTr("Source")
+                Kirigami.FormData.isSection: true
+            }
+
+            DeviceTreeComboBox {
+                id: sourceCombo
+                Kirigami.FormData.label: qsTr("Source catalog")
+                Layout.preferredWidth: Kirigami.Units.gridUnit * 24
+                catalogOnly: true
+            }
+
+            // Target
+            Kirigami.Separator {
+                Kirigami.FormData.label: qsTr("Target")
+                Kirigami.FormData.isSection: true
+            }
+
+            DeviceTreeComboBox {
+                id: targetCombo
+                Kirigami.FormData.label: qsTr("Target catalog")
+                Layout.preferredWidth: Kirigami.Units.gridUnit * 24
+                catalogOnly: true
+            }
+
+            // Options
+            Kirigami.Separator {
+                Kirigami.FormData.label: qsTr("Options")
+                Kirigami.FormData.isSection: true
+            }
+
             // Name + auto-generate
             RowLayout {
                 Kirigami.FormData.label: qsTr("Name")
@@ -130,36 +165,11 @@ Kirigami.ScrollablePage {
                 }
             }
 
-            // Source
-            Kirigami.Separator {
-                Kirigami.FormData.label: qsTr("Source")
-                Kirigami.FormData.isSection: true
-            }
-
-            DeviceTreeComboBox {
-                id: sourceCombo
-                Kirigami.FormData.label: qsTr("Source catalog")
-                Layout.preferredWidth: Kirigami.Units.gridUnit * 24
-                catalogOnly: true
-            }
-
-            // Target
-            Kirigami.Separator {
-                Kirigami.FormData.label: qsTr("Target")
-                Kirigami.FormData.isSection: true
-            }
-
-            DeviceTreeComboBox {
-                id: targetCombo
-                Kirigami.FormData.label: qsTr("Target catalog")
-                Layout.preferredWidth: Kirigami.Units.gridUnit * 24
-                catalogOnly: true
-            }
-
-            // Options
-            Kirigami.Separator {
-                Kirigami.FormData.label: qsTr("Options")
-                Kirigami.FormData.isSection: true
+            Controls.CheckBox {
+                id: includeEmptyDirsCheck
+                Kirigami.FormData.label: qsTr("Directories")
+                text: qsTr("Include empty")
+                checked: true
             }
 
             Controls.CheckBox {

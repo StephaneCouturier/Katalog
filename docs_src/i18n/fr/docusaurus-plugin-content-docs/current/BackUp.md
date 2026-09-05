@@ -1,8 +1,8 @@
 ---
-version: "2.12"
+version: "2.13"
 ---
 # Sauvegarde
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![2.13](https://img.shields.io/badge/Version-2.13-blue)
 
 ## Résumé
 Cette page décrit toutes les fonctionnalités de l'écran **BackUp** et comment les utiliser.<br/>
@@ -46,6 +46,9 @@ La sauvegarde Katalog copie les fichiers d'un **catalogue source** vers un **cat
 
 Options "Copie stricte"
 - <i>Copie stricte</i> (par défaut) : Katalog copiera les fichiers même s'ils sont déjà présents dans la cible. Si décoché, les fichiers déjà présents dans la cible (selon le nom, la taille et la date) ne seront pas copiés à nouveau.
+
+Options "Répertoires"
+- <i>Inclure les vides</i> (par défaut : coché) : l'arborescence des répertoires de la source est recréée dans la cible avant toute copie de fichier. Si coché, un répertoire qui ne contient rien du tout — ni fichier ni sous-répertoire — est également recréé. Si décoché, un tel répertoire n'est pas créé, tandis que tout répertoire qui contient quelque chose l'est toujours. Décocher cette option ne supprime jamais un répertoire déjà présent dans la cible.
 
 Options de gestion des conflits
 - <i>En cas de conflit</i> (par défaut : <i>Renommer le plus ancien</i>)
@@ -120,6 +123,7 @@ Le panneau *Créer un lien* peut être replié ou déplié à l'aide du bouton b
 | Copie stricte | Si activé (par défaut), copie les fichiers par chemin — même si le fichier existe déjà ailleurs dans la cible. Si désactivé, ignore les fichiers déjà présents dans la cible (mode dédoublonnage). Non applicable pour les liens *Archive* (désactivé automatiquement). |
 | En cas de conflit | Comportement lorsqu'un fichier existe au même chemin dans la source et la cible mais diffère. Par défaut : `RenommerLePlusAncien`. Voir [Modes disponibles](#available-modes). |
 | Mode source | `Catalogue` (par défaut) ou `Disque`. Contrôle si la source est lue depuis l'index du catalogue ou en parcourant directement le système de fichiers. Voir [Mode source](#source-mode). |
+| Répertoires - Inclure les vides | Si activé (par défaut), les répertoires qui ne contiennent ni fichier ni sous-répertoire sont recréés dans la cible. Si désactivé, seuls les répertoires qui contiennent quelque chose sont créés. |
 
 #### Exemple et catalogues
 Objectif : créer un lien entre la source sur le disque local et la cible sur un disque externe.
@@ -136,6 +140,7 @@ Objectif : créer un lien entre la source sur le disque local et la cible sur un
 #### Définir le nom, les options et créer
 - Générer un nom : nom du catalogue source + " -> " + nom du catalogue cible
 - Définir l'option "Copie stricte"
+- Définir l'option "Répertoires"
 - Définir le comportement en cas de détection de conflit
 - Créer le lien
 

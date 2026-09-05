@@ -73,6 +73,7 @@ QString BackupMappingManager::buildSelectFromJoin()
             COALESCE(dm.mapping_strict_copy,    1) AS mapping_strict_copy,
             COALESCE(dm.mapping_conflict_mode, 'RenameOldest') AS mapping_conflict_mode,
             COALESCE(dm.mapping_source_mode, 'Catalog') AS mapping_source_mode,
+            COALESCE(dm.mapping_include_empty_dirs, 1) AS mapping_include_empty_dirs,
             dm.mapping_backup_last_date AS backup_last_date,
             COALESCE(dm.mapping_backup_last_size, 0) AS backup_last_size
         FROM device_mapping dm
@@ -207,6 +208,7 @@ MappingInfo BackupMappingManager::parseMappingFromQuery(const QSqlQuery& query)
     info.strictCopy                = query.value("mapping_strict_copy").toInt() != 0;
     info.conflictMode              = conflictModeFromString(query.value("mapping_conflict_mode").toString());
     info.sourceDrive               = query.value("mapping_source_mode").toString() == QLatin1String("Drive");
+    info.includeEmptyDirs          = query.value("mapping_include_empty_dirs").toInt() != 0;
     info.lastBackupDate            = query.value("backup_last_date").toString();
     info.lastBackupSize            = query.value("backup_last_size").toLongLong();
 
@@ -355,14 +357,16 @@ bool BackupMappingManager::createMapping(
     const QString &name, const QString &type,
     int sourceId, int targetId,
     bool strictCopy, const QString &conflictMode,
-    bool sourceDrive)
+    bool sourceDrive, bool includeEmptyDirs)
 {
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
     query.prepare(QLatin1String(R"(
         INSERT INTO device_mapping
         (mapping_name, mapping_type, mapping_device_source_id, mapping_device_target_id,
-         mapping_strict_copy, mapping_conflict_mode, mapping_source_mode)
-        VALUES (:name, :type, :sourceId, :targetId, :strictCopy, :conflictMode, :sourceMode)
+         mapping_strict_copy, mapping_conflict_mode, mapping_source_mode,
+         mapping_include_empty_dirs)
+        VALUES (:name, :type, :sourceId, :targetId, :strictCopy, :conflictMode, :sourceMode,
+                :includeEmptyDirs)
     )"));
     query.bindValue(":name",         name);
     query.bindValue(":type",         type);
@@ -371,6 +375,7 @@ bool BackupMappingManager::createMapping(
     query.bindValue(":strictCopy",   strictCopy ? 1 : 0);
     query.bindValue(":conflictMode", conflictMode);
     query.bindValue(":sourceMode",   sourceDrive ? QStringLiteral("Drive") : QStringLiteral("Catalog"));
+    query.bindValue(":includeEmptyDirs", includeEmptyDirs ? 1 : 0);
     if (!query.exec()) {
         qWarning() << "BackupMappingManager::createMapping error:" << query.lastError();
         return false;
@@ -383,7 +388,7 @@ bool BackupMappingManager::updateMapping(
     const QString &name, const QString &type,
     int sourceId, int targetId,
     bool strictCopy, const QString &conflictMode,
-    bool sourceDrive)
+    bool sourceDrive, bool includeEmptyDirs)
 {
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
     query.prepare(QLatin1String(R"(
@@ -394,7 +399,8 @@ bool BackupMappingManager::updateMapping(
             mapping_device_target_id = :targetId,
             mapping_strict_copy      = :strictCopy,
             mapping_conflict_mode    = :conflictMode,
-            mapping_source_mode      = :sourceMode
+            mapping_source_mode      = :sourceMode,
+            mapping_include_empty_dirs = :includeEmptyDirs
         WHERE mapping_id = :mappingId
     )"));
     query.bindValue(":name",         name);
@@ -404,6 +410,7 @@ bool BackupMappingManager::updateMapping(
     query.bindValue(":strictCopy",   strictCopy ? 1 : 0);
     query.bindValue(":conflictMode", conflictMode);
     query.bindValue(":sourceMode",   sourceDrive ? QStringLiteral("Drive") : QStringLiteral("Catalog"));
+    query.bindValue(":includeEmptyDirs", includeEmptyDirs ? 1 : 0);
     query.bindValue(":mappingId",    mappingId);
     if (!query.exec()) {
         qWarning() << "BackupMappingManager::updateMapping error:" << query.lastError();

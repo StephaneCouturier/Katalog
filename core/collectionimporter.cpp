@@ -1465,7 +1465,8 @@ void CollectionImporter::importBackupMappings()
     srcQ.exec(QLatin1String(R"(
         SELECT mapping_type, mapping_name, mapping_device_source_id, mapping_device_target_id,
                mapping_backup_last_date, mapping_backup_last_size,
-               mapping_strict_copy, mapping_conflict_mode, mapping_source_mode
+               mapping_strict_copy, mapping_conflict_mode, mapping_source_mode,
+               COALESCE(mapping_include_empty_dirs, 1)
         FROM device_mapping WHERE mapping_type != 'CollectionImport'
     )"));
 
@@ -1475,12 +1476,13 @@ void CollectionImporter::importBackupMappings()
             mapping_type, mapping_name,
             mapping_device_source_id, mapping_device_target_id,
             mapping_backup_last_date, mapping_backup_last_size,
-            mapping_strict_copy, mapping_conflict_mode, mapping_source_mode)
+            mapping_strict_copy, mapping_conflict_mode, mapping_source_mode,
+            mapping_include_empty_dirs)
         VALUES (
             :type, :name,
             :src, :tgt,
             :date, :size,
-            :strict, :conflict, :srcmode)
+            :strict, :conflict, :srcmode, :emptydirs)
     )"));
 
     while (srcQ.next()) {
@@ -1498,6 +1500,7 @@ void CollectionImporter::importBackupMappings()
         ins.bindValue(":size",    srcQ.value(5));
         ins.bindValue(":strict",  srcQ.value(6));
         ins.bindValue(":conflict",srcQ.value(7));
+        ins.bindValue(":emptydirs", srcQ.value(9));
         ins.bindValue(":srcmode", srcQ.value(8));
         ins.exec();
     }

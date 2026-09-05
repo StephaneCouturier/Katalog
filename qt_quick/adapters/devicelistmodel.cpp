@@ -74,12 +74,13 @@ QString DeviceListModel::formatDescription(const DeviceItem &device) const
     // everything below it.
     QStringList parts;
 
-    if (device.totalFileCount > 0) {
-        QString filesPart = QString("%1 files").arg(locale.toString(device.totalFileCount));
-        if (device.totalFileSize > 0)
-            filesPart += QString(" · %1").arg(locale.formattedDataSize(device.totalFileSize));
-        parts << filesPart;
-    }
+    // Reported even when the device holds nothing: an empty catalog is a fact
+    // worth showing ("0 files · 0 bytes"), and gating on a non-zero count left
+    // its card with a blank second line, indistinguishable from a card whose
+    // counts had simply never been computed.
+    QString filesPart = QString("%1 files").arg(locale.toString(device.totalFileCount));
+    filesPart += QString(" · %1").arg(locale.formattedDataSize(device.totalFileSize));
+    parts << filesPart;
 
     // Space details — Storage and Virtual only, and independent of the file count.
     if ((device.type == "Storage" || device.type == "Virtual") && device.totalSpace > 0) {

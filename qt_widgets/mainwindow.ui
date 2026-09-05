@@ -10193,6 +10193,23 @@ background: url(:/images/link-h.png) repeat-x center;</string>
                   </widget>
                  </item>
                  <item>
+                  <widget class="QLabel" name="BackUp_label_Directories">
+                   <property name="text">
+                    <string>Directories</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="BackUp_checkBox_IncludeEmptyDirs">
+                   <property name="text">
+                    <string>Include empty</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
                   <widget class="QLabel" name="BackUp_label_ConflictMode">
                    <property name="text">
                     <string>On conflict</string>

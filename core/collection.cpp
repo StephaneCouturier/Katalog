@@ -1218,7 +1218,8 @@ void Collection::loadMappingFileToTable()
                                             mapping_strict_copy,
                                             mapping_conflict_mode,
                                             mapping_source_mode,
-                                            mapping_source_collection
+                                            mapping_source_collection,
+                                            mapping_include_empty_dirs
                                         )
                                         VALUES(
                                             :mapping_id,
@@ -1231,7 +1232,8 @@ void Collection::loadMappingFileToTable()
                                             :mapping_strict_copy,
                                             :mapping_conflict_mode,
                                             :mapping_source_mode,
-                                            :mapping_source_collection
+                                            :mapping_source_collection,
+                                            :mapping_include_empty_dirs
                                         )
                                         )");
                 insertQuery.prepare(insertQuerySQL);
@@ -1253,6 +1255,11 @@ void Collection::loadMappingFileToTable()
                 // field[10] = source_collection path — empty for BackUp mappings, populated for CollectionImport
                 insertQuery.bindValue(":mapping_source_collection",
                     fieldList.size() > 10 ? fieldList[10] : QString());
+                // field[11] = include_empty_dirs — absent in files written before the
+                // option existed, and those mappings replicated empty directories, so
+                // they default to 1 (SpecBackup.md BKP-F17).
+                insertQuery.bindValue(":mapping_include_empty_dirs",
+                    fieldList.size() > 11 ? fieldList[11].toInt() : 1);
                 insertQuery.exec();
             }
         }
@@ -1764,6 +1771,7 @@ void Collection::saveMappingTableToFile()
             << "conflict_mode"             << "\t"
             << "source_mode"               << "\t"
             << "source_collection"         << "\t"
+            << "include_empty_dirs"        << "\t"
             << '\n';
 
         //Get data
@@ -1780,7 +1788,8 @@ void Collection::saveMappingTableToFile()
                                         mapping_strict_copy,
                                         mapping_conflict_mode,
                                         mapping_source_mode,
-                                        mapping_source_collection
+                                        mapping_source_collection,
+                                        mapping_include_empty_dirs
                                     FROM device_mapping
                                 )");
         query.prepare(querySQL);

@@ -254,8 +254,8 @@ public slots:
     // Backup
     Q_INVOKABLE QVariantList getBackupMappings(const QString &filterType = "None", int deviceId = -1, const QString &mappingType = "All") const;
     Q_INVOKABLE QVariantMap  getBackupTotals(const QString &filterType = "None", int deviceId = -1, const QString &mappingType = "All") const;
-    Q_INVOKABLE QString      createBackupMapping(const QString &name, const QString &type, int sourceId, int targetId, bool strictCopy, const QString &conflictMode, bool sourceDrive);
-    Q_INVOKABLE QString      updateBackupMapping(int mappingId, const QString &name, const QString &type, int sourceId, int targetId, bool strictCopy, const QString &conflictMode, bool sourceDrive);
+    Q_INVOKABLE QString      createBackupMapping(const QString &name, const QString &type, int sourceId, int targetId, bool strictCopy, const QString &conflictMode, bool sourceDrive, bool includeEmptyDirs);
+    Q_INVOKABLE QString      updateBackupMapping(int mappingId, const QString &name, const QString &type, int sourceId, int targetId, bool strictCopy, const QString &conflictMode, bool sourceDrive, bool includeEmptyDirs);
     Q_INVOKABLE bool         deleteBackupMapping(int mappingId);
     Q_INVOKABLE bool         invertBackupMapping(int mappingId);
     Q_INVOKABLE void         startBackupPreview(int mappingId);

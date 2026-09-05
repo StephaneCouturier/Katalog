@@ -66,6 +66,7 @@ struct MappingInfo {
     bool strictCopy;                  // true (default) = mirror folder structure exactly; false = dedup (skip if name+size exists anywhere in target)
     ConflictMode conflictMode;        // how to handle files that exist in target but differ
     bool sourceDrive;                 // false (default) = 'Catalog' mode (use index); true = 'Drive' mode (full filesystem walk, requires connected source)
+    bool includeEmptyDirs;            // true (default) = replicate directories that hold no entry at all; false = create only directories that hold something (SpecBackup.md BKP-F17)
 
     MappingInfo()
         : sourceSize(0)
@@ -81,6 +82,7 @@ struct MappingInfo {
         , strictCopy(true)
         , conflictMode(ConflictMode::RenameOldest)
         , sourceDrive(false)
+        , includeEmptyDirs(true)
     {}
 };
 
@@ -174,12 +176,12 @@ public:
     bool createMapping(const QString &name, const QString &type,
                        int sourceId, int targetId,
                        bool strictCopy, const QString &conflictMode,
-                       bool sourceDrive);
+                       bool sourceDrive, bool includeEmptyDirs);
     bool updateMapping(int mappingId,
                        const QString &name, const QString &type,
                        int sourceId, int targetId,
                        bool strictCopy, const QString &conflictMode,
-                       bool sourceDrive);
+                       bool sourceDrive, bool includeEmptyDirs);
     bool deleteMapping(int mappingId);
     bool invertMapping(int mappingId);
     // Record the result of a completed backup/archive run (date + bytes transferred).

@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+166"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+3960"/>
+        <location line="+3975"/>
         <source>Search</source>
         <translation>Zoeken</translation>
     </message>
     <message>
-        <location line="-4080"/>
+        <location line="-4095"/>
         <source>Stopped</source>
         <translation>Gestopt</translation>
     </message>
@@ -46,22 +46,23 @@
         <location line="+81"/>
         <location line="+1813"/>
         <location line="+528"/>
-        <location line="+1219"/>
+        <location line="+20"/>
+        <location line="+1213"/>
         <location line="+11"/>
         <location line="+60"/>
-        <location line="+344"/>
+        <location line="+345"/>
         <source>In Progress</source>
         <translation>Bezig</translation>
     </message>
     <message>
-        <location line="-3961"/>
-        <location line="+3598"/>
+        <location line="-3976"/>
+        <location line="+3612"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Voltooid</translation>
     </message>
     <message>
-        <location line="-3243"/>
+        <location line="-3257"/>
         <source>Empty database path provided</source>
         <translation>Leeg databasepad opgegeven</translation>
     </message>
@@ -147,12 +148,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2397"/>
+        <location line="+2411"/>
         <source>Size</source>
         <translation>Grootte</translation>
     </message>
     <message>
-        <location line="-2396"/>
+        <location line="-2410"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
@@ -287,7 +288,12 @@ Kies een andere naam en probeer het opnieuw.</translation>
         <translation>Fout: %1</translation>
     </message>
     <message>
-        <location line="+466"/>
+        <location line="+237"/>
+        <source>Update</source>
+        <translation type="unfinished">Bijwerken</translation>
+    </message>
+    <message>
+        <location line="+243"/>
         <source>The selected device is not a catalog.</source>
         <translation>Het geselecteerde apparaat is geen catalogus.</translation>
     </message>
@@ -475,7 +481,7 @@ Kies een andere naam.</translation>
         <translation>Geen opslagapparaat.</translation>
     </message>
     <message>
-        <location line="+168"/>
+        <location line="+169"/>
         <location line="+22"/>
         <source>Provide a link name.</source>
         <translation>Geef een koppelingsnaam op.</translation>
@@ -612,7 +618,7 @@ Kies een andere naam.</translation>
         <translation>Catalogus</translation>
     </message>
     <message>
-        <location line="+1548"/>
+        <location line="+1566"/>
         <source>root</source>
         <translation>hoofdmap</translation>
     </message>
@@ -645,7 +651,7 @@ Kies een andere naam.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2521"/>
+        <location filename="../core/collection.cpp" line="+2530"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Deze map bevat collectiebestanden in geheugenmodus, maar u bent momenteel in bestandsmodus.&lt;br/&gt;Schakel over naar geheugenmodus of selecteer een andere map.</translation>
     </message>
@@ -663,7 +669,7 @@ Kies een andere naam.</translation>
 <context>
     <name>CollectionImporter</name>
     <message>
-        <location filename="../core/collectionimporter.cpp" line="+1653"/>
+        <location filename="../core/collectionimporter.cpp" line="+1656"/>
         <source>Name</source>
         <translation>Naam</translation>
     </message>
@@ -681,7 +687,7 @@ Kies een andere naam.</translation>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+227"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+228"/>
         <source>Collection</source>
         <translation>Verzameling</translation>
     </message>
@@ -732,32 +738,32 @@ Kies een andere naam.</translation>
     <message>
         <location line="+6"/>
         <location line="+60"/>
-        <location line="+29"/>
-        <location line="+127"/>
+        <location line="+39"/>
+        <location line="+131"/>
         <location line="+149"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
     <message>
-        <location line="-361"/>
+        <location line="-375"/>
         <location line="+60"/>
-        <location line="+162"/>
+        <location line="+176"/>
         <location line="+723"/>
         <location line="+117"/>
         <source>Cancel</source>
         <translation>Annuleren</translation>
     </message>
     <message>
-        <location line="-1162"/>
+        <location line="-1176"/>
         <location line="+65"/>
         <location line="+69"/>
-        <location line="+158"/>
+        <location line="+172"/>
         <location line="+137"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location line="-407"/>
+        <location line="-421"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
         <translation>&lt;br/&gt;&lt;b&gt;Welkom bij Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Het lijkt erop dat dit de eerste keer is dat het programma wordt uitgevoerd.&lt;br/&gt;&lt;br/&gt;De volgende instellingen zijn toegepast:&lt;br/&gt; - Taal: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Thema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;U kunt deze wijzigen in het tabblad %3.</translation>
     </message>
@@ -800,42 +806,42 @@ Kies een andere naam.</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+763"/>
+        <location line="+777"/>
         <source>Selection</source>
         <translation>Selectie</translation>
     </message>
     <message>
-        <location line="-753"/>
-        <location line="+1026"/>
+        <location line="-767"/>
+        <location line="+1040"/>
         <source>Devices</source>
         <translation>Apparaten</translation>
     </message>
     <message>
-        <location line="-1021"/>
-        <location line="+1116"/>
+        <location line="-1035"/>
+        <location line="+1130"/>
         <source>Explore</source>
         <translation>Verkennen</translation>
     </message>
     <message>
-        <location line="-1106"/>
-        <location line="+1329"/>
+        <location line="-1120"/>
+        <location line="+1343"/>
         <source>Backup</source>
         <translation>Back-up</translation>
     </message>
     <message>
-        <location line="-1324"/>
-        <location line="+1288"/>
+        <location line="-1338"/>
+        <location line="+1302"/>
         <source>Statistics</source>
         <translation>Statistieken</translation>
     </message>
     <message>
-        <location line="-1283"/>
-        <location line="+1303"/>
+        <location line="-1297"/>
+        <location line="+1317"/>
         <source>Tags</source>
         <translation>Tags</translation>
     </message>
     <message>
-        <location line="-1290"/>
+        <location line="-1304"/>
         <source>Documentation</source>
         <translation>Documentatie</translation>
     </message>
@@ -908,13 +914,13 @@ Kies een andere naam.</translation>
         <translation>1- Selecteer een volledige schijf of map, &lt;br/&gt;2- selecteer opties, en &lt;br/&gt;3- klik op &apos;Maken&apos;&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+120"/>
+        <location line="+130"/>
         <source>Update the catalog content with the new criteria?</source>
         <translation>De catalogusinhoud bijwerken met de nieuwe criteria?</translation>
     </message>
     <message>
         <location line="+8"/>
-        <location line="+128"/>
+        <location line="+132"/>
         <location line="+148"/>
         <source>No</source>
         <translation>Nee</translation>
@@ -1108,8 +1114,8 @@ Dit kan betekenen dat de bron leeg is of dat het apparaat niet op deze map is aa
 Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
     </message>
     <message>
-        <location line="-703"/>
-        <location line="+881"/>
+        <location line="-717"/>
+        <location line="+895"/>
         <location line="+43"/>
         <source>Search</source>
         <translation>Zoeken</translation>
@@ -1155,7 +1161,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Sluiten</translation>
     </message>
     <message>
-        <location line="-1137"/>
+        <location line="-1151"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1164,7 +1170,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
 </translation>
     </message>
     <message>
-        <location line="+494"/>
+        <location line="+508"/>
         <source>Copy version and system information</source>
         <translation>Versie- en systeeminformatie kopiëren</translation>
     </message>
@@ -1243,8 +1249,8 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Aanmaken van catalogus mislukt: </translation>
     </message>
     <message>
-        <location line="-1171"/>
-        <location line="+1161"/>
+        <location line="-1185"/>
+        <location line="+1175"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Maken</translation>
@@ -1583,7 +1589,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+95"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+448"/>
         <location line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+406"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+409"/>
         <location line="+176"/>
         <location line="+154"/>
         <location line="+19"/>
@@ -2164,13 +2170,13 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Herstellen</translation>
     </message>
     <message>
-        <location line="+5655"/>
+        <location line="+5672"/>
         <source>Port</source>
         <translation>Poort</translation>
     </message>
     <message>
-        <location line="-2494"/>
-        <location line="+2481"/>
+        <location line="-2511"/>
+        <location line="+2498"/>
         <source>Password</source>
         <translation>Wachtwoord</translation>
     </message>
@@ -2194,7 +2200,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Bestand</translation>
     </message>
     <message>
-        <location line="-9766"/>
+        <location line="-9783"/>
         <location line="+652"/>
         <location line="+709"/>
         <location line="+725"/>
@@ -2426,14 +2432,14 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
     </message>
     <message>
         <location line="+1289"/>
-        <location line="+4701"/>
+        <location line="+4718"/>
         <location line="+55"/>
         <location line="+10"/>
         <source>Import</source>
         <translation>Importeren</translation>
     </message>
     <message>
-        <location line="-4438"/>
+        <location line="-4455"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-432"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-327"/>
         <location line="+21"/>
@@ -2447,7 +2453,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
     <message>
         <location line="-1801"/>
         <location line="+991"/>
-        <location line="+5255"/>
+        <location line="+5272"/>
         <location line="+20"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-269"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-27"/>
@@ -2471,8 +2477,8 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Bewerken</translation>
     </message>
     <message>
-        <location line="-5377"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1167"/>
+        <location line="-5394"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1170"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+44"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+68"/>
         <source>Delete</source>
@@ -2493,8 +2499,8 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
     </message>
     <message>
         <location line="+799"/>
-        <location line="+3246"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+730"/>
+        <location line="+3263"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+733"/>
         <location line="+143"/>
         <location line="+301"/>
         <location line="+7"/>
@@ -2507,18 +2513,19 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Pad</translation>
     </message>
     <message>
-        <location line="-4342"/>
+        <location line="-4359"/>
+        <location line="+2915"/>
         <source>Directories</source>
         <translation>Mappen</translation>
     </message>
     <message>
-        <location line="-6778"/>
-        <location line="+11307"/>
+        <location line="-9693"/>
+        <location line="+11324"/>
         <source>Show/Hide Filters</source>
         <translation>Filters tonen/verbergen</translation>
     </message>
     <message>
-        <location line="-11687"/>
+        <location line="-11704"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1252"/>
         <source>Virtual</source>
         <translation>Virtueel</translation>
@@ -2716,7 +2723,12 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Selecteer inhoudopties</translation>
     </message>
     <message>
-        <location line="+3468"/>
+        <location line="+2140"/>
+        <source>Include empty</source>
+        <translation>Lege opnemen</translation>
+    </message>
+    <message>
+        <location line="+1345"/>
         <source>Images folder</source>
         <translation>Afbeeldingenmap</translation>
     </message>
@@ -2737,7 +2749,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation type="vanished">Map toevoegen om uit te sluiten</translation>
     </message>
     <message>
-        <location line="-3789"/>
+        <location line="-3806"/>
         <source>3- </source>
         <translation>3- </translation>
     </message>
@@ -2860,7 +2872,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Opslagvelden</translation>
     </message>
     <message>
-        <location line="+5034"/>
+        <location line="+5051"/>
         <source>Icons</source>
         <translation>Pictogrammen</translation>
     </message>
@@ -2906,7 +2918,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Gegevensbeheer</translation>
     </message>
     <message>
-        <location line="-10383"/>
+        <location line="-10400"/>
         <location line="+5740"/>
         <location line="+2083"/>
         <location line="+134"/>
@@ -2922,7 +2934,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <location line="+134"/>
         <location line="+294"/>
         <location line="+479"/>
-        <location line="+2360"/>
+        <location line="+2377"/>
         <location line="+89"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-65"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="-334"/>
@@ -2932,7 +2944,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Selecteren</translation>
     </message>
     <message>
-        <location line="-11461"/>
+        <location line="-11478"/>
         <location line="+6893"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-977"/>
         <location line="+2831"/>
@@ -2942,12 +2954,12 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Opslag</translation>
     </message>
     <message>
-        <location line="+3447"/>
+        <location line="+3464"/>
         <source>New</source>
         <translation>Nieuw</translation>
     </message>
     <message>
-        <location line="-5102"/>
+        <location line="-5119"/>
         <location line="+261"/>
         <source>Devices</source>
         <translation>Apparaten</translation>
@@ -3099,12 +3111,12 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Linknaam</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+108"/>
         <source>Create link</source>
         <translation>Link maken</translation>
     </message>
     <message>
-        <location line="-578"/>
+        <location line="-595"/>
         <source>Catalog Links</source>
         <translation>Cataloguslinks</translation>
     </message>
@@ -3145,22 +3157,22 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1292"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1295"/>
         <source>Replicate directories</source>
         <translation>Mappen repliceren</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-6"/>
-        <location line="+1273"/>
+        <location line="+1276"/>
         <location line="+16"/>
         <source>Preview Backup</source>
         <translation>Voorbeeld back-up</translation>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1294"/>
-        <location line="+280"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-1297"/>
+        <location line="+283"/>
         <location line="+997"/>
         <location line="+14"/>
         <source>Run Backup</source>
@@ -3189,7 +3201,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Bronschijf direct scannen</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+27"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-78"/>
         <source>On conflict</source>
         <translation>Bij conflict</translation>
@@ -3265,7 +3277,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Gegevensmodus &quot;SQLite lokaal bestand&quot;</translation>
     </message>
     <message>
-        <location line="-3456"/>
+        <location line="-3473"/>
         <source>Apply options to the Selection device tree.</source>
         <translation>Pas opties toe op de selectie-apparaatstructuur.</translation>
     </message>
@@ -3336,7 +3348,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation type="vanished">Doelcatalogi laden</translation>
     </message>
     <message>
-        <location line="+1004"/>
+        <location line="+1021"/>
         <source>File list display</source>
         <translation>Bestandslijstweergave</translation>
     </message>
@@ -3458,14 +3470,14 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Openen</translation>
     </message>
     <message>
-        <location line="-1242"/>
+        <location line="-1259"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-677"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+480"/>
         <source>Open file</source>
         <translation>Bestand openen</translation>
     </message>
     <message>
-        <location line="+1581"/>
+        <location line="+1598"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-211"/>
         <location line="+103"/>
         <location line="+71"/>
@@ -3502,7 +3514,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Bestandsnaam zonder extensie kopiëren</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-8197"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-8214"/>
         <location line="+709"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1292"/>
         <location line="+240"/>
@@ -3517,7 +3529,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
     </message>
     <message>
         <location line="-999"/>
-        <location line="+9029"/>
+        <location line="+9046"/>
         <location line="+53"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
@@ -3542,7 +3554,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Selecteer de map voor deze collectie</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-6257"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-6274"/>
         <location line="+2406"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2291"/>
         <location line="+240"/>
@@ -4050,7 +4062,7 @@ Splitsen is niet uitgevoerd.</translation>
         <translation>Alle filters herstellen</translation>
     </message>
     <message>
-        <location line="+10612"/>
+        <location line="+10629"/>
         <source>About</source>
         <translation>Over</translation>
     </message>
@@ -4417,7 +4429,7 @@ Splitsen is niet uitgevoerd.</translation>
         <translation>Altijd een back-up van elke catalogus bewaren</translation>
     </message>
     <message>
-        <location line="-5007"/>
+        <location line="-5024"/>
         <source>Used</source>
         <translation>Gebruikt</translation>
     </message>
@@ -4466,7 +4478,7 @@ Splitsen is niet uitgevoerd.</translation>
         <translation>Kies een andere naam en probeer opnieuw.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="+5563"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="+5580"/>
         <source>Check at start up</source>
         <translation>Controleren bij opstarten</translation>
     </message>
@@ -4475,7 +4487,7 @@ Splitsen is niet uitgevoerd.</translation>
         <translation type="vanished">Verborgen bestanden opnemen</translation>
     </message>
     <message>
-        <location line="-4626"/>
+        <location line="-4643"/>
         <source>Save</source>
         <translation>Opslaan</translation>
     </message>
@@ -4491,8 +4503,8 @@ Splitsen is niet uitgevoerd.</translation>
     </message>
     <message>
         <location line="+3285"/>
-        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-141"/>
-        <location line="+344"/>
+        <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-144"/>
+        <location line="+347"/>
         <location line="+768"/>
         <source>Source</source>
         <translation>Bron</translation>
@@ -4565,12 +4577,12 @@ Splitsen is niet uitgevoerd.</translation>
         <translation>Datum gewijzigd</translation>
     </message>
     <message>
-        <location line="+8077"/>
+        <location line="+8094"/>
         <source>Verify if a new version of Katalog is available when starting the app.</source>
         <translation>Controleer of een nieuwe versie van Katalog beschikbaar is bij het starten van de app.</translation>
     </message>
     <message>
-        <location line="-6026"/>
+        <location line="-6043"/>
         <source>Show/Hide search history</source>
         <translation>Zoekgeschiedenis tonen/verbergen</translation>
     </message>
@@ -4692,7 +4704,7 @@ Splitsen is niet uitgevoerd.</translation>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;De resultaten moeten exact overeenkomen met de tekst (gevoelig voor hoofdletters)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location line="+9267"/>
+        <location line="+9284"/>
         <location line="+23"/>
         <source>Preload last selected catalogs at start-up to accelerate next search</source>
         <translation>Laatst geselecteerde catalogi voorladen bij opstarten om volgende zoekopdracht te versnellen</translation>
@@ -4772,7 +4784,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Deze map taggen</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="-10255"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="-10272"/>
         <source>Selection</source>
         <translation>Selectie</translation>
     </message>
@@ -4835,7 +4847,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Doelcatalogus selecteren</translation>
     </message>
     <message>
-        <location line="+505"/>
+        <location line="+522"/>
         <source>The collection data is saved to .idx or .csv files locally on the computer.</source>
         <translation>De collectiegegevens worden lokaal op de computer opgeslagen in .idx of .csv bestanden.</translation>
     </message>
@@ -4861,7 +4873,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Instellingenbestand openen</translation>
     </message>
     <message>
-        <location line="-2764"/>
+        <location line="-2781"/>
         <source>Display folders</source>
         <translation>Mappen weergeven</translation>
     </message>
@@ -4907,7 +4919,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation>De geselecteerde catalogus bevat meer dan %1 bestanden.&lt;br/&gt;Het kan enkele minuten duren om te openen.&lt;br/&gt;Doorgaan?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.ui" line="+4956"/>
+        <location filename="../qt_widgets/mainwindow.ui" line="+4973"/>
         <location line="+753"/>
         <location filename="../qt_widgets/mainwindow.cpp" line="-2"/>
         <source>Memory</source>
@@ -4918,7 +4930,7 @@ naar de prullenbak verplaatsen?</translation>
         <translation type="vanished">Gebruik de tekstcriteria in de zoekopdracht</translation>
     </message>
     <message>
-        <location line="-8492"/>
+        <location line="-8509"/>
         <source>Differences on</source>
         <translation>Verschillen op</translation>
     </message>
@@ -5116,59 +5128,59 @@ naar de prullenbak verplaatsen?</translation>
         <translation>Doel-ID</translation>
     </message>
     <message>
-        <location line="-1117"/>
-        <location line="+344"/>
+        <location line="-1120"/>
+        <location line="+347"/>
         <location line="+774"/>
         <source>Target</source>
         <translation>Doel</translation>
     </message>
     <message>
-        <location line="-1222"/>
-        <location line="+1291"/>
+        <location line="-1225"/>
+        <location line="+1294"/>
         <source>Run Archive</source>
         <translation>Archief uitvoeren</translation>
     </message>
     <message>
-        <location line="-1286"/>
-        <location line="+1289"/>
+        <location line="-1289"/>
+        <location line="+1292"/>
         <source>Preview Archive</source>
         <translation>Voorbeeld archief</translation>
     </message>
     <message>
-        <location line="-1274"/>
+        <location line="-1277"/>
         <source>Invert (swap source and target)</source>
         <translation>Omkeren (bron en doel wisselen)</translation>
     </message>
     <message>
         <location line="+43"/>
-        <location line="+111"/>
+        <location line="+114"/>
         <location line="+236"/>
         <location line="+467"/>
         <source>Select a mapping first.</source>
         <translation>Selecteer eerst een koppeling.</translation>
     </message>
     <message>
-        <location line="-792"/>
-        <location line="+108"/>
+        <location line="-795"/>
+        <location line="+111"/>
         <location line="+236"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>Bron en doel moeten catalogusapparaten zijn.</translation>
     </message>
     <message>
-        <location line="-332"/>
-        <location line="+62"/>
+        <location line="-335"/>
+        <location line="+65"/>
         <source>Replicate</source>
         <translation>Repliceren</translation>
     </message>
     <message>
-        <location line="-61"/>
-        <location line="+344"/>
+        <location line="-64"/>
+        <location line="+347"/>
         <source>%1 not available</source>
         <translation>%1 niet beschikbaar</translation>
     </message>
     <message>
-        <location line="-333"/>
-        <location line="+90"/>
+        <location line="-336"/>
+        <location line="+93"/>
         <location line="+255"/>
         <source>A catalog update is already in progress. Please wait and try again.</source>
         <translation>Er is al een catalogusupdate bezig. Wacht even en probeer opnieuw.</translation>
@@ -6094,7 +6106,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Koppeling bewerken</translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+61"/>
         <source>Save</source>
         <translation>Opslaan</translation>
     </message>
@@ -6104,7 +6116,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Annuleren</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+56"/>
         <source>Name</source>
         <translation>Naam</translation>
     </message>
@@ -6134,7 +6146,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Archief</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="-54"/>
         <source>Source</source>
         <translation>Bron</translation>
     </message>
@@ -6159,7 +6171,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Opties</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+39"/>
         <source>Strict copy</source>
         <translation>Strikte kopie</translation>
     </message>
@@ -6192,6 +6204,16 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <location line="+1"/>
         <source>Scan source drive directly (requires connected source)</source>
         <translation>Bronstation rechtstreeks scannen (vereist verbonden bron)</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Directories</source>
+        <translation>Mappen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Include empty</source>
+        <translation>Lege opnemen</translation>
     </message>
 </context>
 <context>

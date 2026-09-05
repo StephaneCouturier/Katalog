@@ -4129,6 +4129,7 @@ QVariantList AppManager::getBackupMappings(const QString &filterType, int device
         map[QStringLiteral("strictCopy")]          = m.strictCopy;
         map[QStringLiteral("conflictMode")]        = conflictModeToString(m.conflictMode);
         map[QStringLiteral("sourceDrive")]         = m.sourceDrive;
+        map[QStringLiteral("includeEmptyDirs")]    = m.includeEmptyDirs;
         map[QStringLiteral("lastBackupDate")]      = m.lastBackupDate;
         map[QStringLiteral("lastBackupSize")]      = m.lastBackupSize;
         map[QStringLiteral("lastBackupSizeStr")]   = QLocale().formattedDataSize(m.lastBackupSize);
@@ -4165,7 +4166,7 @@ QVariantMap AppManager::getBackupTotals(const QString &filterType, int deviceId,
 //----------------------------------------------------------------------
 QString AppManager::createBackupMapping(const QString &name, const QString &type,
     int sourceId, int targetId, bool strictCopy,
-    const QString &conflictMode, bool sourceDrive)
+    const QString &conflictMode, bool sourceDrive, bool includeEmptyDirs)
 {
     if (name.trimmed().isEmpty())
         return tr("Provide a link name.");
@@ -4177,7 +4178,7 @@ QString AppManager::createBackupMapping(const QString &name, const QString &type
         return tr("Select a different source or target (a device shall not be mapped to itself).");
 
     BackupMappingManager manager(m_connectionName);
-    if (!manager.createMapping(name.trimmed(), type, sourceId, targetId, strictCopy, conflictMode, sourceDrive))
+    if (!manager.createMapping(name.trimmed(), type, sourceId, targetId, strictCopy, conflictMode, sourceDrive, includeEmptyDirs))
         return tr("Failed to create link.");
 
     collection->saveMappingTableToFile();
@@ -4187,7 +4188,7 @@ QString AppManager::createBackupMapping(const QString &name, const QString &type
 //----------------------------------------------------------------------
 QString AppManager::updateBackupMapping(int mappingId, const QString &name, const QString &type,
     int sourceId, int targetId, bool strictCopy,
-    const QString &conflictMode, bool sourceDrive)
+    const QString &conflictMode, bool sourceDrive, bool includeEmptyDirs)
 {
     if (name.trimmed().isEmpty())
         return tr("Provide a link name.");
@@ -4199,7 +4200,7 @@ QString AppManager::updateBackupMapping(int mappingId, const QString &name, cons
         return tr("Select a different source or target (a device shall not be mapped to itself).");
 
     BackupMappingManager manager(m_connectionName);
-    if (!manager.updateMapping(mappingId, name.trimmed(), type, sourceId, targetId, strictCopy, conflictMode, sourceDrive))
+    if (!manager.updateMapping(mappingId, name.trimmed(), type, sourceId, targetId, strictCopy, conflictMode, sourceDrive, includeEmptyDirs))
         return tr("Failed to update link.");
 
     collection->saveMappingTableToFile();
@@ -4452,13 +4453,13 @@ void AppManager::executeBackupJob(int mappingId)
     if (mapping.sourceDrive) {
         //Drive mode: walk the source filesystem directly
         DirectoryReplicator replicator(m_connectionName);
-        replicator.replicateFromDrive(sourceDevice.path, targetDevice.path);
+        replicator.replicateFromDrive(sourceDevice.path, targetDevice.path, mapping.includeEmptyDirs);
     } else {
         //Catalog mode: replicate from the folder table (includes empty directories)
         if (collection->databaseMode == QLatin1String("Memory"))
             sourceDevice.catalog->loadFoldersToTable();
         DirectoryReplicator replicator(m_connectionName);
-        replicator.replicate({sourceDevice.externalID}, sourceDevice.path, targetDevice.path);
+        replicator.replicate({sourceDevice.externalID}, sourceDevice.path, targetDevice.path, mapping.includeEmptyDirs);
     }
 
     CatalogDifferenceEngine cmpEngine(m_connectionName);
@@ -4618,11 +4619,11 @@ QVariantMap AppManager::replicateDirectories(int mappingId)
     DirectoryReplicator replicator(m_connectionName);
     ReplicationResult repResult;
     if (mapping.sourceDrive) {
-        repResult = replicator.replicateFromDrive(sourceDevice.path, targetDevice.path);
+        repResult = replicator.replicateFromDrive(sourceDevice.path, targetDevice.path, mapping.includeEmptyDirs);
     } else {
         if (collection->databaseMode == QLatin1String("Memory"))
             sourceDevice.catalog->loadFoldersToTable();
-        repResult = replicator.replicate({sourceDevice.externalID}, sourceDevice.path, targetDevice.path);
+        repResult = replicator.replicate({sourceDevice.externalID}, sourceDevice.path, targetDevice.path, mapping.includeEmptyDirs);
     }
 
     result[QStringLiteral("error")]   = QString();

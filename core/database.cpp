@@ -427,6 +427,7 @@ QString Database::getSQLCreateTableBackupMapping(DatabaseType databaseType)
                     mapping_strict_copy                   INTEGER DEFAULT 1,
                     mapping_conflict_mode                 TEXT DEFAULT 'RenameOldest',
                     mapping_source_mode                   TEXT DEFAULT 'Catalog',
+                    mapping_include_empty_dirs            INTEGER DEFAULT 1,
                     mapping_source_collection             TEXT)
             )").arg(autoIncrementSyntax, largeNumeric);
 }
@@ -1280,6 +1281,27 @@ QSqlError Database::ensureDeviceCommentColumn(const QString &connectionName)
             "ALTER TABLE device ADD COLUMN device_comment TEXT");
         if (err.type() != QSqlError::NoError) {
             qWarning() << "WARNING: Failed to add device_comment column:" << err.text();
+            return err;
+        }
+    }
+    return QSqlError();
+}
+//----------------------------------------------------------------------
+
+QSqlError Database::ensureMappingIncludeEmptyDirsColumn(const QString &connectionName)
+{
+    // Unconditional column guard rather than a step inside runMigration_2_13: the
+    // field was added to the 2.13 cycle after databases had already been stamped
+    // 2.13, so the versioned migration no longer runs for them and the column
+    // would never appear. Default 1 keeps every existing mapping replicating empty
+    // directories, the behaviour specified before the option existed
+    // (SpecBackup.md BKP-F17, BKP-C9).
+    QStringList mappingColumns = getTableColumns(connectionName, "device_mapping");
+    if (!mappingColumns.contains("mapping_include_empty_dirs")) {
+        QSqlError err = executeSql(connectionName,
+            "ALTER TABLE device_mapping ADD COLUMN mapping_include_empty_dirs INTEGER DEFAULT 1");
+        if (err.type() != QSqlError::NoError) {
+            qWarning() << "WARNING: Failed to add mapping_include_empty_dirs column:" << err.text();
             return err;
         }
     }
