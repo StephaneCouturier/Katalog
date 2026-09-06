@@ -87,6 +87,12 @@ qt_add_qml_module(Katalog3
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.
 set_target_properties(Katalog3 PROPERTIES
+    # The shipped program is called Katalog: Katalog 3 IS Katalog, and the "3" is a
+    # transition marker, the same way the pre-release settings file carries one and drops
+    # it at release (AppManager). Only the cmake target keeps the suffix, because
+    # qt_widgets already declares a target named Katalog and two targets cannot share a
+    # name if both variants are ever enabled in one tree.
+    OUTPUT_NAME "Katalog"
 #    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.Katalog3
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}

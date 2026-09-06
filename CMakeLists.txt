@@ -53,10 +53,13 @@ add_subdirectory(core)
 # Shared translation sources
 add_subdirectory(translations)
 
-# Variants — build one at a time
-option(BUILD_QT_WIDGETS "Build Katalog2 - QtWidgets/KF6 desktop" ON)
-option(BUILD_QT_QUICK   "Build Katalog3 - QtQuick/KF6 desktop"   OFF)
-option(BUILD_WEB_SERVER  "Build KatalogWeb - REST API server"    OFF)
+# Variants — build one at a time.
+# Katalog 3 is the default: it is the version under active development and the one that
+# will ship as Katalog. Katalog 2 stays available and is built by passing
+# -DBUILD_QT_WIDGETS=ON -DBUILD_QT_QUICK=OFF.
+option(BUILD_QT_WIDGETS "Build Katalog2 - QtWidgets/KF6 desktop" OFF)
+option(BUILD_QT_QUICK   "Build Katalog3 - QtQuick/KF6 desktop"   ON)
+# option(BUILD_WEB_SERVER  "Build KatalogWeb - REST API server"    OFF)
 
 if(BUILD_QT_WIDGETS)
     add_subdirectory(qt_widgets)
