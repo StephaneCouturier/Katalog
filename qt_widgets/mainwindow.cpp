@@ -112,6 +112,17 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
         //Set up the User Interface
             ui->setupUi(this);
 
+            // On Linux, override the mainwindow.ui window icon with the 256px
+            // master. The icon is handed to the Wayland compositor as an
+            // xdg-toplevel-icon buffer, and the .ico's 16x16 entry is upscaled
+            // into the titlebar slot, which renders with a black rim: qtwayland
+            // fills those buffers with straight alpha while declaring them
+            // premultiplied. The .ui value is kept: it stays the Windows and
+            // macOS icon. See SpecApplicationIcon.md (ICO-C1, ICO-C3).
+#ifdef Q_OS_LINUX
+            setWindowIcon(QIcon(":/images/Katalog_logo_256.png"));
+#endif
+
             // Add Quit shortcut
             QShortcut *quitShortcut = new QShortcut(QKeySequence::Quit, this);
             connect(quitShortcut, &QShortcut::activated, qApp, &QApplication::quit);

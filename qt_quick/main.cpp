@@ -34,7 +34,17 @@ int main(int argc, char *argv[])
 #endif
 
     //Set the application icon
+    // On Linux the window icon is handed to the Wayland compositor as an
+    // xdg-toplevel-icon buffer. The .ico offers a 16x16 entry, which the
+    // compositor upscales into the titlebar slot and so renders with a black
+    // rim: qtwayland fills those buffers with straight alpha while declaring
+    // them premultiplied. The single 256px master is downscaled instead, which
+    // averages the defect away. See SpecApplicationIcon.md (ICO-C1).
+#ifdef Q_OS_LINUX
+    app.setWindowIcon(QIcon(":/images/Katalog_logo_256.png"));
+#else
     app.setWindowIcon(QIcon(":/images/Katalog_logo_64.ico"));
+#endif
 
     // Icon theme setup — mirrors K2 platform-specific behaviour.
     // On Linux, the system KDE theme provides icons for QML icon.name;
