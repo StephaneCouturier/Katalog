@@ -256,6 +256,11 @@ void SearchJobStoppable::searchFiles(Device *selectedDevice)
     }
 
     if (!shouldContinue()) {
+        // A stopped search still displays the rows gathered so far, so the
+        // owning devices must be resolved here too — otherwise fileDeviceIDs
+        // stays empty and every partial row would read as "no device" and open
+        // unguarded (SpecDeviceActiveStatus.md DAS-F11).
+        rebuildDeviceIDs();
         emit searchProgress(-1); // Indicate interruption
         return;
     }
@@ -280,6 +285,12 @@ void SearchJobStoppable::searchFiles(Device *selectedDevice)
         (differencesOnName || differencesOnSize || differencesOnDate || differencesOnChecksum)) {
         processDifferences(m_connectionName);
     }
+
+    // Resolve the owning device for every result row. Deliberately here and not
+    // in processResults(): the duplicates and differences passes above REPLACE
+    // the result arrays after processResults() has run, so this is the only
+    // point where fileCatalogIDs is final (SpecDeviceActiveStatus.md DAS-F11).
+    rebuildDeviceIDs();
 
     // Calculate statistics
     calculateStatistics();

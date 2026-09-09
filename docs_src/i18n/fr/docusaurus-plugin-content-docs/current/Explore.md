@@ -71,7 +71,7 @@ Un clic droit sur une entrée dans le panneau droit affiche un menu contextuel q
 
 | Action | Description |
 |--------|-------------|
-| *Ouvrir le fichier* | Ouvre le fichier avec l'application par défaut du système |
+| *Ouvrir le fichier* | Ouvre le fichier avec l'application par défaut du système. Si le périphérique exploré n'est pas connecté, un avertissement s'affiche et le fichier n'est pas ouvert. |
 | *Ouvrir le dossier* | Ouvre le dossier parent du fichier dans le gestionnaire de fichiers |
 | *Afficher les métadonnées étendues (JSON)* | Affiche les métadonnées détaillées (disponible uniquement si le catalogue a été indexé avec les métadonnées étendues) |
 | *Copier le chemin du dossier* | Copie le chemin du dossier parent dans le presse-papiers |

@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+166"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4004"/>
+        <location line="+4071"/>
         <source>Search</source>
         <translation>Keresés</translation>
     </message>
     <message>
-        <location line="-4124"/>
+        <location line="-4191"/>
         <source>Stopped</source>
         <translation>Leállítva</translation>
     </message>
@@ -44,8 +44,8 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+1813"/>
-        <location line="+528"/>
+        <location line="+1878"/>
+        <location line="+530"/>
         <location line="+20"/>
         <location line="+1213"/>
         <location line="+11"/>
@@ -55,14 +55,14 @@
         <translation>Folyamatban</translation>
     </message>
     <message>
-        <location line="-4005"/>
-        <location line="+3612"/>
+        <location line="-4072"/>
+        <location line="+3679"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Befejezve</translation>
     </message>
     <message>
-        <location line="-3257"/>
+        <location line="-3324"/>
         <source>Empty database path provided</source>
         <translation>Üres adatbázis-elérési út lett megadva</translation>
     </message>
@@ -102,7 +102,7 @@
         <translation>Helyi lemez</translation>
     </message>
     <message>
-        <location line="+382"/>
+        <location line="+447"/>
         <source>search_results</source>
         <translation>keresesi_eredmenyek</translation>
     </message>
@@ -148,12 +148,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2411"/>
+        <location line="+2413"/>
         <source>Size</source>
         <translation>Méret</translation>
     </message>
     <message>
-        <location line="-2410"/>
+        <location line="-2412"/>
         <source>Date</source>
         <translation>Dátum</translation>
     </message>
@@ -247,12 +247,12 @@ Válasszon másik nevet, és próbálja újra.</translation>
     </message>
     <message>
         <location line="+85"/>
-        <location line="+527"/>
+        <location line="+529"/>
         <source>Create</source>
         <translation>Létrehozás</translation>
     </message>
     <message>
-        <location line="-434"/>
+        <location line="-436"/>
         <source>Catalog creation was stopped.</source>
         <translation>A katalógus létrehozása leállt.</translation>
     </message>
@@ -273,7 +273,7 @@ Válasszon másik nevet, és próbálja újra.</translation>
         <translation>Törlés sikertelen</translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+74"/>
         <source>Virtual</source>
         <translation>Virtuális</translation>
     </message>
@@ -653,7 +653,7 @@ Válasszon másik nevet.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2530"/>
+        <location filename="../core/collection.cpp" line="+2597"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Ez a mappa memória módú gyűjteményfájlokat tartalmaz, de jelenleg fájl módban van.&lt;br/&gt;Váltson memória módra, vagy válasszon másik mappát.</translation>
     </message>
@@ -1543,7 +1543,7 @@ Mindenképpen menti (a katalógus üres lesz)?</translation>
         <location filename="../qt_widgets/mainwindow.ui" line="-5542"/>
         <location line="+737"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1383"/>
-        <location filename="../core/search.cpp" line="+246"/>
+        <location filename="../core/search.cpp" line="+248"/>
         <source>Checksum</source>
         <translation>Ellenőrző összeg</translation>
     </message>
@@ -1671,7 +1671,7 @@ Mindenképpen menti (a katalógus üres lesz)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+313"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-210"/>
         <location line="+154"/>
-        <location filename="../core/searchjobstoppable.cpp" line="+430"/>
+        <location filename="../core/searchjobstoppable.cpp" line="+441"/>
         <source>File Types Updated</source>
         <translation>Fájltípusok frissítve</translation>
     </message>
@@ -1994,7 +1994,7 @@ Mindenképpen menti (a katalógus üres lesz)?</translation>
         <translation>Teljes bővített</translation>
     </message>
     <message>
-        <location filename="../core/device.cpp" line="+660"/>
+        <location filename="../core/device.cpp" line="+683"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
         <translation>Szeretné &lt;span style=&apos;color: red&apos;;&gt;törölni&lt;/span&gt; ezt a %1 eszközt?</translation>
     </message>
@@ -7097,7 +7097,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageExploreFiles</name>
     <message>
-        <location filename="../qt_quick/PageExploreFiles.qml" line="+70"/>
+        <location filename="../qt_quick/PageExploreFiles.qml" line="+78"/>
+        <source>The device is not active. It may be disconnected, or its path may have changed.</source>
+        <translation>Az eszköz nem aktív. Lehet, hogy le van választva, vagy megváltozott az elérési útja.</translation>
+    </message>
+    <message>
+        <location line="+18"/>
         <source>No folder selected</source>
         <translation>Nincs kiválasztott mappa</translation>
     </message>
@@ -7671,7 +7676,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageSearchResultsForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+109"/>
+        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+135"/>
         <source>%1 duplicate(s) found</source>
         <translation>%1 másodpéldány található</translation>
     </message>
@@ -7712,7 +7717,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+681"/>
+        <location line="+683"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Ellenőrző összegek ellenőrzése</translation>
@@ -7724,25 +7729,30 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Metaadatok befoglalása</translation>
     </message>
     <message>
-        <location line="-732"/>
-        <location line="+519"/>
+        <location line="-734"/>
+        <location line="+521"/>
         <location line="+158"/>
         <source>Move to Trash</source>
         <translation>Lomtárba helyezés</translation>
     </message>
     <message>
-        <location line="-678"/>
+        <location line="-807"/>
+        <source>The device is not active. It may be disconnected, or its path may have changed.</source>
+        <translation>Az eszköz nem aktív. Lehet, hogy le van választva, vagy megváltozott az elérési útja.</translation>
+    </message>
+    <message>
+        <location line="+127"/>
         <source>Extract Metadata</source>
         <translation>Metaadatok kinyerése</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+637"/>
+        <location line="+639"/>
         <source>Delete</source>
         <translation>Törlés</translation>
     </message>
     <message>
-        <location line="-579"/>
+        <location line="-581"/>
         <source>Exported to: %1</source>
         <translation>Exportálva ide: %1</translation>
     </message>
@@ -7762,7 +7772,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Az exportálás sikertelen — nincs eredmény vagy adatbázishiba</translation>
     </message>
     <message>
-        <location line="+304"/>
+        <location line="+306"/>
         <source>(no selection)</source>
         <translation>(nincs kijelölés)</translation>
     </message>

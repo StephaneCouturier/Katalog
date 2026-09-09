@@ -46,6 +46,32 @@ ColumnLayout {
         return String(h).padStart(2, '0') + ":" + String(m).padStart(2, '0') + ":" + String(sec).padStart(2, '0')
     }
 
+    // Refuse-and-inform when the row's device is not reachable, instead of
+    // handing the path to the desktop environment and letting it report a
+    // generic "does not exist" (SpecDeviceActiveStatus.md DAS-O7 / DAS-F11).
+    function openRowFile(row, path) {
+        deviceInactiveMessage.visible = !appManager1.searchRowDeviceIsActive(row)
+        if (deviceInactiveMessage.visible)
+            return
+        appManager1.openFile(path)
+    }
+    function openRowFolder(row, path) {
+        deviceInactiveMessage.visible = !appManager1.searchRowDeviceIsActive(row)
+        if (deviceInactiveMessage.visible)
+            return
+        appManager1.openFolder(path)
+    }
+
+    Kirigami.InlineMessage {
+        id: deviceInactiveMessage
+        Layout.fillWidth: true
+        Layout.margins: Kirigami.Units.smallSpacing
+        type: Kirigami.MessageType.Warning
+        showCloseButton: true
+        visible: false
+        text: qsTr("The device is not active. It may be disconnected, or its path may have changed.")
+    }
+
     // ── Device path ──────────────────────────────────────────────────────
     Rectangle {
         Layout.fillWidth: true
@@ -357,7 +383,7 @@ ColumnLayout {
                         case  2: return 140  // Date
                         case  3: return 320  // Directory
                         case  4: return 140  // Catalog Name
-                        case  5: return 80   // Catalog ID
+                        case  5: return 0    // Catalog ID (hidden — used by the code, not shown)
                         case  6: return 0    // orderValue (hidden)
                         case  7: return 0    // Path (hidden)
                         case  8: return 80   // File Type
@@ -477,7 +503,7 @@ ColumnLayout {
                                 var lm = appManager1.searchSortModel
                                 let lFileName = String(lm.data(lm.index(row, 0), Qt.DisplayRole) ?? "")
                                 let lFolder   = String(lm.data(lm.index(row, 3), Qt.DisplayRole) ?? "")
-                                appManager1.openFile(lFolder + "/" + lFileName)
+                                pageSearchResults_column.openRowFile(row, lFolder + "/" + lFileName)
                             }
                             if (mouse.button === Qt.RightButton)
                                 openResultContextMenu()
@@ -530,8 +556,10 @@ ColumnLayout {
         property string checksum:    ""
         property int    catalogId:   -1
         property string catalogName: ""
+        property int    row:         -1
 
         function openForRow(r, name, dir, cksum, catId, catName) {
+            row         = r
             fileName    = name
             folder      = dir
             fullPath    = dir + "/" + name
@@ -551,13 +579,13 @@ ColumnLayout {
             text: qsTr("Open file")
             icon.name: "document-open"
             enabled: resultContextMenu.fileName !== ""
-            onTriggered: appManager1.openFile(resultContextMenu.fullPath)
+            onTriggered: pageSearchResults_column.openRowFile(resultContextMenu.row, resultContextMenu.fullPath)
         }
         Controls.MenuItem {
             text: qsTr("Open folder")
             icon.name: "document-open"
             enabled: resultContextMenu.folder !== ""
-            onTriggered: appManager1.openFolder(resultContextMenu.folder)
+            onTriggered: pageSearchResults_column.openRowFolder(resultContextMenu.row, resultContextMenu.folder)
         }
         Controls.MenuItem {
             text: qsTr("Explore folder")

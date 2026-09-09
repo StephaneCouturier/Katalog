@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+166"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4004"/>
+        <location line="+4071"/>
         <source>Search</source>
         <translation>搜索</translation>
     </message>
     <message>
-        <location line="-4124"/>
+        <location line="-4191"/>
         <source>Stopped</source>
         <translation>已停止</translation>
     </message>
@@ -44,8 +44,8 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+1813"/>
-        <location line="+528"/>
+        <location line="+1878"/>
+        <location line="+530"/>
         <location line="+20"/>
         <location line="+1213"/>
         <location line="+11"/>
@@ -55,14 +55,14 @@
         <translation>进行中</translation>
     </message>
     <message>
-        <location line="-4005"/>
-        <location line="+3612"/>
+        <location line="-4072"/>
+        <location line="+3679"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>已完成</translation>
     </message>
     <message>
-        <location line="-3257"/>
+        <location line="-3324"/>
         <source>Empty database path provided</source>
         <translation>提供的数据库路径为空</translation>
     </message>
@@ -102,7 +102,7 @@
         <translation>本地磁盘</translation>
     </message>
     <message>
-        <location line="+382"/>
+        <location line="+447"/>
         <source>search_results</source>
         <translation>搜索结果</translation>
     </message>
@@ -148,12 +148,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2411"/>
+        <location line="+2413"/>
         <source>Size</source>
         <translation>大小</translation>
     </message>
     <message>
-        <location line="-2410"/>
+        <location line="-2412"/>
         <source>Date</source>
         <translation>日期</translation>
     </message>
@@ -247,12 +247,12 @@ Choose a different name and try again.</source>
     </message>
     <message>
         <location line="+85"/>
-        <location line="+527"/>
+        <location line="+529"/>
         <source>Create</source>
         <translation>创建</translation>
     </message>
     <message>
-        <location line="-434"/>
+        <location line="-436"/>
         <source>Catalog creation was stopped.</source>
         <translation>目录创建已停止。</translation>
     </message>
@@ -273,7 +273,7 @@ Choose a different name and try again.</source>
         <translation>删除失败</translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+74"/>
         <source>Virtual</source>
         <translation>虚拟</translation>
     </message>
@@ -653,7 +653,7 @@ Choose a different name.</source>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2530"/>
+        <location filename="../core/collection.cpp" line="+2597"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>此文件夹包含内存模式的收藏文件，但您当前处于文件模式。&lt;br/&gt;切换到内存模式或选择其他文件夹。</translation>
     </message>
@@ -1543,7 +1543,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow.ui" line="-5542"/>
         <location line="+737"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1383"/>
-        <location filename="../core/search.cpp" line="+246"/>
+        <location filename="../core/search.cpp" line="+248"/>
         <source>Checksum</source>
         <translation>校验和</translation>
     </message>
@@ -1671,7 +1671,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+313"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-210"/>
         <location line="+154"/>
-        <location filename="../core/searchjobstoppable.cpp" line="+430"/>
+        <location filename="../core/searchjobstoppable.cpp" line="+441"/>
         <source>File Types Updated</source>
         <translation>文件类型已更新</translation>
     </message>
@@ -1994,7 +1994,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>完整扩展</translation>
     </message>
     <message>
-        <location filename="../core/device.cpp" line="+660"/>
+        <location filename="../core/device.cpp" line="+683"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
         <translation>您要&lt;span style=&apos;color: red&apos;;&gt;删除&lt;/span&gt;这个 %1 设备吗？</translation>
     </message>
@@ -7098,7 +7098,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageExploreFiles</name>
     <message>
-        <location filename="../qt_quick/PageExploreFiles.qml" line="+70"/>
+        <location filename="../qt_quick/PageExploreFiles.qml" line="+78"/>
+        <source>The device is not active. It may be disconnected, or its path may have changed.</source>
+        <translation>设备未激活。它可能已断开连接，或者其路径已更改。</translation>
+    </message>
+    <message>
+        <location line="+18"/>
         <source>No folder selected</source>
         <translation>未选择文件夹</translation>
     </message>
@@ -7672,7 +7677,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageSearchResultsForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+109"/>
+        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+135"/>
         <source>%1 duplicate(s) found</source>
         <translation>找到 %1 个重复项</translation>
     </message>
@@ -7713,7 +7718,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+681"/>
+        <location line="+683"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>验证校验和</translation>
@@ -7725,25 +7730,30 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>包括元数据</translation>
     </message>
     <message>
-        <location line="-732"/>
-        <location line="+519"/>
+        <location line="-734"/>
+        <location line="+521"/>
         <location line="+158"/>
         <source>Move to Trash</source>
         <translation>移动到回收站</translation>
     </message>
     <message>
-        <location line="-678"/>
+        <location line="-807"/>
+        <source>The device is not active. It may be disconnected, or its path may have changed.</source>
+        <translation>设备未激活。它可能已断开连接，或者其路径已更改。</translation>
+    </message>
+    <message>
+        <location line="+127"/>
         <source>Extract Metadata</source>
         <translation>提取元数据</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+637"/>
+        <location line="+639"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location line="-579"/>
+        <location line="-581"/>
         <source>Exported to: %1</source>
         <translation>已导出到：%1</translation>
     </message>
@@ -7763,7 +7773,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>导出失败 — 无结果或数据库错误</translation>
     </message>
     <message>
-        <location line="+304"/>
+        <location line="+306"/>
         <source>(no selection)</source>
         <translation>（无选择）</translation>
     </message>

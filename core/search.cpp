@@ -188,6 +188,7 @@ QVariant Search::data(const QModelIndex &index, int role) const
     case TitleRole:       return (row < audioTitles.size())   ? QString(audioTitles[row])   : QString("");
     case ChecksumRole:    return (row < checksumSha256s.size())         ? QString(checksumSha256s[row])         : QString("");
     case ChecksumDateRole:return (row < checksumExtractionDates.size()) ? QString(checksumExtractionDates[row]) : QString("");
+    case DeviceIdRole:    return int(fileDeviceIDs.value(row, 0));
     }
     return QVariant();
 }
@@ -216,6 +217,7 @@ QHash<int, QByteArray> Search::roleNames() const
     roles[TitleRole]        = "title";
     roles[ChecksumRole]     = "checksum";
     roles[ChecksumDateRole] = "checksumDate";
+    roles[DeviceIdRole]     = "deviceId";
     return roles;
 }
 
@@ -429,6 +431,46 @@ void Search::setMultipliers()
         sizeMultiplierMax = qint64(1024) * 1024 * 1024 * 1024;
 }
 
+// Resolves a catalog ID to the device that carries it. Memoised through `cache`
+// so a result set spanning N rows over a handful of catalogs costs one query per
+// catalog, not one per row.
+static int deviceIDForCatalog(const QString &connectionName, int catalogID, QHash<int,int> &cache)
+{
+    if (catalogID == 0)
+        return 0;
+
+    const auto cached = cache.constFind(catalogID);
+    if (cached != cache.constEnd())
+        return cached.value();
+
+    QSqlQuery query(QSqlDatabase::database(connectionName));
+    query.prepare(QLatin1String(R"(
+        SELECT device_id
+        FROM device
+        WHERE device_external_id = :catalog_id
+        AND device_type = 'Catalog'
+    )"));
+    query.bindValue(":catalog_id", catalogID);
+    query.exec();
+
+    int deviceID = 0;
+    if (query.next())
+        deviceID = query.value(0).toInt();
+
+    cache.insert(catalogID, deviceID);
+    return deviceID;
+}
+
+void Search::rebuildDeviceIDs()
+{
+    fileDeviceIDs.clear();
+    fileDeviceIDs.reserve(fileCatalogIDs.size());
+
+    QHash<int,int> cache;
+    for (int catalogID : std::as_const(fileCatalogIDs))
+        fileDeviceIDs.append(deviceIDForCatalog(m_connectionName, catalogID, cache));
+}
+
 void Search::processResults()
 {
     // Process search results: list of catalogs with results
@@ -447,26 +489,12 @@ void Search::processResults()
     }
 
     // Add each unique catalog to the model
+    QHash<int,int> deviceIDCache;
     for (auto it = uniqueCatalogs.begin(); it != uniqueCatalogs.end(); ++it) {
         int catalogID = it.key();
         QString catalogName = it.value();
 
-        // Query the device table to get the device ID for this catalog
-        QSqlQuery query(QSqlDatabase::database(m_connectionName));
-        QString querySQL = QLatin1String(R"(
-            SELECT device_id
-            FROM device
-            WHERE device_external_id = :catalog_id
-            AND device_type = 'Catalog'
-        )");
-        query.prepare(querySQL);
-        query.bindValue(":catalog_id", catalogID);
-        query.exec();
-
-        int deviceID = 0;
-        if (query.next()) {
-            deviceID = query.value(0).toInt();
-        }
+        int deviceID = deviceIDForCatalog(m_connectionName, catalogID, deviceIDCache);
 
         QList<QStandardItem*> rowItems;
         QStandardItem* nameItem = new QStandardItem(catalogName);
@@ -1014,6 +1042,7 @@ void Search::clearResults()
     filePaths.clear();
     fileCatalogs.clear();
     fileCatalogIDs.clear();
+    fileDeviceIDs.clear();
     filesFoundList.clear();
     deviceFoundIDList.clear();
     deviceFoundModel->clear();

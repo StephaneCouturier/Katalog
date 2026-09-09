@@ -244,7 +244,7 @@ Kliknutím pravým tlačítkem na řádek výsledku se otevře kontextová nabí
 **Navigace:**
 | Akce | Popis |
 |------|-------|
-| *Otevřít soubor* | Otevře soubor výchozí aplikací systému |
+| *Otevřít soubor* | Otevře soubor výchozí aplikací systému. Pokud zařízení souboru není připojeno, zobrazí se upozornění a soubor se neotevře. |
 | *Otevřít složku* | Otevře nadřazenou složku souboru ve správci souborů |
 | *Prozkoumat složku* | Přejde do složky souboru na obrazovce [Prozkoumat](Explore) v Katalogu |
 

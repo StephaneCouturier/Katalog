@@ -71,7 +71,7 @@ Kliknutí pravým tlačítkem na položku v pravém panelu zobrazí kontextovou 
 
 | Akce | Popis |
 |------|-------|
-| *Otevřít soubor* | Otevře soubor výchozí aplikací systému |
+| *Otevřít soubor* | Otevře soubor výchozí aplikací systému. Pokud prozkoumávané zařízení není připojeno, zobrazí se upozornění a soubor se neotevře. |
 | *Otevřít složku* | Otevře nadřazenou složku souboru ve správci souborů |
 | *Zobrazit rozšířená metadata (JSON)* | Zobrazí podrobná metadata (k dispozici pouze pokud byl katalog indexován s rozšířenými metadaty) |
 | *Kopírovat cestu složky* | Zkopíruje cestu nadřazené složky do schránky |

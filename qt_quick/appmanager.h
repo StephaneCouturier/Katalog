@@ -422,6 +422,18 @@ public slots:
     // File / folder operations from results
     Q_INVOKABLE void    openFile(const QString &filePath);
     Q_INVOKABLE void    openFolder(const QString &folderPath);
+    // Probes ONE device path at the moment of the click, rather than reading the
+    // cached device_active, so a drive disconnected after the results were
+    // produced is still detected (SpecDeviceActiveStatus.md DAS-F12).
+    // deviceId <= 0 means the row has no device behind it (a connected-directory
+    // search browses a live folder), and is reported active.
+    Q_INVOKABLE bool    probeDeviceActive(int deviceId);
+    // Same probe for a Search results row. `row` is a row of the SORTED proxy and
+    // is resolved through it, never by indexing the result arrays, and the device
+    // is read by role name so no role number is hardcoded in QML.
+    Q_INVOKABLE bool    searchRowDeviceIsActive(int row);
+    // Same probe for the device the Explore page is currently showing.
+    Q_INVOKABLE bool    probeExploreDeviceActive();
     // Row of a device in the filtered Selection list, or -1 when it is not shown.
     // Lets the UI scroll to a device without hardcoding a role number.
     Q_INVOKABLE int     selectionRowForDevice(int deviceId) const;

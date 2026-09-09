@@ -244,7 +244,7 @@ Right-clicking on a result line opens a context menu:
 **Navigation:**
 | Action | Description |
 |--------|-------------|
-| *Open file* | Opens the file with the system's default application |
+| *Open file* | Opens the file with the system's default application. If the file's device is not connected, a warning is shown instead and the file is not opened. |
 | *Open folder* | Opens the file's parent folder in the file manager |
 | *Explore folder* | Navigates to the file's folder in Katalog's [Explore](Explore) screen |
 

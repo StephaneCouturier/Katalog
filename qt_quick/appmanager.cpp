@@ -1052,6 +1052,61 @@ void AppManager::openFolder(const QString &folderPath)
     QDesktopServices::openUrl(QUrl::fromLocalFile(folderPath));
 }
 //----------------------------------------------------------------------
+bool AppManager::probeDeviceActive(int deviceId)
+{
+    // No device behind this row, so there is nothing to probe and nothing to
+    // refuse: a connected-directory search reads a live folder directly.
+    if (deviceId <= 0)
+        return true;
+
+    // loadDevice() calls updateActiveState() internally — one QDir::exists() on
+    // this one path, and an UPDATE only when the value actually changed
+    // (DAS-C11). No other device is touched (DAS-F12).
+    Device device;
+    device.ID = deviceId;
+    device.catalog->setConnectionName(m_connectionName);
+    device.setConnectionName(m_connectionName);
+    device.loadDevice(m_connectionName);
+    return device.active;
+}
+//----------------------------------------------------------------------
+bool AppManager::searchRowDeviceIsActive(int row)
+{
+    if (!m_searchSortModel || row < 0)
+        return true;
+
+    // Resolve the role by name rather than by number, as selectionRowForDevice
+    // does: Search::Roles is an implementation detail and inserting an
+    // enumerator would silently shift any hardcoded Qt::UserRole + N.
+    const QHash<int, QByteArray> roles = m_searchSortModel->roleNames();
+    int deviceIdRole = -1;
+    for (auto it = roles.constBegin(); it != roles.constEnd(); ++it) {
+        if (it.value() == QByteArrayLiteral("deviceId")) {
+            deviceIdRole = it.key();
+            break;
+        }
+    }
+    if (deviceIdRole < 0)
+        return true;
+
+    // Read through the proxy so the sorted row maps to the right result.
+    const QModelIndex idx = m_searchSortModel->index(row, 0);
+    if (!idx.isValid())
+        return true;
+
+    return probeDeviceActive(m_searchSortModel->data(idx, deviceIdRole).toInt());
+}
+//----------------------------------------------------------------------
+bool AppManager::probeExploreDeviceActive()
+{
+    if (!exploreDevice || exploreDevice->ID <= 0)
+        return true;
+
+    // Already loaded, so re-probe in place rather than reloading the whole row.
+    exploreDevice->updateActiveState(m_connectionName);
+    return exploreDevice->active;
+}
+//----------------------------------------------------------------------
 int AppManager::selectionRowForDevice(int deviceId) const
 {
     if (!m_deviceFilterModel || deviceId <= 0)

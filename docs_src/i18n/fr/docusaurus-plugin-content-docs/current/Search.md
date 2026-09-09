@@ -244,7 +244,7 @@ Un clic droit sur une ligne de résultat ouvre un menu contextuel :
 **Navigation :**
 | Action | Description |
 |--------|-------------|
-| *Ouvrir le fichier* | Ouvre le fichier avec l'application par défaut du système |
+| *Ouvrir le fichier* | Ouvre le fichier avec l'application par défaut du système. Si le périphérique du fichier n'est pas connecté, un avertissement s'affiche et le fichier n'est pas ouvert. |
 | *Ouvrir le dossier* | Ouvre le dossier parent du fichier dans le gestionnaire de fichiers |
 | *Explorer le dossier* | Navigue vers le dossier du fichier dans l'écran [Explorer](Explore) de Katalog |
 

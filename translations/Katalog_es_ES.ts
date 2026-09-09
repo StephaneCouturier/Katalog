@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+166"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4004"/>
+        <location line="+4071"/>
         <source>Search</source>
         <translation>Buscar</translation>
     </message>
     <message>
-        <location line="-4124"/>
+        <location line="-4191"/>
         <source>Stopped</source>
         <translation>Detenido</translation>
     </message>
@@ -44,8 +44,8 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+1813"/>
-        <location line="+528"/>
+        <location line="+1878"/>
+        <location line="+530"/>
         <location line="+20"/>
         <location line="+1213"/>
         <location line="+11"/>
@@ -55,14 +55,14 @@
         <translation>En progreso</translation>
     </message>
     <message>
-        <location line="-4005"/>
-        <location line="+3612"/>
+        <location line="-4072"/>
+        <location line="+3679"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Completado</translation>
     </message>
     <message>
-        <location line="-3257"/>
+        <location line="-3324"/>
         <source>Empty database path provided</source>
         <translation>Se proporcionó una ruta de base de datos vacía</translation>
     </message>
@@ -102,7 +102,7 @@
         <translation>Disco local</translation>
     </message>
     <message>
-        <location line="+382"/>
+        <location line="+447"/>
         <source>search_results</source>
         <translation>resultados_busqueda</translation>
     </message>
@@ -148,12 +148,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2411"/>
+        <location line="+2413"/>
         <source>Size</source>
         <translation>Tamaño</translation>
     </message>
     <message>
-        <location line="-2410"/>
+        <location line="-2412"/>
         <source>Date</source>
         <translation>Fecha</translation>
     </message>
@@ -247,12 +247,12 @@ Elija un nombre diferente e inténtelo de nuevo.</translation>
     </message>
     <message>
         <location line="+85"/>
-        <location line="+527"/>
+        <location line="+529"/>
         <source>Create</source>
         <translation>Crear</translation>
     </message>
     <message>
-        <location line="-434"/>
+        <location line="-436"/>
         <source>Catalog creation was stopped.</source>
         <translation>Se detuvo la creación del catálogo.</translation>
     </message>
@@ -273,7 +273,7 @@ Elija un nombre diferente e inténtelo de nuevo.</translation>
         <translation>Error al eliminar</translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+74"/>
         <source>Virtual</source>
         <translation>Virtual</translation>
     </message>
@@ -653,7 +653,7 @@ Elija un nombre diferente.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2530"/>
+        <location filename="../core/collection.cpp" line="+2597"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Esta carpeta contiene archivos de colección en modo Memoria, pero actualmente está en modo Archivo.&lt;br/&gt;Cambie al modo Memoria o seleccione otra carpeta.</translation>
     </message>
@@ -1543,7 +1543,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location filename="../qt_widgets/mainwindow.ui" line="-5542"/>
         <location line="+737"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1383"/>
-        <location filename="../core/search.cpp" line="+246"/>
+        <location filename="../core/search.cpp" line="+248"/>
         <source>Checksum</source>
         <translation>Suma de verificación</translation>
     </message>
@@ -1691,7 +1691,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+313"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-210"/>
         <location line="+154"/>
-        <location filename="../core/searchjobstoppable.cpp" line="+430"/>
+        <location filename="../core/searchjobstoppable.cpp" line="+441"/>
         <source>File Types Updated</source>
         <translation>Tipos de archivo actualizados</translation>
     </message>
@@ -2014,7 +2014,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation>Completo extendido</translation>
     </message>
     <message>
-        <location filename="../core/device.cpp" line="+660"/>
+        <location filename="../core/device.cpp" line="+683"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
         <translation>¿Quieres &lt;span style=&apos;color: red&apos;;&gt;eliminar&lt;/span&gt; este dispositivo %1?</translation>
     </message>
@@ -7098,7 +7098,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageExploreFiles</name>
     <message>
-        <location filename="../qt_quick/PageExploreFiles.qml" line="+70"/>
+        <location filename="../qt_quick/PageExploreFiles.qml" line="+78"/>
+        <source>The device is not active. It may be disconnected, or its path may have changed.</source>
+        <translation>El dispositivo no está activo. Puede estar desconectado o su ruta puede haber cambiado.</translation>
+    </message>
+    <message>
+        <location line="+18"/>
         <source>No folder selected</source>
         <translation>Ninguna carpeta seleccionada</translation>
     </message>
@@ -7672,7 +7677,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageSearchResultsForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+109"/>
+        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+135"/>
         <source>%1 duplicate(s) found</source>
         <translation>%1 duplicado(s) encontrado(s)</translation>
     </message>
@@ -7713,7 +7718,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+681"/>
+        <location line="+683"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Verificar sumas de verificación</translation>
@@ -7725,25 +7730,30 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Incluir metadatos</translation>
     </message>
     <message>
-        <location line="-732"/>
-        <location line="+519"/>
+        <location line="-734"/>
+        <location line="+521"/>
         <location line="+158"/>
         <source>Move to Trash</source>
         <translation>Mover a la papelera</translation>
     </message>
     <message>
-        <location line="-678"/>
+        <location line="-807"/>
+        <source>The device is not active. It may be disconnected, or its path may have changed.</source>
+        <translation>El dispositivo no está activo. Puede estar desconectado o su ruta puede haber cambiado.</translation>
+    </message>
+    <message>
+        <location line="+127"/>
         <source>Extract Metadata</source>
         <translation>Extraer metadatos</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+637"/>
+        <location line="+639"/>
         <source>Delete</source>
         <translation>Eliminar</translation>
     </message>
     <message>
-        <location line="-579"/>
+        <location line="-581"/>
         <source>Exported to: %1</source>
         <translation>Exportado a: %1</translation>
     </message>
@@ -7763,7 +7773,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Error en la exportación — sin resultados o error de base de datos</translation>
     </message>
     <message>
-        <location line="+304"/>
+        <location line="+306"/>
         <source>(no selection)</source>
         <translation>(sin selección)</translation>
     </message>

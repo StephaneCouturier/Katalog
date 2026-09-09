@@ -71,7 +71,7 @@ Right-clicking on an entry in the right panel shows a context menu that adapts t
 
 | Action | Description |
 |--------|-------------|
-| *Open file* | Opens the file with the system's default application |
+| *Open file* | Opens the file with the system's default application. If the explored device is not connected, a warning is shown instead and the file is not opened. |
 | *Open folder* | Opens the file's parent folder in the system's file manager |
 | *Show extended metadata (JSON)* | Displays detailed metadata (available only if the catalog was indexed with extended metadata) |
 | *Copy folder path* | Copies the file's parent folder path to the clipboard |

@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+166"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4004"/>
+        <location line="+4071"/>
         <source>Search</source>
         <translation>Пошук</translation>
     </message>
     <message>
-        <location line="-4124"/>
+        <location line="-4191"/>
         <source>Stopped</source>
         <translation>Зупинено</translation>
     </message>
@@ -44,8 +44,8 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+1813"/>
-        <location line="+528"/>
+        <location line="+1878"/>
+        <location line="+530"/>
         <location line="+20"/>
         <location line="+1213"/>
         <location line="+11"/>
@@ -55,14 +55,14 @@
         <translation>Виконується</translation>
     </message>
     <message>
-        <location line="-4005"/>
-        <location line="+3612"/>
+        <location line="-4072"/>
+        <location line="+3679"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Завершено</translation>
     </message>
     <message>
-        <location line="-3257"/>
+        <location line="-3324"/>
         <source>Empty database path provided</source>
         <translation>Вказано порожній шлях до бази даних</translation>
     </message>
@@ -102,7 +102,7 @@
         <translation>Локальний диск</translation>
     </message>
     <message>
-        <location line="+382"/>
+        <location line="+447"/>
         <source>search_results</source>
         <translation>результати_пошуку</translation>
     </message>
@@ -148,12 +148,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2411"/>
+        <location line="+2413"/>
         <source>Size</source>
         <translation>Розмір</translation>
     </message>
     <message>
-        <location line="-2410"/>
+        <location line="-2412"/>
         <source>Date</source>
         <translation>Дата</translation>
     </message>
@@ -247,12 +247,12 @@ Choose a different name and try again.</source>
     </message>
     <message>
         <location line="+85"/>
-        <location line="+527"/>
+        <location line="+529"/>
         <source>Create</source>
         <translation>Створити</translation>
     </message>
     <message>
-        <location line="-434"/>
+        <location line="-436"/>
         <source>Catalog creation was stopped.</source>
         <translation>Створення каталогу зупинено.</translation>
     </message>
@@ -273,7 +273,7 @@ Choose a different name and try again.</source>
         <translation>Видалення не вдалося</translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+74"/>
         <source>Virtual</source>
         <translation>Віртуальний</translation>
     </message>
@@ -653,7 +653,7 @@ Choose a different name.</source>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2530"/>
+        <location filename="../core/collection.cpp" line="+2597"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Ця тека містить файли колекції в режимі пам&apos;яті, але ви зараз у режимі файлів.&lt;br/&gt;Перейдіть до режиму пам&apos;яті або виберіть іншу теку.</translation>
     </message>
@@ -1543,7 +1543,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow.ui" line="-5542"/>
         <location line="+737"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1383"/>
-        <location filename="../core/search.cpp" line="+246"/>
+        <location filename="../core/search.cpp" line="+248"/>
         <source>Checksum</source>
         <translation>Контрольна сума</translation>
     </message>
@@ -1671,7 +1671,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+313"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-210"/>
         <location line="+154"/>
-        <location filename="../core/searchjobstoppable.cpp" line="+430"/>
+        <location filename="../core/searchjobstoppable.cpp" line="+441"/>
         <source>File Types Updated</source>
         <translation>Типи файлів оновлено</translation>
     </message>
@@ -1994,7 +1994,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Повний Розширений</translation>
     </message>
     <message>
-        <location filename="../core/device.cpp" line="+660"/>
+        <location filename="../core/device.cpp" line="+683"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
         <translation>Чи хочете &lt;span style=&apos;color: red&apos;;&gt;видалити&lt;/span&gt; цей %1 пристрій?</translation>
     </message>
@@ -7098,7 +7098,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageExploreFiles</name>
     <message>
-        <location filename="../qt_quick/PageExploreFiles.qml" line="+70"/>
+        <location filename="../qt_quick/PageExploreFiles.qml" line="+78"/>
+        <source>The device is not active. It may be disconnected, or its path may have changed.</source>
+        <translation>Пристрій не активний. Можливо, його від'єднано або змінився його шлях.</translation>
+    </message>
+    <message>
+        <location line="+18"/>
         <source>No folder selected</source>
         <translation>Теку не вибрано</translation>
     </message>
@@ -7672,7 +7677,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageSearchResultsForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+109"/>
+        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+135"/>
         <source>%1 duplicate(s) found</source>
         <translation>Знайдено дублікатів: %1</translation>
     </message>
@@ -7713,7 +7718,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+681"/>
+        <location line="+683"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Перевірити контрольні суми</translation>
@@ -7725,25 +7730,30 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Включити метадані</translation>
     </message>
     <message>
-        <location line="-732"/>
-        <location line="+519"/>
+        <location line="-734"/>
+        <location line="+521"/>
         <location line="+158"/>
         <source>Move to Trash</source>
         <translation>Перемістити в кошик</translation>
     </message>
     <message>
-        <location line="-678"/>
+        <location line="-807"/>
+        <source>The device is not active. It may be disconnected, or its path may have changed.</source>
+        <translation>Пристрій не активний. Можливо, його від'єднано або змінився його шлях.</translation>
+    </message>
+    <message>
+        <location line="+127"/>
         <source>Extract Metadata</source>
         <translation>Витягти метадані</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+637"/>
+        <location line="+639"/>
         <source>Delete</source>
         <translation>Видалити</translation>
     </message>
     <message>
-        <location line="-579"/>
+        <location line="-581"/>
         <source>Exported to: %1</source>
         <translation>Експортовано до: %1</translation>
     </message>
@@ -7763,7 +7773,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Не вдалося експортувати — немає результатів або помилка бази даних</translation>
     </message>
     <message>
-        <location line="+304"/>
+        <location line="+306"/>
         <source>(no selection)</source>
         <translation>(немає вибору)</translation>
     </message>

@@ -79,7 +79,8 @@ public:
         AlbumRole         = Qt::UserRole + 18,
         TitleRole         = Qt::UserRole + 19,
         ChecksumRole      = Qt::UserRole + 20,
-        ChecksumDateRole  = Qt::UserRole + 21
+        ChecksumDateRole  = Qt::UserRole + 21,
+        DeviceIdRole      = Qt::UserRole + 22
     };
 
     // Internal constants
@@ -179,6 +180,12 @@ public:
     QList<QString> filePaths;
     QList<QString> fileCatalogs;
     QList<int> fileCatalogIDs;
+    // Device that owns each result row, aligned with fileCatalogIDs. Exposed to
+    // QML as the "deviceId" role only — it is deliberately not a display column,
+    // so columnCount() stays at 21 and the K2 view is unaffected
+    // (SpecDeviceActiveStatus.md DAS-F11). 0 means "no device": a connected-
+    // directory search browses a live folder and has no catalog behind it.
+    QList<int> fileDeviceIDs;
 
     QStringList fileTypes;
     QStringList mimeTypes;
@@ -238,6 +245,10 @@ public:
     void prepareSearchPatterns();
     void setMultipliers();
     void processResults();
+    // Fills fileDeviceIDs from fileCatalogIDs. Must run after the result arrays
+    // are final: duplicates and differences REPLACE them after processResults()
+    // has already run, so this is called at the end of the search instead.
+    void rebuildDeviceIDs();
     void calculateStatistics();
     virtual void processDuplicates(const QString &connectionName);
     virtual void processDifferences(const QString &connectionName);

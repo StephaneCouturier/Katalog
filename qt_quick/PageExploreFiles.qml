@@ -48,9 +48,35 @@ Item {
         root.folderTotalSize = stats.totalSize
     }
 
+    // Refuse-and-inform when the explored device is not reachable, instead of
+    // handing the path to the desktop environment and letting it report a
+    // generic "does not exist" (SpecDeviceActiveStatus.md DAS-O7 / DAS-F11).
+    function openEntryFile(path) {
+        deviceInactiveMessage.visible = !appManager1.probeExploreDeviceActive()
+        if (deviceInactiveMessage.visible)
+            return
+        appManager1.openFile(path)
+    }
+    function openEntryFolder(path) {
+        deviceInactiveMessage.visible = !appManager1.probeExploreDeviceActive()
+        if (deviceInactiveMessage.visible)
+            return
+        appManager1.openFolder(path)
+    }
+
     ColumnLayout {
         anchors.fill: parent
         spacing: 0
+
+        Kirigami.InlineMessage {
+            id: deviceInactiveMessage
+            Layout.fillWidth: true
+            Layout.margins: Kirigami.Units.smallSpacing
+            type: Kirigami.MessageType.Warning
+            showCloseButton: true
+            visible: false
+            text: qsTr("The device is not active. It may be disconnected, or its path may have changed.")
+        }
 
         // Header: current folder path + options. Fixed height, matching the
         // Selection page and the Explore directory tree.
@@ -326,7 +352,7 @@ Item {
                                 root.folderNavigated(fullPath)
                             }
                             if (mouse.button === Qt.LeftButton && entryType === "file") {
-                                appManager1.openFile(fullPath)
+                                root.openEntryFile(fullPath)
                             }
                             if (mouse.button === Qt.RightButton)
                                 openExploreContextMenu()
@@ -359,9 +385,9 @@ Item {
             icon.name: "document-open"
             onTriggered: {
                 if (root._activeEntryType === "folder")
-                    appManager1.openFolder(root._activeFilePath)
+                    root.openEntryFolder(root._activeFilePath)
                 else
-                    appManager1.openFile(root._activeFilePath)
+                    root.openEntryFile(root._activeFilePath)
             }
         }
 
@@ -370,7 +396,7 @@ Item {
             icon.name: "document-open-data"
             visible: root._activeEntryType === "file"
             height: visible ? implicitHeight : 0
-            onTriggered: appManager1.openFolder(root._activeFolderPath)
+            onTriggered: root.openEntryFolder(root._activeFolderPath)
         }
 
         Controls.MenuSeparator {}
