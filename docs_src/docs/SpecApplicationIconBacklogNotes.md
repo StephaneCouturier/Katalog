@@ -82,6 +82,18 @@ Conclusions drawn:
   `ICO-C1` is expressed as a minimum size rather than a ban on small icons in
   general: the defect only becomes visible when upscaling meets gradient edges.
 
+## Upstream report
+
+A bug report against qtwayland has been drafted covering the
+`Format_ARGB32` / `WL_SHM_FORMAT_ARGB8888` mismatch described above. It is held
+outside version control and is not part of this repository; ask the maintainer
+for it rather than looking for a tracked path.
+
+Katalog's mitigation stands regardless of whether that report is accepted:
+`ICO-C1` constrains only which buffer Katalog offers, and remains correct even
+after the upstream defect is fixed, because a 256 raster is the right thing to
+hand a compositor in either case.
+
 ## Standing note — the `.ico` filename is misleading
 
 `assets/Katalog_logo_64.ico` contains entries at 16, 32, 48 and 256. It contains

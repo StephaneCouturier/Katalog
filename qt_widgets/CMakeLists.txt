@@ -302,6 +302,18 @@ install(FILES ${CMAKE_SOURCE_DIR}/packaging/qt_widgets/io.github.stephanecouturi
     DESTINATION share/metainfo
     RENAME io.github.stephanecouturier.Katalog.metainfo.xml)
 
+# Application icon, installed at every size a desktop asks for so launchers and
+# the window manager find an exact match instead of rescaling the 256 master.
+# The size list is fixed by SpecApplicationIcon.md (ICO-F4); the files are
+# pre-generated PNGs, never a build-time conversion (ICO-C5).
+foreach(katalog_icon_size 16 22 24 32 48 64 128)
+    install(FILES ${CMAKE_SOURCE_DIR}/assets/icons/katalog_${katalog_icon_size}.png
+        DESTINATION share/icons/hicolor/${katalog_icon_size}x${katalog_icon_size}/apps
+        RENAME io.github.stephanecouturier.Katalog.png)
+endforeach()
+
+# The 256 entry is the master itself, which is also the Linux window icon
+# (ICO-F1) — kept as one file so a copy cannot drift from it.
 install(FILES ${CMAKE_SOURCE_DIR}/assets/Katalog_logo_256.png
     DESTINATION share/icons/hicolor/256x256/apps
     RENAME io.github.stephanecouturier.Katalog.png)

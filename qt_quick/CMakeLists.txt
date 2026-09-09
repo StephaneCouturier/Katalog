@@ -128,3 +128,28 @@ install(TARGETS Katalog3
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+
+# Desktop entry. K2 and K3 both install as bin/Katalog and deliberately share
+# one desktop entry and one application id — they are mutually exclusive
+# installs, so the K2 file is reused as-is rather than duplicated. Its
+# translated Name/GenericName/Comment/Keywords values must not be edited.
+# See SpecApplicationIcon.md (ICO-F3, ICO-C6, ICO-C7).
+install(FILES ${CMAKE_SOURCE_DIR}/packaging/qt_widgets/Katalog.desktop
+    DESTINATION share/applications
+    RENAME io.github.stephanecouturier.Katalog.desktop)
+
+# Application icon, installed at every size a desktop asks for so launchers and
+# the window manager find an exact match instead of rescaling the 256 master.
+# The size list is fixed by SpecApplicationIcon.md (ICO-F4); the files are
+# pre-generated PNGs, never a build-time conversion (ICO-C5).
+foreach(katalog_icon_size 16 22 24 32 48 64 128)
+    install(FILES ${CMAKE_SOURCE_DIR}/assets/icons/katalog_${katalog_icon_size}.png
+        DESTINATION share/icons/hicolor/${katalog_icon_size}x${katalog_icon_size}/apps
+        RENAME io.github.stephanecouturier.Katalog.png)
+endforeach()
+
+# The 256 entry is the master itself, which is also the Linux window icon
+# (ICO-F1) — kept as one file so a copy cannot drift from it.
+install(FILES ${CMAKE_SOURCE_DIR}/assets/Katalog_logo_256.png
+    DESTINATION share/icons/hicolor/256x256/apps
+    RENAME io.github.stephanecouturier.Katalog.png)
