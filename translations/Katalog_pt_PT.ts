@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+166"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+3975"/>
+        <location line="+4004"/>
         <source>Search</source>
         <translation>Pesquisar</translation>
     </message>
     <message>
-        <location line="-4095"/>
+        <location line="-4124"/>
         <source>Stopped</source>
         <translation>Parado</translation>
     </message>
@@ -50,12 +50,12 @@
         <location line="+1213"/>
         <location line="+11"/>
         <location line="+60"/>
-        <location line="+345"/>
+        <location line="+374"/>
         <source>In Progress</source>
         <translation>Em progresso</translation>
     </message>
     <message>
-        <location line="-3976"/>
+        <location line="-4005"/>
         <location line="+3612"/>
         <location line="+52"/>
         <source>Completed</source>
@@ -482,30 +482,32 @@ Escolha um nome diferente.</translation>
     </message>
     <message>
         <location line="+169"/>
-        <location line="+22"/>
+        <location line="+51"/>
         <source>Provide a link name.</source>
         <translation>Indique um nome para a ligação.</translation>
     </message>
     <message>
-        <location line="-20"/>
-        <location line="+22"/>
+        <location line="-49"/>
+        <location line="+51"/>
         <source>Select a source catalog first.</source>
         <translation>Selecione primeiro um catálogo de origem.</translation>
     </message>
     <message>
-        <location line="-20"/>
-        <location line="+22"/>
+        <location line="-49"/>
+        <location line="+51"/>
         <source>Select a target catalog first.</source>
         <translation>Selecione primeiro um catálogo de destino.</translation>
     </message>
     <message>
-        <location line="-20"/>
-        <location line="+22"/>
+        <location line="-49"/>
+        <location line="+51"/>
         <source>Select a different source or target (a device shall not be mapped to itself).</source>
         <translation>Seleccione uma origem ou destino diferente (um dispositivo não deve ser mapeado para si mesmo).</translation>
     </message>
     <message>
-        <location line="-18"/>
+        <location line="-47"/>
+        <location line="+14"/>
+        <location line="+15"/>
         <source>Failed to create link.</source>
         <translation>Falha ao criar a ligação.</translation>
     </message>
@@ -1318,7 +1320,7 @@ Deseja guardá-lo mesmo assim (o catálogo ficaria vazio)?</translation>
         <translation>Seleccionar a base de dados a criar e abrir:</translation>
     </message>
     <message>
-        <location filename="../qt_quick/main.cpp" line="+107"/>
+        <location filename="../qt_quick/main.cpp" line="+117"/>
         <source>Catalog your devices to search, analyze, and backup your files.</source>
         <translation>Catalogue os seus dispositivos para procurar, analisar e efetuar cópias de segurança dos seus ficheiros.</translation>
     </message>
@@ -2194,7 +2196,7 @@ Deseja guardá-lo mesmo assim (o catálogo ficaria vazio)?</translation>
     <message>
         <location line="-735"/>
         <location line="+743"/>
-        <location filename="../qt_widgets/mainwindow.cpp" line="+307"/>
+        <location filename="../qt_widgets/mainwindow.cpp" line="+318"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-266"/>
         <source>File</source>
         <translation>Ficheiro</translation>
@@ -5881,63 +5883,63 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+514"/>
+        <location line="+600"/>
         <source>Errors: %1</source>
         <translation>Erros: %1</translation>
     </message>
     <message>
-        <location line="-474"/>
+        <location line="-552"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+16"/>
+        <location line="+19"/>
         <source>All</source>
         <translation>Todos</translation>
     </message>
     <message>
-        <location line="-15"/>
-        <location line="+236"/>
+        <location line="-18"/>
+        <location line="+246"/>
         <source>Backup</source>
         <translation>Cópia de segurança</translation>
     </message>
     <message>
-        <location line="-235"/>
-        <location line="+235"/>
+        <location line="-245"/>
+        <location line="+245"/>
         <source>Archive</source>
         <translation>Arquivo</translation>
     </message>
     <message>
-        <location line="-226"/>
+        <location line="-233"/>
         <source>Filter</source>
         <translation>Filtro</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+241"/>
+        <location line="+248"/>
         <source>Source</source>
         <translation>Origem</translation>
     </message>
     <message>
-        <location line="-240"/>
-        <location line="+271"/>
+        <location line="-247"/>
+        <location line="+298"/>
         <source>Target</source>
         <translation>Destino</translation>
     </message>
     <message>
-        <location line="-251"/>
-        <location line="+18"/>
+        <location line="-277"/>
+        <location line="+19"/>
         <source>Run listed links</source>
         <translation>Executar as ligações listadas</translation>
     </message>
     <message>
-        <location line="-8"/>
+        <location line="-9"/>
         <source>Update catalogs</source>
         <translation>Atualizar catálogos</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <source>Continue</source>
         <translation>Continuar</translation>
     </message>
@@ -5987,15 +5989,15 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Crie uma ligação para definir uma origem e um destino para operações de cópia de segurança ou arquivo.</translation>
     </message>
     <message>
-        <location line="+124"/>
-        <location line="+31"/>
-        <location line="+27"/>
+        <location line="+144"/>
+        <location line="+47"/>
+        <location line="+46"/>
         <location line="+7"/>
         <source>files</source>
         <translation>ficheiros</translation>
     </message>
     <message>
-        <location line="-20"/>
+        <location line="-34"/>
         <source>Diff</source>
         <translation>Dif</translation>
     </message>
@@ -6005,7 +6007,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>A mover</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+26"/>
         <source>Nothing to move</source>
         <translation>Nada a mover</translation>
     </message>
@@ -6015,7 +6017,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Atualizado</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+23"/>
         <source>Last archive</source>
         <translation>Último arquivamento</translation>
     </message>
@@ -6030,7 +6032,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>nunca</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+26"/>
         <source>ETA %1</source>
         <translation>Faltam %1</translation>
     </message>
@@ -6055,8 +6057,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Retomar</translation>
     </message>
     <message>
-        <location line="-358"/>
-        <location line="+364"/>
+        <location line="-417"/>
+        <location line="+423"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
@@ -6082,6 +6084,11 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+5"/>
+        <source>Duplicate</source>
+        <translation>Duplicar</translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>Replicate directories</source>
         <translation>Replicar diretórios</translation>
     </message>

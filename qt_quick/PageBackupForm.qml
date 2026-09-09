@@ -727,6 +727,20 @@ ColumnLayout {
                                 onTriggered: root.requestEditMapping(modelData)
                             }
                             Controls.MenuItem {
+                                text: qsTr("Duplicate")
+                                icon.name: "edit-copy"
+                                onTriggered: {
+                                    // SpecBackup.md BKP-F22: creates the copy and
+                                    // nothing else — no run, no preview, no change
+                                    // to the original.
+                                    var err = appManager1.duplicateBackupMapping(modelData.mappingId)
+                                    if (err)
+                                        root.lastReportSummary = err
+                                    else
+                                        root.refresh()
+                                }
+                            }
+                            Controls.MenuItem {
                                 text: qsTr("Replicate directories")
                                 icon.name: "folder-sync"
                                 onTriggered: {

@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+166"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+3975"/>
+        <location line="+4004"/>
         <source>Search</source>
         <translation>खोज</translation>
     </message>
     <message>
-        <location line="-4095"/>
+        <location line="-4124"/>
         <source>Stopped</source>
         <translation>रोका गया</translation>
     </message>
@@ -50,12 +50,12 @@
         <location line="+1213"/>
         <location line="+11"/>
         <location line="+60"/>
-        <location line="+345"/>
+        <location line="+374"/>
         <source>In Progress</source>
         <translation>प्रगति में</translation>
     </message>
     <message>
-        <location line="-3976"/>
+        <location line="-4005"/>
         <location line="+3612"/>
         <location line="+52"/>
         <source>Completed</source>
@@ -482,30 +482,32 @@ Choose a different name.</source>
     </message>
     <message>
         <location line="+169"/>
-        <location line="+22"/>
+        <location line="+51"/>
         <source>Provide a link name.</source>
         <translation>एक लिंक नाम दें।</translation>
     </message>
     <message>
-        <location line="-20"/>
-        <location line="+22"/>
+        <location line="-49"/>
+        <location line="+51"/>
         <source>Select a source catalog first.</source>
         <translation>पहले स्रोत कैटलॉग चुनें।</translation>
     </message>
     <message>
-        <location line="-20"/>
-        <location line="+22"/>
+        <location line="-49"/>
+        <location line="+51"/>
         <source>Select a target catalog first.</source>
         <translation>पहले लक्ष्य कैटलॉग चुनें।</translation>
     </message>
     <message>
-        <location line="-20"/>
-        <location line="+22"/>
+        <location line="-49"/>
+        <location line="+51"/>
         <source>Select a different source or target (a device shall not be mapped to itself).</source>
         <translation>एक अलग स्रोत या लक्ष्य चुनें (एक डिवाइस को अपने आप पर मैप नहीं किया जा सकता)।</translation>
     </message>
     <message>
-        <location line="-18"/>
+        <location line="-47"/>
+        <location line="+14"/>
+        <location line="+15"/>
         <source>Failed to create link.</source>
         <translation>लिंक बनाने में विफल।</translation>
     </message>
@@ -1318,7 +1320,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>बनाने और खोलने के लिए डेटाबेस चुनें:</translation>
     </message>
     <message>
-        <location filename="../qt_quick/main.cpp" line="+107"/>
+        <location filename="../qt_quick/main.cpp" line="+117"/>
         <source>Catalog your devices to search, analyze, and backup your files.</source>
         <translation>अपनी फ़ाइलों को खोजने, विश्लेषण करने और बैकअप लेने के लिए अपने उपकरणों को सूचीबद्ध करें।</translation>
     </message>
@@ -2194,7 +2196,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="-735"/>
         <location line="+743"/>
-        <location filename="../qt_widgets/mainwindow.cpp" line="+307"/>
+        <location filename="../qt_widgets/mainwindow.cpp" line="+318"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-266"/>
         <source>File</source>
         <translation>फ़ाइल</translation>
@@ -5880,63 +5882,63 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+514"/>
+        <location line="+600"/>
         <source>Errors: %1</source>
         <translation>त्रुटियाँ: %1</translation>
     </message>
     <message>
-        <location line="-474"/>
+        <location line="-552"/>
         <source>Type</source>
         <translation>प्रकार</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+16"/>
+        <location line="+19"/>
         <source>All</source>
         <translation>सभी</translation>
     </message>
     <message>
-        <location line="-15"/>
-        <location line="+236"/>
+        <location line="-18"/>
+        <location line="+246"/>
         <source>Backup</source>
         <translation>बैकअप</translation>
     </message>
     <message>
-        <location line="-235"/>
-        <location line="+235"/>
+        <location line="-245"/>
+        <location line="+245"/>
         <source>Archive</source>
         <translation>आर्काइव</translation>
     </message>
     <message>
-        <location line="-226"/>
+        <location line="-233"/>
         <source>Filter</source>
         <translation>फ़िल्टर</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+241"/>
+        <location line="+248"/>
         <source>Source</source>
         <translation>स्रोत</translation>
     </message>
     <message>
-        <location line="-240"/>
-        <location line="+271"/>
+        <location line="-247"/>
+        <location line="+298"/>
         <source>Target</source>
         <translation>लक्ष्य</translation>
     </message>
     <message>
-        <location line="-251"/>
-        <location line="+18"/>
+        <location line="-277"/>
+        <location line="+19"/>
         <source>Run listed links</source>
         <translation>सूचीबद्ध लिंक चलाएँ</translation>
     </message>
     <message>
-        <location line="-8"/>
+        <location line="-9"/>
         <source>Update catalogs</source>
         <translation>कैटलॉग अपडेट करें</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <source>Continue</source>
         <translation>जारी रखें</translation>
     </message>
@@ -5986,15 +5988,15 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>बैकअप या संग्रह संचालन के लिए स्रोत और लक्ष्य परिभाषित करने हेतु एक लिंक बनाएँ।</translation>
     </message>
     <message>
-        <location line="+124"/>
-        <location line="+31"/>
-        <location line="+27"/>
+        <location line="+144"/>
+        <location line="+47"/>
+        <location line="+46"/>
         <location line="+7"/>
         <source>files</source>
         <translation>फ़ाइलें</translation>
     </message>
     <message>
-        <location line="-20"/>
+        <location line="-34"/>
         <source>Diff</source>
         <translation>अंतर</translation>
     </message>
@@ -6004,7 +6006,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>स्थानांतरित करने हेतु</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+26"/>
         <source>Nothing to move</source>
         <translation>स्थानांतरित करने के लिए कुछ नहीं</translation>
     </message>
@@ -6014,7 +6016,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>अद्यतित</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+23"/>
         <source>Last archive</source>
         <translation>अंतिम संग्रह</translation>
     </message>
@@ -6029,7 +6031,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>कभी नहीं</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+26"/>
         <source>ETA %1</source>
         <translation>शेष %1</translation>
     </message>
@@ -6054,8 +6056,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>फिर से शुरू करें</translation>
     </message>
     <message>
-        <location line="-358"/>
-        <location line="+364"/>
+        <location line="-417"/>
+        <location line="+423"/>
         <source>Cancel</source>
         <translation>रद्द करें</translation>
     </message>
@@ -6081,6 +6083,11 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+5"/>
+        <source>Duplicate</source>
+        <translation>डुप्लिकेट करें</translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>Replicate directories</source>
         <translation>निर्देशिकाएँ प्रतिलिपि करें</translation>
     </message>

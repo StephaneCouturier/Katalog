@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+166"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+3975"/>
+        <location line="+4004"/>
         <source>Search</source>
         <translation>Søg</translation>
     </message>
     <message>
-        <location line="-4095"/>
+        <location line="-4124"/>
         <source>Stopped</source>
         <translation>Stoppet</translation>
     </message>
@@ -50,12 +50,12 @@
         <location line="+1213"/>
         <location line="+11"/>
         <location line="+60"/>
-        <location line="+345"/>
+        <location line="+374"/>
         <source>In Progress</source>
         <translation>I gang</translation>
     </message>
     <message>
-        <location line="-3976"/>
+        <location line="-4005"/>
         <location line="+3612"/>
         <location line="+52"/>
         <source>Completed</source>
@@ -482,30 +482,32 @@ Vælg et andet navn.</translation>
     </message>
     <message>
         <location line="+169"/>
-        <location line="+22"/>
+        <location line="+51"/>
         <source>Provide a link name.</source>
         <translation>Angiv et linknavn.</translation>
     </message>
     <message>
-        <location line="-20"/>
-        <location line="+22"/>
+        <location line="-49"/>
+        <location line="+51"/>
         <source>Select a source catalog first.</source>
         <translation>Vælg et kildekatalog først.</translation>
     </message>
     <message>
-        <location line="-20"/>
-        <location line="+22"/>
+        <location line="-49"/>
+        <location line="+51"/>
         <source>Select a target catalog first.</source>
         <translation>Vælg et målkatalog først.</translation>
     </message>
     <message>
-        <location line="-20"/>
-        <location line="+22"/>
+        <location line="-49"/>
+        <location line="+51"/>
         <source>Select a different source or target (a device shall not be mapped to itself).</source>
         <translation>Vælg en anden kilde eller mål (en enhed kan ikke kortlægges til sig selv).</translation>
     </message>
     <message>
-        <location line="-18"/>
+        <location line="-47"/>
+        <location line="+14"/>
+        <location line="+15"/>
         <source>Failed to create link.</source>
         <translation>Kunne ikke oprette linket.</translation>
     </message>
@@ -1318,7 +1320,7 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <translation>Vælg databasen der skal oprettes og åbnes:</translation>
     </message>
     <message>
-        <location filename="../qt_quick/main.cpp" line="+107"/>
+        <location filename="../qt_quick/main.cpp" line="+117"/>
         <source>Catalog your devices to search, analyze, and backup your files.</source>
         <translation>Katalogisér dine enheder for at søge, analysere og sikkerhedskopiere dine filer.</translation>
     </message>
@@ -2194,7 +2196,7 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
     <message>
         <location line="-735"/>
         <location line="+743"/>
-        <location filename="../qt_widgets/mainwindow.cpp" line="+307"/>
+        <location filename="../qt_widgets/mainwindow.cpp" line="+318"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-266"/>
         <source>File</source>
         <translation>Fil</translation>
@@ -5881,63 +5883,63 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+514"/>
+        <location line="+600"/>
         <source>Errors: %1</source>
         <translation>Fejl: %1</translation>
     </message>
     <message>
-        <location line="-474"/>
+        <location line="-552"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+16"/>
+        <location line="+19"/>
         <source>All</source>
         <translation>Alle</translation>
     </message>
     <message>
-        <location line="-15"/>
-        <location line="+236"/>
+        <location line="-18"/>
+        <location line="+246"/>
         <source>Backup</source>
         <translation>Sikkerhedskopi</translation>
     </message>
     <message>
-        <location line="-235"/>
-        <location line="+235"/>
+        <location line="-245"/>
+        <location line="+245"/>
         <source>Archive</source>
         <translation>Arkiv</translation>
     </message>
     <message>
-        <location line="-226"/>
+        <location line="-233"/>
         <source>Filter</source>
         <translation>Filter</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+241"/>
+        <location line="+248"/>
         <source>Source</source>
         <translation>Kilde</translation>
     </message>
     <message>
-        <location line="-240"/>
-        <location line="+271"/>
+        <location line="-247"/>
+        <location line="+298"/>
         <source>Target</source>
         <translation>Mål</translation>
     </message>
     <message>
-        <location line="-251"/>
-        <location line="+18"/>
+        <location line="-277"/>
+        <location line="+19"/>
         <source>Run listed links</source>
         <translation>Kør de viste link</translation>
     </message>
     <message>
-        <location line="-8"/>
+        <location line="-9"/>
         <source>Update catalogs</source>
         <translation>Opdater kataloger</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <source>Continue</source>
         <translation>Fortsæt</translation>
     </message>
@@ -5987,15 +5989,15 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Opret et link for at definere en kilde og et mål til sikkerhedskopiering eller arkivering.</translation>
     </message>
     <message>
-        <location line="+124"/>
-        <location line="+31"/>
-        <location line="+27"/>
+        <location line="+144"/>
+        <location line="+47"/>
+        <location line="+46"/>
         <location line="+7"/>
         <source>files</source>
         <translation>filer</translation>
     </message>
     <message>
-        <location line="-20"/>
+        <location line="-34"/>
         <source>Diff</source>
         <translation>Diff</translation>
     </message>
@@ -6005,7 +6007,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Skal flyttes</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+26"/>
         <source>Nothing to move</source>
         <translation>Intet at flytte</translation>
     </message>
@@ -6015,7 +6017,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Opdateret</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+23"/>
         <source>Last archive</source>
         <translation>Seneste arkivering</translation>
     </message>
@@ -6030,7 +6032,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>aldrig</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+26"/>
         <source>ETA %1</source>
         <translation>Tilbage %1</translation>
     </message>
@@ -6055,8 +6057,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Fortsæt</translation>
     </message>
     <message>
-        <location line="-358"/>
-        <location line="+364"/>
+        <location line="-417"/>
+        <location line="+423"/>
         <source>Cancel</source>
         <translation>Annuller</translation>
     </message>
@@ -6082,6 +6084,11 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+5"/>
+        <source>Duplicate</source>
+        <translation>Duplikér</translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>Replicate directories</source>
         <translation>Replikér mapper</translation>
     </message>

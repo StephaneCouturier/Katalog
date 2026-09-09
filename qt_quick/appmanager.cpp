@@ -4186,6 +4186,35 @@ QString AppManager::createBackupMapping(const QString &name, const QString &type
     return QString();
 }
 //----------------------------------------------------------------------
+QString AppManager::duplicateBackupMapping(int mappingId)
+{
+    // SpecBackup.md BKP-F22 / BKP-C13: adapter-only, no core code. The copy is
+    // read with getMappingById() and written with the existing createMapping().
+    BackupMappingManager manager(m_connectionName);
+    const MappingInfo source = manager.getMappingById(mappingId);
+    if (source.mappingId < 0)
+        return tr("Failed to create link.");
+
+    // The name is the original followed by a datetime stamp in the shape
+    // BKP-F5 already uses. No literal word is added, so the generated name
+    // carries no translatable text. Link names are not unique: two duplicates
+    // made in the same second share a name, which is accepted, not an error.
+    const QString newName = source.mappingName + QLatin1Char('_')
+        + QDateTime::currentDateTime().toString(QStringLiteral("yyyyMMdd-HHmmss"));
+
+    // Every setting is copied. Run history is not: the duplicate starts with no
+    // last-run date and no last-run size (BKP-F10), exactly as a new link does.
+    if (!manager.createMapping(newName, source.mappingType,
+                               source.sourceDeviceId, source.targetDeviceId,
+                               source.strictCopy, conflictModeToString(source.conflictMode),
+                               source.sourceDrive, source.includeEmptyDirs))
+        return tr("Failed to create link.");
+
+    collection->saveMappingTableToFile();
+    emit backupMappingsChanged();
+    return QString();
+}
+//----------------------------------------------------------------------
 QString AppManager::updateBackupMapping(int mappingId, const QString &name, const QString &type,
     int sourceId, int targetId, bool strictCopy,
     const QString &conflictMode, bool sourceDrive, bool includeEmptyDirs)
