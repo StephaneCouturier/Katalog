@@ -356,9 +356,8 @@ void AppManager::initializeDeviceListModel()
     // loading the list — the stored device_active is stale when opening a collection
     // (it reflects connectivity at the time it was last saved, possibly on another machine).
     collection->updateAllDeviceActive();
-    // Seed the refresh policy state so the activation that follows startup finds
-    // an unchanged mount table and exits at the cheap gate.
-    m_lastActiveProbe = QDateTime::currentDateTime();
+    // Seed the mount table so the activation that follows startup does not treat
+    // it as changed and check network mounts for nothing.
     m_lastMountSignature = collection->mountSignature();
     deviceListModel = new DeviceListModel(this);
     deviceListModel->loadFromConnection(m_connectionName);
@@ -507,21 +506,22 @@ void AppManager::refreshDeviceActiveOnActivation()
     if (!getRefreshDeviceStatusOnActivation())
         return;
 
-    // Cheap gate first: reading the mount table costs nothing and, when nothing
-    // has been mounted or unmounted, spares every device path a QDir::exists()
-    // that would block on an unreachable network mount.
-    const QString signature = collection->mountSignature();
-    if (signature == m_lastMountSignature)
-        return;
-    m_lastMountSignature = signature;
+    // Every time the window becomes active, re-check the folders of devices on
+    // local mounts: a catalogued folder can be renamed or deleted without the
+    // mount table changing at all, and that is the common case. The check is one
+    // QDir::exists() per device and runs with no delay, so returning to Katalog
+    // shows the truth immediately (DAS-F10).
+    // Devices on network mounts are checked only when the mount table changed
+    // (DAS-F5), because QDir::exists() on an unreachable share blocks this
+    // thread. Network devices are a separate use case, not covered here.
+    const bool mountsChanged = (collection->mountSignature() != m_lastMountSignature);
+    const bool statusChanged = collection->updateAllDeviceActive(!mountsChanged);
+    m_lastMountSignature = collection->mountSignature();
 
-    // Debounce: also absorbs the activation that immediately follows startup,
-    // where the collection was just opened and already probed.
-    if (m_lastActiveProbe.isValid()
-            && m_lastActiveProbe.secsTo(QDateTime::currentDateTime()) < 30)
-        return;
-
-    refreshDeviceList();
+    // Rebuild the list only when something actually changed, so an ordinary
+    // window switch does not throw away the user's scroll position (DAS-O4).
+    if (statusChanged)
+        reloadDeviceListModel();
 }
 //----------------------------------------------------------------------
 bool AppManager::getShowSelectionPage() const
@@ -844,12 +844,22 @@ void AppManager::refreshDeviceList()
         // so the Selection page reflects what is actually mounted now (not stale values
         // carried over when switching/opening a collection). Mirrors K2's device refresh.
         collection->updateAllDeviceActive();
-        m_lastActiveProbe = QDateTime::currentDateTime();
-        deviceListModel->refreshData();
-        emit deviceListRefreshed();
-        emit deviceListModelChanged();
-        emit deviceListChanged();
+        // Record the mount table as seen by this check. Without it the retained
+        // signature stays stale and the next activation checks network mounts
+        // for nothing (DAS-O4).
+        m_lastMountSignature = collection->mountSignature();
+        reloadDeviceListModel();
     }
+}
+//----------------------------------------------------------------------
+void AppManager::reloadDeviceListModel()
+{
+    if (!deviceListModel)
+        return;
+    deviceListModel->refreshData();
+    emit deviceListRefreshed();
+    emit deviceListModelChanged();
+    emit deviceListChanged();
 }
 
 void AppManager::refreshSearchResults()
@@ -2278,7 +2288,9 @@ QVariantList AppManager::getDeviceList(const QString &viewFilter, int scopeDevic
     // K2 does the same inside its device-tree model loaders; without it this
     // path would display whatever was cached at the last device operation.
     collection->updateAllDeviceActive();
-    m_lastActiveProbe = QDateTime::currentDateTime();
+    // Record the mount table as seen by this check, for the same reason as in
+    // refreshDeviceList().
+    m_lastMountSignature = collection->mountSignature();
 
     const QList<Device::DeviceTreeNode> nodes = Device::loadDeviceTree(conn, scopeDeviceId);
 

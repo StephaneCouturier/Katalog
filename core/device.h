@@ -103,6 +103,12 @@ public:
         //States
         bool hasSubDevice;
         bool active;
+        // The device_active value as read by loadDevice(), so updateActiveState()
+        // can skip the UPDATE when the probe agrees with what is already stored
+        // (SpecDeviceActiveStatus.md DAS-C11). Invalid when the device was not
+        // loaded from a row, in which case the write happens unconditionally.
+        bool activeStored      = false;
+        bool activeStoredValid = false;
 
     //Structures
         // Error codes for device operations
@@ -138,7 +144,10 @@ public:
         bool verifyDeviceHasSourceMapping();
         bool verifyDeviceHasTargetMapping();
         void getIDFromDeviceName();
-        void updateActiveState(QString connectionName);
+        // Returns true when the stored device_active was changed, so callers
+        // can tell an activation that found something from one that did not
+        // (SpecDeviceActiveStatus.md DAS-O4).
+        bool updateActiveState(QString connectionName);
 
         void updateNumbersFromChildren();
         void updateParentsNumbers();

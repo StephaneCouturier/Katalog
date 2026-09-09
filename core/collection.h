@@ -148,7 +148,12 @@ public:
 
     //Data management
     bool insertPhysicalStorageGroup();
-    void updateAllDeviceActive();
+    // skipNetworkPaths: leave devices on network mounts untouched, so an
+    // unreachable share cannot block the caller. Classification comes from the
+    // mount listing alone and never touches the device path itself.
+    // SpecDeviceActiveStatus.md DAS-C9 / DAS-C10.
+    // Returns true when at least one device's active state changed.
+    bool updateAllDeviceActive(bool skipNetworkPaths = false);
     // Signature of the currently mounted volumes' root paths. Compare successive
     // values to detect a mount or unmount without probing any device path.
     QString mountSignature() const;

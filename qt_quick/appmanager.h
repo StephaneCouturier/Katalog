@@ -171,6 +171,10 @@ public slots:
     void initializeDeviceListModel();
     void refreshAllUI();
     void refreshDeviceList();
+    // Rebuilds the device list model and notifies QML, without probing. Split
+    // out so the activation refresh can reload only when a status actually
+    // changed, instead of resetting the model on every activation.
+    void reloadDeviceListModel();
     void refreshSearchResults();
     void refreshStatistics();
 
@@ -538,8 +542,11 @@ private:
     QString m_connectionName = "defaultConnection";
     // Device active-status refresh policy (SpecDeviceActiveStatus.md).
     // Mutable: getDeviceList() is const but legitimately re-probes before reading.
-    mutable QDateTime m_lastActiveProbe;
-    QString m_lastMountSignature;
+    // The mount table as it was when the devices were last checked. Used only
+    // to decide whether devices on network mounts need checking too
+    // (SpecDeviceActiveStatus.md DAS-F5/DAS-C3). Mutable because
+    // getDeviceList() is const and checks.
+    mutable QString m_lastMountSignature;
     bool    m_firstRun = false;
     bool    m_searchIsRunning  = false;
     bool    m_searchIsPaused   = false;

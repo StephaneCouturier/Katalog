@@ -2432,14 +2432,70 @@ bool Collection::insertPhysicalStorageGroup() {
     return defaultsCreated;
 }
 //----------------------------------------------------------------------
-void Collection::updateAllDeviceActive()
+namespace {
+//Filesystems reached over the network. A QDir::exists() on one of these can
+//block for seconds when the peer is unreachable, which is the whole reason
+//DAS-C10 lets the caller skip them.
+bool isNetworkFileSystem(const QString &fileSystemType)
+{
+    static const QSet<QString> networkTypes = {
+        QStringLiteral("nfs"),   QStringLiteral("nfs3"),  QStringLiteral("nfs4"),
+        QStringLiteral("cifs"),  QStringLiteral("smbfs"), QStringLiteral("smb2"),
+        QStringLiteral("smb3"),  QStringLiteral("sshfs"), QStringLiteral("fuse.sshfs"),
+        QStringLiteral("davfs"), QStringLiteral("fuse.davfs"),
+        QStringLiteral("ftpfs"), QStringLiteral("curlftpfs"),
+        QStringLiteral("afpfs"), QStringLiteral("ncpfs"), QStringLiteral("glusterfs"),
+        QStringLiteral("ceph"),  QStringLiteral("9p"),    QStringLiteral("afs"),
+        QStringLiteral("coda")
+    };
+    return networkTypes.contains(fileSystemType.toLower());
+}
+
+//Longest root-path prefix wins, so /home beats / for a path under /home.
+//A path matching no mount root is reported as network: the default is the
+//non-blocking one, per DAS-C10.
+bool pathIsOnNetworkMount(const QString &path,
+                          const QList<QPair<QString, bool>> &mounts)
+{
+    int  longestRoot = -1;
+    bool onNetwork   = true;
+
+    for (const QPair<QString, bool> &mount : mounts) {
+        const QString &root   = mount.first;
+        const QString  prefix = root.endsWith(QLatin1Char('/')) ? root
+                                                                : root + QLatin1Char('/');
+        if (path == root || path.startsWith(prefix)) {
+            if (root.length() > longestRoot) {
+                longestRoot = root.length();
+                onNetwork   = mount.second;
+            }
+        }
+    }
+    return onNetwork;
+}
+} // namespace
+
+bool Collection::updateAllDeviceActive(bool skipNetworkPaths)
 {//Update the value Active for all Devices
 
+    //Read the mount table once for the whole pass rather than once per device
+    //(DAS-C9). Only root path and filesystem type are read — never the device
+    //path itself, so an unreachable share is not contacted here (DAS-C10).
+    QList<QPair<QString, bool>> mounts;
+    if (skipNetworkPaths) {
+        const QList<QStorageInfo> volumes = QStorageInfo::mountedVolumes();
+        mounts.reserve(volumes.size());
+        for (const QStorageInfo &volume : volumes)
+            mounts.append({ volume.rootPath(),
+                            isNetworkFileSystem(QString::fromLatin1(volume.fileSystemType())) });
+    }
+
     //For Storage and Catalog devices
-    //Get the list of devices
+    //Get the list of devices. device_path is selected so a network-mounted
+    //device can be skipped without loading it at all.
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
-                                            SELECT device_id
+                                            SELECT device_id, device_path, device_active
                                             FROM   device
                                             WHERE  device_type = 'Storage' OR device_type = 'Catalog'
                                     )");
@@ -2449,11 +2505,22 @@ void Collection::updateAllDeviceActive()
     //Update and Save sourcePathIsActive for each catalog
     //loadDevice() already calls updateActiveState() internally, so probing again
     //here would cost a second QDir::exists() and a second UPDATE per device.
+    bool anyChanged = false;
     Device loopDevice;
     while (query.next()){
+        if (skipNetworkPaths) {
+            const QString devicePath = query.value(1).toString();
+            if (devicePath.isEmpty() || pathIsOnNetworkMount(devicePath, mounts))
+                continue;
+        }
         loopDevice.ID = query.value(0).toInt();
         loopDevice.loadDevice(m_connectionName);
+        // loadDevice() probes via updateActiveState(); it records the change on
+        // the object, so no second probe is needed to learn the outcome.
+        if (loopDevice.activeStoredValid && loopDevice.active != query.value(2).toBool())
+            anyChanged = true;
     }
+    return anyChanged;
 }
 
 QString Collection::mountSignature() const

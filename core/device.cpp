@@ -40,6 +40,11 @@
 void Device::loadDevice(QString connectionName){
     QElapsedTimer totalTimer;
     totalTimer.start();
+
+    // Cleared up front: this object is reused across devices in loops, and a
+    // row that is not found must not leave the previous device's stored value
+    // behind for updateActiveState() to compare against (DAS-C11).
+    activeStoredValid = false;
     QElapsedTimer stepTimer;
     stepTimer.start();
     bool useTimerForDebug = false;
@@ -64,7 +69,8 @@ void Device::loadDevice(QString connectionName){
                                     device_free_space,
                                     device_group_id,
                                     device_order,
-                                    device_comment
+                                    device_comment,
+                                    device_active
                             FROM  device
                             WHERE device_id =:device_id
                         )");
@@ -89,6 +95,10 @@ void Device::loadDevice(QString connectionName){
             groupID     = query.value(10).toInt();
             order       = query.value(11).toInt();
             comment     = query.value(12).toString();
+            // Remember what is already stored so updateActiveState() can skip a
+            // no-op UPDATE (DAS-C11).
+            activeStored      = query.value(13).toBool();
+            activeStoredValid = true;
         } else if (ID !=0){
             qWarning() << "WARNING: DEBUG: loadDevice query failed, no record found for device_id" << ID;
         }
@@ -571,7 +581,7 @@ void Device::updateParentsNumbers()
     }
 }
 
-void Device::updateActiveState(QString connectionName)
+bool Device::updateActiveState(QString connectionName)
 {//Update the Active value: verify that the path is active = the related drive is mounted
     if(path !=""){
         QDir dir(path);
@@ -580,6 +590,13 @@ void Device::updateActiveState(QString connectionName)
     else {
         active = false;
     }
+
+    // Write only when the probe disagrees with what is stored (DAS-C11). The
+    // activation refresh probes local devices on every window activation, so an
+    // unconditional UPDATE here would be one write per device per focus change
+    // — a network round-trip each in Hosted mode, on the UI thread.
+    if (activeStoredValid && active == activeStored)
+        return false;
 
     QSqlQuery queryUpdateActive(QSqlDatabase::database(connectionName));
     QString queryUpdateActiveSQL = QLatin1String(R"(
@@ -591,6 +608,12 @@ void Device::updateActiveState(QString connectionName)
     queryUpdateActive.bindValue(":device_active", active);
     queryUpdateActive.bindValue(":device_id", ID);
     queryUpdateActive.exec();
+
+    // What is stored now matches what was just probed, so a second call on the
+    // same object does not write again.
+    activeStored      = active;
+    activeStoredValid = true;
+    return true;
 }
 
 void Device::saveStatistics(QDateTime dateTime, QString requestSource)
