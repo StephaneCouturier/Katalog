@@ -70,16 +70,6 @@ Kirigami.ApplicationWindow {
     // than per page so the three line up when they share the screen.
     readonly property real headerRowHeight: Kirigami.Units.gridUnit * 2
 
-    // Katalog's own palette, as used by K2's Katalog Colors theme
-    // (qt_widgets/mainwindow_setup.cpp). These are brand colours, so they are
-    // fixed rather than derived from Kirigami.Theme.highlightColor — that is the
-    // desktop accent, which is not blue on every theme and turned the tinted
-    // page greenish under a dark desktop.
-    readonly property color katalogBlueLight:   "#39b2e5"
-    readonly property color katalogBlue:        "#10a2df"
-    readonly property color katalogBlueDark:    "#0D79A6"
-    readonly property color katalogBlueDarkest: "#095676"
-
     // The desktop's own background tells us which way round we are.
     //
     // Read inside each colour binding rather than through a shared property. As
@@ -92,11 +82,33 @@ Kirigami.ApplicationWindow {
         return Kirigami.Theme.backgroundColor.hslLightness < 0.5
     }
 
+    // The desktop's View background — the surface its own file managers and list
+    // views paint on. It needs a probe of its own because everything else here
+    // inherits the Window colour set, which is the grey; the View set is the
+    // near-white (#fcfcfc under Breeze light) or near-black (#1b1e20 under Breeze
+    // dark) one row of a file list is meant to sit on. Taken from the scheme
+    // rather than hardcoded to white/black so a scheme that uses neither still
+    // gets its own surface (SpecTheme THM-F1, THM-C6).
+    readonly property color viewBackgroundColor:
+        viewColorProbe.Kirigami.Theme.backgroundColor
+
+    // Must NOT be visible: false. A hidden item gets no resolved palette from
+    // the KDE platform theme and Kirigami.Theme.backgroundColor then reads back
+    // opaque black, which painted the first row of every file list black on a
+    // light desktop. It is a bare 0x0 Item with no children, so it paints
+    // nothing regardless. Note this only misbehaves under the real platform
+    // theme — with QT_QPA_PLATFORM=offscreen a hidden probe still returns the
+    // right colour, so it cannot be caught by an offscreen run.
+    Item {
+        id: viewColorProbe
+        Kirigami.Theme.colorSet: Kirigami.Theme.View
+        Kirigami.Theme.inherit: false
+    }
+
     // The two tinted surfaces, defined once for every theme so they always agree.
-    // Katalog Colors forces the brand blues; Desktop Theme derives both from the
-    // desktop's own palette. In both cases the logo band is the darker of the
-    // two, so it reads as a header above the page.
-    // Under Desktop Theme both surfaces are built from the desktop's ACCENT
+    // In both cases the logo band is the darker of the two, so it reads as a
+    // header above the page.
+    // Both surfaces are built from the desktop's ACCENT
     // (Kirigami.Theme.highlightColor), not from its background. The background is
     // a grey, so lightening or darkening it only ever yields more grey; the
     // accent is what carries the desktop's hue — blue under Breeze, green under
@@ -111,50 +123,41 @@ Kirigami.ApplicationWindow {
     // desktop's BACKGROUND rather than its accent: no hue at all, just a step
     // away from the window colour, for anyone who finds the tinted version too
     // strong.
+    // Theme 1, "Katalog Colors", no longer forces the brand blues — the brand
+    // palette was retired from K3 and theme 1 renders exactly as theme 0, not as
+    // theme 2 (SpecTheme THM-C2). The stored value and its Settings entry are
+    // kept, so no string and no translation slot moves (THM-C3).
     readonly property color selectionPageColor:
-        appManager1.themeId === 1
-        ? (root.isDarkDesktop() ? root.katalogBlueDarkest
-                            : Qt.rgba(root.katalogBlue.r, root.katalogBlue.g,
-                                      root.katalogBlue.b, 0.12))
-        : appManager1.themeId === 2
-          ? (root.isDarkDesktop() ? Qt.lighter(Kirigami.Theme.backgroundColor, 1.25)
-                                  : Qt.darker(Kirigami.Theme.backgroundColor, 1.06))
-          : (root.isDarkDesktop() ? Qt.darker(Kirigami.Theme.highlightColor, 2.6)
-                              : Qt.rgba(Kirigami.Theme.highlightColor.r,
-                                        Kirigami.Theme.highlightColor.g,
-                                        Kirigami.Theme.highlightColor.b, 0.12))
+        appManager1.themeId === 2
+        ? (root.isDarkDesktop() ? Qt.lighter(Kirigami.Theme.backgroundColor, 1.25)
+                                : Qt.darker(Kirigami.Theme.backgroundColor, 1.06))
+        : (root.isDarkDesktop() ? Qt.darker(Kirigami.Theme.highlightColor, 2.6)
+                            : Qt.rgba(Kirigami.Theme.highlightColor.r,
+                                      Kirigami.Theme.highlightColor.g,
+                                      Kirigami.Theme.highlightColor.b, 0.12))
 
-    // Selection highlight. Katalog Colors owns it too, so a selected row or card
-    // is brand blue rather than the desktop accent; both Desktop themes hand it
-    // back to the desktop. One definition for every list in the application —
-    // Selection cards, search results, explore files and folders, device combos.
-    readonly property color selectionHighlightColor:
-        appManager1.themeId === 1 ? root.katalogBlue
-                                  : Kirigami.Theme.highlightColor
+    // Selection highlight. One definition for every list in the application —
+    // Selection cards, search results, explore files and folders, device combos —
+    // and every theme hands it back to the desktop (SpecTheme THM-C2).
+    readonly property color selectionHighlightColor: Kirigami.Theme.highlightColor
 
-    // Alternating row stripe. Was a hardcoded pale blue that stayed put under
-    // the desktop themes, which is the same inconsistency in reverse: brand tint
-    // under Katalog Colors, a neutral step off the desktop background otherwise.
-    readonly property color rowStripeColor:
-        appManager1.themeId === 1
-        ? (root.isDarkDesktop() ? Qt.darker(root.katalogBlueDarkest, 2.2)
-                                : Qt.rgba(root.katalogBlue.r, root.katalogBlue.g,
-                                          root.katalogBlue.b, 0.07))
-        : (root.isDarkDesktop() ? Qt.lighter(Kirigami.Theme.backgroundColor, 1.18)
-                                : Qt.darker(Kirigami.Theme.backgroundColor, 1.04))
+    // The two file-list row surfaces, for the Search results list and the Explore
+    // file list. Even rows take the desktop's View background — its brightest
+    // surface on a light scheme, its darkest on a dark one — and odd rows the
+    // Window background beside it, so the pair is two neighbouring steps of the
+    // desktop's own scale rather than a tint of its own (SpecTheme THM-F1/F2),
+    // the same pair under every stored Theme value (THM-F4). Defined here and
+    // consumed by both delegates, which must not re-derive either colour
+    // inline (THM-C1).
+    readonly property color rowBaseColor:   root.viewBackgroundColor
+    readonly property color rowStripeColor: Kirigami.Theme.backgroundColor
 
     // Always at least as dark as a selected card, and always darker than the
     // page beneath it. On a light desktop that is the full accent — the very
     // colour a selected card is filled with; on a dark one the page is already a
     // darkened accent, so the band is darkened further still.
     readonly property color logoBandColor:
-        appManager1.themeId === 1
-        // #0D79A6 is darker than the page's 12% wash on a light desktop, but
-        // LIGHTER than the #095676 the page uses on a dark one — hence the
-        // darkened form there rather than the mid blue.
-        ? (root.isDarkDesktop() ? Qt.darker(root.katalogBlueDarkest, 1.6)
-                            : root.katalogBlueDark)
-        : appManager1.themeId === 2
+        appManager1.themeId === 2
           // Grey: on a dark desktop the page was lightened, so the band stays at
           // the plain background; on a light one it steps further down.
           ? (root.isDarkDesktop() ? Kirigami.Theme.backgroundColor

@@ -273,12 +273,14 @@ Item {
 
                     readonly property string checksum: checksumSha256
 
-                    // Selected row and the alternating stripe both follow the
-                    // theme now — see applicationWindow() for the definitions.
+                    // Selected row and the alternating pair both follow the
+                    // desktop — see applicationWindow() for the definitions.
+                    // Even rows sit on the desktop's View surface, odd ones on
+                    // the Window background beside it (SpecTheme THM-F1/F2/F3).
                     color: exploreTableView.selectedRow === row
                            ? applicationWindow().selectionHighlightColor
                            : (row % 2 === 0
-                              ? Kirigami.Theme.backgroundColor
+                              ? applicationWindow().rowBaseColor
                               : applicationWindow().rowStripeColor)
 
                     // Column separator

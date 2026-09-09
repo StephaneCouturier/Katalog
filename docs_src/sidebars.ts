@@ -93,7 +93,8 @@ export default {
                 'SpecDeviceComment',
                 'SpecCollectionOpen',
                 'SpecSelection',
-                'SpecApplicationIcon'
+                'SpecApplicationIcon',
+                'SpecTheme'
                 ],
       },
        'Development-Repository',
