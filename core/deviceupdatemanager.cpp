@@ -949,6 +949,11 @@ void DeviceUpdateManager::requestHardStop()
     m_stopRequested.storeRelease(1);
     m_gentleStopRequested.storeRelease(1); // Also set gentle stop for consistency
 
+    qWarning() << "STOPTRACE DeviceUpdateManager::requestHardStop catalogManager="
+               << (m_catalogManager != nullptr)
+               << "catalogOperationRunning="
+               << (m_catalogManager && m_catalogManager->catalogOperationRunning());
+
     // Delegate stop to underlying CatalogManager if active
     if (m_catalogManager && m_catalogManager->catalogOperationRunning()) {
         // The catalog job is on the main thread stack at this very moment:
@@ -1015,6 +1020,8 @@ void DeviceUpdateManager::handleOperationCancellation()
     // when the job actually terminates. Without this guard the operation is
     // cancelled twice and every handler — status message, notification — fires
     // twice. m_operationRunning is cleared below, so the second call returns here.
+    qWarning() << "STOPTRACE handleOperationCancellation operationRunning=" << m_operationRunning
+               << "updateType=" << m_updateType;
     if (!m_operationRunning)
         return;
 

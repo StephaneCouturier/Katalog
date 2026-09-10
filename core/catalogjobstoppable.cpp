@@ -121,6 +121,8 @@ void CatalogJobStoppable::processCatalog()
             // stopped during metadata or checksum scanning. Completion writes the
             // device statistics and, in Memory mode, the .idx files — skipping it
             // would discard a catalog that is already committed to the database.
+            qWarning() << "STOPTRACE after create: shouldContinue=" << shouldContinue()
+                       << "catalogCommitted=" << m_catalogCommitted;
             if (shouldContinue() || m_catalogCommitted) {
                 completeCatalogCreation();
             }
@@ -182,7 +184,8 @@ void CatalogJobStoppable::createCatalogWithProgress()
     }
 
     // Initialize database transaction for efficiency
-    Database::beginTransaction(m_connectionName);
+    const bool traceBegan = Database::beginTransaction(m_connectionName);
+    qWarning() << "STOPTRACE begin transaction ok=" << traceBegan << "catalogID=" << catalog->ID;
 
     // Save catalog to database first
     catalog->insertCatalog();
@@ -193,14 +196,18 @@ void CatalogJobStoppable::createCatalogWithProgress()
 
     if (!shouldContinue()) {
 
+        qWarning() << "STOPTRACE stopped during indexing, cleaning up catalogID=" << catalog->ID;
+
         // Rollback file insertions
-        Database::rollbackTransaction(m_connectionName);
+        const bool traceRolledBack = Database::rollbackTransaction(m_connectionName);
+        qWarning() << "STOPTRACE rollback ok=" << traceRolledBack;
 
         // ALSO delete any committed files for this catalog
         QSqlQuery cleanupQuery(QSqlDatabase::database(m_connectionName));
         cleanupQuery.prepare("DELETE FROM file WHERE file_catalog_id = :catalog_id");
         cleanupQuery.bindValue(":catalog_id", catalog->ID);
         if (cleanupQuery.exec()) {
+            qWarning() << "STOPTRACE deleted file rows=" << cleanupQuery.numRowsAffected();
         } else {
             qWarning() << "WARNING: Failed to cleanup files:" << cleanupQuery.lastError().text();
         }
@@ -209,7 +216,10 @@ void CatalogJobStoppable::createCatalogWithProgress()
         QSqlQuery cleanupFoldersQuery(QSqlDatabase::database(m_connectionName));
         cleanupFoldersQuery.prepare("DELETE FROM folder WHERE folder_catalog_id = :catalog_id");
         cleanupFoldersQuery.bindValue(":catalog_id", catalog->ID);
-        cleanupFoldersQuery.exec();
+        if (cleanupFoldersQuery.exec())
+            qWarning() << "STOPTRACE deleted folder rows=" << cleanupFoldersQuery.numRowsAffected();
+        else
+            qWarning() << "STOPTRACE failed to delete folders:" << cleanupFoldersQuery.lastError().text();
 
         return; // Exit without completing
     }

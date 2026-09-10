@@ -2174,6 +2174,11 @@ QString AppManager::createCatalog(const QString &name, const QString &path,
 //----------------------------------------------------------------------
 void AppManager::stopCatalogCreation()
 {
+    qWarning() << "STOPTRACE AppManager::stopCatalogCreation manager="
+               << (m_deviceUpdateManager != nullptr)
+               << "operationRunning="
+               << (m_deviceUpdateManager && m_deviceUpdateManager->operationRunning())
+               << "catalogIsCreating=" << m_catalogIsCreating;
     if (m_deviceUpdateManager && m_deviceUpdateManager->operationRunning())
         m_deviceUpdateManager->requestHardStop();
 }
@@ -2230,8 +2235,17 @@ void AppManager::onCatalogCreationCancelled()
                                       ? m_deviceUpdateManager->lastScanIncompleteMessage()
                                       : QString();
 
+    qWarning() << "STOPTRACE AppManager::onCatalogCreationCancelled keptCatalog=" << keptCatalog
+               << "creatingDevice=" << (m_creatingDevice != nullptr)
+               << "deviceID=" << (m_creatingDevice ? m_creatingDevice->ID : -1)
+               << "type=" << (m_creatingDevice ? m_creatingDevice->type : QStringLiteral("<none>"))
+               << "catalogID=" << (m_creatingDevice && m_creatingDevice->catalog
+                                   ? m_creatingDevice->catalog->ID : -1);
     if (!keptCatalog && m_creatingDevice) {
-        m_creatingDevice->deleteDevice(false);
+        const Device::DeleteOperationResult r = m_creatingDevice->deleteDevice(false);
+        qWarning() << "STOPTRACE deleteDevice result=" << int(r.result)
+                   << "needsConfirmation=" << r.needsConfirmation
+                   << "error=" << r.errorMessage;
     }
     m_creatingDevice = nullptr;
 

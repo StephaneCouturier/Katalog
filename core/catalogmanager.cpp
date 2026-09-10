@@ -278,6 +278,9 @@ void CatalogManager::onJobResult(KJob *job)
             m_lastCatalogCommitted      = endEngine->catalogCommitted();
         }
 
+        qWarning() << "STOPTRACE CatalogManager::onJobResult error=" << job->error()
+                   << "lastCatalogCommitted=" << m_lastCatalogCommitted;
+
         if (job->error() == KJob::KilledJobError) {
             // Phase is already set correctly from where cancel was triggered
             // Don't change it - just emit signal so handlers can read lastPhase
