@@ -49,6 +49,18 @@ Zařízení lze zobrazovat a spravovat třemi způsoby:
 
 **[Seznam katalogů](DevicesCatalogs)**: Zobrazuje pouze katalogová zařízení, filtrovaná podle panelu [Výběr](Selection).
 
+### Výběr mezi kartami a tabulkou
+
+V **Seznamu úložišť** a v **Seznamu katalogů** lze zařízení zobrazit dvěma způsoby:
+
+**Karty**: každé zařízení je karta s názvem, hlavními údaji a nabídkou akcí. Pohodlné pro čtení několika zařízení.
+
+**Tabulka**: zařízení jsou zobrazena v řádcích a sloupcích, stejně jako v předchozí verzi Katalogu. Hodnoty jsou zarovnány v každém sloupci, takže lze zařízení porovnat na první pohled, a kliknutím na záhlaví sloupce se seznam podle tohoto sloupce seřadí — dalším kliknutím se pořadí obrátí. Čísla, velikosti a data se řadí podle skutečné hodnoty, nikoli abecedně.
+
+Tato volba platí pro oba seznamy a je zapamatována pro každou sbírku. Zobrazení **Strom zařízení** je vždy zobrazeno jako karty.
+
+Kliknutím pravým tlačítkem na řádek tabulky se otevře stejná nabídka akcí jako u karty.
+
 ### Zobrazit celou tabulku
 Pokud je povoleno, zobrazí se v aktuálním zobrazení všechny dostupné sloupce.
 

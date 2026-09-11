@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+166"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+175"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4071"/>
+        <location line="+4197"/>
         <source>Search</source>
         <translation>Chercher</translation>
     </message>
     <message>
-        <location line="-4191"/>
+        <location line="-4317"/>
         <source>Stopped</source>
         <translation>Arrêté</translation>
     </message>
@@ -44,8 +44,8 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+1878"/>
-        <location line="+530"/>
+        <location line="+1932"/>
+        <location line="+602"/>
         <location line="+20"/>
         <location line="+1213"/>
         <location line="+11"/>
@@ -55,14 +55,14 @@
         <translation>En cours</translation>
     </message>
     <message>
-        <location line="-4072"/>
-        <location line="+3679"/>
+        <location line="-4198"/>
+        <location line="+3805"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Terminé</translation>
     </message>
     <message>
-        <location line="-3324"/>
+        <location line="-3396"/>
         <source>Empty database path provided</source>
         <translation>Chemin de base de données vide fourni</translation>
     </message>
@@ -148,12 +148,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2413"/>
+        <location line="+2485"/>
         <source>Size</source>
         <translation>Taille</translation>
     </message>
     <message>
-        <location line="-2412"/>
+        <location line="-2484"/>
         <source>Date</source>
         <translation>Date</translation>
     </message>
@@ -247,12 +247,12 @@ Choisissez un autre nom et réessayez.</translation>
     </message>
     <message>
         <location line="+85"/>
-        <location line="+529"/>
+        <location line="+601"/>
         <source>Create</source>
         <translation>Créer</translation>
     </message>
     <message>
-        <location line="-436"/>
+        <location line="-494"/>
         <source>Catalog creation was stopped.</source>
         <translation>La création du catalogue a été arrêtée.</translation>
     </message>
@@ -273,7 +273,7 @@ Choisissez un autre nom et réessayez.</translation>
         <translation>La suppression a échoué</translation>
     </message>
     <message>
-        <location line="+74"/>
+        <location line="+132"/>
         <source>Virtual</source>
         <translation>Virtuel</translation>
     </message>
@@ -290,7 +290,7 @@ Choisissez un autre nom et réessayez.</translation>
     <message>
         <location line="+237"/>
         <source>Update</source>
-        <translation type="unfinished">Actualiser</translation>
+        <translation>Actualiser</translation>
     </message>
     <message>
         <location line="+243"/>
@@ -695,6 +695,180 @@ Choisissez un autre nom.</translation>
     </message>
 </context>
 <context>
+    <name>DeviceTableModel</name>
+    <message>
+        <location filename="../qt_quick/adapters/devicetablemodel.cpp" line="+173"/>
+        <source>None</source>
+        <translation>Aucun</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Media Basic</source>
+        <translation>Média basique</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Media Extended</source>
+        <translation>Média étendu</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Full Extended</source>
+        <translation>Complet étendu</translation>
+    </message>
+    <message>
+        <location line="+94"/>
+        <location line="+28"/>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <location line="-27"/>
+        <location line="+28"/>
+        <source>Active</source>
+        <translation>Actif</translation>
+    </message>
+    <message>
+        <location line="-27"/>
+        <source>Storage ID</source>
+        <translation>ID de stockage</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+28"/>
+        <source>Number of files</source>
+        <translation>Nombre de fichiers</translation>
+    </message>
+    <message>
+        <location line="-27"/>
+        <location line="+28"/>
+        <source>Total Size</source>
+        <translation>Taille Totale</translation>
+    </message>
+    <message>
+        <location line="-27"/>
+        <source>Used space</source>
+        <translation>Espace utilisé</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Free space</source>
+        <translation>Espace libre</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Total space</source>
+        <translation>Espace total</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+25"/>
+        <source>Date updated</source>
+        <translation>Date de mise à jour</translation>
+    </message>
+    <message>
+        <location line="-24"/>
+        <location line="+25"/>
+        <source>Path</source>
+        <translation>Chemin</translation>
+    </message>
+    <message>
+        <location line="-24"/>
+        <source>Type</source>
+        <translation>Type</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Label</source>
+        <translation>Etiquette</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>FileSystem</source>
+        <translation>Système de Fichers</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Brand</source>
+        <translation>Marque</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Model</source>
+        <translation>Modèle</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Serial Number</source>
+        <translation>Numéro de Série</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Build Date</source>
+        <translation>Date de Fabrication</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Comment 1</source>
+        <translation>Commentaire 1</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Comment 2</source>
+        <translation>Commentaire 2</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Comment 3</source>
+        <translation>Commentaire 3</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Catalog ID</source>
+        <translation>Numéro de catalogue</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>File Type</source>
+        <translation>Type de Fichier</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hidden</source>
+        <translation>Caché</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Metadata</source>
+        <translation>Métadonnées</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Checksum</source>
+        <translation>Somme de contrôle</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Parent storage</source>
+        <translation>Stockage parent</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Date Loaded</source>
+        <translation>Date de chargement</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>App Version</source>
+        <translation>Version de l'application</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>File Path</source>
+        <translation>Chemin du fichier</translation>
+    </message>
+</context>
+<context>
     <name>DeviceTreeComboBox</name>
     <message>
         <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+133"/>
@@ -733,7 +907,7 @@ Choisissez un autre nom.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+838"/>
+        <location filename="../qt_quick/Main.qml" line="+841"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Voulez-vous &lt;b&gt;supprimer&lt;/b&gt; ce périphérique %1 ?&lt;br/&gt;&lt;br/&gt;Nom : &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -1645,7 +1819,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <translation>Profil de sauvegarde créé.</translation>
     </message>
     <message>
-        <location filename="../core/catalogjobstoppable.cpp" line="+260"/>
+        <location filename="../core/catalogjobstoppable.cpp" line="+270"/>
         <source>The file list is saved. Metadata and checksum scanning is incomplete and continues when the catalog is updated.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2045,12 +2219,12 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1908"/>
-        <location filename="../core/deviceupdatemanager.cpp" line="+1040"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+1047"/>
         <source>Operation cancelled</source>
         <translation>Opération annulée</translation>
     </message>
     <message>
-        <location filename="../core/deviceupdatemanager.cpp" line="-55"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="-57"/>
         <source>Stopping after current catalog completes...</source>
         <translation>Arrêt après la fin du catalogue actuel...</translation>
     </message>
@@ -6816,7 +6990,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDevicesView</name>
     <message>
-        <location filename="../qt_quick/PageDevicesView.qml" line="+62"/>
+        <location filename="../qt_quick/PageDevicesView.qml" line="+91"/>
         <location line="+37"/>
         <source>Split Catalog</source>
         <translation>Diviser le catalogue</translation>
@@ -6957,7 +7131,22 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Filtrer depuis la sélection</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+18"/>
+        <source>Cards</source>
+        <translation>Cartes</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Table</source>
+        <translation>Tableau</translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Full Table</source>
+        <translation>Tableau complet</translation>
+    </message>
+    <message>
+        <location line="+35"/>
         <source>Catalogs</source>
         <translation>Catalogues</translation>
     </message>
@@ -6992,7 +7181,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Libre</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+23"/>
+        <location line="+143"/>
         <source>No devices</source>
         <translation>Aucun périphérique</translation>
     </message>
@@ -7000,7 +7190,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDevicesViewDelegate</name>
     <message>
-        <location filename="../qt_quick/PageDevicesViewDelegate.qml" line="+64"/>
+        <location filename="../qt_quick/PageDevicesViewDelegate.qml" line="+68"/>
         <source>Update</source>
         <translation>Actualiser</translation>
     </message>
@@ -7101,7 +7291,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     <message>
         <location filename="../qt_quick/PageExploreFiles.qml" line="+78"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
-        <translation>Le périphérique n'est pas actif. Il est peut-être déconnecté, ou son chemin a peut-être changé.</translation>
+        <translation>Le périphérique n&apos;est pas actif. Il est peut-être déconnecté, ou son chemin a peut-être changé.</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -7134,7 +7324,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Taille Totale</translation>
     </message>
     <message>
-        <location line="+228"/>
+        <location line="+230"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>Ouvrir le dossier</translation>
@@ -7719,7 +7909,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+683"/>
+        <location line="+685"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Vérifier les sommes de contrôle</translation>
@@ -7731,16 +7921,16 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Inclure les metadonnées</translation>
     </message>
     <message>
-        <location line="-734"/>
-        <location line="+521"/>
+        <location line="-736"/>
+        <location line="+523"/>
         <location line="+158"/>
         <source>Move to Trash</source>
         <translation>Déplacer dans la corbeille</translation>
     </message>
     <message>
-        <location line="-807"/>
+        <location line="-809"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
-        <translation>Le périphérique n'est pas actif. Il est peut-être déconnecté, ou son chemin a peut-être changé.</translation>
+        <translation>Le périphérique n&apos;est pas actif. Il est peut-être déconnecté, ou son chemin a peut-être changé.</translation>
     </message>
     <message>
         <location line="+127"/>
@@ -7749,12 +7939,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+2"/>
-        <location line="+639"/>
+        <location line="+641"/>
         <source>Delete</source>
         <translation>Supprimer</translation>
     </message>
     <message>
-        <location line="-581"/>
+        <location line="-583"/>
         <source>Exported to: %1</source>
         <translation>Exporté vers : %1</translation>
     </message>
@@ -7774,7 +7964,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Échec de l&apos;export — aucun résultat ou erreur de base de données</translation>
     </message>
     <message>
-        <location line="+306"/>
+        <location line="+308"/>
         <source>(no selection)</source>
         <translation>(aucune sélection)</translation>
     </message>

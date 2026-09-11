@@ -38,6 +38,31 @@ QML_DIR   = REPO_ROOT / "qt_quick"
 TRANS_DIR = REPO_ROOT / "translations"
 
 
+def k3_cpp_contexts():
+    """Context names that belong to K3 but are not .qml files.
+
+    K3 has user-visible strings outside QML: the adapter classes under
+    qt_quick/ call tr() / QT_TRANSLATE_NOOP, and Qt files those under the
+    *class* name (AppManager, DeviceListModel, DeviceTableModel, ...), never
+    under a .qml stem.  Deriving the K3 context set from *.qml alone left those
+    contexts unreachable here, so a K3 adapter string that K2 has already
+    translated stayed `unfinished` and rendered in English.
+
+    Only classes actually *defined* with Q_OBJECT in a header under qt_quick/
+    count.  Forward declarations are skipped on purpose, and the explicit
+    context literals used in qt_quick -- translate("MainWindow", ...) and
+    translate("Main", ...) -- are deliberately NOT harvested: they name a K2 or
+    a QML context, and marking those K3 would invert the "K2 wins" precedence.
+    """
+    contexts = set()
+    for header in sorted(QML_DIR.rglob("*.h")):
+        text = header.read_text(encoding="utf-8", errors="ignore")
+        for m in re.finditer(r"\bclass\s+(\w+)\s*(?:final\s*)?(?::[^;{]*)?\{", text):
+            if "Q_OBJECT" in text[m.end():m.end() + 400]:
+                contexts.add(m.group(1))
+    return contexts
+
+
 def extract_qml_strings():
     """Parse every *.qml file and return {context_name: [source_strings]}."""
     result = {}
@@ -179,7 +204,9 @@ def process_ts(ts_path, k3_strings):
         if ctx.find("name") is not None
     }
 
-    k3_context_names = set(k3_strings.keys())
+    # QML contexts plus the K3 C++ adapter contexts, so an adapter string
+    # K2 already translated is bridged instead of staying unfinished.
+    k3_context_names = set(k3_strings.keys()) | k3_cpp_contexts()
     known_tr   = get_known_translations(root, k3_context_names)
     new_blocks = []
 

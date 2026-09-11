@@ -41,6 +41,10 @@ Kirigami.AbstractCard {
     anchors.leftMargin: devLevel * Kirigami.Units.gridUnit
     anchors.right:      parent ? parent.right : undefined
 
+    // Lets the Devices page open this same menu for a table row, so the table
+    // and the cards can never offer different actions (SpecDevicesPage DVP-F6).
+    function openContextMenu() { contextMenu.popup() }
+
     TapHandler {
         acceptedButtons: Qt.RightButton
         onTapped: contextMenu.popup()

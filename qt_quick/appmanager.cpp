@@ -143,6 +143,15 @@ void AppManager::setSearchObject(SearchSync *search)
 
     m_backupPreviewModel = new BackupPreviewModel(this);
 
+    // Devices page Table display mode. The proxy sorts on the model's SortRole,
+    // which carries the still-typed value, so counts and sizes sort numerically
+    // (SpecDevicesPage DVP-F2).
+    m_deviceTableModel     = new DeviceTableModel(this);
+    m_deviceTableSortModel = new QSortFilterProxyModel(this);
+    m_deviceTableSortModel->setSourceModel(m_deviceTableModel);
+    m_deviceTableSortModel->setSortRole(DeviceTableModel::SortRole);
+    m_deviceTableSortModel->setSortCaseSensitivity(Qt::CaseInsensitive);
+
     m_searchSortModel->setCaseSensitive(m_fileSortCaseSensitive);
     m_exploreSortModel->setCaseSensitive(m_fileSortCaseSensitive);
 
@@ -552,6 +561,84 @@ void AppManager::setDeviceFilterFromSelection(bool value)
     settings.setValue("Devices/FilterFromSelection", value);
     settings.sync();
     emit deviceFilterFromSelectionChanged();
+}
+//----------------------------------------------------------------------
+bool AppManager::getDeviceDisplayAsTable() const
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    // Cards is what a collection with no stored value opens in (DVP-C1).
+    return settings.value("Devices/DisplayAsTable", false).toBool();
+}
+//----------------------------------------------------------------------
+void AppManager::setDeviceDisplayAsTable(bool value)
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("Devices/DisplayAsTable", value);
+    settings.sync();
+    emit deviceDisplayAsTableChanged();
+}
+//----------------------------------------------------------------------
+bool AppManager::getDeviceDisplayFullTable() const
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    // K2 writes this same key from its own Full Table checkbox, as an int; a
+    // collection therefore carries one shared value between the two versions
+    // (DVP-F4).
+    return settings.value("Devices/DisplayFullDeviceTable", false).toBool();
+}
+//----------------------------------------------------------------------
+void AppManager::setDeviceDisplayFullTable(bool value)
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("Devices/DisplayFullDeviceTable", value);
+    settings.sync();
+    if (m_deviceTableModel)
+        m_deviceTableModel->setFullTable(value);
+    emit deviceDisplayFullTableChanged();
+}
+//----------------------------------------------------------------------
+QString AppManager::getDeviceDisplayContents() const
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    // K2 stores "Tree" where K3's view filter says "All"; the two other values
+    // match by name (mainwindow_tab_device_ui.cpp:45,55,65). Translating at this
+    // boundary keeps the shared key readable by K2 (DVP-F7).
+    const QString stored = settings.value("Devices/DisplayContents", "Tree").toString();
+    if (stored == QLatin1String("Storage") || stored == QLatin1String("Catalogs"))
+        return stored;
+    // Absent or unrecognised: the Device tree. A deliberate divergence from K2,
+    // which falls back to its Catalogs list - see DVP-F8 for why that fallback
+    // is an artefact rather than a requirement.
+    return QStringLiteral("All");
+}
+//----------------------------------------------------------------------
+void AppManager::setDeviceDisplayContents(const QString &value)
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("Devices/DisplayContents",
+                      value == QLatin1String("All") ? QStringLiteral("Tree") : value);
+    settings.sync();
+    emit deviceDisplayContentsChanged();
+}
+//----------------------------------------------------------------------
+void AppManager::populateDeviceTable(const QString &viewFilter, const QVariantList &rows)
+{
+    if (!m_deviceTableModel) return;
+    m_deviceTableModel->setView(viewFilter);
+    m_deviceTableModel->setMemoryMode(collection->databaseMode == QLatin1String("Memory"));
+    m_deviceTableModel->setFullTable(getDeviceDisplayFullTable());
+    m_deviceTableModel->populate(rows);
+}
+//----------------------------------------------------------------------
+int AppManager::deviceTableColumnWidth(int column) const
+{
+    return m_deviceTableModel ? m_deviceTableModel->columnWidth(column) : 100;
+}
+//----------------------------------------------------------------------
+void AppManager::sortDeviceTable(int column, int order)
+{
+    if (!m_deviceTableSortModel) return;
+    m_deviceTableSortModel->sort(column, static_cast<Qt::SortOrder>(order));
 }
 //----------------------------------------------------------------------
 bool AppManager::getSearchKeepsSelection() const
@@ -2364,10 +2451,25 @@ QVariantList AppManager::getDeviceList(const QString &viewFilter, int scopeDevic
     const QList<Device::DeviceTreeNode> nodes = Device::loadDeviceTree(conn, scopeDeviceId);
 
     // Build id → type map so each node can resolve its parent's type without a second query.
+    // The name map serves the Catalogs table's "Parent storage" column the same way.
     QHash<int, QString> typeById;
+    QHash<int, QString> nameById;
     typeById.reserve(nodes.size());
-    for (const Device::DeviceTreeNode &n : nodes)
+    nameById.reserve(nodes.size());
+    for (const Device::DeviceTreeNode &n : nodes) {
         typeById.insert(n.id, n.type);
+        nameById.insert(n.id, n.name);
+    }
+
+    // The Table display mode needs the Storage and Catalog detail columns
+    // (SpecDevicesPage DVP-F3). They are read here, for the list views that show
+    // them, rather than when the user switches to Table: toggling the display
+    // mode must not reload the list, because a reload would re-probe the active
+    // status and break DAS-O4 / DVP-C2. Both loads are plain database reads on
+    // existing core methods - no filesystem access, and no SQL in qt_quick
+    // (DVP-C4).
+    const bool wantStorageDetail = (viewFilter == QLatin1String("Storage"));
+    const bool wantCatalogDetail = (viewFilter == QLatin1String("Catalogs"));
 
     QVariantList result;
     result.reserve(nodes.size());
@@ -2396,6 +2498,49 @@ QVariantList AppManager::getDeviceList(const QString &viewFilter, int scopeDevic
         item[QStringLiteral("groupId")]       = n.groupId;
         item[QStringLiteral("externalId")]    = n.externalId;
         item[QStringLiteral("comment")]       = n.comment;
+        // Used space is not stored; K2 derives it the same way
+        // (mainwindow_tab_device_pr.cpp:1519).
+        item[QStringLiteral("usedSpace")]     = n.totalSpace - n.freeSpace;
+
+        if (wantStorageDetail && n.type == QLatin1String("Storage")) {
+            Storage storage;
+            storage.ID = n.externalId;
+            storage.setConnectionName(conn);
+            storage.loadStorage(conn);
+            item[QStringLiteral("storageType")]         = storage.type;
+            item[QStringLiteral("storageLabel")]        = storage.label;
+            item[QStringLiteral("storageFileSystem")]   = storage.fileSystem;
+            item[QStringLiteral("storageBrand")]        = storage.brand;
+            item[QStringLiteral("storageModel")]        = storage.model;
+            item[QStringLiteral("storageSerialNumber")] = storage.serialNumber;
+            item[QStringLiteral("storageBuildDate")]    = storage.buildDate;
+            item[QStringLiteral("storageComment1")]     = storage.comment1;
+            item[QStringLiteral("storageComment2")]     = storage.comment2;
+            item[QStringLiteral("storageComment3")]     = storage.comment3;
+        }
+
+        if (wantCatalogDetail && n.type == QLatin1String("Catalog")) {
+            Catalog catalog;
+            catalog.ID = n.externalId;
+            catalog.setConnectionName(conn);
+            catalog.loadCatalog();
+            item[QStringLiteral("catalogFileType")]       = catalog.fileType;
+            item[QStringLiteral("catalogIncludeHidden")]  = catalog.includeHidden;
+            // A pre-metadata catalog stores the literal "false"; the device
+            // loader normalises it the same way (device.cpp:130).
+            item[QStringLiteral("catalogIncludeMetadata")] =
+                (catalog.includeMetadata == QLatin1String("false"))
+                    ? Catalog::METADATA_NONE : catalog.includeMetadata;
+            item[QStringLiteral("catalogIncludeChecksum")] = catalog.includeChecksum;
+            item[QStringLiteral("catalogParentStorage")]   = nameById.value(n.parentId);
+            item[QStringLiteral("catalogAppVersion")]      = catalog.appVersion;
+            item[QStringLiteral("catalogFilePath")]        = catalog.filePath;
+            item[QStringLiteral("catalogDateLoaded")]      =
+                catalog.dateLoaded.isValid()
+                    ? catalog.dateLoaded.toString(QStringLiteral("yyyy-MM-dd hh:mm:ss"))
+                    : QString();
+        }
+
         result.append(item);
     }
     return result;

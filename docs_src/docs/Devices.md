@@ -49,6 +49,18 @@ The devices can be listed and managed in 3 ways:
 
 **[Catalog list](DevicesCatalogs)**: Shows only Catalog devices, filtered by the [Selection](Selection) panel.
 
+### Choosing between cards and table
+
+On the **Storage list** and the **Catalog list**, the devices can be shown in two ways:
+
+**Cards**: each device is a card, with its name, its main figures and a menu of actions. Comfortable for reading a handful of devices.
+
+**Table**: the devices are shown as rows and columns, as in the previous version of Katalog. Values line up down each column, so devices can be compared at a glance, and clicking a column heading sorts the list by that column — clicking it again reverses the order. Numbers, sizes and dates sort by their real value, not alphabetically.
+
+The choice applies to both lists and is remembered for each collection. The **Device Tree** view is always shown as cards.
+
+Right-clicking a table row opens the same menu of actions a card offers.
+
 ### Display full table
 When enabled, all available columns are shown in the current view.
 

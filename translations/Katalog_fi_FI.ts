@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+166"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+175"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4071"/>
+        <location line="+4197"/>
         <source>Search</source>
         <translation>Haku</translation>
     </message>
     <message>
-        <location line="-4191"/>
+        <location line="-4317"/>
         <source>Stopped</source>
         <translation>Pysäytetty</translation>
     </message>
@@ -44,8 +44,8 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+1878"/>
-        <location line="+530"/>
+        <location line="+1932"/>
+        <location line="+602"/>
         <location line="+20"/>
         <location line="+1213"/>
         <location line="+11"/>
@@ -55,14 +55,14 @@
         <translation>Käynnissä</translation>
     </message>
     <message>
-        <location line="-4072"/>
-        <location line="+3679"/>
+        <location line="-4198"/>
+        <location line="+3805"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Valmis</translation>
     </message>
     <message>
-        <location line="-3324"/>
+        <location line="-3396"/>
         <source>Empty database path provided</source>
         <translation>Tyhjä tietokantapolku annettu</translation>
     </message>
@@ -148,12 +148,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2413"/>
+        <location line="+2485"/>
         <source>Size</source>
         <translation>Koko</translation>
     </message>
     <message>
-        <location line="-2412"/>
+        <location line="-2484"/>
         <source>Date</source>
         <translation>Päivämäärä</translation>
     </message>
@@ -247,12 +247,12 @@ Valitse toinen nimi ja yritä uudelleen.</translation>
     </message>
     <message>
         <location line="+85"/>
-        <location line="+529"/>
+        <location line="+601"/>
         <source>Create</source>
         <translation>Luo</translation>
     </message>
     <message>
-        <location line="-436"/>
+        <location line="-494"/>
         <source>Catalog creation was stopped.</source>
         <translation>Katalogin luonti pysäytettiin.</translation>
     </message>
@@ -273,7 +273,7 @@ Valitse toinen nimi ja yritä uudelleen.</translation>
         <translation>Poisto epäonnistui</translation>
     </message>
     <message>
-        <location line="+74"/>
+        <location line="+132"/>
         <source>Virtual</source>
         <translation>Virtuaalinen</translation>
     </message>
@@ -290,7 +290,7 @@ Valitse toinen nimi ja yritä uudelleen.</translation>
     <message>
         <location line="+237"/>
         <source>Update</source>
-        <translation type="unfinished">Päivitä</translation>
+        <translation>Päivitä</translation>
     </message>
     <message>
         <location line="+243"/>
@@ -695,6 +695,180 @@ Valitse toinen nimi.</translation>
     </message>
 </context>
 <context>
+    <name>DeviceTableModel</name>
+    <message>
+        <location filename="../qt_quick/adapters/devicetablemodel.cpp" line="+173"/>
+        <source>None</source>
+        <translation>Ei mitään</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Media Basic</source>
+        <translation>Media perustaso</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Media Extended</source>
+        <translation>Media laajennettu</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Full Extended</source>
+        <translation>Täysi laajennettu</translation>
+    </message>
+    <message>
+        <location line="+94"/>
+        <location line="+28"/>
+        <source>Name</source>
+        <translation>Nimi</translation>
+    </message>
+    <message>
+        <location line="-27"/>
+        <location line="+28"/>
+        <source>Active</source>
+        <translation>Aktiivinen</translation>
+    </message>
+    <message>
+        <location line="-27"/>
+        <source>Storage ID</source>
+        <translation>Tallennustila-ID</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+28"/>
+        <source>Number of files</source>
+        <translation>Tiedostojen määrä</translation>
+    </message>
+    <message>
+        <location line="-27"/>
+        <location line="+28"/>
+        <source>Total Size</source>
+        <translation>Kokonaiskoko</translation>
+    </message>
+    <message>
+        <location line="-27"/>
+        <source>Used space</source>
+        <translation>Käytetty tila</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Free space</source>
+        <translation>Vapaa tila</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Total space</source>
+        <translation>Kokonaistila</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+25"/>
+        <source>Date updated</source>
+        <translation>Päivityspäivä</translation>
+    </message>
+    <message>
+        <location line="-24"/>
+        <location line="+25"/>
+        <source>Path</source>
+        <translation>Polku</translation>
+    </message>
+    <message>
+        <location line="-24"/>
+        <source>Type</source>
+        <translation>Tyyppi</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Label</source>
+        <translation>Nimike</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>FileSystem</source>
+        <translation>Tiedostojärjestelmä</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Brand</source>
+        <translation>Merkki</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Model</source>
+        <translation>Malli</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Serial Number</source>
+        <translation>Sarjanumero</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Build Date</source>
+        <translation>Valmistuspäivä</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Comment 1</source>
+        <translation>Kommentti 1</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Comment 2</source>
+        <translation>Kommentti 2</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Comment 3</source>
+        <translation>Kommentti 3</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Catalog ID</source>
+        <translation>Katalogi-ID</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>File Type</source>
+        <translation>Tiedostotyyppi</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hidden</source>
+        <translation>Piilotettu</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Metadata</source>
+        <translation>Metatiedot</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Checksum</source>
+        <translation>Tarkistussumma</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Parent storage</source>
+        <translation>Yläobjektin tallennustila</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Date Loaded</source>
+        <translation>Latauksen päivämäärä</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>App Version</source>
+        <translation>Sovelluksen versio</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>File Path</source>
+        <translation>Tiedostopolku</translation>
+    </message>
+</context>
+<context>
     <name>DeviceTreeComboBox</name>
     <message>
         <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+133"/>
@@ -733,7 +907,7 @@ Valitse toinen nimi.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+838"/>
+        <location filename="../qt_quick/Main.qml" line="+841"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Haluatko &lt;b&gt;poistaa&lt;/b&gt; tämän %1-laitteen?&lt;br/&gt;&lt;br/&gt;Nimi: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -1640,7 +1814,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <translation>Varmuuskopiointi profiili luotu.</translation>
     </message>
     <message>
-        <location filename="../core/catalogjobstoppable.cpp" line="+260"/>
+        <location filename="../core/catalogjobstoppable.cpp" line="+270"/>
         <source>The file list is saved. Metadata and checksum scanning is incomplete and continues when the catalog is updated.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2040,12 +2214,12 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1908"/>
-        <location filename="../core/deviceupdatemanager.cpp" line="+1040"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+1047"/>
         <source>Operation cancelled</source>
         <translation>Toiminto peruutettu</translation>
     </message>
     <message>
-        <location filename="../core/deviceupdatemanager.cpp" line="-55"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="-57"/>
         <source>Stopping after current catalog completes...</source>
         <translation>Pysäytetään nykyisen luettelon valmistuttua...</translation>
     </message>
@@ -6815,7 +6989,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDevicesView</name>
     <message>
-        <location filename="../qt_quick/PageDevicesView.qml" line="+62"/>
+        <location filename="../qt_quick/PageDevicesView.qml" line="+91"/>
         <location line="+37"/>
         <source>Split Catalog</source>
         <translation>Jaa luettelo</translation>
@@ -6956,7 +7130,22 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Suodata valinnasta</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+18"/>
+        <source>Cards</source>
+        <translation>Kortit</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Table</source>
+        <translation>Taulukko</translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Full Table</source>
+        <translation>Koko taulukko</translation>
+    </message>
+    <message>
+        <location line="+35"/>
         <source>Catalogs</source>
         <translation>Katalogit</translation>
     </message>
@@ -6991,7 +7180,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Vapaa</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+23"/>
+        <location line="+143"/>
         <source>No devices</source>
         <translation>Ei laitteita</translation>
     </message>
@@ -6999,7 +7189,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDevicesViewDelegate</name>
     <message>
-        <location filename="../qt_quick/PageDevicesViewDelegate.qml" line="+64"/>
+        <location filename="../qt_quick/PageDevicesViewDelegate.qml" line="+68"/>
         <source>Update</source>
         <translation>Päivitä</translation>
     </message>
@@ -7133,7 +7323,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Kokonaiskoko</translation>
     </message>
     <message>
-        <location line="+228"/>
+        <location line="+230"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>Avaa kansio</translation>
@@ -7718,7 +7908,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+683"/>
+        <location line="+685"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Tarkista tarkistussummat</translation>
@@ -7730,14 +7920,14 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Sisällytä metatiedot</translation>
     </message>
     <message>
-        <location line="-734"/>
-        <location line="+521"/>
+        <location line="-736"/>
+        <location line="+523"/>
         <location line="+158"/>
         <source>Move to Trash</source>
         <translation>Siirrä roskakoriin</translation>
     </message>
     <message>
-        <location line="-807"/>
+        <location line="-809"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Laite ei ole aktiivinen. Se voi olla irrotettu tai sen polku on saattanut muuttua.</translation>
     </message>
@@ -7748,12 +7938,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+2"/>
-        <location line="+639"/>
+        <location line="+641"/>
         <source>Delete</source>
         <translation>Poista</translation>
     </message>
     <message>
-        <location line="-581"/>
+        <location line="-583"/>
         <source>Exported to: %1</source>
         <translation>Viety kohteeseen: %1</translation>
     </message>
@@ -7773,7 +7963,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Vienti epäonnistui — ei tuloksia tai tietokantavirhe</translation>
     </message>
     <message>
-        <location line="+306"/>
+        <location line="+308"/>
         <source>(no selection)</source>
         <translation>(ei valintaa)</translation>
     </message>

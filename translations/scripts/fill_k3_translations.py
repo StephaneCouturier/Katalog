@@ -29,7 +29,8 @@ Then compile & embed (K2 build dir, then K3 build dir):
 
 Safety:
   * Only touches messages whose translation is type="unfinished".
-  * Only inside contexts that are K3 QML files (qt_quick/*.qml stems).
+  * Only inside K3 contexts: qt_quick/*.qml stems plus the K3 C++ adapter
+    classes (AppManager, DeviceTableModel, ...).
   * en_US is skipped (English source = the displayed text already).
   * Edits are targeted text replacements — the rest of each .ts is untouched.
 """
@@ -48,9 +49,34 @@ JSON_PATH = REPO_ROOT / "translations" / "scripts" / "k3_unfinished.json"
 SKIP_LANGS = {"en_US"}  # English source already equals displayed text
 
 
+def k3_cpp_contexts():
+    """Context names that belong to K3 but are not .qml files.
+
+    K3 has user-visible strings outside QML: the adapter classes under
+    qt_quick/ call tr() / QT_TRANSLATE_NOOP, and Qt files those under the
+    *class* name (AppManager, DeviceListModel, DeviceTableModel, ...), never
+    under a .qml stem.  Deriving the K3 context set from *.qml alone left those
+    contexts unreachable here, so a K3 adapter string that K2 has already
+    translated stayed `unfinished` and rendered in English.
+
+    Only classes actually *defined* with Q_OBJECT in a header under qt_quick/
+    count.  Forward declarations are skipped on purpose, and the explicit
+    context literals used in qt_quick -- translate("MainWindow", ...) and
+    translate("Main", ...) -- are deliberately NOT harvested: they name a K2 or
+    a QML context, and marking those K3 would invert the "K2 wins" precedence.
+    """
+    contexts = set()
+    for header in sorted(QML_DIR.rglob("*.h")):
+        text = header.read_text(encoding="utf-8", errors="ignore")
+        for m in re.finditer(r"\bclass\s+(\w+)\s*(?:final\s*)?(?::[^;{]*)?\{", text):
+            if "Q_OBJECT" in text[m.end():m.end() + 400]:
+                contexts.add(m.group(1))
+    return contexts
+
 def k3_contexts():
-    """Context names that belong to K3 = stems of qt_quick/*.qml."""
-    return {p.stem for p in QML_DIR.glob("*.qml")}
+    """Context names that belong to K3: stems of qt_quick/*.qml plus the
+    K3 C++ adapter class contexts."""
+    return {p.stem for p in QML_DIR.glob("*.qml")} | k3_cpp_contexts()
 
 
 def lang_of(ts_path):

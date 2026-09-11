@@ -67,6 +67,7 @@
 #include "adapters/search.h"
 #include "adapters/devicelistmodel.h"
 #include "adapters/explorefilesmodel.h"
+#include "adapters/devicetablemodel.h"
 #include "adapters/backuppreviewmodel.h"
 #include "filesview.h"
 #include <QElapsedTimer>
@@ -82,6 +83,7 @@ class AppManager : public QObject
     Q_PROPERTY(QAbstractItemModel*    searchSortModel   READ getSearchSortModel    CONSTANT)
     Q_PROPERTY(QAbstractItemModel*    exploreSortModel  READ getExploreSortModel   CONSTANT)
     Q_PROPERTY(QAbstractItemModel*    backupPreviewModel READ getBackupPreviewModel CONSTANT)
+    Q_PROPERTY(QAbstractItemModel*    deviceTableModel  READ getDeviceTableModel   CONSTANT)
     Q_PROPERTY(int     selectedDeviceId   READ getSelectedDeviceId   NOTIFY selectedDeviceChanged)
     Q_PROPERTY(QString selectedDeviceName READ getSelectedDeviceName NOTIFY selectedDeviceChanged)
     Q_PROPERTY(QString selectedDeviceType READ getSelectedDeviceType NOTIFY selectedDeviceChanged)
@@ -99,6 +101,15 @@ class AppManager : public QObject
     Q_PROPERTY(bool refreshDeviceStatusOnActivation READ getRefreshDeviceStatusOnActivation WRITE setRefreshDeviceStatusOnActivation NOTIFY refreshDeviceStatusOnActivationChanged)
     Q_PROPERTY(bool showSelectionPage READ getShowSelectionPage WRITE setShowSelectionPage NOTIFY showSelectionPageChanged)
     Q_PROPERTY(bool deviceFilterFromSelection READ getDeviceFilterFromSelection WRITE setDeviceFilterFromSelection NOTIFY deviceFilterFromSelectionChanged)
+    // Devices page display mode and its Full Table option (SpecDevicesPage
+    // DVP-F4). DisplayFullDeviceTable is the key K2 already writes, so a
+    // collection carries one shared value between the two versions.
+    Q_PROPERTY(bool deviceDisplayAsTable READ getDeviceDisplayAsTable WRITE setDeviceDisplayAsTable NOTIFY deviceDisplayAsTableChanged)
+    Q_PROPERTY(bool deviceDisplayFullTable READ getDeviceDisplayFullTable WRITE setDeviceDisplayFullTable NOTIFY deviceDisplayFullTableChanged)
+    // Which of the three Devices views is shown (SpecDevicesPage DVP-F7).
+    // Stored under K2's own Devices/DisplayContents key, so the choice follows a
+    // collection between the two versions.
+    Q_PROPERTY(QString deviceDisplayContents READ getDeviceDisplayContents WRITE setDeviceDisplayContents NOTIFY deviceDisplayContentsChanged)
     Q_PROPERTY(bool searchKeepsSelection READ getSearchKeepsSelection WRITE setSearchKeepsSelection NOTIFY searchKeepsSelectionChanged)
     Q_PROPERTY(bool checkVersionChoice READ getCheckVersionChoice WRITE setCheckVersionChoice NOTIFY checkVersionChoiceChanged)
     Q_PROPERTY(bool fileSortCaseSensitive READ getFileSortCaseSensitive WRITE setFileSortCaseSensitive NOTIFY fileSortCaseSensitiveChanged)
@@ -229,6 +240,12 @@ public slots:
     void setShowSelectionPage(bool value);
     bool getDeviceFilterFromSelection() const;
     void setDeviceFilterFromSelection(bool value);
+    bool getDeviceDisplayAsTable() const;
+    void setDeviceDisplayAsTable(bool value);
+    bool getDeviceDisplayFullTable() const;
+    void setDeviceDisplayFullTable(bool value);
+    QString getDeviceDisplayContents() const;
+    void setDeviceDisplayContents(const QString &value);
     bool getSearchKeepsSelection() const;
     void setSearchKeepsSelection(bool value);
     QString getAppReleaseDate() const { return releaseDate; }
@@ -386,6 +403,7 @@ public slots:
     // Sort
     Q_INVOKABLE void sortSearch(int column, int order);
     Q_INVOKABLE void sortExplore(int column, int order);
+    Q_INVOKABLE void sortDeviceTable(int column, int order);
     Q_INVOKABLE int  getSearchSortColumn()  const;
     Q_INVOKABLE int  getSearchSortOrder()   const;
     Q_INVOKABLE int  getExploreSortColumn() const;
@@ -395,6 +413,12 @@ public slots:
     QAbstractItemModel *getSearchSortModel()  const { return m_searchSortModel; }
     QAbstractItemModel *getExploreSortModel() const { return m_exploreSortModel; }
     QAbstractItemModel *getBackupPreviewModel() const { return m_backupPreviewModel; }
+    QAbstractItemModel *getDeviceTableModel()   const { return m_deviceTableSortModel; }
+
+    /** Feeds the Devices page table with the rows already loaded for the cards. */
+    Q_INVOKABLE void populateDeviceTable(const QString &viewFilter, const QVariantList &rows);
+    /** Width hint for a visible table column, for the QML columnWidthProvider. */
+    Q_INVOKABLE int  deviceTableColumnWidth(int column) const;
 
     // Storage helpers
     Q_INVOKABLE QStringList  getStoragePictureList() const;
@@ -512,6 +536,9 @@ signals:
     void showSelectionPageChanged();
     void searchKeepsSelectionChanged();
     void deviceFilterFromSelectionChanged();
+    void deviceDisplayAsTableChanged();
+    void deviceDisplayFullTableChanged();
+    void deviceDisplayContentsChanged();
     void checkVersionChoiceChanged();
     void fileSortCaseSensitiveChanged();
     void databasePathChanged(const QString &newPath);
@@ -673,6 +700,8 @@ private:
 
     ExploreFilesModel *m_exploreFilesModel = nullptr;
     FilesView         *m_exploreSortModel  = nullptr;
+    DeviceTableModel      *m_deviceTableModel     = nullptr;
+    QSortFilterProxyModel *m_deviceTableSortModel = nullptr;
     BackupPreviewModel *m_backupPreviewModel = nullptr;
     FilesView         *m_searchSortModel   = nullptr;
 

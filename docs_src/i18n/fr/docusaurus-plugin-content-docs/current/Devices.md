@@ -49,6 +49,18 @@ Les périphériques peuvent être listés et gérés de 3 façons :
 
 **[Liste des catalogues](DevicesCatalogs)** : affiche uniquement les périphériques de type catalogue, filtrés selon le panneau [Sélection](Selection).
 
+### Choisir entre cartes et tableau
+
+Dans la **Liste des stockages** et la **Liste des catalogues**, les périphériques peuvent être affichés de deux manières :
+
+**Cartes** : chaque périphérique est une carte, avec son nom, ses principaux chiffres et un menu d'actions. Confortable pour lire quelques périphériques.
+
+**Tableau** : les périphériques sont affichés en lignes et colonnes, comme dans la version précédente de Katalog. Les valeurs sont alignées dans chaque colonne, ce qui permet de comparer les périphériques d'un coup d'œil, et un clic sur un en-tête de colonne trie la liste selon cette colonne — un second clic inverse l'ordre. Les nombres, les tailles et les dates sont triés selon leur valeur réelle, et non par ordre alphabétique.
+
+Ce choix s'applique aux deux listes et est mémorisé pour chaque collection. La vue **Arborescence des périphériques** est toujours affichée sous forme de cartes.
+
+Un clic droit sur une ligne du tableau ouvre le même menu d'actions que celui d'une carte.
+
 ### Afficher le tableau complet
 Lorsqu'elle est activée, toutes les colonnes disponibles sont affichées dans la vue courante.
 

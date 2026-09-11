@@ -81,6 +81,7 @@ set(K3_QML_FILES
     # files under their class context (AppManager, DeviceListModel).
     ${CMAKE_SOURCE_DIR}/qt_quick/appmanager.cpp
     ${CMAKE_SOURCE_DIR}/qt_quick/adapters/devicelistmodel.cpp
+    ${CMAKE_SOURCE_DIR}/qt_quick/adapters/devicetablemodel.cpp
     ${CMAKE_SOURCE_DIR}/qt_quick/Main.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/PageSearchForm.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/PageSearchResultsForm.qml
