@@ -578,6 +578,13 @@ signals:
     void splitCompleted(bool success, const QString &error);
 
 private:
+    // The single naming rule for a collection, shared by the drawer header and the
+    // Open menu's recent entries so the two cannot drift apart
+    // (SpecCollectionIdentity.md CID-C5). Callers supply the values they hold;
+    // the mode decides which ones are used.
+    static QString collectionDisplayName(const QString &mode, const QString &path,
+                                         const QString &hostName, const QString &dbName);
+
     QString m_connectionName = "defaultConnection";
     // Device active-status refresh policy (SpecDeviceActiveStatus.md).
     // Mutable: getDeviceList() is const but legitimately re-probes before reading.

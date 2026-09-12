@@ -352,6 +352,7 @@ QString AppManager::startDatabase()
     initializeDeviceListModel();
     selectedDevice->loadDevice(conn);
     emit databaseModeChanged();
+    emit recentCollectionsChanged();
     qInfo() << "Katalog" << currentVersion << "– database ready:" << collection->databaseMode;
     return "startDatabase: No Error";
 }
@@ -1000,6 +1001,10 @@ bool AppManager::reconnectToDatabase()
 
     refreshAllUI();
     emit databaseModeChanged();
+    // Notify of the collection change itself: the drawer header reads the current
+    // collection name through this signal, and the rollback path above reconnects
+    // without going through saveToRecentCollections().
+    emit recentCollectionsChanged();
     return true;
 }
 
@@ -1985,7 +1990,6 @@ QVariantList AppManager::getRecentCollections() const
         QVariantMap entry;
         entry["mode"]        = settings.value(QString("Recent/%1/mode").arg(i)).toString();
         entry["path"]        = settings.value(QString("Recent/%1/path").arg(i)).toString();
-        entry["displayName"] = settings.value(QString("Recent/%1/displayName").arg(i)).toString();
         QString storedIcon   = settings.value(QString("Recent/%1/iconName").arg(i)).toString();
         if      (storedIcon == "server-database") storedIcon = "network-server-database";
         else if (storedIcon == "network-server")  storedIcon = "network-workgroup";
@@ -1995,23 +1999,62 @@ QVariantList AppManager::getRecentCollections() const
         entry["port"]        = settings.value(QString("Recent/%1/port").arg(i), 3306).toInt();
         entry["userName"]    = settings.value(QString("Recent/%1/userName").arg(i)).toString();
         entry["password"]    = settings.value(QString("Recent/%1/password").arg(i)).toString();
+
+        // Entries written before the name was computed reliably are stored blank;
+        // deriving here rather than trusting the stored value means they recover
+        // on their own, without the user reopening each collection to repair it.
+        // The path is the last resort so a menu line is never empty.
+        QString displayName = settings.value(QString("Recent/%1/displayName").arg(i)).toString();
+        if (displayName.isEmpty())
+            displayName = collectionDisplayName(entry["mode"].toString(), entry["path"].toString(),
+                                                entry["hostName"].toString(), entry["dbName"].toString());
+        if (displayName.isEmpty())
+            displayName = entry["path"].toString();
+        entry["displayName"] = displayName;
+
         result.append(entry);
     }
     return result;
+}
+//----------------------------------------------------------------------
+QString AppManager::collectionDisplayName(const QString &mode, const QString &path,
+                                         const QString &hostName, const QString &dbName)
+{
+    // QDir::dirName(), not QFileInfo::fileName(): the latter returns an empty
+    // string for a path that ends with a separator, which is how a collection
+    // folder arrives from some of the write paths. cleanPath() first, because
+    // dirName() is empty in turn for a doubled separator; and an empty path is
+    // returned as such, since QDir("").dirName() is "." rather than nothing.
+    if (mode == "Memory") {
+        if (path.isEmpty()) return QString();
+        return QDir(QDir::cleanPath(path)).dirName();
+    }
+    if (mode == "File")   return QFileInfo(path).fileName();
+    if (mode == "Hosted") return hostName + "/" + dbName;
+    return QString();
 }
 //----------------------------------------------------------------------
 QString AppManager::getCurrentCollectionDisplayName() const
 {
     QString mode = getDatabaseMode();
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
-    if (mode == "Memory")
-        return QFileInfo(collection->folder).fileName();
-    if (mode == "File")
-        return QFileInfo(settings.value("Settings/DatabaseFilePath").toString()).fileName();
-    if (mode == "Hosted")
-        return settings.value("Settings/databaseHostName").toString()
-               + "/" + settings.value("Settings/databaseName").toString();
-    return QString();
+    // The collection fields are repopulated by Database::initialize() on every
+    // connection, so they are current even when the settings file is not; the
+    // persisted keys are the fallback for values never set this session.
+    QString path, host, name;
+    if (mode == "Memory") {
+        path = collection->folder;
+        if (path.isEmpty()) path = settings.value("LastCollectionFolder").toString();
+    } else if (mode == "File") {
+        path = collection->databaseFilePath;
+        if (path.isEmpty()) path = settings.value("Settings/DatabaseFilePath").toString();
+    } else if (mode == "Hosted") {
+        host = collection->databaseHostName;
+        name = collection->databaseName;
+        if (host.isEmpty()) host = settings.value("Settings/databaseHostName").toString();
+        if (name.isEmpty()) name = settings.value("Settings/databaseName").toString();
+    }
+    return collectionDisplayName(mode, path, host, name);
 }
 //----------------------------------------------------------------------
 QString AppManager::getCurrentCollectionIconName() const
@@ -2072,10 +2115,16 @@ void AppManager::saveToRecentCollections(const QString &mode, const QString &pat
     QString iconName = (mode == "Memory") ? "folder"
                      : (mode == "File")   ? "network-server-database"
                                           : "network-workgroup";
+    // Computed here, not taken on trust: a caller passing an empty name must not
+    // be able to freeze it into the settings file (SpecCollectionIdentity.md CID-C4).
+    QString name = collectionDisplayName(mode, path, hostName, dbName);
+    if (name.isEmpty())
+        name = displayName.isEmpty() ? path : displayName;
+
     QVariantMap newEntry;
     newEntry["mode"]        = mode;
     newEntry["path"]        = path;
-    newEntry["displayName"] = displayName;
+    newEntry["displayName"] = name;
     newEntry["iconName"]    = iconName;
     newEntry["hostName"]    = hostName;
     newEntry["dbName"]      = dbName;

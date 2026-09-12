@@ -95,7 +95,8 @@ export default {
                 'SpecSelection',
                 'SpecApplicationIcon',
                 'SpecTheme',
-                'SpecDevicesPage'
+                'SpecDevicesPage',
+                'SpecCollectionIdentity'
                 ],
       },
        'Development-Repository',
