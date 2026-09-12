@@ -1533,7 +1533,7 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
         <translation>Pasirinkite duomenų bazę sukūrimui ir atidarymui:</translation>
     </message>
     <message>
-        <location filename="../qt_quick/main.cpp" line="+117"/>
+        <location filename="../qt_quick/main.cpp" line="+122"/>
         <source>Catalog your devices to search, analyze, and backup your files.</source>
         <translation>Kataloguokite savo įrenginius, kad galėtumėte ieškoti, analizuoti ir kurti atsargines failų kopijas.</translation>
     </message>
@@ -7148,47 +7148,55 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Taip</translation>
     </message>
     <message>
-        <location line="+63"/>
         <source>Device tree</source>
-        <translation>Įrenginių medis</translation>
+        <translation type="vanished">Įrenginių medis</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Storage list</source>
-        <translation>Saugyklos sąrašas</translation>
+        <translation type="vanished">Saugyklos sąrašas</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Catalogs list</source>
-        <translation>Katalogų sąrašas</translation>
+        <translation type="vanished">Katalogų sąrašas</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+169"/>
         <source>Filter from Selection</source>
         <translation>Filtruoti pagal pasirinkimą</translation>
     </message>
     <message>
-        <location line="-45"/>
+        <location line="-47"/>
         <source>Cards</source>
         <translation>Kortelės</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Table</source>
         <translation>Lentelė</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+18"/>
         <source>Full Table</source>
         <translation>Pilna lentelė</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="-47"/>
+        <location line="+101"/>
         <source>Catalogs</source>
         <translation>Katalogai</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-127"/>
+        <source>All devices</source>
+        <translation>Visi įrenginiai</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Storage</source>
+        <translation>Saugykla</translation>
+    </message>
+    <message>
+        <location line="+120"/>
         <source>Total File Size</source>
         <translation>Bendras failų dydis</translation>
     </message>

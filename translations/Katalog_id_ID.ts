@@ -1533,7 +1533,7 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <translation>Pilih database untuk dibuat dan dibuka:</translation>
     </message>
     <message>
-        <location filename="../qt_quick/main.cpp" line="+117"/>
+        <location filename="../qt_quick/main.cpp" line="+122"/>
         <source>Catalog your devices to search, analyze, and backup your files.</source>
         <translation>Katalogkan perangkat Anda untuk mencari, menganalisis, dan mencadangkan berkas Anda.</translation>
     </message>
@@ -7149,47 +7149,55 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Ya</translation>
     </message>
     <message>
-        <location line="+63"/>
         <source>Device tree</source>
-        <translation>Pohon perangkat</translation>
+        <translation type="vanished">Pohon perangkat</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Storage list</source>
-        <translation>Daftar penyimpanan</translation>
+        <translation type="vanished">Daftar penyimpanan</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Catalogs list</source>
-        <translation>Daftar katalog</translation>
+        <translation type="vanished">Daftar katalog</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+169"/>
         <source>Filter from Selection</source>
         <translation>Filter dari pilihan</translation>
     </message>
     <message>
-        <location line="-45"/>
+        <location line="-47"/>
         <source>Cards</source>
         <translation>Kartu</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Table</source>
         <translation>Tabel</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+18"/>
         <source>Full Table</source>
         <translation>Tabel Lengkap</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="-47"/>
+        <location line="+101"/>
         <source>Catalogs</source>
         <translation>Katalog</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-127"/>
+        <source>All devices</source>
+        <translation>Semua perangkat</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Storage</source>
+        <translation>Penyimpanan</translation>
+    </message>
+    <message>
+        <location line="+120"/>
         <source>Total File Size</source>
         <translation>Total Ukuran File</translation>
     </message>

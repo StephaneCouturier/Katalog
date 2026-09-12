@@ -389,122 +389,146 @@ Item {
         anchors.fill: parent
         spacing: 0
 
-        // Filter bar
+// Filter bar. An ActionToolBar rather than a plain row: narrowing the
+        // window used to clip controls out of sight, and this is the same
+        // mechanism the page toolbar uses - what no longer fits moves into the
+        // overflow menu instead of disappearing (DVP-F27).
         Rectangle {
             Layout.fillWidth: true
-            implicitHeight: filterRow.implicitHeight + Kirigami.Units.smallSpacing * 2
+            implicitHeight: filterBar.implicitHeight + Kirigami.Units.smallSpacing * 2
             color: Kirigami.Theme.alternateBackgroundColor
 
-            RowLayout {
-                id: filterRow
+            Kirigami.ActionToolBar {
+                id: filterBar
                 anchors {
                     left: parent.left; right: parent.right
                     verticalCenter: parent.verticalCenter
                     leftMargin: Kirigami.Units.largeSpacing
                     rightMargin: Kirigami.Units.largeSpacing
                 }
-                spacing: Kirigami.Units.smallSpacing
+                // The bar's own background would sit on top of the band.
+                background: null
+                alignment: Qt.AlignLeft
 
-                Controls.ButtonGroup { id: filterGroup }
-
-                Controls.ToolButton {
-                    text: qsTr("Device tree")
-                    checkable: true; checked: root.viewFilter === "All"
-                    Controls.ButtonGroup.group: filterGroup
-                    onClicked: {
-                        root.viewFilter = "All"
-                        appManager1.deviceDisplayContents = "All"
-                        root.refreshDevices()
+                // Order as DVP-F1: the three views, then the display cluster,
+                // then Filter from Selection last. The display options carry
+                // the lower display hint, so they are the first to fold into
+                // the overflow menu; the view choice, which changes what is
+                // being looked at rather than how it is drawn, is the last to
+                // go (DVP-F27).
+                // The three view buttons name the Virtual, Storage and
+                // INACTIVE-Catalog icons (DVP-F29). Category icons for a view
+                // chooser, not a rendering of any device - the Catalogs button
+                // shows the inactive icon whether or not a catalog is active,
+                // which is why this is not a third user of the per-type device
+                // mapping in DeviceIdentity.qml and DeviceTableModel (DVP-C26).
+                actions: [
+                    Kirigami.Action {
+                        text: qsTr("All devices")
+                        icon.name: "drive-multidisk"
+                        checkable: true
+                        checked: root.viewFilter === "All"
+                        displayHint: Kirigami.DisplayHint.KeepVisible
+                        onTriggered: {
+                            root.viewFilter = "All"
+                            appManager1.deviceDisplayContents = "All"
+                            root.refreshDevices()
+                            checked = Qt.binding(() => root.viewFilter === "All")
+                        }
+                    },
+                    Kirigami.Action {
+                        text: qsTr("Storage")
+                        icon.name: "drive-harddisk"
+                        checkable: true
+                        checked: root.viewFilter === "Storage"
+                        displayHint: Kirigami.DisplayHint.KeepVisible
+                        onTriggered: {
+                            root.viewFilter = "Storage"
+                            appManager1.deviceDisplayContents = "Storage"
+                            root.refreshDevices()
+                            checked = Qt.binding(() => root.viewFilter === "Storage")
+                        }
+                    },
+                    Kirigami.Action {
+                        text: qsTr("Catalogs")
+                        icon.name: "media-optical"
+                        checkable: true
+                        checked: root.viewFilter === "Catalogs"
+                        displayHint: Kirigami.DisplayHint.KeepVisible
+                        onTriggered: {
+                            root.viewFilter = "Catalogs"
+                            appManager1.deviceDisplayContents = "Catalogs"
+                            root.refreshDevices()
+                            checked = Qt.binding(() => root.viewFilter === "Catalogs")
+                        }
+                    },
+                    Kirigami.Action {
+                        separator: true
+                        visible: root.tableAvailable
+                    },
+                    Kirigami.Action {
+                        text: qsTr("Cards")
+                        icon.name: "view-list-icons"
+                        visible: root.tableAvailable
+                        checkable: true
+                        checked: !root.displayAsTable
+                        onTriggered: {
+                            root.displayAsTable = false
+                            appManager1.deviceDisplayAsTable = false
+                            checked = Qt.binding(() => !root.displayAsTable)
+                        }
+                    },
+                    Kirigami.Action {
+                        text: qsTr("Table")
+                        icon.name: "view-list-details"
+                        visible: root.tableAvailable
+                        checkable: true
+                        checked: root.displayAsTable
+                        onTriggered: {
+                            root.displayAsTable = true
+                            appManager1.deviceDisplayAsTable = true
+                            root.refreshTable()
+                            checked = Qt.binding(() => root.displayAsTable)
+                        }
+                    },
+                    // K2's own Full Table string (mainwindow.ui:5591), reused
+                    // verbatim so no translation slot is spent (DVP-C5). Drawn
+                    // as a toggle button rather than a tick box now, which is
+                    // how an ActionToolBar renders a checkable action
+                    // (DVP-F28); what it does is unchanged.
+                    Kirigami.Action {
+                        text: qsTr("Full Table")
+                        visible: root.tableMode
+                        checkable: true
+                        checked: appManager1.deviceDisplayFullTable
+                        onTriggered: {
+                            appManager1.deviceDisplayFullTable = checked
+                            // The column count changed; TableView caches column
+                            // widths and has to be told to measure them again.
+                            deviceTable.forceLayout()
+                            checked = Qt.binding(() => appManager1.deviceDisplayFullTable)
+                        }
+                    },
+                    Kirigami.Action {
+                        separator: true
+                        visible: root.tableAvailable
+                    },
+                    Kirigami.Action {
+                        text: qsTr("Filter from Selection")
+                        checkable: true
+                        checked: root.filterFromSelection
+                        onTriggered: {
+                            root.filterFromSelection = checked
+                            appManager1.deviceFilterFromSelection = checked
+                            root.refreshDevices()
+                            checked = Qt.binding(() => root.filterFromSelection)
+                        }
                     }
-                }
-                Controls.ToolButton {
-                    text: qsTr("Storage list")
-                    checkable: true; checked: root.viewFilter === "Storage"
-                    Controls.ButtonGroup.group: filterGroup
-                    onClicked: {
-                        root.viewFilter = "Storage"
-                        appManager1.deviceDisplayContents = "Storage"
-                        root.refreshDevices()
-                    }
-                }
-                Controls.ToolButton {
-                    text: qsTr("Catalogs list")
-                    checkable: true; checked: root.viewFilter === "Catalogs"
-                    Controls.ButtonGroup.group: filterGroup
-                    onClicked: {
-                        root.viewFilter = "Catalogs"
-                        appManager1.deviceDisplayContents = "Catalogs"
-                        root.refreshDevices()
-                    }
-                }
-
-                Item { Layout.fillWidth: true }
-
-                // Display mode (DVP-F1). Shown only for the two list views; the
-                // Device tree has no table yet. Neither this nor Full Table
-                // reloads the list - both re-render rows already in hand, so no
-                // active-status probe is triggered (DVP-C2).
-                Controls.ToolSeparator { visible: root.tableAvailable }
-
-                Controls.ButtonGroup { id: displayModeGroup }
-
-                Controls.ToolButton {
-                    text: qsTr("Cards")
-                    icon.name: "view-list-icons"
-                    visible: root.tableAvailable
-                    checkable: true; checked: !root.displayAsTable
-                    Controls.ButtonGroup.group: displayModeGroup
-                    onClicked: {
-                        root.displayAsTable = false
-                        appManager1.deviceDisplayAsTable = false
-                    }
-                }
-                Controls.ToolButton {
-                    text: qsTr("Table")
-                    icon.name: "view-list-details"
-                    visible: root.tableAvailable
-                    checkable: true; checked: root.displayAsTable
-                    Controls.ButtonGroup.group: displayModeGroup
-                    onClicked: {
-                        root.displayAsTable = true
-                        appManager1.deviceDisplayAsTable = true
-                        root.refreshTable()
-                    }
-                }
-
-                // K2's own Full Table string (mainwindow.ui:5591), reused
-                // verbatim so no translation slot is spent (DVP-C5).
-                Controls.CheckBox {
-                    text: qsTr("Full Table")
-                    visible: root.tableMode
-                    checked: appManager1.deviceDisplayFullTable
-                    onToggled: {
-                        appManager1.deviceDisplayFullTable = checked
-                        // The column count changed; TableView caches column
-                        // widths and has to be told to measure them again.
-                        deviceTable.forceLayout()
-                    }
-                }
-
-                // Last in the bar, after the whole display-mode cluster rather
-                // than between Table and Full Table, which would split that
-                // cluster (DVP-F1). The separator carries the cluster's own
-                // visibility, so in the Device tree view this checkbox is the
-                // only control at the right of the bar.
-                Controls.ToolSeparator { visible: root.tableAvailable }
-
-                Controls.CheckBox {
-                    text: qsTr("Filter from Selection")
-                    checked: root.filterFromSelection
-                    onToggled: {
-                        root.filterFromSelection = checked
-                        appManager1.deviceFilterFromSelection = checked
-                        root.refreshDevices()
-                    }
-                }
+                ]
             }
         }
 
+        
         Kirigami.Separator { Layout.fillWidth: true }
 
         // Summary bar - shown for Catalogs and Storage list views (matches K2 CatalogStats/StorageStats)

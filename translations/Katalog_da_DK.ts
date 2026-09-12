@@ -1533,7 +1533,7 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <translation>Vælg databasen der skal oprettes og åbnes:</translation>
     </message>
     <message>
-        <location filename="../qt_quick/main.cpp" line="+117"/>
+        <location filename="../qt_quick/main.cpp" line="+122"/>
         <source>Catalog your devices to search, analyze, and backup your files.</source>
         <translation>Katalogisér dine enheder for at søge, analysere og sikkerhedskopiere dine filer.</translation>
     </message>
@@ -7149,47 +7149,55 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Ja</translation>
     </message>
     <message>
-        <location line="+63"/>
         <source>Device tree</source>
-        <translation>Enhedstræ</translation>
+        <translation type="vanished">Enhedstræ</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Storage list</source>
-        <translation>Lagerliste</translation>
+        <translation type="vanished">Lagerliste</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Catalogs list</source>
-        <translation>Katalogliste</translation>
+        <translation type="vanished">Katalogliste</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+169"/>
         <source>Filter from Selection</source>
         <translation>Filtrer fra markering</translation>
     </message>
     <message>
-        <location line="-45"/>
+        <location line="-47"/>
         <source>Cards</source>
         <translation>Kort</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Table</source>
         <translation>Tabel</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+18"/>
         <source>Full Table</source>
         <translation>Fuld tabel</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="-47"/>
+        <location line="+101"/>
         <source>Catalogs</source>
         <translation>Kataloger</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-127"/>
+        <source>All devices</source>
+        <translation>Alle enheder</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Storage</source>
+        <translation>Lager</translation>
+    </message>
+    <message>
+        <location line="+120"/>
         <source>Total File Size</source>
         <translation>Samlet filstørrelse</translation>
     </message>

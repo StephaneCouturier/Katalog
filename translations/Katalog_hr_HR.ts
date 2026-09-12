@@ -1533,7 +1533,7 @@ To može značiti da je izvor prazan ili uređaj nije montiran na ovu mapu.
         <translation>Odaberite bazu podataka za stvaranje i otvaranje:</translation>
     </message>
     <message>
-        <location filename="../qt_quick/main.cpp" line="+117"/>
+        <location filename="../qt_quick/main.cpp" line="+122"/>
         <source>Catalog your devices to search, analyze, and backup your files.</source>
         <translation>Katalogizirajte svoje uređaje za pretraživanje, analizu i sigurnosno kopiranje datoteka.</translation>
     </message>
@@ -7149,47 +7149,55 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Da</translation>
     </message>
     <message>
-        <location line="+63"/>
         <source>Device tree</source>
-        <translation>Stablo uređaja</translation>
+        <translation type="vanished">Stablo uređaja</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Storage list</source>
-        <translation>Lista pohraništa</translation>
+        <translation type="vanished">Lista pohraništa</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Catalogs list</source>
-        <translation>Lista kataloga</translation>
+        <translation type="vanished">Lista kataloga</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+169"/>
         <source>Filter from Selection</source>
         <translation>Filtriraj iz odabira</translation>
     </message>
     <message>
-        <location line="-45"/>
+        <location line="-47"/>
         <source>Cards</source>
         <translation>Kartice</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Table</source>
         <translation>Tablica</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+18"/>
         <source>Full Table</source>
         <translation>Puna tablica</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="-47"/>
+        <location line="+101"/>
         <source>Catalogs</source>
         <translation>Katalozi</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-127"/>
+        <source>All devices</source>
+        <translation>Svi uređaji</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Storage</source>
+        <translation>Pohranište</translation>
+    </message>
+    <message>
+        <location line="+120"/>
         <source>Total File Size</source>
         <translation>Ukupna veličina datoteka</translation>
     </message>

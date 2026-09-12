@@ -1533,7 +1533,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>बनाने और खोलने के लिए डेटाबेस चुनें:</translation>
     </message>
     <message>
-        <location filename="../qt_quick/main.cpp" line="+117"/>
+        <location filename="../qt_quick/main.cpp" line="+122"/>
         <source>Catalog your devices to search, analyze, and backup your files.</source>
         <translation>अपनी फ़ाइलों को खोजने, विश्लेषण करने और बैकअप लेने के लिए अपने उपकरणों को सूचीबद्ध करें।</translation>
     </message>
@@ -7148,47 +7148,55 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>हाँ</translation>
     </message>
     <message>
-        <location line="+63"/>
         <source>Device tree</source>
-        <translation>डिवाइस ट्री</translation>
+        <translation type="vanished">डिवाइस ट्री</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Storage list</source>
-        <translation>स्टोरेज सूची</translation>
+        <translation type="vanished">स्टोरेज सूची</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Catalogs list</source>
-        <translation>कैटलॉग सूची</translation>
+        <translation type="vanished">कैटलॉग सूची</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+169"/>
         <source>Filter from Selection</source>
         <translation>चयन से फ़िल्टर करें</translation>
     </message>
     <message>
-        <location line="-45"/>
+        <location line="-47"/>
         <source>Cards</source>
         <translation>कार्ड</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Table</source>
         <translation>तालिका</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+18"/>
         <source>Full Table</source>
         <translation>पूर्ण तालिका</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="-47"/>
+        <location line="+101"/>
         <source>Catalogs</source>
         <translation>कैटलॉग</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-127"/>
+        <source>All devices</source>
+        <translation>सभी डिवाइसेस</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Storage</source>
+        <translation>स्टोरेज</translation>
+    </message>
+    <message>
+        <location line="+120"/>
         <source>Total File Size</source>
         <translation>कुल फ़ाइल आकार</translation>
     </message>

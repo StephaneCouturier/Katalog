@@ -1533,7 +1533,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation>Seleccione la base de datos a crear y abrir:</translation>
     </message>
     <message>
-        <location filename="../qt_quick/main.cpp" line="+117"/>
+        <location filename="../qt_quick/main.cpp" line="+122"/>
         <source>Catalog your devices to search, analyze, and backup your files.</source>
         <translation>Cataloga tus dispositivos para buscar, analizar y respaldar tus archivos.</translation>
     </message>
@@ -7149,47 +7149,55 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Sí</translation>
     </message>
     <message>
-        <location line="+63"/>
         <source>Device tree</source>
-        <translation>Árbol de dispositivos</translation>
+        <translation type="vanished">Árbol de dispositivos</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Storage list</source>
-        <translation>Lista de almacenamiento</translation>
+        <translation type="vanished">Lista de almacenamiento</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Catalogs list</source>
-        <translation>Lista de catálogos</translation>
+        <translation type="vanished">Lista de catálogos</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+169"/>
         <source>Filter from Selection</source>
         <translation>Filtrar desde la selección</translation>
     </message>
     <message>
-        <location line="-45"/>
+        <location line="-47"/>
         <source>Cards</source>
         <translation>Tarjetas</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Table</source>
         <translation>Tabla</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+18"/>
         <source>Full Table</source>
         <translation>Tabla completa</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="-47"/>
+        <location line="+101"/>
         <source>Catalogs</source>
         <translation>Catálogos</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-127"/>
+        <source>All devices</source>
+        <translation>Todos los dispositivos</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Storage</source>
+        <translation>Almacenamiento</translation>
+    </message>
+    <message>
+        <location line="+120"/>
         <source>Total File Size</source>
         <translation>Tamaño total del archivo</translation>
     </message>

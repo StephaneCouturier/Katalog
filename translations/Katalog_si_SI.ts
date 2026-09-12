@@ -1533,7 +1533,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <translation>Izberi podatkovno bazo za ustvarjanje in odpiranje:</translation>
     </message>
     <message>
-        <location filename="../qt_quick/main.cpp" line="+117"/>
+        <location filename="../qt_quick/main.cpp" line="+122"/>
         <source>Catalog your devices to search, analyze, and backup your files.</source>
         <translation>ඔබගේ ගොනු සෙවීමට, විශ්ලේෂණය කිරීමට සහ උපස්ථ කිරීමට ඔබගේ උපාංග නාමාවලිගත කරන්න.</translation>
     </message>
@@ -7150,47 +7150,55 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Da</translation>
     </message>
     <message>
-        <location line="+63"/>
         <source>Device tree</source>
-        <translation>Drevo naprav</translation>
+        <translation type="vanished">Drevo naprav</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Storage list</source>
-        <translation>Seznam shranjevanja</translation>
+        <translation type="vanished">Seznam shranjevanja</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Catalogs list</source>
-        <translation>Seznam katalogov</translation>
+        <translation type="vanished">Seznam katalogov</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+169"/>
         <source>Filter from Selection</source>
         <translation>Filtriraj iz izbire</translation>
     </message>
     <message>
-        <location line="-45"/>
+        <location line="-47"/>
         <source>Cards</source>
         <translation>Kartice</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Table</source>
         <translation>Tabela</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+18"/>
         <source>Full Table</source>
         <translation>Polna tabela</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="-47"/>
+        <location line="+101"/>
         <source>Catalogs</source>
         <translation>Katalogi</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-127"/>
+        <source>All devices</source>
+        <translation>Vse naprave</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Storage</source>
+        <translation>Shranjevanje</translation>
+    </message>
+    <message>
+        <location line="+120"/>
         <source>Total File Size</source>
         <translation>Skupna velikost datotek</translation>
     </message>

@@ -1533,7 +1533,7 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
         <translation>Selecteer de database om te maken en openen:</translation>
     </message>
     <message>
-        <location filename="../qt_quick/main.cpp" line="+117"/>
+        <location filename="../qt_quick/main.cpp" line="+122"/>
         <source>Catalog your devices to search, analyze, and backup your files.</source>
         <translation>Catalogiseer uw apparaten om uw bestanden te zoeken, analyseren en back-uppen.</translation>
     </message>
@@ -7148,47 +7148,55 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Ja</translation>
     </message>
     <message>
-        <location line="+63"/>
         <source>Device tree</source>
-        <translation>Apparaatstructuur</translation>
+        <translation type="vanished">Apparaatstructuur</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Storage list</source>
-        <translation>Opslaglijst</translation>
+        <translation type="vanished">Opslaglijst</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Catalogs list</source>
-        <translation>Catalogilijst</translation>
+        <translation type="vanished">Catalogilijst</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+169"/>
         <source>Filter from Selection</source>
         <translation>Filteren op selectie</translation>
     </message>
     <message>
-        <location line="-45"/>
+        <location line="-47"/>
         <source>Cards</source>
         <translation>Kaarten</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Table</source>
         <translation>Tabel</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+18"/>
         <source>Full Table</source>
         <translation>Volledige tabel</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="-47"/>
+        <location line="+101"/>
         <source>Catalogs</source>
         <translation>Catalogi</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-127"/>
+        <source>All devices</source>
+        <translation>Alle apparaten</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Storage</source>
+        <translation>Opslag</translation>
+    </message>
+    <message>
+        <location line="+120"/>
         <source>Total File Size</source>
         <translation>Totale bestandsgrootte</translation>
     </message>
