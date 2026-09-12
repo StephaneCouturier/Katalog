@@ -369,6 +369,24 @@ Item {
                     width: folderListView.width
                     highlighted: model.fullPath === root.selectedFolderPath
 
+                    // Painted by the application, not left to the Qt Quick
+                    // Controls style (SpecTheme THM-F9). Without this the row
+                    // surface came from whichever style was active - Breeze on
+                    // Linux, Fusion on Windows and macOS, where main.cpp forces
+                    // it - so the list matched the rest of the app on one
+                    // platform and not the other, with Kirigami text sitting on
+                    // a Fusion background. The colours are the ones
+                    // applicationWindow() defines for every row surface; none is
+                    // derived here (THM-C11). Striped like the file list beside
+                    // it and like K2's own Explore directory tree (THM-F8).
+                    background: Rectangle {
+                        color: folderDelegate.highlighted
+                               ? applicationWindow().selectionHighlightColor
+                               : (index % 2 === 0
+                                  ? applicationWindow().rowBaseColor
+                                  : applicationWindow().rowStripeColor)
+                    }
+
                     contentItem: RowLayout {
                         spacing: Kirigami.Units.smallSpacing
 

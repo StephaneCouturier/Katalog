@@ -147,8 +147,12 @@ Kirigami.ApplicationWindow {
     // Window background beside it, so the pair is two neighbouring steps of the
     // desktop's own scale rather than a tint of its own (SpecTheme THM-F1/F2),
     // the same pair under every stored Theme value (THM-F4). Defined here and
-    // consumed by both delegates, which must not re-derive either colour
-    // inline (THM-C1).
+    // consumed by three delegates - the Search results list, the Explore file
+    // list and, since THM-F8, the Explore folder list - none of which may
+    // re-derive either colour inline (THM-C1 / THM-C11). Until THM-F8 this
+    // comment already claimed the folder list as a consumer while the spec
+    // covered only the two file lists and the folder list consumed neither:
+    // the comment was an intention, not a requirement (THM-C12).
     readonly property color rowBaseColor:   root.viewBackgroundColor
     readonly property color rowStripeColor: Kirigami.Theme.backgroundColor
 

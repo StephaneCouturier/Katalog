@@ -33,8 +33,9 @@ what this spec removes.
 **In scope:** K3 colour derivation — the file-list row pair, and the reach of the
 three `Settings/Theme` values on K3's derived colours — and the **icon size
 preference** of `THM-F7`, which belongs here because it is stored in the same
-`Settings/Theme*` key family and shared with K2. *(Scope widened 2026-09-12 from
-colour derivation alone.)*
+`Settings/Theme*` key family and shared with K2 — and the **Explore folder list's** row surfaces
+(`THM-F8`, `THM-F9`, `THM-C11`). *(Scope widened 2026-09-12, first from colour
+derivation alone, then to the folder list.)*
 
 **Out of scope (non-goals):**
 
@@ -75,6 +76,8 @@ Observable behaviour that can be triggered and watched.
 | THM-F5 | A **selected** row is painted with the selection highlight instead of its parity colour; the row pair applies only to unselected rows. Existing behaviour, unchanged by this spec. | [Implemented] |
 | THM-F6 | Derived colours are bindings on `Kirigami.Theme`, so changing the desktop colour scheme while Katalog is running repaints the lists to the new scheme without restarting the application. | [Planned] |
 | THM-F7 | The Settings page offers a **bigger icon size** choice, as K2 does. Unset, icons are drawn at the smaller size; set, at the larger one. K2's pixel values map onto the Kirigami size tokens: checked → the *medium* token (32), unchecked → the *small-medium* token (22). The user asked for this port on 2026-09-12 and chose the Settings page, as in K2, over a per-page control. | [Planned] |
+| THM-F8 | The `THM-F1` / `THM-F2` row pair **also applies to the Explore folder list**, identically to the file list beside it — the folder rows stripe. *(Added 2026-09-12. `THM-F3` named only the Search results and Explore **file** lists, so the folder list was never covered by any row; it painted no surface of its own at all.)* The list is a tree and its rows are indented, which was the argument for leaving it unstriped; it is overruled because K2 stripes its own Explore directory tree (`alternatingRowColors` on `Explore_treeview_Directories`, `qt_widgets/mainwindow.ui`) and because two lists side by side on one page with different row surfaces is the more visible inconsistency. | [Planned] |
+| THM-F9 | A row surface in these lists is **painted by the application, not left to the active Qt Quick Controls style**. The Explore folder list drew no background of its own, so its rows took the style's — Breeze under Plasma, Fusion on every other platform (`qt_quick/main.cpp:32-34`) — while their text colour came from Kirigami either way, which is how a Kirigami text colour ended up on a Fusion background. The user reported the resulting difference between Linux and Windows on 2026-09-12. The lists governed by `THM-F3` and `THM-F8` MUST look the same under either style. | [Planned] |
 
 ## Constructional requirements — *how it is built / limits / MUST-NOTs*
 
@@ -92,8 +95,19 @@ Boundaries and implementation constraints, not user-visible behaviour.
 | THM-C8 | `THM-F7` is stored in the **existing** key `Settings/ThemeBiggerIconSize`, the one K2 already writes (`qt_widgets/mainwindow_tab_settings.cpp:624-645`, restored at `qt_widgets/mainwindow_setup.cpp:384`), so both versions share one preference. K2 stores the Qt check state (`2` / `0`) and reads it with `toBool()`, so a K3 boolean round-trips through it; K3 MUST NOT introduce a second key, nor change the value encoding. | [Planned] |
 | THM-C9 | `THM-F7` reuses K2's existing label **`Use bigger icon size`** byte-for-byte — approved per string by the user on 2026-09-12 — so the 30 existing translations carry it and no slot is spent. **No other new string** is authorised by these rows. K2 MUST NOT be modified, per `THM-C5`. | [Planned] |
 | THM-C10 | `THM-F7` is consumed by the **Devices page cards** (`DVP-F20`, `SpecDevicesPage.md`) and the **Selection page cards** (`SEL-F7`, `SpecSelection.md`) — and by nothing else. *(Amended 2026-09-12: the Selection page was added at the user's explicit request, which is the "separate request" this row originally reserved. The mechanism worked as intended: the widening was asked for, not assumed.)* K2 applies its equivalent to all eight of its tree views; K3 MUST NOT be widened to every icon in the application as a side effect. Each further view honouring the setting remains a separate request. | [Planned] |
+| THM-C11 | The Explore folder delegate consumes the colours defined once in `Main.qml` — the two row colours and the selection highlight — and MUST NOT derive, hardcode or locally redefine any of them, exactly as `THM-C1` requires of the file-list delegates. `THM-C1`'s wording *"one definition, two consumers"* becomes **three consumers**; the definition stays single. The selected row keeps the highlight of `THM-F5`, and the highlighted text colour it already sets is unchanged — only the surface beneath it is now painted. | [Planned] |
+| THM-C12 | A **code comment is not a requirement.** `Main.qml` already claimed these colours were consumed by *"explore files and folders"* while the folder delegate consumed neither. The comment was ahead of both the code and the spec; it described an intention, and the requirement is `THM-F8`, not the comment. Correcting the comment is part of this work; it MUST NOT be cited as authorisation for anything. | [Planned] |
 
 ---
+
+
+---
+
+## Open, not authorised
+
+| Item | Detail |
+|------|--------|
+| Other lists that inherit the platform style | The same pattern — a bare `Controls.ItemDelegate` painting no surface of its own — exists in several other K3 lists (`Main.qml:1304`, `PageDeviceEditForm.qml:337`, `DeviceTreeComboBox.qml:178`, `PageCreateForm.qml:215`, `PageSearchForm.qml:516` and `:786`, `PageSettings.qml:525`, `PageSearchResultsForm.qml:203`). They will show the same difference between Linux and Windows. The user reported the **Explore folder list**, and only that is authorised. A sweep across the others is a separate request and MUST NOT be carried in behind this fix. |
 
 ## Manual test charter
 
@@ -114,3 +128,7 @@ For each row: set up the stated condition, look at the result.
 - **THM-F7 (sizes)** — With the option off, a Devices card icon and a Selection card icon both match the small-medium token; with it on, both match the medium token. The change takes effect without restarting.
 - **THM-C9** — Run `ninja translations_lupdate`: **no** new untranslated string appears. With the interface in French, the Settings label is translated, proving the K2 string was reused verbatim.
 - **THM-C10** — With the option on, confirm the Devices cards and the Selection cards both follow it, and that icons elsewhere in the application — the drawer, the toolbars, the other pages — are unchanged.
+- **THM-F8** — On the Explore page, compare the folder list with the file list beside it: the same two row colours in the same parity, the first row of each taking the View colour. Confirm a selected folder row takes the selection highlight and that its text stays legible on it.
+- **THM-F9 (Fusion)** — Run the application with the Fusion style forced (`QT_QUICK_CONTROLS_STYLE=Fusion`) and compare the Explore page with the same page under `org.kde.desktop`: the folder rows and the file rows are the same colours in both, because the application paints them. This is the Linux stand-in for the Windows report and MUST be run before the fix is called done.
+- **THM-F9 / THM-F6** — With the folder list open, change the desktop colour scheme from light to dark: the folder rows follow the new scheme without a restart, as the file rows do.
+- **THM-C11** — Grep the folder delegate: it references the application-level colour properties and defines no colour of its own.
