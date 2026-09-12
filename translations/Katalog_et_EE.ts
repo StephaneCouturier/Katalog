@@ -689,7 +689,12 @@ Vali teine nimi.</translation>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+228"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+86"/>
+        <source>files</source>
+        <translation>failid</translation>
+    </message>
+    <message>
+        <location line="+147"/>
         <source>Collection</source>
         <translation>Kogu</translation>
     </message>
@@ -7214,7 +7219,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Vaba</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+29"/>
         <location line="+146"/>
         <source>No devices</source>
         <translation>Seadmed puuduvad</translation>
@@ -7304,7 +7309,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Kustuta</translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+100"/>
         <source>files</source>
         <translation>failid</translation>
     </message>
@@ -8281,7 +8286,7 @@ Vigu: %3</translation>
 <context>
     <name>PageSelectionDelegate</name>
     <message>
-        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+52"/>
+        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+60"/>
         <source>Search</source>
         <translation>Otsing</translation>
     </message>
@@ -8306,7 +8311,7 @@ Vigu: %3</translation>
         <translation>Muuda</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+88"/>
         <source>Collapse</source>
         <translation>Ahenda</translation>
     </message>

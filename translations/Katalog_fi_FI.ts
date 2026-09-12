@@ -689,7 +689,12 @@ Valitse toinen nimi.</translation>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+228"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+86"/>
+        <source>files</source>
+        <translation>tiedostot</translation>
+    </message>
+    <message>
+        <location line="+147"/>
         <source>Collection</source>
         <translation>Kokoelma</translation>
     </message>
@@ -7214,7 +7219,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Vapaa</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+29"/>
         <location line="+146"/>
         <source>No devices</source>
         <translation>Ei laitteita</translation>
@@ -7304,7 +7309,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Poista</translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+100"/>
         <source>files</source>
         <translation>tiedostot</translation>
     </message>
@@ -8281,7 +8286,7 @@ Virheitä: %3</translation>
 <context>
     <name>PageSelectionDelegate</name>
     <message>
-        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+52"/>
+        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+60"/>
         <source>Search</source>
         <translation>Haku</translation>
     </message>
@@ -8306,7 +8311,7 @@ Virheitä: %3</translation>
         <translation>Muokkaa</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+88"/>
         <source>Collapse</source>
         <translation>Tiivistä</translation>
     </message>

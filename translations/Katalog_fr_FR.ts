@@ -689,7 +689,12 @@ Choisissez un autre nom.</translation>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+228"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+86"/>
+        <source>files</source>
+        <translation>fichiers</translation>
+    </message>
+    <message>
+        <location line="+147"/>
         <source>Collection</source>
         <translation>Collection</translation>
     </message>
@@ -7215,7 +7220,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Libre</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+29"/>
         <location line="+146"/>
         <source>No devices</source>
         <translation>Aucun périphérique</translation>
@@ -7305,7 +7310,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Supprimer</translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+100"/>
         <source>files</source>
         <translation>fichiers</translation>
     </message>
@@ -8282,7 +8287,7 @@ Erreurs : %3</translation>
 <context>
     <name>PageSelectionDelegate</name>
     <message>
-        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+52"/>
+        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+60"/>
         <source>Search</source>
         <translation>Chercher</translation>
     </message>
@@ -8307,7 +8312,7 @@ Erreurs : %3</translation>
         <translation>Editer</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+88"/>
         <source>Collapse</source>
         <translation>Réduire</translation>
     </message>
@@ -8577,7 +8582,7 @@ Erreurs : %3</translation>
     <message>
         <location line="+27"/>
         <source>Use bigger icon size</source>
-        <translation>Utiliser une taille d'icône plus grande</translation>
+        <translation>Utiliser une taille d&apos;icône plus grande</translation>
     </message>
     <message>
         <location line="+6"/>

@@ -46,7 +46,8 @@ activation, the card context menu, and restoring a search from history; the
 display of the current selection at the top of the Selection page; and the
 display of each history entry's device scope; and the **icon size** of the
 Selection cards together with the alignment that depends on it (`SEL-F7`,
-`SEL-C8`), added 2026-09-12.
+`SEL-C8`), added 2026-09-12; and the **content of the Selection card's second
+line** (`SEL-F8`, `SEL-C10`).
 
 **Out of scope (non-goals):** the device tree's collapse and expand state and its
 header controls; the ordering and filtering of the device list; the Devices page
@@ -84,6 +85,7 @@ Observable behaviour that can be triggered and watched.
 | SEL-F5 | The Selection page shows the currently selected device at the very top, immediately **before** the filter and expand row, rendered as a device card: the type icon and the device name with the per-type font rules. No label, heading or title precedes it. When no device is selected the row shows `All` with the `folder` icon — the same icon the *All* entry already uses elsewhere in K3. The row is **always present**, so the layout never shifts as the selection changes. Deliberate divergence from K2, which labels three separate rows Virtual / Storage / Catalog and fills the two that do not apply with `All`. | [Planned] |
 | SEL-F6 | Clicking the `SEL-F5` reminder scrolls the device list so the selected card is visible. It is a navigation affordance only — see `SEL-C7`. | [Planned] |
 | SEL-F7 | The Selection cards draw their device icon at the size set by the **bigger icon size** preference (`THM-F7`, `SpecTheme.md`), the same two-state rule the Devices cards follow: the medium token when the option is set, the small-medium token when it is not. One setting therefore drives both pages. The user requested this on 2026-09-12. **With the option off the Selection icon becomes larger than it was** — small-medium (22) where it was small (16): that growth is part of the request, not a side effect, because a third size reserved for this page would defeat a shared preference and would break `DVP-C20`, which requires the two cards to match. | [Planned] |
+| SEL-F8 | The second line of a **Storage** or **Virtual** Selection card states the file count, the total file size and the **used space** — and **not** the total space, which is removed. At the default card size the previous four figures wrapped onto a second line often enough to be the normal case, and the total was the value the user chose to drop on 2026-09-12. A **Catalog** card's second line is unchanged. | [Planned] |
 
 ## Constructional requirements — *how it is built / limits / MUST-NOTs*
 
@@ -100,8 +102,19 @@ Boundaries and implementation constraints, not user-visible behaviour.
 | SEL-C7 | The `SEL-F6` click MUST NOT change or clear the selection. Clearing to *All* was considered and **rejected** on 2026-08-30: the reminder sits directly above the filter field, so a misclick would silently widen the scope of the next search with no error and no visible cause — the same class of silent wrong answer that `SEL-F1` exists to remove. The reminder scrolls the list and does nothing else. | [Planned] |
 | SEL-C8 | The Selection card's second line is indented to line up with the **name**, not with the icon — its left margin is the icon size plus the small spacing. That margin MUST follow `SEL-F7`'s themed size rather than the hard-coded small token it uses today, otherwise the description stops aligning with the name as soon as the icon size changes. This is the one edit to the Selection page authorised by the 2026-09-12 request; `DVP-C21`'s prohibition on changing this page for the Devices work is unaffected and still stands for everything else. | [Planned] |
 | SEL-C9 | `SEL-F7` and `SEL-C8` add **no** new user-visible string, and MUST NOT change what the Selection card says, which device is selected, or any behaviour of `SEL-F1` to `SEL-F6`. They change two sizes and one margin. | [Planned] |
+| SEL-C10 | The file-count text of the Selection card MUST be **translatable**. It is built today from a raw, untranslated literal (`qt_quick/adapters/devicelistmodel.cpp:81`), so the word ships in English in all 30 languages — a defect, not a wording choice. The fix MUST reuse the **existing** source string `files`, the one K3 already uses on the Devices card and the Backup form and which is already translated, with the count substituted separately. A combined `%1 files` source string MUST NOT be introduced: it would be new wording, costing 30 translation slots for text that already exists. | [Planned] |
+| SEL-C11 | The space figure left by `SEL-F8` stays **unlabelled**, as the other figures on that line are. Labelling it was considered and **not** authorised: labels cost the width `SEL-F8` exists to recover. This is recorded because a single bare figure is less self-explanatory than the pair it replaces — see *Open, not authorised* below. The Devices card's labelled figures (`DVP-F16`) are **not** the model here: `DVP-C20` names the second line's information as a permitted difference between the two cards, so the two lines differing is by design. | [Planned] |
 
 ---
+
+
+---
+
+## Open, not authorised
+
+| Item | Detail |
+|------|--------|
+| The bare space figure of `SEL-F8` | With two figures a reader could infer *used of total*; with one, used and free are indistinguishable without a label. Removing the total was what the user asked for, and labelling the survivor would spend the width the removal recovered, so neither relabelling nor restoring the total is authorised. If the ambiguity proves to matter in use, the options — a short lowercase label reusing the existing `used`, or a tooltip — need the user's decision first. |
 
 ## Manual test charter
 
@@ -120,5 +133,9 @@ For each row: set up the stated condition, run the operation, confirm the result
 - **SEL-F7** — Tick *Use bigger icon size* in Settings: the Selection card icons grow, and so do the Devices card icons, from one setting. Untick it: both shrink to the small-medium size. Confirm the Selection icon at the off state is the same size as the Devices card's at the off state.
 - **SEL-C8** — At each icon size, confirm the Selection card's second line starts exactly under the first character of the device name, not under the icon and not offset from it.
 - **SEL-C9** — Confirm the card still names the same device, that clicking it still selects, and that the `SEL-F5` reminder and the context menu are unchanged.
+- **SEL-F8** — At the default card size, look at a Storage card and a Virtual card with space figures: the line reads the file count, the size and one space figure, and fits on **one** line. Confirm the total space is gone and that the remaining figure matches the *Used space* column of the Devices table for the same device.
+- **SEL-F8 (catalog)** — A Catalog card's second line is unchanged.
+- **SEL-C10** — Switch the interface to French and read a Selection card: the word for files is translated, not the English `files`. Run `ninja translations_lupdate`: **no** new untranslated string appears — the existing `files` is reused, now also in the device-list model context.
+- **SEL-C10 (count)** — Confirm the count is still locale-formatted, with the thousands separator of the active language, and that it is not glued to the word.
 - **SEL-C4** — Run `ninja translations_lupdate`. No new untranslated string appears for the Selection page or the search history list.
 - **SEL-C6** — Open the same collection in K2. Its Selection panel still shows the three labelled Virtual / Storage / Catalog rows and its history table still shows a raw ID column. Both are expected and are not defects of these rows.

@@ -689,7 +689,12 @@ Izberite drugo ime.</translation>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+228"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+86"/>
+        <source>files</source>
+        <translation>datoteke</translation>
+    </message>
+    <message>
+        <location line="+147"/>
         <source>Collection</source>
         <translation>Zbirka</translation>
     </message>
@@ -7215,7 +7220,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Prosto</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+29"/>
         <location line="+146"/>
         <source>No devices</source>
         <translation>Ni naprav</translation>
@@ -7305,7 +7310,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Izbriši</translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+100"/>
         <source>files</source>
         <translation>datoteke</translation>
     </message>
@@ -8282,7 +8287,7 @@ Napake: %3</translation>
 <context>
     <name>PageSelectionDelegate</name>
     <message>
-        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+52"/>
+        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+60"/>
         <source>Search</source>
         <translation>Iskanje</translation>
     </message>
@@ -8307,7 +8312,7 @@ Napake: %3</translation>
         <translation>Uredi</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+88"/>
         <source>Collapse</source>
         <translation>Strni</translation>
     </message>

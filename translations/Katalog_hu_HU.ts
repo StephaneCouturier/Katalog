@@ -689,7 +689,12 @@ Válasszon másik nevet.</translation>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+228"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+86"/>
+        <source>files</source>
+        <translation>fájlok</translation>
+    </message>
+    <message>
+        <location line="+147"/>
         <source>Collection</source>
         <translation>Gyűjtemény</translation>
     </message>
@@ -7213,7 +7218,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Szabad</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+29"/>
         <location line="+146"/>
         <source>No devices</source>
         <translation>Nincs eszköz</translation>
@@ -7303,7 +7308,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Törlés</translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+100"/>
         <source>files</source>
         <translation>fájlok</translation>
     </message>
@@ -8280,7 +8285,7 @@ Hibák: %3</translation>
 <context>
     <name>PageSelectionDelegate</name>
     <message>
-        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+52"/>
+        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+60"/>
         <source>Search</source>
         <translation>Keresés</translation>
     </message>
@@ -8305,7 +8310,7 @@ Hibák: %3</translation>
         <translation>Szerkesztés</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+88"/>
         <source>Collapse</source>
         <translation>Összecsukás</translation>
     </message>

@@ -78,16 +78,21 @@ QString DeviceListModel::formatDescription(const DeviceItem &device) const
     // worth showing ("0 files · 0 bytes"), and gating on a non-zero count left
     // its card with a blank second line, indistinguishable from a card whose
     // counts had simply never been computed.
-    QString filesPart = QString("%1 files").arg(locale.toString(device.totalFileCount));
+    // The word goes through tr() and is the bare "files" - the same source text
+    // the Devices card and the Backup form already ship, so it resolves to a
+    // translation that exists in every language (SEL-C10). Not tr("%1 files"):
+    // that would be a new source string for wording K3 already has.
+    QString filesPart = QString("%1 %2").arg(locale.toString(device.totalFileCount),
+                                             tr("files"));
     filesPart += QString(" · %1").arg(locale.formattedDataSize(device.totalFileSize));
     parts << filesPart;
 
     // Space details — Storage and Virtual only, and independent of the file count.
+    // Used space alone: with the total appended as well, the line wrapped onto a
+    // second row at the default card size, which is what SEL-F8 recovers.
     if ((device.type == "Storage" || device.type == "Virtual") && device.totalSpace > 0) {
         qint64 usedSpace = device.totalSpace - device.freeSpace;
-        parts << QString("%1 · %2")
-                     .arg(locale.formattedDataSize(usedSpace))
-                     .arg(locale.formattedDataSize(device.totalSpace));
+        parts << locale.formattedDataSize(usedSpace);
     }
 
     if (!parts.isEmpty())

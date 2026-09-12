@@ -70,7 +70,6 @@ int main(int argc, char *argv[])
     AppManager *appManager = new AppManager;
     appManager->initiateApp();
     appManager->collection->appVersion = appManager->currentVersion;
-    appManager->startDatabase();
 
     // Load the user's language and install the translator before the QML engine
     // evaluates any qsTr string. Mirrors K2 (qt_widgets/main.cpp): migrate the
@@ -104,6 +103,12 @@ int main(int argc, char *argv[])
         if (translator->load("Katalog_" + userLanguage, ":translations"))
             app.installTranslator(translator);
     }
+
+    // After the translator: startDatabase() builds the device list, and the
+    // Selection card's second line is composed in C++ and stored in the model.
+    // Built before the translator was installed, that line kept its English
+    // words however complete the translation was.
+    appManager->startDatabase();
 
     // Build KAboutData AFTER the translator is installed so its translatable
     // strings (short description, author role) resolve in the user's language.
@@ -158,11 +163,17 @@ int main(int argc, char *argv[])
 
     // Apply language change at runtime without restart
     QObject::connect(appManager, &AppManager::languageChanged, &engine,
-        [&app, &engine, translator](const QString &code) {
+        [&app, &engine, translator, appManager](const QString &code) {
             app.removeTranslator(translator);
             if (translator->load("Katalog_" + code, ":translations"))
                 app.installTranslator(translator);
             engine.retranslate();
+            // retranslate() reaches qsTr in QML only. The Selection card's
+            // second line is built in C++ and held in the model, so it has to
+            // be composed again in the new language. reloadDeviceListModel()
+            // rather than refreshDeviceList(): the latter probes the filesystem
+            // for active states, which a language change must not trigger.
+            appManager->reloadDeviceListModel();
         });
 
     //appManager->testQuery();

@@ -689,7 +689,12 @@ Choose a different name.</source>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+228"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+86"/>
+        <source>files</source>
+        <translation>文件</translation>
+    </message>
+    <message>
+        <location line="+147"/>
         <source>Collection</source>
         <translation>收藏</translation>
     </message>
@@ -7214,7 +7219,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>可用</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+29"/>
         <location line="+146"/>
         <source>No devices</source>
         <translation>无设备</translation>
@@ -7304,7 +7309,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>删除</translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+100"/>
         <source>files</source>
         <translation>文件</translation>
     </message>
@@ -8281,7 +8286,7 @@ Errors: %3</source>
 <context>
     <name>PageSelectionDelegate</name>
     <message>
-        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+52"/>
+        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+60"/>
         <source>Search</source>
         <translation>搜索</translation>
     </message>
@@ -8306,7 +8311,7 @@ Errors: %3</source>
         <translation>编辑</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+88"/>
         <source>Collapse</source>
         <translation>折叠</translation>
     </message>

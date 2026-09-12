@@ -689,7 +689,12 @@ Välj ett annat namn.</translation>
 <context>
     <name>DeviceListModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+228"/>
+        <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+86"/>
+        <source>files</source>
+        <translation>filer</translation>
+    </message>
+    <message>
+        <location line="+147"/>
         <source>Collection</source>
         <translation>Samling</translation>
     </message>
@@ -7214,7 +7219,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Ledigt</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+29"/>
         <location line="+146"/>
         <source>No devices</source>
         <translation>Inga enheter</translation>
@@ -7304,7 +7309,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Ta bort</translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+100"/>
         <source>files</source>
         <translation>filer</translation>
     </message>
@@ -8281,7 +8286,7 @@ Fel: %3</translation>
 <context>
     <name>PageSelectionDelegate</name>
     <message>
-        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+52"/>
+        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+60"/>
         <source>Search</source>
         <translation>Sök</translation>
     </message>
@@ -8306,7 +8311,7 @@ Fel: %3</translation>
         <translation>Redigera</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+88"/>
         <source>Collapse</source>
         <translation>Fäll ihop</translation>
     </message>
