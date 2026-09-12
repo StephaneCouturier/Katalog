@@ -511,6 +511,25 @@ void AppManager::setThemeId(int value)
     emit themeIdChanged();
 }
 //----------------------------------------------------------------------
+bool AppManager::getBiggerIconSize() const
+{
+    // K2 stores the checkbox's Qt check state - 2 for checked, 0 for unchecked -
+    // and reads it back with toBool(), which is why writing a plain bool here
+    // round-trips through K2 unharmed (THM-C8).
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    return settings.value("Settings/ThemeBiggerIconSize", false).toBool();
+}
+//----------------------------------------------------------------------
+void AppManager::setBiggerIconSize(bool value)
+{
+    if (getBiggerIconSize() == value)
+        return;
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("Settings/ThemeBiggerIconSize", value);
+    settings.sync();
+    emit biggerIconSizeChanged();
+}
+//----------------------------------------------------------------------
 void AppManager::refreshDeviceActiveOnActivation()
 {
     if (!getRefreshDeviceStatusOnActivation())

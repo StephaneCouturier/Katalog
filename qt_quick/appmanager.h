@@ -122,6 +122,9 @@ class AppManager : public QObject
     // choice carries over untouched; 2 is K3-only and K2 will coerce it to 1.
     Q_PROPERTY(int  themeId READ getThemeId WRITE setThemeId NOTIFY themeIdChanged)
     Q_PROPERTY(bool katalogTheme READ getKatalogTheme NOTIFY themeIdChanged)
+    // K2's own "Use bigger icon size" choice, on K2's own key, so the two
+    // versions share one preference (SpecTheme.md THM-F7 / THM-C8).
+    Q_PROPERTY(bool biggerIconSize READ getBiggerIconSize WRITE setBiggerIconSize NOTIFY biggerIconSizeChanged)
     Q_PROPERTY(QVariantList recentCollections READ getRecentCollections NOTIFY recentCollectionsChanged)
     Q_PROPERTY(QString currentCollectionDisplayName READ getCurrentCollectionDisplayName NOTIFY recentCollectionsChanged)
     Q_PROPERTY(QString currentCollectionIconName    READ getCurrentCollectionIconName    NOTIFY recentCollectionsChanged)
@@ -232,6 +235,8 @@ public slots:
     // Only Katalog Colors forces the brand palette; both Desktop variants follow
     // the desktop, one from its accent and one from its greys.
     bool getKatalogTheme() const { return getThemeId() == 1; }
+    bool getBiggerIconSize() const;
+    void setBiggerIconSize(bool value);
     // Called when the application becomes active. Does nothing unless the
     // setting above is on; then skips cheaply when nothing was mounted or
     // unmounted, or when a probe already ran in the last 30 seconds.
@@ -535,6 +540,7 @@ signals:
     void refreshDeviceStatusOnActivationChanged();
     void allowFileDeletionChanged();
     void themeIdChanged();
+    void biggerIconSizeChanged();
     void showSelectionPageChanged();
     void searchKeepsSelectionChanged();
     void deviceFilterFromSelectionChanged();

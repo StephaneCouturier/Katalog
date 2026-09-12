@@ -48,6 +48,11 @@ RowLayout {
     // Devices card turns it on so far.
     property bool nameWraps: false
 
+    // The icon's size, so a caller can follow the "Use bigger icon size"
+    // setting (THM-F7). Default unchanged, so the Selection cards and the
+    // reminder above them keep the size they have.
+    property real iconSize: Kirigami.Units.iconSizes.small
+
     spacing: Kirigami.Units.smallSpacing
 
     Kirigami.Icon {
@@ -58,8 +63,8 @@ RowLayout {
               : identity.deviceType === "Virtual" ? "drive-multidisk"
               : identity.deviceType === "Storage" ? "drive-harddisk"
               : identity.deviceIsActive ? "media-optical-blu-ray" : "media-optical"
-        implicitWidth:  Kirigami.Units.iconSizes.small
-        implicitHeight: Kirigami.Units.iconSizes.small
+        implicitWidth:  identity.iconSize
+        implicitHeight: identity.iconSize
     }
 
     Kirigami.Heading {

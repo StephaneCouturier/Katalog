@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+175"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4290"/>
+        <location line="+4309"/>
         <source>Search</source>
         <translation>Suche</translation>
     </message>
     <message>
-        <location line="-4410"/>
+        <location line="-4429"/>
         <source>Stopped</source>
         <translation>Gestoppt</translation>
     </message>
@@ -44,7 +44,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2025"/>
+        <location line="+2044"/>
         <location line="+602"/>
         <location line="+20"/>
         <location line="+1213"/>
@@ -55,8 +55,8 @@
         <translation>In Bearbeitung</translation>
     </message>
     <message>
-        <location line="-4291"/>
-        <location line="+3898"/>
+        <location line="-4310"/>
+        <location line="+3917"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Abgeschlossen</translation>
@@ -7023,7 +7023,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDevicesView</name>
     <message>
-        <location filename="../qt_quick/PageDevicesView.qml" line="+108"/>
+        <location filename="../qt_quick/PageDevicesView.qml" line="+152"/>
         <location line="+37"/>
         <source>Split Catalog</source>
         <translation>Katalog aufteilen</translation>
@@ -7214,8 +7214,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Frei</translation>
     </message>
     <message>
-        <location line="+23"/>
-        <location line="+143"/>
+        <location line="+27"/>
+        <location line="+146"/>
         <source>No devices</source>
         <translation>Keine Geräte</translation>
     </message>
@@ -7223,7 +7223,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDevicesViewDelegate</name>
     <message>
-        <location filename="../qt_quick/PageDevicesViewDelegate.qml" line="+68"/>
+        <location filename="../qt_quick/PageDevicesViewDelegate.qml" line="+96"/>
         <source>Update</source>
         <translation>Aktualisieren</translation>
     </message>
@@ -7304,7 +7304,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Löschen</translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+95"/>
         <source>files</source>
         <translation>Dateien</translation>
     </message>
@@ -7324,7 +7324,17 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>gesamt</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+24"/>
+        <source>Expand</source>
+        <translation>Ausklappen</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Collapse</source>
+        <translation>Einklappen</translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Actions</source>
         <translation>Aktionen</translation>
     </message>
@@ -8353,12 +8363,12 @@ Fehler: %3</translation>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+437"/>
+        <location line="+446"/>
         <source>(none)</source>
         <translation>(keine)</translation>
     </message>
     <message>
-        <location line="-429"/>
+        <location line="-438"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8564,7 +8574,12 @@ Fehler: %3</translation>
         <translation>Katalog-Farben</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+27"/>
+        <source>Use bigger icon size</source>
+        <translation>Použijte větší velikost ikony</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Language</source>
         <translation>Sprache</translation>
     </message>

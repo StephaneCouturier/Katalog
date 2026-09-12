@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+175"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4290"/>
+        <location line="+4309"/>
         <source>Search</source>
         <translation>Αναζήτηση</translation>
     </message>
     <message>
-        <location line="-4410"/>
+        <location line="-4429"/>
         <source>Stopped</source>
         <translation>Σταμάτησε</translation>
     </message>
@@ -44,7 +44,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2025"/>
+        <location line="+2044"/>
         <location line="+602"/>
         <location line="+20"/>
         <location line="+1213"/>
@@ -55,8 +55,8 @@
         <translation>Σε εξέλιξη</translation>
     </message>
     <message>
-        <location line="-4291"/>
-        <location line="+3898"/>
+        <location line="-4310"/>
+        <location line="+3917"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Ολοκληρωμένο</translation>
@@ -7024,7 +7024,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDevicesView</name>
     <message>
-        <location filename="../qt_quick/PageDevicesView.qml" line="+108"/>
+        <location filename="../qt_quick/PageDevicesView.qml" line="+152"/>
         <location line="+37"/>
         <source>Split Catalog</source>
         <translation>Διαχωρισμός καταλόγου</translation>
@@ -7215,8 +7215,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Ελεύθερος</translation>
     </message>
     <message>
-        <location line="+23"/>
-        <location line="+143"/>
+        <location line="+27"/>
+        <location line="+146"/>
         <source>No devices</source>
         <translation>Δεν υπάρχουν συσκευές</translation>
     </message>
@@ -7224,7 +7224,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDevicesViewDelegate</name>
     <message>
-        <location filename="../qt_quick/PageDevicesViewDelegate.qml" line="+68"/>
+        <location filename="../qt_quick/PageDevicesViewDelegate.qml" line="+96"/>
         <source>Update</source>
         <translation>Ενημέρωση</translation>
     </message>
@@ -7305,7 +7305,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Διαγραφή</translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+95"/>
         <source>files</source>
         <translation>αρχεία</translation>
     </message>
@@ -7325,7 +7325,17 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>σύνολο</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+24"/>
+        <source>Expand</source>
+        <translation>Ανάπτυξη</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Collapse</source>
+        <translation>Σύμπτυξη</translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Actions</source>
         <translation>Ενέργειες</translation>
     </message>
@@ -8354,12 +8364,12 @@ Errors: %3</source>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+437"/>
+        <location line="+446"/>
         <source>(none)</source>
         <translation>(καμία)</translation>
     </message>
     <message>
-        <location line="-429"/>
+        <location line="-438"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8565,7 +8575,12 @@ Errors: %3</source>
         <translation>Χρώματα του Katalog</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+27"/>
+        <source>Use bigger icon size</source>
+        <translation>Χρήση μεγαλύτερου μεγέθους εικονιδίων</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Language</source>
         <translation>Γλώσσα</translation>
     </message>

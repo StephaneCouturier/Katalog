@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+175"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4290"/>
+        <location line="+4309"/>
         <source>Search</source>
         <translation>Hľadať</translation>
     </message>
     <message>
-        <location line="-4410"/>
+        <location line="-4429"/>
         <source>Stopped</source>
         <translation>Zastavené</translation>
     </message>
@@ -44,7 +44,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2025"/>
+        <location line="+2044"/>
         <location line="+602"/>
         <location line="+20"/>
         <location line="+1213"/>
@@ -55,8 +55,8 @@
         <translation>Prebieha</translation>
     </message>
     <message>
-        <location line="-4291"/>
-        <location line="+3898"/>
+        <location line="-4310"/>
+        <location line="+3917"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Dokončené</translation>
@@ -7023,7 +7023,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDevicesView</name>
     <message>
-        <location filename="../qt_quick/PageDevicesView.qml" line="+108"/>
+        <location filename="../qt_quick/PageDevicesView.qml" line="+152"/>
         <location line="+37"/>
         <source>Split Catalog</source>
         <translation>Rozdeliť katalóg</translation>
@@ -7214,8 +7214,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Voľné</translation>
     </message>
     <message>
-        <location line="+23"/>
-        <location line="+143"/>
+        <location line="+27"/>
+        <location line="+146"/>
         <source>No devices</source>
         <translation>Žiadne zariadenia</translation>
     </message>
@@ -7223,7 +7223,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDevicesViewDelegate</name>
     <message>
-        <location filename="../qt_quick/PageDevicesViewDelegate.qml" line="+68"/>
+        <location filename="../qt_quick/PageDevicesViewDelegate.qml" line="+96"/>
         <source>Update</source>
         <translation>Aktualizovať</translation>
     </message>
@@ -7304,7 +7304,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Zmazať</translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+95"/>
         <source>files</source>
         <translation>súbory</translation>
     </message>
@@ -7324,7 +7324,17 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>spolu</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+24"/>
+        <source>Expand</source>
+        <translation>Rozbaliť</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Collapse</source>
+        <translation>Zbaliť</translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Actions</source>
         <translation>Akcie</translation>
     </message>
@@ -8353,12 +8363,12 @@ Chyby: %3</translation>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+437"/>
+        <location line="+446"/>
         <source>(none)</source>
         <translation>(žiadna)</translation>
     </message>
     <message>
-        <location line="-429"/>
+        <location line="-438"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8564,7 +8574,12 @@ Chyby: %3</translation>
         <translation>Farby Katalogu</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+27"/>
+        <source>Use bigger icon size</source>
+        <translation>Použiť väčšiu veľkosť ikon</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Language</source>
         <translation>Jazyk</translation>
     </message>

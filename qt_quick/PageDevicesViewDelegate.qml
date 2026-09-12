@@ -11,6 +11,14 @@ Kirigami.AbstractCard {
 
     property real delegateCardScale: 1.0
 
+    // Which of the three views is showing, and this row's place in the tree.
+    // The collapse state is the page's, held per page and never shared with the
+    // Selection page (DVP-C18).
+    property string viewFilter: "All"
+    readonly property bool cardHasChildren: modelData._hasChildren === true
+    readonly property bool cardIsCollapsed: modelData._isCollapsed === true
+    signal collapseToggleRequested(int deviceId)
+
     signal editRequested(int deviceId)
     signal exploreRequested(int deviceId)
     signal splitSubDirRequested(int deviceId, string deviceName)
@@ -37,9 +45,29 @@ Kirigami.AbstractCard {
     // Virtual devices are never unassigned - they can only be deleted.
     readonly property bool canUnassign: devType !== "Virtual" && devGroupId !== 0 && devPath !== "EXPORT"
 
+    // The icon size the user chose, shared with K2 (THM-F7). One level of the
+    // tree's indent is exactly that size (DVP-F22), so the indent grows and
+    // shrinks with the icons.
+    readonly property real deviceIconSize: appManager1.biggerIconSize
+                                           ? Kirigami.Units.iconSizes.medium
+                                           : Kirigami.Units.iconSizes.smallMedium
+
+    // Only the Device tree indents. The Storage and Catalogs lists never show a
+    // card's parent, so an indent there marks a hierarchy the user cannot see
+    // (DVP-F21).
+    readonly property bool showsHierarchy: viewFilter === "All"
+
     anchors.left:       parent ? parent.left  : undefined
-    anchors.leftMargin: devLevel * Kirigami.Units.gridUnit
+    anchors.leftMargin: showsHierarchy ? devLevel * deviceIconSize : 0
     anchors.right:      parent ? parent.right : undefined
+
+    // Matched to the Selection card, which trims the vertical padding hardest
+    // because that is what stacks up over a long list, and leaves the
+    // horizontal padding alone (DVP-F19).
+    topPadding:    Kirigami.Units.mediumSpacing
+    bottomPadding: Kirigami.Units.mediumSpacing
+    leftPadding:   Kirigami.Units.largeSpacing
+    rightPadding:  Kirigami.Units.largeSpacing
 
     // Lets the Devices page open this same menu for a table row, so the table
     // and the cards can never offer different actions (SpecDevicesPage DVP-F6).
@@ -182,17 +210,6 @@ Kirigami.AbstractCard {
             }
             spacing: Kirigami.Units.largeSpacing
 
-            Kirigami.Icon {
-                source: {
-                    if (card.devType === "Storage") return "drive-harddisk"
-                    if (card.devType === "Catalog")
-                        return card.devActive ? "media-optical-blu-ray" : "media-optical"
-                    return "drive-multidisk"
-                }
-                implicitWidth:  Kirigami.Units.iconSizes.medium
-                implicitHeight: Kirigami.Units.iconSizes.medium
-            }
-
             ColumnLayout {
                 Layout.fillWidth: true
                 spacing: Kirigami.Units.smallSpacing
@@ -208,7 +225,10 @@ Kirigami.AbstractCard {
                     // already draws a larger one in the column to the left.
                     DeviceIdentity {
                         Layout.fillWidth: true
-                        showIcon:       false
+                        // Icon as well as name, from the one component: a second
+                        // icon rule in this file is what DVP-C20 removes.
+                        showIcon:       true
+                        iconSize:       card.deviceIconSize
                         // Cards wrap rather than hide (CDT-F1). Only this
                         // caller opts in: the Selection cards and the reminder
                         // above that list keep their current behaviour until
@@ -238,8 +258,21 @@ Kirigami.AbstractCard {
                     }
                 }
 
-                Controls.Label {
+                // Drawn only when there is a line below it to separate, as on
+                // the Selection card (DVP-F23).
+                Kirigami.Separator {
                     Layout.fillWidth: true
+                    visible: deviceDetailLine.text.length > 0
+                }
+
+                Controls.Label {
+                    id: deviceDetailLine
+                    Layout.fillWidth: true
+                    // Lined up with the name above, past the icon, exactly as
+                    // the Selection card's second line is (DVP-F26). The
+                    // separator above stays full width (DVP-C22).
+                    Layout.leftMargin: card.deviceIconSize
+                                       + Kirigami.Units.smallSpacing
                     // Wraps onto as many lines as it needs, so the date at the
                     // end stays readable on a narrow card (CDT-F1 / DVP-F18).
                     wrapMode: Text.Wrap
@@ -278,6 +311,24 @@ Kirigami.AbstractCard {
                     }
                     visible: text.length > 0
                 }
+            }
+
+            // The Selection card's own expand/collapse control, same icons and
+            // same tooltips (DVP-F24). It keeps its place in the layout when the
+            // device has no children, so every card in the view is the same
+            // height - the reason the Selection card does it that way. Only the
+            // Device tree shows a hierarchy, so only it carries the control.
+            Controls.ToolButton {
+                visible: card.showsHierarchy
+                icon.name: card.cardIsCollapsed ? "go-down" : "go-up"
+                icon.width:  Kirigami.Units.iconSizes.small
+                icon.height: Kirigami.Units.iconSizes.small
+                padding: 0
+                opacity: card.cardHasChildren ? 1.0 : 0.0
+                enabled: card.cardHasChildren
+                onClicked: card.collapseToggleRequested(card.devId)
+                Controls.ToolTip.text: card.cardIsCollapsed ? qsTr("Expand") : qsTr("Collapse")
+                Controls.ToolTip.visible: hovered
             }
 
             IconButton { flat: true;

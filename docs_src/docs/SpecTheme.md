@@ -1,11 +1,11 @@
 ---
 id: SpecTheme
-title: Theme and colour derivation
-description: How K3 derives its surface, row and highlight colours from the desktop colour scheme, and what the Theme setting is allowed to change.
+title: Theme, colour derivation and icon size
+description: How K3 derives its surface, row and highlight colours from the desktop colour scheme, what the Theme setting is allowed to change, and the shared bigger-icon-size preference.
 version: "2.13"
 ---
 
-# Theme and colour derivation
+# Theme, colour derivation and icon size
 
 ![Status](https://img.shields.io/badge/Status-Draft-orange) ![Version](https://img.shields.io/badge/Version-2.13-blue) ![Implementation](https://img.shields.io/badge/Implementation-partial-yellow)
 
@@ -30,15 +30,20 @@ what this spec removes.
 
 ## Scope at a glance
 
-**In scope:** K3 colour derivation only — the file-list row pair, and the reach
-of the three `Settings/Theme` values on K3's derived colours.
+**In scope:** K3 colour derivation — the file-list row pair, and the reach of the
+three `Settings/Theme` values on K3's derived colours — and the **icon size
+preference** of `THM-F7`, which belongs here because it is stored in the same
+`Settings/Theme*` key family and shared with K2. *(Scope widened 2026-09-12 from
+colour derivation alone.)*
 
 **Out of scope (non-goals):**
 
 - **K2 (`qt_widgets`)** — in maintenance mode. It shares the same
   `Settings/Theme` key and keeps its own Katalog Colors rendering, untouched
   (`THM-C5`).
-- **Icon theme** — icon set selection is not governed here.
+- **Icon theme** — icon set selection is not governed here; `THM-F7` sets a
+  size, never which icon set is used.
+- **Which K3 views honour `THM-F7`** beyond the Devices cards — see `THM-C10`.
 - **Removing the "Katalog Colors" entry from the Settings combo** — explicitly
   future work, not authorised by this spec (`THM-C3`).
 - Typography, spacing, and any other non-colour theming.
@@ -69,6 +74,7 @@ Observable behaviour that can be triggered and watched.
 | THM-F4 | The row pair is the same under **every** `Settings/Theme` value (0, 1 and 2). The Theme setting does not change file-list row colours. | [Planned] |
 | THM-F5 | A **selected** row is painted with the selection highlight instead of its parity colour; the row pair applies only to unselected rows. Existing behaviour, unchanged by this spec. | [Implemented] |
 | THM-F6 | Derived colours are bindings on `Kirigami.Theme`, so changing the desktop colour scheme while Katalog is running repaints the lists to the new scheme without restarting the application. | [Planned] |
+| THM-F7 | The Settings page offers a **bigger icon size** choice, as K2 does. Unset, icons are drawn at the smaller size; set, at the larger one. K2's pixel values map onto the Kirigami size tokens: checked → the *medium* token (32), unchecked → the *small-medium* token (22). The user asked for this port on 2026-09-12 and chose the Settings page, as in K2, over a per-page control. | [Planned] |
 
 ## Constructional requirements — *how it is built / limits / MUST-NOTs*
 
@@ -83,6 +89,9 @@ Boundaries and implementation constraints, not user-visible behaviour.
 | THM-C5 | K2 (`qt_widgets`) MUST NOT be modified by this work. It shares the `Settings/Theme` key and keeps its own Katalog Colors rendering; the divergence between K2 and K3 on theme id 1 is accepted and deliberate. | [Planned] |
 | THM-C6 | The View colour set MUST be entered in a scope narrow enough that it does not leak onto surrounding items — `inherit: false` on the item that reads it, so sibling and parent surfaces keep the Window colour set. | [Planned] |
 | THM-C7 | The item that reads the View colour set MUST NOT be hidden (`visible: false`). A hidden item is given no resolved palette by the KDE platform theme and its background colour reads back as opaque black, which paints the first row of every file list black on a light desktop. This failure does not reproduce under `QT_QPA_PLATFORM=offscreen`, where a hidden item still returns the correct colour, so it cannot be caught by an offscreen run — it must be checked against the real desktop. | [Planned] |
+| THM-C8 | `THM-F7` is stored in the **existing** key `Settings/ThemeBiggerIconSize`, the one K2 already writes (`qt_widgets/mainwindow_tab_settings.cpp:624-645`, restored at `qt_widgets/mainwindow_setup.cpp:384`), so both versions share one preference. K2 stores the Qt check state (`2` / `0`) and reads it with `toBool()`, so a K3 boolean round-trips through it; K3 MUST NOT introduce a second key, nor change the value encoding. | [Planned] |
+| THM-C9 | `THM-F7` reuses K2's existing label **`Use bigger icon size`** byte-for-byte — approved per string by the user on 2026-09-12 — so the 30 existing translations carry it and no slot is spent. **No other new string** is authorised by these rows. K2 MUST NOT be modified, per `THM-C5`. | [Planned] |
+| THM-C10 | `THM-F7` is consumed by the **Devices page cards** (`DVP-F20`, `SpecDevicesPage.md`) and the **Selection page cards** (`SEL-F7`, `SpecSelection.md`) — and by nothing else. *(Amended 2026-09-12: the Selection page was added at the user's explicit request, which is the "separate request" this row originally reserved. The mechanism worked as intended: the widening was asked for, not assumed.)* K2 applies its equivalent to all eight of its tree views; K3 MUST NOT be widened to every icon in the application as a side effect. Each further view honouring the setting remains a separate request. | [Planned] |
 
 ---
 
@@ -101,3 +110,7 @@ For each row: set up the stated condition, look at the result.
 - **THM-F6 (live scheme switch)** — With Katalog open on the Search results list, change the Plasma colour scheme from light to dark in System Settings. The list repaints to the new scheme without restarting Katalog; both row colours follow, and the selected row's highlight follows too.
 - **THM-C1** — Compare a Search results row and an Explore row of the same parity under the same scheme: they are the same colour. Grep confirms neither page defines a row colour of its own.
 - **THM-C5** — Open K2 and select *Katalog Colors*. K2 still renders its own brand palette; the two applications differ here by design.
+- **THM-F7 / THM-C8 (shared key)** — Tick *Use bigger icon size* in K3, then open K2: its own checkbox is ticked and its tree icons are the larger size. Untick it in K2 and reopen K3: K3 draws the smaller icons. Confirm only `Settings/ThemeBiggerIconSize` is written, with no second key.
+- **THM-F7 (sizes)** — With the option off, a Devices card icon and a Selection card icon both match the small-medium token; with it on, both match the medium token. The change takes effect without restarting.
+- **THM-C9** — Run `ninja translations_lupdate`: **no** new untranslated string appears. With the interface in French, the Settings label is translated, proving the K2 string was reused verbatim.
+- **THM-C10** — With the option on, confirm the Devices cards and the Selection cards both follow it, and that icons elsewhere in the application — the drawer, the toolbars, the other pages — are unchanged.

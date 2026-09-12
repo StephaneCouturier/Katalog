@@ -473,6 +473,15 @@ Kirigami.ScrollablePage {
                     Layout.preferredWidth: Kirigami.Units.gridUnit * 12
                 }
             }
+            // K2's own option, on K2's own key, so a choice made in either
+            // version is read by the other (THM-F7 / THM-C8). K2 applies it to
+            // its eight tree views; K3 consumes it in the Devices cards for now
+            // (THM-C10).
+            Controls.CheckBox {
+                text: qsTr("Use bigger icon size")
+                checked: appManager1.biggerIconSize
+                onToggled: appManager1.biggerIconSize = checked
+            }
         }
 
         Controls.Label { text: qsTr("Language"); opacity: 0.7; Layout.topMargin: Kirigami.Units.largeSpacing * 2; Layout.alignment: Qt.AlignTop }

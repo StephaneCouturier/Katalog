@@ -44,7 +44,9 @@ This page is the only source of requirements for those behaviours.
 **In scope:** which device is selected; the ways the selection changes — card
 activation, the card context menu, and restoring a search from history; the
 display of the current selection at the top of the Selection page; and the
-display of each history entry's device scope.
+display of each history entry's device scope; and the **icon size** of the
+Selection cards together with the alignment that depends on it (`SEL-F7`,
+`SEL-C8`), added 2026-09-12.
 
 **Out of scope (non-goals):** the device tree's collapse and expand state and its
 header controls; the ordering and filtering of the device list; the Devices page
@@ -81,6 +83,7 @@ Observable behaviour that can be triggered and watched.
 | SEL-F4 | **Edit**, **Update** and **Open folder** MUST NOT change the selection. They act on the right-clicked device while the highlight stays where it was. This is a **deliberate, informed decision** taken on 2026-08-30: the resulting mismatch — the same one `SEL-F3` exists to remove for Search and Explore — was put to the maintainer explicitly for these three items and accepted. It is also a **divergence from K2**, which selects the device when the context menu is *opened* (`qt_widgets/mainwindow_tab_filters.cpp:176-183` calls `on_Filters_treeView_Devices_clicked()` before building the menu), so in K2 every item selects and merely dismissing the menu selects too. K3 selects per item. This MUST NOT be "corrected" to match `SEL-F3`, and MUST NOT be "corrected" back to K2's select-on-menu-open. | [Planned] |
 | SEL-F5 | The Selection page shows the currently selected device at the very top, immediately **before** the filter and expand row, rendered as a device card: the type icon and the device name with the per-type font rules. No label, heading or title precedes it. When no device is selected the row shows `All` with the `folder` icon — the same icon the *All* entry already uses elsewhere in K3. The row is **always present**, so the layout never shifts as the selection changes. Deliberate divergence from K2, which labels three separate rows Virtual / Storage / Catalog and fills the two that do not apply with `All`. | [Planned] |
 | SEL-F6 | Clicking the `SEL-F5` reminder scrolls the device list so the selected card is visible. It is a navigation affordance only — see `SEL-C7`. | [Planned] |
+| SEL-F7 | The Selection cards draw their device icon at the size set by the **bigger icon size** preference (`THM-F7`, `SpecTheme.md`), the same two-state rule the Devices cards follow: the medium token when the option is set, the small-medium token when it is not. One setting therefore drives both pages. The user requested this on 2026-09-12. **With the option off the Selection icon becomes larger than it was** — small-medium (22) where it was small (16): that growth is part of the request, not a side effect, because a third size reserved for this page would defeat a shared preference and would break `DVP-C20`, which requires the two cards to match. | [Planned] |
 
 ## Constructional requirements — *how it is built / limits / MUST-NOTs*
 
@@ -95,6 +98,8 @@ Boundaries and implementation constraints, not user-visible behaviour.
 | SEL-C5 | The device name of `SEL-F2` MUST be obtained through an existing device accessor. It MUST NOT be obtained by adding a `device` join, or any further raw SQL, to `AppManager::getSearchHistory()` (`qt_quick/appmanager.cpp:1357`), whose existing raw `QSqlQuery` is already a departure from the UI/core boundary. That departure is recorded in `SpecBacklogNotes.md` as reported and unruled; it is neither authorised nor to be deepened here. | [Planned] |
 | SEL-C6 | K2 MUST NOT change. K2 already satisfies `SEL-F1` (`qt_widgets/mainwindow_tab_search_ui.cpp:651-693`, including its "device still exists, else All" guard) and shows a labelled variant of `SEL-F5` (`displaySelectedDeviceName()`, `qt_widgets/mainwindow_tab_filters.cpp:449-470`). K2's labelled three-row display, its select-on-menu-open behaviour and its raw-ID history column MUST NOT be reported as drift against these rows. | [Planned] |
 | SEL-C7 | The `SEL-F6` click MUST NOT change or clear the selection. Clearing to *All* was considered and **rejected** on 2026-08-30: the reminder sits directly above the filter field, so a misclick would silently widen the scope of the next search with no error and no visible cause — the same class of silent wrong answer that `SEL-F1` exists to remove. The reminder scrolls the list and does nothing else. | [Planned] |
+| SEL-C8 | The Selection card's second line is indented to line up with the **name**, not with the icon — its left margin is the icon size plus the small spacing. That margin MUST follow `SEL-F7`'s themed size rather than the hard-coded small token it uses today, otherwise the description stops aligning with the name as soon as the icon size changes. This is the one edit to the Selection page authorised by the 2026-09-12 request; `DVP-C21`'s prohibition on changing this page for the Devices work is unaffected and still stands for everything else. | [Planned] |
+| SEL-C9 | `SEL-F7` and `SEL-C8` add **no** new user-visible string, and MUST NOT change what the Selection card says, which device is selected, or any behaviour of `SEL-F1` to `SEL-F6`. They change two sizes and one margin. | [Planned] |
 
 ---
 
@@ -112,5 +117,8 @@ For each row: set up the stated condition, run the operation, confirm the result
 - **SEL-F5 (All)** — Reset the selection so no device is selected. The reminder shows `All` with the `folder` icon, and the row keeps the same height, so nothing below it moves.
 - **SEL-C1** — Change one styling value in the shared component and confirm the reminder and the cards both follow it. Confirm by inspection that the icon rule, the font rules and the opacity values exist in exactly one file.
 - **SEL-F6 / SEL-C7** — Scroll the device list until the selected card is off screen, then click the reminder: the list scrolls to the selected card. Confirm the selection is unchanged — same device highlighted, same device name in the reminder — and that no search scope has widened. Click the reminder repeatedly: nothing changes but the scroll position.
+- **SEL-F7** — Tick *Use bigger icon size* in Settings: the Selection card icons grow, and so do the Devices card icons, from one setting. Untick it: both shrink to the small-medium size. Confirm the Selection icon at the off state is the same size as the Devices card's at the off state.
+- **SEL-C8** — At each icon size, confirm the Selection card's second line starts exactly under the first character of the device name, not under the icon and not offset from it.
+- **SEL-C9** — Confirm the card still names the same device, that clicking it still selects, and that the `SEL-F5` reminder and the context menu are unchanged.
 - **SEL-C4** — Run `ninja translations_lupdate`. No new untranslated string appears for the Selection page or the search history list.
 - **SEL-C6** — Open the same collection in K2. Its Selection panel still shows the three labelled Virtual / Storage / Catalog rows and its history table still shows a raw ID column. Both are expected and are not defects of these rows.

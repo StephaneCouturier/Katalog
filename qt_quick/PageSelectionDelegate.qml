@@ -22,6 +22,14 @@ Kirigami.AbstractCard {
 
     property bool isSelected: appManager1.selectedDeviceId === model.deviceId
 
+    // The same two-state rule the Devices cards follow, on the same setting
+    // shared with K2 (THM-F7 / SEL-F7). One preference drives both pages: a
+    // third size here would defeat that and put the two cards out of step
+    // (DVP-C20).
+    readonly property real deviceIconSize: appManager1.biggerIconSize
+                                           ? Kirigami.Units.iconSizes.medium
+                                           : Kirigami.Units.iconSizes.smallMedium
+
     TapHandler {
         onTapped: appManager1.selectDeviceById(model.deviceId)
     }
@@ -136,6 +144,7 @@ Kirigami.AbstractCard {
                     deviceType:     model.type
                     deviceName:     model.name
                     deviceIsActive: model.isActive
+                    iconSize:       card.deviceIconSize
                     fontScale:      root.cardScale
                     // The selected card is filled with the highlight colour, so
                     // the name needs the colour meant to sit on it.
@@ -151,7 +160,10 @@ Kirigami.AbstractCard {
                     Layout.fillWidth: true
                     // Lined up with the device name above, not with its icon:
                     // the icon's width plus the gap after it.
-                    Layout.leftMargin: Kirigami.Units.iconSizes.small
+                    // Follows the themed icon size, not a fixed one: with a
+                    // hard-coded size the description stops lining up with the
+                    // name as soon as the icons grow (SEL-C8).
+                    Layout.leftMargin: card.deviceIconSize
                                        + Kirigami.Units.smallSpacing
                     wrapMode: Text.WordWrap
                     text: model.description

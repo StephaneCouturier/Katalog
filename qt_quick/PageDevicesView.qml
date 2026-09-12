@@ -18,6 +18,48 @@ Item {
     property string viewFilter: appManager1.deviceDisplayContents
     property bool   filterFromSelection: appManager1.deviceFilterFromSelection
     property var    devices: []
+
+    // Collapsed device IDs for the CARD tree, held here and derived from the
+    // flat list the loader returns - the technique PageExploreFolders.qml uses
+    // (DVP-C19). Independent of the Selection page, which keeps its own state
+    // in its own model (DVP-C18), and of the tree table, which keeps its own.
+    // Transient: every fresh load opens the tree fully (DVP-F25).
+    property var collapsedCardIds: ({})
+
+    // The cards actually shown: every device, minus those under a collapsed
+    // one. Each row is tagged with whether it has children and whether it is
+    // collapsed, so the delegate needs no second pass over the list.
+    readonly property var visibleCards: {
+        var all = root.devices
+        if (root.viewFilter !== "All")
+            return all
+        var out = []
+        var skipDeeperThan = -1
+        for (var i = 0; i < all.length; i++) {
+            var d = all[i]
+            if (skipDeeperThan >= 0) {
+                if (d.level > skipDeeperThan) continue
+                skipDeeperThan = -1
+            }
+            // A row has children when the next one stands a level deeper: the
+            // list is depth-first, so that is the whole test.
+            var hasKids = i + 1 < all.length && all[i + 1].level > d.level
+            var collapsed = hasKids && root.collapsedCardIds[d.deviceId] === true
+            var row = Object.assign({}, d)
+            row._hasChildren = hasKids
+            row._isCollapsed = collapsed
+            out.push(row)
+            if (collapsed) skipDeeperThan = d.level
+        }
+        return out
+    }
+
+    function toggleCardCollapsed(deviceId) {
+        var next = Object.assign({}, root.collapsedCardIds)
+        if (next[deviceId] === true) delete next[deviceId]
+        else next[deviceId] = true
+        root.collapsedCardIds = next
+    }
     property string operationDeviceName: ""
     property bool   operationDeviceActive: false
 
@@ -50,6 +92,8 @@ Item {
     function refreshDevices() {
         var scope = filterFromSelection ? appManager1.selectedDeviceId : 0
         devices = appManager1.getDeviceList(viewFilter, scope)
+        // Fully expanded on every load, matching the tree table (DVP-F25).
+        collapsedCardIds = ({})
     }
 
     // Create a child device and open it for editing, as K2 does
@@ -549,8 +593,12 @@ Item {
             Layout.fillHeight: true
             visible: !root.tableMode
             clip: true
-            model: root.devices
+            model: root.visibleCards
             topMargin: Kirigami.Units.smallSpacing
+            // Tighter than the Kirigami default, to fit more devices on screen
+            // (DVP-F19). The card's own padding is trimmed to match the
+            // Selection card's in the delegate.
+            spacing: Kirigami.Units.smallSpacing
 
             Kirigami.PlaceholderMessage {
                 anchors.centerIn: parent
@@ -561,6 +609,9 @@ Item {
 
             delegate: PageDevicesViewDelegate {
                 delegateCardScale: root.cardScale
+                viewFilter:        root.viewFilter
+
+                onCollapseToggleRequested: (id) => root.toggleCardCollapsed(id)
 
                 onEditRequested:    (id) => root.editDeviceRequested(id)
                 onExploreRequested: (id) => root.exploreDeviceRequested(id)
