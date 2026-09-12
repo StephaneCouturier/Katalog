@@ -393,16 +393,6 @@ Item {
 
                 Item { Layout.fillWidth: true }
 
-                Controls.CheckBox {
-                    text: qsTr("Filter from Selection")
-                    checked: root.filterFromSelection
-                    onToggled: {
-                        root.filterFromSelection = checked
-                        appManager1.deviceFilterFromSelection = checked
-                        root.refreshDevices()
-                    }
-                }
-
                 // Display mode (DVP-F1). Shown only for the two list views; the
                 // Device tree has no table yet. Neither this nor Full Table
                 // reloads the list - both re-render rows already in hand, so no
@@ -446,6 +436,23 @@ Item {
                         // The column count changed; TableView caches column
                         // widths and has to be told to measure them again.
                         deviceTable.forceLayout()
+                    }
+                }
+
+                // Last in the bar, after the whole display-mode cluster rather
+                // than between Table and Full Table, which would split that
+                // cluster (DVP-F1). The separator carries the cluster's own
+                // visibility, so in the Device tree view this checkbox is the
+                // only control at the right of the bar.
+                Controls.ToolSeparator { visible: root.tableAvailable }
+
+                Controls.CheckBox {
+                    text: qsTr("Filter from Selection")
+                    checked: root.filterFromSelection
+                    onToggled: {
+                        root.filterFromSelection = checked
+                        appManager1.deviceFilterFromSelection = checked
+                        root.refreshDevices()
                     }
                 }
             }

@@ -46,11 +46,16 @@ their sorting, and the `Full Table` option; the persistence of both choices;
 the persistence and restoration of the three-view choice (Device tree / Storage
 list / Catalogs list).
 
+**Also in scope:** the **default value** of the `Filter from Selection`
+checkbox when the collection has stored none, and where that value is stored
+(`DVP-F9`, `DVP-C8`).
+
 **Out of scope (non-goals):** the **Device tree** view, which keeps its current
 card rendering and is deferred to later work; the device editor; the device
-context menu's contents; which devices the list contains (filtering and the
-`Filter from Selection` checkbox) — the persistence of that choice is in scope
-per `DVP-F7`; when the active-status cache is probed, which
+context menu's contents; which devices the list contains once the checkbox is
+set — the filtering behaviour itself, and the rest of the filter bar, stay
+outside these rows even though the checkbox's default and persistence are now
+inside them; when the active-status cache is probed, which
 belongs to `SpecDeviceActiveStatus.md`; the device comment, which belongs to
 `SpecDeviceComment.md`. None of them is governed by this spec and this spec does
 not authorise changing any of them.
@@ -91,7 +96,7 @@ Observable behaviour that can be triggered and watched.
 
 | ID | Requirement | Status |
 |----|-------------|--------|
-| DVP-F1 | The Devices page offers a **Cards / Table** display choice, placed in the filter bar immediately after the existing `Filter from Selection` checkbox. It applies to the **Storage list** and the **Catalogs list** views only. The **Device tree** view is unaffected and keeps its current card rendering — the tree is explicitly deferred to later work and MUST NOT be converted by this work. | [Planned] |
+| DVP-F1 | The Devices page offers a **Cards / Table** display choice, placed in the filter bar at the right of the view buttons, as the display-mode cluster *Cards, Table, `Full Table`*, with `Filter from Selection` following that whole cluster — **not** preceding it. *(Amended 2026-09-12 at the user's request: the original wording placed the Cards / Table control immediately after `Filter from Selection`. The order is now the reverse. `Filter from Selection` sits after `Full Table`, which is itself a table option, so the display-mode cluster is not split. A `ToolSeparator` on each side of the cluster, both shown on the same condition as the cluster, keeps the Device tree view's bar reading as it does today.)* It applies to the **Storage list** and the **Catalogs list** views only. The **Device tree** view is unaffected and keeps its current card rendering — the tree is explicitly deferred to later work and MUST NOT be converted by this work. | [Planned] |
 | DVP-F2 | In Table mode, clicking a column header sorts the rows by that column; clicking the same header again reverses the order. Numeric columns — file counts, file sizes, used / free / total space, and IDs — sort **numerically**, not as text, so `10` follows `9` and a formatted size sorts by its underlying byte value. | [Planned] |
 | DVP-F3 | In Table mode a **Full Table** option reveals extra columns, matching K2's `Devices_checkBox_DisplayFullTable` column set (`qt_widgets/mainwindow_tab_device_pr.cpp:1627,1901`). It reuses K2's existing `Full Table` string verbatim. Column sets are as listed in [Table mode columns](#table-mode-columns) below. | [Planned] |
 | DVP-F4 | The display mode and the Full Table state persist **per collection**, in the collection's `.ini` (`collection->settingsFilePath`), and are restored when the collection is opened. Keys: `Devices/DisplayAsTable` — new, no K2 precedent — and `Devices/DisplayFullDeviceTable`, which is the key K2 already uses, so both versions share one stored value. | [Planned] |
@@ -99,6 +104,7 @@ Observable behaviour that can be triggered and watched.
 | DVP-F6 | Row actions in Table mode offer the **same context menu** the card delegate already offers (`qt_quick/PageDevicesViewDelegate.qml`), unchanged — same entries, same conditions, same confirmations. Table mode adds no action and removes none. | [Planned] |
 | DVP-F7 | The Devices page's **three-view choice** — Device tree, Storage list, Catalogs list — persists **per collection** in the collection's `.ini` (`collection->settingsFilePath`) under `Devices/DisplayContents`, the key K2 already uses (`qt_widgets/mainwindow_tab_device_ui.cpp:45,55,65`), so both versions share one stored value. K3's `viewFilter` values map to it as `"All"` ↔ `"Tree"`, `"Storage"` ↔ `"Storage"`, `"Catalogs"` ↔ `"Catalogs"`. The stored view is applied when the Devices page first opens and again when another collection is opened. Restoring `"Tree"` restores *which view is shown* only; the Device tree keeps its card rendering per `DVP-F1`. | [Planned] |
 | DVP-F8 | **When `Devices/DisplayContents` is absent, K3 opens on the Device tree (`"All"`)** — a deliberate divergence from K2, which effectively falls back to the Catalogs list. K2's fallback is not a stated requirement but an artefact: `qt_widgets/mainwindow.cpp:344` reads the key with **no default**, so none of its three branches matches and the `.ui` default stands — `Devices_radioButton_CatalogList` is pre-checked (`qt_widgets/mainwindow.ui:5502-5509`) — while `qt_widgets/mainwindow_tab_device_pr.cpp:2104` reads the *same* key defaulting to `"Tree"`, so K2 is internally inconsistent about it. K3 therefore keeps its existing opening view, so collections that never stored a choice see no change; the user chose this over matching K2 on 2026-09-12. This divergence is intended and MUST NOT be reported as drift against `DVP-F7` or `DVP-C3`. | [Planned] |
+| DVP-F9 | **When `Devices/FilterFromSelection` is absent, `Filter from Selection` is ON.** A new user therefore sees the Devices page already scoped to the device chosen on the Selection page, which is the reading most users expect; showing every device of the collection regardless of the selection was an artefact of the hard `false` fallback, never a stated requirement. The choice persists **per collection** in the collection's `.ini` (`collection->settingsFilePath`) under `Devices/FilterFromSelection`. A collection that already stored a value keeps it unchanged — including a stored `false`; only the absent-key case changes. There is **no K2 equivalent**: K2's Devices tab has no such checkbox, so this is K3-only and MUST NOT be reported as divergence from K2. The user approved the default on 2026-09-12. | [Planned] |
 
 ### Table mode columns {#table-mode-columns}
 
@@ -138,6 +144,7 @@ Boundaries and implementation constraints, not user-visible behaviour.
 | DVP-C5 | All column header strings reuse K2's existing `tr()` wording **byte-for-byte** — copied from the K2 model headers, not retyped. Exactly **two** new user-visible strings are authorised: `Cards` and `Table`, the toggle labels, approved per string by the user on 2026-09-11. Any further new string needs its own approval. | [Planned] |
 | DVP-C6 | Restoring the view per `DVP-F7` MUST NOT cause a second device-list load, and therefore no second active-status probe, on application start or on collection open: `AppManager::getDeviceList()` probes on **every** call (`collection->updateAllDeviceActive()`, `qt_quick/appmanager.cpp:2422`), and a second pass would breach `DVP-C2` and `DAS-O4`. The restored value MUST be in place **before** the list is built. Note that on collection open `refreshAllUI()` runs **before** `emit databaseModeChanged()` (`qt_quick/appmanager.cpp:977-978`), so the existing `onDatabaseModeChanged` handler in `qt_quick/PageDevicesView.qml` is the **wrong place** for this restore even though `DVP-F4`'s display-mode restore sits there safely — that one only re-renders rows already loaded, whereas a view change arriving after the list was rebuilt with the previous view would force a reload. Switching the view *by user action* keeps its existing single probe, per `DAS-F3`. | [Planned] |
 | DVP-C7 | `Devices/DisplayContents` is read and written through `AppManager`, alongside the `DVP-F4` keys; **no `core/` change** is authorised, per `DVP-C4`. **No new user-visible string:** the three view labels already exist. | [Planned] |
+| DVP-C8 | `DVP-F9`'s default is applied **where the value is read**, as the fallback of the settings read — it MUST NOT be seeded by writing the key at first run or on collection open. Writing it would make an untouched collection indistinguishable from one the user deliberately set, and would defeat the guarantee that only the absent-key case changes. `Filter from Selection` carries **no new user-visible string**: the existing label is unchanged. | [Planned] |
 
 ---
 
@@ -163,7 +170,8 @@ not have to rediscover it.
 For each row: set up the stated condition, run the operation, confirm the result.
 
 - **DVP-F1** — On the Storage list, switch to Table: the devices render as an aligned table. Switch to the Catalogs list: still Table. Switch to the Device tree: it still renders as cards and shows no Cards / Table control effect. Return to the Storage list: still Table.
-- **DVP-F1 (placement)** — Confirm the Cards / Table control sits in the filter bar immediately after `Filter from Selection`, and that `Filter from Selection` still filters the list in both modes.
+- **DVP-F1 (placement)** — Confirm the filter bar reads, left to right: the three view buttons, then the display-mode cluster `Cards`, `Table`, `Full Table`, then `Filter from Selection` last. Confirm `Filter from Selection` still filters the list in both modes, and that its checked state is unchanged by the move.
+- **DVP-F1 (placement, Device tree)** — Switch to the Device tree view: the display-mode cluster and both separators are hidden, and `Filter from Selection` remains the only control at the right of the bar.
 - **DVP-F2** — In Table mode click the *Number of files* header: rows sort ascending by count; click again: descending. Confirm a device with 1000 files sorts above one with 999 — not below it as a text sort would give. Repeat on *Total Size* with sizes spanning KB / MB / GB, and on *Storage ID*.
 - **DVP-F3 (Storage)** — On the Storage list in Table mode with `Full Table` off, confirm exactly the default column set. Tick `Full Table`: Active, Type, Brand, Model, Serial Number, Build Date and Comment 1/2/3 appear. Open the same collection in K2 and confirm the same columns appear there.
 - **DVP-F3 (Catalogs)** — On the Catalogs list in File mode with `Full Table` on, confirm Active, Catalog ID and App Version appear and that **Date Loaded and File Path do not**. Open the same collection in Memory mode: both now appear.
@@ -182,6 +190,9 @@ For each row: set up the stated condition, run the operation, confirm the result
 - **DVP-F7 (shared key)** — Select the Catalogs list in K3, then open the same collection in K2: `Devices_radioButton_CatalogList` is checked. Select the Storage list in K2 and reopen in K3: the Storage list is shown.
 - **DVP-F7 (tree rendering)** — With `"Tree"` stored, reopen: the Device tree is shown **as cards**, with no Cards / Table control effect.
 - **DVP-F8** — Delete the `Devices/DisplayContents` key from a collection `.ini` and open that collection in K3: the Device tree is shown. Open the same collection in K2: K2 shows the Catalogs list. Both are correct, not a defect.
+- **DVP-F9** — Open a collection whose `.ini` has no `Devices/FilterFromSelection` key (a new collection, or delete the key from an existing one). On the Devices page `Filter from Selection` is **checked**, and the list is scoped to the device selected on the Selection page rather than showing the whole collection.
+- **DVP-F9 (stored value wins)** — Set `Devices/FilterFromSelection` to `false` in a collection `.ini` and open it: the checkbox is **unchecked** and the list shows all devices. Set it to `true` and reopen: checked. A collection that had already stored a choice is unaffected by the new default.
+- **DVP-F9 / DVP-C8 (no seeding)** — Open a collection with the key absent, visit the Devices page, and close the application **without touching the checkbox**. The key is still absent from the collection `.ini` — the default was applied on read, not written. Untick the checkbox and close: now the key is present and reads `false`.
 - **DVP-C6 (start)** — Instrument `Device::updateActiveState()`. With a stored view of `"Storage"`, start the application and open the Devices page: the probes amount to one pass over the devices, not two.
 - **DVP-C6 (collection open)** — With the Devices page open and a stored view differing from the one on screen, open another collection: exactly one probe pass runs, and the page ends on the new collection's stored view.
 - **DVP-C6 (network mount)** — With an unreachable network mount configured, open a collection whose stored view differs from the current one. The interface does not freeze twice over.

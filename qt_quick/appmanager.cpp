@@ -553,7 +553,11 @@ void AppManager::setShowSelectionPage(bool value)
 bool AppManager::getDeviceFilterFromSelection() const
 {
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
-    return settings.value("Devices/FilterFromSelection", false).toBool();
+    // On for a collection that has never stored a choice (SpecDevicesPage.md
+    // DVP-F9). Applied here, as the fallback of the read, and never seeded by
+    // writing the key: an untouched collection must stay distinguishable from
+    // one the user deliberately set to off (DVP-C8).
+    return settings.value("Devices/FilterFromSelection", true).toBool();
 }
 //----------------------------------------------------------------------
 void AppManager::setDeviceFilterFromSelection(bool value)
