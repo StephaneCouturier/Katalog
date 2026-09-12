@@ -234,9 +234,17 @@ Kirigami.AbstractCard {
                         var d = card.modelData
                         var parts = []
                         if (d.type !== "Virtual") parts.push(d.type)
-                        if (d.fileCount > 0)
+                        // A catalog states its figures even when both are zero:
+                        // an empty catalog is a fact worth reading, and hiding
+                        // them made it look like one whose contents are unknown
+                        // (DVP-F10). formatDataSizeDelta(), because the other
+                        // formatter returns an empty string at zero and would
+                        // blank the size here (DVP-C9); above zero the two are
+                        // the same call. Catalogs only - Storage and Virtual
+                        // cards keep their current behaviour.
+                        if (d.type === "Catalog" || d.fileCount > 0)
                             parts.push(Number(d.fileCount).toLocaleString(Qt.locale(), "f", 0) + " " + qsTr("files")
-                                       + "  " + appManager1.formatDataSize(d.totalFileSize))
+                                       + "  " + appManager1.formatDataSizeDelta(d.totalFileSize))
                         if (d.type === "Storage" && d.freeSpace > 0)
                             parts.push(qsTr("free") + ": " + appManager1.formatDataSize(d.freeSpace))
                         if (d.dateUpdated && d.dateUpdated.length > 0)
