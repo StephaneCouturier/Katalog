@@ -29,6 +29,7 @@
         <file alias="fallback-icons/folder.png">../assets/fallback-icons/folder.png</file>
         <file alias="fallback-icons/format-convert-to-path.png">../assets/fallback-icons/format-convert-to-path.png</file>
         <file alias="fallback-icons/go-down.png">../assets/fallback-icons/go-down.png</file>
+        <file alias="fallback-icons/go-down-symbolic.png">../assets/fallback-icons/go-down-symbolic.png</file>
         <file alias="fallback-icons/go-next.png">../assets/fallback-icons/go-next.png</file>
         <file alias="fallback-icons/go-previous.png">../assets/fallback-icons/go-previous.png</file>
         <file alias="fallback-icons/go-up.png">../assets/fallback-icons/go-up.png</file>
@@ -48,6 +49,8 @@
         <file alias="fallback-icons/view-filter.png">../assets/fallback-icons/view-filter.png</file>
         <file alias="fallback-icons/view-history.png">../assets/fallback-icons/view-history.png</file>
         <file alias="fallback-icons/view-list-text.png">../assets/fallback-icons/view-list-text.png</file>
+        <file alias="fallback-icons/view-list-icons.png">../assets/fallback-icons/view-list-icons.png</file>
+        <file alias="fallback-icons/view-list-details.png">../assets/fallback-icons/view-list-details.png</file>
         <file alias="fallback-icons/view-list-tree.png">../assets/fallback-icons/view-list-tree.png</file>
         <file alias="fallback-icons/view-media-playlist.png">../assets/fallback-icons/view-media-playlist.png</file>
         <file alias="fallback-icons/view-statistics.png">../assets/fallback-icons/view-statistics.png</file>
@@ -81,6 +84,7 @@
         <file alias="fallback-icons-dark/folder.png">../assets/fallback-icons-dark/folder.png</file>
         <file alias="fallback-icons-dark/format-convert-to-path.png">../assets/fallback-icons-dark/format-convert-to-path.png</file>
         <file alias="fallback-icons-dark/go-down.png">../assets/fallback-icons-dark/go-down.png</file>
+        <file alias="fallback-icons-dark/go-down-symbolic.png">../assets/fallback-icons-dark/go-down-symbolic.png</file>
         <file alias="fallback-icons-dark/go-next.png">../assets/fallback-icons-dark/go-next.png</file>
         <file alias="fallback-icons-dark/go-previous.png">../assets/fallback-icons-dark/go-previous.png</file>
         <file alias="fallback-icons-dark/go-up.png">../assets/fallback-icons-dark/go-up.png</file>
@@ -100,6 +104,8 @@
         <file alias="fallback-icons-dark/view-filter.png">../assets/fallback-icons-dark/view-filter.png</file>
         <file alias="fallback-icons-dark/view-history.png">../assets/fallback-icons-dark/view-history.png</file>
         <file alias="fallback-icons-dark/view-list-text.png">../assets/fallback-icons-dark/view-list-text.png</file>
+        <file alias="fallback-icons-dark/view-list-icons.png">../assets/fallback-icons-dark/view-list-icons.png</file>
+        <file alias="fallback-icons-dark/view-list-details.png">../assets/fallback-icons-dark/view-list-details.png</file>
         <file alias="fallback-icons-dark/view-list-tree.png">../assets/fallback-icons-dark/view-list-tree.png</file>
         <file alias="fallback-icons-dark/view-media-playlist.png">../assets/fallback-icons-dark/view-media-playlist.png</file>
         <file alias="fallback-icons-dark/view-refresh.png">../assets/fallback-icons-dark/view-refresh.png</file>
