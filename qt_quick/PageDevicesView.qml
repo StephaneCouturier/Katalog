@@ -595,10 +595,12 @@ Item {
             clip: true
             model: root.visibleCards
             topMargin: Kirigami.Units.smallSpacing
-            // Tighter than the Kirigami default, to fit more devices on screen
-            // (DVP-F19). The card's own padding is trimmed to match the
-            // Selection card's in the delegate.
-            spacing: Kirigami.Units.smallSpacing
+            // The Selection list's own two values, copied rather than guessed:
+            // that list is the one in Main.qml (the CardsListView holding
+            // PageSelectionDelegate), not the unused PageSelectionView.qml.
+            // Leaving spacing unset is not the same thing - Kirigami's own
+            // default is wider than largeSpacing (DVP-F19).
+            spacing: Kirigami.Units.largeSpacing
 
             Kirigami.PlaceholderMessage {
                 anchors.centerIn: parent
