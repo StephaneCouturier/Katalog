@@ -201,15 +201,15 @@ jobs:
         mkdir -p packaging/qt_quick
 
         # Create desktop file
-        cat > packaging/qt_quick/Katalog3.desktop << EOF
+        cat > packaging/qt_quick/io.github.stephanecouturier.Katalog.desktop << EOF
         [Desktop Entry]
         Type=Application
-        Name=Katalog3
+        Name=Katalog
         GenericName=File Catalog Manager
         Comment=Create and manage catalogs of your files and folders
         Comment[fr]=Créer et gérer des catalogues de vos fichiers et dossiers
         Exec=Katalog
-        Icon=Katalog3
+        Icon=Katalog
         Terminal=false
         Categories=Utility;FileManager;Qt;
         Keywords=catalog;files;folders;organization;storage;backup;
@@ -218,11 +218,11 @@ jobs:
         EOF
 
         # Create AppData file
-        cat > packaging/qt_quick/io.github.stephanecouturier.katalog3.appdata.xml << EOF
+        cat > packaging/qt_quick/io.github.stephanecouturier.Katalog.appdata.xml << EOF
         <?xml version="1.0" encoding="UTF-8"?>
         <component type="desktop-application">
-          <id>io.github.stephanecouturier.katalog3</id>
-          <name>Katalog3</name>
+          <id>io.github.stephanecouturier.Katalog</id>
+          <name>Katalog</name>
           <summary>File Catalog Manager</summary>
           <description>
             <p>
@@ -246,7 +246,7 @@ jobs:
           <url type="homepage">https://stephanecouturier.github.io/Katalog</url>
           <url type="bugtracker">https://github.com/StephaneCouturier/Katalog/issues</url>
           <url type="help">https://stephanecouturier.github.io/Katalog/docs/tutorial</url>
-          <launchable type="desktop-id">io.github.stephanecouturier.katalog3.desktop</launchable>
+          <launchable type="desktop-id">io.github.stephanecouturier.Katalog.desktop</launchable>
           <provides>
             <binary>Katalog</binary>
           </provides>
@@ -333,36 +333,36 @@ jobs:
         mkdir -p AppDir/usr/share/icons/hicolor/64x64/apps
 
         # Copy desktop file
-        cp ../packaging/qt_quick/Katalog3.desktop AppDir/usr/share/applications/
+        cp ../packaging/qt_quick/io.github.stephanecouturier.Katalog.desktop AppDir/usr/share/applications/
 
         # Copy AppData
-        cp ../packaging/qt_quick/io.github.stephanecouturier.katalog3.appdata.xml AppDir/usr/share/metainfo/
+        cp ../packaging/qt_quick/io.github.stephanecouturier.Katalog.appdata.xml AppDir/usr/share/metainfo/
 
         # Create proper 64x64 icon
         if [ -f "../assets/Katalog_logo_64.ico" ]; then
           # Convert ico to png with exact 64x64 size
           sudo apt-get install -y imagemagick
-          convert "../assets/Katalog_logo_64.ico[0]" -resize 64x64! AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png 2>/dev/null || \
+          convert "../assets/Katalog_logo_64.ico[0]" -resize 64x64! AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png 2>/dev/null || \
           {
             echo "ICO conversion failed, creating fallback icon"
-            convert -size 64x64 xc:steelblue -gravity center -pointsize 28 -fill white -font DejaVu-Sans-Bold -annotate +0+0 "K" AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png
+            convert -size 64x64 xc:steelblue -gravity center -pointsize 28 -fill white -font DejaVu-Sans-Bold -annotate +0+0 "K" AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png
           }
         else
           echo "ICO file not found, creating fallback icon"
           sudo apt-get install -y imagemagick
-          convert -size 64x64 xc:steelblue -gravity center -pointsize 28 -fill white -font DejaVu-Sans-Bold -annotate +0+0 "K" AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png
+          convert -size 64x64 xc:steelblue -gravity center -pointsize 28 -fill white -font DejaVu-Sans-Bold -annotate +0+0 "K" AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png
         fi
 
         # Verify icon dimensions
         echo "Icon information:"
-        file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png
-        identify AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png || echo "Could not identify icon"
+        file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png
+        identify AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png || echo "Could not identify icon"
 
         # Validate desktop file
-        desktop-file-validate AppDir/usr/share/applications/Katalog3.desktop || echo "Desktop file validation warnings (non-critical)"
+        desktop-file-validate AppDir/usr/share/applications/io.github.stephanecouturier.Katalog.desktop || echo "Desktop file validation warnings (non-critical)"
 
         # Validate AppData
-        appstream-util validate AppDir/usr/share/metainfo/io.github.stephanecouturier.katalog3.appdata.xml || echo "AppData validation warnings (non-critical)"
+        appstream-util validate AppDir/usr/share/metainfo/io.github.stephanecouturier.Katalog.appdata.xml || echo "AppData validation warnings (non-critical)"
 
     - name: Create AppImage
       run: |
@@ -441,8 +441,8 @@ jobs:
           --appdir AppDir \
           --plugin qt \
           --executable AppDir/usr/bin/Katalog \
-          --desktop-file AppDir/usr/share/applications/Katalog3.desktop \
-          --icon-file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png \
+          --desktop-file AppDir/usr/share/applications/io.github.stephanecouturier.Katalog.desktop \
+          --icon-file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog.png \
           $LIBRARY_FLAGS
 
         # Replace linuxdeploy's AppRun (a binary or symlink to the main binary) with
@@ -552,10 +552,10 @@ jobs:
         # modifying libraries. This avoids a second linuxdeploy pass that could
         # interfere with the manually bundled Qt6 QML libs.
         export ARCH=x86_64
-        appimagetool AppDir Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage
+        appimagetool AppDir Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
 
         # Verify the AppImage was created
-        if [ ! -f "Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage" ]; then
+        if [ ! -f "Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage" ]; then
           echo "Error: AppImage not created"
           ls -la *.AppImage || echo "No AppImage files found"
           exit 1
@@ -566,14 +566,14 @@ jobs:
         cd build
 
         # Basic test - check if AppImage can show version
-        chmod +x Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage
+        chmod +x Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
 
         # Test extraction
-        ./Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage --appimage-extract-and-run --version || echo "Version check completed"
+        ./Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage --appimage-extract-and-run --version || echo "Version check completed"
 
         # Get AppImage size and info
-        ls -lh Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage
-        file Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage
+        ls -lh Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+        file Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
 
     - name: Upload AppImage to Release
       if: env.IS_RELEASE == 'true'
@@ -582,16 +582,16 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ github.event.release.upload_url }}
-        asset_path: build/Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage
-        asset_name: Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage
+        asset_path: build/Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+        asset_name: Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
         asset_content_type: application/octet-stream
 
     - name: Upload AppImage as Artifact
       if: env.IS_RELEASE != 'true'
       uses: actions/upload-artifact@v4
       with:
-        name: Katalog3-AppImage-${{ env.VERSION_TAG }}
-        path: build/Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage
+        name: Katalog-AppImage-${{ env.VERSION_TAG }}
+        path: build/Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
         retention-days: 30
 
     - name: Summary
@@ -599,8 +599,8 @@ jobs:
         echo "## Build Complete! 🎉" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "- **Version**: ${{ env.VERSION_TAG }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **File**: Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage" >> $GITHUB_STEP_SUMMARY
-        echo "- **Size**: $(ls -lh build/Katalog3-${{ env.VERSION_TAG }}-x86_64.AppImage | awk '{print $5}')" >> $GITHUB_STEP_SUMMARY
+        echo "- **File**: Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage" >> $GITHUB_STEP_SUMMARY
+        echo "- **Size**: $(ls -lh build/Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage | awk '{print $5}')" >> $GITHUB_STEP_SUMMARY
 
         if [ "${{ env.IS_RELEASE }}" = "true" ]; then
           echo "- **Status**: ✅ Uploaded to GitHub Release" >> $GITHUB_STEP_SUMMARY

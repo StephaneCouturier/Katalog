@@ -202,13 +202,13 @@ jobs:
     - name: Create DMG
       run: |
         cd build
-        DMG_NAME="Katalog3-$VERSION_TAG-macOS.dmg"
+        DMG_NAME="Katalog-$VERSION_TAG-macOS.dmg"
         mkdir dmg_temp
         cp -R qt_quick/Katalog.app dmg_temp/
 
         if command -v create-dmg >/dev/null 2>&1; then
           create-dmg \
-            --volname "Katalog3 $VERSION_TAG" \
+            --volname "Katalog $VERSION_TAG" \
             --window-pos 200 120 \
             --window-size 600 300 \
             --icon-size 100 \
@@ -230,14 +230,14 @@ jobs:
     - name: Upload DMG as Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: Katalog3_${{ env.VERSION_TAG }}_dmg
-        path: build/Katalog3-${{ env.VERSION_TAG }}-macOS.dmg
+        name: Katalog_${{ env.VERSION_TAG }}_dmg
+        path: build/Katalog-${{ env.VERSION_TAG }}-macOS.dmg
         retention-days: 30
 
     - name: Upload App Bundle as Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: Katalog3_${{ env.VERSION_TAG }}_bundle
+        name: Katalog_${{ env.VERSION_TAG }}_bundle
         path: build/qt_quick/Katalog.app
         retention-days: 7
 
@@ -245,5 +245,5 @@ jobs:
       run: |
         echo "## Katalog 3 macOS Build" >> $GITHUB_STEP_SUMMARY
         echo "- **Version**: ${{ env.VERSION_TAG }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **File**: Katalog3-${{ env.VERSION_TAG }}-macOS.dmg" >> $GITHUB_STEP_SUMMARY
+        echo "- **File**: Katalog-${{ env.VERSION_TAG }}-macOS.dmg" >> $GITHUB_STEP_SUMMARY
         echo "- **Status**: 📦 Available as build artifact" >> $GITHUB_STEP_SUMMARY
