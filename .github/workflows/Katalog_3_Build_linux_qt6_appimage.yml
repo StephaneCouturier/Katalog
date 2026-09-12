@@ -208,13 +208,13 @@ jobs:
         GenericName=File Catalog Manager
         Comment=Create and manage catalogs of your files and folders
         Comment[fr]=Créer et gérer des catalogues de vos fichiers et dossiers
-        Exec=Katalog3
+        Exec=Katalog
         Icon=Katalog3
         Terminal=false
         Categories=Utility;FileManager;Qt;
         Keywords=catalog;files;folders;organization;storage;backup;
         StartupNotify=true
-        StartupWMClass=Katalog3
+        StartupWMClass=Katalog
         EOF
 
         # Create AppData file
@@ -248,7 +248,7 @@ jobs:
           <url type="help">https://stephanecouturier.github.io/Katalog/docs/tutorial</url>
           <launchable type="desktop-id">io.github.stephanecouturier.katalog3.desktop</launchable>
           <provides>
-            <binary>Katalog3</binary>
+            <binary>Katalog</binary>
           </provides>
           <content_rating type="oars-1.1"/>
           <releases>
@@ -317,7 +317,7 @@ jobs:
 
         # Create AppDir and install manually if needed
         mkdir -p AppDir/usr/bin
-        cp qt_quick/Katalog3 AppDir/usr/bin/
+        cp qt_quick/Katalog AppDir/usr/bin/
 
         # Or try the install target with proper environment
         export DESTDIR="$(pwd)/AppDir"
@@ -440,7 +440,7 @@ jobs:
         linuxdeploy \
           --appdir AppDir \
           --plugin qt \
-          --executable AppDir/usr/bin/Katalog3 \
+          --executable AppDir/usr/bin/Katalog \
           --desktop-file AppDir/usr/share/applications/Katalog3.desktop \
           --icon-file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png \
           $LIBRARY_FLAGS
@@ -448,7 +448,7 @@ jobs:
         # Replace linuxdeploy's AppRun (a binary or symlink to the main binary) with
         # an explicit shell script. The binary AppRun does not set LD_LIBRARY_PATH, so
         # bundled Qt6 QML libs are bypassed in favour of the system's Qt6 version.
-        # rm -f is essential: linuxdeploy may create AppRun as a symlink to usr/bin/Katalog3;
+        # rm -f is essential: linuxdeploy may create AppRun as a symlink to usr/bin/Katalog;
         # writing through a symlink would overwrite the binary instead of creating a new file.
         # Use $APPDIR (set by the AppImage runtime before invoking AppRun) rather than
         # computing HERE from BASH_SOURCE[0]: the runtime always sets APPDIR correctly,
@@ -461,7 +461,7 @@ jobs:
           'export QT_PLUGIN_PATH="${APPDIR}/usr/plugins${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}"' \
           'export QML2_IMPORT_PATH="${APPDIR}/usr/qml${QML2_IMPORT_PATH:+:$QML2_IMPORT_PATH}"' \
           'export QML_IMPORT_PATH="${APPDIR}/usr/qml${QML_IMPORT_PATH:+:$QML_IMPORT_PATH}"' \
-          'exec "${APPDIR}/usr/bin/Katalog3" "$@"' \
+          'exec "${APPDIR}/usr/bin/Katalog" "$@"' \
           > AppDir/AppRun
         chmod +x AppDir/AppRun
         echo "AppRun contents:"

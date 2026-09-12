@@ -180,9 +180,9 @@ jobs:
         fi
 
         echo "=== Build output ==="
-        find . -name "Katalog3*" -o -name "*.app" | sort
+        find . -name "Katalog*" -o -name "*.app" | sort
 
-        if [ -f "qt_quick/Katalog3.app/Contents/MacOS/Katalog3" ]; then
+        if [ -f "qt_quick/Katalog.app/Contents/MacOS/Katalog" ]; then
           echo "✅ Katalog3 app bundle found"
         else
           echo "❌ Katalog3 app bundle not found"
@@ -194,7 +194,7 @@ jobs:
         cd build
         QT_DEPLOY_TOOL="$(brew --prefix qt@6)/bin/macdeployqt"
         if [ -x "$QT_DEPLOY_TOOL" ]; then
-          "$QT_DEPLOY_TOOL" qt_quick/Katalog3.app -verbose=1 || echo "macdeployqt completed with warnings"
+          "$QT_DEPLOY_TOOL" qt_quick/Katalog.app -verbose=1 || echo "macdeployqt completed with warnings"
         else
           echo "macdeployqt not found"
         fi
@@ -204,7 +204,7 @@ jobs:
         cd build
         DMG_NAME="Katalog3-$VERSION_TAG-macOS.dmg"
         mkdir dmg_temp
-        cp -R qt_quick/Katalog3.app dmg_temp/
+        cp -R qt_quick/Katalog.app dmg_temp/
 
         if command -v create-dmg >/dev/null 2>&1; then
           create-dmg \
@@ -212,8 +212,8 @@ jobs:
             --window-pos 200 120 \
             --window-size 600 300 \
             --icon-size 100 \
-            --icon "Katalog3.app" 175 120 \
-            --hide-extension "Katalog3.app" \
+            --icon "Katalog.app" 175 120 \
+            --hide-extension "Katalog.app" \
             --app-drop-link 425 120 \
             "$DMG_NAME" \
             "dmg_temp/" || true
@@ -221,7 +221,7 @@ jobs:
 
         # Fallback if create-dmg failed or not installed
         if [ ! -f "$DMG_NAME" ]; then
-          hdiutil create -srcfolder qt_quick/Katalog3.app -format UDZO -o "$DMG_NAME"
+          hdiutil create -srcfolder qt_quick/Katalog.app -format UDZO -o "$DMG_NAME"
         fi
 
         echo "DMG created: $DMG_NAME"
@@ -238,7 +238,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Katalog3_${{ env.VERSION_TAG }}_bundle
-        path: build/qt_quick/Katalog3.app
+        path: build/qt_quick/Katalog.app
         retention-days: 7
 
     - name: Summary

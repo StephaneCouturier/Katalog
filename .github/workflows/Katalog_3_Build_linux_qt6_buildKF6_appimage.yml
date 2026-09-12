@@ -288,13 +288,13 @@ jobs:
         GenericName=File Catalog Manager
         Comment=Create and manage catalogs of your files and folders
         Comment[fr]=Créer et gérer des catalogues de vos fichiers et dossiers
-        Exec=Katalog3
+        Exec=Katalog
         Icon=Katalog3
         Terminal=false
         Categories=Utility;FileManager;Qt;
         Keywords=catalog;files;folders;organization;storage;backup;
         StartupNotify=true
-        StartupWMClass=Katalog3
+        StartupWMClass=Katalog
         EOF
 
         # Create AppData file
@@ -327,7 +327,7 @@ jobs:
           <url type="help">https://stephanecouturier.github.io/Katalog/docs/tutorial</url>
           <launchable type="desktop-id">io.github.stephanecouturier.katalog3.desktop</launchable>
           <provides>
-            <binary>Katalog3</binary>
+            <binary>Katalog</binary>
           </provides>
           <content_rating type="oars-1.1"/>
           <releases>
@@ -392,7 +392,7 @@ jobs:
 
         # Create AppDir and install
         mkdir -p AppDir/usr/bin
-        cp qt_quick/Katalog3 AppDir/usr/bin/
+        cp qt_quick/Katalog AppDir/usr/bin/
 
         export DESTDIR="$(pwd)/AppDir"
         ninja install || echo "Install target failed, but binary copied manually"
@@ -476,7 +476,7 @@ jobs:
         linuxdeploy \
           --appdir AppDir \
           --plugin qt \
-          --executable AppDir/usr/bin/Katalog3 \
+          --executable AppDir/usr/bin/Katalog \
           --desktop-file AppDir/usr/share/applications/Katalog3.desktop \
           --icon-file AppDir/usr/share/icons/hicolor/64x64/apps/Katalog3.png \
           $LIBRARY_FLAGS
@@ -495,7 +495,7 @@ jobs:
           'export QML_IMPORT_PATH="${APPDIR}/usr/qml${QML_IMPORT_PATH:+:$QML_IMPORT_PATH}"' \
           'export XDG_DATA_DIRS="${APPDIR}/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"' \
           'if [ -z "$KDE_SESSION_VERSION" ] && [ -z "$KDE_FULL_SESSION" ]; then unset QT_QPA_PLATFORMTHEME; fi' \
-          'exec "${APPDIR}/usr/bin/Katalog3" "$@"' \
+          'exec "${APPDIR}/usr/bin/Katalog" "$@"' \
           > AppDir/AppRun
         chmod +x AppDir/AppRun
         echo "AppRun contents:"
