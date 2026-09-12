@@ -717,7 +717,7 @@ Välj ett annat namn.</translation>
         <translation>Fullständig Utökad</translation>
     </message>
     <message>
-        <location line="+119"/>
+        <location line="+124"/>
         <location line="+32"/>
         <location line="+22"/>
         <source>Name</source>
@@ -7304,17 +7304,27 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Ta bort</translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+86"/>
         <source>files</source>
         <translation>filer</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+11"/>
+        <source>used</source>
+        <translation>använt</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>free</source>
         <translation>ledigt</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+1"/>
+        <source>total</source>
+        <translation>totalt</translation>
+    </message>
+    <message>
+        <location line="+13"/>
         <source>Actions</source>
         <translation>Åtgärder</translation>
     </message>

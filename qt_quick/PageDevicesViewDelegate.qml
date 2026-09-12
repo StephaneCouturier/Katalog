@@ -201,13 +201,23 @@ Kirigami.AbstractCard {
                     Layout.fillWidth: true
                     spacing: Kirigami.Units.smallSpacing
 
-                    Kirigami.Heading {
+                    // The Selection page's own name rules - per-type weight,
+                    // italic and opacity - taken from the shared component
+                    // rather than copied, so the two pages cannot drift
+                    // (DVP-F17 / DVP-C14). The icon is suppressed: this card
+                    // already draws a larger one in the column to the left.
+                    DeviceIdentity {
                         Layout.fillWidth: true
-                        level: 2
-                        text: card.devName
-                        elide: Text.ElideRight
-                        maximumLineCount: 1
-                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * card.delegateCardScale
+                        showIcon:       false
+                        // Cards wrap rather than hide (CDT-F1). Only this
+                        // caller opts in: the Selection cards and the reminder
+                        // above that list keep their current behaviour until
+                        // the user asks otherwise (DVP-C16).
+                        nameWraps:      true
+                        deviceType:     card.devType
+                        deviceName:     card.devName
+                        deviceIsActive: card.devActive
+                        fontScale:      card.delegateCardScale
                     }
 
                     // The user's own note, beside the name when there is one.
@@ -219,8 +229,10 @@ Kirigami.AbstractCard {
                         visible: text.length > 0
                         text: card.modelData.comment !== undefined
                               ? card.modelData.comment : ""
-                        elide: Text.ElideRight
-                        maximumLineCount: 1
+                        // The half-width cap stays - it is what keeps the note
+                        // from crowding the name - and the text wraps inside it
+                        // instead of being cut off (CDT-F1 / DVP-C17).
+                        wrapMode: Text.Wrap
                         opacity: 0.7
                         font.pointSize: Kirigami.Theme.defaultFont.pointSize * card.delegateCardScale * 0.8
                     }
@@ -228,7 +240,9 @@ Kirigami.AbstractCard {
 
                 Controls.Label {
                     Layout.fillWidth: true
-                    elide: Text.ElideRight
+                    // Wraps onto as many lines as it needs, so the date at the
+                    // end stays readable on a narrow card (CDT-F1 / DVP-F18).
+                    wrapMode: Text.Wrap
                     font.pointSize: Kirigami.Theme.defaultFont.pointSize * card.delegateCardScale * 0.8
                     text: {
                         var d = card.modelData
@@ -245,8 +259,19 @@ Kirigami.AbstractCard {
                         if (d.type === "Catalog" || d.fileCount > 0)
                             parts.push(Number(d.fileCount).toLocaleString(Qt.locale(), "f", 0) + " " + qsTr("files")
                                        + "  " + appManager1.formatDataSizeDelta(d.totalFileSize))
-                        if (d.type === "Storage" && d.freeSpace > 0)
-                            parts.push(qsTr("free") + ": " + appManager1.formatDataSize(d.freeSpace))
+                        // A device that reports space states all three, in the
+                        // order the user reads them (DVP-F16). Shown only when
+                        // there is space to report: three zeros would claim a
+                        // measurement that was never taken, which is why this is
+                        // not the empty-catalog rule of DVP-F10. Each value goes
+                        // through the zero-rendering formatter, so a full disk's
+                        // free space reads as zero rather than as a blank after
+                        // its label (DVP-C13).
+                        if ((d.type === "Storage" || d.type === "Virtual") && d.totalSpace > 0) {
+                            parts.push(qsTr("used")  + ": " + appManager1.formatDataSizeDelta(d.usedSpace))
+                            parts.push(qsTr("free")  + ": " + appManager1.formatDataSizeDelta(d.freeSpace))
+                            parts.push(qsTr("total") + ": " + appManager1.formatDataSizeDelta(d.totalSpace))
+                        }
                         if (d.dateUpdated && d.dateUpdated.length > 0)
                             parts.push(d.dateUpdated)
                         return parts.join("  ·  ")

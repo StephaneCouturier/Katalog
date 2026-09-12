@@ -717,7 +717,7 @@ Izberite drugo ime.</translation>
         <translation>Polno Razširjeno</translation>
     </message>
     <message>
-        <location line="+119"/>
+        <location line="+124"/>
         <location line="+32"/>
         <location line="+22"/>
         <source>Name</source>
@@ -7305,17 +7305,27 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Izbriši</translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+86"/>
         <source>files</source>
         <translation>datoteke</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+11"/>
+        <source>used</source>
+        <translation>zasedeno</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>free</source>
         <translation>prosto</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+1"/>
+        <source>total</source>
+        <translation>skupaj</translation>
+    </message>
+    <message>
+        <location line="+13"/>
         <source>Actions</source>
         <translation>Dejanja</translation>
     </message>

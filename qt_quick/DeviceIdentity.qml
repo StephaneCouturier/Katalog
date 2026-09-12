@@ -36,9 +36,22 @@ RowLayout {
                                       : deviceType === "Storage" ? 0.78
                                       : 1.0
 
+    // The Devices card draws its own, larger icon in a separate column, so it
+    // takes the name rules from here without a second icon beside them
+    // (DVP-C14). Default true, so every other caller is unaffected.
+    property bool showIcon: true
+
+    // A card never hides text, it wraps it (SpecCardsAndTables.md CDT-F1). The
+    // caller decides, because this component also serves the selected-device
+    // reminder above the Selection list, which is a single line that must not
+    // grow and push the list down (CDT-C4 / DVP-C16). Default off: only the
+    // Devices card turns it on so far.
+    property bool nameWraps: false
+
     spacing: Kirigami.Units.smallSpacing
 
     Kirigami.Icon {
+        visible: identity.showIcon
         // "All" has no device of its own, so it borrows the generic folder icon
         // K3 already uses for the all-devices entry elsewhere (SEL-F5).
         source: identity.deviceType === "All"     ? "folder"
@@ -53,8 +66,9 @@ RowLayout {
         Layout.fillWidth: true
         level: 2
         text: identity.deviceName
-        elide: Text.ElideRight
-        maximumLineCount: 1
+        wrapMode:  identity.nameWraps ? Text.Wrap : Text.NoWrap
+        elide:     identity.nameWraps ? Text.ElideNone : Text.ElideRight
+        maximumLineCount: identity.nameWraps ? Number.MAX_VALUE : 1
         font.pointSize: Kirigami.Theme.defaultFont.pointSize * identity.fontScale
 
         // font.weight, not font.bold: Kirigami.Heading binds font.weight from its

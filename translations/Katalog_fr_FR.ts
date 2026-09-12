@@ -717,7 +717,7 @@ Choisissez un autre nom.</translation>
         <translation>Complet étendu</translation>
     </message>
     <message>
-        <location line="+119"/>
+        <location line="+124"/>
         <location line="+32"/>
         <location line="+22"/>
         <source>Name</source>
@@ -7305,17 +7305,27 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Supprimer</translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+86"/>
         <source>files</source>
         <translation>fichiers</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+11"/>
+        <source>used</source>
+        <translation>utilisé</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>free</source>
         <translation>libre</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+1"/>
+        <source>total</source>
+        <translation>total</translation>
+    </message>
+    <message>
+        <location line="+13"/>
         <source>Actions</source>
         <translation>Actions</translation>
     </message>

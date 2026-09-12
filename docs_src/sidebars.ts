@@ -96,7 +96,8 @@ export default {
                 'SpecApplicationIcon',
                 'SpecTheme',
                 'SpecDevicesPage',
-                'SpecCollectionIdentity'
+                'SpecCollectionIdentity',
+                'SpecCardsAndTables'
                 ],
       },
        'Development-Repository',
