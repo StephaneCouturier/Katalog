@@ -304,6 +304,11 @@ jobs:
           <id>io.github.stephanecouturier.Katalog</id>
           <name>Katalog</name>
           <summary>File Catalog Manager</summary>
+          <metadata_license>CC0-1.0</metadata_license>
+          <project_license>GPL-3.0-or-later</project_license>
+          <developer id="io.github.stephanecouturier">
+            <name>Stéphane Couturier</name>
+          </developer>
           <description>
             <p>
               Katalog is a file catalog manager that helps you organize and track your files and folders across multiple storage devices.
