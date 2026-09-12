@@ -24,7 +24,10 @@ Item {
     // Table display mode (SpecDevicesPage DVP-F1). Offered for the Storage and
     // Catalogs lists only; the Device tree keeps its cards until that view is
     // migrated in its own right.
-    readonly property bool tableAvailable: viewFilter !== "All"
+    // All three views render as cards or as a table, on one shared preference
+    // (DVP-F1 as amended, DVP-F15). Kept as a property because the filter bar
+    // and the table body both read it.
+    readonly property bool tableAvailable: true
     property bool displayAsTable: appManager1.deviceDisplayAsTable
     readonly property bool tableMode: tableAvailable && displayAsTable
     property int  tableSortColumn: -1
@@ -734,6 +737,13 @@ Item {
                     required property bool   dimmed
                     required property int    deviceId
                     required property var    rowData
+                    // Tree rows only; zero and false everywhere else, so the
+                    // two flat views lay out exactly as they did (DVP-F11).
+                    required property int    level
+                    required property bool   hasChildren
+                    required property bool   expanded
+
+                    readonly property real treeIndent: level * Kirigami.Units.gridUnit
 
                     implicitHeight: 30
 
@@ -751,6 +761,40 @@ Item {
                         opacity: 0.4
                     }
 
+                    // Expand/collapse, on tree rows that have children. Icon
+                    // only - K2's tree has no text here either, so nothing to
+                    // translate (DVP-C12).
+                    Kirigami.Icon {
+                        id: treeBranchIcon
+                        visible: hasChildren
+                        // Above the row-wide MouseArea below, which is declared
+                        // after this icon and would otherwise sit on top of it
+                        // and swallow every click on the chevron.
+                        z: 2
+                        anchors {
+                            left: parent.left
+                            verticalCenter: parent.verticalCenter
+                            leftMargin: 4 + treeIndent
+                        }
+                        source: expanded ? "go-down-symbolic" : "go-next-symbolic"
+                        implicitWidth:  Kirigami.Units.iconSizes.small
+                        implicitHeight: Kirigami.Units.iconSizes.small
+                        color: deviceTable.selectedRow === row
+                               ? Kirigami.Theme.highlightedTextColor
+                               : Kirigami.Theme.textColor
+                        isMask: true
+
+                        MouseArea {
+                            anchors.fill: parent
+                            // A little wider than the icon: the chevron is small
+                            // and this is the one control the tree is driven by.
+                            anchors.margins: -4
+                            // Ahead of the row's own handler, so opening a
+                            // branch does not also select the device.
+                            onClicked: appManager1.toggleDeviceTableRow(row)
+                        }
+                    }
+
                     // Device icon, in the Name cell only, as K2 draws it.
                     Kirigami.Icon {
                         id: deviceRowIcon
@@ -758,7 +802,12 @@ Item {
                         anchors {
                             left: parent.left
                             verticalCenter: parent.verticalCenter
-                            leftMargin: 6
+                            // Past the chevron, and past the space kept for one
+                            // even when this row has no children, so every name
+                            // at the same depth starts at the same x.
+                            leftMargin: 6 + treeIndent
+                                        + (root.viewFilter === "All" && column === 0
+                                           ? Kirigami.Units.iconSizes.small + 4 : 0)
                         }
                         source: iconName
                         implicitWidth:  Kirigami.Units.iconSizes.small

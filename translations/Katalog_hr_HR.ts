@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+175"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4197"/>
+        <location line="+4290"/>
         <source>Search</source>
         <translation>Pretraži</translation>
     </message>
     <message>
-        <location line="-4317"/>
+        <location line="-4410"/>
         <source>Stopped</source>
         <translation>Zaustavljeno</translation>
     </message>
@@ -44,7 +44,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+1932"/>
+        <location line="+2025"/>
         <location line="+602"/>
         <location line="+20"/>
         <location line="+1213"/>
@@ -55,14 +55,14 @@
         <translation>U tijeku</translation>
     </message>
     <message>
-        <location line="-4198"/>
-        <location line="+3805"/>
+        <location line="-4291"/>
+        <location line="+3898"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Završeno</translation>
     </message>
     <message>
-        <location line="-3396"/>
+        <location line="-3444"/>
         <source>Empty database path provided</source>
         <translation>Navedena prazna putanja baze podataka</translation>
     </message>
@@ -102,7 +102,7 @@
         <translation>Lokalni disk</translation>
     </message>
     <message>
-        <location line="+447"/>
+        <location line="+451"/>
         <source>search_results</source>
         <translation>rezultati_pretrage</translation>
     </message>
@@ -148,12 +148,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2485"/>
+        <location line="+2529"/>
         <source>Size</source>
         <translation>Veličina</translation>
     </message>
     <message>
-        <location line="-2484"/>
+        <location line="-2528"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
@@ -208,7 +208,7 @@
         <translation>Hostirana veza nije uspjela: %1</translation>
     </message>
     <message>
-        <location line="+185"/>
+        <location line="+229"/>
         <source>Provide a name for this new catalog.</source>
         <translation>Navedite naziv za ovaj novi katalog.</translation>
     </message>
@@ -697,7 +697,7 @@ Odaberite drugi naziv.</translation>
 <context>
     <name>DeviceTableModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicetablemodel.cpp" line="+173"/>
+        <location filename="../qt_quick/adapters/devicetablemodel.cpp" line="+356"/>
         <source>None</source>
         <translation>Ništa</translation>
     </message>
@@ -717,63 +717,72 @@ Odaberite drugi naziv.</translation>
         <translation>Potpuno prošireno</translation>
     </message>
     <message>
-        <location line="+94"/>
-        <location line="+28"/>
+        <location line="+119"/>
+        <location line="+32"/>
+        <location line="+22"/>
         <source>Name</source>
         <translation>Naziv</translation>
     </message>
     <message>
-        <location line="-27"/>
-        <location line="+28"/>
+        <location line="-53"/>
+        <location line="+33"/>
+        <location line="+21"/>
         <source>Active</source>
         <translation>Aktivan</translation>
     </message>
     <message>
-        <location line="-27"/>
+        <location line="-53"/>
         <source>Storage ID</source>
         <translation>ID pohraništa</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+28"/>
+        <location line="+35"/>
+        <location line="+19"/>
         <source>Number of files</source>
         <translation>Broj datoteka</translation>
     </message>
     <message>
-        <location line="-27"/>
-        <location line="+28"/>
+        <location line="-53"/>
+        <location line="+35"/>
+        <location line="+19"/>
         <source>Total Size</source>
         <translation>Ukupna veličina</translation>
     </message>
     <message>
-        <location line="-27"/>
+        <location line="-53"/>
+        <location line="+35"/>
         <source>Used space</source>
         <translation>Korišteni prostor</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-34"/>
+        <location line="+35"/>
         <source>Free space</source>
         <translation>Slobodan prostor</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-34"/>
+        <location line="+35"/>
         <source>Total space</source>
         <translation>Ukupan prostor</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <location line="+25"/>
+        <location line="-34"/>
+        <location line="+35"/>
+        <location line="+16"/>
         <source>Date updated</source>
         <translation>Datum ažuriranja</translation>
     </message>
     <message>
-        <location line="-24"/>
-        <location line="+25"/>
+        <location line="-50"/>
+        <location line="+35"/>
+        <location line="+16"/>
         <source>Path</source>
         <translation>Putanja</translation>
     </message>
     <message>
-        <location line="-24"/>
+        <location line="-50"/>
         <source>Type</source>
         <translation>Tip</translation>
     </message>
@@ -821,6 +830,31 @@ Odaberite drugi naziv.</translation>
         <location line="+1"/>
         <source>Comment 3</source>
         <translation>Komentar 3</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Device Type</source>
+        <translation>Tip uređaja</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Parent ID</source>
+        <translation>Roditeljski ID</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>External ID</source>
+        <translation>Vanjski ID</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Group ID</source>
+        <translation>ID grupe</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -6989,7 +7023,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDevicesView</name>
     <message>
-        <location filename="../qt_quick/PageDevicesView.qml" line="+91"/>
+        <location filename="../qt_quick/PageDevicesView.qml" line="+108"/>
         <location line="+37"/>
         <source>Split Catalog</source>
         <translation>Podijeli katalog</translation>
@@ -7115,22 +7149,22 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Stablo uređaja</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+10"/>
         <source>Storage list</source>
         <translation>Lista pohraništa</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+10"/>
         <source>Catalogs list</source>
         <translation>Lista kataloga</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+66"/>
         <source>Filter from Selection</source>
         <translation>Filtriraj iz odabira</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="-45"/>
         <source>Cards</source>
         <translation>Kartice</translation>
     </message>
@@ -7145,7 +7179,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Puna tablica</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+52"/>
         <source>Catalogs</source>
         <translation>Katalozi</translation>
     </message>
@@ -7270,7 +7304,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Obriši</translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+81"/>
         <source>files</source>
         <translation>datoteke</translation>
     </message>

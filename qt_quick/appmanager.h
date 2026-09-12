@@ -404,6 +404,8 @@ public slots:
     Q_INVOKABLE void sortSearch(int column, int order);
     Q_INVOKABLE void sortExplore(int column, int order);
     Q_INVOKABLE void sortDeviceTable(int column, int order);
+    /** Device tree table: opens or closes one row's children (DVP-F13). */
+    Q_INVOKABLE void toggleDeviceTableRow(int row);
     Q_INVOKABLE int  getSearchSortColumn()  const;
     Q_INVOKABLE int  getSearchSortOrder()   const;
     Q_INVOKABLE int  getExploreSortColumn() const;

@@ -643,7 +643,23 @@ int AppManager::deviceTableColumnWidth(int column) const
 void AppManager::sortDeviceTable(int column, int order)
 {
     if (!m_deviceTableSortModel) return;
+    // The tree sorts inside the model, among each parent's own children. The
+    // proxy is left unsorted for it: sorting the flattened rows would lift
+    // devices out from under their parents (DVP-F14).
+    if (m_deviceTableModel && m_deviceTableModel->isTreeView()) {
+        m_deviceTableSortModel->sort(-1);
+        m_deviceTableModel->sortTree(column, static_cast<Qt::SortOrder>(order));
+        return;
+    }
     m_deviceTableSortModel->sort(column, static_cast<Qt::SortOrder>(order));
+}
+//----------------------------------------------------------------------
+void AppManager::toggleDeviceTableRow(int row)
+{
+    // Expanding or collapsing only re-derives the visible rows from the ones
+    // already loaded - no reload, and so no active-status probe (DVP-C11).
+    if (m_deviceTableModel)
+        m_deviceTableModel->toggleExpanded(row);
 }
 //----------------------------------------------------------------------
 bool AppManager::getSearchKeepsSelection() const

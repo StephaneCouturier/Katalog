@@ -41,6 +41,7 @@
 #define DEVICETABLEMODEL_H
 
 #include <QAbstractTableModel>
+#include <QSet>
 #include <QVariantList>
 #include <QVariantMap>
 
@@ -63,11 +64,16 @@ public:
         DimmedRole    = Qt::UserRole + 8,
         DeviceIdRole  = Qt::UserRole + 9,
         RowDataRole   = Qt::UserRole + 10,  // whole row map, for the context menu
+        // Device tree view only (DVP-F11). Zero and false in the flat views, so
+        // their delegates need no special case.
+        LevelRole       = Qt::UserRole + 11,  // depth, for the Name cell's indent
+        HasChildrenRole = Qt::UserRole + 12,  // row carries an expand/collapse control
+        ExpandedRole    = Qt::UserRole + 13,  // that control's state
     };
 
     explicit DeviceTableModel(QObject *parent = nullptr);
 
-    /** "Storage" or "Catalogs". Any other value yields no columns. */
+    /** "Storage", "Catalogs", or "All" for the device tree. */
     void setView(const QString &view);
     void setFullTable(bool fullTable);
     /** Memory database mode gates the Date Loaded and File Path columns, as K2 does. */
@@ -84,6 +90,12 @@ public:
 
     /** Suggested width for a visible column, used by the QML columnWidthProvider. */
     Q_INVOKABLE int columnWidth(int column) const;
+
+    /** The device tree's rows, as K2's QTreeView handles them (DVP-F13/F14). */
+    Q_INVOKABLE void toggleExpanded(int row);
+    /** Sorts children within their own parent, never across the hierarchy. */
+    void sortTree(int column, Qt::SortOrder order);
+    bool isTreeView() const;
 
     enum class Kind {
         Name,      // device name, carries the type icon
@@ -107,11 +119,23 @@ private:
     const QList<Column> &columnsForView() const;
     void rebuildVisibleColumns();
 
+    // Tree plumbing. The rows arrive already flattened depth-first with a level
+    // (Device::loadDeviceTree), so the hierarchy needs no second representation:
+    // m_allRows is that list, m_rows the part of it currently visible.
+    bool hasChildrenAt(int allRow) const;
+    void rebuildVisibleRows();
+    void applyTreeSort();
+    QVariant sortValueFor(const QVariantMap &row, const Column &col) const;
+
     QString     m_view;
     bool        m_fullTable  = false;
     bool        m_memoryMode = false;
-    QVariantList m_rows;
+    QVariantList m_allRows;  // every row of the tree, collapsed ones included
+    QVariantList m_rows;     // the rows the view shows
     QList<int>  m_visible;   // indices into columnsForView()
+    QSet<int>   m_collapsed; // device IDs whose children are hidden
+    int         m_sortColumn = 0;   // absolute column; Name, as K2 starts (DVP-F14)
+    Qt::SortOrder m_sortOrder = Qt::AscendingOrder;
 };
 
 #endif // DEVICETABLEMODEL_H

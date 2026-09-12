@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+175"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4197"/>
+        <location line="+4290"/>
         <source>Search</source>
         <translation>Meklēt</translation>
     </message>
     <message>
-        <location line="-4317"/>
+        <location line="-4410"/>
         <source>Stopped</source>
         <translation>Apstādināts</translation>
     </message>
@@ -44,7 +44,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+1932"/>
+        <location line="+2025"/>
         <location line="+602"/>
         <location line="+20"/>
         <location line="+1213"/>
@@ -55,14 +55,14 @@
         <translation>Procesā</translation>
     </message>
     <message>
-        <location line="-4198"/>
-        <location line="+3805"/>
+        <location line="-4291"/>
+        <location line="+3898"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Pabeigts</translation>
     </message>
     <message>
-        <location line="-3396"/>
+        <location line="-3444"/>
         <source>Empty database path provided</source>
         <translation>Norādīts tukšs datubāzes ceļš</translation>
     </message>
@@ -102,7 +102,7 @@
         <translation>Lokālais disks</translation>
     </message>
     <message>
-        <location line="+447"/>
+        <location line="+451"/>
         <source>search_results</source>
         <translation>meklēšanas_rezultāti</translation>
     </message>
@@ -148,12 +148,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2485"/>
+        <location line="+2529"/>
         <source>Size</source>
         <translation>Izmērs</translation>
     </message>
     <message>
-        <location line="-2484"/>
+        <location line="-2528"/>
         <source>Date</source>
         <translation>Datums</translation>
     </message>
@@ -208,7 +208,7 @@
         <translation>Mitinātais savienojums neizdevās: %1</translation>
     </message>
     <message>
-        <location line="+185"/>
+        <location line="+229"/>
         <source>Provide a name for this new catalog.</source>
         <translation>Norādiet nosaukumu šim jaunajam katalogam.</translation>
     </message>
@@ -697,7 +697,7 @@ Izvēlieties citu nosaukumu.</translation>
 <context>
     <name>DeviceTableModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicetablemodel.cpp" line="+173"/>
+        <location filename="../qt_quick/adapters/devicetablemodel.cpp" line="+356"/>
         <source>None</source>
         <translation>Nav</translation>
     </message>
@@ -717,63 +717,72 @@ Izvēlieties citu nosaukumu.</translation>
         <translation>Pilns paplašināts</translation>
     </message>
     <message>
-        <location line="+94"/>
-        <location line="+28"/>
+        <location line="+119"/>
+        <location line="+32"/>
+        <location line="+22"/>
         <source>Name</source>
         <translation>Nosaukums</translation>
     </message>
     <message>
-        <location line="-27"/>
-        <location line="+28"/>
+        <location line="-53"/>
+        <location line="+33"/>
+        <location line="+21"/>
         <source>Active</source>
         <translation>Aktīvs</translation>
     </message>
     <message>
-        <location line="-27"/>
+        <location line="-53"/>
         <source>Storage ID</source>
         <translation>Krātuves ID</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+28"/>
+        <location line="+35"/>
+        <location line="+19"/>
         <source>Number of files</source>
         <translation>Failu skaits</translation>
     </message>
     <message>
-        <location line="-27"/>
-        <location line="+28"/>
+        <location line="-53"/>
+        <location line="+35"/>
+        <location line="+19"/>
         <source>Total Size</source>
         <translation>Kopējais izmērs</translation>
     </message>
     <message>
-        <location line="-27"/>
+        <location line="-53"/>
+        <location line="+35"/>
         <source>Used space</source>
         <translation>Izmantotā vieta</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-34"/>
+        <location line="+35"/>
         <source>Free space</source>
         <translation>Brīvā vieta</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-34"/>
+        <location line="+35"/>
         <source>Total space</source>
         <translation>Kopējā vieta</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <location line="+25"/>
+        <location line="-34"/>
+        <location line="+35"/>
+        <location line="+16"/>
         <source>Date updated</source>
         <translation>Atjaunināšanas datums</translation>
     </message>
     <message>
-        <location line="-24"/>
-        <location line="+25"/>
+        <location line="-50"/>
+        <location line="+35"/>
+        <location line="+16"/>
         <source>Path</source>
         <translation>Ceļš</translation>
     </message>
     <message>
-        <location line="-24"/>
+        <location line="-50"/>
         <source>Type</source>
         <translation>Tips</translation>
     </message>
@@ -821,6 +830,31 @@ Izvēlieties citu nosaukumu.</translation>
         <location line="+1"/>
         <source>Comment 3</source>
         <translation>Komentārs 3</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Device Type</source>
+        <translation>Ierīces tips</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Parent ID</source>
+        <translation>Vecāka ID</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>External ID</source>
+        <translation>Ārējais ID</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Group ID</source>
+        <translation>Grupas ID</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -6989,7 +7023,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDevicesView</name>
     <message>
-        <location filename="../qt_quick/PageDevicesView.qml" line="+91"/>
+        <location filename="../qt_quick/PageDevicesView.qml" line="+108"/>
         <location line="+37"/>
         <source>Split Catalog</source>
         <translation>Sadalīt katalogu</translation>
@@ -7115,22 +7149,22 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Ierīču koks</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+10"/>
         <source>Storage list</source>
         <translation>Krātuvju saraksts</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+10"/>
         <source>Catalogs list</source>
         <translation>Katalogu saraksts</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+66"/>
         <source>Filter from Selection</source>
         <translation>Filtrēt no atlases</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="-45"/>
         <source>Cards</source>
         <translation>Kartītes</translation>
     </message>
@@ -7145,7 +7179,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Pilna tabula</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+52"/>
         <source>Catalogs</source>
         <translation>Katalogi</translation>
     </message>
@@ -7270,7 +7304,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Dzēst</translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+81"/>
         <source>files</source>
         <translation>faili</translation>
     </message>
