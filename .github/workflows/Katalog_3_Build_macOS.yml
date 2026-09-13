@@ -333,6 +333,42 @@ jobs:
           exit 1
         fi
 
+    - name: Sign the bundle (ad-hoc) and verify it
+      run: |
+        cd build
+        APP="qt_quick/Katalog.app"
+
+        # An ad-hoc signature - "-" means no identity, no Apple account needed.
+        # Two reasons it matters, neither of them notarization:
+        #  1. On Apple Silicon every executable must carry a valid signature to
+        #     run at all. macdeployqt rewrites install names with
+        #     install_name_tool, which invalidates whatever signature a binary
+        #     arrived with; signing afterwards makes that independent of what a
+        #     given Qt version happens to re-sign on its own.
+        #  2. At Gatekeeper a broken or absent signature produces "Katalog is
+        #     damaged and can't be opened", which reads as unfixable, whereas a
+        #     valid ad-hoc one produces "unverified developer", which the
+        #     documented right-click-Open works around.
+        # It is NOT notarization: a downloaded build is still warned about.
+        echo "=== Signing ==="
+        codesign --force --deep --sign - --timestamp=none "$APP"
+
+        echo "=== Verifying ==="
+        if codesign --verify --deep --strict --verbose=2 "$APP" 2>&1; then
+          echo "✅ Signature valid for the bundle and everything nested in it"
+          echo "- **Code signature**: valid (ad-hoc, not notarized)" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ The bundle does not carry a valid signature - on Apple Silicon it may be killed at launch"
+          echo "- **Code signature**: INVALID - build rejected" >> $GITHUB_STEP_SUMMARY
+          exit 1
+        fi
+
+        # Reported, never enforced: this fails by definition until the app is
+        # notarized with a paid Developer ID, so failing the build on it would
+        # block every release for a condition we have chosen to accept.
+        echo "=== Gatekeeper assessment (expected to fail without notarization) ==="
+        spctl --assess --type execute --verbose=4 "$APP" 2>&1 || true
+
     - name: Smoke test - start the app without Homebrew
       run: |
         cd build
