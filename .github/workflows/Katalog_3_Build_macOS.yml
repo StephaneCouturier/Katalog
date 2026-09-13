@@ -253,6 +253,20 @@ jobs:
         COCOA_PLUGIN="qt_quick/Katalog.app/Contents/PlugIns/platforms/libqcocoa.dylib"
         echo "=== Bundled Qt plugins ==="
         ls -R qt_quick/Katalog.app/Contents/PlugIns 2>/dev/null || echo "(no PlugIns directory)"
+        # Katalog cannot open any collection without the SQLite driver. Unlike
+        # the platform plugin, its absence does not stop the app starting - it
+        # would launch and then fail on every database operation, which a user
+        # reports as "it does not work" rather than "it does not start".
+        SQLITE_PLUGIN="qt_quick/Katalog.app/Contents/PlugIns/sqldrivers/libqsqlite.dylib"
+        if [ -f "$SQLITE_PLUGIN" ]; then
+          echo "✅ SQLite driver bundled"
+          echo "- **SQLite driver**: bundled" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ $SQLITE_PLUGIN is missing - no collection could be opened"
+          echo "- **SQLite driver**: MISSING - build rejected" >> $GITHUB_STEP_SUMMARY
+          exit 1
+        fi
+
         if [ -f "$COCOA_PLUGIN" ]; then
           echo "✅ Cocoa platform plugin bundled"
           echo "- **Platform plugin**: bundled" >> $GITHUB_STEP_SUMMARY
@@ -362,7 +376,14 @@ jobs:
         # inconclusive: a missing QML module, an unloadable plugin or a database
         # driver that will not load all stop the application just as dead as a
         # missing library, and none of them mentions dyld.
-        if grep -qE "Library not loaded|dyld|image not found|failed to load component|plugin .* not found|Driver not loaded|no Qt platform plugin could be initialized" launch.log; then
+        # "Driver not loaded" is deliberately NOT in this list. This runner has
+        # no settings file and no collection, so Database::initialize returns
+        # early ("Not configured yet; first-run flow will set the path",
+        # core/database.cpp) and no database is ever added - every later query
+        # then reports that. It is correct first-run behaviour, not a missing
+        # SQLite plugin, and the plugin's presence is checked at deploy time
+        # instead, where it can actually be judged.
+        if grep -qE "Library not loaded|dyld|image not found|failed to load component|plugin .* not found|no Qt platform plugin could be initialized" launch.log; then
           echo "❌ The app could not start with only the bundle to rely on."
           echo "   That is exactly what a user's Mac would do."
           echo "- **Starts without Homebrew**: NO - see the log" >> $GITHUB_STEP_SUMMARY
