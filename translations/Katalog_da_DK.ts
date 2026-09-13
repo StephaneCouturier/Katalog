@@ -946,7 +946,7 @@ Vælg et andet navn.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+841"/>
+        <location filename="../qt_quick/Main.qml" line="+880"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Vil du &lt;b&gt;slette&lt;/b&gt; denne %1-enhed?&lt;br/&gt;&lt;br/&gt;Navn: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -988,13 +988,13 @@ Vælg et andet navn.</translation>
         <translation>System</translation>
     </message>
     <message>
-        <location line="-235"/>
-        <location line="+236"/>
+        <location line="-270"/>
+        <location line="+271"/>
         <source>Settings</source>
         <translation>Indstillinger</translation>
     </message>
     <message>
-        <location line="-360"/>
+        <location line="-395"/>
         <source>Open...</source>
         <translation>Åbn...</translation>
     </message>
@@ -1021,42 +1021,42 @@ Vælg et andet navn.</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+777"/>
+        <location line="+812"/>
         <source>Selection</source>
         <translation>Udvælgelse</translation>
     </message>
     <message>
-        <location line="-767"/>
-        <location line="+1040"/>
+        <location line="-802"/>
+        <location line="+1075"/>
         <source>Devices</source>
         <translation>Enheder</translation>
     </message>
     <message>
-        <location line="-1035"/>
-        <location line="+1130"/>
+        <location line="-1070"/>
+        <location line="+1165"/>
         <source>Explore</source>
         <translation>Udforsk</translation>
     </message>
     <message>
-        <location line="-1120"/>
-        <location line="+1343"/>
+        <location line="-1155"/>
+        <location line="+1378"/>
         <source>Backup</source>
         <translation>Sikkerhedskopi</translation>
     </message>
     <message>
-        <location line="-1338"/>
-        <location line="+1302"/>
+        <location line="-1373"/>
+        <location line="+1337"/>
         <source>Statistics</source>
         <translation>Statistik</translation>
     </message>
     <message>
-        <location line="-1297"/>
-        <location line="+1317"/>
+        <location line="-1332"/>
+        <location line="+1352"/>
         <source>Tags</source>
         <translation>Tags</translation>
     </message>
     <message>
-        <location line="-1304"/>
+        <location line="-1339"/>
         <source>Documentation</source>
         <translation>Dokumentation</translation>
     </message>
@@ -1104,7 +1104,7 @@ Vælg et andet navn.</translation>
 </translation>
     </message>
     <message>
-        <location line="+132"/>
+        <location line="+167"/>
         <source>Do not show again</source>
         <translation>Vis ikke igen</translation>
     </message>
@@ -1329,8 +1329,8 @@ Det kan betyde, at kilden er tom, eller at enheden ikke er monteret til denne ma
 Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
     </message>
     <message>
-        <location line="-717"/>
-        <location line="+895"/>
+        <location line="-752"/>
+        <location line="+930"/>
         <location line="+43"/>
         <source>Search</source>
         <translation>Søg</translation>
@@ -1376,7 +1376,7 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <translation>Luk</translation>
     </message>
     <message>
-        <location line="-1151"/>
+        <location line="-1175"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1385,7 +1385,7 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
 </translation>
     </message>
     <message>
-        <location line="+508"/>
+        <location line="+532"/>
         <source>Copy version and system information</source>
         <translation>Kopiér versions- og systemoplysninger</translation>
     </message>
@@ -1464,8 +1464,8 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <translation>Oprettelse af katalog mislykkedes: </translation>
     </message>
     <message>
-        <location line="-1185"/>
-        <location line="+1175"/>
+        <location line="-1220"/>
+        <location line="+1210"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Opret</translation>
@@ -7583,7 +7583,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Udvid alle</translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+69"/>
         <source>Expand</source>
         <translation>Udvid</translation>
     </message>

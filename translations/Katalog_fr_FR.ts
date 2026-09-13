@@ -946,7 +946,7 @@ Choisissez un autre nom.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+841"/>
+        <location filename="../qt_quick/Main.qml" line="+880"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Voulez-vous &lt;b&gt;supprimer&lt;/b&gt; ce périphérique %1 ?&lt;br/&gt;&lt;br/&gt;Nom : &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -988,13 +988,13 @@ Choisissez un autre nom.</translation>
         <translation>Système</translation>
     </message>
     <message>
-        <location line="-235"/>
-        <location line="+236"/>
+        <location line="-270"/>
+        <location line="+271"/>
         <source>Settings</source>
         <translation>Réglages</translation>
     </message>
     <message>
-        <location line="-360"/>
+        <location line="-395"/>
         <source>Open...</source>
         <translation>Ouvrir...</translation>
     </message>
@@ -1021,42 +1021,42 @@ Choisissez un autre nom.</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+777"/>
+        <location line="+812"/>
         <source>Selection</source>
         <translation>Sélection</translation>
     </message>
     <message>
-        <location line="-767"/>
-        <location line="+1040"/>
+        <location line="-802"/>
+        <location line="+1075"/>
         <source>Devices</source>
         <translation>Périphériques</translation>
     </message>
     <message>
-        <location line="-1035"/>
-        <location line="+1130"/>
+        <location line="-1070"/>
+        <location line="+1165"/>
         <source>Explore</source>
         <translation>Explorer</translation>
     </message>
     <message>
-        <location line="-1120"/>
-        <location line="+1343"/>
+        <location line="-1155"/>
+        <location line="+1378"/>
         <source>Backup</source>
         <translation>Sauvegarde</translation>
     </message>
     <message>
-        <location line="-1338"/>
-        <location line="+1302"/>
+        <location line="-1373"/>
+        <location line="+1337"/>
         <source>Statistics</source>
         <translation>Statistiques</translation>
     </message>
     <message>
-        <location line="-1297"/>
-        <location line="+1317"/>
+        <location line="-1332"/>
+        <location line="+1352"/>
         <source>Tags</source>
         <translation>Etiquettes</translation>
     </message>
     <message>
-        <location line="-1304"/>
+        <location line="-1339"/>
         <source>Documentation</source>
         <translation>Documentation</translation>
     </message>
@@ -1104,7 +1104,7 @@ Choisissez un autre nom.</translation>
 </translation>
     </message>
     <message>
-        <location line="+132"/>
+        <location line="+167"/>
         <source>Do not show again</source>
         <translation>Ne plus afficher</translation>
     </message>
@@ -1329,8 +1329,8 @@ Cela peut signifier que la source est vide ou que le périphérique n&apos;est p
 Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</translation>
     </message>
     <message>
-        <location line="-717"/>
-        <location line="+895"/>
+        <location line="-752"/>
+        <location line="+930"/>
         <location line="+43"/>
         <source>Search</source>
         <translation>Chercher</translation>
@@ -1376,7 +1376,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <translation>Fermer</translation>
     </message>
     <message>
-        <location line="-1151"/>
+        <location line="-1175"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1385,7 +1385,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
 </translation>
     </message>
     <message>
-        <location line="+508"/>
+        <location line="+532"/>
         <source>Copy version and system information</source>
         <translation>Copier les informations de version et de système</translation>
     </message>
@@ -1464,8 +1464,8 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <translation>Échec de la création du catalogue : </translation>
     </message>
     <message>
-        <location line="-1185"/>
-        <location line="+1175"/>
+        <location line="-1220"/>
+        <location line="+1210"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Créer</translation>
@@ -7584,7 +7584,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Tout développer</translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+69"/>
         <source>Expand</source>
         <translation>Développer</translation>
     </message>

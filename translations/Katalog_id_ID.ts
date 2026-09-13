@@ -946,7 +946,7 @@ Pilih nama lain.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+841"/>
+        <location filename="../qt_quick/Main.qml" line="+880"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Apakah Anda ingin &lt;b&gt;menghapus&lt;/b&gt; perangkat %1 ini?&lt;br/&gt;&lt;br/&gt;Nama: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -988,13 +988,13 @@ Pilih nama lain.</translation>
         <translation>Sistem</translation>
     </message>
     <message>
-        <location line="-235"/>
-        <location line="+236"/>
+        <location line="-270"/>
+        <location line="+271"/>
         <source>Settings</source>
         <translation>Pengaturan</translation>
     </message>
     <message>
-        <location line="-360"/>
+        <location line="-395"/>
         <source>Open...</source>
         <translation>Buka...</translation>
     </message>
@@ -1021,42 +1021,42 @@ Pilih nama lain.</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+777"/>
+        <location line="+812"/>
         <source>Selection</source>
         <translation>Seleksi</translation>
     </message>
     <message>
-        <location line="-767"/>
-        <location line="+1040"/>
+        <location line="-802"/>
+        <location line="+1075"/>
         <source>Devices</source>
         <translation>Perangkat</translation>
     </message>
     <message>
-        <location line="-1035"/>
-        <location line="+1130"/>
+        <location line="-1070"/>
+        <location line="+1165"/>
         <source>Explore</source>
         <translation>Jelajahi</translation>
     </message>
     <message>
-        <location line="-1120"/>
-        <location line="+1343"/>
+        <location line="-1155"/>
+        <location line="+1378"/>
         <source>Backup</source>
         <translation>Cadangan</translation>
     </message>
     <message>
-        <location line="-1338"/>
-        <location line="+1302"/>
+        <location line="-1373"/>
+        <location line="+1337"/>
         <source>Statistics</source>
         <translation>Statistik</translation>
     </message>
     <message>
-        <location line="-1297"/>
-        <location line="+1317"/>
+        <location line="-1332"/>
+        <location line="+1352"/>
         <source>Tags</source>
         <translation>Tag</translation>
     </message>
     <message>
-        <location line="-1304"/>
+        <location line="-1339"/>
         <source>Documentation</source>
         <translation>Dokumentasi</translation>
     </message>
@@ -1104,7 +1104,7 @@ Pilih nama lain.</translation>
 </translation>
     </message>
     <message>
-        <location line="+132"/>
+        <location line="+167"/>
         <source>Do not show again</source>
         <translation>Jangan tampilkan lagi</translation>
     </message>
@@ -1329,8 +1329,8 @@ Ini bisa berarti sumber kosong atau perangkat tidak terpasang ke folder ini.
 Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
     </message>
     <message>
-        <location line="-717"/>
-        <location line="+895"/>
+        <location line="-752"/>
+        <location line="+930"/>
         <location line="+43"/>
         <source>Search</source>
         <translation>Cari</translation>
@@ -1376,7 +1376,7 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <translation>Tutup</translation>
     </message>
     <message>
-        <location line="-1151"/>
+        <location line="-1175"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1385,7 +1385,7 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
 </translation>
     </message>
     <message>
-        <location line="+508"/>
+        <location line="+532"/>
         <source>Copy version and system information</source>
         <translation>Salin informasi versi dan sistem</translation>
     </message>
@@ -1464,8 +1464,8 @@ Apakah Anda tetap ingin menyimpannya (katalog akan kosong)?</translation>
         <translation>Gagal membuat katalog: </translation>
     </message>
     <message>
-        <location line="-1185"/>
-        <location line="+1175"/>
+        <location line="-1220"/>
+        <location line="+1210"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Buat</translation>
@@ -7583,7 +7583,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Perluas semua</translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+69"/>
         <source>Expand</source>
         <translation>Perluas</translation>
     </message>
