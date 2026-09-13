@@ -26,7 +26,12 @@ Item {
     // they never drive the row height. A row without sub-directories keeps the
     // button in the layout and merely fades it: a button that comes and goes
     // re-lays the row out, which moves everything on it and flickers the tree.
-    readonly property real rowButton: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+    // Same disclosure control as the Devices tree, same size (CDT-F3). That one
+    // fills its table row, which is 30px; smallMedium + largeSpacing is the same
+    // 30 in Kirigami's units, so the two match without hard-coding a number
+    // here. The icon inside stays iconSizes.small on both - it is the click
+    // TARGET that grows, not the chevron.
+    readonly property real rowButton: Kirigami.Units.iconSizes.smallMedium + Kirigami.Units.largeSpacing
 
     // How far each level of the tree steps in.
     readonly property real indentStep: Kirigami.Units.gridUnit
@@ -369,6 +374,17 @@ Item {
                     width: folderListView.width
                     highlighted: model.fullPath === root.selectedFolderPath
 
+                    // One fixed height for every row, the same as a Devices tree
+                    // row (CDT-F3). Left to itself an ItemDelegate takes its
+                    // height from the content plus whatever vertical padding the
+                    // active style applies, which made the rows both taller than
+                    // the Devices table and uneven between themselves. The
+                    // disclosure button is exactly this tall, so it sets the
+                    // floor and nothing else can push a row higher.
+                    implicitHeight: root.rowButton
+                    topPadding:    0
+                    bottomPadding: 0
+
                     // Painted by the application, not left to the Qt Quick
                     // Controls style (SpecTheme THM-F9). Without this the row
                     // surface came from whichever style was active - Breeze on
@@ -408,12 +424,18 @@ Item {
                             icon.height: Kirigami.Units.iconSizes.small
                             opacity: model.hasChildren ? 1.0 : 0.0
                             enabled: model.hasChildren
-                            icon.name: model.isCollapsed ? "go-next" : "go-down"
+                            // Breeze's -symbolic pair are its tree disclosure
+                            // chevrons; go-next/go-down are navigation arrows.
+                            // Same control as the Devices tree (CDT-F3).
+                            icon.name: model.isCollapsed ? "go-next-symbolic" : "go-down-symbolic"
+                            // The text stays for accessibility, but no tooltip:
+                            // one per row means a pop-up follows the pointer all
+                            // the way down the tree, and a disclosure arrow is
+                            // self-explanatory in a way the header controls,
+                            // which keep theirs (EXP-F9), are not.
                             text: model.isCollapsed ? qsTr("Expand") : qsTr("Collapse")
                             display: Controls.AbstractButton.IconOnly
                             onClicked: root.toggleCollapsed(model.fullPath)
-                            Controls.ToolTip.text: text
-                            Controls.ToolTip.visible: hovered
                         }
 
                         Kirigami.Icon {

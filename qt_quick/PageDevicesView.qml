@@ -841,35 +841,35 @@ Item {
                     // Expand/collapse, on tree rows that have children. Icon
                     // only - K2's tree has no text here either, so nothing to
                     // translate (DVP-C12).
-                    Kirigami.Icon {
+                    // A real button, as the Explore tree has: hover and press
+                    // feedback and a full-size target are what tell the user the
+                    // chevron is clickable (CDT-F3). It replaces a bare icon
+                    // with a 4px click margin, which looked lighter in a table
+                    // cell but said nothing about being operable.
+                    Controls.ToolButton {
                         id: treeBranchIcon
-                        visible: hasChildren
+                        // Kept in the layout when the row has no children, so
+                        // every name at the same depth starts at the same x.
+                        opacity: hasChildren ? 1.0 : 0.0
+                        enabled: hasChildren
                         // Above the row-wide MouseArea below, which is declared
-                        // after this icon and would otherwise sit on top of it
+                        // after this button and would otherwise sit on top of it
                         // and swallow every click on the chevron.
                         z: 2
                         anchors {
                             left: parent.left
                             verticalCenter: parent.verticalCenter
-                            leftMargin: 4 + treeIndent
+                            leftMargin: treeIndent
                         }
-                        source: expanded ? "go-down-symbolic" : "go-next-symbolic"
-                        implicitWidth:  Kirigami.Units.iconSizes.small
-                        implicitHeight: Kirigami.Units.iconSizes.small
-                        color: deviceTable.selectedRow === row
-                               ? Kirigami.Theme.highlightedTextColor
-                               : Kirigami.Theme.textColor
-                        isMask: true
-
-                        MouseArea {
-                            anchors.fill: parent
-                            // A little wider than the icon: the chevron is small
-                            // and this is the one control the tree is driven by.
-                            anchors.margins: -4
-                            // Ahead of the row's own handler, so opening a
-                            // branch does not also select the device.
-                            onClicked: appManager1.toggleDeviceTableRow(row)
-                        }
+                        implicitWidth:  parent.height
+                        implicitHeight: parent.height
+                        icon.name: expanded ? "go-down-symbolic" : "go-next-symbolic"
+                        icon.width:  Kirigami.Units.iconSizes.small
+                        icon.height: Kirigami.Units.iconSizes.small
+                        display: Controls.AbstractButton.IconOnly
+                        // Ahead of the row's own handler, so opening a branch
+                        // does not also select the device.
+                        onClicked: appManager1.toggleDeviceTableRow(row)
                     }
 
                     // Device icon, in the Name cell only, as K2 draws it.
@@ -882,9 +882,12 @@ Item {
                             // Past the chevron, and past the space kept for one
                             // even when this row has no children, so every name
                             // at the same depth starts at the same x.
+                            // Past the disclosure button, whose space is kept
+                            // even on a childless row so the names line up
+                            // (CDT-F3).
                             leftMargin: 6 + treeIndent
                                         + (root.viewFilter === "All" && column === 0
-                                           ? Kirigami.Units.iconSizes.small + 4 : 0)
+                                           ? treeBranchIcon.width : 0)
                         }
                         source: iconName
                         implicitWidth:  Kirigami.Units.iconSizes.small

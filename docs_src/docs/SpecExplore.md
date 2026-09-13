@@ -88,6 +88,7 @@ Observable behaviour that can be triggered and watched.
 | EXP-F12 | When sub-folders are listed recursively ("and all sub-folders"), every listed folder row carries its own recursive total. Rows therefore overlap by design: a listed folder's size is counted again in each of its listed ancestors. The Size column MUST NOT be treated as a partition, and no row total is derived from it. | [Planned] |
 | EXP-F13 | The header row that carries the current folder path also shows the total size of the whole catalog, placed before the display options. | [Planned] |
 | EXP-F14 | Every figure of `EXP-F10`, `EXP-F11` and `EXP-F13` is computed from the catalog's file records at the moment the listing is produced. None is read from a stored or cached total, so none can disagree with the file records or with each other, and none can be stale. | [Planned] |
+| EXP-F15 | The Explore tree's per-row disclosure control follows the shared rule `CDT-F3` (`SpecCardsAndTables.md`). Concretely it adopts the **symbolic** chevrons in place of the filled navigation arrows it used, and keeps everything else it already did: the control kept in place on childless rows so names stay aligned, the shared indent unit, and no tooltip. The four header controls of `EXP-F9` are **unaffected** and stay Explore's alone (`CDT-C5`). Approved by the user on 2026-09-13. | [Planned] |
 
 > **Verification note (2026-08-27).** `EXP-F2` is marked `[Implemented]` on the
 > built code: the two-rank initial depth is in place and builds clean. The user
@@ -147,6 +148,7 @@ For each row: set up the stated condition, run the operation, confirm the result
 - **EXP-F12** — Tick "Display folders" and "and all sub-folders". A nested folder's size appears again inside each of its listed ancestors; the Size column deliberately does not add up to the catalog total.
 - **EXP-F13** — The catalog total appears in the path header, before the display options, and matches the recursive figure of the catalog root. It does not change as the user navigates between folders.
 - **EXP-F14** — Update the catalog so its content changes, then reopen Explore. Every figure follows the new content; none shows a pre-update value.
+- **EXP-F15** — In the Explore tree, confirm the chevrons are the thin disclosure variants, not the filled navigation arrows, in both the collapsed and expanded states, and that they are legible in a dark colour scheme as well as a light one. Confirm the four header controls are untouched.
 - **EXP-C9** — Run the whole `EXP-F10`–`EXP-F14` charter again with the collection in Memory database mode. The figures are identical to File mode; no folder shows zero where File mode showed a value.
 - **EXP-C10** — Open the same catalog in K2. Folder rows in its file list still show a blank size and its directory tree still shows a zero item count. Both are expected and are not defects of these rows.
 - **EXP-C11** — Confirm the size is visible on folder rows, not only on file rows, in the same column and right-aligned like the file sizes.
