@@ -262,8 +262,18 @@ jobs:
             *Mach-O*) ;;
             *) continue ;;
           esac
-          REFS=$(otool -L "$f" 2>/dev/null | tail -n +2 | awk '{print $1}' \
-                 | grep -E '^(/opt/homebrew|/usr/local|/Users/|/opt/local)' || true)
+          # A library's OWN install name (LC_ID_DYLIB) is printed by otool -L
+          # as its first entry, before the real dependencies, and macdeployqt
+          # commonly leaves it as the original Homebrew path. That is harmless:
+          # dyld resolves a dependency through the path recorded in the
+          # REFERENCING binary, not through the library's own id. Only genuine
+          # dependencies are checked here, so the id is excluded first.
+          OWN_ID=$(otool -D "$f" 2>/dev/null | tail -n +2 | head -1)
+          DEPS=$(otool -L "$f" 2>/dev/null | tail -n +2 | awk '{print $1}')
+          if [ -n "$OWN_ID" ]; then
+            DEPS=$(echo "$DEPS" | grep -v -x -F "$OWN_ID" || true)
+          fi
+          REFS=$(echo "$DEPS" | grep -E '^(/opt/homebrew|/usr/local|/Users/|/opt/local)' || true)
           if [ -n "$REFS" ]; then
             echo "❌ ${f#$APP/} depends on paths outside the bundle:"
             echo "$REFS" | sed 's/^/       /'
