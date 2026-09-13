@@ -243,6 +243,44 @@ jobs:
           exit 1
         fi
 
+    - name: Verify the bundle is self-contained
+      run: |
+        cd build
+        APP="qt_quick/Katalog.app"
+
+        # Every Mach-O file in the bundle is asked what it links against. A
+        # dependency under /opt/homebrew, /usr/local or a home directory exists
+        # on this runner and NOT on a user's Mac, so the app would fail to start
+        # there with a dyld error - the failure a user can only describe as "it
+        # does not open". @rpath, @executable_path and @loader_path resolve
+        # inside the bundle and are fine; /usr/lib and /System/Library are part
+        # of macOS itself.
+        echo "=== Checking linked libraries ==="
+        BAD_FILES=0
+        for f in $(find "$APP" -type f); do
+          case "$(file -b "$f")" in
+            *Mach-O*) ;;
+            *) continue ;;
+          esac
+          REFS=$(otool -L "$f" 2>/dev/null | tail -n +2 | awk '{print $1}' \
+                 | grep -E '^(/opt/homebrew|/usr/local|/Users/|/opt/local)' || true)
+          if [ -n "$REFS" ]; then
+            echo "❌ ${f#$APP/} depends on paths outside the bundle:"
+            echo "$REFS" | sed 's/^/       /'
+            BAD_FILES=$((BAD_FILES + 1))
+          fi
+        done
+
+        if [ "$BAD_FILES" -eq 0 ]; then
+          echo "✅ Every linked library resolves inside the bundle or in macOS itself"
+          echo "- **Self-contained**: yes" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ $BAD_FILES file(s) reference libraries that only exist on this build machine."
+          echo "   This DMG would not start on a user's Mac."
+          echo "- **Self-contained**: NO - $BAD_FILES file(s) link outside the bundle" >> $GITHUB_STEP_SUMMARY
+          exit 1
+        fi
+
     - name: Create DMG
       run: |
         cd build
