@@ -257,9 +257,10 @@ jobs:
         # of macOS itself.
         echo "=== Checking linked libraries ==="
         BAD_FILES=0
+        CHECKED=0
         for f in $(find "$APP" -type f); do
           case "$(file -b "$f")" in
-            *Mach-O*) ;;
+            *Mach-O*) CHECKED=$((CHECKED + 1)) ;;
             *) continue ;;
           esac
           # A library's OWN install name (LC_ID_DYLIB) is printed by otool -L
@@ -281,14 +282,77 @@ jobs:
           fi
         done
 
+        echo "Mach-O files examined: $CHECKED"
+        # A path mistake would examine nothing and report success, so an empty
+        # sweep is itself a failure.
+        if [ "$CHECKED" -lt 10 ]; then
+          echo "❌ Only $CHECKED Mach-O file(s) examined - the bundle path is wrong, this is not a clean result"
+          exit 1
+        fi
+
         if [ "$BAD_FILES" -eq 0 ]; then
-          echo "✅ Every linked library resolves inside the bundle or in macOS itself"
-          echo "- **Self-contained**: yes" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Every linked library resolves inside the bundle or in macOS itself ($CHECKED files)"
+          echo "- **Self-contained**: yes ($CHECKED binaries checked)" >> $GITHUB_STEP_SUMMARY
         else
           echo "❌ $BAD_FILES file(s) reference libraries that only exist on this build machine."
           echo "   This DMG would not start on a user's Mac."
           echo "- **Self-contained**: NO - $BAD_FILES file(s) link outside the bundle" >> $GITHUB_STEP_SUMMARY
           exit 1
+        fi
+
+    - name: Smoke test - start the app without Homebrew
+      run: |
+        cd build
+        APP="qt_quick/Katalog.app"
+
+        # The previous step reads what the binaries declare; this one actually
+        # runs the app. Homebrew is moved aside first, because otherwise a
+        # library missing from the bundle would quietly resolve from
+        # /opt/homebrew - which exists here and on no user's Mac. This is the
+        # closest a build machine gets to looking like the machine a user
+        # downloads onto.
+        sudo mv /opt/homebrew /opt/homebrew.hidden
+        echo "=== Homebrew hidden, starting the app ==="
+
+        set +e
+        "$APP/Contents/MacOS/Katalog" > launch.log 2>&1 &
+        APP_PID=$!
+        sleep 20
+        if kill -0 "$APP_PID" 2>/dev/null; then
+          STILL_RUNNING=1
+          kill "$APP_PID" 2>/dev/null
+        else
+          STILL_RUNNING=0
+        fi
+        wait "$APP_PID" 2>/dev/null
+        set -e
+
+        sudo mv /opt/homebrew.hidden /opt/homebrew
+        echo "=== Homebrew restored ==="
+
+        echo "=== Application output ==="
+        cat launch.log || true
+
+        # A dyld failure is the defect this whole exercise is about: a library
+        # the bundle does not carry. Anything else that stops the app here may
+        # be the runner having no user session rather than a broken bundle, so
+        # it is reported without failing the build - a false red would be worse
+        # than no check.
+        if grep -qE "Library not loaded|dyld|image not found" launch.log; then
+          echo "❌ The app could not load a library once Homebrew was hidden."
+          echo "   That is exactly what a user's Mac would do."
+          echo "- **Starts without Homebrew**: NO - missing library" >> $GITHUB_STEP_SUMMARY
+          exit 1
+        fi
+
+        if [ "$STILL_RUNNING" -eq 1 ]; then
+          echo "✅ The app started and was still running after 20s with no Homebrew present"
+          echo "- **Starts without Homebrew**: yes" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "⚠️ The app exited early, but not with a library error - see the output above."
+          echo "   Inconclusive rather than failed: a headless runner can stop a GUI app for reasons"
+          echo "   that have nothing to do with the bundle."
+          echo "- **Starts without Homebrew**: inconclusive - exited early, no library error" >> $GITHUB_STEP_SUMMARY
         fi
 
     - name: Create DMG
