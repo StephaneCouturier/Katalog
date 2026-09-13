@@ -62,7 +62,7 @@ Kirigami.Page {
             Layout.margins: Kirigami.Units.largeSpacing
             visible: root.previewData === null
             text: qsTr("Computing preview…")
-            icon.name: "hourglass"
+            icon.name: "view-refresh"
         }
 
         // Error state
