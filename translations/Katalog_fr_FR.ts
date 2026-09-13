@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+175"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4309"/>
+        <location line="+4400"/>
         <source>Search</source>
         <translation>Chercher</translation>
     </message>
     <message>
-        <location line="-4429"/>
+        <location line="-4520"/>
         <source>Stopped</source>
         <translation>Arrêté</translation>
     </message>
@@ -44,7 +44,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2044"/>
+        <location line="+2135"/>
         <location line="+602"/>
         <location line="+20"/>
         <location line="+1213"/>
@@ -55,8 +55,8 @@
         <translation>En cours</translation>
     </message>
     <message>
-        <location line="-4310"/>
-        <location line="+3917"/>
+        <location line="-4401"/>
+        <location line="+4008"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Terminé</translation>
@@ -7976,7 +7976,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+685"/>
+        <location line="+782"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Vérifier les sommes de contrôle</translation>
@@ -7988,14 +7988,14 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Inclure les metadonnées</translation>
     </message>
     <message>
-        <location line="-736"/>
+        <location line="-833"/>
         <location line="+523"/>
-        <location line="+158"/>
+        <location line="+255"/>
         <source>Move to Trash</source>
         <translation>Déplacer dans la corbeille</translation>
     </message>
     <message>
-        <location line="-809"/>
+        <location line="-906"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Le périphérique n&apos;est pas actif. Il est peut-être déconnecté, ou son chemin a peut-être changé.</translation>
     </message>
@@ -8237,7 +8237,23 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 %1</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+53"/>
+        <location line="+6"/>
+        <source>Catalog with results</source>
+        <translation>Catalogue avec résultats</translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <source>All</source>
+        <translation>Tous</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>None</source>
+        <translation>Aucun</translation>
+    </message>
+    <message>
+        <location line="+68"/>
         <source>Matched: %1
 Mismatched: %2
 New checksums calculated: %3

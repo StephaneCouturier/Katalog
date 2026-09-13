@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+175"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4309"/>
+        <location line="+4400"/>
         <source>Search</source>
         <translation>Pretraži</translation>
     </message>
     <message>
-        <location line="-4429"/>
+        <location line="-4520"/>
         <source>Stopped</source>
         <translation>Zaustavljeno</translation>
     </message>
@@ -44,7 +44,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2044"/>
+        <location line="+2135"/>
         <location line="+602"/>
         <location line="+20"/>
         <location line="+1213"/>
@@ -55,8 +55,8 @@
         <translation>U tijeku</translation>
     </message>
     <message>
-        <location line="-4310"/>
-        <location line="+3917"/>
+        <location line="-4401"/>
+        <location line="+4008"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Završeno</translation>
@@ -7975,7 +7975,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+685"/>
+        <location line="+782"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Provjeri kontrolne zbroje</translation>
@@ -7987,14 +7987,14 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Uključi metapodatke</translation>
     </message>
     <message>
-        <location line="-736"/>
+        <location line="-833"/>
         <location line="+523"/>
-        <location line="+158"/>
+        <location line="+255"/>
         <source>Move to Trash</source>
         <translation>Premjesti u smeće</translation>
     </message>
     <message>
-        <location line="-809"/>
+        <location line="-906"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Uređaj nije aktivan. Možda je odspojen ili je njegova putanja promijenjena.</translation>
     </message>
@@ -8236,7 +8236,23 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 %1</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+53"/>
+        <location line="+6"/>
+        <source>Catalog with results</source>
+        <translation>Katalog s rezultatima</translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <source>All</source>
+        <translation>Sve</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>None</source>
+        <translation>Ništa</translation>
+    </message>
+    <message>
+        <location line="+68"/>
         <source>Matched: %1
 Mismatched: %2
 New checksums calculated: %3

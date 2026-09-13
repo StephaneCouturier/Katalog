@@ -869,9 +869,138 @@ ColumnLayout {
         Layout.bottomMargin: Kirigami.Units.smallSpacing
         spacing: Kirigami.Units.smallSpacing
 
-        Controls.Label { text: "" }
+        // Footer filters (SpecSearchResultsFilters.md). Both narrow the rows
+        // already on screen: nothing here re-runs a search, and nothing here
+        // touches the application-wide Selection (SRF-C1).
+        Kirigami.SearchField {
+            id: resultsNameFilter
+            Layout.preferredWidth: Kirigami.Units.gridUnit * 14
+            // The toolkit's own placeholder, translated by Kirigami itself, so
+            // this field costs no translation slot (SRF-C3).
+            onTextChanged: appManager1.searchNameFilter = text
+
+            // New results clear the filters (SRF-F7); follow that here so the
+            // field cannot show text that is no longer being applied.
+            Connections {
+                target: appManager1
+                function onSearchFiltersChanged() {
+                    if (resultsNameFilter.text !== appManager1.searchNameFilter)
+                        resultsNameFilter.text = appManager1.searchNameFilter
+                }
+            }
+        }
 
         Item { Layout.fillWidth: true }
+
+        // Several catalogs can be ticked in one visit: a Menu closes on every
+        // activation, so selecting three would mean opening it three times -
+        // the friction that made the previous single-select list feel broken
+        // (SRF-F9). An empty selection means every catalog (SRF-F5).
+        Controls.Button {
+            id: catalogFilterButton
+            enabled: appManager1.searchCatalogsFound.length > 0
+            // Deliberately no `text` and no `icon.name`: the desktop style
+            // paints those itself through QStyle, and with a custom contentItem
+            // both would be drawn, one over the other. The label lives in the
+            // property below and is rendered only by the contentItem.
+            Layout.preferredWidth: Kirigami.Units.gridUnit * 16
+            contentItem: RowLayout {
+                spacing: Kirigami.Units.smallSpacing
+                Kirigami.Icon {
+                    source: "media-optical"
+                    // A custom contentItem replaces the style's own padding, so
+                    // the icon would otherwise sit flush against the frame.
+                    Layout.leftMargin: Kirigami.Units.smallSpacing
+                    implicitWidth:  Kirigami.Units.iconSizes.small
+                    implicitHeight: Kirigami.Units.iconSizes.small
+                    Layout.alignment: Qt.AlignVCenter
+                }
+                Controls.Label {
+                    Layout.fillWidth: true
+                    text: catalogFilterButton.labelText
+                    elide: Text.ElideRight
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+            // None selected: the K2 wording. Exactly one: that catalog's name.
+            // Several: the same wording with a generated count, which is a
+            // number rather than translatable text (SRF-F10 / SRF-C3).
+            readonly property string labelText: {
+                var sel = appManager1.searchCatalogFilters
+                if (sel.length === 0) return qsTr("Catalog with results")
+                if (sel.length === 1) {
+                    var list = appManager1.searchCatalogsFound
+                    for (var i = 0; i < list.length; i++)
+                        if (list[i].catalogId === sel[0]) return list[i].name
+                }
+                return qsTr("Catalog with results") + " (" + sel.length + ")"
+            }
+            onClicked: catalogFilterPopup.visible ? catalogFilterPopup.close()
+                                                  : catalogFilterPopup.open()
+
+            Controls.Popup {
+                id: catalogFilterPopup
+                // Anchored to the button's RIGHT edge: the button sits at the
+                // right of the footer, so a popup growing rightwards from its
+                // left edge ran into the window and the catalog names were cut
+                // off. Growing leftwards keeps the full names visible.
+                x: catalogFilterButton.width - width
+                y: -height - Kirigami.Units.smallSpacing
+                // Wide enough for real catalog names, and never wider than the
+                // page.
+                width: Math.min(Math.max(implicitWidth, Kirigami.Units.gridUnit * 18),
+                                pageSearchResults_column.width - Kirigami.Units.largeSpacing * 2)
+                padding: Kirigami.Units.smallSpacing
+                // Stays open while catalogs are ticked; closed by clicking away,
+                // by Escape, or by the button itself.
+                closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutsideParent
+
+                ColumnLayout {
+                    spacing: 0
+
+                    // Actions, not catalogs: kept above the list and separated
+                    // from it so they cannot be mistaken for a catalog named
+                    // "All" (SRF-F11). Both leave the popup open, like the
+                    // checkboxes below (SRF-F9). "All" and "None" show the same
+                    // rows - that is by design, not a defect: "All" is the
+                    // starting point for unticking a few, which is the only
+                    // practical way to say "everything except these".
+                    RowLayout {
+                        Layout.fillWidth: true
+                        spacing: Kirigami.Units.smallSpacing
+
+                        Controls.Button {
+                            text: qsTr("All")
+                            flat: true
+                            onClicked: appManager1.selectAllSearchCatalogFilters()
+                        }
+                        Controls.Button {
+                            text: qsTr("None")
+                            flat: true
+                            onClicked: appManager1.clearSearchCatalogFilters()
+                        }
+                        Item { Layout.fillWidth: true }
+                    }
+
+                    Kirigami.Separator {
+                        Layout.fillWidth: true
+                        Layout.topMargin:    Kirigami.Units.smallSpacing
+                        Layout.bottomMargin: Kirigami.Units.smallSpacing
+                    }
+
+                    Repeater {
+                        model: appManager1.searchCatalogsFound
+                        delegate: Controls.CheckBox {
+                            required property var modelData
+                            Layout.fillWidth: true
+                            text: modelData.name
+                            checked: appManager1.searchCatalogFilters.indexOf(modelData.catalogId) !== -1
+                            onToggled: appManager1.toggleSearchCatalogFilter(modelData.catalogId)
+                        }
+                    }
+                }
+            }
+        }
     }
 
     Kirigami.Dialog {

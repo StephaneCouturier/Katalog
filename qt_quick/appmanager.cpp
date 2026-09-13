@@ -310,9 +310,100 @@ void AppManager::executeSearch()
         emit searchStatusTextChanged();
     }
 
+    // New results: drop any filter left from the previous search, or it would
+    // silently hide rows of this one (SRF-F7), and republish the catalog list
+    // the footer offers.
+    if (m_searchSortModel)
+        m_searchSortModel->clearFilters();
+    emit searchFiltersChanged();
+    emit searchCatalogsFoundChanged();
+
     // Persist history to CSV file (no-op for File/Hosted modes — guarded inside the method)
     collection->saveSearchHistoryTableToFile();
 
+}
+//----------------------------------------------------------------------
+QString AppManager::getSearchNameFilter() const
+{
+    return m_searchSortModel ? m_searchSortModel->nameFilter() : QString();
+}
+//----------------------------------------------------------------------
+void AppManager::setSearchNameFilter(const QString &text)
+{
+    if (!m_searchSortModel || m_searchSortModel->nameFilter() == text)
+        return;
+    m_searchSortModel->setNameFilter(text);
+    emit searchFiltersChanged();
+}
+//----------------------------------------------------------------------
+QVariantList AppManager::getSearchCatalogFilters() const
+{
+    QVariantList result;
+    if (!m_searchSortModel)
+        return result;
+    const QList<int> ids = m_searchSortModel->catalogFilters();
+    for (int id : ids)
+        result.append(id);
+    return result;
+}
+//----------------------------------------------------------------------
+void AppManager::toggleSearchCatalogFilter(int catalogId)
+{
+    if (!m_searchSortModel)
+        return;
+    m_searchSortModel->toggleCatalogFilter(catalogId);
+    emit searchFiltersChanged();
+}
+//----------------------------------------------------------------------
+// Selects every catalog the results contain. Shows the same rows as an empty
+// set - correct, not a defect: this is the starting point for unticking a few,
+// which is how "everything except these two" is expressed (SRF-F11).
+void AppManager::selectAllSearchCatalogFilters()
+{
+    if (!m_searchSortModel)
+        return;
+    const QVariantList found = getSearchCatalogsFound();
+    QList<int> selected = m_searchSortModel->catalogFilters();
+    for (const QVariant &entry : found) {
+        const int id = entry.toMap().value(QStringLiteral("catalogId")).toInt();
+        if (!selected.contains(id))
+            m_searchSortModel->toggleCatalogFilter(id);
+    }
+    emit searchFiltersChanged();
+}
+//----------------------------------------------------------------------
+void AppManager::clearSearchCatalogFilters()
+{
+    if (!m_searchSortModel)
+        return;
+    const QList<int> selected = m_searchSortModel->catalogFilters();
+    for (int id : selected)
+        m_searchSortModel->toggleCatalogFilter(id);
+    emit searchFiltersChanged();
+}
+//----------------------------------------------------------------------
+// The catalogs the current results actually come from, each once, in the order
+// they first appear. Read straight off the results already in memory - K2 builds
+// the same list in Search::processResults (core/search.cpp:475-508), but this
+// needs no core change and no query (SRF-C2).
+QVariantList AppManager::getSearchCatalogsFound() const
+{
+    QVariantList result;
+    if (!searchObject)
+        return result;
+
+    QSet<int> seen;
+    for (int i = 0; i < searchObject->fileCatalogIDs.size() && i < searchObject->fileCatalogs.size(); ++i) {
+        const int id = searchObject->fileCatalogIDs.at(i);
+        if (seen.contains(id))
+            continue;
+        seen.insert(id);
+        QVariantMap entry;
+        entry[QStringLiteral("catalogId")] = id;
+        entry[QStringLiteral("name")]      = searchObject->fileCatalogs.at(i);
+        result.append(entry);
+    }
+    return result;
 }
 //----------------------------------------------------------------------
 // Also add a method to get current database info for display:

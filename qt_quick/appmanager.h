@@ -131,6 +131,11 @@ class AppManager : public QObject
     Q_PROPERTY(bool    searchIsRunning   READ getSearchIsRunning   NOTIFY searchStateChanged)
     Q_PROPERTY(bool    searchIsPaused    READ getSearchIsPaused    NOTIFY searchStateChanged)
     Q_PROPERTY(QString searchStatusText  READ getSearchStatusText  NOTIFY searchStatusTextChanged)
+    // Search results footer filters (SpecSearchResultsFilters.md). Both narrow
+    // the rows already displayed; neither runs a search.
+    Q_PROPERTY(QString searchNameFilter    READ getSearchNameFilter    WRITE setSearchNameFilter    NOTIFY searchFiltersChanged)
+    Q_PROPERTY(QVariantList searchCatalogFilters READ getSearchCatalogFilters NOTIFY searchFiltersChanged)
+    Q_PROPERTY(QVariantList searchCatalogsFound READ getSearchCatalogsFound NOTIFY searchCatalogsFoundChanged)
     Q_PROPERTY(bool    catalogIsCreating READ getCatalogIsCreating NOTIFY catalogIsCreatingChanged)
     Q_PROPERTY(QString catalogStatusText READ getCatalogStatusText NOTIFY catalogStatusTextChanged)
     Q_PROPERTY(bool    importIsRunning   READ getImportIsRunning   NOTIFY importIsRunningChanged)
@@ -411,6 +416,17 @@ public slots:
     Q_INVOKABLE void sortDeviceTable(int column, int order);
     /** Device tree table: opens or closes one row's children (DVP-F13). */
     Q_INVOKABLE void toggleDeviceTableRow(int row);
+
+    QString getSearchNameFilter() const;
+    void    setSearchNameFilter(const QString &text);
+    /** The selected catalog IDs; empty means every catalog (SRF-F5). */
+    QVariantList getSearchCatalogFilters() const;
+    Q_INVOKABLE void toggleSearchCatalogFilter(int catalogId);
+    /** Selection helpers (SRF-F11): every listed catalog, or the empty set. */
+    Q_INVOKABLE void selectAllSearchCatalogFilters();
+    Q_INVOKABLE void clearSearchCatalogFilters();
+    /** The catalogs present in the current results: {catalogId, name} entries. */
+    QVariantList getSearchCatalogsFound() const;
     Q_INVOKABLE int  getSearchSortColumn()  const;
     Q_INVOKABLE int  getSearchSortOrder()   const;
     Q_INVOKABLE int  getExploreSortColumn() const;
@@ -529,6 +545,8 @@ public slots:
 signals:
     void searchStateChanged();
     void searchStatusTextChanged();
+    void searchFiltersChanged();
+    void searchCatalogsFoundChanged();
     void catalogIsCreatingChanged();
     void catalogStatusTextChanged();
     void catalogCreationCompleted(bool success, const QString &report);

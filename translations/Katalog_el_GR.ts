@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+175"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4309"/>
+        <location line="+4400"/>
         <source>Search</source>
         <translation>Αναζήτηση</translation>
     </message>
     <message>
-        <location line="-4429"/>
+        <location line="-4520"/>
         <source>Stopped</source>
         <translation>Σταμάτησε</translation>
     </message>
@@ -44,7 +44,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2044"/>
+        <location line="+2135"/>
         <location line="+602"/>
         <location line="+20"/>
         <location line="+1213"/>
@@ -55,8 +55,8 @@
         <translation>Σε εξέλιξη</translation>
     </message>
     <message>
-        <location line="-4310"/>
-        <location line="+3917"/>
+        <location line="-4401"/>
+        <location line="+4008"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Ολοκληρωμένο</translation>
@@ -7976,7 +7976,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+685"/>
+        <location line="+782"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Επαλήθευση αθροισμάτων ελέγχου</translation>
@@ -7988,14 +7988,14 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Συμπερίληψη μεταδεδομένων</translation>
     </message>
     <message>
-        <location line="-736"/>
+        <location line="-833"/>
         <location line="+523"/>
-        <location line="+158"/>
+        <location line="+255"/>
         <source>Move to Trash</source>
         <translation>Μετακίνηση στα απορρίμματα</translation>
     </message>
     <message>
-        <location line="-809"/>
+        <location line="-906"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Η συσκευή δεν είναι ενεργή. Ενδέχεται να έχει αποσυνδεθεί ή να έχει αλλάξει η διαδρομή της.</translation>
     </message>
@@ -8237,7 +8237,23 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 %1</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+53"/>
+        <location line="+6"/>
+        <source>Catalog with results</source>
+        <translation>Κατάλογος με αποτελέσματα</translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <source>All</source>
+        <translation>Όλα</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>None</source>
+        <translation>Κανένα</translation>
+    </message>
+    <message>
+        <location line="+68"/>
         <source>Matched: %1
 Mismatched: %2
 New checksums calculated: %3

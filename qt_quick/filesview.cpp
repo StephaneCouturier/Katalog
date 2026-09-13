@@ -103,3 +103,77 @@ bool FilesView::lessThan(const QModelIndex &left, const QModelIndex &right) cons
 
     return QSortFilterProxyModel::lessThan(left, right);
 }
+
+// Columns of the source model (core/search.cpp Search::data): 0 is the file
+// name, 5 the catalog ID. Named here rather than repeated as bare numbers.
+namespace {
+constexpr int ColumnFileName  = 0;
+constexpr int ColumnCatalogId = 5;
+}
+
+void FilesView::setNameFilter(const QString &text)
+{
+    if (m_nameFilter == text)
+        return;
+    m_nameFilter = text;
+    invalidateFilter();
+}
+
+QList<int> FilesView::catalogFilters() const
+{
+    return QList<int>(m_catalogFilters.cbegin(), m_catalogFilters.cend());
+}
+
+// Adds or removes one catalog. Removing the last one empties the set, which is
+// the unfiltered state - so the control needs no separate clear entry (SRF-F5).
+void FilesView::toggleCatalogFilter(int catalogId)
+{
+    if (m_catalogFilters.contains(catalogId))
+        m_catalogFilters.remove(catalogId);
+    else
+        m_catalogFilters.insert(catalogId);
+    invalidateFilter();
+}
+
+// Called when new results arrive: a filter left over from the previous search
+// would silently hide rows of the new one, which reads as results missing
+// rather than as a filter being active (SRF-F7).
+void FilesView::clearFilters()
+{
+    if (m_nameFilter.isEmpty() && m_catalogFilters.isEmpty())
+        return;
+    m_nameFilter.clear();
+    m_catalogFilters.clear();
+    invalidateFilter();
+}
+
+// The two filters stack: a row must satisfy both to be shown (SRF-F6). The file
+// name match is a case-insensitive substring - deliberately not the sort's
+// case-sensitivity setting, which is about ordering, not about matching.
+bool FilesView::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+{
+    if (m_nameFilter.isEmpty() && m_catalogFilters.isEmpty())
+        return true;
+
+    const QAbstractItemModel *src = sourceModel();
+    if (!src)
+        return true;
+
+    // An empty set shows every catalog; otherwise the row's catalog must be one
+    // of those selected (SRF-F5/F6).
+    if (!m_catalogFilters.isEmpty()) {
+        const int catalogId = src->index(sourceRow, ColumnCatalogId, sourceParent)
+                                  .data(Qt::DisplayRole).toInt();
+        if (!m_catalogFilters.contains(catalogId))
+            return false;
+    }
+
+    if (!m_nameFilter.isEmpty()) {
+        const QString name = src->index(sourceRow, ColumnFileName, sourceParent)
+                                 .data(Qt::DisplayRole).toString();
+        if (!name.contains(m_nameFilter, Qt::CaseInsensitive))
+            return false;
+    }
+
+    return true;
+}

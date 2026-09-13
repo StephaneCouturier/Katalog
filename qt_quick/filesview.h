@@ -33,6 +33,9 @@
 #define FILESVIEW_H
 
 #include <QSortFilterProxyModel>
+#include <QList>
+#include <QSet>
+#include <QString>
 
 class FilesView : public QSortFilterProxyModel
 {
@@ -44,14 +47,28 @@ public:
     bool caseSensitive() const { return m_caseSensitive; }
     void setCaseSensitive(bool v);
 
+    // The two footer filters of the Search results page
+    // (SpecSearchResultsFilters.md SRF-F2/F5). Both narrow what is displayed and
+    // neither re-runs the search: the rows are already in hand.
+    QString nameFilter() const { return m_nameFilter; }
+    void setNameFilter(const QString &text);
+    /** The catalogs to show. An EMPTY set is the unfiltered state, meaning every
+     *  catalog - not "none" (SRF-F5). */
+    QList<int> catalogFilters() const;
+    void toggleCatalogFilter(int catalogId);
+    void clearFilters();
+
     // Q_INVOKABLE wrapper so QML can call sort(column, Qt.AscendingOrder/Qt.DescendingOrder)
     Q_INVOKABLE void sort(int column, int order = 0);
 
 protected:
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
+    bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
 
 private:
-    bool m_caseSensitive = false;
+    bool    m_caseSensitive = false;
+    QString   m_nameFilter;
+    QSet<int> m_catalogFilters;
 };
 
 #endif // FILESVIEW_H

@@ -97,7 +97,8 @@ export default {
                 'SpecTheme',
                 'SpecDevicesPage',
                 'SpecCollectionIdentity',
-                'SpecCardsAndTables'
+                'SpecCardsAndTables',
+                'SpecSearchResultsFilters'
                 ],
       },
        'Development-Repository',
