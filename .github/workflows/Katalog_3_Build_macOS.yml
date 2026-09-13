@@ -219,9 +219,28 @@ jobs:
         cd build
         QT_DEPLOY_TOOL="$(brew --prefix)/bin/macdeployqt"
         if [ -x "$QT_DEPLOY_TOOL" ]; then
-          "$QT_DEPLOY_TOOL" qt_quick/Katalog.app -verbose=1 || echo "macdeployqt completed with warnings"
+          # -qmldir is NOT optional for a Qt Quick app. Without it macdeployqt
+          # never scans the QML, so no QML module is bundled and the app dies at
+          # startup with: module "QtQuick.Controls" plugin
+          # "qtquickcontrols2plugin" not found. The libraries and the platform
+          # plugin are all present in that state, which is why the earlier
+          # checks passed while the app could not start at all.
+          "$QT_DEPLOY_TOOL" qt_quick/Katalog.app -qmldir=../qt_quick -verbose=1 \
+            || echo "macdeployqt completed with warnings"
         else
           echo "macdeployqt not found"
+        fi
+
+        # The QML modules land here. Their absence is what made the app
+        # unstartable, so it is checked rather than assumed.
+        QML_DIR="qt_quick/Katalog.app/Contents/Resources/qml"
+        if [ -d "$QML_DIR" ]; then
+          echo "✅ QML modules bundled: $(find "$QML_DIR" -name '*.dylib' | wc -l | tr -d ' ') plugin(s)"
+          echo "- **QML modules**: bundled" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ No QML modules in the bundle - the app cannot load its interface"
+          echo "- **QML modules**: MISSING - build rejected" >> $GITHUB_STEP_SUMMARY
+          exit 1
         fi
 
         # Without the Cocoa platform plugin a Qt app aborts at startup with
@@ -338,10 +357,15 @@ jobs:
         # be the runner having no user session rather than a broken bundle, so
         # it is reported without failing the build - a false red would be worse
         # than no check.
-        if grep -qE "Library not loaded|dyld|image not found" launch.log; then
-          echo "❌ The app could not load a library once Homebrew was hidden."
+        # Widened after a run where the app failed with 'plugin
+        # "qtquickcontrols2plugin" not found' and this check called it
+        # inconclusive: a missing QML module, an unloadable plugin or a database
+        # driver that will not load all stop the application just as dead as a
+        # missing library, and none of them mentions dyld.
+        if grep -qE "Library not loaded|dyld|image not found|failed to load component|plugin .* not found|Driver not loaded|no Qt platform plugin could be initialized" launch.log; then
+          echo "❌ The app could not start with only the bundle to rely on."
           echo "   That is exactly what a user's Mac would do."
-          echo "- **Starts without Homebrew**: NO - missing library" >> $GITHUB_STEP_SUMMARY
+          echo "- **Starts without Homebrew**: NO - see the log" >> $GITHUB_STEP_SUMMARY
           exit 1
         fi
 
