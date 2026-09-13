@@ -79,7 +79,27 @@ Katalog crée des <b>index complets pour que vous puissiez rechercher dans toute
 |-------------------|-------------|-------------|
 | <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/linux.png').default} width="40" /> GNU/Linux</div>         | Tout 64bits, glibc 2.38+ <br/>Tout 32bits, glibc 2.35     | [FlatHub/Flatpak](https://flathub.org/en/apps/io.github.stephanecouturier.Katalog)<br/>[AppImage](https://sourceforge.net/projects/katalogg/files/) <br/>[Portable](https://sourceforge.net/projects/katalogg/files/) |
 | <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/windows.png').default} width="40" /> Microsoft Windows</div> | 64bits : Windows 10 & Windows 11    | [Installateur](https://sourceforge.net/projects/katalogg/files/) <br/> [Portable](https://sourceforge.net/projects/katalogg/files/)       |
-| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/macos.png').default} width="40" /> Apple macOS</div>       | 14+      | [Installateur](https://sourceforge.net/projects/katalogg/files/)<br/> [Portable](https://sourceforge.net/projects/katalogg/files/)       |
+| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/macos.png').default} width="40" /> Apple macOS</div>       | 14 (Sonoma)      | [Installateur](https://sourceforge.net/projects/katalogg/files/)<br/> [Portable](https://sourceforge.net/projects/katalogg/files/)       |
+
+### Compatibilité macOS
+
+- **Version minimale de macOS** : macOS 14 (Sonoma) ou ultérieure
+- **Architecture** : Apple Silicon (M1/M2/M3) uniquement. Les Mac Intel ne sont **pas** pris en charge — Rosetta 2 traduit les logiciels Intel pour les exécuter sur Apple Silicon, et non l'inverse : il n'existe donc aucun moyen d'exécuter cette version sur un Mac Intel.
+- **Environnement de compilation** : compilé sur macOS 14 (Sonoma) avec Qt 6 et KDE Frameworks 6 (KF6), via Homebrew
+
+**Important : l'application n'est ni signée ni notariée.**
+
+macOS bloque l'application par défaut. Pour lancer Katalog, essayez l'une de ces méthodes :
+
+1. Clic droit sur l'application → choisissez « Ouvrir » (et non un double-clic) → confirmez dans la boîte de dialogue
+2. Ou allez dans Réglages Système → Confidentialité et sécurité → faites défiler puis cliquez sur « Ouvrir quand même »
+3. Ou exécutez dans le Terminal : `xattr -cr /chemin/vers/Katalog.app` puis ouvrez normalement
+
+**Limitation connue** :
+
+sur les Mac gérés par une organisation (profil MDM/entreprise), ces contournements peuvent être bloqués par la politique de sécurité. Il n'existe actuellement aucune solution pour les Mac gérés — cela nécessiterait de signer l'application avec un certificat Apple Developer.
+
+Une version héritée (v2.5, Qt6 pur, sans dépendances KF6) est également disponible, avec les mêmes prérequis macOS.
 
 ---
 ## Support multilingue

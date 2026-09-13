@@ -224,6 +224,25 @@ jobs:
           echo "macdeployqt not found"
         fi
 
+        # Without the Cocoa platform plugin a Qt app aborts at startup with
+        # "no Qt platform plugin could be initialized" - one of the classic
+        # "it does not even start" reports. It cannot be caught by running the
+        # app on this runner, where Qt is installed system-wide and would be
+        # found anyway; only the bundle's own copy matters on a user's Mac.
+        # macdeployqt is allowed to fail softly above (|| echo), so this is the
+        # check that decides whether the bundle is shippable.
+        COCOA_PLUGIN="qt_quick/Katalog.app/Contents/PlugIns/platforms/libqcocoa.dylib"
+        echo "=== Bundled Qt plugins ==="
+        ls -R qt_quick/Katalog.app/Contents/PlugIns 2>/dev/null || echo "(no PlugIns directory)"
+        if [ -f "$COCOA_PLUGIN" ]; then
+          echo "✅ Cocoa platform plugin bundled"
+          echo "- **Platform plugin**: bundled" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ $COCOA_PLUGIN is missing - the app would not start on a user's Mac"
+          echo "- **Platform plugin**: MISSING - build rejected" >> $GITHUB_STEP_SUMMARY
+          exit 1
+        fi
+
     - name: Create DMG
       run: |
         cd build

@@ -79,7 +79,27 @@ Katalog vytváří komplexní <b>indexy, abyste mohli prohledávat celou svou ko
 |-------------------|-------------|-------------|
 | <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/linux.png').default} width="40" /> GNU/Linux</div>         | Jakýkoli 64bitový, glibc 2.38+ <br/>Jakýkoli 32bitový, glibc 2.35     | [FlatHub/Flatpak](https://flathub.org/en/apps/io.github.stephanecouturier.Katalog)<br/>[AppImage](https://sourceforge.net/projects/katalogg/files/) <br/>[Přenosný](https://sourceforge.net/projects/katalogg/files/) |
 | <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/windows.png').default} width="40" /> Microsoft Windows</div> | 64bitový: Windows 10 a Windows 11    | [Instalátor](https://sourceforge.net/projects/katalogg/files/) <br/> [Přenosný](https://sourceforge.net/projects/katalogg/files/)       |
-| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/macos.png').default} width="40" /> Apple macOS</div>       | 14+      | [Instalátor](https://sourceforge.net/projects/katalogg/files/)<br/> [Přenosný](https://sourceforge.net/projects/katalogg/files/)       |
+| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/macos.png').default} width="40" /> Apple macOS</div>       | 14 (Sonoma)      | [Instalátor](https://sourceforge.net/projects/katalogg/files/)<br/> [Přenosný](https://sourceforge.net/projects/katalogg/files/)       |
+
+### Kompatibilita s macOS
+
+- **Minimální verze macOS**: macOS 14 (Sonoma) nebo novější
+- **Architektura**: pouze Apple Silicon (M1/M2/M3). Intelové Macy **nejsou** podporovány — Rosetta 2 překládá software pro Intel tak, aby běžel na Apple Silicon, nikoli naopak, takže tuto verzi nelze na Intelovém Macu spustit.
+- **Sestavovací prostředí**: sestaveno na macOS 14 (Sonoma) s Qt 6 a KDE Frameworks 6 (KF6) přes Homebrew
+
+**Důležité: aplikace není podepsaná ani notarizovaná.**
+
+macOS aplikaci ve výchozím nastavení zablokuje. Pro spuštění Katalogu vyzkoušejte jeden z těchto postupů:
+
+1. Klikněte na aplikaci pravým tlačítkem → zvolte „Otevřít“ (nikoli dvojklik) → potvrďte v dialogu
+2. Nebo přejděte do Nastavení systému → Soukromí a zabezpečení → sjeďte dolů a klikněte na „Přesto otevřít“
+3. Nebo spusťte v Terminálu: `xattr -cr /cesta/ke/Katalog.app` a poté otevřete normálně
+
+**Známé omezení**:
+
+na Macích spravovaných organizací (MDM/firemní profil) mohou být tato řešení blokována bezpečnostními zásadami. Pro spravované Macy momentálně neexistuje řešení — vyžadovalo by to podepsání aplikace certifikátem Apple Developer.
+
+K dispozici je také starší sestavení (v2.5, čisté Qt6, bez závislostí na KF6) se stejnými požadavky na macOS.
 
 ---
 ## Podpora více jazyků

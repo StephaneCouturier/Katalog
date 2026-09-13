@@ -80,13 +80,13 @@ Katalog creates comprehensive <b>indexes so you can search your entire file coll
 |-------------------|-------------|-------------|
 | <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/linux.png').default} width="40" /> GNU/Linux</div>         | 64bits, glibc 2.38+ <br/>32bits, glibc 2.35     | [FlatHub/Flatpak](https://flathub.org/en/apps/io.github.stephanecouturier.Katalog)<br/>[AppImage](https://sourceforge.net/projects/katalogg/files/) <br/>[Portable](https://sourceforge.net/projects/katalogg/files/) |
 | <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/windows.png').default} width="40" /> Microsoft Windows</div> | 64bits:  Windows 10 & Windows 11    | [Installer](https://sourceforge.net/projects/katalogg/files/) <br/> [Portable](https://sourceforge.net/projects/katalogg/files/)       |
-| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/macos.png').default} width="40" /> Apple macOS</div>       | 13 (Ventura)  | [Installer](https://sourceforge.net/projects/katalogg/files/)<br/> [Portable](https://sourceforge.net/projects/katalogg/files/)       |
+| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/macos.png').default} width="40" /> Apple macOS</div>       | 14 (Sonoma)  | [Installer](https://sourceforge.net/projects/katalogg/files/)<br/> [Portable](https://sourceforge.net/projects/katalogg/files/)       |
 
 
 ### macOS Compatibility
 
-- **Minimum macOS version**: macOS 13 (Ventura) or later
-- **Architecture**: Apple Silicon (M1/M2/M3) native. Intel Macs may work via Rosetta 2 but are untested.
+- **Minimum macOS version**: macOS 14 (Sonoma) or later
+- **Architecture**: Apple Silicon (M1/M2/M3) only. Intel Macs are **not** supported — Rosetta 2 translates Intel software to run on Apple Silicon, not the other way round, so there is no way to run this build on an Intel Mac.
 - **Build environment**: Built on macOS 14 (Sonoma) with Qt 6 and KDE Frameworks 6 (KF6), via Homebrew
 
 **Important: the app is not code-signed or notarized.**
