@@ -201,6 +201,19 @@ jobs:
           exit 1
         fi
 
+        # Which processor this build actually runs on. Recorded rather than
+        # enforced: no CMAKE_OSX_ARCHITECTURES is set, so the build is native to
+        # the runner (macos-14 = Apple Silicon) and will NOT start on an Intel
+        # Mac. When a user reports "it does not start", this line says in one
+        # glance whether that build could ever have run on their machine.
+        ARCHS=$(lipo -archs qt_quick/Katalog.app/Contents/MacOS/Katalog 2>/dev/null || echo "unknown")
+        echo "=== Binary architecture: ${ARCHS} ==="
+        echo "### macOS build" >> $GITHUB_STEP_SUMMARY
+        echo "- **Architecture**: ${ARCHS}" >> $GITHUB_STEP_SUMMARY
+        if ! echo "$ARCHS" | grep -q "x86_64"; then
+          echo "- ⚠️ Intel Macs are **not** supported by this build" >> $GITHUB_STEP_SUMMARY
+        fi
+
     - name: Deploy Qt6 dependencies
       run: |
         cd build
