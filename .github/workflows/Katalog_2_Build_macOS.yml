@@ -72,13 +72,20 @@ jobs:
           brew install ninja
         fi
 
-        # Install Qt6
-        echo "Installing Qt6..."
-        if ! brew list qt@6 >/dev/null 2>&1; then
-          brew install qt@6
-        else
-          echo "Qt6 already installed"
-        fi
+        # Install Qt6 as individual modules, NOT the umbrella qt@6 formula:
+        # qt@6 aliases "qt", which depends on all 38 Qt modules including
+        # qtwebengine, and qtwebengine has no prebuilt bottle for this runner's
+        # macOS, so brew falls back to compiling it from source and the job dies.
+        # Katalog uses none of WebEngine. Same list as the K3 workflow, so the
+        # two cannot drift.
+        echo "Installing Qt6 modules..."
+        for qt_mod in qtbase qtdeclarative qtsvg qtcharts qttools qt5compat qtimageformats; do
+          if brew list "$qt_mod" >/dev/null 2>&1; then
+            echo "  already present: $qt_mod"
+          else
+            brew install "$qt_mod"
+          fi
+        done
 
         # Install dependencies for building KF6
         echo "Installing KF6 build dependencies..."
@@ -108,13 +115,13 @@ jobs:
     - name: Set Qt6 environment
       run: |
         # Set up Qt6 paths
-        echo "$(brew --prefix qt@6)/bin" >> $GITHUB_PATH
-        echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@6)" >> $GITHUB_ENV
-        echo "Qt6_DIR=$(brew --prefix qt@6)/lib/cmake/Qt6" >> $GITHUB_ENV
+        echo "$(brew --prefix)/bin" >> $GITHUB_PATH
+        echo "CMAKE_PREFIX_PATH=$(brew --prefix)" >> $GITHUB_ENV
+        echo "Qt6_DIR=$(brew --prefix)/lib/cmake/Qt6" >> $GITHUB_ENV
 
         # Display Qt6 version info
-        echo "Qt6 installation path: $(brew --prefix qt@6)"
-        echo "Qt6 version: $($(brew --prefix qt@6)/bin/qmake -version)"
+        echo "Qt6 installation path: $(brew --prefix)"
+        echo "Qt6 version: $($(brew --prefix)/bin/qmake -version)"
 
         # Set up build environment
         echo "CMAKE_BUILD_PARALLEL_LEVEL=$(sysctl -n hw.ncpu)" >> $GITHUB_ENV
@@ -153,7 +160,7 @@ jobs:
 
         # Set up common cmake args
         CMAKE_ARGS=(
-          "-DCMAKE_PREFIX_PATH=$(brew --prefix qt@6)"
+          "-DCMAKE_PREFIX_PATH=$(brew --prefix)"
           "-DCMAKE_BUILD_TYPE=Release"
           "-DCMAKE_INSTALL_PREFIX=$(brew --prefix)"
           "-DCMAKE_OSX_DEPLOYMENT_TARGET=11.0"
@@ -328,7 +335,7 @@ jobs:
         find "$(brew --prefix)" -name "*XmlGui*" -o -name "*xmlgui*" 2>/dev/null | head -20
 
         # Build final CMAKE_PREFIX_PATH for next steps
-        FINAL_CMAKE_PREFIX_PATH="$(brew --prefix qt@6)"
+        FINAL_CMAKE_PREFIX_PATH="$(brew --prefix)"
 
         # Add all found KF6 cmake directories
         for kf6_dir in "$(brew --prefix)"/lib/cmake/KF6*; do
@@ -407,7 +414,7 @@ jobs:
         # Build comprehensive CMAKE_PREFIX_PATH with all found KF6 locations
         echo "=== Setting up comprehensive CMAKE_PREFIX_PATH ==="
 
-        BASE_PATHS="$(brew --prefix qt@6):$(brew --prefix)/lib/cmake:$(brew --prefix)"
+        BASE_PATHS="$(brew --prefix)/lib/cmake:$(brew --prefix)"
 
         # Add specific KF6 component directories
         KF6_PATHS=""
@@ -776,7 +783,7 @@ jobs:
         echo "=== Deploying Qt6 dependencies ==="
 
         # Use Qt6's macdeployqt to handle dependencies
-        QT_DEPLOY_TOOL="$(brew --prefix qt@6)/bin/macdeployqt"
+        QT_DEPLOY_TOOL="$(brew --prefix)/bin/macdeployqt"
 
         if [ -x "$QT_DEPLOY_TOOL" ]; then
           echo "Using macdeployqt: $QT_DEPLOY_TOOL"
@@ -886,7 +893,7 @@ jobs:
         echo "- **Size**: $(ls -lh build/Katalog-*.dmg 2>/dev/null | awk '{print $5}' || echo 'N/A')" >> $GITHUB_STEP_SUMMARY
         echo "- **Target**: macOS 11.0+ (Big Sur and later)" >> $GITHUB_STEP_SUMMARY
         echo "- **Architecture**: $(uname -m)" >> $GITHUB_STEP_SUMMARY
-        echo "- **Qt Version**: $($(brew --prefix qt@6)/bin/qmake -version | grep 'Qt version' || echo 'Unknown')" >> $GITHUB_STEP_SUMMARY
+        echo "- **Qt Version**: $($(brew --prefix)/bin/qmake -version | grep 'Qt version' || echo 'Unknown')" >> $GITHUB_STEP_SUMMARY
         echo "- **KF6 Version**: ${{ env.KF6_BUILD_VERSION }}" >> $GITHUB_STEP_SUMMARY
         echo "- **Codebase**: master (Qt6 + KF6 with all modern features)" >> $GITHUB_STEP_SUMMARY
         echo "- **Status**: 📦 Available as build artifact" >> $GITHUB_STEP_SUMMARY

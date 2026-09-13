@@ -29,10 +29,22 @@ jobs:
         if ! command -v cmake >/dev/null 2>&1; then brew install cmake; fi
         if ! command -v ninja >/dev/null 2>&1; then brew install ninja; fi
 
-        echo "Installing Qt6 with Quick/QML support..."
-        if ! brew list qt@6 >/dev/null 2>&1; then
-          brew install qt@6
-        fi
+        # The individual Qt modules, NOT the umbrella qt@6 formula. qt@6 is an
+        # alias for "qt", which depends on all 38 Qt modules including
+        # qtwebengine - and qtwebengine has no prebuilt bottle for this runner's
+        # macOS ("Tier 3 configuration"), so brew tried to compile it from source
+        # and the job died. Katalog uses none of WebEngine. Components needed:
+        # Core/Widgets/Gui/Sql/Network (qtbase), Charts (qtcharts),
+        # LinguistTools (qttools), Quick/QuickControls2 (qtdeclarative), plus
+        # qtsvg and qt5compat for Kirigami.
+        echo "Installing Qt6 modules (without the WebEngine-pulling umbrella)..."
+        for qt_mod in qtbase qtdeclarative qtsvg qtcharts qttools qt5compat qtimageformats; do
+          if brew list "$qt_mod" >/dev/null 2>&1; then
+            echo "  already present: $qt_mod"
+          else
+            brew install "$qt_mod"
+          fi
+        done
 
         brew install extra-cmake-modules || echo "extra-cmake-modules install failed"
         brew install git wget python3 || echo "Some tools already installed"
@@ -56,9 +68,9 @@ jobs:
 
     - name: Set Qt6 environment
       run: |
-        echo "$(brew --prefix qt@6)/bin" >> $GITHUB_PATH
-        echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@6)" >> $GITHUB_ENV
-        echo "Qt6_DIR=$(brew --prefix qt@6)/lib/cmake/Qt6" >> $GITHUB_ENV
+        echo "$(brew --prefix)/bin" >> $GITHUB_PATH
+        echo "CMAKE_PREFIX_PATH=$(brew --prefix)" >> $GITHUB_ENV
+        echo "Qt6_DIR=$(brew --prefix)/lib/cmake/Qt6" >> $GITHUB_ENV
         echo "CMAKE_BUILD_PARALLEL_LEVEL=$(sysctl -n hw.ncpu)" >> $GITHUB_ENV
 
     - name: Build KF6 from source (if Homebrew install failed)
@@ -74,7 +86,7 @@ jobs:
         # installed to $(brew --prefix)/lib/cmake/KF6*/). Without this, kfilemetadata
         # cannot find KCoreAddons/KI18n/KConfig that were built just before it.
         CMAKE_ARGS=(
-          "-DCMAKE_PREFIX_PATH=$(brew --prefix qt@6):$(brew --prefix)"
+          "-DCMAKE_PREFIX_PATH=$(brew --prefix)"
           "-DCMAKE_BUILD_TYPE=Release"
           "-DCMAKE_INSTALL_PREFIX=$(brew --prefix)"
           "-DCMAKE_OSX_DEPLOYMENT_TARGET=11.0"
@@ -154,7 +166,7 @@ jobs:
         mkdir build && cd build
 
         # Build comprehensive CMAKE_PREFIX_PATH
-        BASE_PATHS="$(brew --prefix qt@6):$(brew --prefix)/lib/cmake:$(brew --prefix)"
+        BASE_PATHS="$(brew --prefix)/lib/cmake:$(brew --prefix)"
         export CMAKE_PREFIX_PATH="$BASE_PATHS"
 
         echo "=== Running CMake configuration ==="
@@ -192,7 +204,7 @@ jobs:
     - name: Deploy Qt6 dependencies
       run: |
         cd build
-        QT_DEPLOY_TOOL="$(brew --prefix qt@6)/bin/macdeployqt"
+        QT_DEPLOY_TOOL="$(brew --prefix)/bin/macdeployqt"
         if [ -x "$QT_DEPLOY_TOOL" ]; then
           "$QT_DEPLOY_TOOL" qt_quick/Katalog.app -verbose=1 || echo "macdeployqt completed with warnings"
         else
