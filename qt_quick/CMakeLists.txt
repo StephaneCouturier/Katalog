@@ -101,6 +101,23 @@ set_target_properties(Katalog3 PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
+if(APPLE)
+    # The bundle icon must be an .icns and must also be copied into
+    # Contents/Resources: naming it alone leaves Finder with no icon at all.
+    # It is deliberately NOT a qrc resource — it is a bundle file, and listing
+    # it in images.qrc would embed a second copy in every platform's binary.
+    # See SpecApplicationIcon.md, ICO-F5, ICO-C10 and ICO-C12.
+    if(EXISTS "${CMAKE_SOURCE_DIR}/assets/Katalog.icns")
+        target_sources(Katalog3 PRIVATE "${CMAKE_SOURCE_DIR}/assets/Katalog.icns")
+        set_source_files_properties("${CMAKE_SOURCE_DIR}/assets/Katalog.icns"
+            PROPERTIES MACOSX_PACKAGE_LOCATION "Resources"
+        )
+        set_target_properties(Katalog3 PROPERTIES
+            MACOSX_BUNDLE_ICON_FILE "Katalog.icns"
+        )
+    endif()
+endif()
+
 target_link_libraries(Katalog3
     PRIVATE
     katalog-core

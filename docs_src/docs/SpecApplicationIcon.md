@@ -6,7 +6,7 @@ description: Requirements for the window icon, the installed desktop entry, and 
 
 # APPLICATION ICON AND DESKTOP INTEGRATION
 
-![Status](https://img.shields.io/badge/Status-Approved-brightgreen) ![Part 1](https://img.shields.io/badge/Part%201%20defect%20fix-implemented-brightgreen) ![Part 2](https://img.shields.io/badge/Part%202%20packaging-implemented-brightgreen) ![K2](https://img.shields.io/badge/K2-2.13-blue) ![K3](https://img.shields.io/badge/K3-3.0-blue)
+![Status](https://img.shields.io/badge/Status-Approved-brightgreen) ![Part 1](https://img.shields.io/badge/Part%201%20defect%20fix-implemented-brightgreen) ![Part 2](https://img.shields.io/badge/Part%202%20packaging-implemented-brightgreen) ![Part 3](https://img.shields.io/badge/Part%203%20macOS%20bundle%20icon-planned-yellow) ![K2](https://img.shields.io/badge/K2-2.13-blue) ![K3](https://img.shields.io/badge/K3-3.0-blue)
 
 ## Context
 
@@ -31,13 +31,17 @@ Measurements, the Wayland protocol trace and the A/B probe results are in
 `SpecApplicationIconBacklogNotes.md`. They are evidence, not requirements, and
 are deliberately kept out of the tables below.
 
-This spec covers two separable pieces of work:
+This spec covers three separable pieces of work:
 
 - **The defect fix** (`ICO-F1`, `ICO-F2`) — which asset each platform sets the
   window icon from. This alone resolves the reported corruption.
 - **Desktop integration** (`ICO-F3`, `ICO-F4`) — installing a desktop entry and
   a full hicolor icon set. This is a separate improvement, not part of the
   defect, and neither depends on the other.
+- **The macOS bundle icon** (`ICO-F5`) — a second, unrelated defect reported by
+  a K3 3.0 beta1 tester on macOS: *"No icon attached to the application, but
+  once running, it is displayed correctly."* macOS has two independent icons and
+  only the runtime one was ever set. This depends on neither of the other two.
 
 > **Reading the requirement IDs.** Each requirement has a permanent ID.
 > IDs are never renumbered or reused; a retired requirement is marked
@@ -50,6 +54,7 @@ This spec covers two separable pieces of work:
 
 **In scope:** the icon each platform sets as the window icon in K2 and K3; the
 desktop entry installed on Linux; the hicolor icon sizes installed on Linux; the
+macOS bundle icon resource and its `CFBundleIconFile` entry, in K2 and K3; the
 constraints that keep all of the above from regressing.
 
 **Out of scope (non-goals):** the artwork itself — no icon is redrawn or
@@ -70,6 +75,7 @@ Goals in real use, independent of how they are built.
 |----|-------------|--------|
 | ICO-O1 | A user sees the Katalog icon rendered cleanly in the window titlebar, the task manager and the window switcher, on every supported platform and in both user interfaces. | [Implemented] |
 | ICO-O2 | A user who installs Katalog finds it in the application launcher under its own name and icon, and can start it from there, whichever user interface is installed. | [Planned] |
+| ICO-O3 | On macOS, a user sees the Katalog icon on the application itself — in Finder, in the DMG window, in Launchpad, and on the Dock icon before the application is started — in both user interfaces. | [Planned] |
 
 ## Functional requirements — *what the system does*
 
@@ -78,9 +84,10 @@ Observable behaviour that can be triggered and watched.
 | ID | Requirement | Status |
 |----|-------------|--------|
 | ICO-F1 | On Linux, both K2 and K3 set the window icon from the 256-pixel PNG master, not from the `.ico`. | [Implemented] |
-| ICO-F2 | On Windows and macOS, both K2 and K3 continue to set the window icon from the `.ico`. | [Implemented] |
+| ICO-F2 | On Windows and macOS, both K2 and K3 continue to set the *runtime window* icon from the `.ico`. This is the taskbar/Dock icon while the application is running; it is distinct from the macOS bundle icon of `ICO-F5`. | [Implemented] |
 | ICO-F3 | Installing either user interface on Linux installs exactly one desktop entry, named `io.github.stephanecouturier.Katalog.desktop`, into `share/applications`. | [Implemented] |
 | ICO-F4 | Installing either user interface on Linux installs the application icon at each of the eight sizes listed in *Installed icon set* below, into `share/icons/hicolor/<size>x<size>/apps`. | [Implemented] |
+| ICO-F5 | On macOS, both K2 and K3 ship an `.icns` application icon inside `Katalog.app/Contents/Resources`, and the generated `Info.plist` names that file in `CFBundleIconFile`. | [Planned] |
 
 ## Constructional requirements — *how it is built / limits / MUST-NOTs*
 
@@ -89,7 +96,7 @@ Boundaries and implementation constraints, not user-visible behaviour.
 | ID | Requirement | Status |
 |----|-------------|--------|
 | ICO-C1 | The image handed to the compositor as the Linux window icon MUST be a single large raster. It MUST NOT be a multi-entry `.ico`, and MUST NOT be any image smaller than 256 pixels. This is the root-cause guard: a smaller buffer is upscaled into the titlebar slot and exposes the upstream alpha defect. | [Implemented] |
-| ICO-C2 | The `.ico` MUST be retained. It is the Windows `.rc` resource and the macOS bundle icon, and it stays listed in both `images.qrc` files. It MUST NOT be deleted as "unused" on the strength of the Linux change. | [Implemented] |
+| ICO-C2 | The `.ico` MUST be retained. It is the Windows `.rc` resource and the Windows and macOS *window* icon, and it stays listed in both `images.qrc` files. It MUST NOT be deleted as "unused" on the strength of the Linux change. It is **not**, and MUST NOT be used as, the macOS bundle icon — see `ICO-C10`. | [Implemented] |
 | ICO-C3 | K2 sets its Linux window icon in C++, immediately after `setupUi`. The `windowIcon` property in `mainwindow.ui` MUST NOT be used as the platform-conditional mechanism, and MUST NOT be removed: it remains the Windows and macOS value and the designer-visible icon. The C++ call overrides it on Linux only. | [Implemented] |
 | ICO-C4 | The K2 change is limited to the icon source. No other K2 UI change is authorised by this spec — K2 is in maintenance mode. | [Implemented] |
 | ICO-C5 | The installed icons are pre-generated PNG files committed under `assets/`. They MUST NOT be produced by a build-time image conversion step: no ImageMagick or equivalent may be added as a build dependency, because the Windows build must remain viable. | [Implemented] |
@@ -97,6 +104,11 @@ Boundaries and implementation constraints, not user-visible behaviour.
 | ICO-C7 | The desktop entry is reused as-is. Its `Name`, `GenericName`, `Comment` and `Keywords` values, and all of their localised variants, MUST NOT be edited, reordered or re-generated by this work. | [Implemented] |
 | ICO-C8 | No user-visible application string is added, changed or removed by this spec. | [Implemented] |
 | ICO-C9 | No `core/` change. This spec touches only UI entry points and build files. | [Implemented] |
+| ICO-C10 | The macOS bundle icon MUST be an `.icns`. A `.ico` MUST NOT be named as `MACOSX_BUNDLE_ICON_FILE`: macOS reads only `.icns` as a bundle icon, so naming a `.ico` there yields a bundle with no icon at all. Naming the file is not sufficient on its own — the `.icns` MUST also be copied into `Contents/Resources` by the build. | [Planned] |
+| ICO-C11 | The `.icns` is a pre-generated asset committed under `assets/`, derived from the master `assets/Katalog_logo_256.png`. It MUST NOT be produced by a build-time conversion step: `iconutil` and `sips` exist only on macOS, and a build-time rule would make the icon unreproducible on the Linux and Windows builders. This extends `ICO-C5` to the macOS bundle icon. | [Planned] |
+| ICO-C12 | The `.icns` MUST NOT be added to either `images.qrc`. It is a bundle resource copied into `Contents/Resources` by CMake, never a Qt resource; listing it in a `.qrc` would embed a second copy in every platform's binary. | [Planned] |
+| ICO-C13 | The runtime window icon of `ICO-F1` / `ICO-F2` is unchanged by this work. `qt_quick/main.cpp` and `qt_widgets/mainwindow.ui` MUST NOT be touched: the bundle icon and the window icon are two independent macOS icons, and the reported defect concerns only the former. | [Planned] |
+| ICO-C14 | The K2 part of `ICO-F5` is limited to `qt_widgets/CMakeLists.txt` and the added asset. No K2 source, UI, layout or string change is authorised — K2 remains in maintenance mode. This is the K2 counterpart of `ICO-C4` for this second defect. | [Planned] |
 
 ---
 
@@ -151,6 +163,10 @@ The complete mapping authorised by `ICO-F1` and `ICO-F2`.
 | Windows | `:/images/Katalog_logo_64.ico` | `qt_widgets/mainwindow.ui:31-35` property | `qt_quick/main.cpp:36-47`, `#else` branch |
 | macOS | `:/images/Katalog_logo_64.ico` | `qt_widgets/mainwindow.ui:31-35` property | `qt_quick/main.cpp:36-47`, `#else` branch |
 
+This table covers the *window* icon only. The macOS bundle icon is a separate
+asset governed by `ICO-F5` and `ICO-C10`, and is listed in *macOS bundle icon*
+below.
+
 `Katalog_logo_256.png` is registered at `qt_widgets/images.qrc:4` and
 `qt_quick/images.qrc:47`. The `.ico` entries alongside them are retained per
 `ICO-C2`.
@@ -162,6 +178,24 @@ removed as dead.
 The delivered change is 23 insertions and 0 deletions across those four files.
 Nothing was removed, which is the direct evidence for `ICO-C2` and `ICO-C3`.
 
+## macOS bundle icon
+
+The complete mapping authorised by `ICO-F5`.
+
+| Item | Value |
+|------|-------|
+| Asset | `assets/Katalog.icns`, pre-generated from `assets/Katalog_logo_256.png` |
+| `Info.plist` key | `CFBundleIconFile`, set via `MACOSX_BUNDLE_ICON_FILE` |
+| Copied to | `Katalog.app/Contents/Resources/` |
+| K2 declared at | `qt_widgets/CMakeLists.txt`, `if(APPLE)` block |
+| K3 declared at | `qt_quick/CMakeLists.txt`, `set_target_properties` block |
+
+macOS has two independent icons. The bundle icon is what Finder, the DMG window,
+Launchpad and the not-running Dock tile show; the window icon of `ICO-F2` is what
+the running application shows. Setting one does not set the other, which is why
+the reported defect — *"No icon attached to the application, but once running, it
+is displayed correctly"* — is a bundle-icon defect only.
+
 ---
 
 ## Manual test charter
@@ -171,7 +205,7 @@ For each row: set up the stated condition, run the operation, confirm the result
 - **ICO-O1 / ICO-F1** — On Plasma Wayland, start K2 and then K3. In each, look at the titlebar icon, the task manager entry and the Alt-Tab switcher. The icon is clean: no black rim, no stray colours at any edge. Compare against a screenshot taken before the change to confirm the rim is gone.
 - **ICO-F2** — Build and run on Windows, and on macOS. The window icon, the taskbar or Dock icon, and the executable's own icon are unchanged from the previous release.
 - **ICO-C1** — Run either UI under `WAYLAND_DEBUG=1` and capture the `xdg_toplevel_icon_v1` traffic. Exactly one `add_buffer` call is made, and it carries the 256 raster. Four buffers, or any buffer smaller than 256, is a failure. *Verified after implementation:* `QIcon(":/images/Katalog_logo_256.png")` reports `availableSizes count=1` at 256x256, so Qt offers a single buffer where the `.ico` previously offered four (16/32/48/256). That is the configuration measured clean as probe B2.
-- **ICO-C2** — Confirm the `.ico` is still present in `assets/`, still listed in both `.qrc` files, and still referenced by the Windows `.rc` and the macOS bundle configuration.
+- **ICO-C2** — Confirm the `.ico` is still present in `assets/`, still listed in both `.qrc` files, and still referenced by the Windows `.rc`. It is *not* expected in the macOS bundle configuration; if `MACOSX_BUNDLE_ICON_FILE` names a `.ico`, that is a failure of `ICO-C10`.
 - **ICO-C3** — Open `mainwindow.ui` in Designer: the `windowIcon` property is still set to the `.ico`. Then run K2 on Linux and confirm the effective icon is the PNG, proving the C++ call overrides it. Then build for Windows and confirm the effective icon is the `.ico`.
 - **ICO-C4** — Review the K2 diff: it touches the icon source and nothing else. No layout, no string, no behaviour change.
 - **ICO-C5** — Configure a clean build tree with no ImageMagick installed. Both UIs configure and build successfully. `grep` the CMake files for any image conversion command: none is present.
@@ -181,3 +215,9 @@ For each row: set up the stated condition, run the operation, confirm the result
 - **ICO-C7** — Diff the installed desktop entry against `packaging/qt_widgets/Katalog.desktop`: byte-identical apart from the filename. Confirm every localised `Name`, `GenericName`, `Comment` and `Keywords` line is unchanged.
 - **ICO-C8** — Review the full diff for `tr(` and `qsTr(`: no addition, no change, no removal.
 - **ICO-C9** — Confirm no file under `core/` is modified.
+- **ICO-O3 / ICO-F5** — On macOS, mount the released DMG. The `Katalog.app` tile in the DMG window shows the Katalog icon, not the generic application placeholder. Copy it to `/Applications`: it shows the Katalog icon in Finder and in Launchpad, and on the Dock tile before it is started. Repeat for K2 and K3.
+- **ICO-C10** — `plutil -p Katalog.app/Contents/Info.plist | grep CFBundleIconFile` names an `.icns`, and `ls Katalog.app/Contents/Resources/` lists that exact file. A `.ico` in either place is a failure.
+- **ICO-C11 / ICO-C5** — `grep` both CMake files for `iconutil`, `sips` or any image conversion command: none is present. The `.icns` is a committed file in `assets/`.
+- **ICO-C12** — `grep` both `images.qrc` files for `.icns`: no match.
+- **ICO-C13** — Review the diff: `qt_quick/main.cpp` and `qt_widgets/mainwindow.ui` are unmodified. Run each UI on macOS and confirm the running Dock icon and window icon are unchanged from beta1.
+- **ICO-C14** — Review the K2 diff: `qt_widgets/CMakeLists.txt` and the new asset only.

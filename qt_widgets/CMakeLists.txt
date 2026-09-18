@@ -277,10 +277,17 @@ if(WIN32)
 endif()
 
 if(APPLE)
-    if(EXISTS "${CMAKE_SOURCE_DIR}/assets/Katalog_logo_64.ico")
+    # The bundle icon must be an .icns and must also be copied into
+    # Contents/Resources: naming it alone leaves Finder with no icon at all.
+    # See SpecApplicationIcon.md, ICO-F5 and ICO-C10.
+    if(EXISTS "${CMAKE_SOURCE_DIR}/assets/Katalog.icns")
+        target_sources(Katalog PRIVATE "${CMAKE_SOURCE_DIR}/assets/Katalog.icns")
+        set_source_files_properties("${CMAKE_SOURCE_DIR}/assets/Katalog.icns"
+            PROPERTIES MACOSX_PACKAGE_LOCATION "Resources"
+        )
         set_target_properties(Katalog PROPERTIES
             MACOSX_BUNDLE TRUE
-            MACOSX_BUNDLE_ICON_FILE "Katalog_logo_64.ico"
+            MACOSX_BUNDLE_ICON_FILE "Katalog.icns"
         )
     endif()
 endif()
