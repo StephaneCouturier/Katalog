@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+175"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+176"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4400"/>
+        <location line="+4487"/>
         <source>Search</source>
         <translation>खोज</translation>
     </message>
     <message>
-        <location line="-4520"/>
+        <location line="-4607"/>
         <source>Stopped</source>
         <translation>रोका गया</translation>
     </message>
@@ -44,7 +44,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2135"/>
+        <location line="+2222"/>
         <location line="+602"/>
         <location line="+20"/>
         <location line="+1213"/>
@@ -55,8 +55,8 @@
         <translation>प्रगति में</translation>
     </message>
     <message>
-        <location line="-4401"/>
-        <location line="+4008"/>
+        <location line="-4488"/>
+        <location line="+4095"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>पूर्ण हुआ</translation>
@@ -946,7 +946,7 @@ Choose a different name.</source>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+880"/>
+        <location filename="../qt_quick/Main.qml" line="+936"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>क्या आप इस %1 डिवाइस को &lt;b&gt;हटाना&lt;/b&gt; चाहते हैं?&lt;br/&gt;&lt;br/&gt;नाम: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -988,13 +988,13 @@ Choose a different name.</source>
         <translation>सिस्टम</translation>
     </message>
     <message>
-        <location line="-270"/>
-        <location line="+271"/>
+        <location line="-291"/>
+        <location line="+292"/>
         <source>Settings</source>
         <translation>सेटिंग्स</translation>
     </message>
     <message>
-        <location line="-395"/>
+        <location line="-416"/>
         <source>Open...</source>
         <translation>खोलें...</translation>
     </message>
@@ -1021,42 +1021,42 @@ Choose a different name.</source>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+812"/>
+        <location line="+833"/>
         <source>Selection</source>
         <translation>चयन</translation>
     </message>
     <message>
-        <location line="-802"/>
-        <location line="+1075"/>
+        <location line="-823"/>
+        <location line="+1096"/>
         <source>Devices</source>
         <translation>डिवाइसेस</translation>
     </message>
     <message>
-        <location line="-1070"/>
-        <location line="+1165"/>
+        <location line="-1091"/>
+        <location line="+1186"/>
         <source>Explore</source>
         <translation>अन्वेषण</translation>
     </message>
     <message>
-        <location line="-1155"/>
-        <location line="+1378"/>
+        <location line="-1176"/>
+        <location line="+1399"/>
         <source>Backup</source>
         <translation>बैकअप</translation>
     </message>
     <message>
-        <location line="-1373"/>
-        <location line="+1337"/>
+        <location line="-1394"/>
+        <location line="+1358"/>
         <source>Statistics</source>
         <translation>आंकड़े</translation>
     </message>
     <message>
-        <location line="-1332"/>
-        <location line="+1352"/>
+        <location line="-1353"/>
+        <location line="+1373"/>
         <source>Tags</source>
         <translation>टैग्स</translation>
     </message>
     <message>
-        <location line="-1339"/>
+        <location line="-1360"/>
         <source>Documentation</source>
         <translation>दस्तावेज़</translation>
     </message>
@@ -1104,7 +1104,7 @@ Choose a different name.</source>
 </translation>
     </message>
     <message>
-        <location line="+167"/>
+        <location line="+188"/>
         <source>Do not show again</source>
         <translation>फिर से न दिखाएँ</translation>
     </message>
@@ -1329,8 +1329,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
 क्या आप फिर भी इसे सहेजना चाहते हैं (कैटलॉग खाली रहेगा)?</translation>
     </message>
     <message>
-        <location line="-752"/>
-        <location line="+930"/>
+        <location line="-773"/>
+        <location line="+951"/>
         <location line="+43"/>
         <source>Search</source>
         <translation>खोज</translation>
@@ -1464,8 +1464,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>कैटलॉग बनाना विफल: </translation>
     </message>
     <message>
-        <location line="-1220"/>
-        <location line="+1210"/>
+        <location line="-1241"/>
+        <location line="+1231"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>बनाएं</translation>
@@ -6004,7 +6004,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>विस्तारित मेटाडेटा</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+11"/>
         <source>Copy JSON</source>
         <translation>JSON कॉपी करें</translation>
     </message>
@@ -6014,7 +6014,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>मेटाडेटा JSON क्लिपबोर्ड पर कॉपी किया गया</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+40"/>
         <source>Field</source>
         <translation>फ़ील्ड</translation>
     </message>
@@ -6095,12 +6095,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+600"/>
+        <location line="+604"/>
         <source>Errors: %1</source>
         <translation>त्रुटियाँ: %1</translation>
     </message>
     <message>
-        <location line="-552"/>
+        <location line="-556"/>
         <source>Type</source>
         <translation>प्रकार</translation>
     </message>
@@ -6112,35 +6112,35 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="-18"/>
-        <location line="+246"/>
+        <location line="+250"/>
         <source>Backup</source>
         <translation>बैकअप</translation>
     </message>
     <message>
-        <location line="-245"/>
-        <location line="+245"/>
+        <location line="-249"/>
+        <location line="+249"/>
         <source>Archive</source>
         <translation>आर्काइव</translation>
     </message>
     <message>
-        <location line="-233"/>
+        <location line="-237"/>
         <source>Filter</source>
         <translation>फ़िल्टर</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+248"/>
+        <location line="+252"/>
         <source>Source</source>
         <translation>स्रोत</translation>
     </message>
     <message>
-        <location line="-247"/>
-        <location line="+298"/>
+        <location line="-251"/>
+        <location line="+302"/>
         <source>Target</source>
         <translation>लक्ष्य</translation>
     </message>
     <message>
-        <location line="-277"/>
+        <location line="-281"/>
         <location line="+19"/>
         <source>Run listed links</source>
         <translation>सूचीबद्ध लिंक चलाएँ</translation>
@@ -6151,12 +6151,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>कैटलॉग अपडेट करें</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+15"/>
         <source>Continue</source>
         <translation>जारी रखें</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+23"/>
         <source>%1 link(s) will run, one after another.</source>
         <translation>%1 लिंक एक के बाद एक चलेंगे।</translation>
     </message>
@@ -6269,8 +6269,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>फिर से शुरू करें</translation>
     </message>
     <message>
-        <location line="-417"/>
-        <location line="+423"/>
+        <location line="-422"/>
+        <location line="+428"/>
         <source>Cancel</source>
         <translation>रद्द करें</translation>
     </message>
@@ -7475,12 +7475,18 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>फ़ाइल हटाएँ</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+11"/>
         <source>Delete</source>
         <translation>डिलीट</translation>
     </message>
     <message>
         <location line="+5"/>
+        <location line="+81"/>
+        <source>Cancel</source>
+        <translation>रद्द करें</translation>
+    </message>
+    <message>
+        <location line="-74"/>
         <source>File deleted</source>
         <translation>फ़ाइल हटाई गई</translation>
     </message>
@@ -7529,12 +7535,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>चेकसम बेमेल</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+11"/>
         <source>Update Checksum</source>
         <translation>चेकसम अपडेट करें</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+16"/>
         <source>Checksum saved to database</source>
         <translation>चेकसम डेटाबेस में सहेजा गया</translation>
     </message>
@@ -7557,7 +7563,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+284"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+289"/>
         <source>Directories</source>
         <translation>डायरेक्टरियां</translation>
     </message>
@@ -7582,7 +7588,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>सभी विस्तृत करें</translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+88"/>
         <source>Expand</source>
         <translation>विस्तृत करें</translation>
     </message>
@@ -7655,22 +7661,22 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>खोज इतिहास</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Keep Last 10</source>
         <translation>अंतिम 10 रखें</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Clear</source>
         <translation>साफ़ करें</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Cancel</source>
         <translation>रद्द करें</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+92"/>
         <source>(no text filter)</source>
         <translation>(कोई टेक्स्ट फ़िल्टर नहीं)</translation>
     </message>
@@ -7974,7 +7980,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+782"/>
+        <location line="+836"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>चेकसम सत्यापित करें</translation>
@@ -7986,14 +7992,14 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>मेटाडेटा शामिल करें</translation>
     </message>
     <message>
-        <location line="-833"/>
+        <location line="-887"/>
         <location line="+523"/>
-        <location line="+255"/>
+        <location line="+309"/>
         <source>Move to Trash</source>
         <translation>ट्रैश में भेजें</translation>
     </message>
     <message>
-        <location line="-906"/>
+        <location line="-960"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>डिवाइस सक्रिय नहीं है। यह डिस्कनेक्ट हो सकता है, या इसका पथ बदल गया हो सकता है।</translation>
     </message>
@@ -8004,12 +8010,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+2"/>
-        <location line="+641"/>
+        <location line="+656"/>
         <source>Delete</source>
         <translation>डिलीट</translation>
     </message>
     <message>
-        <location line="-583"/>
+        <location line="-598"/>
         <source>Exported to: %1</source>
         <translation>यहाँ निर्यात किया गया: %1</translation>
     </message>
@@ -8186,12 +8192,18 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>चेकसम बेमेल</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+11"/>
         <source>Update Checksum</source>
         <translation>चेकसम अपडेट करें</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+5"/>
+        <location line="+58"/>
+        <source>Cancel</source>
+        <translation>रद्द करें</translation>
+    </message>
+    <message>
+        <location line="-47"/>
         <source>Checksum saved to database</source>
         <translation>चेकसम डेटाबेस में सहेजा गया</translation>
     </message>
@@ -8216,7 +8228,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>फ़ाइल हटाएँ</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+22"/>
         <source>File deleted</source>
         <translation>फ़ाइल हटाई गई</translation>
     </message>
@@ -8235,13 +8247,13 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 %1</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+75"/>
         <location line="+6"/>
         <source>Catalog with results</source>
         <translation>परिणामों के साथ कैटलॉग</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+37"/>
         <source>All</source>
         <translation>सभी</translation>
     </message>
@@ -8251,7 +8263,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>कोई नहीं</translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+69"/>
         <source>Matched: %1
 Mismatched: %2
 New checksums calculated: %3

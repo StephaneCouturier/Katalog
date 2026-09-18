@@ -786,26 +786,37 @@ ColumnLayout {
         property string expectedChecksum: ""
         property string actualChecksum:   ""
         title: qsTr("Checksum Mismatch")
-        standardButtons: Kirigami.Dialog.Cancel
         preferredWidth: Kirigami.Units.gridUnit * 36
         padding: Kirigami.Units.largeSpacing
 
-        customFooterActions: [
-            Kirigami.Action {
+        // Each button carries a role and the style places it, so every platform
+        // gets the order it expects (SpecValidationRules D1/D2). The pair cannot
+        // go through customFooterActions: Kirigami builds those as role-less
+        // buttons inside this same button box, so they sort after every
+        // role-carrying button and would always land right of Cancel.
+        footer: Controls.DialogButtonBox {
+            Controls.Button {
                 text: qsTr("Update Checksum")
                 icon.name: "document-save"
-                onTriggered: {
-                    appManager1.calculateAndSaveChecksum(
-                        resultContextMenu.fullPath,
-                        resultContextMenu.fileName,
-                        resultContextMenu.folder,
-                        resultContextMenu.catalogId)
-                    resultContextMenu.checksum = checksumMismatchDialog.actualChecksum
-                    showPassiveNotification(qsTr("Checksum saved to database"))
-                    checksumMismatchDialog.close()
-                }
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.AcceptRole
             }
-        ]
+            Controls.Button {
+                text: qsTr("Cancel")
+                icon.name: "dialog-cancel"
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.RejectRole
+            }
+            onAccepted: {
+                appManager1.calculateAndSaveChecksum(
+                    resultContextMenu.fullPath,
+                    resultContextMenu.fileName,
+                    resultContextMenu.folder,
+                    resultContextMenu.catalogId)
+                resultContextMenu.checksum = checksumMismatchDialog.actualChecksum
+                showPassiveNotification(qsTr("Checksum saved to database"))
+                checksumMismatchDialog.close()
+            }
+            onRejected: checksumMismatchDialog.close()
+        }
 
         contentItem: ColumnLayout {
             spacing: Kirigami.Units.smallSpacing
@@ -833,23 +844,34 @@ ColumnLayout {
     Kirigami.Dialog {
         id: deleteFileDialog
         title: qsTr("Delete File")
-        standardButtons: Kirigami.Dialog.Cancel
         preferredWidth: Kirigami.Units.gridUnit * 28
         padding: Kirigami.Units.largeSpacing
 
-        customFooterActions: [
-            Kirigami.Action {
+        // Each button carries a role and the style places it, so every platform
+        // gets the order it expects (SpecValidationRules D1/D2). The pair cannot
+        // go through customFooterActions: Kirigami builds those as role-less
+        // buttons inside this same button box, so they sort after every
+        // role-carrying button and would always land right of Cancel.
+        footer: Controls.DialogButtonBox {
+            Controls.Button {
                 text: qsTr("Delete")
                 icon.name: "edit-delete"
-                onTriggered: {
-                    if (appManager1.deleteSingleFile(resultContextMenu.fullPath))
-                        showPassiveNotification(qsTr("File deleted"))
-                    else
-                        showPassiveNotification(qsTr("Could not delete file"))
-                    deleteFileDialog.close()
-                }
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.AcceptRole
             }
-        ]
+            Controls.Button {
+                text: qsTr("Cancel")
+                icon.name: "dialog-cancel"
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.RejectRole
+            }
+            onAccepted: {
+                if (appManager1.deleteSingleFile(resultContextMenu.fullPath))
+                    showPassiveNotification(qsTr("File deleted"))
+                else
+                    showPassiveNotification(qsTr("Could not delete file"))
+                deleteFileDialog.close()
+            }
+            onRejected: deleteFileDialog.close()
+        }
 
         contentItem: Controls.Label {
             text: qsTr("Permanently delete this file? This cannot be undone.\n\n%1")

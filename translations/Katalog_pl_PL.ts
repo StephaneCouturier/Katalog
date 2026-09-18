@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+175"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+176"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4400"/>
+        <location line="+4487"/>
         <source>Search</source>
         <translation>Szukaj</translation>
     </message>
     <message>
-        <location line="-4520"/>
+        <location line="-4607"/>
         <source>Stopped</source>
         <translation>Zatrzymane</translation>
     </message>
@@ -44,7 +44,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2135"/>
+        <location line="+2222"/>
         <location line="+602"/>
         <location line="+20"/>
         <location line="+1213"/>
@@ -55,8 +55,8 @@
         <translation>W toku</translation>
     </message>
     <message>
-        <location line="-4401"/>
-        <location line="+4008"/>
+        <location line="-4488"/>
+        <location line="+4095"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Ukończone</translation>
@@ -946,7 +946,7 @@ Wybierz inną nazwę.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+880"/>
+        <location filename="../qt_quick/Main.qml" line="+936"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Czy chcesz &lt;b&gt;usunąć&lt;/b&gt; to urządzenie %1?&lt;br/&gt;&lt;br/&gt;Nazwa: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -988,13 +988,13 @@ Wybierz inną nazwę.</translation>
         <translation>System</translation>
     </message>
     <message>
-        <location line="-270"/>
-        <location line="+271"/>
+        <location line="-291"/>
+        <location line="+292"/>
         <source>Settings</source>
         <translation>Ustawienia</translation>
     </message>
     <message>
-        <location line="-395"/>
+        <location line="-416"/>
         <source>Open...</source>
         <translation>Otwórz...</translation>
     </message>
@@ -1021,42 +1021,42 @@ Wybierz inną nazwę.</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+812"/>
+        <location line="+833"/>
         <source>Selection</source>
         <translation>Wybór</translation>
     </message>
     <message>
-        <location line="-802"/>
-        <location line="+1075"/>
+        <location line="-823"/>
+        <location line="+1096"/>
         <source>Devices</source>
         <translation>Urządzenia</translation>
     </message>
     <message>
-        <location line="-1070"/>
-        <location line="+1165"/>
+        <location line="-1091"/>
+        <location line="+1186"/>
         <source>Explore</source>
         <translation>Eksploruj</translation>
     </message>
     <message>
-        <location line="-1155"/>
-        <location line="+1378"/>
+        <location line="-1176"/>
+        <location line="+1399"/>
         <source>Backup</source>
         <translation>Kopia zapasowa</translation>
     </message>
     <message>
-        <location line="-1373"/>
-        <location line="+1337"/>
+        <location line="-1394"/>
+        <location line="+1358"/>
         <source>Statistics</source>
         <translation>Statystyki</translation>
     </message>
     <message>
-        <location line="-1332"/>
-        <location line="+1352"/>
+        <location line="-1353"/>
+        <location line="+1373"/>
         <source>Tags</source>
         <translation>Tagi</translation>
     </message>
     <message>
-        <location line="-1339"/>
+        <location line="-1360"/>
         <source>Documentation</source>
         <translation>Dokumentacja</translation>
     </message>
@@ -1104,7 +1104,7 @@ Wybierz inną nazwę.</translation>
 </translation>
     </message>
     <message>
-        <location line="+167"/>
+        <location line="+188"/>
         <source>Do not show again</source>
         <translation>Nie pokazuj ponownie</translation>
     </message>
@@ -1329,8 +1329,8 @@ Może to oznaczać, że źródło jest puste lub że urządzenie nie jest zamont
 Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
     </message>
     <message>
-        <location line="-752"/>
-        <location line="+930"/>
+        <location line="-773"/>
+        <location line="+951"/>
         <location line="+43"/>
         <source>Search</source>
         <translation>Szukaj</translation>
@@ -1464,8 +1464,8 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <translation>Tworzenie katalogu nie powiodło się: </translation>
     </message>
     <message>
-        <location line="-1220"/>
-        <location line="+1210"/>
+        <location line="-1241"/>
+        <location line="+1231"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Utwórz</translation>
@@ -6005,7 +6005,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Rozszerzone metadane</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+11"/>
         <source>Copy JSON</source>
         <translation>Kopiuj JSON</translation>
     </message>
@@ -6015,7 +6015,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>JSON metadanych skopiowany do schowka</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+40"/>
         <source>Field</source>
         <translation>Pole</translation>
     </message>
@@ -6096,12 +6096,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+600"/>
+        <location line="+604"/>
         <source>Errors: %1</source>
         <translation>Błędy: %1</translation>
     </message>
     <message>
-        <location line="-552"/>
+        <location line="-556"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
@@ -6113,35 +6113,35 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="-18"/>
-        <location line="+246"/>
+        <location line="+250"/>
         <source>Backup</source>
         <translation>Kopia zapasowa</translation>
     </message>
     <message>
-        <location line="-245"/>
-        <location line="+245"/>
+        <location line="-249"/>
+        <location line="+249"/>
         <source>Archive</source>
         <translation>Archiwum</translation>
     </message>
     <message>
-        <location line="-233"/>
+        <location line="-237"/>
         <source>Filter</source>
         <translation>Filtr</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+248"/>
+        <location line="+252"/>
         <source>Source</source>
         <translation>Źródło</translation>
     </message>
     <message>
-        <location line="-247"/>
-        <location line="+298"/>
+        <location line="-251"/>
+        <location line="+302"/>
         <source>Target</source>
         <translation>Cel</translation>
     </message>
     <message>
-        <location line="-277"/>
+        <location line="-281"/>
         <location line="+19"/>
         <source>Run listed links</source>
         <translation>Uruchom wymienione odnośniki</translation>
@@ -6152,12 +6152,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Aktualizuj katalogi</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+15"/>
         <source>Continue</source>
         <translation>Kontynuuj</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+23"/>
         <source>%1 link(s) will run, one after another.</source>
         <translation>%1 odnośnik(i) zostaną uruchomione, jeden po drugim.</translation>
     </message>
@@ -6270,8 +6270,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Wznów</translation>
     </message>
     <message>
-        <location line="-417"/>
-        <location line="+423"/>
+        <location line="-422"/>
+        <location line="+428"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
@@ -7476,12 +7476,18 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Usuń plik</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+11"/>
         <source>Delete</source>
         <translation>Usuń</translation>
     </message>
     <message>
         <location line="+5"/>
+        <location line="+81"/>
+        <source>Cancel</source>
+        <translation>Anuluj</translation>
+    </message>
+    <message>
+        <location line="-74"/>
         <source>File deleted</source>
         <translation>Plik usunięty</translation>
     </message>
@@ -7530,12 +7536,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Niezgodność sumy kontrolnej</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+11"/>
         <source>Update Checksum</source>
         <translation>Aktualizuj sumę kontrolną</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+16"/>
         <source>Checksum saved to database</source>
         <translation>Suma kontrolna zapisana w bazie danych</translation>
     </message>
@@ -7558,7 +7564,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+284"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+289"/>
         <source>Directories</source>
         <translation>Katalogi</translation>
     </message>
@@ -7583,7 +7589,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Rozwiń wszystko</translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+88"/>
         <source>Expand</source>
         <translation>Rozwiń</translation>
     </message>
@@ -7656,22 +7662,22 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Historia wyszukiwania</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Keep Last 10</source>
         <translation>Zachowaj ostatnie 10</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Clear</source>
         <translation>Wyczyść</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+92"/>
         <source>(no text filter)</source>
         <translation>(brak filtra tekstu)</translation>
     </message>
@@ -7975,7 +7981,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+782"/>
+        <location line="+836"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Weryfikuj sumy kontrolne</translation>
@@ -7987,14 +7993,14 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Uwzględnij metadane</translation>
     </message>
     <message>
-        <location line="-833"/>
+        <location line="-887"/>
         <location line="+523"/>
-        <location line="+255"/>
+        <location line="+309"/>
         <source>Move to Trash</source>
         <translation>Przenieś do kosza</translation>
     </message>
     <message>
-        <location line="-906"/>
+        <location line="-960"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Urządzenie nie jest aktywne. Może być odłączone lub jego ścieżka mogła ulec zmianie.</translation>
     </message>
@@ -8005,12 +8011,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+2"/>
-        <location line="+641"/>
+        <location line="+656"/>
         <source>Delete</source>
         <translation>Usuń</translation>
     </message>
     <message>
-        <location line="-583"/>
+        <location line="-598"/>
         <source>Exported to: %1</source>
         <translation>Wyeksportowano do: %1</translation>
     </message>
@@ -8187,12 +8193,18 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Niezgodność sumy kontrolnej</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+11"/>
         <source>Update Checksum</source>
         <translation>Aktualizuj sumę kontrolną</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+5"/>
+        <location line="+58"/>
+        <source>Cancel</source>
+        <translation>Anuluj</translation>
+    </message>
+    <message>
+        <location line="-47"/>
         <source>Checksum saved to database</source>
         <translation>Suma kontrolna zapisana w bazie danych</translation>
     </message>
@@ -8217,7 +8229,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Usuń plik</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+22"/>
         <source>File deleted</source>
         <translation>Plik usunięty</translation>
     </message>
@@ -8236,13 +8248,13 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 %1</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+75"/>
         <location line="+6"/>
         <source>Catalog with results</source>
         <translation>Katalog z wynikami</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+37"/>
         <source>All</source>
         <translation>Wszystkie</translation>
     </message>
@@ -8252,7 +8264,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Brak</translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+69"/>
         <source>Matched: %1
 Mismatched: %2
 New checksums calculated: %3

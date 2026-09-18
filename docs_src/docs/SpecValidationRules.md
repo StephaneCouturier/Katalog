@@ -1,13 +1,23 @@
+---
+id: SpecValidationRules
+title: Form Validation Rules — Feedback Channel, Dialog Button Order and Input Normalization
+description: The app-wide K3 rules for validating data-entry forms, for choosing the channel that reports feedback to the user, for where the confirming and dismissing buttons sit in a modal dialog, and for the silent normalization applied to a value the user picks or types
+version: "2.13"
+---
+
 # Form Validation Rules
+
+![Status](https://img.shields.io/badge/Status-Approved-brightgreen) ![Version](https://img.shields.io/badge/Version-2.13-blue) ![Implementation](https://img.shields.io/badge/Implementation-partial-yellow)
 
 ## Introduction
 
 This document is the single source of truth for **input-validation rules** on
-Katalog's data-entry forms, for **how validation feedback is presented**, and for
-**input normalization** — the silent cleanup applied to a value the user picks or
-types. It exists so each rule is greppable and doubles as a manual-test charter:
-every row in the tables below is a case that must hold after any change to the
-relevant screen.
+Katalog's data-entry forms, for **how validation feedback is presented**, for
+**dialog button order** — where the confirming and the dismissing button sit in
+any modal dialog — and for **input normalization**, the silent cleanup applied to
+a value the user picks or types. It exists so each rule is greppable and doubles
+as a manual-test charter: every row in the tables below is a case that must hold
+after any change to the relevant screen.
 
 Scope: K3 (Qt Quick) primarily; K2 (Qt Widgets) noted where it diverges.
 
@@ -24,6 +34,106 @@ Kirigami HIG and the project rule in `CLAUDE.md`.
 
 **Never** use a modal dialog or a passive notification for routine field
 validation, and **never** use an inline banner for a transient success message.
+
+## Dialog button order (how)
+
+The table above says *use a modal*; it never said where that modal's buttons go,
+so nothing governed it and K3 drifted into three different constructions at once.
+The user reported on 2026-09-18 that the **Delete File** confirmations in Search
+results and Explore render `[Cancel] [Delete]` — the dismissing button on the
+left, the destructive one on the right — which is inverted relative to the
+platform convention and relative to K2, whose `QMessageBox` confirmations take
+the platform layout for free.
+
+Rules use the `D` prefix.
+
+| # | Rule | Applies to | Status |
+|---|------|------------|--------|
+| D1 | A modal dialog's buttons are ordered by the **active Qt Quick Controls style for the platform**, never by their position in the QML source. Every button is declared with a *role* and the style places it. This matters beyond KDE: K3 beta1 ships on Windows and macOS, whose conventional order differs, so any order frozen into the source is wrong on at least one platform. | K3 (`qt_quick/`) | [Implemented] |
+| D2 | A dialog's accept and reject buttons are supplied **either** through `standardButtons` **or** through a `Controls.DialogButtonBox` given as the dialog's `footer`, whose buttons each carry an explicit `Controls.DialogButtonBox.buttonRole`. `customFooterActions` MUST NOT supply the accept or the reject button. Reason, measured on Plasma with Qt 6.11.2: Kirigami instantiates each `customFooterActions` entry as a **role-less** `QQC2.Button` *inside* the `DialogButtonBox` (`/usr/lib64/qt6/qml/org/kde/kirigami/dialogs/Dialog.qml:463-472`), and a role-less button sorts **after every role-carrying standard button**, so a custom action always lands rightmost and keeps only its source order relative to other custom actions. Mixing `standardButtons: Cancel` with a custom affirming action therefore *guarantees* `[Cancel] [Affirm]` on every platform. | K3 (`qt_quick/`) | [Implemented] |
+| D3 | The affirming button of a confirmation takes **`AcceptRole`** and the dismissing button **`RejectRole`**, wired through the button box's `onAccepted` / `onRejected`. `DestructiveRole` MUST NOT be used even for a destructive confirmation: `QQuickDialogButtonBox` emits neither `accepted()` nor `rejected()` for it, so the button would be laid out but dead. The reference construction is `qt_quick/PageDevicesView.qml:160-170`. | K3 (`qt_quick/`) | [Implemented] |
+| D4 | `customFooterActions` and `footerLeadingComponent` remain allowed for a **genuine extra** — an action that is neither the accept nor the reject of the dialog. An extra that is not a decision at all belongs in `footerLeadingComponent`, which places it away from the decision pair: `MetadataDialog.qml`'s **Copy JSON** is such an extra and keeps `standardButtons: Kirigami.Dialog.Close` beside it. An extra that *does* belong on the decision row takes a third form — a button with **`ActionRole`** in the same `DialogButtonBox`, handled by its own `onClicked` rather than by `onAccepted` — so that it too is placed by role and not by source position: `PageSearchForm.qml`'s **Keep Last 10** and **Clear** beside the `RejectRole` `Cancel`. *(The `ActionRole` form was added to this row on 2026-09-19 to match what was built, and ratified by the user the same day.)* | K3 (`qt_quick/`) | [Implemented] |
+| D5 | In a destructive confirmation the affirming button keeps its explicit verb label (`Delete`, `Split`, `Continue`) rather than a bare `OK`, and the dismissing button is `Cancel`. `D1`–`D4` govern **order, role and construction only**: applying them rewords nothing. | K3 (`qt_quick/`) | [Implemented] |
+| D6 | K2 (`qt_widgets/`) is out of scope. Its `QMessageBox` confirmations already take the platform layout and are not modified — K2 is in maintenance mode. A difference between a K2 and a K3 dialog's internals is not drift; only a difference in the *rendered* order would be. | K2 (`qt_widgets/`) | [Implemented] |
+
+> **What `[Implemented]` means on these rows.** The code is in and builds clean;
+> it does **not** mean the manual test charter below has passed. Two of its
+> checks are still open and are deliberately left unticked: the rendered order
+> has not yet been seen in the running application against a real collection, and
+> the Windows and macOS order has not been checked at all — that needs the beta
+> testers. Should either check fail, these rows are wrong and become drift to
+> report, not a new requirement to write.
+
+Verified on 2026-09-19 before and after the change, on Plasma with Qt 6.11.2:
+headless probes confirmed each construction — a `Kirigami.Dialog` with a role
+footer gives `[Delete] [Cancel]` with both `onAccepted` and `onRejected` firing,
+`Kirigami.PromptDialog` behaves identically, `footerLeadingComponent` gives
+`[Copy JSON] … [Close]`, and two `ActionRole` buttons plus a `RejectRole` give
+`[Keep Last 10] [Clear] [Cancel]` with `onRejected` firing. `ninja` in
+`build/Debug-QtQuick` builds clean with all five files compiled by
+`qmlcachegen`, and `qmllint6` reports no error on any of them. `DestructiveRole`
+appears nowhere, and a grep for `customFooterActions` in `qt_quick/` returns
+comment lines only.
+
+### The seven dialogs this covers
+
+Scope was set by the user on 2026-09-19: **all seven**, not only the two
+reported. Five were defective under `D2` because a role-less custom action was
+mixed with a role-carrying standard button; two were hard-coded because *every*
+button was a role-less custom action, so the order was frozen in source even
+where it happened to look right.
+
+The table records the state **as found on 2026-09-18**. All seven were rebuilt
+on 2026-09-19 to the `D2`/`D3`/`D4` construction — a `Controls.DialogButtonBox`
+footer with `AcceptRole` / `RejectRole` wired through `onAccepted` / `onRejected`
+— and the faults below no longer hold.
+
+| Dialog | File | Fault as found |
+|--------|------|----------------|
+| Delete File (Search results) | `qt_quick/PageSearchResultsForm.qml` | `D2` — `standardButtons: Cancel` + custom `Delete`; renders `[Cancel] [Delete]`. The reported case. |
+| Delete File (Explore) | `qt_quick/PageExploreFiles.qml` | `D2` — identical construction, identical result. The reported case. |
+| Checksum Mismatch (Search results) | `qt_quick/PageSearchResultsForm.qml` | `D2` — `standardButtons: Cancel` + custom `Update Checksum`. |
+| Checksum Mismatch (Explore) | `qt_quick/PageExploreFiles.qml` | `D2` — same. |
+| Extended Metadata | `qt_quick/MetadataDialog.qml` | `D2`/`D4` — `standardButtons: Close` + custom `Copy JSON` put the extra to the right of the closing button. `Copy JSON` moves to `footerLeadingComponent`; `Close` stays a standard button. |
+| Search History | `qt_quick/PageSearchForm.qml` | Hard-coded — no `standardButtons`; `Keep Last 10`, `Clear` and `Cancel` are all role-less actions. `Cancel` becomes `RejectRole`; the other two stay extras under `D4`. |
+| Run listed links | `qt_quick/PageBackupForm.qml` | Hard-coded — `standardButtons: NoButton` + custom `Continue` and `Cancel`. |
+
+> **Run listed links and `BKP-F19`.** That dialog is owned by `SpecBackup.md`
+> (`BKP-F19`, `[Implemented]`) and is included here deliberately, with the user's
+> explicit go-ahead on 2026-09-19; `D2` carries **no exemption** for it. Nothing
+> in `BKP-F19` changes: the same dialog, the same four conditional lines, the same
+> two button labels, and on KDE the same rendered order — `Continue` stays to the
+> left of `Cancel`. Only the construction becomes role-based, so the order now
+> follows the platform on Windows and macOS instead of being frozen. This spec
+> does not amend `SpecBackup.md`.
+
+### Constructions that were measured and do not work
+
+Recorded so they are not retried. Both were probed on this machine (Plasma,
+Qt 6.11.2) before the working fix was found:
+
+- **Retitling a standard button** — `Dialog.standardButton(Kirigami.Dialog.Ok).text = "Delete"`. The retitle does not stick.
+- **Injecting a role onto a footer action's button** — setting `DialogButtonBox.buttonRole` on the button returned by `customFooterButton()`. The role is ignored and the button still sorts last.
+
+The only construction that produces `[Delete] [Cancel]` is replacing the dialog's
+`footer` with a `Controls.DialogButtonBox` whose buttons carry explicit roles,
+which is what `D2` and `D3` require.
+
+### Strings
+
+This change spends **no new source text**. It adds exactly one existing text,
+`Cancel`, to two files — `qt_quick/PageSearchResultsForm.qml` and
+`qt_quick/PageExploreFiles.qml` — approved by the user on 2026-09-19, because a
+dialog that supplies its own `DialogButtonBox` must also supply that button's
+label, where `standardButtons` previously supplied it. The text `Cancel` is
+already in use in K3 and is already a spec'd string (`SpecBackup.md` string
+table). Under K3's per-QML-file `qsTr()` contexts the two additions appear as
+**two new `.ts` entries**, one per file; that is expected and MUST NOT be
+reported as drift, on the same footing as `DAS-C14`. The two entries MUST stay
+byte-identical to each other and to every other `Cancel` in K3. **No other
+string is added, reworded, moved or deleted** by this change — in particular
+`Delete`, `Update Checksum`, `Copy JSON`, `Keep Last 10`, `Clear` and `Continue`
+are untouched.
 
 ## Copy style
 
@@ -80,6 +190,38 @@ For each validation rule above (T*, C*): trigger the stated condition, confirm
 the exact message and the correct channel appear, confirm the action did **not**
 proceed (for blocking rules), and confirm the banner disappears when the
 offending field is edited.
+
+For the dialog button rules (D*), in K3:
+
+- D1 / D2 (the reported case) — open the **Delete File** confirmation from a
+  Search results row and from an Explore row. The dismissing button sits where
+  every other Plasma dialog puts it, and the pair matches the Split Catalog
+  dialog on the Devices page seen side by side. `Escape` still dismisses and
+  `Return` still triggers the affirming button.
+- D1 (platform) — run the same two dialogs on Windows and on macOS. Each follows
+  its own platform order, and the two platforms do **not** agree with each other.
+  A build where all three platforms show the same order has frozen the order and
+  fails this row.
+- D2 (construction) — grep `qt_quick/` for `customFooterActions`: every remaining
+  occurrence supplies an extra only. No occurrence sits beside a
+  `standardButtons` value that names `Cancel`, `Ok`, `Yes`, `No` or `Close` as
+  the dialog's decision pair.
+- D3 — grep `qt_quick/` for `DestructiveRole`: no occurrence. Then trigger each
+  of the seven dialogs' affirming button and confirm the action actually runs —
+  a button that renders but does nothing is the `DestructiveRole` trap.
+- D4 — in the **Extended Metadata** dialog, `Copy JSON` sits apart from `Close`
+  rather than to its right, and still copies and still shows its notification.
+  In **Search History**, `Keep Last 10` and `Clear` still open their own
+  confirmations from their `onClicked`, and dismissing the dialog with `Cancel`
+  or `Escape` runs neither of them.
+- D5 / strings — read the label on every button of the seven dialogs: each is
+  byte-identical to before the change. With the interface in French, the two new
+  `Cancel` buttons are translated, proving the existing text was reused. Run
+  `ninja translations_lupdate`: no new **source text** appears, and the only new
+  entries are the two per-context `Cancel` rows.
+- Run listed links / `BKP-F19` — re-run the `BKP-F19` charter rows in
+  `SpecBackup.md` unchanged: the four conditional lines, the counts, and
+  `Cancel` starting nothing. On KDE, `Continue` is still left of `Cancel`.
 
 For the normalization rules (N*), in K3:
 

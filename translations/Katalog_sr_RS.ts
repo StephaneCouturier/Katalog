@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+175"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+176"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4400"/>
+        <location line="+4487"/>
         <source>Search</source>
         <translation>Pretraga</translation>
     </message>
     <message>
-        <location line="-4520"/>
+        <location line="-4607"/>
         <source>Stopped</source>
         <translation>Заустављено</translation>
     </message>
@@ -44,7 +44,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2135"/>
+        <location line="+2222"/>
         <location line="+602"/>
         <location line="+20"/>
         <location line="+1213"/>
@@ -55,8 +55,8 @@
         <translation>У току</translation>
     </message>
     <message>
-        <location line="-4401"/>
-        <location line="+4008"/>
+        <location line="-4488"/>
+        <location line="+4095"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Завршено</translation>
@@ -946,7 +946,7 @@ Choose a different name.</source>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+880"/>
+        <location filename="../qt_quick/Main.qml" line="+936"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Želite li da &lt;b&gt;obrišete&lt;/b&gt; ovaj uređaj %1?&lt;br/&gt;&lt;br/&gt;Ime: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -988,13 +988,13 @@ Choose a different name.</source>
         <translation>Sistem</translation>
     </message>
     <message>
-        <location line="-270"/>
-        <location line="+271"/>
+        <location line="-291"/>
+        <location line="+292"/>
         <source>Settings</source>
         <translation>Podešavanja</translation>
     </message>
     <message>
-        <location line="-395"/>
+        <location line="-416"/>
         <source>Open...</source>
         <translation>Отвори...</translation>
     </message>
@@ -1021,42 +1021,42 @@ Choose a different name.</source>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+812"/>
+        <location line="+833"/>
         <source>Selection</source>
         <translation>Selekcija</translation>
     </message>
     <message>
-        <location line="-802"/>
-        <location line="+1075"/>
+        <location line="-823"/>
+        <location line="+1096"/>
         <source>Devices</source>
         <translation>Uređaji</translation>
     </message>
     <message>
-        <location line="-1070"/>
-        <location line="+1165"/>
+        <location line="-1091"/>
+        <location line="+1186"/>
         <source>Explore</source>
         <translation>Istražuj</translation>
     </message>
     <message>
-        <location line="-1155"/>
-        <location line="+1378"/>
+        <location line="-1176"/>
+        <location line="+1399"/>
         <source>Backup</source>
         <translation>Rezervna kopija</translation>
     </message>
     <message>
-        <location line="-1373"/>
-        <location line="+1337"/>
+        <location line="-1394"/>
+        <location line="+1358"/>
         <source>Statistics</source>
         <translation>Statistike</translation>
     </message>
     <message>
-        <location line="-1332"/>
-        <location line="+1352"/>
+        <location line="-1353"/>
+        <location line="+1373"/>
         <source>Tags</source>
         <translation>Oznake</translation>
     </message>
     <message>
-        <location line="-1339"/>
+        <location line="-1360"/>
         <source>Documentation</source>
         <translation>Dokumentacija</translation>
     </message>
@@ -1104,7 +1104,7 @@ Choose a different name.</source>
 </translation>
     </message>
     <message>
-        <location line="+167"/>
+        <location line="+188"/>
         <source>Do not show again</source>
         <translation>Ne prikazuj ponovo</translation>
     </message>
@@ -1329,8 +1329,8 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
 Želite li je ipak sačuvati (katalog bi bio prazan)?</translation>
     </message>
     <message>
-        <location line="-752"/>
-        <location line="+930"/>
+        <location line="-773"/>
+        <location line="+951"/>
         <location line="+43"/>
         <source>Search</source>
         <translation>Pretraga</translation>
@@ -1464,8 +1464,8 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <translation>Kreiranje kataloga nije uspelo: </translation>
     </message>
     <message>
-        <location line="-1220"/>
-        <location line="+1210"/>
+        <location line="-1241"/>
+        <location line="+1231"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Kreiraj</translation>
@@ -6005,7 +6005,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Проширени метаподаци</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+11"/>
         <source>Copy JSON</source>
         <translation>Копирај JSON</translation>
     </message>
@@ -6015,7 +6015,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>JSON метаподатака копиран у оставу</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+40"/>
         <source>Field</source>
         <translation>Поље</translation>
     </message>
@@ -6096,12 +6096,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+600"/>
+        <location line="+604"/>
         <source>Errors: %1</source>
         <translation>Greške: %1</translation>
     </message>
     <message>
-        <location line="-552"/>
+        <location line="-556"/>
         <source>Type</source>
         <translation>Tip</translation>
     </message>
@@ -6113,35 +6113,35 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="-18"/>
-        <location line="+246"/>
+        <location line="+250"/>
         <source>Backup</source>
         <translation>Rezervna kopija</translation>
     </message>
     <message>
-        <location line="-245"/>
-        <location line="+245"/>
+        <location line="-249"/>
+        <location line="+249"/>
         <source>Archive</source>
         <translation>Arhiva</translation>
     </message>
     <message>
-        <location line="-233"/>
+        <location line="-237"/>
         <source>Filter</source>
         <translation>Filter</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+248"/>
+        <location line="+252"/>
         <source>Source</source>
         <translation>Izvor</translation>
     </message>
     <message>
-        <location line="-247"/>
-        <location line="+298"/>
+        <location line="-251"/>
+        <location line="+302"/>
         <source>Target</source>
         <translation>Cilj</translation>
     </message>
     <message>
-        <location line="-277"/>
+        <location line="-281"/>
         <location line="+19"/>
         <source>Run listed links</source>
         <translation>Pokreni navedene veze</translation>
@@ -6152,12 +6152,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Ažuriraj kataloge</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+15"/>
         <source>Continue</source>
         <translation>Nastavi</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+23"/>
         <source>%1 link(s) will run, one after another.</source>
         <translation>%1 veza(e) će se izvršiti, jedna za drugom.</translation>
     </message>
@@ -6270,8 +6270,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Nastavi</translation>
     </message>
     <message>
-        <location line="-417"/>
-        <location line="+423"/>
+        <location line="-422"/>
+        <location line="+428"/>
         <source>Cancel</source>
         <translation>Otkaži</translation>
     </message>
@@ -7476,12 +7476,18 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Обриши датотеку</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+11"/>
         <source>Delete</source>
         <translation>Obriši</translation>
     </message>
     <message>
         <location line="+5"/>
+        <location line="+81"/>
+        <source>Cancel</source>
+        <translation>Otkaži</translation>
+    </message>
+    <message>
+        <location line="-74"/>
         <source>File deleted</source>
         <translation>Датотека обрисана</translation>
     </message>
@@ -7530,12 +7536,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Неподударање контролног збира</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+11"/>
         <source>Update Checksum</source>
         <translation>Ажурирај контролну суму</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+16"/>
         <source>Checksum saved to database</source>
         <translation>Контролни збир сачуван у бази података</translation>
     </message>
@@ -7558,7 +7564,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+284"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+289"/>
         <source>Directories</source>
         <translation>Direktorijumi</translation>
     </message>
@@ -7583,7 +7589,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Raširi sve</translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+88"/>
         <source>Expand</source>
         <translation>Raširi</translation>
     </message>
@@ -7656,22 +7662,22 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Историја претраге</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Keep Last 10</source>
         <translation>Задржи последњих 10</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Clear</source>
         <translation>Očisti</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Cancel</source>
         <translation>Otkaži</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+92"/>
         <source>(no text filter)</source>
         <translation>(без текстуалног филтера)</translation>
     </message>
@@ -7975,7 +7981,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+782"/>
+        <location line="+836"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Провери контролне суме</translation>
@@ -7987,14 +7993,14 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Uključi metapodatke</translation>
     </message>
     <message>
-        <location line="-833"/>
+        <location line="-887"/>
         <location line="+523"/>
-        <location line="+255"/>
+        <location line="+309"/>
         <source>Move to Trash</source>
         <translation>Premesti u korpu</translation>
     </message>
     <message>
-        <location line="-906"/>
+        <location line="-960"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Uređaj nije aktivan. Možda je isključen ili je njegova putanja promenjena.</translation>
     </message>
@@ -8005,12 +8011,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+2"/>
-        <location line="+641"/>
+        <location line="+656"/>
         <source>Delete</source>
         <translation>Obriši</translation>
     </message>
     <message>
-        <location line="-583"/>
+        <location line="-598"/>
         <source>Exported to: %1</source>
         <translation>Извезено у: %1</translation>
     </message>
@@ -8187,12 +8193,18 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Неподударање контролног збира</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+11"/>
         <source>Update Checksum</source>
         <translation>Ажурирај контролну суму</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+5"/>
+        <location line="+58"/>
+        <source>Cancel</source>
+        <translation>Otkaži</translation>
+    </message>
+    <message>
+        <location line="-47"/>
         <source>Checksum saved to database</source>
         <translation>Контролни збир сачуван у бази података</translation>
     </message>
@@ -8217,7 +8229,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Обриши датотеку</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+22"/>
         <source>File deleted</source>
         <translation>Датотека обрисана</translation>
     </message>
@@ -8236,13 +8248,13 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 %1</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+75"/>
         <location line="+6"/>
         <source>Catalog with results</source>
         <translation>Katalog sa rezultatima</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+37"/>
         <source>All</source>
         <translation>Sve</translation>
     </message>
@@ -8252,7 +8264,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Ниједан</translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+69"/>
         <source>Matched: %1
 Mismatched: %2
 New checksums calculated: %3

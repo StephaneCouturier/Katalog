@@ -451,23 +451,28 @@ ColumnLayout {
         id: searchHistoryDialog
         title: qsTr("Search History")
 
-        customFooterActions: [
-            Kirigami.Action {
+        // Roles rather than source order, so Cancel follows the platform instead
+        // of a position hard-coded for KDE (SpecValidationRules D1/D2).
+        footer: Controls.DialogButtonBox {
+            Controls.Button {
                 text: qsTr("Keep Last 10")
                 icon.name: "edit-delete"
-                onTriggered: keepLastHistoryConfirmDialog.open()
-            },
-            Kirigami.Action {
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.ActionRole
+                onClicked: keepLastHistoryConfirmDialog.open()
+            }
+            Controls.Button {
                 text: qsTr("Clear")
                 icon.name: "edit-delete"
-                onTriggered: clearHistoryConfirmDialog.open()
-            },
-            Kirigami.Action {
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.ActionRole
+                onClicked: clearHistoryConfirmDialog.open()
+            }
+            Controls.Button {
                 text: qsTr("Cancel")
                 icon.name: "dialog-cancel"
-                onTriggered: searchHistoryDialog.close()
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.RejectRole
             }
-        ]
+            onRejected: searchHistoryDialog.close()
+        }
 
         // Kept within the Search page's own column, never over the Selection
         // panel beside it. Selection cards drawn under this dialog composite on

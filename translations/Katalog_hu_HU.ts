@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+175"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+176"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4400"/>
+        <location line="+4487"/>
         <source>Search</source>
         <translation>Keresés</translation>
     </message>
     <message>
-        <location line="-4520"/>
+        <location line="-4607"/>
         <source>Stopped</source>
         <translation>Leállítva</translation>
     </message>
@@ -44,7 +44,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2135"/>
+        <location line="+2222"/>
         <location line="+602"/>
         <location line="+20"/>
         <location line="+1213"/>
@@ -55,8 +55,8 @@
         <translation>Folyamatban</translation>
     </message>
     <message>
-        <location line="-4401"/>
-        <location line="+4008"/>
+        <location line="-4488"/>
+        <location line="+4095"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Befejezve</translation>
@@ -946,7 +946,7 @@ Válasszon másik nevet.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+880"/>
+        <location filename="../qt_quick/Main.qml" line="+936"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Biztosan &lt;b&gt;törli&lt;/b&gt; ezt a(z) %1 eszközt?&lt;br/&gt;&lt;br/&gt;Név: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -988,13 +988,13 @@ Válasszon másik nevet.</translation>
         <translation>Rendszer</translation>
     </message>
     <message>
-        <location line="-270"/>
-        <location line="+271"/>
+        <location line="-291"/>
+        <location line="+292"/>
         <source>Settings</source>
         <translation>Beállítások</translation>
     </message>
     <message>
-        <location line="-395"/>
+        <location line="-416"/>
         <source>Open...</source>
         <translation>Megnyitás...</translation>
     </message>
@@ -1021,42 +1021,42 @@ Válasszon másik nevet.</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+812"/>
+        <location line="+833"/>
         <source>Selection</source>
         <translation>Kiválasztás</translation>
     </message>
     <message>
-        <location line="-802"/>
-        <location line="+1075"/>
+        <location line="-823"/>
+        <location line="+1096"/>
         <source>Devices</source>
         <translation>Eszközök</translation>
     </message>
     <message>
-        <location line="-1070"/>
-        <location line="+1165"/>
+        <location line="-1091"/>
+        <location line="+1186"/>
         <source>Explore</source>
         <translation>Tallózás</translation>
     </message>
     <message>
-        <location line="-1155"/>
-        <location line="+1378"/>
+        <location line="-1176"/>
+        <location line="+1399"/>
         <source>Backup</source>
         <translation>Biztonsági mentés</translation>
     </message>
     <message>
-        <location line="-1373"/>
-        <location line="+1337"/>
+        <location line="-1394"/>
+        <location line="+1358"/>
         <source>Statistics</source>
         <translation>Statisztikák</translation>
     </message>
     <message>
-        <location line="-1332"/>
-        <location line="+1352"/>
+        <location line="-1353"/>
+        <location line="+1373"/>
         <source>Tags</source>
         <translation>Címkék</translation>
     </message>
     <message>
-        <location line="-1339"/>
+        <location line="-1360"/>
         <source>Documentation</source>
         <translation>Dokumentáció</translation>
     </message>
@@ -1104,7 +1104,7 @@ Válasszon másik nevet.</translation>
 </translation>
     </message>
     <message>
-        <location line="+167"/>
+        <location line="+188"/>
         <source>Do not show again</source>
         <translation>Ne jelenjen meg újra</translation>
     </message>
@@ -1329,8 +1329,8 @@ Ez azt jelentheti, hogy a forrás üres, vagy az eszköz nincs csatolva ehhez a 
 Mindenképpen menti (a katalógus üres lesz)?</translation>
     </message>
     <message>
-        <location line="-752"/>
-        <location line="+930"/>
+        <location line="-773"/>
+        <location line="+951"/>
         <location line="+43"/>
         <source>Search</source>
         <translation>Keresés</translation>
@@ -1464,8 +1464,8 @@ Mindenképpen menti (a katalógus üres lesz)?</translation>
         <translation>A katalógus létrehozása sikertelen: </translation>
     </message>
     <message>
-        <location line="-1220"/>
-        <location line="+1210"/>
+        <location line="-1241"/>
+        <location line="+1231"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Létrehozás</translation>
@@ -6004,7 +6004,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Bővített metaadatok</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+11"/>
         <source>Copy JSON</source>
         <translation>JSON másolása</translation>
     </message>
@@ -6014,7 +6014,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>A metaadatok JSON-ja a vágólapra másolva</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+40"/>
         <source>Field</source>
         <translation>Mező</translation>
     </message>
@@ -6095,12 +6095,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+600"/>
+        <location line="+604"/>
         <source>Errors: %1</source>
         <translation>Hibák: %1</translation>
     </message>
     <message>
-        <location line="-552"/>
+        <location line="-556"/>
         <source>Type</source>
         <translation>Típus</translation>
     </message>
@@ -6112,35 +6112,35 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="-18"/>
-        <location line="+246"/>
+        <location line="+250"/>
         <source>Backup</source>
         <translation>Biztonsági mentés</translation>
     </message>
     <message>
-        <location line="-245"/>
-        <location line="+245"/>
+        <location line="-249"/>
+        <location line="+249"/>
         <source>Archive</source>
         <translation>Archívum</translation>
     </message>
     <message>
-        <location line="-233"/>
+        <location line="-237"/>
         <source>Filter</source>
         <translation>Szűrő</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+248"/>
+        <location line="+252"/>
         <source>Source</source>
         <translation>Forrás</translation>
     </message>
     <message>
-        <location line="-247"/>
-        <location line="+298"/>
+        <location line="-251"/>
+        <location line="+302"/>
         <source>Target</source>
         <translation>Cél</translation>
     </message>
     <message>
-        <location line="-277"/>
+        <location line="-281"/>
         <location line="+19"/>
         <source>Run listed links</source>
         <translation>Felsorolt hivatkozások futtatása</translation>
@@ -6151,12 +6151,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Katalógusok frissítése</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+15"/>
         <source>Continue</source>
         <translation>Folytatás</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+23"/>
         <source>%1 link(s) will run, one after another.</source>
         <translation>%1 hivatkozás(ok) egymás után fut le.</translation>
     </message>
@@ -6269,8 +6269,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Folytatás</translation>
     </message>
     <message>
-        <location line="-417"/>
-        <location line="+423"/>
+        <location line="-422"/>
+        <location line="+428"/>
         <source>Cancel</source>
         <translation>Mégse</translation>
     </message>
@@ -7475,12 +7475,18 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Fájl törlése</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+11"/>
         <source>Delete</source>
         <translation>Törlés</translation>
     </message>
     <message>
         <location line="+5"/>
+        <location line="+81"/>
+        <source>Cancel</source>
+        <translation>Mégse</translation>
+    </message>
+    <message>
+        <location line="-74"/>
         <source>File deleted</source>
         <translation>Fájl törölve</translation>
     </message>
@@ -7529,12 +7535,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Ellenőrző összeg eltérése</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+11"/>
         <source>Update Checksum</source>
         <translation>Ellenőrző összeg frissítése</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+16"/>
         <source>Checksum saved to database</source>
         <translation>Az ellenőrző összeg az adatbázisba mentve</translation>
     </message>
@@ -7557,7 +7563,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+284"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+289"/>
         <source>Directories</source>
         <translation>Könyvtárak</translation>
     </message>
@@ -7582,7 +7588,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Összes kibontása</translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+88"/>
         <source>Expand</source>
         <translation>Kibontás</translation>
     </message>
@@ -7655,22 +7661,22 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Keresési előzmények</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Keep Last 10</source>
         <translation>Utolsó 10 megtartása</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Clear</source>
         <translation>Törlés</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Cancel</source>
         <translation>Mégse</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+92"/>
         <source>(no text filter)</source>
         <translation>(nincs szövegszűrő)</translation>
     </message>
@@ -7974,7 +7980,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+782"/>
+        <location line="+836"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Ellenőrző összegek ellenőrzése</translation>
@@ -7986,14 +7992,14 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Metaadatok befoglalása</translation>
     </message>
     <message>
-        <location line="-833"/>
+        <location line="-887"/>
         <location line="+523"/>
-        <location line="+255"/>
+        <location line="+309"/>
         <source>Move to Trash</source>
         <translation>Lomtárba helyezés</translation>
     </message>
     <message>
-        <location line="-906"/>
+        <location line="-960"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Az eszköz nem aktív. Lehet, hogy le van választva, vagy megváltozott az elérési útja.</translation>
     </message>
@@ -8004,12 +8010,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+2"/>
-        <location line="+641"/>
+        <location line="+656"/>
         <source>Delete</source>
         <translation>Törlés</translation>
     </message>
     <message>
-        <location line="-583"/>
+        <location line="-598"/>
         <source>Exported to: %1</source>
         <translation>Exportálva ide: %1</translation>
     </message>
@@ -8186,12 +8192,18 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Ellenőrző összeg eltérése</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+11"/>
         <source>Update Checksum</source>
         <translation>Ellenőrző összeg frissítése</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+5"/>
+        <location line="+58"/>
+        <source>Cancel</source>
+        <translation>Mégse</translation>
+    </message>
+    <message>
+        <location line="-47"/>
         <source>Checksum saved to database</source>
         <translation>Az ellenőrző összeg az adatbázisba mentve</translation>
     </message>
@@ -8216,7 +8228,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Fájl törlése</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+22"/>
         <source>File deleted</source>
         <translation>Fájl törölve</translation>
     </message>
@@ -8235,13 +8247,13 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 %1</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+75"/>
         <location line="+6"/>
         <source>Catalog with results</source>
         <translation>Katalógus eredményekkel</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+37"/>
         <source>All</source>
         <translation>Minden</translation>
     </message>
@@ -8251,7 +8263,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Nincs</translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+69"/>
         <source>Matched: %1
 Mismatched: %2
 New checksums calculated: %3

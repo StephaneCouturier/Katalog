@@ -31,16 +31,18 @@ Kirigami.Dialog {
 
     standardButtons: Kirigami.Dialog.Close
 
-    customFooterActions: [
-        Kirigami.Action {
-            text: qsTr("Copy JSON")
-            icon.name: "edit-copy"
-            onTriggered: {
-                appManager1.copyToClipboard(metadataDialog.jsonText)
-                applicationWindow().showPassiveNotification(qsTr("Metadata JSON copied to clipboard"))
-            }
+    // Copy JSON is an extra action, not the accept button, so it takes the
+    // leading slot at the far left and Close keeps the trailing position the
+    // platform gives it (SpecValidationRules D1/D2). Left in customFooterActions
+    // it rendered to the right of Close, which no other dialog does.
+    footerLeadingComponent: Controls.Button {
+        text: qsTr("Copy JSON")
+        icon.name: "edit-copy"
+        onClicked: {
+            appManager1.copyToClipboard(metadataDialog.jsonText)
+            applicationWindow().showPassiveNotification(qsTr("Metadata JSON copied to clipboard"))
         }
-    ]
+    }
 
     contentItem: ColumnLayout {
         spacing: 0

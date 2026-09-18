@@ -264,22 +264,26 @@ ColumnLayout {
     Kirigami.PromptDialog {
         id: runListedDialog
         title: qsTr("Run listed links")
-        standardButtons: Kirigami.Dialog.NoButton
-        customFooterActions: [
-            Kirigami.Action {
+        // Roles rather than source order, so Cancel follows the platform instead
+        // of a position hard-coded for KDE (SpecValidationRules D1/D2). BKP-F19
+        // is unchanged: Cancel still starts nothing, Continue still runs the list.
+        footer: Controls.DialogButtonBox {
+            Controls.Button {
                 text: qsTr("Continue")
                 icon.name: "media-playback-start"
-                onTriggered: {
-                    appManager1.runListedBackups(root.runnableListedIds())
-                    runListedDialog.close()
-                }
-            },
-            Kirigami.Action {
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.AcceptRole
+            }
+            Controls.Button {
                 text: qsTr("Cancel")
                 icon.name: "dialog-cancel"
-                onTriggered: runListedDialog.close()
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.RejectRole
             }
-        ]
+            onAccepted: {
+                appManager1.runListedBackups(root.runnableListedIds())
+                runListedDialog.close()
+            }
+            onRejected: runListedDialog.close()
+        }
 
         ColumnLayout {
             spacing: Kirigami.Units.smallSpacing
