@@ -1,8 +1,8 @@
 ---
-version: "2.12"
+version: "2.13"
 ---
 # Přehled
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![2.13](https://img.shields.io/badge/Version-2.13-blue)
 
 ## Indexování souborů a správce úložných zařízení
 Katalog je výkonný <b>správce katalogů souborů</b>, který vám pomáhá organizovat a vyhledávat soubory.<br/>
@@ -84,6 +84,7 @@ Katalog vytváří komplexní <b>indexy, abyste mohli prohledávat celou svou ko
 ### Kompatibilita s macOS
 
 - **Minimální verze macOS**: macOS 14 (Sonoma) nebo novější
+- **Testováno na**: macOS 15 (Sequoia), Apple Silicon
 - **Architektura**: pouze Apple Silicon (M1/M2/M3). Intelové Macy **nejsou** podporovány — Rosetta 2 překládá software pro Intel tak, aby běžel na Apple Silicon, nikoli naopak, takže tuto verzi nelze na Intelovém Macu spustit.
 - **Sestavovací prostředí**: sestaveno na macOS 14 (Sonoma) s Qt 6 a KDE Frameworks 6 (KF6) přes Homebrew
 
@@ -93,7 +94,7 @@ macOS aplikaci ve výchozím nastavení zablokuje. Pro spuštění Katalogu vyzk
 
 1. Klikněte na aplikaci pravým tlačítkem → zvolte „Otevřít“ (nikoli dvojklik) → potvrďte v dialogu
 2. Nebo přejděte do Nastavení systému → Soukromí a zabezpečení → sjeďte dolů a klikněte na „Přesto otevřít“
-3. Nebo spusťte v Terminálu: `xattr -cr /cesta/ke/Katalog.app` a poté otevřete normálně
+3. Nebo spusťte v Terminálu: `xattr -cr /cesta/ke/Katalog.app` a poté otevřete normálně. Pokud je přístup odepřen, přidejte na začátek `sudo`.
 
 **Známé omezení**:
 

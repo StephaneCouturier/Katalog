@@ -1,8 +1,8 @@
 ---
-version: "2.12"
+version: "2.13"
 ---
 # Overview
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![2.13](https://img.shields.io/badge/Version-2.13-blue)
 
 ## Files indexing & Storage devices manager
 Katalog is a powerful <b>file catalog manager</b> that helps you organize and find files.<br/>
@@ -86,6 +86,7 @@ Katalog creates comprehensive <b>indexes so you can search your entire file coll
 ### macOS Compatibility
 
 - **Minimum macOS version**: macOS 14 (Sonoma) or later
+- **Tested on**: macOS 15 (Sequoia), Apple Silicon
 - **Architecture**: Apple Silicon (M1/M2/M3) only. Intel Macs are **not** supported — Rosetta 2 translates Intel software to run on Apple Silicon, not the other way round, so there is no way to run this build on an Intel Mac.
 - **Build environment**: Built on macOS 14 (Sonoma) with Qt 6 and KDE Frameworks 6 (KF6), via Homebrew
 
@@ -95,7 +96,7 @@ macOS will block the app by default. To run Katalog, try one of these methods:
 
 1. Right-click the app → select "Open" (not double-click) → confirm in the dialog
 2. Or go to System Settings → Privacy & Security → scroll down and click "Open Anyway"
-3. Or run in Terminal: `xattr -cr /path/to/Katalog.app` then open normally
+3. Or run in Terminal: `xattr -cr /path/to/Katalog.app` then open normally. Add `sudo` in front if permission is denied.
 
 **Known limitation**: 
 

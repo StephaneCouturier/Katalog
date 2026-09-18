@@ -55,6 +55,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 > **CRITICAL — Version context:**
 > - Last **released** version: **2.12** (schema 2.12 is shipped — its migrations are frozen, do NOT edit them in place)
+> - **K3 3.0 beta1 is released** — portable builds only (Linux, Windows, macOS), published on SourceForge only. It is in users' hands: K3 behaviour changes now have real testers, and bug reports arrive from **Windows and macOS**, not only from the Linux/KDE development machine. When diagnosing a K3 report, consider platform-specific behaviour (window manager, QSettings backend, icon theme, Qt Quick Controls style) before assuming a logic bug.
+> - beta1 writes its own settings file `katalog3_prerelease_settings.ini` (see `AppManager::initiateApp`). Testers already have one on disk, so a change to what K3 persists must stay readable for an existing beta1 file — state the impact on beta testers up front.
 > - Current **development** version: **K2 2.13 / K3 3.0** (branch `katalog_development`), database schema **2.13**
 > - Database migrations 2.13 are introduced **during** the 2.13/3.0 development cycle and have **never been shipped**. Any field added by those migrations can be changed in-place (schema + migration ALTER TABLE) — no additional migration step is needed *while 2.13 stays unreleased*.
 > - **Rule:** When a new DB field is introduced in the current development version, note it here so future work knows it has not been released yet and can be edited directly rather than adding a new migration.
