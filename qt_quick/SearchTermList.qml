@@ -10,8 +10,8 @@ import org.kde.kirigami as Kirigami
 // SpecSearchList.md (SRL-C1). Assigning `text` rebuilds the rows; editing a row
 // updates `text` with the trimmed, blank-stripped join.
 //
-// Set showInlineClear: true to draw the per-row clear icon inside each field
-// (the exclude list uses it; the text list uses the list-level Clear button).
+// Set showInlineClear: true to draw the per-row clear icon inside each field;
+// clearing a row leaves the caret in it. Both search lists use it.
 // The accepted() signal fires when the user presses Enter in any row.
 ColumnLayout {
     id: root
@@ -284,10 +284,13 @@ ColumnLayout {
                             HoverHandler { cursorShape: Qt.ArrowCursor }
                             TapHandler {
                                 id: rowClearTap
+                                // Focus follows the clear, so the user can retype
+                                // straight away instead of clicking the row again.
                                 onTapped: {
                                     termField.clear()
                                     termsModel.setProperty(termRow.index, "term", "")
                                     root._commit()
+                                    termRow.focusField()
                                 }
                             }
                         }

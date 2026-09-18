@@ -313,21 +313,21 @@ per-term structure.
 Single term — the common case. Identical to today except the `+` line:
 
 ```
-text     [ holidays france                    ]  [✕] [📋] [⌫]
+text     [ holidays france                    ]  [📋] [⌫]
          [+]
 ```
 
 Three terms:
 
 ```
-text     [ holidays france                    ]  [✕] [📋] [⌫]
+text     [ holidays france                    ]  [📋] [⌫]
          [ trip europe                        ]  [−]
          [ weekend mountain                   ]  [−]
          [+]
 ```
 
-- The `✕` Clear / `📋` Paste / `⌫` Clean button group stays anchored to the
-  **first** row and acts on the **whole list** — they are list-level actions.
+- The `📋` Paste / `⌫` Clean button group stays anchored to the **first** row
+  and acts on the **whole list** — they are list-level actions.
 - `−` (`list-remove`) appears on every row **only when the list has more than one
   row**. A single-row list never shows it, so a one-term search is visually
   unchanged.
@@ -335,14 +335,15 @@ text     [ holidays france                    ]  [✕] [📋] [⌫]
   aligned with the fields.
 - Each row is a single-line `Controls.TextField`, replacing today's
   `Controls.TextArea` (`PageSearchForm.qml:555`).
-- The same widget is used for the `exclude` field, which keeps its own
-  `📋` / `⌫` buttons. It has no `✕` button today; instead it carries an **inline
-  clear icon inside the field** (`edit-clear-locationbar`, shown when the field
-  is non-empty — `PageSearchForm.qml:648-660`). **Decision: that inline icon
-  stays per-row**, clearing only the row it sits in, and no list-level `✕` is
-  added to exclude. Rationale: it is the standard Kirigami single-field
-  affordance and a per-row clear is the natural reading of an icon drawn inside
-  a row.
+- The same widget is used for the `exclude` field, with the same `📋` / `⌫`
+  buttons. **Both lists clear per row**, through an **inline clear icon inside
+  the field** (`edit-clear-locationbar`, shown when the row is non-empty), which
+  clears only the row it sits in and leaves the caret there. Rationale: it is the
+  standard Kirigami single-field affordance and a per-row clear is the natural
+  reading of an icon drawn inside a row. The `text` list previously carried a
+  list-level `✕` Clear button; it dated from before rows existed, when emptying
+  the whole field was the only clear available, and it was removed once rows
+  made per-row clearing possible.
 
 ### Controls
 
@@ -350,7 +351,7 @@ text     [ holidays france                    ]  [✕] [📋] [⌫]
 |---------|------|-------|-----------|
 | `+` | `list-add` | list | Appends an empty row at the end and moves focus into it |
 | `−` | `list-remove` | row | Deletes that row. Hidden when only one row exists, so the last row can never be deleted |
-| `✕` Clear | `edit-clear` | list | Resets the list to a **single empty row** |
+| inline clear | `edit-clear-locationbar` | row | Shown inside a non-empty row. Empties that row and leaves focus in it |
 | `📋` Paste | `edit-paste` | list | **Replaces** the whole list with the clipboard, one row per line (current behaviour, extended to rows) |
 | `⌫` Clean | `edit-clear-history` | list | Applies `returnCleanedText()` to **every** row. The helper only substitutes punctuation for spaces and never touches `\n`, so per-row and whole-string application are equivalent |
 
@@ -610,7 +611,7 @@ covered by the original exclude-row approval. Both are now approved.
 | SRL-F5 | `Enter` runs the search from any row — unchanged from today and from K2. | [Implemented] |
 | SRL-F6 | The `📋` Paste button replaces the whole list with the clipboard, one row per non-empty line. | [Planned] |
 | SRL-F7 | `Ctrl+V` of multi-line clipboard content splices the lines in at the cursor as new rows; single-line content pastes normally. Newlines are never silently dropped. | [Planned] |
-| SRL-F8 | `✕` Clear resets the list to one empty row. `⌫` Clean applies `returnCleanedText()` to every row. | [Planned] |
+| SRL-F8 | The inline clear icon empties its own row and leaves focus in it. `⌫` Clean applies `returnCleanedText()` to every row. | [Planned] |
 | SRL-F9 | On launch, rows are trimmed and blank rows are excluded from the criteria; an all-blank list is equivalent to an empty field. | [Planned] |
 | SRL-F10 | A multi-term search is saved to history and restored from it with every term, in order, alongside all other criteria. | [Planned] |
 | SRL-F11 | The history summary renders each term quoted and joined with `", "`, on a single line, with the criteria suffix appended once. | [Planned] |
@@ -648,7 +649,7 @@ For each row: set up the stated condition, run the operation, confirm the result
 - **SRL-C11** — Search one term in *Exact Phrase* mode with any exclude term, where the term appears in the **middle** of the file name. The file is found. Repeat in *Any Word* mode.
 - **SRL-F6** — Copy three lines, click `📋`. Exactly three rows appear and any previous content is gone.
 - **SRL-F7** — With three rows and the cursor mid-text in row 2, `Ctrl+V` three lines. Rows 1 and 3 are intact, the three lines are spliced in at the cursor, and the last inserted row has focus. Repeat with single-line clipboard content: it inserts at the cursor and creates no row.
-- **SRL-F8** — With three rows, click `⌫`: all three are cleaned. Click `✕`: the list returns to one empty row.
+- **SRL-F8** — With three rows, click `⌫`: all three are cleaned. Click the inline clear icon in row 2: only row 2 is emptied, and the caret is in it — typing goes straight there with no further click.
 - **SRL-F9** — Run a search with rows `a`, blank, `b`. Results match a search with rows `a`, `b`.
 - **SRL-F11** — Run a three-term search. The history entry is one line reading `"a", "b", "c"` with no newline and no wrapping.
 - **SRL-F10** — Click that history entry. All three text rows are restored in order, plus the exclude rows, plus every other criterion.

@@ -641,16 +641,16 @@ ColumnLayout {
             SearchTermList {
                 id: search_TextField_FileNameText
                 Layout.fillWidth: true
+                // Same affordance as the exclude list: clearing is per-row, through
+                // the icon inside the field. The list-level Clear button this field
+                // used to carry predates the rows — it was the only way to empty a
+                // field that stood in for several terms, and rows replaced it.
+                showInlineClear: true
                 onAccepted: pageSearchForm.searchRequested()
             }
             RowLayout {
                 Layout.alignment: Qt.AlignTop
                 spacing: Kirigami.Units.smallSpacing
-                IconButton {
-                    id: search_Button_ClearSearchText
-                    icon.name: "edit-clear"
-                    onClicked: search_TextField_FileNameText.clearAll()
-                }
                 IconButton {
                     id: search_Button_PasteClipboard
                     icon.name: "edit-paste"
@@ -718,8 +718,6 @@ ColumnLayout {
             SearchTermList {
                 id: search_TextField_FileNameExclude
                 Layout.fillWidth: true
-                // Keeps the inline per-row clear icon this field has always had,
-                // instead of gaining a list-level Clear button.
                 showInlineClear: true
                 onAccepted: pageSearchForm.searchRequested()
             }
@@ -970,7 +968,15 @@ ColumnLayout {
                     opacity: metaClearTap.pressed ? 0.5 : 1.0
                     Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration } }
                     HoverHandler { cursorShape: Qt.ArrowCursor }
-                    TapHandler { id: metaClearTap; onTapped: search_lineEdit_MetadataText.clear() }
+                    TapHandler {
+                        id: metaClearTap
+                        // Focus follows the clear, so the user can retype straight
+                        // away instead of clicking the field a second time.
+                        onTapped: {
+                            search_lineEdit_MetadataText.clear()
+                            search_lineEdit_MetadataText.forceActiveFocus()
+                        }
+                    }
                 }
             }
             IconButton {
