@@ -20,6 +20,7 @@
 #include <QJsonObject>
 #include "version.h"
 #include <QGuiApplication>
+#include <QScreen>
 #include <QCoreApplication>
 #include <QCryptographicHash>
 #include <QTimer>
@@ -843,6 +844,93 @@ QString AppManager::getLastPage() const
 {
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
     return settings.value("Settings/lastPage", "Search").toString();
+}
+//----------------------------------------------------------------------
+// Window geometry
+//----------------------------------------------------------------------
+// Stored in the settings file AppManager::initiateApp resolved — beside the
+// executable for a portable build, otherwise in ~/.config — and not in the
+// platform-native store the QtCore Settings QML type uses. A portable build
+// must not leave window state behind in the user's home or the registry, and
+// that store's identity varies per platform.
+//
+// The position is saved and asked for on every platform, with nothing here
+// testing which one is running. A platform that cannot place a window where the
+// application asks — Wayland today, where the compositor decides and Qt drops
+// the coordinates — simply ignores the request, and the window opens wherever
+// that platform chose. Nothing has to detect this, and nothing has to be
+// changed here if it ever stops being true.
+//----------------------------------------------------------------------
+QVariantMap AppManager::getWindowGeometry() const
+{
+    const int defaultWidth  = 900;
+    const int defaultHeight = 600;
+
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    int width  = settings.value("Settings/WindowWidth",  defaultWidth).toInt();
+    int height = settings.value("Settings/WindowHeight", defaultHeight).toInt();
+
+    if (width  <= 0) width  = defaultWidth;
+    if (height <= 0) height = defaultHeight;
+
+    QVariantMap geometry;
+    geometry["maximized"]   = settings.value("Settings/WindowMaximized", false).toBool();
+    geometry["hasPosition"] = false;
+
+    const bool hasStoredPosition = settings.contains("Settings/WindowX")
+                                   && settings.contains("Settings/WindowY");
+    const int x = settings.value("Settings/WindowX").toInt();
+    const int y = settings.value("Settings/WindowY").toInt();
+
+    //The stored position is reused only if the window would still be reachable:
+    //the middle of its title bar has to land on a screen that exists now, so a
+    //window saved on a second monitor does not reopen off-screen once that
+    //monitor is gone. Without a position, the platform places the window itself.
+    const QScreen *targetScreen = nullptr;
+    if (hasStoredPosition) {
+        const QPoint titleBarCentre(x + width / 2, y + 10);
+        const QList<QScreen *> screens = QGuiApplication::screens();
+        for (const QScreen *screen : screens) {
+            if (screen->availableGeometry().contains(titleBarCentre)) {
+                targetScreen = screen;
+                break;
+            }
+        }
+    }
+
+    //A size stored on a larger monitor must not survive that monitor being
+    //unplugged — but it is measured against the screen the window is actually
+    //reopening on, not always the primary one, so a window kept on a wide
+    //secondary display keeps its width.
+    if (targetScreen == nullptr)
+        targetScreen = QGuiApplication::primaryScreen();
+    if (targetScreen != nullptr) {
+        const QRect available = targetScreen->availableGeometry();
+        width  = qMin(width,  available.width());
+        height = qMin(height, available.height());
+    }
+
+    geometry["width"]  = width;
+    geometry["height"] = height;
+
+    if (hasStoredPosition && targetScreen != nullptr && targetScreen->availableGeometry().contains(QPoint(x + width / 2, y + 10))) {
+        geometry["x"]           = x;
+        geometry["y"]           = y;
+        geometry["hasPosition"] = true;
+    }
+
+    return geometry;
+}
+//----------------------------------------------------------------------
+void AppManager::saveWindowGeometry(int x, int y, int width, int height, bool maximized)
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+
+    if (width  > 0) settings.setValue("Settings/WindowWidth",  width);
+    if (height > 0) settings.setValue("Settings/WindowHeight", height);
+    settings.setValue("Settings/WindowMaximized", maximized);
+    settings.setValue("Settings/WindowX", x);
+    settings.setValue("Settings/WindowY", y);
 }
 //----------------------------------------------------------------------
 bool AppManager::canExpandDevices() const

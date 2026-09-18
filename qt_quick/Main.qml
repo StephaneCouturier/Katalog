@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Window
 import QtQuick.Layouts
 import QtQuick.Controls as Controls
 import org.kde.kirigami as Kirigami
@@ -36,14 +37,48 @@ Kirigami.ApplicationWindow {
             if (Qt.application.state === Qt.ApplicationActive)
                 appManager1.refreshDeviceActiveOnActivation()
         }
+        //Quitting the application does not always close the window first —
+        //Cmd+Q on macOS does not — so the geometry is saved here too.
+        function onAboutToQuit() {
+            root.saveWindowGeometry()
+        }
     }
 
     Settings {
         id: windowSettings
-        property int  savedWidth:     900
-        property int  savedHeight:    600
         property bool drawerPinned:   false
         property real savedCardScale: 1.0
+    }
+
+    // Window geometry ---------------------------------------------------------
+    // Kept in Katalog's own settings file through AppManager, not in the
+    // Settings block above: that one writes to the platform-native store, which
+    // a portable build has no business using. The tracked values are the
+    // windowed ones, so a maximized window comes back maximized and
+    // un-maximizes to the size it had before.
+    property bool _geometryRestored: false
+    property int  _windowedX:      0
+    property int  _windowedY:      0
+    property int  _windowedWidth:  900
+    property int  _windowedHeight: 600
+
+    function trackWindowedGeometry() {
+        //Only once the saved geometry has been applied: the sizes the platform
+        //reports while the window is still being set up are transient, and
+        //recording them used to overwrite the stored value before it was read.
+        if (!root._geometryRestored || root.visibility !== Window.Windowed)
+            return
+
+        root._windowedX      = root.x
+        root._windowedY      = root.y
+        root._windowedWidth  = root.width
+        root._windowedHeight = root.height
+    }
+
+    function saveWindowGeometry() {
+        appManager1.saveWindowGeometry(root._windowedX, root._windowedY,
+                                       root._windowedWidth, root._windowedHeight,
+                                       root.visibility === Window.Maximized)
     }
 
     signal searchTriggered()
@@ -687,8 +722,24 @@ Kirigami.ApplicationWindow {
     pageStack.initialPage: pageSelection
 
     Component.onCompleted: {
-        width         = windowSettings.savedWidth
-        height        = windowSettings.savedHeight
+        //The position is asked for unconditionally: a platform that does not let
+        //an application place its own window ignores it and places the window
+        //itself. It is only asked for if it still lands on an existing screen.
+        var savedGeometry = appManager1.getWindowGeometry()
+        width  = savedGeometry.width
+        height = savedGeometry.height
+        if (savedGeometry.hasPosition) {
+            x = savedGeometry.x
+            y = savedGeometry.y
+        }
+        root._windowedX      = root.x
+        root._windowedY      = root.y
+        root._windowedWidth  = root.width
+        root._windowedHeight = root.height
+        if (savedGeometry.maximized)
+            visibility = Window.Maximized
+        root._geometryRestored = true
+
         root.cardScale = windowSettings.savedCardScale
 
         if (appManager1.isFirstRun) {
@@ -729,8 +780,13 @@ Kirigami.ApplicationWindow {
         }
     }
 
-    onWidthChanged:  windowSettings.savedWidth  = width
-    onHeightChanged: windowSettings.savedHeight = height
+    onXChanged:      root.trackWindowedGeometry()
+    onYChanged:      root.trackWindowedGeometry()
+    onWidthChanged:  root.trackWindowedGeometry()
+    onHeightChanged: root.trackWindowedGeometry()
+
+    //Saved when the window goes away rather than on every resize step.
+    onClosing: root.saveWindowGeometry()
 
     Controls.Dialog {
         id: alphaWarningDialog

@@ -269,6 +269,8 @@ public slots:
     Q_INVOKABLE QString getDatabaseSchemaVersion();
     Q_INVOKABLE void    setLastPage(const QString &pageName);
     Q_INVOKABLE QString getLastPage() const;
+    Q_INVOKABLE QVariantMap getWindowGeometry() const;
+    Q_INVOKABLE void        saveWindowGeometry(int x, int y, int width, int height, bool maximized);
 
     void selectDeviceById(int deviceId);
     QString getSelectedDeviceName() const;
