@@ -1,8 +1,8 @@
 ---
-version: "2.12"
+version: "2.13"
 ---
 # Zařízení: Úložiště
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![2.13](https://img.shields.io/badge/Version-2.13-blue)
 
 ## Souhrn
 Tato stránka popisuje všechny funkce zobrazení **Seznam úložiště** na obrazovce [Zařízení](Devices).

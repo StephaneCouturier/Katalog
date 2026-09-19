@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+176"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4487"/>
+        <location line="+4553"/>
         <source>Search</source>
         <translation>Buscar</translation>
     </message>
     <message>
-        <location line="-4607"/>
+        <location line="-4673"/>
         <source>Stopped</source>
         <translation>Detenido</translation>
     </message>
@@ -45,9 +45,10 @@
         <location line="+7"/>
         <location line="+81"/>
         <location line="+2222"/>
-        <location line="+602"/>
+        <location line="+623"/>
+        <location line="+26"/>
         <location line="+20"/>
-        <location line="+1213"/>
+        <location line="+1232"/>
         <location line="+11"/>
         <location line="+60"/>
         <location line="+374"/>
@@ -55,14 +56,14 @@
         <translation>En progreso</translation>
     </message>
     <message>
-        <location line="-4488"/>
-        <location line="+4095"/>
+        <location line="-4554"/>
+        <location line="+4161"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Completado</translation>
     </message>
     <message>
-        <location line="-3444"/>
+        <location line="-3510"/>
         <source>Empty database path provided</source>
         <translation>Se proporcionó una ruta de base de datos vacía</translation>
     </message>
@@ -148,12 +149,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2529"/>
+        <location line="+2595"/>
         <source>Size</source>
         <translation>Tamaño</translation>
     </message>
     <message>
-        <location line="-2528"/>
+        <location line="-2594"/>
         <source>Date</source>
         <translation>Fecha</translation>
     </message>
@@ -247,12 +248,12 @@ Elija un nombre diferente e inténtelo de nuevo.</translation>
     </message>
     <message>
         <location line="+85"/>
-        <location line="+601"/>
+        <location line="+648"/>
         <source>Create</source>
         <translation>Crear</translation>
     </message>
     <message>
-        <location line="-494"/>
+        <location line="-541"/>
         <source>Catalog creation was stopped.</source>
         <translation>Se detuvo la creación del catálogo.</translation>
     </message>
@@ -288,7 +289,8 @@ Elija un nombre diferente e inténtelo de nuevo.</translation>
         <translation>Error: %1</translation>
     </message>
     <message>
-        <location line="+237"/>
+        <location line="+238"/>
+        <location line="+46"/>
         <source>Update</source>
         <translation>Actualizar</translation>
     </message>
@@ -429,7 +431,7 @@ Elija un nombre diferente.</translation>
         <translation>Ya existe un almacenamiento con este ID. Elija un ID diferente.</translation>
     </message>
     <message>
-        <location line="+128"/>
+        <location line="+147"/>
         <source>Selected device is not a catalog</source>
         <translation>El dispositivo seleccionado no es un catálogo</translation>
     </message>
@@ -1151,7 +1153,17 @@ Elija un nombre diferente.</translation>
         <translation>La ruta de almacenamiento ha cambiado.</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+1"/>
+        <source>Old path:</source>
+        <translation>Ruta anterior:</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>New path:</source>
+        <translation>Nueva ruta:</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>How should the catalog indexes be updated?</source>
         <translation>¿Cómo deben actualizarse los índices del catálogo?</translation>
     </message>
@@ -1950,6 +1962,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+285"/>
         <location line="+36"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-107"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+166"/>
         <location filename="../core/searchprogressmanager.cpp" line="-13"/>
         <source>Completed</source>
         <translation>Completado</translation>
@@ -2273,12 +2286,17 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1908"/>
-        <location filename="../core/deviceupdatemanager.cpp" line="+1047"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+898"/>
         <source>Operation cancelled</source>
         <translation>Operación cancelada</translation>
     </message>
     <message>
-        <location filename="../core/deviceupdatemanager.cpp" line="-57"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="-896"/>
+        <source>Paths Updated</source>
+        <translation>Rutas actualizadas</translation>
+    </message>
+    <message>
+        <location line="+839"/>
         <source>Stopping after current catalog completes...</source>
         <translation>Deteniendo después de que se complete el catálogo actual...</translation>
     </message>
@@ -3503,6 +3521,7 @@ No se realizó la división.</translation>
         <location filename="../core/catalogprogressmanager.cpp" line="-115"/>
         <location line="+76"/>
         <location line="+72"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="-842"/>
         <source>Update</source>
         <translation>Actualizar</translation>
     </message>
@@ -5369,6 +5388,7 @@ a la papelera?</translation>
     </message>
     <message>
         <location line="+232"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+5"/>
         <location filename="../core/searchprogressmanager.cpp" line="-101"/>
         <location line="+69"/>
         <location line="+31"/>
@@ -7771,7 +7791,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>excluir</translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="+30"/>
         <source>File attributes</source>
         <translation>Atributos de archivo</translation>
     </message>
@@ -7781,8 +7801,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Tipo</translation>
     </message>
     <message>
-        <location line="-221"/>
-        <location line="+232"/>
+        <location line="-219"/>
+        <location line="+230"/>
         <source>All</source>
         <translation>Todo</translation>
     </message>
@@ -7819,26 +7839,26 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+35"/>
-        <location line="+169"/>
+        <location line="+177"/>
         <location line="+188"/>
         <location line="+122"/>
         <source>Size</source>
         <translation>Tamaño</translation>
     </message>
     <message>
-        <location line="-425"/>
-        <location line="+313"/>
+        <location line="-433"/>
+        <location line="+321"/>
         <location line="+122"/>
         <source>Date</source>
         <translation>Fecha</translation>
     </message>
     <message>
-        <location line="-378"/>
+        <location line="-386"/>
         <source>File metadata</source>
         <translation>Metadatos del archivo</translation>
     </message>
     <message>
-        <location line="+75"/>
+        <location line="+83"/>
         <source>Width</source>
         <translation>Ancho</translation>
     </message>

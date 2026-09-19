@@ -4,6 +4,7 @@
 #include <QSqlQuery>
 #include <QSqlDatabase>
 #include <QCoreApplication>
+#include "statusbarmessagebuilder.h"
 
 DeviceUpdateManager::DeviceUpdateManager(QObject *parent)
     : QObject(parent)
@@ -154,6 +155,22 @@ void DeviceUpdateManager::replaceStorageRoot(Device* storageDevice,
             << r.foldersUpdated;   // [3]
 
     emit operationRunningChanged();
+
+    // Completion report (DSR-F7, DSR-F8, DSR-C5). Built here, once, in the
+    // MainWindow translation context, so K2 (status bar) and K3 (activity panel)
+    // render identical text from a single set of translations. A UI layer must
+    // not compose its own variant of it.
+    if (m_catalogProgressManager) {
+        StatusBarMessageBuilder builder;
+        builder.setOperation(QCoreApplication::translate("MainWindow", "Update"))
+               .setStatus(QCoreApplication::translate("MainWindow", "Completed"))
+               .setDeviceContext(r.catalogsUpdated, r.catalogsUpdated, storageDevice->name)
+               .setProcess(QCoreApplication::translate("MainWindow", "Paths Updated"),
+                           r.filesUpdated, r.filesUpdated)
+               .addResult(QCoreApplication::translate("MainWindow", "Folders found"),
+                          r.foldersUpdated);
+        m_catalogProgressManager->showMessage(builder.build(), 5000);
+    }
 
     // Defer operationCompleted so it fires after the current call stack (saveDeviceForm)
     // unwinds — matching the async behaviour of updateDeviceHierarchy.

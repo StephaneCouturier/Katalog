@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+176"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4487"/>
+        <location line="+4553"/>
         <source>Search</source>
         <translation>Iskanje</translation>
     </message>
     <message>
-        <location line="-4607"/>
+        <location line="-4673"/>
         <source>Stopped</source>
         <translation>Ustavljeno</translation>
     </message>
@@ -45,9 +45,10 @@
         <location line="+7"/>
         <location line="+81"/>
         <location line="+2222"/>
-        <location line="+602"/>
+        <location line="+623"/>
+        <location line="+26"/>
         <location line="+20"/>
-        <location line="+1213"/>
+        <location line="+1232"/>
         <location line="+11"/>
         <location line="+60"/>
         <location line="+374"/>
@@ -55,14 +56,14 @@
         <translation>V teku</translation>
     </message>
     <message>
-        <location line="-4488"/>
-        <location line="+4095"/>
+        <location line="-4554"/>
+        <location line="+4161"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Končano</translation>
     </message>
     <message>
-        <location line="-3444"/>
+        <location line="-3510"/>
         <source>Empty database path provided</source>
         <translation>Podana prazna pot do zbirke podatkov</translation>
     </message>
@@ -148,12 +149,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2529"/>
+        <location line="+2595"/>
         <source>Size</source>
         <translation>Velikost</translation>
     </message>
     <message>
-        <location line="-2528"/>
+        <location line="-2594"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
@@ -247,12 +248,12 @@ Izberite drugo ime in poskusite znova.</translation>
     </message>
     <message>
         <location line="+85"/>
-        <location line="+601"/>
+        <location line="+648"/>
         <source>Create</source>
         <translation>Ustvari</translation>
     </message>
     <message>
-        <location line="-494"/>
+        <location line="-541"/>
         <source>Catalog creation was stopped.</source>
         <translation>Ustvarjanje kataloga je bilo ustavljeno.</translation>
     </message>
@@ -288,7 +289,8 @@ Izberite drugo ime in poskusite znova.</translation>
         <translation>Napaka: %1</translation>
     </message>
     <message>
-        <location line="+237"/>
+        <location line="+238"/>
+        <location line="+46"/>
         <source>Update</source>
         <translation>Posodobi</translation>
     </message>
@@ -429,7 +431,7 @@ Izberite drugo ime.</translation>
         <translation>Shranjevanje s tem ID-jem že obstaja. Izberite drug ID.</translation>
     </message>
     <message>
-        <location line="+128"/>
+        <location line="+147"/>
         <source>Selected device is not a catalog</source>
         <translation>Izbrana naprava ni katalog</translation>
     </message>
@@ -1151,7 +1153,17 @@ Izberite drugo ime.</translation>
         <translation>Pot shranjevanja se je spremenila.</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+1"/>
+        <source>Old path:</source>
+        <translation>Stara pot:</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>New path:</source>
+        <translation>Nova pot:</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>How should the catalog indexes be updated?</source>
         <translation>Kako je treba posodobiti indekse kataloga?</translation>
     </message>
@@ -1930,6 +1942,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+285"/>
         <location line="+36"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-107"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+166"/>
         <location filename="../core/searchprogressmanager.cpp" line="-13"/>
         <source>Completed</source>
         <translation>Končano</translation>
@@ -2253,12 +2266,17 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1908"/>
-        <location filename="../core/deviceupdatemanager.cpp" line="+1047"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+898"/>
         <source>Operation cancelled</source>
         <translation>Operacija preklicana</translation>
     </message>
     <message>
-        <location filename="../core/deviceupdatemanager.cpp" line="-57"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="-896"/>
+        <source>Paths Updated</source>
+        <translation>Poti posodobljene</translation>
+    </message>
+    <message>
+        <location line="+839"/>
         <source>Stopping after current catalog completes...</source>
         <translation>Ustavljanje po dokončanju trenutnega kataloga...</translation>
     </message>
@@ -2680,6 +2698,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location filename="../core/catalogprogressmanager.cpp" line="-115"/>
         <location line="+76"/>
         <location line="+72"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="-842"/>
         <source>Update</source>
         <translation>Posodobi</translation>
     </message>
@@ -5727,6 +5746,7 @@ Razdelitev ni bila izvedena.</translation>
     </message>
     <message>
         <location line="+232"/>
+        <location filename="../core/deviceupdatemanager.cpp" line="+5"/>
         <location filename="../core/searchprogressmanager.cpp" line="-101"/>
         <location line="+69"/>
         <location line="+31"/>
@@ -7772,7 +7792,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>izključi</translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="+30"/>
         <source>File attributes</source>
         <translation>Atributi datoteke</translation>
     </message>
@@ -7782,8 +7802,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Tip</translation>
     </message>
     <message>
-        <location line="-221"/>
-        <location line="+232"/>
+        <location line="-219"/>
+        <location line="+230"/>
         <source>All</source>
         <translation>Vse</translation>
     </message>
@@ -7820,26 +7840,26 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+35"/>
-        <location line="+169"/>
+        <location line="+177"/>
         <location line="+188"/>
         <location line="+122"/>
         <source>Size</source>
         <translation>Velikost</translation>
     </message>
     <message>
-        <location line="-425"/>
-        <location line="+313"/>
+        <location line="-433"/>
+        <location line="+321"/>
         <location line="+122"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
     <message>
-        <location line="-378"/>
+        <location line="-386"/>
         <source>File metadata</source>
         <translation>Metapodatki datoteke</translation>
     </message>
     <message>
-        <location line="+75"/>
+        <location line="+83"/>
         <source>Width</source>
         <translation>Širina</translation>
     </message>

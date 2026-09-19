@@ -794,7 +794,8 @@ void MainWindow::saveDeviceForm()
         QString queryUpdateStorageSQL = QLatin1String(R"(
                                     UPDATE storage
                                     SET storage_name =:storage_name,
-                                        storage_id   =:new_storage_id
+                                        storage_id   =:new_storage_id,
+                                        storage_path =:storage_path
                                     WHERE storage_id =:storage_id
                                 )");
 
@@ -802,6 +803,10 @@ void MainWindow::saveDeviceForm()
         updateQuery.prepare(queryUpdateStorageSQL);
         updateQuery.bindValue(":storage_name", activeDevice->name);
         updateQuery.bindValue(":new_storage_id", previousExternalID);
+        // storage_path follows the save, not the path-root replacement (DSR-C8):
+        // written on every branch, so Skip and Full re-scan no longer leave it
+        // holding the old path while device_path holds the new one.
+        updateQuery.bindValue(":storage_path", activeDevice->path);
         updateQuery.bindValue(":storage_id", activeDevice->externalID);
         updateQuery.exec();
 

@@ -118,6 +118,23 @@ here for familiarity, and it can be changed to any other value without contradic
 anything. That is precisely why OPQ-C14 requires it to live in one named constant —
 changing the choice must stay a one-line edit.
 
+### Note on the path-root replacement (OPQ-C2)
+
+A **path-root replacement** — the disk-free index repair offered when a device's
+path changes, specified in `SpecDeviceStorageRoot.md` — counts as an **update**
+entry for OPQ-C2 and is queued, shown, guarded and drained exactly like any other
+device update. It is not a third entry type: it runs through `DeviceUpdateManager`
+on a device, contends for the same single-writer database, and has no property the
+queue needs to distinguish.
+
+It is short — typically a fraction of a second — which is precisely the case
+OPQ-F11 and OPQ-F12 exist for: the panel is painted before it starts and lingers
+afterwards, so a repair that takes no measurable time is still seen to have run.
+
+`SpecDeviceStorageRoot.md` DSR-C6 and DSR-C7 state the K3 obligations this
+implies, including that a replacement must not release or advance the queue when
+it is not itself the running entry.
+
 ### Note on the reach of OPQ-C16
 
 OPQ-C16 covers catalog creation, device updates and search, and nothing else. Two

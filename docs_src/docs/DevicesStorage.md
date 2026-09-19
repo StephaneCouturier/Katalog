@@ -1,8 +1,8 @@
 ---
-version: "2.12"
+version: "2.13"
 ---
 # Devices: Storage
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![2.13](https://img.shields.io/badge/Version-2.13-blue)
 
 ## Summary
 This page describes all the features of the **Storage list** view of the [Devices](Devices) screen and how to use them.

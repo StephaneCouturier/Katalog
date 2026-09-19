@@ -701,11 +701,19 @@ private:
         int     deviceId = 0;
         bool    isCreate = false;
         QString deviceName;
+        // A path-root replacement is an update entry (SpecOperationQueue.md,
+        // note on OPQ-C2), distinguished only by what the entry runs and by
+        // carrying the two paths the replacement needs.
+        bool    isReplaceRoot = false;
+        QString previousPath;
+        QString newPath;
     };
     QList<QueuedOperation> m_pendingDeviceUpdates;
     QueuedOperation        m_runningOperation;
     bool                   m_hasRunningOperation = false;
     void enqueueOperation(int deviceId, bool isCreate, const QString &deviceName);
+    void enqueueReplaceRoot(int deviceId, const QString &deviceName,
+                            const QString &previousPath, const QString &newPath);
     bool isDeviceQueuedOrRunning(int deviceId) const;
     void emitQueueChanged();
     // Releases the entry that just ended and hands over to the next one; called

@@ -1398,13 +1398,10 @@ Device::StorageRootReplaceResult Device::replaceStorageRootInIndexes(
         result.catalogsUpdated++;
     }
 
-    // UPDATE storage_path
-    QSqlQuery storQ(db);
-    storQ.prepare(QLatin1String("UPDATE storage SET storage_path = :path WHERE storage_id = :id"));
-    storQ.bindValue(":path", newN);
-    storQ.bindValue(":id",   externalID);
-    if (!storQ.exec())
-        qWarning() << "WARNING: replaceStorageRootInIndexes: storage_path UPDATE failed:" << storQ.lastError().text();
+    // storage.storage_path is deliberately NOT written here (DSR-C8). It is a
+    // second copy of device.device_path, written when the device is saved; the
+    // save runs on every branch of the path-change question, this operation only
+    // on one. Maintaining it in both places is what let the two drift apart.
 
     return result;
 }

@@ -2916,6 +2916,14 @@ void AppManager::onDevicePageUpdateCompleted(const QList<qint64> &results)
     emit deviceListChanged();
     refreshDeviceList();
 
+    // A path-root replacement reports in the activity panel and opens no dialog
+    // (DSR-F8): its message is already on screen, built by core. Releasing the
+    // entry here is what lets the queue carry on (DSR-C7).
+    if (m_runningOperation.isReplaceRoot) {
+        finishRunningOperation();
+        return;
+    }
+
     if (m_isBatchUpdate) {
         // Single operationCompleted for the whole "All Active" batch — show aggregate
         QVariantMap report = buildBatchUpdateReport(results);
@@ -2993,6 +3001,22 @@ void AppManager::enqueueOperation(int deviceId, bool isCreate, const QString &de
     op.deviceId   = deviceId;
     op.isCreate   = isCreate;
     op.deviceName = deviceName;
+    m_pendingDeviceUpdates.append(op);
+    emitQueueChanged();
+}
+//----------------------------------------------------------------------
+void AppManager::enqueueReplaceRoot(int deviceId, const QString &deviceName,
+                                    const QString &previousPath, const QString &newPath)
+{
+    if (isDeviceQueuedOrRunning(deviceId))
+        return;
+
+    QueuedOperation op;
+    op.deviceId      = deviceId;
+    op.deviceName    = deviceName;
+    op.isReplaceRoot = true;
+    op.previousPath  = previousPath;
+    op.newPath       = newPath;
     m_pendingDeviceUpdates.append(op);
     emitQueueChanged();
 }
@@ -3095,6 +3119,29 @@ void AppManager::startNextDeviceUpdate()
     Device *dev = new Device();
     dev->ID = next.deviceId;
     dev->loadDevice(m_connectionName);
+
+    if (next.isReplaceRoot) {
+        // Same handler set as a device update: it ends in
+        // onDevicePageUpdateCompleted(), which releases the entry and lets the
+        // queue carry on. The completion message is built in core and arrives
+        // through CatalogProgressManager (DSR-F7, DSR-C5).
+        setupDeviceUpdateManagerForDevices();
+        m_deviceUpdateStatusText = StatusBarMessageBuilder()
+                                       .setOperation(tr("Update"))
+                                       .setStatus(tr("In Progress"))
+                                       .setDeviceContext(m_operationsStarted,
+                                                         m_operationsStarted + m_pendingDeviceUpdates.size(),
+                                                         dev->name)
+                                       .build();
+        emit deviceUpdateStatusChanged();
+        // Deferred so the panel paints before the work starts (OPQ-F11). The
+        // replacement is near-instant, so without this it would never be seen.
+        QTimer::singleShot(kStartDeferralMs, this, [this, dev, next]() {
+            m_deviceUpdateManager->replaceStorageRoot(dev, next.previousPath, next.newPath,
+                                                      collection->databaseMode, collection->folder);
+        });
+        return;
+    }
 
     if (next.isCreate) {
         // Queued creation: the device and catalog rows already exist, so this
@@ -4004,6 +4051,7 @@ QString AppManager::saveStorageDetails(int deviceId, const QVariantMap &fields)
     q.prepare(QLatin1String(R"(
         UPDATE storage
         SET storage_id           = :storage_id,
+            storage_path         = :path,
             storage_type         = :type,
             storage_label        = :label,
             storage_file_system  = :fs,
@@ -4020,6 +4068,10 @@ QString AppManager::saveStorageDetails(int deviceId, const QVariantMap &fields)
         WHERE storage_id = :old_id
     )"));
     q.bindValue(":storage_id", newExtId);
+    // storage_path follows the save, not the path-root replacement (DSR-C8):
+    // written on every branch, so Skip and Full re-index no longer leave it
+    // holding the old path while device_path holds the new one.
+    q.bindValue(":path",   dev.path);
     q.bindValue(":type",   dev.storage->type);
     q.bindValue(":label",  dev.storage->label);
     q.bindValue(":fs",     dev.storage->fileSystem);
@@ -4053,13 +4105,32 @@ void AppManager::triggerDeviceRescan(int deviceId)
 //----------------------------------------------------------------------
 void AppManager::triggerStoragePathReplace(int deviceId, const QString &previousPath, const QString &newPath)
 {
-    Device *dev = new Device();
-    dev->ID = deviceId;
-    dev->loadDevice(m_connectionName);
-    if (!m_deviceUpdateManager)
-        setupDeviceUpdateManager();
-    m_deviceUpdateManager->replaceStorageRoot(dev, previousPath, newPath,
-                                              collection->databaseMode, collection->folder);
+    // Requested through the queue, exactly like a device update (DSR-C6): driving
+    // DeviceUpdateManager directly set no running flag, so the replacement was
+    // invisible in the activity panel and could start on top of another operation.
+    // Refused rather than queued while a search runs, for the reason updateDevice()
+    // gives: nothing drains the queue when a search ends.
+    if (m_searchIsRunning) {
+        qWarning() << "AppManager::triggerStoragePathReplace: refused, a search is running";
+        return;
+    }
+
+    Device dev;
+    dev.ID = deviceId;
+    dev.loadDevice(m_connectionName);
+
+    if (m_deviceUpdateIsRunning || (m_deviceUpdateManager && m_deviceUpdateManager->operationRunning())) {
+        enqueueReplaceRoot(deviceId, dev.name, previousPath, newPath);
+        return;
+    }
+
+    m_isBatchUpdate = false;
+    // m_showEachUpdateReport is deliberately left alone: it is a drain-wide mode,
+    // not a per-entry one, and an update queued behind this replacement still owes
+    // the user its report. The replacement opens no dialog of its own because
+    // onDevicePageUpdateCompleted() returns before that flag is consulted (DSR-F8).
+    enqueueReplaceRoot(deviceId, dev.name, previousPath, newPath);
+    startNextDeviceUpdate();
 }
 //----------------------------------------------------------------------
 QStringList AppManager::getDeviceExcludeFolders(int deviceId) const

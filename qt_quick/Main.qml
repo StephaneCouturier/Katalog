@@ -1074,8 +1074,8 @@ Kirigami.ApplicationWindow {
                 text: (pageDeviceEdit_form.deviceType === "Catalog"
                        ? qsTr("The catalog source path changed.")
                        : qsTr("The storage path changed."))
-                      + "\n\nOld path: " + editStoragePathDialog.previousPath
-                      + "\nNew path: " + editStoragePathDialog.newPath
+                      + "\n\n" + qsTr("Old path:") + " " + editStoragePathDialog.previousPath
+                      + "\n" + qsTr("New path:") + " " + editStoragePathDialog.newPath
                       + "\n\n" + qsTr("How should the catalog indexes be updated?")
             }
         }
