@@ -82,6 +82,7 @@ ColumnLayout {
 
         if (d.type === "Storage") {
             edit_lineEdit_StorageExtId.text   = String(d.storageExtId)
+            storageUserIdWarning.visible      = false
             edit_lineEdit_StorageType.text    = d.storageType
             edit_lineEdit_StorageLabel.text   = d.storageLabel
             edit_lineEdit_StorageFS.text      = d.storageFileSystem
@@ -214,6 +215,24 @@ ColumnLayout {
     }
 
     ListModel { id: excludeFoldersModel }
+
+    // The save already went through; this reports a duplicate number, it does not
+    // refuse anything (STI-F5). Inline rather than a dialog or a passive notice:
+    // it is a warning attached to a field the user can still correct.
+    Kirigami.InlineMessage {
+        id: storageUserIdWarning
+        Layout.fillWidth: true
+        Layout.margins: Kirigami.Units.gridUnit
+        type: Kirigami.MessageType.Warning
+        showCloseButton: true
+        visible: false
+        text: qsTr("Another storage already uses this ID.")
+    }
+
+    Connections {
+        target: appManager1
+        function onStorageUserIdDuplicate() { storageUserIdWarning.visible = true }
+    }
 
     // ═══ Main Form ═════════════════════════════════════════════════════════════
     GridLayout {
@@ -493,7 +512,13 @@ ColumnLayout {
         }
 
         Controls.Label { text: qsTr("Storage ID"); opacity: 0.7; visible: root.deviceType === "Storage" }
-        Controls.TextField { id: edit_lineEdit_StorageExtId; Layout.fillWidth: true; visible: root.deviceType === "Storage" }
+        Controls.TextField {
+            id: edit_lineEdit_StorageExtId
+            Layout.fillWidth: true
+            visible: root.deviceType === "Storage"
+            // The warning goes away as soon as the number it complained about is edited.
+            onTextEdited: storageUserIdWarning.visible = false
+        }
 
         Controls.Label { text: qsTr("Type"); opacity: 0.7; visible: root.deviceType === "Storage" }
         Controls.TextField { id: edit_lineEdit_StorageType; Layout.fillWidth: true; visible: root.deviceType === "Storage" }

@@ -368,6 +368,27 @@ void Device::verifyHasSubDevice(QString connectionName)
         hasSubDevice = false;
 }
 
+bool Device::storageUserIDExists(int userID, int excludeStorageId,
+                                 const QString &connectionName)
+{
+    // 0 means "no number written on this disk yet" and never counts as a clash.
+    if (userID == 0)
+        return false;
+
+    QSqlQuery query(QSqlDatabase::database(connectionName));
+    query.prepare(QLatin1String(R"(
+        SELECT COUNT(storage_id)
+        FROM   storage
+        WHERE  storage_user_id = :user_id
+          AND  storage_id     != :exclude_id
+    )"));
+    query.bindValue(":user_id",    userID);
+    query.bindValue(":exclude_id", excludeStorageId);
+    if (!query.exec() || !query.next())
+        return false;
+    return query.value(0).toInt() > 0;
+}
+//----------------------------------------------------------------------
 bool Device::verifyStorageExternalIDExists()
 {
     QSqlQuery queryExternalID(QSqlDatabase::database(m_connectionName));

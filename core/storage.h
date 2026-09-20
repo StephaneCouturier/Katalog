@@ -66,6 +66,9 @@ public:
 
     // Data members
     int ID;
+    // The number the user writes on the physical disk. Distinct from ID, which is
+    // the internal key device.device_external_id points at (SpecStorageIdentity.md).
+    int userID = 0;
     QString name;
     QString type;
     QString path;

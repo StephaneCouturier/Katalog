@@ -2774,6 +2774,9 @@ QVariantList AppManager::getDeviceList(const QString &viewFilter, int scopeDevic
             storage.ID = n.externalId;
             storage.setConnectionName(conn);
             storage.loadStorage(conn);
+            // The number the user wrote on the disk; device_external_id stays the
+            // internal key and is not shown (STI-F10).
+            item[QStringLiteral("storageUserId")]       = storage.userID;
             item[QStringLiteral("storageType")]         = storage.type;
             item[QStringLiteral("storageLabel")]        = storage.label;
             item[QStringLiteral("storageFileSystem")]   = storage.fileSystem;
@@ -3823,7 +3826,9 @@ QVariantMap AppManager::getDeviceDetails(int deviceId) const
         r["isFullDevice"]    = dev.catalog->isFullDevice;
         r["excludeFolders"]  = dev.catalog->getExcludeFolders();
     } else if (dev.type == "Storage") {
-        r["storageExtId"]         = dev.externalID;
+        // The user's number (STI-F10); device_external_id is the internal key and
+        // is not shown or editable.
+        r["storageExtId"]         = dev.storage->userID;
         r["storageType"]          = dev.storage->type;
         r["storageLabel"]         = dev.storage->label;
         r["storageFileSystem"]    = dev.storage->fileSystem;
@@ -4020,15 +4025,17 @@ QString AppManager::saveStorageDetails(int deviceId, const QVariantMap &fields)
     dev.ID = deviceId;
     dev.loadDevice(conn);
 
-    // Check Storage external ID uniqueness if changed
-    int newExtId = fields.value("storageExtId", dev.externalID).toInt();
-    if (newExtId != dev.externalID) {
-        Device check;
-        check.externalID = newExtId;
-        if (check.verifyStorageExternalIDExists())
-            return tr("There is already a Storage with this ID. Choose a different ID.");
-        dev.externalID = newExtId;
-    }
+    // The form edits the user's number, never device_external_id / storage_id
+    // (STI-C1, STI-C6). The previous code reassigned dev.externalID here and then
+    // matched the UPDATE below on the already-new value, so on an ID change the
+    // whole statement matched nothing: every storage field was silently discarded
+    // while dev.saveDevice() had already re-pointed the device row — an orphan.
+    const int newUserId = fields.value("storageExtId", dev.storage->userID).toInt();
+    // A duplicate warns and the save proceeds (STI-F5); the number is the user's
+    // label for a disk, not a key.
+    const bool userIdIsDuplicate =
+        (newUserId != dev.storage->userID)
+        && Device::storageUserIDExists(newUserId, dev.externalID, conn);
 
     dev.totalSpace = fields.value("totalSpace", (qlonglong)dev.totalSpace).toLongLong();
     dev.freeSpace  = fields.value("freeSpace",  (qlonglong)dev.freeSpace).toLongLong();
@@ -4050,7 +4057,7 @@ QString AppManager::saveStorageDetails(int deviceId, const QVariantMap &fields)
     QSqlQuery q(QSqlDatabase::database(conn));
     q.prepare(QLatin1String(R"(
         UPDATE storage
-        SET storage_id           = :storage_id,
+        SET storage_user_id      = :user_id,
             storage_path         = :path,
             storage_type         = :type,
             storage_label        = :label,
@@ -4067,7 +4074,7 @@ QString AppManager::saveStorageDetails(int deviceId, const QVariantMap &fields)
             storage_picture_path = :pic
         WHERE storage_id = :old_id
     )"));
-    q.bindValue(":storage_id", newExtId);
+    q.bindValue(":user_id", newUserId);
     // storage_path follows the save, not the path-root replacement (DSR-C8):
     // written on every branch, so Skip and Full re-index no longer leave it
     // holding the old path while device_path holds the new one.
@@ -4089,7 +4096,11 @@ QString AppManager::saveStorageDetails(int deviceId, const QVariantMap &fields)
     if (!q.exec())
         return q.lastError().text();
 
+    dev.storage->userID = newUserId;
     collection->saveStorageTableToFile();
+
+    if (userIdIsDuplicate)
+        emit storageUserIdDuplicate();
     return {};
 }
 //----------------------------------------------------------------------

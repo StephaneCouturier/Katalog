@@ -605,7 +605,7 @@ void MainWindow::editDevice()
         ui->Devices_widget_EditStorageFields->show();
         ui->Devices_widget_EditCatalogFields->hide();
 
-        ui->Storage_lineEdit_Panel_ID->setText(QString::number(activeDevice->storage->ID));
+        ui->Storage_lineEdit_Panel_ID->setText(QString::number(activeDevice->storage->userID));
         ui->Storage_lineEdit_Panel_Type->setText(activeDevice->storage->type);
         ui->Storage_lineEdit_Panel_Label->setText(activeDevice->storage->label);
         ui->Storage_lineEdit_Panel_FileSystem->setText(activeDevice->storage->fileSystem);
@@ -660,8 +660,15 @@ void MainWindow::saveDeviceForm()
     activeDevice->parentID = (selectedParentId > 0) ? selectedParentId : 0;
     activeDevice->name = ui->Devices_lineEdit_Name->text();
 
-    if (activeDevice->type == "Storage")
-        activeDevice->externalID = ui->Storage_lineEdit_Panel_ID->text().toInt();
+    // The form edits the user's number only. device_external_id / storage_id are
+    // the internal key and are never written from the UI (STI-C1, STI-C6): doing
+    // so is what let a save re-key a storage row and orphan its device.
+    int previousStorageUserID = 0;
+    int newStorageUserID      = 0;
+    if (activeDevice->type == "Storage") {
+        previousStorageUserID = activeDevice->storage->userID;
+        newStorageUserID      = ui->Storage_lineEdit_Panel_ID->text().toInt();
+    }
 
     if (previousName != activeDevice->name
         and activeDevice->verifyDeviceNameExists()==true
@@ -676,18 +683,14 @@ void MainWindow::saveDeviceForm()
         msgBox.exec();
         return;
     }
-    if (previousExternalID != activeDevice->externalID
-        and activeDevice->verifyStorageExternalIDExists()==true
-        and activeDevice->type=="Storage"){
-        //Duplicate storage IDs (device external ID) are not allowed
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Katalog");
-        msgBox.setText( tr("There is already a Storage with this ID.<b>")
-                       + "<br/><br/>"+tr("Choose a different ID and try again."));
-        msgBox.setIcon(QMessageBox::Warning);
-        msgBox.exec();
-        return;
-    }
+    // A duplicate user number no longer blocks the save (STI-F5). The number is
+    // the user's own label for a disk, not a key, so two disks may carry the
+    // same one; the warning is shown after the save, further below.
+    bool storageUserIDIsDuplicate = false;
+    if (activeDevice->type == "Storage" and previousStorageUserID != newStorageUserID)
+        storageUserIDIsDuplicate = Device::storageUserIDExists(newStorageUserID,
+                                                               activeDevice->externalID,
+                                                               m_connectionName);
 
     //Get new path: remove the / at the end if any, except for / alone (root directory in Linux)
     activeDevice->path = ui->Devices_lineEdit_Path->text();
@@ -793,22 +796,26 @@ void MainWindow::saveDeviceForm()
         //Update Storage name
         QString queryUpdateStorageSQL = QLatin1String(R"(
                                     UPDATE storage
-                                    SET storage_name =:storage_name,
-                                        storage_id   =:new_storage_id,
-                                        storage_path =:storage_path
-                                    WHERE storage_id =:storage_id
+                                    SET storage_name    =:storage_name,
+                                        storage_path    =:storage_path,
+                                        storage_user_id =:storage_user_id
+                                    WHERE storage_id    =:storage_id
                                 )");
 
         QSqlQuery updateQuery(QSqlDatabase::database(m_connectionName));
         updateQuery.prepare(queryUpdateStorageSQL);
         updateQuery.bindValue(":storage_name", activeDevice->name);
-        updateQuery.bindValue(":new_storage_id", previousExternalID);
         // storage_path follows the save, not the path-root replacement (DSR-C8):
         // written on every branch, so Skip and Full re-scan no longer leave it
         // holding the old path while device_path holds the new one.
         updateQuery.bindValue(":storage_path", activeDevice->path);
+        updateQuery.bindValue(":storage_user_id", newStorageUserID);
+        // Keyed on the internal id, which the form cannot change (STI-C6). The
+        // previous statement set storage_id from the edited field and matched on
+        // the new value, so on an ID change it updated nothing at all.
         updateQuery.bindValue(":storage_id", activeDevice->externalID);
         updateQuery.exec();
+        activeDevice->storage->userID = newStorageUserID;
 
         //loadStorageTableToModel();
         updateStorageSelectionStatistics();
@@ -885,9 +892,7 @@ void MainWindow::saveDeviceForm()
         QSqlQuery queryStorage(QSqlDatabase::database(m_connectionName));
         QString queryStorageSQL = QLatin1String(R"(
                                     UPDATE storage
-                                    SET storage_id =:new_storage_id,
-                                        storage_type =:storage_type,
-                                        storage_location =:storage_location,
+                                    SET storage_type =:storage_type,
                                         storage_label =:storage_label,
                                         storage_file_system =:storage_file_system,
                                         storage_total_space =:storage_total_space,
@@ -904,7 +909,6 @@ void MainWindow::saveDeviceForm()
                                 )");
 
         queryStorage.prepare(queryStorageSQL);
-        queryStorage.bindValue(":new_storage_id",        ui->Storage_lineEdit_Panel_ID->text());
         queryStorage.bindValue(":storage_type",          ui->Storage_lineEdit_Panel_Type->text());
         queryStorage.bindValue(":storage_label",         ui->Storage_lineEdit_Panel_Label->text());
         queryStorage.bindValue(":storage_file_system",   ui->Storage_lineEdit_Panel_FileSystem->text());
@@ -916,6 +920,13 @@ void MainWindow::saveDeviceForm()
         queryStorage.bindValue(":storage_comment2",      ui->Storage_lineEdit_Panel_Comment2->text());
         queryStorage.bindValue(":storage_comment3",      ui->Storage_lineEdit_Panel_Comment3->text());
         queryStorage.bindValue(":storage_picture_path",  ui->Storage_comboBox_PicturePath->currentText());
+        // Bound at last (STI-F11). These were named in the SET clause but never
+        // bound, so an unbound placeholder went in as NULL and every Storage save
+        // silently blanked them. storage_location is dropped from the statement
+        // instead: nothing reads it and Storage has no member for it, so the way
+        // to preserve it is not to write it.
+        queryStorage.bindValue(":storage_total_space",   activeDevice->totalSpace);
+        queryStorage.bindValue(":storage_free_space",    activeDevice->freeSpace);
         queryStorage.bindValue(":storage_id",            activeDevice->storage->ID);
         queryStorage.exec();
 
@@ -924,6 +935,16 @@ void MainWindow::saveDeviceForm()
 
         //Save data to file
         collection->saveStorageTableToFile();
+
+        // After the save, not instead of it (STI-F5): the number is the user's
+        // label for a disk, so two disks may legitimately carry the same one.
+        if (storageUserIDIsDuplicate) {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Katalog");
+            msgBox.setText(tr("Another storage already uses this ID."));
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.exec();
+        }
     }
 
     //Update previous and new parent device values
@@ -1415,7 +1436,7 @@ void MainWindow::loadDevicesStorageToModel(){
                             0,
                             device_name,
                             device_type,
-                            device_external_id,
+                            s.storage_user_id,
                             device_path,
                             device_total_file_size,
                             device_total_file_count,
@@ -1509,6 +1530,8 @@ void MainWindow::loadDevicesStorageToModel(){
         int parentId                    = loadStorageQuery.value(1).toInt();
         QString name                    = loadStorageQuery.value(2).toString();
         QString type                    = loadStorageQuery.value(3).toString();
+        // The user's number (STI-F10), not device_external_id: that is the internal
+        // key and is never shown.
         int externalId                  = loadStorageQuery.value(4).toInt();
         QString path                    = loadStorageQuery.value(5).toString();
         qint64 size                     = loadStorageQuery.value(6).toLongLong();

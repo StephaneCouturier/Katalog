@@ -482,7 +482,7 @@ static const QList<DeviceTableModel::Column> &storageColumns()
         //  key                    header             kind          full   memory width
         { "name",               QT_TRANSLATE_NOOP("DeviceTableModel", "Name"),           Kind::Name,    false, false, 220 },
         { "active",             QT_TRANSLATE_NOOP("DeviceTableModel", "Active"),         Kind::Boolean, true,  false,  60 },
-        { "externalId",         QT_TRANSLATE_NOOP("DeviceTableModel", "Storage ID"),     Kind::Number,  false, false,  80 },
+        { "storageUserId",      QT_TRANSLATE_NOOP("DeviceTableModel", "Storage ID"),     Kind::Number,  false, false,  80 },
         { "fileCount",          QT_TRANSLATE_NOOP("DeviceTableModel", "Number of files"),Kind::Number,  false, false, 110 },
         { "totalFileSize",      QT_TRANSLATE_NOOP("DeviceTableModel", "Total Size"),     Kind::Size,    false, false, 100 },
         { "usedSpace",          QT_TRANSLATE_NOOP("DeviceTableModel", "Used space"),     Kind::Size,    false, false, 100 },

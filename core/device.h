@@ -141,6 +141,13 @@ public:
         bool verifyDeviceNameExists();
         bool verifyParentDeviceExistsInPhysicalGroup();
         bool verifyStorageExternalIDExists();
+        /**
+         * True when another storage already carries this user number.
+         * @param excludeStorageId the storage being saved, so it never matches itself.
+         * Advisory only: a duplicate warns, it does not block (STI-F5).
+         */
+        static bool storageUserIDExists(int userID, int excludeStorageId,
+                                        const QString &connectionName);
         bool verifyDeviceHasSourceMapping();
         bool verifyDeviceHasTargetMapping();
         void getIDFromDeviceName();

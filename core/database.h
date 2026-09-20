@@ -206,6 +206,7 @@ public:
     static QSqlError ensureMappingSourceCollectionColumn(const QString &connectionName);
     static QSqlError ensureMappingIncludeEmptyDirsColumn(const QString &connectionName);
     static QSqlError ensureDeviceCommentColumn(const QString &connectionName);
+    static QSqlError ensureStorageUserIdColumn(const QString &connectionName);
 
 private:
     // Helper method to execute SQL with error checking

@@ -48,7 +48,11 @@ void Storage::generateID()
     queryDeviceNumber.next();
     int maxID = queryDeviceNumber.value(0).toInt();
     ID = maxID + 1;
-    name = name + "_"+QString::number(ID);
+    // At creation there is no number on the disk yet, so the user number starts
+    // as the internal one; the user edits it afterwards. The name suffix uses the
+    // user number, not the internal key (STI-F7).
+    userID = ID;
+    name = name + "_"+QString::number(userID);
 }
 
 void Storage::insertStorage()
@@ -70,7 +74,8 @@ void Storage::insertStorage()
                             storage_build_date,
                             storage_comment1,
                             storage_comment2,
-                            storage_comment3)
+                            storage_comment3,
+                            storage_user_id)
                       VALUES(
                             :new_id,
                             :storage_name,
@@ -86,12 +91,14 @@ void Storage::insertStorage()
                             "",
                             "",
                             "",
-                            "")
+                            "",
+                            :storage_user_id)
                     )");
 
     QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
     insertQuery.prepare(querySQL);
     insertQuery.bindValue(":new_id", ID);
+    insertQuery.bindValue(":storage_user_id", userID > 0 ? userID : ID);
     insertQuery.bindValue(":storage_name", name);
     if(name=="")
         insertQuery.bindValue(":storage_name","");
@@ -131,7 +138,8 @@ void Storage::loadStorage(QString connectionName)
                                 storage_comment1,
                                 storage_comment2,
                                 storage_comment3,
-                                storage_picture_path
+                                storage_picture_path,
+                                storage_user_id
                             FROM storage
                             WHERE storage_id=:storage_id
                         )");
@@ -155,6 +163,7 @@ void Storage::loadStorage(QString connectionName)
             comment2     = query.value(12).toString();
             comment3     = query.value(13).toString();
             picturePath  = query.value(14).toString();
+            userID       = query.value(15).toInt();
         } else {
         }
     } else {

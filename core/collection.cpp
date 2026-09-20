@@ -704,7 +704,8 @@ void Collection::loadStorageFileToTable()
                                         storage_comment1,
                                         storage_comment2,
                                         storage_comment3,
-                                        storage_picture_path)
+                                        storage_picture_path,
+                                        storage_user_id)
                                   values(
                                         :storage_id,
                                         :storage_name,
@@ -722,7 +723,8 @@ void Collection::loadStorageFileToTable()
                                         :storage_comment1,
                                         :storage_comment2,
                                         :storage_comment3,
-                                        :storage_picture_path)
+                                        :storage_picture_path,
+                                        :storage_user_id)
                                 )");
 
                     QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
@@ -744,6 +746,12 @@ void Collection::loadStorageFileToTable()
                     insertQuery.bindValue(":storage_comment2",      fieldList[14]);
                     insertQuery.bindValue(":storage_comment3",      fieldList[15]);
                     insertQuery.bindValue(":storage_picture_path",  fieldList.size() > 16 ? fieldList[16] : "");
+                    // 18th field (STI-C5). Files written before this change have 17,
+                    // so fall back to the internal id — the same value the upgrade
+                    // back-fill uses, so a Memory collection reads back consistently.
+                    insertQuery.bindValue(":storage_user_id",       fieldList.size() > 17
+                                                                        ? fieldList[17].toInt()
+                                                                        : fieldList[0].toInt());
 
                     if(line!="")
                         insertQuery.exec();
@@ -1421,6 +1429,7 @@ void Collection::saveStorageTableToFile()
             << "Comment2"      << "\t"
             << "Comment3"      << "\t"
             << "PicturePath"   << "\t"
+            << "UserID"        << "\t"
             << '\n';
 
         //Get data
@@ -1443,7 +1452,8 @@ void Collection::saveStorageTableToFile()
                             storage_comment1      ,
                             storage_comment2      ,
                             storage_comment3      ,
-                            storage_picture_path
+                            storage_picture_path  ,
+                            storage_user_id
                         FROM storage
                                     )");
         query.prepare(querySQL);

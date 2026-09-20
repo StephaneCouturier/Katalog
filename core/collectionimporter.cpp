@@ -129,6 +129,8 @@ void CollectionImporter::close()
     m_sourceMode.clear();
     m_deviceIdMap.clear();
     m_catalogIdMap.clear();
+    m_storageIdMap.clear();
+    m_storageNameMap.clear();
     m_storageIdOffset = 0;
 }
 
@@ -413,7 +415,12 @@ int CollectionImporter::remapAndInsertCatalog(int srcCatalogId)
     ins.bindValue(":catalog_source_path_is_active",  srcQ.value(7));
     ins.bindValue(":catalog_include_hidden",         srcQ.value(8));
     ins.bindValue(":catalog_file_type",              srcQ.value(9));
-    ins.bindValue(":catalog_storage",                srcQ.value(10));
+    // Follows a storage renamed by STI-F3. Catalogs imported before the rename
+    // are corrected by applyStorageRenameToImportedCatalogs(); these are the
+    // ones that come after it.
+    ins.bindValue(":catalog_storage",                m_storageNameMap.value(
+                                                         srcQ.value(10).toString(),
+                                                         srcQ.value(10).toString()));
     ins.bindValue(":catalog_include_symblinks",      srcQ.value(11));
     ins.bindValue(":catalog_is_full_device",         srcQ.value(12));
     ins.bindValue(":catalog_date_loaded",            srcQ.value(13));
@@ -852,6 +859,47 @@ bool CollectionImporter::importSubTree(int srcDeviceId, int targetParentId,
             }
         }
     }
+    else if (deviceType == "Storage") {
+        // A Storage device's own storage row, whether or not any catalog sits
+        // beneath it (STI-F2) — importStorageForCatalog only ever ran from the
+        // Catalog branch, so a catalog-less Storage device got no row at all.
+        // The external id is then set from the id actually created, so it can
+        // never point at a row that does not exist (STI-F1, STI-C2). Before
+        // this, the source id was carried over while the row was renumbered.
+        QString storageName;
+        {
+            // Prefer the storage the device actually points at; fall back to the
+            // device name, the way the Catalog branch falls back above.
+            QSqlQuery extQ(QSqlDatabase::database(m_sourceConnectionName));
+            extQ.prepare("SELECT device_external_id FROM device WHERE device_id = :id");
+            extQ.bindValue(":id", srcDeviceId);
+            extQ.exec();
+            if (extQ.next()) {
+                QSqlQuery nameQ(QSqlDatabase::database(m_sourceConnectionName));
+                nameQ.prepare("SELECT storage_name FROM storage WHERE storage_id = :sid");
+                nameQ.bindValue(":sid", extQ.value(0).toInt());
+                nameQ.exec();
+                if (nameQ.next())
+                    storageName = nameQ.value(0).toString();
+            }
+            if (storageName.isEmpty())
+                storageName = srcDeviceName(srcDeviceId);
+        }
+
+        const int newStorageId = importStorageByName(storageName);
+        if (newStorageId > 0) {
+            QSqlQuery upd(QSqlDatabase::database(m_target->connectionName()));
+            upd.prepare("UPDATE device SET device_external_id = :ext WHERE device_id = :id");
+            upd.bindValue(":ext", newStorageId);
+            upd.bindValue(":id",  newDeviceId);
+            if (!upd.exec())
+                qWarning() << "WARNING: CollectionImporter: device_external_id UPDATE failed:"
+                           << upd.lastError().text();
+        } else {
+            qWarning() << "WARNING: CollectionImporter: no storage row imported for Storage device"
+                       << srcDeviceId << storageName;
+        }
+    }
 
     // Record a CollectionImport link for every imported device (except id=1, the Physical
     // root group that always exists in both collections and is never re-inserted).
@@ -889,6 +937,8 @@ bool CollectionImporter::importDevice(int sourceDeviceId)
     m_stopRequested.storeRelease(0);
     m_deviceIdMap.clear();
     m_catalogIdMap.clear();
+    m_storageIdMap.clear();
+    m_storageNameMap.clear();
     buildIdOffsets();
 
     // Count Catalog-type devices in the sub-tree being imported for progress display.
@@ -960,6 +1010,8 @@ int CollectionImporter::importAllDevices()
 
     m_deviceIdMap.clear();
     m_catalogIdMap.clear();
+    m_storageIdMap.clear();
+    m_storageNameMap.clear();
     buildIdOffsets();
 
     // Count all Catalog-type devices in the source for per-catalog progress display.
@@ -1279,28 +1331,17 @@ void CollectionImporter::copyStorageImage(const QString &picturePath)
         QFile::copy(src, dst);
 }
 
-void CollectionImporter::importStorageForCatalog(int srcCatalogId)
+int CollectionImporter::importStorageByName(const QString &storageName)
 {
-    // Identify the storage name referenced by this catalog
-    QSqlQuery catQ(QSqlDatabase::database(m_sourceConnectionName));
-    catQ.prepare("SELECT catalog_storage FROM catalog WHERE catalog_id = :id");
-    catQ.bindValue(":id", srcCatalogId);
-    catQ.exec();
-    if (!catQ.next()) return;
-    const QString storageName = catQ.value(0).toString();
-    if (storageName.isEmpty()) return;
+    if (storageName.isEmpty())
+        return 0;
+
+    // One row per disk per run: five catalogs on the same disk must not create
+    // five storage rows.
+    if (m_storageIdMap.contains(storageName))
+        return m_storageIdMap.value(storageName);
 
     const QString tgtConn = m_target->connectionName();
-
-    // Skip if the same storage name already exists in the target
-    {
-        QSqlQuery chk(QSqlDatabase::database(tgtConn));
-        chk.prepare("SELECT COUNT(*) FROM storage WHERE storage_name = :n");
-        chk.bindValue(":n", storageName);
-        chk.exec();
-        if (chk.next() && chk.value(0).toInt() > 0)
-            return;
-    }
 
     // Read the full source storage row
     QSqlQuery srcQ(QSqlDatabase::database(m_sourceConnectionName));
@@ -1308,13 +1349,33 @@ void CollectionImporter::importStorageForCatalog(int srcCatalogId)
         SELECT storage_id, storage_name, storage_type, storage_location, storage_path,
                storage_label, storage_file_system, storage_total_space, storage_free_space,
                storage_brand, storage_model, storage_serial_number, storage_build_date,
-               storage_comment1, storage_comment2, storage_comment3, storage_picture_path
+               storage_comment1, storage_comment2, storage_comment3, storage_picture_path,
+               storage_user_id
         FROM storage WHERE storage_name = :n
     )"));
     srcQ.bindValue(":n", storageName);
     srcQ.exec();
-    if (!srcQ.next()) return;
+    if (!srcQ.next()) {
+        qWarning() << "WARNING: CollectionImporter: no source storage row named" << storageName;
+        return 0;
+    }
 
+    // Target name. A storage of this name already in the target is treated as a
+    // different disk, so the imported one is disambiguated rather than merged
+    // into it (STI-F3). Previously this returned early and created nothing,
+    // which left the imported device pointing at no storage row at all.
+    const QString srcName = srcQ.value(1).toString();
+    QString newName;
+    {
+        QStringList existingNames;
+        QSqlQuery namesQ(QSqlDatabase::database(tgtConn));
+        namesQ.exec("SELECT storage_name FROM storage");
+        while (namesQ.next())
+            existingNames << namesQ.value(0).toString();
+        newName = resolveNameConflict(srcName, existingNames);
+    }
+
+    // Target id
     int newStorageId = srcQ.value(0).toInt() + m_storageIdOffset;
     {
         QSqlQuery chkId(QSqlDatabase::database(tgtConn));
@@ -1334,15 +1395,16 @@ void CollectionImporter::importStorageForCatalog(int srcCatalogId)
             storage_id, storage_name, storage_type, storage_location, storage_path,
             storage_label, storage_file_system, storage_total_space, storage_free_space,
             storage_brand, storage_model, storage_serial_number, storage_build_date,
-            storage_comment1, storage_comment2, storage_comment3, storage_picture_path)
+            storage_comment1, storage_comment2, storage_comment3, storage_picture_path,
+            storage_user_id)
         VALUES (
             :id, :name, :type, :loc, :path,
             :label, :fs, :total, :free,
             :brand, :model, :serial, :build,
-            :c1, :c2, :c3, :pic)
+            :c1, :c2, :c3, :pic, :userid)
     )"));
     ins.bindValue(":id",     newStorageId);
-    ins.bindValue(":name",   srcQ.value(1));
+    ins.bindValue(":name",   newName);
     ins.bindValue(":type",   srcQ.value(2));
     ins.bindValue(":loc",    srcQ.value(3));
     ins.bindValue(":path",   srcQ.value(4));
@@ -1358,11 +1420,63 @@ void CollectionImporter::importStorageForCatalog(int srcCatalogId)
     ins.bindValue(":c2",     srcQ.value(14));
     ins.bindValue(":c3",     srcQ.value(15));
     ins.bindValue(":pic",    srcQ.value(16));
-    ins.exec();
+    // Copied verbatim: the number is written on a physical disk, so import never
+    // offsets, suffixes or disambiguates it. Only the NAME is disambiguated
+    // (STI-C3); a duplicate number is surfaced to the user, not resolved silently.
+    ins.bindValue(":userid", srcQ.value(17));
+    if (!ins.exec()) {
+        qWarning() << "WARNING: CollectionImporter: storage INSERT failed:" << ins.lastError().text();
+        return 0;
+    }
 
     copyStorageImage(srcQ.value(16).toString());
-}
 
+    m_storageIdMap.insert(storageName, newStorageId);
+    if (newName != srcName) {
+        m_storageNameMap.insert(srcName, newName);
+        applyStorageRenameToImportedCatalogs(srcName, newName);
+    }
+
+    return newStorageId;
+}
+//----------------------------------------------------------------------
+void CollectionImporter::applyStorageRenameToImportedCatalogs(const QString &oldName,
+                                                              const QString &newName)
+{
+    if (m_catalogIdMap.isEmpty())
+        return;
+
+    // Only catalogs this run imported. Catalogs already in the target that name
+    // the same storage belong to the target's own disk and MUST NOT be moved.
+    QStringList idList;
+    for (int catalogId : m_catalogIdMap)
+        idList << QString::number(catalogId);
+
+    QSqlQuery q(QSqlDatabase::database(m_target->connectionName()));
+    q.prepare(QString(QLatin1String("UPDATE catalog SET catalog_storage = :new "
+                                    "WHERE catalog_storage = :old AND catalog_id IN (%1)"))
+                  .arg(idList.join(QLatin1Char(','))));
+    q.bindValue(":new", newName);
+    q.bindValue(":old", oldName);
+    if (!q.exec())
+        qWarning() << "WARNING: CollectionImporter: catalog_storage rename failed:" << q.lastError().text();
+}
+//----------------------------------------------------------------------
+void CollectionImporter::importStorageForCatalog(int srcCatalogId)
+{
+    // Identify the storage name referenced by this catalog, then delegate: a
+    // catalog and a Storage device must resolve storage the same way.
+    QSqlQuery catQ(QSqlDatabase::database(m_sourceConnectionName));
+    catQ.prepare("SELECT catalog_storage FROM catalog WHERE catalog_id = :id");
+    catQ.bindValue(":id", srcCatalogId);
+    catQ.exec();
+    if (!catQ.next()) return;
+    importStorageByName(catQ.value(0).toString());
+}
+//----------------------------------------------------------------------
+// storage_user_id is deliberately absent from the UPDATE below: updating from an
+// external collection refreshes what the disk contains, not the number the user
+// wrote on it, so the target's own number stands (STI-F8).
 void CollectionImporter::updateStorageRecord(int srcStorageId, int targetStorageId)
 {
     QSqlQuery srcQ(QSqlDatabase::database(m_sourceConnectionName));

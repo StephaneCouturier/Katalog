@@ -129,6 +129,7 @@ QString Database::getSQLCreateTableStorage(DatabaseType dbType)
     return QString(R"(
                 CREATE TABLE IF NOT EXISTS storage(
                     storage_id            %1  primary key default 0,
+                    storage_user_id       %1 default 0,
                     storage_name          TEXT,
                     storage_type          TEXT,
                     storage_location      TEXT,
@@ -1281,6 +1282,35 @@ QSqlError Database::ensureDeviceCommentColumn(const QString &connectionName)
             "ALTER TABLE device ADD COLUMN device_comment TEXT");
         if (err.type() != QSqlError::NoError) {
             qWarning() << "WARNING: Failed to add device_comment column:" << err.text();
+            return err;
+        }
+    }
+    return QSqlError();
+}
+//----------------------------------------------------------------------
+
+QSqlError Database::ensureStorageUserIdColumn(const QString &connectionName)
+{
+    // Unconditional column guard rather than a step inside runMigration_2_13: the
+    // field joined the 2.13 cycle after databases had already been stamped 2.13,
+    // so the versioned migration no longer runs for them (SpecStorageIdentity.md
+    // STI-C4, same remedy as ensureDeviceCommentColumn above).
+    //
+    // storage_id is the internal key; storage_user_id is the number the user
+    // writes on the disk. Existing rows are back-filled from storage_id so every
+    // device shows the same number after the upgrade as before it (STI-F9).
+    QStringList storageColumns = getTableColumns(connectionName, "storage");
+    if (!storageColumns.contains("storage_user_id")) {
+        QSqlError err = executeSql(connectionName,
+            "ALTER TABLE storage ADD COLUMN storage_user_id NUMERIC DEFAULT 0");
+        if (err.type() != QSqlError::NoError) {
+            qWarning() << "WARNING: Failed to add storage_user_id column:" << err.text();
+            return err;
+        }
+        err = executeSql(connectionName,
+            "UPDATE storage SET storage_user_id = storage_id");
+        if (err.type() != QSqlError::NoError) {
+            qWarning() << "WARNING: Failed to back-fill storage_user_id:" << err.text();
             return err;
         }
     }

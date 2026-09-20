@@ -138,6 +138,13 @@ QSqlError DatabaseManager::runMigrations(const QString &connectionName, Collecti
         if (err.type() != QSqlError::NoError) return err;
     }
 
+    // Same reason again: storage_user_id joined the 2.13 cycle after collections
+    // had already been stamped 2.13 (SpecStorageIdentity.md STI-C4).
+    {
+        QSqlError err = Database::ensureStorageUserIdColumn(connectionName);
+        if (err.type() != QSqlError::NoError) return err;
+    }
+
     // Same reason again: mapping_include_empty_dirs joined the 2.13 cycle after
     // collections had already been stamped 2.13 (SpecBackup.md BKP-C9).
     {

@@ -602,6 +602,9 @@ signals:
     void deviceUpdateReportReady(QVariantMap report);
     void firstRunChanged();
     void deviceListChanged();
+    // Another storage already carries the number just saved (STI-F5). The save
+    // went through; this is a warning, not a refusal.
+    void storageUserIdDuplicate();
     void checksumVerificationCompleted(QVariantMap result);
     void splitCompleted(bool success, const QString &error);
 
