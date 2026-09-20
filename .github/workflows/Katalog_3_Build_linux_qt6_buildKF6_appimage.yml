@@ -465,6 +465,10 @@ jobs:
         # files for qmlimportscanner to discover).
         # Dynamically discover all Qt6 QML/Quick/Charts/Labs libraries so the
         # AppImage is self-contained regardless of what Qt version is on the host.
+        # libQt6DBus is listed explicitly: the xdgdesktopportal platform theme
+        # plugin (bundled below) talks to the host portal over D-Bus, and that
+        # plugin is copied after linuxdeploy has run, so linuxdeploy never sees
+        # its dependencies.
         LIBRARY_FLAGS=""
         while IFS= read -r src; do
           LIBRARY_FLAGS="$LIBRARY_FLAGS --library $src"
@@ -473,6 +477,7 @@ jobs:
           -name "libQt6Qml*.so.6"   -o \
           -name "libQt6Quick*.so.6" -o \
           -name "libQt6Labs*.so.6"  -o \
+          -name "libQt6DBus.so.6"   -o \
           -name "libQt6Charts*.so.6" \
         \) ! -name "libQt6Quick3D*.so.6" \
           ! -name "libQt6QuickTimeline*.so.6" \
@@ -499,12 +504,42 @@ jobs:
           'export QML2_IMPORT_PATH="${APPDIR}/usr/qml${QML2_IMPORT_PATH:+:$QML2_IMPORT_PATH}"' \
           'export QML_IMPORT_PATH="${APPDIR}/usr/qml${QML_IMPORT_PATH:+:$QML_IMPORT_PATH}"' \
           'export XDG_DATA_DIRS="${APPDIR}/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"' \
-          'if [ -z "$KDE_SESSION_VERSION" ] && [ -z "$KDE_FULL_SESSION" ]; then unset QT_QPA_PLATFORMTHEME; fi' \
+          '# File/folder selection goes through xdg-desktop-portal, so the user gets' \
+          '# the HOST desktop native dialog (Plasma on Plasma, GTK on GNOME/XFCE).' \
+          '# The host QT_QPA_PLATFORMTHEME value cannot be honoured: Plasma sets it' \
+          '# to "kde", whose plugin lives in frameworkintegration, is not bundled,' \
+          '# and must not be loaded from the host (it is built against the host KF6' \
+          '# and Qt ABI). Without the portal, Qt has no native dialog helper at all' \
+          '# and falls back to its non-native QtQuick.Dialogs implementation, which' \
+          '# is why Qt/labs/folderlistmodel must stay in the bundled QML list below.' \
+          'if [ -f "${APPDIR}/usr/plugins/platformthemes/libqxdgdesktopportal.so" ]; then' \
+          '  export QT_QPA_PLATFORMTHEME=xdgdesktopportal' \
+          'else' \
+          '  unset QT_QPA_PLATFORMTHEME' \
+          'fi' \
           'exec "${APPDIR}/usr/bin/Katalog" "$@"' \
           > AppDir/AppRun
         chmod +x AppDir/AppRun
         echo "AppRun contents:"
         cat AppDir/AppRun
+
+        # Phase 1b: bundle the xdg-desktop-portal platform theme plugin.
+        # This is what gives the user the host desktop own file dialog instead of
+        # Qt non-native Qt Quick one. linuxdeploy-plugin-qt may already have
+        # deployed it with the other platformthemes; copy it unconditionally so the
+        # result does not depend on that, and report what ended up in the bundle.
+        echo "Deploying xdg-desktop-portal platform theme..."
+        mkdir -p AppDir/usr/plugins/platformthemes
+        PORTAL_SRC="$QT_ROOT_DIR/plugins/platformthemes/libqxdgdesktopportal.so"
+        if [ -f "$PORTAL_SRC" ]; then
+          cp -n "$PORTAL_SRC" AppDir/usr/plugins/platformthemes/
+          echo "  Bundled: libqxdgdesktopportal.so"
+        else
+          echo "  WARNING: $PORTAL_SRC not found in this Qt build."
+          echo "  WARNING: file dialogs will use Qt non-native Qt Quick fallback."
+        fi
+        echo "  platformthemes now in AppDir:"
+        ls -1 AppDir/usr/plugins/platformthemes/ 2>/dev/null || echo "   (none)"
 
         # Phase 2: deploy QML module plugins.
         # linuxdeploy-plugin-qt only analyses libs passed via --executable/--library;
@@ -641,6 +676,23 @@ jobs:
             echo "  MISSING: $lib — AppImage may fail on systems with older Qt6"
           fi
         done
+
+        # Verify the file-dialog chain. Qt/labs/folderlistmodel is a hard
+        # requirement: it is the only thing that makes a dialog appear when the
+        # host has no portal backend. 3.0.beta1 shipped without it and no file
+        # dialog opened on any tester machine, so this is a build blocker.
+        echo "=== Verifying file dialog support ==="
+        if [ -d "AppDir/usr/qml/Qt/labs/folderlistmodel" ]; then
+          echo "  OK: Qt/labs/folderlistmodel (non-native dialog fallback)"
+        else
+          echo "  FATAL: Qt/labs/folderlistmodel is missing — no file dialog would open."
+          exit 1
+        fi
+        if [ -f "AppDir/usr/plugins/platformthemes/libqxdgdesktopportal.so" ]; then
+          echo "  OK: libqxdgdesktopportal.so (host native dialogs via portal)"
+        else
+          echo "  WARNING: no portal platform theme — dialogs will look non-native"
+        fi
 
         # Phase 3: create the AppImage with the type2 runtime (fuse2 + fuse3 + fuse-free).
         ARCH=x86_64 "$HOME/linuxdeploy/appimagetool" \
