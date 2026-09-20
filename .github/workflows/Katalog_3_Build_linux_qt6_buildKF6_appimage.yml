@@ -529,6 +529,17 @@ jobs:
           DEST="AppDir/usr/qml"
           mkdir -p "$DEST"
 
+          # Qt/labs/folderlistmodel is NOT imported by any Katalog .qml, but it is
+          # imported by Qt's own non-native QtQuick.Dialogs implementation
+          # (QtQuick/Dialogs/quickimpl/qml/FileDialog.qml + FolderDialog.qml).
+          # The AppImage bundles no platform-theme plugin, so no native file dialog
+          # helper exists on the target and that non-native fallback is ALWAYS the
+          # code path taken. Without this module every file/folder dialog silently
+          # fails to open, logging only:
+          #   QML FileDialog: Failed to load non-native FileDialog implementation:
+          #   module "Qt.labs.folderlistmodel" is not installed
+          # (3.0.beta1 shipped without it — no dialog appeared on any tester's
+          # machine, whatever the distro or desktop.)
           for module in \
             "QtCore" \
             "QtCharts" \
@@ -537,7 +548,8 @@ jobs:
             "QtQuick/Layouts" \
             "QtQuick/Dialogs" \
             "Qt/labs/settings" \
-            "Qt/labs/platform"; do
+            "Qt/labs/platform" \
+            "Qt/labs/folderlistmodel"; do
             src="$QT_QML_DIR/$module"
             dst_parent="$DEST/$(dirname "$module")"
             if [ -d "$src" ]; then
