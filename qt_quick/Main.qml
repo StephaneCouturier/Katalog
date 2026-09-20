@@ -1397,12 +1397,30 @@ Kirigami.ApplicationWindow {
             // (SpecSelection.md SEL-F5). Always present, including the All state,
             // so the rows below never shift as the selection changes.
             Controls.ItemDelegate {
+                id: selectionReminder
                 Layout.fillWidth: true
                 Layout.leftMargin:  Kirigami.Units.gridUnit
                 Layout.rightMargin: Kirigami.Units.gridUnit
                 Layout.preferredHeight: root.headerRowHeight
                 topPadding: 0
                 bottomPadding: 0
+
+                // The row paints its own surface instead of taking the active Qt
+                // Quick Controls style's (THM-F10, the rule THM-F9 set for the
+                // Explore lists). Under Fusion — the style every packaged build
+                // resolves to — ItemDelegate's background is an opaque #ffffff
+                // rectangle that paints unconditionally, which covered the tinted
+                // Selection page surface; under org.kde.desktop the same delegate
+                // is transparent until hovered, so a development build never
+                // showed it. Idle is fully transparent so selectionPageColor shows
+                // through; the hover tint stays because the row is clickable
+                // (SEL-F6), and comes from Kirigami.Theme, never a literal
+                // (THM-C13). Not a list row: no stripe and no highlighted state,
+                // it mirrors the selection rather than being selectable.
+                background: Rectangle {
+                    color: selectionReminder.hovered ? Kirigami.Theme.hoverColor
+                                                     : "transparent"
+                }
 
                 // Scrolls the list to the selected card — the "where is it?" half
                 // of the problem this reminder solves. It deliberately does NOT

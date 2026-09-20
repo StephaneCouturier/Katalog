@@ -49,6 +49,8 @@ Selection cards together with the alignment that depends on it (`SEL-F7`,
 `SEL-C8`), added 2026-09-12; and the **content of the Selection card's second
 line** (`SEL-F8`, `SEL-C10`).
 
+*Pointer, not a requirement:* the **surface** of the `SEL-F5` reminder row — transparent when idle, tinted on hover — is governed by `THM-F10` and `THM-C13` in `SpecTheme.md`, not by any row here; `SEL-F5`, `SEL-F6` and `SEL-C7` are unchanged by it.
+
 **Out of scope (non-goals):** the device tree's collapse and expand state and its
 header controls; the ordering and filtering of the device list; the Devices page
 and the device editor; connected-drives mode and its directory picker; every
