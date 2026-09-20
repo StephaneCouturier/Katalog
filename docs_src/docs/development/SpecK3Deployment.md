@@ -6,7 +6,7 @@ description: Requirements for what a packaged Katalog 3 Linux build must contain
 
 # K3 DEPLOYMENT — QML MODULES AND PLATFORM INTEGRATION IN PACKAGED BUILDS
 
-![Status](https://img.shields.io/badge/Status-Approved-brightgreen) ![Implementation](https://img.shields.io/badge/Implementation-partial-yellow) ![K3](https://img.shields.io/badge/K3-3.0-blue)
+![Status](https://img.shields.io/badge/Status-Approved-brightgreen) ![Implementation](https://img.shields.io/badge/Implementation-mostly%20complete-green) ![K3](https://img.shields.io/badge/K3-3.0-blue)
 
 ## Context
 
@@ -65,7 +65,8 @@ packaged builds — recorded below as a known limitation, and deliberately *not*
 planned work (`DPL-C4`). Bundling Breeze icon files, building
 `qqc2-desktop-style` and building `frameworkintegration` were each considered
 and **not** authorised. The Windows and macOS portable bundles, Flatpak and any
-other downstream manifest. K2 packaging. The behaviour of any dialog or page
+other downstream manifest. K2 packaging (see
+[SpecK2Deployment](SpecK2Deployment.md)). The behaviour of any dialog or page
 once it loads. No `qt_quick` source change is authorised by this page.
 
 ---
@@ -79,10 +80,22 @@ Goals in real use, independent of how they are built.
 | DPL-O1 | A tester running a released package gets the same **working** features as someone running a build from source: every dialog and page that works in a development build also works in the package. A QML module absent from the package MUST NOT silently disable a feature. | [Planned] |
 | DPL-O2 | A user selecting a file or folder in a packaged build gets the file dialog of the desktop they are actually running, and can still select a file or folder on a desktop that provides none. | [Planned] |
 
-`DPL-O1` is marked `[Planned]`, not `[Implemented]`: its first instance — the
-file and folder dialogs — is closed and verified by `DPL-F1`, but the goal is
-only as strong as its verification, and no other page has been walked through
-in a packaged build yet.
+Both operational rows are marked `[Planned]`, not `[Implemented]`, and
+deliberately so: a goal is only as strong as its verification.
+
+- `DPL-O1` — its first instance, the file and folder dialogs, is closed and
+  verified (`DPL-F1`), but no other page has been walked through in a packaged
+  build yet.
+- `DPL-O2` — its first half is verified: the host's own dialog appears on
+  openSUSE Leap / Plasma, Linux Mint / Cinnamon and Manjaro / XFCE (`DPL-F3`).
+  Its second half is not: none of those three hosts lacked a portal backend, so
+  the fallback is built and asserted but has not been seen in use (`DPL-F4`).
+
+The *Implementation* shield reads **mostly complete** on that basis. Every
+functional row about what the package contains is implemented (`DPL-F1`,
+`DPL-F3`, `DPL-F4`) and every constructional row is satisfied. What remains is
+the breadth of verification behind the two operational rows, and `DPL-F2`, which
+is a release gate rather than something that can be built.
 
 ## Functional requirements — *what the system does*
 
@@ -92,8 +105,8 @@ Observable behaviour that can be triggered and watched.
 |----|-------------|--------|
 | DPL-F1 | The Linux AppImage contains every QML module the `qt_quick` sources import **and** every module those modules load at runtime. This explicitly includes `Qt.labs.folderlistmodel`, which no Katalog source imports: the non-native `QtQuick.Dialogs` implementation requires it, and that implementation is what runs whenever the host offers no native dialog helper. Verified on openSUSE Leap / Plasma: the File-mode dialog appears. | [Implemented] |
 | DPL-F2 | A packaged build that logs `module "X" is not installed`, or `Failed to load non-native ... implementation`, is a **release blocker**. Such a line means a feature is silently unavailable to every user of that package. | [Planned] |
-| DPL-F3 | In a packaged Linux build, file and folder selection uses the **host desktop's own** dialog — Plasma's dialog on Plasma, the host's dialog elsewhere — obtained through Qt's `xdgdesktopportal` platform theme. | [Planned] |
-| DPL-F4 | When the host provides no portal backend, file and folder selection degrades to Qt's non-native `QtQuick.Dialogs` implementation and still works. Degradation is a supported path, not an error state. | [Planned] |
+| DPL-F3 | In a packaged Linux build, file and folder selection uses the **host desktop's own** dialog — Plasma's dialog on Plasma, the host's dialog elsewhere — obtained through Qt's `xdgdesktopportal` platform theme. Verified on openSUSE Leap / Plasma, Linux Mint / Cinnamon and Manjaro / XFCE. | [Implemented] |
+| DPL-F4 | When the host provides no portal backend, file and folder selection degrades to Qt's non-native `QtQuick.Dialogs` implementation and still works. Degradation is a supported path, not an error state. Built and asserted: the launcher selects the portal theme only when the plugin is present and otherwise leaves the theme unset, and the build fails if the fallback's QML module is missing. None of the three hosts tested for `DPL-F3` lacked a portal backend, so the degraded path is implemented but not yet observed on a host that needs it. | [Implemented] |
 
 ## Constructional requirements — *how it is built / limits / MUST-NOTs*
 
@@ -102,9 +115,9 @@ Boundaries and implementation constraints, not user-visible behaviour.
 | ID | Requirement | Status |
 |----|-------------|--------|
 | DPL-C1 | The AppImage QML module list is a **hand-maintained allow-list**, not a scan of the sources. Adding, changing or removing a QML `import` in any `qt_quick` source therefore MUST update that list in the **same change**. A source import that the list does not cover is the defect recorded in *Context*, and it fails silently. | [Implemented] |
-| DPL-C2 | The `xdgdesktopportal` platform-theme plugin MUST be present in the bundle, otherwise `DPL-F3` cannot take effect however the theme is selected. | [Planned] |
-| DPL-C3 | `DPL-F1` remains mandatory **after** `DPL-F3` is in place: it is a hard dependency of `DPL-F3`, not an alternative to it, because `DPL-F4` is the path taken on every host without a portal backend. The bundled `Qt.labs.folderlistmodel` MUST NOT be dropped as "no longer needed now that dialogs are native". | [Planned] |
-| DPL-C4 | The Controls style and icon theme of packaged builds are **out of scope and not planned work**. `DPL-F3` addresses the reported appearance by using the host's own dialog. Bundling Breeze icon files, building `qqc2-desktop-style` and building `frameworkintegration` were each put to the maintainer and **not** authorised; none of them may be introduced on the strength of this page. See *Known limitations*. | [Planned] |
+| DPL-C2 | The `xdgdesktopportal` platform-theme plugin MUST be present in the bundle, otherwise `DPL-F3` cannot take effect however the theme is selected. | [Implemented] |
+| DPL-C3 | `DPL-F1` remains mandatory **after** `DPL-F3` is in place: it is a hard dependency of `DPL-F3`, not an alternative to it, because `DPL-F4` is the path taken on every host without a portal backend. The bundled `Qt.labs.folderlistmodel` MUST NOT be dropped as "no longer needed now that dialogs are native". | [Implemented] |
+| DPL-C4 | The Controls style and icon theme of packaged builds are **not part of this change**. `DPL-F3` addresses the reported appearance by using the host's own dialog instead. Bundling Breeze icon files, building `qqc2-desktop-style` and building `frameworkintegration` were each put to the maintainer for this round and **not** authorised, so no work on them is authorised here. They are not ruled out: introducing any of them is a **separate decision**, to be taken on its own merits, and requires the maintainer's approval and an amendment to this page first. See *Known limitations*. | [Implemented] |
 | DPL-C5 | This work adds, changes and removes **no** user-visible string, and changes **no** file under `core/`. It is deployment configuration only. | [Implemented] |
 
 ---
@@ -121,8 +134,9 @@ here, or for work that was agreed.
 | No KDE platform theme | `frameworkintegration`, which provides the `kde` platform theme plugin, is not built for the bundle. Building it was **not** authorised. `DPL-F3` reaches the host's dialog through the portal instead. |
 
 These three are the reason a packaged build looks unlike a local build. They are
-listed as **limitations**, not as requirements and not as a backlog: nothing on
-this list is authorised work.
+listed as **limitations**, not as requirements: none of them is authorised work
+today, and per `DPL-C4` taking any of them on is a separate decision rather than
+something this page already sanctions.
 
 ---
 
@@ -143,18 +157,26 @@ is the difference between the two.
 - **DPL-F3** — On a Plasma host with a portal backend running, open the
   collection file dialog from the AppImage. The dialog is the host's own file
   dialog, not Qt's Fusion-styled Qt Quick dialog. Repeat on a non-Plasma host
-  (XFCE or Cinnamon): the dialog is that desktop's own.
+  (XFCE or Cinnamon): the dialog is that desktop's own. *Verified after
+  implementation on openSUSE Leap / Plasma, Linux Mint / Cinnamon and
+  Manjaro / XFCE. CachyOS / Plasma and openSUSE MicroOS / Kalpa, which reported
+  the original defect, have not been retested.*
 - **DPL-F4** — On a host with no portal backend available, open the same dialog.
   It still appears, as Qt's non-native implementation, and a file can be
-  selected. This is the case that `DPL-F1` keeps alive.
+  selected. This is the case that `DPL-F1` keeps alive. *Open: this case is the
+  one gap in the `DPL-F3` verification — all three hosts tested had a backend.
+  Proving it needs a host without one, or a run with the portal plugin removed
+  from the AppDir.*
 - **DPL-C1** — Diff the QML `import` lines of every `qt_quick` source against
   the module list in the AppImage workflow. Every imported module is covered.
   Then confirm the last change that touched a QML import also touched the list.
 - **DPL-C2** — List the platform-theme plugins inside the built AppDir: the
-  `xdgdesktopportal` plugin is present.
+  `xdgdesktopportal` plugin is present. *Verified after implementation: the
+  plugin is copied into the AppDir and the build logs the plugins it contains.*
 - **DPL-C3** — Confirm `Qt.labs.folderlistmodel` is still in the bundled module
   list after the portal work. Its removal is a failure even if every test host
-  happens to have a portal backend.
+  happens to have a portal backend. *Verified after implementation: the module
+  is still bundled and the build now fails outright if it is absent.*
 - **DPL-C4** — Review the diff: no Breeze icon files are copied into the AppDir,
   and neither `qqc2-desktop-style` nor `frameworkintegration` has been added to
   the bundle's framework build list.
