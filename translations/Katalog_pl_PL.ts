@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+176"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4553"/>
+        <location line="+4569"/>
         <source>Search</source>
         <translation>Szukaj</translation>
     </message>
     <message>
-        <location line="-4673"/>
+        <location line="-4689"/>
         <source>Stopped</source>
         <translation>Zatrzymane</translation>
     </message>
@@ -45,10 +45,10 @@
         <location line="+7"/>
         <location line="+81"/>
         <location line="+2222"/>
-        <location line="+623"/>
+        <location line="+626"/>
         <location line="+26"/>
         <location line="+20"/>
-        <location line="+1232"/>
+        <location line="+1245"/>
         <location line="+11"/>
         <location line="+60"/>
         <location line="+374"/>
@@ -56,14 +56,14 @@
         <translation>W toku</translation>
     </message>
     <message>
-        <location line="-4554"/>
-        <location line="+4161"/>
+        <location line="-4570"/>
+        <location line="+4177"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Ukończone</translation>
     </message>
     <message>
-        <location line="-3510"/>
+        <location line="-3526"/>
         <source>Empty database path provided</source>
         <translation>Podano pustą ścieżkę bazy danych</translation>
     </message>
@@ -149,12 +149,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2595"/>
+        <location line="+2611"/>
         <source>Size</source>
         <translation>Rozmiar</translation>
     </message>
     <message>
-        <location line="-2594"/>
+        <location line="-2610"/>
         <source>Date</source>
         <translation>Data</translation>
     </message>
@@ -248,12 +248,12 @@ Wybierz inną nazwę i spróbuj ponownie.</translation>
     </message>
     <message>
         <location line="+85"/>
-        <location line="+648"/>
+        <location line="+651"/>
         <source>Create</source>
         <translation>Utwórz</translation>
     </message>
     <message>
-        <location line="-541"/>
+        <location line="-544"/>
         <source>Catalog creation was stopped.</source>
         <translation>Tworzenie katalogu zostało zatrzymane.</translation>
     </message>
@@ -274,7 +274,7 @@ Wybierz inną nazwę i spróbuj ponownie.</translation>
         <translation>Usuwanie nie powiodło się</translation>
     </message>
     <message>
-        <location line="+132"/>
+        <location line="+135"/>
         <source>Virtual</source>
         <translation>Wirtualny</translation>
     </message>
@@ -356,7 +356,7 @@ Wybierz inną nazwę i spróbuj ponownie.</translation>
         <translation>Nie można otworzyć pliku: %1</translation>
     </message>
     <message>
-        <location line="+153"/>
+        <location line="+155"/>
         <source>There is already a catalog with this name: %1
 Choose a different name.</source>
         <translation>Istnieje już katalog o tej nazwie: %1
@@ -426,12 +426,11 @@ Wybierz inną nazwę.</translation>
         <translation>nie</translation>
     </message>
     <message>
-        <location line="+53"/>
         <source>There is already a Storage with this ID. Choose a different ID.</source>
-        <translation>Istnieje już miejsce przechowywania o tym identyfikatorze. Wybierz inny identyfikator.</translation>
+        <translation type="vanished">Istnieje już miejsce przechowywania o tym identyfikatorze. Wybierz inny identyfikator.</translation>
     </message>
     <message>
-        <location line="+147"/>
+        <location line="+211"/>
         <source>Selected device is not a catalog</source>
         <translation>Wybrane urządzenie nie jest katalogiem</translation>
     </message>
@@ -655,7 +654,7 @@ Wybierz inną nazwę.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2597"/>
+        <location filename="../core/collection.cpp" line="+2607"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Ten folder zawiera pliki kolekcji w trybie pamięci, ale obecnie jesteś w trybie pliku.&lt;br/&gt;Przełącz na tryb pamięci lub wybierz inny folder.</translation>
     </message>
@@ -673,7 +672,7 @@ Wybierz inną nazwę.</translation>
 <context>
     <name>CollectionImporter</name>
     <message>
-        <location filename="../core/collectionimporter.cpp" line="+1656"/>
+        <location filename="../core/collectionimporter.cpp" line="+1770"/>
         <source>Name</source>
         <translation>Nazwa</translation>
     </message>
@@ -1558,7 +1557,7 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+2458"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+2486"/>
         <source>Include Checksum</source>
         <translation>Uwzględnij sumę kontrolną</translation>
     </message>
@@ -2220,7 +2219,7 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <translation>Pełne rozszerzone</translation>
     </message>
     <message>
-        <location filename="../core/device.cpp" line="+683"/>
+        <location filename="../core/device.cpp" line="+704"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
         <translation>Czy chcesz &lt;span style=&apos;color: red&apos;;&gt;usunąć&lt;/span&gt; to urządzenie %1?</translation>
     </message>
@@ -2253,7 +2252,7 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+82"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-3088"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-3116"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-490"/>
         <location line="+117"/>
         <location line="+72"/>
@@ -2265,7 +2264,7 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <translation>Operacja urządzenia jest już uruchomiona.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1908"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1936"/>
         <location filename="../core/deviceupdatemanager.cpp" line="+898"/>
         <source>Operation cancelled</source>
         <translation>Operacja anulowana</translation>
@@ -2490,7 +2489,7 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <location line="+4277"/>
         <location line="+3820"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-95"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1587"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1589"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
         <translation>Typ</translation>
@@ -2530,7 +2529,7 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <location line="+11"/>
         <location line="+91"/>
         <location line="+9"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+962"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+964"/>
         <location line="+1"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+108"/>
         <location line="+1"/>
@@ -2738,9 +2737,9 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <location line="+143"/>
         <location line="+301"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-936"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-938"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+3"/>
         <location filename="../core/search.cpp" line="+6"/>
         <source>Path</source>
@@ -2760,7 +2759,7 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
     </message>
     <message>
         <location line="-11704"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1252"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1280"/>
         <source>Virtual</source>
         <translation>Wirtualny</translation>
     </message>
@@ -2853,7 +2852,7 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
     </message>
     <message>
         <location line="-1898"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1008"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1034"/>
         <source>Comment 1</source>
         <translation>Komentarz 1</translation>
     </message>
@@ -3180,8 +3179,8 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
     <message>
         <location line="-11478"/>
         <location line="+6893"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-977"/>
-        <location line="+2831"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1003"/>
+        <location line="+2859"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+15"/>
         <location line="+2"/>
         <source>Storage</source>
@@ -3444,8 +3443,8 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <location line="+11"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+4"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-153"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2591"/>
-        <location line="+1771"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2616"/>
+        <location line="+1796"/>
         <source>Skip</source>
         <translation>Pomiń</translation>
     </message>
@@ -3750,9 +3749,9 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-8214"/>
         <location line="+709"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1292"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1294"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+607"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-654"/>
@@ -3790,9 +3789,9 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-6274"/>
         <location line="+2406"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2291"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2293"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Total Size</source>
         <translation>Całkowity rozmiar</translation>
     </message>
@@ -3822,7 +3821,7 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
     </message>
     <message>
         <location line="-3065"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-956"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-958"/>
         <source>Label</source>
         <translation>Etykieta</translation>
     </message>
@@ -3856,7 +3855,7 @@ Czy mimo to chcesz go zapisać (katalog będzie pusty)?</translation>
         <translation>Data kompilacji</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1429"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1455"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>Katalog jest już przypisany do tego urządzenia wirtualnego.</translation>
     </message>
@@ -3930,22 +3929,20 @@ Podział nie został wykonany.</translation>
         <translation>&lt;br/&gt;Migawka tej kolekcji została zapisana:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Katalogi&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Liczba plików: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (dodano: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Całkowity rozmiar plików: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (dodano: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Przechowywanie&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Wolne miejsce przechowywania: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (dodano: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Całkowite miejsce przechowywania: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (dodano: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location line="+323"/>
+        <location line="+330"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>Istnieje już katalog o tej nazwie:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
     <message>
-        <location line="+13"/>
         <source>There is already a Storage with this ID.&lt;b&gt;</source>
-        <translation>Istnieje już miejsce przechowywania o tym ID.&lt;b&gt;</translation>
+        <translation type="vanished">Istnieje już miejsce przechowywania o tym ID.&lt;b&gt;</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>Choose a different ID and try again.</source>
-        <translation>Wybierz inne ID i spróbuj ponownie.</translation>
+        <translation type="vanished">Wybierz inne ID i spróbuj ponownie.</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+31"/>
         <source>A Catalog in the Physical group can only be set under a Storage or this group. Select a Storage in this group.&lt;br/&gt;&lt;br/&gt;To use this catalog under a device in a virtual group, use the Assign command.&lt;b&gt;</source>
         <translation>Katalog w grupie fizycznej może być ustawiony tylko pod miejscem przechowywania lub tą grupą. Wybierz miejsce przechowywania w tej grupie.&lt;br/&gt;&lt;br/&gt;Aby użyć tego katalogu pod urządzeniem w grupie wirtualnej, użyj polecenia Przypisz.&lt;b&gt;</translation>
     </message>
@@ -3956,78 +3953,83 @@ Podział nie został wykonany.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+1771"/>
+        <location line="+1796"/>
         <source>Old path:</source>
         <translation>Stara ścieżka:</translation>
     </message>
     <message>
-        <location line="-1770"/>
-        <location line="+1771"/>
+        <location line="-1795"/>
+        <location line="+1796"/>
         <source>New path:</source>
         <translation>Nowa ścieżka:</translation>
     </message>
     <message>
-        <location line="-1769"/>
-        <location line="+1771"/>
+        <location line="-1794"/>
+        <location line="+1796"/>
         <source>How should the catalog indexes be updated?</source>
         <translation>Jak należy zaktualizować indeksy katalogu?</translation>
     </message>
     <message>
-        <location line="-1769"/>
-        <location line="+1771"/>
+        <location line="-1794"/>
+        <location line="+1796"/>
         <source>Replace path root</source>
         <translation>Zastąp główny katalog ścieżki</translation>
     </message>
     <message>
-        <location line="-1770"/>
+        <location line="-1795"/>
         <source>Full re-scan</source>
         <translation>Pełne ponowne skanowanie</translation>
     </message>
     <message>
-        <location line="+484"/>
+        <location line="+191"/>
+        <source>Another storage already uses this ID.</source>
+        <translation>Inne miejsce przechowywania już używa tego ID.</translation>
+    </message>
+    <message>
+        <location line="+316"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <source>Parent ID</source>
         <translation>ID nadrzędne</translation>
     </message>
     <message>
-        <location line="-2297"/>
+        <location line="-2299"/>
         <source>External ID</source>
         <translation>ID zewnętrzne</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Number of files</source>
         <translation>Liczba plików</translation>
     </message>
     <message>
-        <location line="-490"/>
+        <location line="-492"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Free space</source>
         <translation>Wolne miejsce</translation>
     </message>
     <message>
-        <location line="-492"/>
+        <location line="-494"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Total space</source>
         <translation>Całkowite miejsce</translation>
     </message>
     <message>
-        <location line="-492"/>
+        <location line="-494"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Date updated</source>
         <translation>Data aktualizacji</translation>
     </message>
     <message>
-        <location line="-491"/>
+        <location line="-493"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Group ID</source>
         <translation>ID grupy</translation>
     </message>
@@ -4243,9 +4245,9 @@ Podział nie został wykonany.</translation>
         <translation type="vanished">Wybrane urządzenie musi być katalogiem. Spróbuj z innym ID urządzenia</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2047"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2049"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Used space</source>
         <translation>Użyte miejsce</translation>
     </message>
@@ -4707,7 +4709,7 @@ Podział nie został wykonany.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1057"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1078"/>
         <source>Choose a different name and try again.</source>
         <translation>Wybierz inną nazwę i spróbuj ponownie.</translation>
     </message>
@@ -4756,7 +4758,7 @@ Podział nie został wykonany.</translation>
     <message>
         <location line="-200"/>
         <location line="+3286"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-471"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-478"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+59"/>
         <location line="+117"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-157"/>
@@ -4776,7 +4778,7 @@ Podział nie został wykonany.</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-3664"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1272"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1298"/>
         <source>Storage ID</source>
         <translation>ID miejsca przechowywania</translation>
     </message>
@@ -5143,7 +5145,7 @@ do kosza?</translation>
         <location line="+18"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-244"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <source>Device Type</source>
         <translation>Typ urządzenia</translation>
@@ -5316,9 +5318,9 @@ do kosza?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+436"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1220"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1222"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <location filename="../core/device.cpp" line="-1"/>
         <source>ID</source>
@@ -5337,9 +5339,9 @@ do kosza?</translation>
     <message>
         <location line="+2"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2299"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2301"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <source>Active</source>
         <translation>Aktywny</translation>
@@ -5991,7 +5993,7 @@ do kosza?</translation>
         <translation>%1 z %2 (%3%)</translation>
     </message>
     <message>
-        <location filename="../core/storage.cpp" line="+209"/>
+        <location filename="../core/storage.cpp" line="+218"/>
         <source>No Path was provided for the Storage: %1. Edit the device to provide one and try again.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6798,7 +6800,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDeviceEditForm</name>
     <message>
-        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+108"/>
+        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+109"/>
         <source>Provide a name for this device.</source>
         <translation>Podaj nazwę tego urządzenia.</translation>
     </message>
@@ -6813,18 +6815,23 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Wykluczone foldery lub pliki uległy zmianie</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+90"/>
+        <source>Another storage already uses this ID.</source>
+        <translation>Inne miejsce przechowywania już używa tego ID.</translation>
+    </message>
+    <message>
+        <location line="+19"/>
         <source>Device</source>
         <translation>Urządzenie</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+263"/>
+        <location line="+269"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
     <message>
-        <location line="-260"/>
+        <location line="-266"/>
         <source>Name</source>
         <translation>Nazwa</translation>
     </message>
@@ -6975,7 +6982,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>ID miejsca przechowywania</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+12"/>
         <source>Label</source>
         <translation>Etykieta</translation>
     </message>

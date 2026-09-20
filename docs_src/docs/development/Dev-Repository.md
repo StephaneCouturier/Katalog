@@ -7,7 +7,7 @@ This page documents the structure of the source repository of Katalog.
 All Katalog variants are consolidated into a single repository, avoiding one repo per "major version":
 
 - **Katalog 2** — QtWidgets + KF6 (current, production)
-- **Katalog 3** — QtQuick + KF6 (early development, alpha) see [Development Roadmap / Katalog 3](Development-Roadmap#katalog-3)
+- **Katalog 3** — QtQuick + KF6 (early development, alpha) see [Development Roadmap / Katalog 3](Dev-Roadmap#katalog-3)
 - **KatalogWeb** — REST API + web frontend (future, not started)
 
 ## Directory Structure

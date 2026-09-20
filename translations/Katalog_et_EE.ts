@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+176"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4553"/>
+        <location line="+4569"/>
         <source>Search</source>
         <translation>Otsing</translation>
     </message>
     <message>
-        <location line="-4673"/>
+        <location line="-4689"/>
         <source>Stopped</source>
         <translation>Peatatud</translation>
     </message>
@@ -45,10 +45,10 @@
         <location line="+7"/>
         <location line="+81"/>
         <location line="+2222"/>
-        <location line="+623"/>
+        <location line="+626"/>
         <location line="+26"/>
         <location line="+20"/>
-        <location line="+1232"/>
+        <location line="+1245"/>
         <location line="+11"/>
         <location line="+60"/>
         <location line="+374"/>
@@ -56,14 +56,14 @@
         <translation>Pooleli</translation>
     </message>
     <message>
-        <location line="-4554"/>
-        <location line="+4161"/>
+        <location line="-4570"/>
+        <location line="+4177"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Lõpetatud</translation>
     </message>
     <message>
-        <location line="-3510"/>
+        <location line="-3526"/>
         <source>Empty database path provided</source>
         <translation>Sisestati tühi andmebaasi tee</translation>
     </message>
@@ -149,12 +149,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2595"/>
+        <location line="+2611"/>
         <source>Size</source>
         <translation>Suurus</translation>
     </message>
     <message>
-        <location line="-2594"/>
+        <location line="-2610"/>
         <source>Date</source>
         <translation>Kuupäev</translation>
     </message>
@@ -248,12 +248,12 @@ Vali teine nimi ja proovi uuesti.</translation>
     </message>
     <message>
         <location line="+85"/>
-        <location line="+648"/>
+        <location line="+651"/>
         <source>Create</source>
         <translation>Loo</translation>
     </message>
     <message>
-        <location line="-541"/>
+        <location line="-544"/>
         <source>Catalog creation was stopped.</source>
         <translation>Kataloogi loomine peatati.</translation>
     </message>
@@ -274,7 +274,7 @@ Vali teine nimi ja proovi uuesti.</translation>
         <translation>Kustutamine ebaõnnestus</translation>
     </message>
     <message>
-        <location line="+132"/>
+        <location line="+135"/>
         <source>Virtual</source>
         <translation>Virtuaalne</translation>
     </message>
@@ -356,7 +356,7 @@ Vali teine nimi ja proovi uuesti.</translation>
         <translation>Faili ei õnnestunud avada: %1</translation>
     </message>
     <message>
-        <location line="+153"/>
+        <location line="+155"/>
         <source>There is already a catalog with this name: %1
 Choose a different name.</source>
         <translation>Selle nimega kataloog on juba olemas: %1
@@ -426,12 +426,11 @@ Vali teine nimi.</translation>
         <translation>ei</translation>
     </message>
     <message>
-        <location line="+53"/>
         <source>There is already a Storage with this ID. Choose a different ID.</source>
-        <translation>Selle ID-ga salvestusruum on juba olemas. Vali teine ID.</translation>
+        <translation type="vanished">Selle ID-ga salvestusruum on juba olemas. Vali teine ID.</translation>
     </message>
     <message>
-        <location line="+147"/>
+        <location line="+211"/>
         <source>Selected device is not a catalog</source>
         <translation>Valitud seade ei ole kataloog</translation>
     </message>
@@ -655,7 +654,7 @@ Vali teine nimi.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2597"/>
+        <location filename="../core/collection.cpp" line="+2607"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>See kaust sisaldab mälu režiimi kogumisfaile, kuid olete praegu faili režiimis.&lt;br/&gt;Lülituge mälu režiimi või valige teine kaust.</translation>
     </message>
@@ -673,7 +672,7 @@ Vali teine nimi.</translation>
 <context>
     <name>CollectionImporter</name>
     <message>
-        <location filename="../core/collectionimporter.cpp" line="+1656"/>
+        <location filename="../core/collectionimporter.cpp" line="+1770"/>
         <source>Name</source>
         <translation>Nimi</translation>
     </message>
@@ -1558,7 +1557,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+2458"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+2486"/>
         <source>Include Checksum</source>
         <translation>Kaasa kontrollsumma</translation>
     </message>
@@ -2185,7 +2184,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation>Täielik laiendatud</translation>
     </message>
     <message>
-        <location filename="../core/device.cpp" line="+683"/>
+        <location filename="../core/device.cpp" line="+704"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
         <translation>Kas soovite selle %1 seadme &lt;span style=&apos;color: red&apos;;&gt;kustutada&lt;/span&gt;?</translation>
     </message>
@@ -2218,7 +2217,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+82"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-3088"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-3116"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-490"/>
         <location line="+117"/>
         <location line="+72"/>
@@ -2230,7 +2229,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation>Seadme operatsioon on juba käimas.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1908"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1936"/>
         <location filename="../core/deviceupdatemanager.cpp" line="+898"/>
         <source>Operation cancelled</source>
         <translation>Operatsioon tühistatud</translation>
@@ -2260,7 +2259,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
     </message>
     <message>
         <location line="-11704"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2588"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2616"/>
         <source>Virtual</source>
         <translation>Virtuaalne</translation>
     </message>
@@ -2268,7 +2267,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <location line="+46"/>
         <location line="+6893"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+28"/>
-        <location line="+2831"/>
+        <location line="+2859"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <location line="+2"/>
         <source>Storage</source>
@@ -2563,7 +2562,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <location line="+4277"/>
         <location line="+3820"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-95"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1858"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1860"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
         <translation>Tüüp</translation>
@@ -2589,7 +2588,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <location line="+11"/>
         <location line="+91"/>
         <location line="+9"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+962"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+964"/>
         <location line="+1"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+108"/>
         <location line="+1"/>
@@ -2664,9 +2663,9 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
     <message>
         <location line="+63"/>
         <location line="+709"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1217"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1219"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-2"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
@@ -2779,9 +2778,9 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
     <message>
         <location line="-4841"/>
         <location line="+2406"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2291"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2293"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Total Size</source>
         <translation>Kogusuurus</translation>
     </message>
@@ -2921,9 +2920,9 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
     <message>
         <location line="+16"/>
         <location line="+18"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-499"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-501"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <source>Device Type</source>
         <translation>Seadme tüüp</translation>
@@ -2992,7 +2991,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
     </message>
     <message>
         <location line="+59"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-966"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-968"/>
         <source>Storage ID</source>
         <translation>Salvestusruumi ID</translation>
     </message>
@@ -3030,7 +3029,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <location line="+991"/>
         <location line="+5272"/>
         <location line="+20"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+685"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+687"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-260"/>
         <location line="+119"/>
         <location line="+72"/>
@@ -3052,7 +3051,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
     </message>
     <message>
         <location line="+28"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-691"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-693"/>
         <source>Brand</source>
         <translation>Bränd</translation>
     </message>
@@ -3094,7 +3093,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
     <message>
         <location line="+16"/>
         <location line="+3286"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1283"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1309"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+87"/>
         <location line="+117"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-176"/>
@@ -3417,9 +3416,9 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <location line="+143"/>
         <location line="+301"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1039"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1065"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+258"/>
         <location filename="../core/search.cpp" line="-2"/>
         <source>Path</source>
@@ -3672,8 +3671,8 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <location line="+11"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+10"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-984"/>
-        <location line="+1771"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1009"/>
+        <location line="+1796"/>
         <source>Skip</source>
         <translation>Jäta vahele</translation>
     </message>
@@ -4391,12 +4390,12 @@ prügikasti?</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1848"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1869"/>
         <source>Choose a different name and try again.</source>
         <translation>Vali teine nimi ja proovi uuesti.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-613"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-620"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>Kataloog on juba sellele virtuaalsele seadmele määratud.</translation>
     </message>
@@ -4470,22 +4469,20 @@ Jagamist ei tehtud.</translation>
         <translation>&lt;br/&gt;Selle kogu hetktõmmis salvestati:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Kataloogid&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Failide arv: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (lisatud: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Failide kogusuurus: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (lisatud: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Salvestusruum&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Vaba ruum: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (lisatud: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Koguruum: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (lisatud: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location line="+323"/>
+        <location line="+330"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>Selle nimega kataloog on juba olemas:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
     <message>
-        <location line="+13"/>
         <source>There is already a Storage with this ID.&lt;b&gt;</source>
-        <translation>Selle ID-ga salvestusruum on juba olemas.&lt;b&gt;</translation>
+        <translation type="vanished">Selle ID-ga salvestusruum on juba olemas.&lt;b&gt;</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>Choose a different ID and try again.</source>
-        <translation>Vali teine ID ja proovi uuesti.</translation>
+        <translation type="vanished">Vali teine ID ja proovi uuesti.</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+31"/>
         <source>A Catalog in the Physical group can only be set under a Storage or this group. Select a Storage in this group.&lt;br/&gt;&lt;br/&gt;To use this catalog under a device in a virtual group, use the Assign command.&lt;b&gt;</source>
         <translation>Füüsilise rühma kataloogi saab seada ainult salvestusruumi või selle rühma alla. Vali selles rühmas salvestusruum.&lt;br/&gt;&lt;br/&gt;Selle kataloogi kasutamiseks virtuaalse rühma seadme all kasuta määramise käsku.&lt;b&gt;</translation>
     </message>
@@ -4496,95 +4493,100 @@ Jagamist ei tehtud.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+1771"/>
+        <location line="+1796"/>
         <source>Old path:</source>
         <translation>Vana tee:</translation>
     </message>
     <message>
-        <location line="-1770"/>
-        <location line="+1771"/>
+        <location line="-1795"/>
+        <location line="+1796"/>
         <source>New path:</source>
         <translation>Uus tee:</translation>
     </message>
     <message>
-        <location line="-1769"/>
-        <location line="+1771"/>
+        <location line="-1794"/>
+        <location line="+1796"/>
         <source>How should the catalog indexes be updated?</source>
         <translation>Kuidas tuleks kataloogi registreid uuendada?</translation>
     </message>
     <message>
-        <location line="-1769"/>
-        <location line="+1771"/>
+        <location line="-1794"/>
+        <location line="+1796"/>
         <source>Replace path root</source>
         <translation>Asenda tee juur</translation>
     </message>
     <message>
-        <location line="-1770"/>
+        <location line="-1795"/>
         <source>Full re-scan</source>
         <translation>Täielik uuesti skannimine</translation>
     </message>
     <message>
-        <location line="+484"/>
+        <location line="+191"/>
+        <source>Another storage already uses this ID.</source>
+        <translation>Teine salvestusruum kasutab juba seda ID-d.</translation>
+    </message>
+    <message>
+        <location line="+316"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <source>Parent ID</source>
         <translation>Vanem ID</translation>
     </message>
     <message>
-        <location line="-2297"/>
+        <location line="-2299"/>
         <source>External ID</source>
         <translation>Väline ID</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Number of files</source>
         <translation>Failide arv</translation>
     </message>
     <message>
-        <location line="-491"/>
+        <location line="-493"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Used space</source>
         <translation>Kasutatud ruum</translation>
     </message>
     <message>
-        <location line="-492"/>
+        <location line="-494"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Free space</source>
         <translation>Vaba ruum</translation>
     </message>
     <message>
-        <location line="-492"/>
+        <location line="-494"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Total space</source>
         <translation>Koguruum</translation>
     </message>
     <message>
-        <location line="-492"/>
+        <location line="-494"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Date updated</source>
         <translation>Uuendamise kuupäev</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-9"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-502"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-504"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <source>Active</source>
         <translation>Aktiivne</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2287"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2289"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Group ID</source>
         <translation>Rühma ID</translation>
     </message>
@@ -5318,9 +5320,9 @@ Jagamist ei tehtud.</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+964"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2052"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2054"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <location filename="../core/device.cpp" line="-1"/>
         <source>ID</source>
@@ -5991,7 +5993,7 @@ Jagamist ei tehtud.</translation>
         <translation>%1 / %2 (%3%)</translation>
     </message>
     <message>
-        <location filename="../core/storage.cpp" line="+209"/>
+        <location filename="../core/storage.cpp" line="+218"/>
         <source>No Path was provided for the Storage: %1. Edit the device to provide one and try again.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6798,7 +6800,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDeviceEditForm</name>
     <message>
-        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+108"/>
+        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+109"/>
         <source>Provide a name for this device.</source>
         <translation>Sisestage selle seadme nimi.</translation>
     </message>
@@ -6813,18 +6815,23 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Välistatud kaustad või failid muutusid</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+90"/>
+        <source>Another storage already uses this ID.</source>
+        <translation>Teine salvestusruum kasutab juba seda ID-d.</translation>
+    </message>
+    <message>
+        <location line="+19"/>
         <source>Device</source>
         <translation>Seade</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+263"/>
+        <location line="+269"/>
         <source>Type</source>
         <translation>Tüüp</translation>
     </message>
     <message>
-        <location line="-260"/>
+        <location line="-266"/>
         <source>Name</source>
         <translation>Nimi</translation>
     </message>
@@ -6975,7 +6982,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Salvestusruumi ID</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+12"/>
         <source>Label</source>
         <translation>Silt</translation>
     </message>

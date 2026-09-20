@@ -55,24 +55,54 @@ Sections:
 
 | Page | Notes |
 |------|-------|
-| Development-Overview | |
-| Development-Roadmap | |
-| Development-Build-from-source | |
-| Development-Release | |
-| Development-Documentation | This page |
-| Development-CodePractice | Coding conventions (diagnostic output, etc.) |
+| Dev-Overview | |
+| Dev-Roadmap | |
+| Dev-Build-from-source | |
+| Dev-Release | |
+| Dev-Documentation | This page |
+| Dev-CodePractice | Coding conventions (diagnostic output, etc.) |
 
-#### Specification pages
+#### Specification and test pages
 
-| Page | Notes |
-|------|-------|
-| BackUp_luckybackup_profile | |
-| DevicesCatalogChecksum | |
-| DevicesCatalogMetadata | |
-| SpecCatalogIncludeExclude | |
-| SpecProgressReport | |
-| SpecVersions | |
+`Spec*.md` and `Test*.md` live in **`docs_src/docs/development/`**, not in the
+docs root, which is reserved for user-facing feature pages and the
+`Development-*` pages.
 
+**They are not listed in the sidebar.** The sidebar carries two index pages —
+`development/Specifications` and `development/Tests` — and each lists every page
+of its kind in a table. Adding a specification or a test plan means adding a row
+to the relevant index; `sidebars.ts` does not change.
+
+#### Test plan pages
+
+A specification may have a test plan beside it. **The file name is the
+specification's name with `Spec` replaced by `Test`**: `SpecStorageIdentity.md`
+is tested by `TestStorageIdentity.md`. One specification, one test plan, same
+subject.
+
+Rules:
+
+* **Conventions are stated once, in the `Tests` index — a test plan does not
+  repeat them.** A plan opens with a link to its specification and goes straight
+  to its cases.
+* **Every test case cites the requirement it verifies**, by its ID
+  (`STI-F3`, `DSR-C8`…). A test that cites no requirement is testing something
+  nobody asked for; a requirement no test cites is untested — both are visible
+  at a glance when the IDs are in the table.
+* Test case IDs mirror the prefix with a `T`: `STI-T1`, `STI-T2`… They are
+  permanent, like requirement IDs: never renumbered, never reused, retired as
+  `[Removed]` rather than deleted.
+* A test case states **what to set up, what to do, and what must be true
+  afterwards** — enough for someone who did not write the code to run it and
+  judge the result without reading the source.
+* Test plans are **English only**, like every other Development and
+  Specification page.
+* The specification keeps its short *Manual test charter*: one line per
+  requirement saying what proving it looks like. The test plan is where that
+  becomes runnable steps. The charter says *what*, the test plan says *how*.
+* Result columns (`Pass` / `Fail` / date) belong in the test plan, not in the
+  specification. A specification says what must be true; a test plan records
+  whether it was.
 
 ---
 ## Page Design
@@ -123,8 +153,8 @@ Short description of the screen + main screenshot.
 
 | Element | Syntax | Example |
 |---------|--------|---------|
-| Cross-page link | `[Label](PageID)` | `[Storage](DevicesStorage)` |
-| Deep link (anchor) | `[Label](PageID#anchor-id)` | `[duplicates](Search#duplicates-on)` |
+| Cross-page link | `[Label](PageID)` | `[Storage](../DevicesStorage)` |
+| Deep link (anchor) | `[Label](PageID#anchor-id)` | `[duplicates](../Search#duplicates-on)` |
 | Custom anchor on heading | `{#anchor-name}` after heading | `## Duplicates {#duplicates-on}` |
 | Screenshot | `![Alt text describing the screenshot](/img/filename.png)` | `![BackUp links list](/img/screen_backup_01.png)` |
 | Screenshot placeholder | `<!-- screenshot: filename.png -->` | marks where a screenshot is needed but not yet available |

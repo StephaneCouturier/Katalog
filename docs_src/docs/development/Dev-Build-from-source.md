@@ -10,7 +10,7 @@ A CMakeLists file is also provided to build with Qt5 for older systems like Ubun
 
 Main steps to build Katalog:
 * Available on any platform (Linux, Windows, Apple)
-* Install Qt6 dev libraries (via your software manager, or https://www.qt.io/download, or [Craft]((https://community.kde.org/Craft)) for Windows or macOS)
+* Install Qt6 dev libraries (via your software manager, or https://www.qt.io/download, or [Craft](https://community.kde.org/Craft) for Windows or macOS)
 * Install KF6 libraries via your software manager (or via Craft)
 * Download the source code (latest released from the katalog_master branch or under development from the katalog_development branch)
 * Choose which **variant** to build (see below)

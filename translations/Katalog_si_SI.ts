@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+176"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4553"/>
+        <location line="+4569"/>
         <source>Search</source>
         <translation>Iskanje</translation>
     </message>
     <message>
-        <location line="-4673"/>
+        <location line="-4689"/>
         <source>Stopped</source>
         <translation>Ustavljeno</translation>
     </message>
@@ -45,10 +45,10 @@
         <location line="+7"/>
         <location line="+81"/>
         <location line="+2222"/>
-        <location line="+623"/>
+        <location line="+626"/>
         <location line="+26"/>
         <location line="+20"/>
-        <location line="+1232"/>
+        <location line="+1245"/>
         <location line="+11"/>
         <location line="+60"/>
         <location line="+374"/>
@@ -56,14 +56,14 @@
         <translation>V teku</translation>
     </message>
     <message>
-        <location line="-4554"/>
-        <location line="+4161"/>
+        <location line="-4570"/>
+        <location line="+4177"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Končano</translation>
     </message>
     <message>
-        <location line="-3510"/>
+        <location line="-3526"/>
         <source>Empty database path provided</source>
         <translation>Podana prazna pot do zbirke podatkov</translation>
     </message>
@@ -149,12 +149,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2595"/>
+        <location line="+2611"/>
         <source>Size</source>
         <translation>Velikost</translation>
     </message>
     <message>
-        <location line="-2594"/>
+        <location line="-2610"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
@@ -248,12 +248,12 @@ Izberite drugo ime in poskusite znova.</translation>
     </message>
     <message>
         <location line="+85"/>
-        <location line="+648"/>
+        <location line="+651"/>
         <source>Create</source>
         <translation>Ustvari</translation>
     </message>
     <message>
-        <location line="-541"/>
+        <location line="-544"/>
         <source>Catalog creation was stopped.</source>
         <translation>Ustvarjanje kataloga je bilo ustavljeno.</translation>
     </message>
@@ -274,7 +274,7 @@ Izberite drugo ime in poskusite znova.</translation>
         <translation>Brisanje neuspešno</translation>
     </message>
     <message>
-        <location line="+132"/>
+        <location line="+135"/>
         <source>Virtual</source>
         <translation>Navidezno</translation>
     </message>
@@ -356,7 +356,7 @@ Izberite drugo ime in poskusite znova.</translation>
         <translation>Datoteke ni mogoče odpreti: %1</translation>
     </message>
     <message>
-        <location line="+153"/>
+        <location line="+155"/>
         <source>There is already a catalog with this name: %1
 Choose a different name.</source>
         <translation>Katalog s tem imenom že obstaja: %1
@@ -426,12 +426,11 @@ Izberite drugo ime.</translation>
         <translation>ne</translation>
     </message>
     <message>
-        <location line="+53"/>
         <source>There is already a Storage with this ID. Choose a different ID.</source>
-        <translation>Shranjevanje s tem ID-jem že obstaja. Izberite drug ID.</translation>
+        <translation type="vanished">Shranjevanje s tem ID-jem že obstaja. Izberite drug ID.</translation>
     </message>
     <message>
-        <location line="+147"/>
+        <location line="+211"/>
         <source>Selected device is not a catalog</source>
         <translation>Izbrana naprava ni katalog</translation>
     </message>
@@ -655,7 +654,7 @@ Izberite drugo ime.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2597"/>
+        <location filename="../core/collection.cpp" line="+2607"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Ta mapa vsebuje datoteke zbirke v načinu pomnilnika, vendar ste trenutno v načinu datoteke.&lt;br/&gt;Preklopite v način pomnilnika ali izberite drugo mapo.</translation>
     </message>
@@ -673,7 +672,7 @@ Izberite drugo ime.</translation>
 <context>
     <name>CollectionImporter</name>
     <message>
-        <location filename="../core/collectionimporter.cpp" line="+1656"/>
+        <location filename="../core/collectionimporter.cpp" line="+1770"/>
         <source>Name</source>
         <translation>Ime</translation>
     </message>
@@ -1558,7 +1557,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+2458"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+2486"/>
         <source>Include Checksum</source>
         <translation>Vključi nadzorno vsoto</translation>
     </message>
@@ -2220,7 +2219,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <translation>Polno Razširjeno</translation>
     </message>
     <message>
-        <location filename="../core/device.cpp" line="+683"/>
+        <location filename="../core/device.cpp" line="+704"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
         <translation>Ali želite &lt;span style=&apos;color: red&apos;;&gt;izbrisati&lt;/span&gt; to %1 napravo?</translation>
     </message>
@@ -2253,7 +2252,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+82"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-3088"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-3116"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-490"/>
         <location line="+117"/>
         <location line="+72"/>
@@ -2265,7 +2264,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <translation>Operacija naprave že poteka.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1908"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1936"/>
         <location filename="../core/deviceupdatemanager.cpp" line="+898"/>
         <source>Operation cancelled</source>
         <translation>Operacija preklicana</translation>
@@ -2490,7 +2489,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location line="+4277"/>
         <location line="+3820"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-95"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1587"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1589"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
         <translation>Tip</translation>
@@ -2530,7 +2529,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location line="+11"/>
         <location line="+91"/>
         <location line="+9"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+962"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+964"/>
         <location line="+1"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+108"/>
         <location line="+1"/>
@@ -2738,9 +2737,9 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location line="+143"/>
         <location line="+301"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-936"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-938"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+3"/>
         <location filename="../core/search.cpp" line="+6"/>
         <source>Path</source>
@@ -2760,7 +2759,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
     </message>
     <message>
         <location line="-11704"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1252"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1280"/>
         <source>Virtual</source>
         <translation>Navidezno</translation>
     </message>
@@ -2944,9 +2943,9 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
     <message>
         <location line="+150"/>
         <location line="+18"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+748"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+774"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <source>Device Type</source>
         <translation>Tip naprave</translation>
@@ -2976,7 +2975,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
     </message>
     <message>
         <location line="+156"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-978"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-980"/>
         <source>Storage ID</source>
         <translation>ID shranjevanja</translation>
     </message>
@@ -3024,7 +3023,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
     <message>
         <location line="+16"/>
         <location line="+3286"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1285"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1311"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+536"/>
         <location line="+117"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-114"/>
@@ -3428,7 +3427,7 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location line="-11478"/>
         <location line="+6893"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+308"/>
-        <location line="+2831"/>
+        <location line="+2859"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+15"/>
         <location line="+2"/>
         <source>Storage</source>
@@ -3691,8 +3690,8 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
         <location line="+11"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+4"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-153"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2591"/>
-        <location line="+1771"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2616"/>
+        <location line="+1796"/>
         <source>Skip</source>
         <translation>Preskoči</translation>
     </message>
@@ -4209,9 +4208,9 @@ v koš?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-8214"/>
         <location line="+709"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1292"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1294"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-6"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-654"/>
@@ -4280,7 +4279,7 @@ v koš?</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2854"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2875"/>
         <source>Choose a different name and try again.</source>
         <translation>Izberite drugo ime in poskusite znova.</translation>
     </message>
@@ -4346,9 +4345,9 @@ v koš?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-6274"/>
         <location line="+2406"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+563"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+582"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Total Size</source>
         <translation>Skupna velikost</translation>
     </message>
@@ -4378,7 +4377,7 @@ v koš?</translation>
     </message>
     <message>
         <location line="-3065"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-956"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-958"/>
         <source>Label</source>
         <translation>Oznaka</translation>
     </message>
@@ -4412,7 +4411,7 @@ v koš?</translation>
         <translation>Datum izdelave</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1429"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1455"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>Katalog je že dodeljen tej navidezni napravi.</translation>
     </message>
@@ -4486,22 +4485,20 @@ Razdelitev ni bila izvedena.</translation>
         <translation>&lt;br/&gt;Posnetek te zbirke je bil zabeležen:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Katalogi&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Število datotek: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (dodano: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Skupna velikost datotek: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (dodano: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Shranjevanje&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Prosti prostor shranjevanja: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (dodano: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Skupni prostor shranjevanja: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (dodano: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location line="+323"/>
+        <location line="+330"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>Že obstaja katalog s tem imenom:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
     <message>
-        <location line="+13"/>
         <source>There is already a Storage with this ID.&lt;b&gt;</source>
-        <translation>Že obstaja shranjevanje s tem ID.&lt;b&gt;</translation>
+        <translation type="vanished">Že obstaja shranjevanje s tem ID.&lt;b&gt;</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>Choose a different ID and try again.</source>
-        <translation>Izberi drug ID in poskusi znova.</translation>
+        <translation type="vanished">Izberi drug ID in poskusi znova.</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+31"/>
         <source>A Catalog in the Physical group can only be set under a Storage or this group. Select a Storage in this group.&lt;br/&gt;&lt;br/&gt;To use this catalog under a device in a virtual group, use the Assign command.&lt;b&gt;</source>
         <translation>Katalog v fizični skupini se lahko nastavi samo pod shranjevanjem ali to skupino. Izberi shranjevanje v tej skupini.&lt;br/&gt;&lt;br/&gt;Za uporabo tega kataloga pod napravo v navidezni skupini uporabi ukaz Dodeli.&lt;b&gt;</translation>
     </message>
@@ -4512,78 +4509,83 @@ Razdelitev ni bila izvedena.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+1771"/>
+        <location line="+1796"/>
         <source>Old path:</source>
         <translation>Stara pot:</translation>
     </message>
     <message>
-        <location line="-1770"/>
-        <location line="+1771"/>
+        <location line="-1795"/>
+        <location line="+1796"/>
         <source>New path:</source>
         <translation>Nova pot:</translation>
     </message>
     <message>
-        <location line="-1769"/>
-        <location line="+1771"/>
+        <location line="-1794"/>
+        <location line="+1796"/>
         <source>How should the catalog indexes be updated?</source>
         <translation>Kako je treba posodobiti indekse kataloga?</translation>
     </message>
     <message>
-        <location line="-1769"/>
-        <location line="+1771"/>
+        <location line="-1794"/>
+        <location line="+1796"/>
         <source>Replace path root</source>
         <translation>Zamenjaj koren poti</translation>
     </message>
     <message>
-        <location line="-1770"/>
+        <location line="-1795"/>
         <source>Full re-scan</source>
         <translation>Popolno ponavljanje pregledovanja</translation>
     </message>
     <message>
-        <location line="+484"/>
+        <location line="+191"/>
+        <source>Another storage already uses this ID.</source>
+        <translation>Ta ID že uporablja drugo shranjevanje.</translation>
+    </message>
+    <message>
+        <location line="+316"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <source>Parent ID</source>
         <translation>ID nadrejene</translation>
     </message>
     <message>
-        <location line="-2297"/>
+        <location line="-2299"/>
         <source>External ID</source>
         <translation>Zunanji ID</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Number of files</source>
         <translation>Število datotek</translation>
     </message>
     <message>
-        <location line="-490"/>
+        <location line="-492"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Free space</source>
         <translation>Prosti prostor</translation>
     </message>
     <message>
-        <location line="-492"/>
+        <location line="-494"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Total space</source>
         <translation>Skupni prostor</translation>
     </message>
     <message>
-        <location line="-492"/>
+        <location line="-494"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Date updated</source>
         <translation>Datum posodobitve</translation>
     </message>
     <message>
-        <location line="-491"/>
+        <location line="-493"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Group ID</source>
         <translation>ID skupine</translation>
     </message>
@@ -4799,9 +4801,9 @@ Razdelitev ni bila izvedena.</translation>
         <translation type="vanished">Izbrana naprava mora biti katalog. Poskusite z drugim ID naprave</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2047"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2049"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Used space</source>
         <translation>Uporabljen prostor</translation>
     </message>
@@ -5266,9 +5268,9 @@ Razdelitev ni bila izvedena.</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+964"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-498"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-500"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <location filename="../core/device.cpp" line="-1"/>
         <source>ID</source>
@@ -5287,9 +5289,9 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+2"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2299"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2301"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <source>Active</source>
         <translation>Aktivno</translation>
@@ -5992,7 +5994,7 @@ Razdelitev ni bila izvedena.</translation>
         <translation>%1 od %2 (%3 %)</translation>
     </message>
     <message>
-        <location filename="../core/storage.cpp" line="+209"/>
+        <location filename="../core/storage.cpp" line="+218"/>
         <source>No Path was provided for the Storage: %1. Edit the device to provide one and try again.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6799,7 +6801,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDeviceEditForm</name>
     <message>
-        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+108"/>
+        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+109"/>
         <source>Provide a name for this device.</source>
         <translation>Vnesite ime za to napravo.</translation>
     </message>
@@ -6814,18 +6816,23 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Izključene mape ali datoteke so spremenjene</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+90"/>
+        <source>Another storage already uses this ID.</source>
+        <translation>Ta ID že uporablja drugo shranjevanje.</translation>
+    </message>
+    <message>
+        <location line="+19"/>
         <source>Device</source>
         <translation>Naprava</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+263"/>
+        <location line="+269"/>
         <source>Type</source>
         <translation>Tip</translation>
     </message>
     <message>
-        <location line="-260"/>
+        <location line="-266"/>
         <source>Name</source>
         <translation>Ime</translation>
     </message>
@@ -6976,7 +6983,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>ID shranjevanja</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+12"/>
         <source>Label</source>
         <translation>Oznaka</translation>
     </message>

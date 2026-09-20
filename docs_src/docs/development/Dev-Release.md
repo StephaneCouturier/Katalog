@@ -127,7 +127,7 @@ User documentation:
 - Download (Linux Flathub):  https://flathub.org/en/apps/io.github.stephanecouturier.Katalog
 - Download (other versions): https://sourceforge.net/projects/katalogg
 - Documentation: https://stephanecouturier.github.io/Katalog/docs/Overview
-- Development: https://stephanecouturier.github.io/Katalog/docs/Development-Overview
+- Development: https://stephanecouturier.github.io/Katalog/docs/Dev-Overview
 - Facebook: https://www.facebook.com/Katalog-107117844916308
 ```
 

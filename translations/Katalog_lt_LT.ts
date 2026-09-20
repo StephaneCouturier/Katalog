@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+176"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4553"/>
+        <location line="+4569"/>
         <source>Search</source>
         <translation>Paieška</translation>
     </message>
     <message>
-        <location line="-4673"/>
+        <location line="-4689"/>
         <source>Stopped</source>
         <translation>Sustabdyta</translation>
     </message>
@@ -45,10 +45,10 @@
         <location line="+7"/>
         <location line="+81"/>
         <location line="+2222"/>
-        <location line="+623"/>
+        <location line="+626"/>
         <location line="+26"/>
         <location line="+20"/>
-        <location line="+1232"/>
+        <location line="+1245"/>
         <location line="+11"/>
         <location line="+60"/>
         <location line="+374"/>
@@ -56,14 +56,14 @@
         <translation>Vykdoma</translation>
     </message>
     <message>
-        <location line="-4554"/>
-        <location line="+4161"/>
+        <location line="-4570"/>
+        <location line="+4177"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Užbaigta</translation>
     </message>
     <message>
-        <location line="-3510"/>
+        <location line="-3526"/>
         <source>Empty database path provided</source>
         <translation>Pateiktas tuščias duomenų bazės kelias</translation>
     </message>
@@ -149,12 +149,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2595"/>
+        <location line="+2611"/>
         <source>Size</source>
         <translation>Dydis</translation>
     </message>
     <message>
-        <location line="-2594"/>
+        <location line="-2610"/>
         <source>Date</source>
         <translation>Data</translation>
     </message>
@@ -248,12 +248,12 @@ Pasirinkite kitą pavadinimą ir bandykite dar kartą.</translation>
     </message>
     <message>
         <location line="+85"/>
-        <location line="+648"/>
+        <location line="+651"/>
         <source>Create</source>
         <translation>Sukurti</translation>
     </message>
     <message>
-        <location line="-541"/>
+        <location line="-544"/>
         <source>Catalog creation was stopped.</source>
         <translation>Katalogo kūrimas buvo sustabdytas.</translation>
     </message>
@@ -274,7 +274,7 @@ Pasirinkite kitą pavadinimą ir bandykite dar kartą.</translation>
         <translation>Trynimas nepavyko</translation>
     </message>
     <message>
-        <location line="+132"/>
+        <location line="+135"/>
         <source>Virtual</source>
         <translation>Virtualus</translation>
     </message>
@@ -356,7 +356,7 @@ Pasirinkite kitą pavadinimą ir bandykite dar kartą.</translation>
         <translation>Nepavyko atverti failo: %1</translation>
     </message>
     <message>
-        <location line="+153"/>
+        <location line="+155"/>
         <source>There is already a catalog with this name: %1
 Choose a different name.</source>
         <translation>Katalogas tokiu pavadinimu jau yra: %1
@@ -426,12 +426,11 @@ Pasirinkite kitą pavadinimą.</translation>
         <translation>ne</translation>
     </message>
     <message>
-        <location line="+53"/>
         <source>There is already a Storage with this ID. Choose a different ID.</source>
-        <translation>Saugykla tokiu ID jau yra. Pasirinkite kitą ID.</translation>
+        <translation type="vanished">Saugykla tokiu ID jau yra. Pasirinkite kitą ID.</translation>
     </message>
     <message>
-        <location line="+147"/>
+        <location line="+211"/>
         <source>Selected device is not a catalog</source>
         <translation>Pasirinktas įrenginys nėra katalogas</translation>
     </message>
@@ -655,7 +654,7 @@ Pasirinkite kitą pavadinimą.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2597"/>
+        <location filename="../core/collection.cpp" line="+2607"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Šiame aplanke yra atminties režimo kolekcijos failai, bet šiuo metu esate failų režime.&lt;br/&gt;Perjunkite į atminties režimą arba pasirinkite kitą aplanką.</translation>
     </message>
@@ -673,7 +672,7 @@ Pasirinkite kitą pavadinimą.</translation>
 <context>
     <name>CollectionImporter</name>
     <message>
-        <location filename="../core/collectionimporter.cpp" line="+1656"/>
+        <location filename="../core/collectionimporter.cpp" line="+1770"/>
         <source>Name</source>
         <translation>Pavadinimas</translation>
     </message>
@@ -1558,7 +1557,7 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+2458"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+2486"/>
         <source>Include Checksum</source>
         <translation>Įtraukti kontrolinę sumą</translation>
     </message>
@@ -2220,7 +2219,7 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
         <translation>Pilna išplėstinė</translation>
     </message>
     <message>
-        <location filename="../core/device.cpp" line="+683"/>
+        <location filename="../core/device.cpp" line="+704"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
         <translation>Ar norite &lt;span style=&apos;color: red&apos;;&gt;ištrinti&lt;/span&gt; šį %1 įrenginį?</translation>
     </message>
@@ -2253,7 +2252,7 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+82"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-3088"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-3116"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-490"/>
         <location line="+117"/>
         <location line="+72"/>
@@ -2265,7 +2264,7 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
         <translation>Įrenginio operacija jau vykdoma.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1908"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1936"/>
         <location filename="../core/deviceupdatemanager.cpp" line="+898"/>
         <source>Operation cancelled</source>
         <translation>Operacija atšaukta</translation>
@@ -2490,7 +2489,7 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
         <location line="+4277"/>
         <location line="+3820"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-95"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1587"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1589"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
         <translation>Tipas</translation>
@@ -2530,7 +2529,7 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
         <location line="+11"/>
         <location line="+91"/>
         <location line="+9"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+962"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+964"/>
         <location line="+1"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+108"/>
         <location line="+1"/>
@@ -2738,9 +2737,9 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
         <location line="+143"/>
         <location line="+301"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-936"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-938"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+3"/>
         <location filename="../core/search.cpp" line="+6"/>
         <source>Path</source>
@@ -2760,7 +2759,7 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
     </message>
     <message>
         <location line="-11704"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1252"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1280"/>
         <source>Virtual</source>
         <translation>Virtualus</translation>
     </message>
@@ -2853,7 +2852,7 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
     </message>
     <message>
         <location line="-1898"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1008"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1034"/>
         <source>Comment 1</source>
         <translation>Komentaras 1</translation>
     </message>
@@ -3180,8 +3179,8 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
     <message>
         <location line="-11478"/>
         <location line="+6893"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-977"/>
-        <location line="+2831"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1003"/>
+        <location line="+2859"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+15"/>
         <location line="+2"/>
         <source>Storage</source>
@@ -3444,8 +3443,8 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
         <location line="+11"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+4"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-153"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2591"/>
-        <location line="+1771"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2616"/>
+        <location line="+1796"/>
         <source>Skip</source>
         <translation>Praleisti</translation>
     </message>
@@ -3750,9 +3749,9 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-8214"/>
         <location line="+709"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1292"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1294"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+607"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-654"/>
@@ -3790,9 +3789,9 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-6274"/>
         <location line="+2406"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2291"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2293"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Total Size</source>
         <translation>Bendras dydis</translation>
     </message>
@@ -3822,7 +3821,7 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
     </message>
     <message>
         <location line="-3065"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-956"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-958"/>
         <source>Label</source>
         <translation>Etiketė</translation>
     </message>
@@ -3856,7 +3855,7 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
         <translation>Gamybos data</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1429"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1455"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>Katalogas jau priskirtas šiam virtualiam įrenginiui.</translation>
     </message>
@@ -3930,22 +3929,20 @@ Padalijimas nebuvo atliktas.</translation>
         <translation>&lt;br/&gt;Šio rinkinio momentinė nuotrauka buvo įrašyta:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Katalogai&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Failų skaičius: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (pridėta: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Bendras failų dydis: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (pridėta: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Saugykla&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Saugyklos laisva vieta: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (pridėta: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Saugyklos visa vieta: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (pridėta: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location line="+323"/>
+        <location line="+330"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>Jau yra katalogas su šiuo pavadinimu:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
     <message>
-        <location line="+13"/>
         <source>There is already a Storage with this ID.&lt;b&gt;</source>
-        <translation>Jau yra saugykla su šiuo ID.&lt;b&gt;</translation>
+        <translation type="vanished">Jau yra saugykla su šiuo ID.&lt;b&gt;</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>Choose a different ID and try again.</source>
-        <translation>Pasirinkite kitą ID ir bandykite dar kartą.</translation>
+        <translation type="vanished">Pasirinkite kitą ID ir bandykite dar kartą.</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+31"/>
         <source>A Catalog in the Physical group can only be set under a Storage or this group. Select a Storage in this group.&lt;br/&gt;&lt;br/&gt;To use this catalog under a device in a virtual group, use the Assign command.&lt;b&gt;</source>
         <translation>Katalogas fizinėje grupėje gali būti nustatytas tik po saugykla arba šia grupe. Pasirinkite saugykle šioje grupėje.&lt;br/&gt;&lt;br/&gt;Norėdami naudoti šį katalogą po įrenginiu virtualioje grupėje, naudokite priskirimo komandą.&lt;b&gt;</translation>
     </message>
@@ -3956,78 +3953,83 @@ Padalijimas nebuvo atliktas.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+1771"/>
+        <location line="+1796"/>
         <source>Old path:</source>
         <translation>Senas kelias:</translation>
     </message>
     <message>
-        <location line="-1770"/>
-        <location line="+1771"/>
+        <location line="-1795"/>
+        <location line="+1796"/>
         <source>New path:</source>
         <translation>Naujas kelias:</translation>
     </message>
     <message>
-        <location line="-1769"/>
-        <location line="+1771"/>
+        <location line="-1794"/>
+        <location line="+1796"/>
         <source>How should the catalog indexes be updated?</source>
         <translation>Kaip reikėtų atnaujinti katalogo indeksus?</translation>
     </message>
     <message>
-        <location line="-1769"/>
-        <location line="+1771"/>
+        <location line="-1794"/>
+        <location line="+1796"/>
         <source>Replace path root</source>
         <translation>Pakeisti kelio šaknį</translation>
     </message>
     <message>
-        <location line="-1770"/>
+        <location line="-1795"/>
         <source>Full re-scan</source>
         <translation>Visiškas peržiūrėjimas iš naujo</translation>
     </message>
     <message>
-        <location line="+484"/>
+        <location line="+191"/>
+        <source>Another storage already uses this ID.</source>
+        <translation>Šį ID jau naudoja kita saugykla.</translation>
+    </message>
+    <message>
+        <location line="+316"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <source>Parent ID</source>
         <translation>Tėvinis ID</translation>
     </message>
     <message>
-        <location line="-2297"/>
+        <location line="-2299"/>
         <source>External ID</source>
         <translation>Išorės ID</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Number of files</source>
         <translation>Failų skaičius</translation>
     </message>
     <message>
-        <location line="-490"/>
+        <location line="-492"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Free space</source>
         <translation>Laisva vieta</translation>
     </message>
     <message>
-        <location line="-492"/>
+        <location line="-494"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Total space</source>
         <translation>Visa vieta</translation>
     </message>
     <message>
-        <location line="-492"/>
+        <location line="-494"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Date updated</source>
         <translation>Atnaujinimo data</translation>
     </message>
     <message>
-        <location line="-491"/>
+        <location line="-493"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Group ID</source>
         <translation>Grupės ID</translation>
     </message>
@@ -4242,9 +4244,9 @@ Padalijimas nebuvo atliktas.</translation>
         <translation type="vanished">Pasirinktas įrenginys turi būti katalogas. Bandykite su kitu įrenginio ID</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2047"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2049"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Used space</source>
         <translation>Naudojama vieta</translation>
     </message>
@@ -4706,7 +4708,7 @@ Padalijimas nebuvo atliktas.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1057"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1078"/>
         <source>Choose a different name and try again.</source>
         <translation>Pasirinkite kitą pavadinimą ir bandykite dar kartą.</translation>
     </message>
@@ -4755,7 +4757,7 @@ Padalijimas nebuvo atliktas.</translation>
     <message>
         <location line="-200"/>
         <location line="+3286"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-471"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-478"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+59"/>
         <location line="+117"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-157"/>
@@ -4775,7 +4777,7 @@ Padalijimas nebuvo atliktas.</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-3664"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1272"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1298"/>
         <source>Storage ID</source>
         <translation>Saugyklos ID</translation>
     </message>
@@ -5142,7 +5144,7 @@ to the trash?</source>
         <location line="+18"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-244"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <source>Device Type</source>
         <translation>Įrenginio tipas</translation>
@@ -5315,9 +5317,9 @@ to the trash?</source>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+436"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1220"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1222"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <location filename="../core/device.cpp" line="-1"/>
         <source>ID</source>
@@ -5336,9 +5338,9 @@ to the trash?</source>
     <message>
         <location line="+2"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2299"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2301"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <source>Active</source>
         <translation>Aktyvus</translation>
@@ -5990,7 +5992,7 @@ to the trash?</source>
         <translation>%1 iš %2 (%3%)</translation>
     </message>
     <message>
-        <location filename="../core/storage.cpp" line="+209"/>
+        <location filename="../core/storage.cpp" line="+218"/>
         <source>No Path was provided for the Storage: %1. Edit the device to provide one and try again.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6797,7 +6799,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDeviceEditForm</name>
     <message>
-        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+108"/>
+        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+109"/>
         <source>Provide a name for this device.</source>
         <translation>Nurodykite šio įrenginio pavadinimą.</translation>
     </message>
@@ -6812,18 +6814,23 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Išskirti aplankai arba failai pasikeitė</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+90"/>
+        <source>Another storage already uses this ID.</source>
+        <translation>Šį ID jau naudoja kita saugykla.</translation>
+    </message>
+    <message>
+        <location line="+19"/>
         <source>Device</source>
         <translation>Įrenginys</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+263"/>
+        <location line="+269"/>
         <source>Type</source>
         <translation>Tipas</translation>
     </message>
     <message>
-        <location line="-260"/>
+        <location line="-266"/>
         <source>Name</source>
         <translation>Pavadinimas</translation>
     </message>
@@ -6974,7 +6981,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Saugyklos ID</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+12"/>
         <source>Label</source>
         <translation>Etiketė</translation>
     </message>

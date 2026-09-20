@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+176"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4553"/>
+        <location line="+4569"/>
         <source>Search</source>
         <translation>Пошук</translation>
     </message>
     <message>
-        <location line="-4673"/>
+        <location line="-4689"/>
         <source>Stopped</source>
         <translation>Зупинено</translation>
     </message>
@@ -45,10 +45,10 @@
         <location line="+7"/>
         <location line="+81"/>
         <location line="+2222"/>
-        <location line="+623"/>
+        <location line="+626"/>
         <location line="+26"/>
         <location line="+20"/>
-        <location line="+1232"/>
+        <location line="+1245"/>
         <location line="+11"/>
         <location line="+60"/>
         <location line="+374"/>
@@ -56,14 +56,14 @@
         <translation>Виконується</translation>
     </message>
     <message>
-        <location line="-4554"/>
-        <location line="+4161"/>
+        <location line="-4570"/>
+        <location line="+4177"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Завершено</translation>
     </message>
     <message>
-        <location line="-3510"/>
+        <location line="-3526"/>
         <source>Empty database path provided</source>
         <translation>Вказано порожній шлях до бази даних</translation>
     </message>
@@ -149,12 +149,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2595"/>
+        <location line="+2611"/>
         <source>Size</source>
         <translation>Розмір</translation>
     </message>
     <message>
-        <location line="-2594"/>
+        <location line="-2610"/>
         <source>Date</source>
         <translation>Дата</translation>
     </message>
@@ -248,12 +248,12 @@ Choose a different name and try again.</source>
     </message>
     <message>
         <location line="+85"/>
-        <location line="+648"/>
+        <location line="+651"/>
         <source>Create</source>
         <translation>Створити</translation>
     </message>
     <message>
-        <location line="-541"/>
+        <location line="-544"/>
         <source>Catalog creation was stopped.</source>
         <translation>Створення каталогу зупинено.</translation>
     </message>
@@ -274,7 +274,7 @@ Choose a different name and try again.</source>
         <translation>Видалення не вдалося</translation>
     </message>
     <message>
-        <location line="+132"/>
+        <location line="+135"/>
         <source>Virtual</source>
         <translation>Віртуальний</translation>
     </message>
@@ -356,7 +356,7 @@ Choose a different name and try again.</source>
         <translation>Не вдалося відкрити файл: %1</translation>
     </message>
     <message>
-        <location line="+153"/>
+        <location line="+155"/>
         <source>There is already a catalog with this name: %1
 Choose a different name.</source>
         <translation>Каталог із такою назвою вже існує: %1
@@ -426,12 +426,11 @@ Choose a different name.</source>
         <translation>ні</translation>
     </message>
     <message>
-        <location line="+53"/>
         <source>There is already a Storage with this ID. Choose a different ID.</source>
-        <translation>Сховище з таким ідентифікатором уже існує. Виберіть інший ідентифікатор.</translation>
+        <translation type="vanished">Сховище з таким ідентифікатором уже існує. Виберіть інший ідентифікатор.</translation>
     </message>
     <message>
-        <location line="+147"/>
+        <location line="+211"/>
         <source>Selected device is not a catalog</source>
         <translation>Вибраний пристрій не є каталогом</translation>
     </message>
@@ -655,7 +654,7 @@ Choose a different name.</source>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2597"/>
+        <location filename="../core/collection.cpp" line="+2607"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Ця тека містить файли колекції в режимі пам&apos;яті, але ви зараз у режимі файлів.&lt;br/&gt;Перейдіть до режиму пам&apos;яті або виберіть іншу теку.</translation>
     </message>
@@ -673,7 +672,7 @@ Choose a different name.</source>
 <context>
     <name>CollectionImporter</name>
     <message>
-        <location filename="../core/collectionimporter.cpp" line="+1656"/>
+        <location filename="../core/collectionimporter.cpp" line="+1770"/>
         <source>Name</source>
         <translation>Назва</translation>
     </message>
@@ -1558,7 +1557,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+2458"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+2486"/>
         <source>Include Checksum</source>
         <translation>Включити контрольну суму</translation>
     </message>
@@ -2220,7 +2219,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Повний Розширений</translation>
     </message>
     <message>
-        <location filename="../core/device.cpp" line="+683"/>
+        <location filename="../core/device.cpp" line="+704"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
         <translation>Чи хочете &lt;span style=&apos;color: red&apos;;&gt;видалити&lt;/span&gt; цей %1 пристрій?</translation>
     </message>
@@ -2253,7 +2252,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+82"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-3088"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-3116"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-490"/>
         <location line="+117"/>
         <location line="+72"/>
@@ -2265,7 +2264,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Операція пристрою вже виконується.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1908"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1936"/>
         <location filename="../core/deviceupdatemanager.cpp" line="+898"/>
         <source>Operation cancelled</source>
         <translation>Операція скасована</translation>
@@ -2490,7 +2489,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+4277"/>
         <location line="+3820"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-95"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1587"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1589"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
         <translation>Тип</translation>
@@ -2530,7 +2529,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+11"/>
         <location line="+91"/>
         <location line="+9"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+962"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+964"/>
         <location line="+1"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+108"/>
         <location line="+1"/>
@@ -2738,9 +2737,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+143"/>
         <location line="+301"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-936"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-938"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+3"/>
         <location filename="../core/search.cpp" line="+6"/>
         <source>Path</source>
@@ -2760,7 +2759,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="-11704"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1252"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1280"/>
         <source>Virtual</source>
         <translation>Віртуальний</translation>
     </message>
@@ -2853,7 +2852,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="-1898"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1008"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1034"/>
         <source>Comment 1</source>
         <translation>Коментар 1</translation>
     </message>
@@ -3180,8 +3179,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="-11478"/>
         <location line="+6893"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-977"/>
-        <location line="+2831"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1003"/>
+        <location line="+2859"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+15"/>
         <location line="+2"/>
         <source>Storage</source>
@@ -3444,8 +3443,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+11"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+4"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-153"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2591"/>
-        <location line="+1771"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2616"/>
+        <location line="+1796"/>
         <source>Skip</source>
         <translation>Пропустити</translation>
     </message>
@@ -3750,9 +3749,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-8214"/>
         <location line="+709"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1292"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1294"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+607"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-654"/>
@@ -3790,9 +3789,9 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-6274"/>
         <location line="+2406"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2291"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2293"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Total Size</source>
         <translation>Загальний розмір</translation>
     </message>
@@ -3822,7 +3821,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="-3065"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-956"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-958"/>
         <source>Label</source>
         <translation>Мітка</translation>
     </message>
@@ -3856,7 +3855,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Дата збірки</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1429"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1455"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>Каталог уже призначений цьому віртуальному пристрою.</translation>
     </message>
@@ -3930,22 +3929,20 @@ Split was not performed.</source>
         <translation>&lt;br/&gt;Знімок цієї колекції було записано:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Каталоги&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Кількість файлів: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (додано: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Загальний розмір файлів: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (додано: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Сховище&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Вільне місце сховища: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (додано: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Загальне місце сховища: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (додано: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location line="+323"/>
+        <location line="+330"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>Каталог з такою назвою вже існує:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
     <message>
-        <location line="+13"/>
         <source>There is already a Storage with this ID.&lt;b&gt;</source>
-        <translation>Сховище з таким ID вже існує.&lt;b&gt;</translation>
+        <translation type="vanished">Сховище з таким ID вже існує.&lt;b&gt;</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>Choose a different ID and try again.</source>
-        <translation>Виберіть інший ID та спробуйте знову.</translation>
+        <translation type="vanished">Виберіть інший ID та спробуйте знову.</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+31"/>
         <source>A Catalog in the Physical group can only be set under a Storage or this group. Select a Storage in this group.&lt;br/&gt;&lt;br/&gt;To use this catalog under a device in a virtual group, use the Assign command.&lt;b&gt;</source>
         <translation>Каталог у фізичній групі може бути встановлений тільки під сховищем або цією групою. Виберіть сховище в цій групі.&lt;br/&gt;&lt;br/&gt;Щоб використовувати цей каталог під пристроєм у віртуальній групі, використовуйте команду Призначити.&lt;b&gt;</translation>
     </message>
@@ -3956,78 +3953,83 @@ Split was not performed.</source>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+1771"/>
+        <location line="+1796"/>
         <source>Old path:</source>
         <translation>Старий шлях:</translation>
     </message>
     <message>
-        <location line="-1770"/>
-        <location line="+1771"/>
+        <location line="-1795"/>
+        <location line="+1796"/>
         <source>New path:</source>
         <translation>Новий шлях:</translation>
     </message>
     <message>
-        <location line="-1769"/>
-        <location line="+1771"/>
+        <location line="-1794"/>
+        <location line="+1796"/>
         <source>How should the catalog indexes be updated?</source>
         <translation>Як слід оновити індекси каталогу?</translation>
     </message>
     <message>
-        <location line="-1769"/>
-        <location line="+1771"/>
+        <location line="-1794"/>
+        <location line="+1796"/>
         <source>Replace path root</source>
         <translation>Замінити корінь шляху</translation>
     </message>
     <message>
-        <location line="-1770"/>
+        <location line="-1795"/>
         <source>Full re-scan</source>
         <translation>Повне повторне сканування</translation>
     </message>
     <message>
-        <location line="+484"/>
+        <location line="+191"/>
+        <source>Another storage already uses this ID.</source>
+        <translation>Цей ID вже використовує інше сховище.</translation>
+    </message>
+    <message>
+        <location line="+316"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <source>Parent ID</source>
         <translation>ID батьківського</translation>
     </message>
     <message>
-        <location line="-2297"/>
+        <location line="-2299"/>
         <source>External ID</source>
         <translation>Зовнішній ID</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Number of files</source>
         <translation>Кількість файлів</translation>
     </message>
     <message>
-        <location line="-490"/>
+        <location line="-492"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Free space</source>
         <translation>Вільне місце</translation>
     </message>
     <message>
-        <location line="-492"/>
+        <location line="-494"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Total space</source>
         <translation>Загальне місце</translation>
     </message>
     <message>
-        <location line="-492"/>
+        <location line="-494"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Date updated</source>
         <translation>Дата оновлення</translation>
     </message>
     <message>
-        <location line="-491"/>
+        <location line="-493"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Group ID</source>
         <translation>ID групи</translation>
     </message>
@@ -4243,9 +4245,9 @@ Split was not performed.</source>
         <translation type="vanished">Вибраний пристрій повинен бути каталогом. Спробуйте з іншим ID пристрою</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2047"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2049"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Used space</source>
         <translation>Використане місце</translation>
     </message>
@@ -4707,7 +4709,7 @@ Split was not performed.</source>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1057"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1078"/>
         <source>Choose a different name and try again.</source>
         <translation>Виберіть іншу назву та спробуйте знову.</translation>
     </message>
@@ -4756,7 +4758,7 @@ Split was not performed.</source>
     <message>
         <location line="-200"/>
         <location line="+3286"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-471"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-478"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+59"/>
         <location line="+117"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-157"/>
@@ -4776,7 +4778,7 @@ Split was not performed.</source>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-3664"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1272"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1298"/>
         <source>Storage ID</source>
         <translation>ID сховища</translation>
     </message>
@@ -5143,7 +5145,7 @@ to the trash?</source>
         <location line="+18"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-244"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <source>Device Type</source>
         <translation>Тип пристрою</translation>
@@ -5316,9 +5318,9 @@ to the trash?</source>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+436"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1220"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1222"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <location filename="../core/device.cpp" line="-1"/>
         <source>ID</source>
@@ -5337,9 +5339,9 @@ to the trash?</source>
     <message>
         <location line="+2"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2299"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2301"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <source>Active</source>
         <translation>Активний</translation>
@@ -5991,7 +5993,7 @@ to the trash?</source>
         <translation>%1 з %2 (%3%)</translation>
     </message>
     <message>
-        <location filename="../core/storage.cpp" line="+209"/>
+        <location filename="../core/storage.cpp" line="+218"/>
         <source>No Path was provided for the Storage: %1. Edit the device to provide one and try again.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6798,7 +6800,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDeviceEditForm</name>
     <message>
-        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+108"/>
+        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+109"/>
         <source>Provide a name for this device.</source>
         <translation>Вкажіть назву цього пристрою.</translation>
     </message>
@@ -6813,18 +6815,23 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Виключені папки або файли змінено</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+90"/>
+        <source>Another storage already uses this ID.</source>
+        <translation>Цей ID вже використовує інше сховище.</translation>
+    </message>
+    <message>
+        <location line="+19"/>
         <source>Device</source>
         <translation>Пристрій</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+263"/>
+        <location line="+269"/>
         <source>Type</source>
         <translation>Тип</translation>
     </message>
     <message>
-        <location line="-260"/>
+        <location line="-266"/>
         <source>Name</source>
         <translation>Назва</translation>
     </message>
@@ -6975,7 +6982,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>ID сховища</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+12"/>
         <source>Label</source>
         <translation>Мітка</translation>
     </message>

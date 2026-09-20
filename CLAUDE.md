@@ -241,11 +241,11 @@ In File/Hosted mode, the data is already in the SQLite database and no pre-loadi
 Any change that affects users or future developers must be documented:
 
 - **User-facing feature or change** → document in `docs_src/docs/` (the feature page for the relevant screen)
-- **Technical practice, architecture decision, limitation, or risk** → document in `docs_src/docs/` as a Markdown file with the `Spec` prefix (e.g. `SpecBackupStrategy.md`)
+- **Technical practice, architecture decision, limitation, or risk** → document in `docs_src/docs/development/` as a Markdown file with the `Spec` prefix (e.g. `SpecBackupStrategy.md`), and add a row to `docs_src/docs/development/Specifications.md` (the sidebar is not updated per file)
 
 ### Documentation page rules
 
-All documentation pages must follow the design guidelines in `docs_src/docs/Development-Documentation.md`. Key rules:
+All documentation pages must follow the design guidelines in `docs_src/docs/development/Dev-Documentation.md`. Key rules:
 
 - Every page starts with a YAML frontmatter block (`id`, `title`, `description`), then `# Title`, then Status + Version shields (shields.io)
 - **Feature pages are for end-users**: no code, no method names, no variable names, no source filenames

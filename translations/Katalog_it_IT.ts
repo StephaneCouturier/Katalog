@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+176"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4553"/>
+        <location line="+4569"/>
         <source>Search</source>
         <translation>Cerca</translation>
     </message>
     <message>
-        <location line="-4673"/>
+        <location line="-4689"/>
         <source>Stopped</source>
         <translation>Interrotto</translation>
     </message>
@@ -45,10 +45,10 @@
         <location line="+7"/>
         <location line="+81"/>
         <location line="+2222"/>
-        <location line="+623"/>
+        <location line="+626"/>
         <location line="+26"/>
         <location line="+20"/>
-        <location line="+1232"/>
+        <location line="+1245"/>
         <location line="+11"/>
         <location line="+60"/>
         <location line="+374"/>
@@ -56,14 +56,14 @@
         <translation>In corso</translation>
     </message>
     <message>
-        <location line="-4554"/>
-        <location line="+4161"/>
+        <location line="-4570"/>
+        <location line="+4177"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Completato</translation>
     </message>
     <message>
-        <location line="-3510"/>
+        <location line="-3526"/>
         <source>Empty database path provided</source>
         <translation>Percorso del database vuoto fornito</translation>
     </message>
@@ -149,12 +149,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2595"/>
+        <location line="+2611"/>
         <source>Size</source>
         <translation>Dimensione</translation>
     </message>
     <message>
-        <location line="-2594"/>
+        <location line="-2610"/>
         <source>Date</source>
         <translation>Data</translation>
     </message>
@@ -248,12 +248,12 @@ Scegliere un nome diverso e riprovare.</translation>
     </message>
     <message>
         <location line="+85"/>
-        <location line="+648"/>
+        <location line="+651"/>
         <source>Create</source>
         <translation>Crea</translation>
     </message>
     <message>
-        <location line="-541"/>
+        <location line="-544"/>
         <source>Catalog creation was stopped.</source>
         <translation>La creazione del catalogo è stata interrotta.</translation>
     </message>
@@ -274,7 +274,7 @@ Scegliere un nome diverso e riprovare.</translation>
         <translation>Eliminazione fallita</translation>
     </message>
     <message>
-        <location line="+132"/>
+        <location line="+135"/>
         <source>Virtual</source>
         <translation>Virtuale</translation>
     </message>
@@ -356,7 +356,7 @@ Scegliere un nome diverso e riprovare.</translation>
         <translation>Impossibile aprire il file: %1</translation>
     </message>
     <message>
-        <location line="+153"/>
+        <location line="+155"/>
         <source>There is already a catalog with this name: %1
 Choose a different name.</source>
         <translation>Esiste già un catalogo con questo nome: %1
@@ -426,12 +426,11 @@ Scegliere un nome diverso.</translation>
         <translation>no</translation>
     </message>
     <message>
-        <location line="+53"/>
         <source>There is already a Storage with this ID. Choose a different ID.</source>
-        <translation>Esiste già un archivio con questo ID. Scegliere un ID diverso.</translation>
+        <translation type="vanished">Esiste già un archivio con questo ID. Scegliere un ID diverso.</translation>
     </message>
     <message>
-        <location line="+147"/>
+        <location line="+211"/>
         <source>Selected device is not a catalog</source>
         <translation>Il dispositivo selezionato non è un catalogo</translation>
     </message>
@@ -655,7 +654,7 @@ Scegliere un nome diverso.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2597"/>
+        <location filename="../core/collection.cpp" line="+2607"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Questa cartella contiene file di raccolta in modalità Memoria, ma sei attualmente in modalità File.&lt;br/&gt;Passa alla modalità Memoria o seleziona una cartella diversa.</translation>
     </message>
@@ -673,7 +672,7 @@ Scegliere un nome diverso.</translation>
 <context>
     <name>CollectionImporter</name>
     <message>
-        <location filename="../core/collectionimporter.cpp" line="+1656"/>
+        <location filename="../core/collectionimporter.cpp" line="+1770"/>
         <source>Name</source>
         <translation>Nome</translation>
     </message>
@@ -1558,7 +1557,7 @@ Vuoi salvarlo comunque (il catalogo sarebbe vuoto)?</translation>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+2458"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+2486"/>
         <source>Include Checksum</source>
         <translation>Includi checksum</translation>
     </message>
@@ -2240,7 +2239,7 @@ Vuoi salvarlo comunque (il catalogo sarebbe vuoto)?</translation>
         <translation>Completo esteso</translation>
     </message>
     <message>
-        <location filename="../core/device.cpp" line="+683"/>
+        <location filename="../core/device.cpp" line="+704"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
         <translation>Vuoi &lt;span style=&apos;color: red&apos;;&gt;eliminare&lt;/span&gt; questo dispositivo %1?</translation>
     </message>
@@ -2273,7 +2272,7 @@ Vuoi salvarlo comunque (il catalogo sarebbe vuoto)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+82"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-3088"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-3116"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-490"/>
         <location line="+117"/>
         <location line="+72"/>
@@ -2285,7 +2284,7 @@ Vuoi salvarlo comunque (il catalogo sarebbe vuoto)?</translation>
         <translation>Un&apos;operazione del dispositivo è già in esecuzione.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1908"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1936"/>
         <location filename="../core/deviceupdatemanager.cpp" line="+898"/>
         <source>Operation cancelled</source>
         <translation>Operazione annullata</translation>
@@ -2316,7 +2315,7 @@ Vuoi salvarlo comunque (il catalogo sarebbe vuoto)?</translation>
         <translation>Percorso: </translation>
     </message>
     <message>
-        <location line="-3212"/>
+        <location line="-3240"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>Il catalogo è già assegnato a questo dispositivo virtuale.</translation>
     </message>
@@ -2390,22 +2389,20 @@ La divisione non è stata eseguita.</translation>
         <translation>&lt;br/&gt;Un&apos;istantanea di questa collezione è stata registrata:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Cataloghi&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Numero di file: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (aggiunto: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Dimensione totale file: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (aggiunto: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Archiviazione&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Spazio libero archiviazione: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (aggiunto: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Spazio totale archiviazione: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (aggiunto: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location line="+323"/>
+        <location line="+330"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>Esiste già un catalogo con questo nome:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
     <message>
-        <location line="+13"/>
         <source>There is already a Storage with this ID.&lt;b&gt;</source>
-        <translation>Esiste già un&apos;archiviazione con questo ID.&lt;b&gt;</translation>
+        <translation type="vanished">Esiste già un&apos;archiviazione con questo ID.&lt;b&gt;</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>Choose a different ID and try again.</source>
-        <translation>Scegli un ID diverso e riprova.</translation>
+        <translation type="vanished">Scegli un ID diverso e riprova.</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+31"/>
         <source>A Catalog in the Physical group can only be set under a Storage or this group. Select a Storage in this group.&lt;br/&gt;&lt;br/&gt;To use this catalog under a device in a virtual group, use the Assign command.&lt;b&gt;</source>
         <translation>Un catalogo nel gruppo fisico può essere impostato solo sotto un&apos;archiviazione o questo gruppo. Seleziona un&apos;archiviazione in questo gruppo.&lt;br/&gt;&lt;br/&gt;Per usare questo catalogo sotto un dispositivo in un gruppo virtuale, usa il comando Assegna.&lt;b&gt;</translation>
     </message>
@@ -2416,85 +2413,90 @@ La divisione non è stata eseguita.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+1771"/>
+        <location line="+1796"/>
         <source>Old path:</source>
         <translation>Vecchio percorso:</translation>
     </message>
     <message>
-        <location line="-1770"/>
-        <location line="+1771"/>
+        <location line="-1795"/>
+        <location line="+1796"/>
         <source>New path:</source>
         <translation>Nuovo percorso:</translation>
     </message>
     <message>
-        <location line="-1769"/>
-        <location line="+1771"/>
+        <location line="-1794"/>
+        <location line="+1796"/>
         <source>How should the catalog indexes be updated?</source>
         <translation>Come devono essere aggiornati gli indici del catalogo?</translation>
     </message>
     <message>
-        <location line="-1769"/>
-        <location line="+1771"/>
+        <location line="-1794"/>
+        <location line="+1796"/>
         <source>Replace path root</source>
         <translation>Sostituisci radice percorso</translation>
     </message>
     <message>
-        <location line="-1770"/>
+        <location line="-1795"/>
         <source>Full re-scan</source>
         <translation>Scansione completa</translation>
     </message>
     <message>
-        <location line="+484"/>
+        <location line="+191"/>
+        <source>Another storage already uses this ID.</source>
+        <translation>Un'altra archiviazione utilizza già questo ID.</translation>
+    </message>
+    <message>
+        <location line="+316"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <source>Parent ID</source>
         <translation>ID genitore</translation>
     </message>
     <message>
-        <location line="-2297"/>
+        <location line="-2299"/>
         <source>External ID</source>
         <translation>ID esterno</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Number of files</source>
         <translation>Numero di file</translation>
     </message>
     <message>
-        <location line="-491"/>
+        <location line="-493"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Used space</source>
         <translation>Spazio utilizzato</translation>
     </message>
     <message>
-        <location line="-492"/>
+        <location line="-494"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Free space</source>
         <translation>Spazio libero</translation>
     </message>
     <message>
-        <location line="-492"/>
+        <location line="-494"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Total space</source>
         <translation>Spazio totale</translation>
     </message>
     <message>
-        <location line="-492"/>
+        <location line="-494"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Date updated</source>
         <translation>Data aggiornamento</translation>
     </message>
     <message>
-        <location line="-491"/>
+        <location line="-493"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Group ID</source>
         <translation>ID gruppo</translation>
     </message>
@@ -2741,7 +2743,7 @@ La divisione non è stata eseguita.</translation>
     </message>
     <message>
         <location line="-11704"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2588"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2616"/>
         <source>Virtual</source>
         <translation>Virtuale</translation>
     </message>
@@ -2749,7 +2751,7 @@ La divisione non è stata eseguita.</translation>
         <location line="+46"/>
         <location line="+6893"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+28"/>
-        <location line="+2831"/>
+        <location line="+2859"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+0"/>
         <location line="+2"/>
         <source>Storage</source>
@@ -3044,7 +3046,7 @@ La divisione non è stata eseguita.</translation>
         <location line="+4277"/>
         <location line="+3820"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-95"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1858"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1860"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
         <translation>Tipo</translation>
@@ -3070,7 +3072,7 @@ La divisione non è stata eseguita.</translation>
         <location line="+11"/>
         <location line="+91"/>
         <location line="+9"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+962"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+964"/>
         <location line="+1"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+108"/>
         <location line="+1"/>
@@ -3145,9 +3147,9 @@ La divisione non è stata eseguita.</translation>
     <message>
         <location line="+63"/>
         <location line="+709"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1217"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1219"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-2"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
@@ -3260,9 +3262,9 @@ La divisione non è stata eseguita.</translation>
     <message>
         <location line="-4841"/>
         <location line="+2406"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2291"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2293"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <source>Total Size</source>
         <translation>Dimensione totale</translation>
     </message>
@@ -3402,9 +3404,9 @@ La divisione non è stata eseguita.</translation>
     <message>
         <location line="+16"/>
         <location line="+18"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-499"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-501"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <source>Device Type</source>
         <translation>Tipo dispositivo</translation>
@@ -3473,7 +3475,7 @@ La divisione non è stata eseguita.</translation>
     </message>
     <message>
         <location line="+59"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-966"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-968"/>
         <source>Storage ID</source>
         <translation>ID archiviazione</translation>
     </message>
@@ -3511,7 +3513,7 @@ La divisione non è stata eseguita.</translation>
         <location line="+991"/>
         <location line="+5272"/>
         <location line="+20"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+685"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+687"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-260"/>
         <location line="+119"/>
         <location line="+72"/>
@@ -3533,7 +3535,7 @@ La divisione non è stata eseguita.</translation>
     </message>
     <message>
         <location line="+28"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-691"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-693"/>
         <source>Brand</source>
         <translation>Marca</translation>
     </message>
@@ -3575,7 +3577,7 @@ La divisione non è stata eseguita.</translation>
     <message>
         <location line="+16"/>
         <location line="+3286"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1283"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1309"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+87"/>
         <location line="+117"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-176"/>
@@ -3983,9 +3985,9 @@ La divisione non è stata eseguita.</translation>
         <location line="+143"/>
         <location line="+301"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1039"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1065"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+4"/>
         <location filename="../core/search.cpp" line="+4"/>
         <source>Path</source>
@@ -4303,8 +4305,8 @@ La divisione non è stata eseguita.</translation>
         <location line="+11"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+4"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-153"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-984"/>
-        <location line="+1771"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1009"/>
+        <location line="+1796"/>
         <source>Skip</source>
         <translation>Salta</translation>
     </message>
@@ -4735,9 +4737,9 @@ La divisione non è stata eseguita.</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-5"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1289"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1291"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <location filename="../core/device.cpp" line="-1"/>
         <source>ID</source>
@@ -4756,9 +4758,9 @@ La divisione non è stata eseguita.</translation>
     <message>
         <location line="+2"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2299"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2301"/>
         <location line="+240"/>
-        <location line="+253"/>
+        <location line="+255"/>
         <location line="+1805"/>
         <source>Active</source>
         <translation>Attivo</translation>
@@ -5122,7 +5124,7 @@ La divisione non è stata eseguita.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2856"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2877"/>
         <source>Choose a different name and try again.</source>
         <translation>Scegli un nome diverso e riprova.</translation>
     </message>
@@ -5991,7 +5993,7 @@ nel cestino?</translation>
         <translation>%1 di %2 (%3%)</translation>
     </message>
     <message>
-        <location filename="../core/storage.cpp" line="+209"/>
+        <location filename="../core/storage.cpp" line="+218"/>
         <source>No Path was provided for the Storage: %1. Edit the device to provide one and try again.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6798,7 +6800,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDeviceEditForm</name>
     <message>
-        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+108"/>
+        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+109"/>
         <source>Provide a name for this device.</source>
         <translation>Fornisci un nome per questo dispositivo.</translation>
     </message>
@@ -6813,18 +6815,23 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Cartelle o file esclusi modificati</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+90"/>
+        <source>Another storage already uses this ID.</source>
+        <translation>Un'altra archiviazione utilizza già questo ID.</translation>
+    </message>
+    <message>
+        <location line="+19"/>
         <source>Device</source>
         <translation>Dispositivo</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+263"/>
+        <location line="+269"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
     <message>
-        <location line="-260"/>
+        <location line="-266"/>
         <source>Name</source>
         <translation>Nome</translation>
     </message>
@@ -6975,7 +6982,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>ID archiviazione</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+12"/>
         <source>Label</source>
         <translation>Etichetta</translation>
     </message>

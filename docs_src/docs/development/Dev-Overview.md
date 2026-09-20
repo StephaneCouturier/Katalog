@@ -3,7 +3,7 @@ This page documents the practices for developing Katalog.<br/>
 
 ## Features management
 ### Roadmap
-* [Roadmap](Development-Roadmap), introducing Katalog 3
+* [Roadmap](Dev-Roadmap), introducing Katalog 3
 
 ### Backlog
 Katalo's Backlog is available in GitHub with 3 views:
@@ -14,7 +14,7 @@ Katalo's Backlog is available in GitHub with 3 views:
 
 ### Specifications
 Documentation of the implementation of specific features & code:
-* [Updates with metadata](DevicesCatalogMetadata) (v2.8)
+* [Updates with metadata](../DevicesCatalogMetadata) (v2.8)
 * [Progress Reporting](SpecProgressReport) (v2.8)
 * [Version Numbers](SpecVersions) (v2.8)
 
@@ -48,7 +48,7 @@ This provides information about how the source code is organized and any common 
 
 
 ## **Build**
-see page [Build from source](Development-Build-from-source)
+see page [Build from source](Dev-Build-from-source)
 GitHub workflows:
 - AppImage Qt5 (gblic 2.35)
 - AppImage Qt6 (gblic 2.38)

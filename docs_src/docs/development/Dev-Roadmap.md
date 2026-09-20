@@ -45,7 +45,7 @@ This is enabled by having done a full split of UI and backend, and the common us
 ### Development phases
 
 #### Code management:
-see [Development-Repository](http://localhost:3000/Katalog/docs/Development-Repository)
+see [Dev-Repository](http://localhost:3000/Katalog/docs/Dev-Repository)
 
 #### Phases
 Legend: ✅ Done · 🚧 Partial · 🔲 Not started

@@ -68,43 +68,23 @@ export default {
     {
       type: 'category',
       label: 'Development',
-      items: [  'Development-Overview',
-                'Development-Roadmap',
-                'Development-CodePractice',
-      {
-        type: 'category',
-        label: 'Specifications',
-        items: [
-                'BackUp_luckybackup_profile',
-                'DevicesCatalogChecksum',
-                'DevicesCatalogMetadata',
-                'SpecCatalogIncludeExclude',
-                'SpecProgressReport',
-                'SpecVersions',
-                'SpecCollection',
-                'SpecDeviceStorageRoot',
-                'SpecDeviceActiveStatus',
-                'SpecOperationQueue',
-                'SpecSearchList',
-                'SpecDevicesSplit',
-                'SpecBackup',
-                'SpecExplore',
-                'SpecAbout',
-                'SpecDeviceComment',
-                'SpecCollectionOpen',
-                'SpecSelection',
-                'SpecApplicationIcon',
-                'SpecTheme',
-                'SpecDevicesPage',
-                'SpecCollectionIdentity',
-                'SpecCardsAndTables',
-                'SpecSearchResultsFilters'
-                ],
-      },
-       'Development-Repository',
-       'Development-Build-from-source',
-       'Development-Release',
-       'Development-Documentation'
+      items: [  'development/Dev-Overview',
+                'development/Dev-Roadmap',
+                'development/Dev-CodePractice',
+      // Specifications and test plans are indexed by their own pages, not listed
+      // here: a new Spec*.md or Test*.md is added to the index table, and the
+      // sidebar never has to change.
+      'development/Specifications',
+      'development/Tests',
+      // Neither Spec* nor Test*, so they stayed in docs/ and would otherwise be
+      // orphaned from the sidebar.
+      'BackUp_luckybackup_profile',
+      'DevicesCatalogChecksum',
+      'DevicesCatalogMetadata',
+       'development/Dev-Repository',
+       'development/Dev-Build-from-source',
+       'development/Dev-Release',
+       'development/Dev-Documentation'
               ],
     },
   ],
