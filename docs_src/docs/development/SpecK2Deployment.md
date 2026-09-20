@@ -44,17 +44,28 @@ stack. Neither workflow removes that plugin from the bundle. The mitigation is
 therefore **incomplete, not absent** — which is why the defect reads as new
 while the code looks as though it were already handled.
 
-Two things this page does *not* claim, because they are not established:
+One thing this page does *not* claim, because it is not established: **which
+bundled plugin fails.** The evidence above locates the failure in theme and
+style initialisation and proves that forcing `generic` avoids it. It does not
+name the plugin. The authorised fix does not depend on that answer (see
+`K2D-C5`).
 
-- **Which bundled plugin fails.** The evidence above locates the failure in
-  theme and style initialisation and proves that forcing `generic` avoids it. It
-  does not name the plugin. The authorised fix does not depend on that answer
-  (see `K2D-C5`).
-- **Which builds are affected.** The defect is confirmed on the 2.13.beta1
-  AppImage. Whether the **released 2.12** AppImage fails the same way on the
-  same desktops has not been tested. If it does, this reaches users of a
-  released version and not only beta testers, so nothing here is written as a
-  beta-only concern.
+### This is not a 2.13 regression
+
+The **released 2.12** AppImage was then run on the same Linux Mint / Cinnamon
+virtual machine and **crashes there too**. So the defect has been shipping in a
+released version: it affects real users on GTK desktops — Cinnamon, XFCE,
+GNOME — and not only beta testers.
+
+Confirmed affected on Mint / Cinnamon: **2.12 (released)** and
+**2.13.beta1**. No other released version was tested, so the claim is not
+extended back to 2.11 or earlier — untested, not known good.
+
+Because the fix is packaging-only (`K2D-C1`), a corrected AppImage for an
+already-released version needs no code change and no new application release —
+only a rebuild with the patched AppRun. Whether to actually republish 2.12 that
+way is the maintainer's **release decision**; it is an available option, not
+planned work, and nothing on this page authorises it.
 
 This page covers **whether the packaged K2 build starts**. It does not cover
 what K2 does once it is running, and it authorises no change to the K2 user
@@ -126,7 +137,7 @@ or for work that was agreed.
 |------|--------|
 | `generic` platform theme, not the desktop's | On a non-KDE session the packaged K2 build uses Qt's `generic` platform theme by `K2D-F1`. It therefore does not pick up that desktop's colours, icon theme or native file dialog. This is the price of starting at all, and it is the state a user already gets today when the launcher merely unsets the variable and Qt finds nothing usable. Improving it is `K2D-C4`. |
 | Failing plugin not named | The bundle keeps every platform-theme plugin it ships today (`K2D-C5`). The fix prevents Qt from selecting the failing one on a non-KDE session; it does not make the bundle incapable of loading it. |
-| Affected released versions unknown | Confirmed on 2.13.beta1. Whether the released 2.12 AppImage fails identically on the same desktops has not been tested, so the size of the affected user base is not yet known. |
+| A released version is affected | Confirmed on Mint / Cinnamon for **2.12 (released)** and **2.13.beta1**: this is not a 2.13 regression, and the affected users are not only beta testers. No other released version was tested, so nothing is claimed for 2.11 or earlier. Until a rebuilt AppImage ships, the only workaround available to a user on a GTK desktop is to launch with `QT_QPA_PLATFORMTHEME=generic` themselves. |
 
 ---
 
@@ -162,7 +173,9 @@ source — the whole subject of this page is the difference between the two.
   auto-detection makes the unset safe on a non-KDE desktop.
 - **K2D-C5** — List `AppDir/usr/plugins/platformthemes/` in the built AppDir:
   unchanged from before this round, with no plugin removed.
-- **Released version exposure** — Run the released **2.12** AppImage on the same
-  Linux Mint / Cinnamon virtual machine. Record whether it fails the same way.
-  This does not gate the fix; it establishes whether the defect reaches users of
-  a released version.
+- **Released version exposure** — *Done: the released **2.12** AppImage was run
+  on the same Linux Mint / Cinnamon virtual machine and crashes identically, so
+  the defect reaches users of a released version.* Should the same check be
+  wanted for an earlier release, run that AppImage on the same virtual machine
+  and record the result here. This does not gate the fix; it establishes how far
+  back the defect reaches.
