@@ -24,7 +24,7 @@ first as a static library (`core`), and each variant links against it.
 | Variant | cmake option | Default | Executable | Version |
 |---------|--------------|---------|------------|---------|
 | **Katalog 2** — QtWidgets / KXmlGui desktop | `BUILD_QT_WIDGETS` | `OFF` | `qt_widgets/Katalog` | 2.13 |
-| **Katalog 3** — QtQuick / QML / Kirigami desktop | `BUILD_QT_QUICK` | `ON` | `qt_quick/Katalog` | 3.0.beta1 |
+| **Katalog 3** — QtQuick / QML / Kirigami desktop | `BUILD_QT_QUICK` | `ON` | `qt_quick/Katalog` | 3.0.beta2 |
 
 ### Code Branches
 #### katalog_master

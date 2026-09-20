@@ -401,8 +401,8 @@ jobs:
           KATALOG_VERSION="2.x"
         fi
 
-        # Build VERSION_TAG: platform_vX.X
-        echo "VERSION_TAG=macos_v${KATALOG_VERSION}" >> $GITHUB_ENV
+        # Artifact file name: Katalog_<platform>_v<version>[-<toolkit>].<ext>
+        echo "ARTIFACT_BASE=Katalog_macos_v${KATALOG_VERSION}" >> $GITHUB_ENV
         echo "KATALOG_VERSION=${KATALOG_VERSION}" >> $GITHUB_ENV
         echo "Building version: macos_v${KATALOG_VERSION}"
 
@@ -814,7 +814,7 @@ jobs:
 
         echo "=== Creating DMG package ==="
 
-        DMG_NAME="Katalog-$VERSION_TAG-macOS.dmg"
+        DMG_NAME="${ARTIFACT_BASE}.dmg"
 
         # Create temporary DMG directory
         mkdir dmg_temp
@@ -824,7 +824,7 @@ jobs:
         if command -v create-dmg >/dev/null 2>&1; then
           echo "Using create-dmg for better DMG creation..."
           create-dmg \
-            --volname "Katalog $VERSION_TAG" \
+            --volname "Katalog $KATALOG_VERSION" \
             --window-pos 200 120 \
             --window-size 600 300 \
             --icon-size 100 \
@@ -873,14 +873,14 @@ jobs:
     - name: Upload DMG as Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: Katalog_${{ env.VERSION_TAG }}_dmg
-        path: build/Katalog-${{ env.VERSION_TAG }}-macOS.dmg
+        name: ${{ env.ARTIFACT_BASE }}_dmg
+        path: build/${{ env.ARTIFACT_BASE }}.dmg
         retention-days: 30
 
     - name: Upload App Bundle as Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: Katalog_${{ env.VERSION_TAG }}_bundle
+        name: ${{ env.ARTIFACT_BASE }}_bundle
         path: build/qt_widgets/Katalog.app
         retention-days: 7
 
@@ -888,9 +888,9 @@ jobs:
       run: |
         echo "## macOS Qt6/KF6 Build Complete! 🍎" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "- **Version**: ${{ env.VERSION_TAG }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **File**: Katalog-${{ env.VERSION_TAG }}-macOS.dmg" >> $GITHUB_STEP_SUMMARY
-        echo "- **Size**: $(ls -lh build/Katalog-*.dmg 2>/dev/null | awk '{print $5}' || echo 'N/A')" >> $GITHUB_STEP_SUMMARY
+        echo "- **Version**: ${{ env.KATALOG_VERSION }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **File**: ${{ env.ARTIFACT_BASE }}.dmg" >> $GITHUB_STEP_SUMMARY
+        echo "- **Size**: $(ls -lh build/Katalog_*.dmg 2>/dev/null | awk '{print $5}' || echo 'N/A')" >> $GITHUB_STEP_SUMMARY
         echo "- **Target**: macOS 11.0+ (Big Sur and later)" >> $GITHUB_STEP_SUMMARY
         echo "- **Architecture**: $(uname -m)" >> $GITHUB_STEP_SUMMARY
         echo "- **Qt Version**: $($(brew --prefix)/bin/qmake -version | grep 'Qt version' || echo 'Unknown')" >> $GITHUB_STEP_SUMMARY

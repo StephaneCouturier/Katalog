@@ -219,7 +219,7 @@ jobs:
           </provides>
           <content_rating type="oars-1.1"/>
           <releases>
-            <release version="2.6" date="2024-01-01"/>
+            <release version="2.13" date="2026-09-21"/>
           </releases>
         </component>
         EOF
@@ -234,10 +234,10 @@ jobs:
           KATALOG_VERSION="2.x"
         fi
 
-        # Build VERSION_TAG: platform_vX.X
-        echo "VERSION_TAG=linux_qt6_v${KATALOG_VERSION}" >> $GITHUB_ENV
+        # Artifact file name: Katalog_<platform>_v<version>[-<toolkit>].<ext>
+        echo "ARTIFACT_BASE=Katalog_linux_v${KATALOG_VERSION}-qt6" >> $GITHUB_ENV
         echo "KATALOG_VERSION=${KATALOG_VERSION}" >> $GITHUB_ENV
-        echo "Building version: linux_qt6_v${KATALOG_VERSION}"
+        echo "Building artifact: Katalog_linux_v${KATALOG_VERSION}-qt6.AppImage"
 
     - name: Build Katalog
       run: |
@@ -415,21 +415,21 @@ jobs:
         ARCH=x86_64 "$HOME/linuxdeploy/appimagetool" \
           --runtime-file "$HOME/linuxdeploy/runtime-x86_64" \
           AppDir \
-          Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+          ${{ env.ARTIFACT_BASE }}.AppImage
 
     - name: Test AppImage
       run: |
         cd build
 
         # Basic test - check if AppImage can show version
-        chmod +x Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+        chmod +x ${{ env.ARTIFACT_BASE }}.AppImage
 
         # Test extraction
-        ./Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage --appimage-extract-and-run --version || echo "Version check completed"
+        ./${{ env.ARTIFACT_BASE }}.AppImage --appimage-extract-and-run --version || echo "Version check completed"
 
         # Get AppImage size and info
-        ls -lh Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
-        file Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+        ls -lh ${{ env.ARTIFACT_BASE }}.AppImage
+        file ${{ env.ARTIFACT_BASE }}.AppImage
 
     - name: Upload AppImage to Release
       if: env.IS_RELEASE == 'true'
@@ -438,25 +438,25 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ github.event.release.upload_url }}
-        asset_path: build/Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
-        asset_name: Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+        asset_path: build/${{ env.ARTIFACT_BASE }}.AppImage
+        asset_name: ${{ env.ARTIFACT_BASE }}.AppImage
         asset_content_type: application/octet-stream
 
     - name: Upload AppImage as Artifact
       if: env.IS_RELEASE != 'true'
       uses: actions/upload-artifact@v4
       with:
-        name: Katalog-AppImage-${{ env.VERSION_TAG }}
-        path: build/Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage
+        name: ${{ env.ARTIFACT_BASE }}
+        path: build/${{ env.ARTIFACT_BASE }}.AppImage
         retention-days: 30
 
     - name: Summary
       run: |
         echo "## Build Complete! 🎉" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "- **Version**: ${{ env.VERSION_TAG }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **File**: Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage" >> $GITHUB_STEP_SUMMARY
-        echo "- **Size**: $(ls -lh build/Katalog-${{ env.VERSION_TAG }}-x86_64.AppImage | awk '{print $5}')" >> $GITHUB_STEP_SUMMARY
+        echo "- **Version**: ${{ env.KATALOG_VERSION }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **File**: ${{ env.ARTIFACT_BASE }}.AppImage" >> $GITHUB_STEP_SUMMARY
+        echo "- **Size**: $(ls -lh build/${{ env.ARTIFACT_BASE }}.AppImage | awk '{print $5}')" >> $GITHUB_STEP_SUMMARY
 
         if [ "${{ env.IS_RELEASE }}" = "true" ]; then
           echo "- **Status**: ✅ Uploaded to GitHub Release" >> $GITHUB_STEP_SUMMARY

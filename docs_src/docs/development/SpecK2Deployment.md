@@ -6,7 +6,7 @@ description: Requirements for the platform theme the packaged Katalog 2 Linux Ap
 
 # K2 DEPLOYMENT — STARTUP OF THE LINUX APPIMAGE ON ANY DESKTOP
 
-![Status](https://img.shields.io/badge/Status-Approved-brightgreen) ![Implementation](https://img.shields.io/badge/Implementation-planned-yellow) ![K2](https://img.shields.io/badge/K2-2.13-blue)
+![Status](https://img.shields.io/badge/Status-Approved-brightgreen) ![Implementation](https://img.shields.io/badge/Implementation-mostly%20complete-green) ![K2](https://img.shields.io/badge/K2-2.13-blue)
 
 ## Context
 
@@ -31,18 +31,18 @@ So the failure is in platform-theme and style initialisation, **before** the
 application's own settings are loaded — no K2 code has run yet — and naming a
 platform theme that is present in the bundle avoids it.
 
-A mitigation for this exact failure was already attempted. Both K2 Qt6 AppImage
-workflows carry a byte-identical AppRun that only *unsets* the variable on a
-non-KDE session
-(`.github/workflows/Katalog_2_Build_linux_qt6_buildKF6_appimage.yml:404-425`
-and `.github/workflows/Katalog_2_Build_linux_qt6_kdeneon_appimage.yml:296-315`),
-under a comment claiming it fixes "SIGSEGV on non-KDE desktops (Cinnamon,
-GNOME, etc.)". Unsetting the variable does not stop Qt from auto-selecting a
+A mitigation for this exact failure had already been attempted, and that is the
+trap. Before the fix, both K2 Qt6 AppImage workflows carried a byte-identical
+AppRun that only *unset* the variable on a non-KDE session, under a comment
+claiming it fixes "SIGSEGV on non-KDE desktops (Cinnamon, GNOME, etc.)".
+Unsetting the variable does not stop Qt from auto-selecting a
 platform theme from the session: on a GTK desktop such as Cinnamon or XFCE Qt
 selects `gtk3` on its own and loads the bundled plugin against the host's GTK
-stack. Neither workflow removes that plugin from the bundle. The mitigation is
-therefore **incomplete, not absent** — which is why the defect reads as new
-while the code looks as though it were already handled.
+stack. Neither workflow removes that plugin from the bundle. That mitigation was
+therefore **incomplete, not absent** — which is why the defect read as new while
+the code looked as though it were already handled. Anyone re-reading that
+comment would have concluded the case was closed; `K2D-C3` exists so the
+comment can no longer say so.
 
 One thing this page does *not* claim, because it is not established: **which
 bundled plugin fails.** The evidence above locates the failure in theme and
@@ -102,7 +102,7 @@ Goals in real use, independent of how they are built.
 
 | ID | Requirement | Status |
 |----|-------------|--------|
-| K2D-O1 | A user can start the published K2 Linux AppImage and reach the main window on any Linux desktop, not only on a KDE/Plasma session, without setting any environment variable first. | [Planned] |
+| K2D-O1 | A user can start the published K2 Linux AppImage and reach the main window on any Linux desktop, not only on a KDE/Plasma session, without setting any environment variable first. Held at `[Planned]` deliberately: its first two instances are closed — Linux Mint / Cinnamon and Manjaro / XFCE both start with no overrides (`K2D-F1`) — but "any Linux desktop" is a wider claim than two GTK desktops. GNOME, which the crash comment named, has not been run, and neither has a Plasma session since the change (`K2D-F2`). A goal is only as strong as its verification. | [Planned] |
 
 ## Functional requirements — *what the system does*
 
@@ -110,8 +110,8 @@ Observable behaviour that can be triggered and watched.
 
 | ID | Requirement | Status |
 |----|-------------|--------|
-| K2D-F1 | On a session that is **not** a KDE session, the K2 Qt6 AppImage launcher sets a platform theme that is present in the bundle (`generic`), rather than leaving Qt to auto-select one from the session. The mitigation is measured: on Linux Mint / Cinnamon the published 2.13.beta1 AppImage dies before its own startup output, and the same AppImage run with `QT_QPA_PLATFORMTHEME=generic` reaches that output and shows the user interface. That evidence covers the *mitigation*, not the shipped launcher, which is why this row is `[Planned]`. | [Planned] |
-| K2D-F2 | On a KDE session the launcher leaves the host's platform theme in effect, so K2 keeps the Plasma appearance it has today. `K2D-F1` MUST NOT be applied unconditionally. | [Planned] |
+| K2D-F1 | On a session that is **not** a KDE session, the K2 Qt6 AppImage launcher sets a platform theme that is present in the bundle (`generic`), rather than leaving Qt to auto-select one from the session. `generic` is built into QtGui and needs no plugin, so it cannot fail the way an auto-selected plugin does. Verified on two independent GTK desktops: an AppImage rebuilt from the patched workflow starts with **no environment overrides** on Linux Mint / Cinnamon and on Manjaro / XFCE, where the previous build died before printing any of its own startup output. | [Implemented] |
+| K2D-F2 | On a KDE session the launcher leaves the host's platform theme in effect, so K2 keeps the Plasma appearance it has today. `K2D-F1` MUST NOT be applied unconditionally. Satisfied by construction: the fix changed only the body of the existing non-KDE branch, leaving its `if [ -z "$KDE_SESSION_VERSION" ] && [ -z "$KDE_FULL_SESSION" ]` condition untouched, so on a KDE session the launcher executes byte-identical code to the previous build. There is no mechanism by which Plasma behaviour could differ; the charter line for this row is confirmation of that reading, not mitigation of a risk. Held at `[Planned]` only because no run on Plasma has been reported. | [Planned] |
 | K2D-F3 | A published AppImage that dies before the application's own startup output on any tested desktop is a **release blocker**, not a per-desktop caveat noted in the release text. It means the application cannot be started at all by everyone on that desktop. | [Planned] |
 
 ## Constructional requirements — *how it is built / limits / MUST-NOTs*
@@ -120,11 +120,11 @@ Boundaries and implementation constraints, not user-visible behaviour.
 
 | ID | Requirement | Status |
 |----|-------------|--------|
-| K2D-C1 | This is **packaging only**: the AppRun scripts of the two K2 Qt6 AppImage workflows. It MUST NOT change any file under `qt_widgets/` or `core/`, and MUST NOT add, change or remove any user-visible string. | [Planned] |
-| K2D-C2 | The two K2 Qt6 AppImage workflows (`buildKF6` and `kdeneon`) carry **byte-identical** AppRun scripts. Any change to one MUST be applied to the other in the same change. They are identical today; fixing only one would leave one published AppImage still crashing. | [Planned] |
-| K2D-C3 | `unset QT_QPA_PLATFORMTHEME` MUST NOT be relied on as the mitigation. Qt still auto-selects a theme plugin from the session, so on a GTK desktop it loads a bundled plugin resolved against the host's GTK stack. The workflow comments that assert the unset works, and give a wrong reason for it (`Katalog_2_Build_linux_qt6_buildKF6_appimage.yml:404-411` and `Katalog_2_Build_linux_qt6_kdeneon_appimage.yml:296-303`), MUST be corrected in the same change — otherwise the next reader re-derives the same incomplete mitigation from a comment that claims it is already solved. | [Planned] |
+| K2D-C1 | This is **packaging only**: the AppRun scripts of the two K2 Qt6 AppImage workflows. It MUST NOT change any file under `qt_widgets/` or `core/`, and MUST NOT add, change or remove any user-visible string. Satisfied: the fix (commit `a4ad9136`) touches the two workflow files and this documentation only — no file under `qt_widgets/` or `core/`, and no `tr(` string. | [Implemented] |
+| K2D-C2 | The two K2 Qt6 AppImage workflows (`buildKF6` and `kdeneon`) carry **byte-identical** AppRun scripts. Any change to one MUST be applied to the other in the same change. They are identical today; fixing only one would leave one published AppImage still crashing. Satisfied: the fix changed both in the same commit, and their AppRun blocks remain byte-identical to each other afterwards. | [Implemented] |
+| K2D-C3 | `unset QT_QPA_PLATFORMTHEME` MUST NOT be relied on as the mitigation. Qt still auto-selects a theme plugin from the session, so on a GTK desktop it loads a bundled plugin resolved against the host's GTK stack. The comment above the AppRun heredoc in each of the two K2 Qt6 workflows asserted that the unset works and gave a wrong reason for it; such a comment MUST be corrected in the same change as the launcher — otherwise the next reader re-derives the same incomplete mitigation from a comment that claims it is already solved. Satisfied: both comments now state that the unset is **not** enough, give the correct reason (Qt auto-selects from `XDG_CURRENT_DESKTOP`, and on a GTK desktop that is `gtk3`), and cite this page. | [Implemented] |
 | K2D-C4 | K2 does **not** adopt the K3 portal approach (`DPL-F3`) in this round. K2 is in maintenance mode, and the authorised fix is the launcher variable only. Host-native dialogs, a bundled Controls style and a bundled icon theme for the K2 AppImage are each a **separate decision**, requiring the maintainer's approval and an amendment to this page first. They are not ruled out; they are simply not sanctioned here. | [Planned] |
-| K2D-C5 | Removing a platform-theme plugin from the K2 AppDir — for example `AppDir/usr/plugins/platformthemes/libqgtk3.so`, so that no other route can load it — is **not authorised** by this page. It is recorded as a **candidate**, pending evidence that names the plugin which fails: the measurements behind `K2D-F1` locate the failure in theme and style initialisation but do not identify the plugin, and `K2D-F1` does not depend on the answer. Taking it on is a separate decision on its own merits. | [Planned] |
+| K2D-C5 | Removing a platform-theme plugin from the K2 AppDir — for example `AppDir/usr/plugins/platformthemes/libqgtk3.so`, so that no other route can load it — is **not authorised** by this page. It is recorded as a **candidate**, pending evidence that names the plugin which fails: the measurements behind `K2D-F1` locate the failure in theme and style initialisation but do not identify the plugin, and `K2D-F1` does not depend on the answer. The grep that would have named it was never run, and now that `K2D-F1` is verified on two GTK desktops there is little left to gain from chasing it: the failing plugin is no longer reachable on the session that selected it. Taking this on is a separate decision on its own merits, and would need the plugin identified first. | [Planned] |
 
 ---
 
@@ -135,7 +135,7 @@ or for work that was agreed.
 
 | Item | Detail |
 |------|--------|
-| `generic` platform theme, not the desktop's | On a non-KDE session the packaged K2 build uses Qt's `generic` platform theme by `K2D-F1`. It therefore does not pick up that desktop's colours, icon theme or native file dialog. This is the price of starting at all, and it is the state a user already gets today when the launcher merely unsets the variable and Qt finds nothing usable. Improving it is `K2D-C4`. |
+| `generic` platform theme, not the desktop's | On a non-KDE session the packaged K2 build uses Qt's `generic` platform theme by `K2D-F1`. It therefore does not pick up that desktop's colours, icon theme or native file dialog. This is the price of starting at all, and it is no loss against the previous build, which on those desktops did not start. Improving it is `K2D-C4`. |
 | Failing plugin not named | The bundle keeps every platform-theme plugin it ships today (`K2D-C5`). The fix prevents Qt from selecting the failing one on a non-KDE session; it does not make the bundle incapable of loading it. |
 | A released version is affected | Confirmed on Mint / Cinnamon for **2.12 (released)** and **2.13.beta1**: this is not a 2.13 regression, and the affected users are not only beta testers. No other released version was tested, so nothing is claimed for 2.11 or earlier. Until a rebuilt AppImage ships, the only workaround available to a user on a GTK desktop is to launch with `QT_QPA_PLATFORMTHEME=generic` themselves. |
 
@@ -149,28 +149,33 @@ source — the whole subject of this page is the difference between the two.
 - **K2D-O1 / K2D-F1** — On Linux Mint / Cinnamon, run the AppImage with no
   environment overrides at all. The main window appears, and the application's
   own startup lines (`WARNING: Unknown SearchIn value, using default: ""` and
-  the three that follow) are printed. *This is the case that fails today: the
-  published 2.13.beta1 AppImage stops after the two
-  `kf.i18n: KLocalizedString` lines.*
-- **K2D-F1 (second desktop)** — Repeat on one more non-KDE, non-GTK-native
-  desktop if one is available (XFCE, GNOME). The window appears there too. One
-  passing desktop shows the mitigation works; it does not show the condition in
-  the launcher is right for every session.
+  the three that follow) are printed. *Verified on an AppImage rebuilt from the
+  patched workflow. The same run against the published 2.13.beta1 and 2.12
+  AppImages stops after the two `kf.i18n: KLocalizedString` lines, which is what
+  makes this a before/after and not just a passing test.*
+- **K2D-F1 (second desktop)** — Repeat on a second non-KDE desktop.
+  *Verified on Manjaro / XFCE: starts with no overrides.* Two desktops show the
+  mitigation holds beyond the one that reported it; they do not close `K2D-O1`,
+  because both are GTK desktops and GNOME has not been run.
 - **K2D-F2** — On Plasma, run the same AppImage. It starts, and it looks as it
-  does today: same colours, same icons, same dialogs. Compare against the
-  previous build on the same machine — a regression here is as serious as the
-  crash being fixed.
+  does today: same colours, same icons, same dialogs. *Open, and expected to
+  pass: the KDE branch of the launcher is byte-identical to the previous build,
+  so this is confirmation rather than a risk to be cleared.*
 - **K2D-F3** — Capture the full stderr of both runs above. Neither stops at the
   `kf.i18n: KLocalizedString` lines. A run that does is a release blocker.
 - **K2D-C1** — Review the diff: no file under `qt_widgets/` or `core/` is
-  touched, and no `tr(` is added, changed or removed.
+  touched, and no `tr(` is added, changed or removed. *Verified on commit
+  `a4ad9136`: two workflow files and documentation only.*
 - **K2D-C2** — Diff the AppRun block of
   `Katalog_2_Build_linux_qt6_buildKF6_appimage.yml` against the one in
   `Katalog_2_Build_linux_qt6_kdeneon_appimage.yml`: byte-identical. Then confirm
-  the change touched both files.
+  the change touched both files. *Verified after the fix: the two blocks differ
+  in nothing, and both files are in the same commit.*
 - **K2D-C3** — Read the comment above each AppRun heredoc. It no longer claims
   that unsetting the variable is sufficient, and no longer states that
-  auto-detection makes the unset safe on a non-KDE desktop.
+  auto-detection makes the unset safe on a non-KDE desktop. *Verified: both
+  comments now say the unset is not enough, name `XDG_CURRENT_DESKTOP` as the
+  reason, and cite this page.*
 - **K2D-C5** — List `AppDir/usr/plugins/platformthemes/` in the built AppDir:
   unchanged from before this round, with no plugin removed.
 - **Released version exposure** — *Done: the released **2.12** AppImage was run
