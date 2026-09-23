@@ -13,10 +13,9 @@
  * Unknown / no preference resolves to light. See SpecK3Deployment.md (DPL-F5).
  *
  * Fusion controls take their colours from the Qt palette, not from Kirigami,
- * so onSync also pushes the same colours into the palette of the window of
- * each synced item; the controls inherit it, keeping the whole window
- * consistently light or dark. It runs on every sync, not only once: when the
- * preference changes, the first syncs happen before all colours are updated.
+ * so the same colours are also written into the palette of each window that
+ * holds a themed item; the controls inherit it, keeping the whole window
+ * consistently light or dark.
  */
 
 import QtQuick
@@ -87,28 +86,47 @@ Kirigami.BasicThemeDefinition {
     headerHoverColor: "#3daee9"
     headerFocusColor: "#3daee9"
 
+    // Fusion controls inherit the window palette. It is written once per window
+    // and again when the light/dark preference changes — never on every sync:
+    // onSync runs for every themed item, and each palette write propagates to
+    // every item in the window, which made startup take minutes on the real app.
+    property var styledWindows: []
+
+    function applyPalette(win) {
+        const p = win.palette
+        p.window = backgroundColor
+        p.windowText = textColor
+        p.base = viewBackgroundColor
+        p.alternateBase = viewAlternateBackgroundColor
+        p.text = viewTextColor
+        p.button = buttonBackgroundColor
+        p.buttonText = buttonTextColor
+        p.brightText = textColor
+        p.placeholderText = disabledTextColor
+        p.highlight = selectionBackgroundColor
+        p.highlightedText = selectionTextColor
+        p.toolTipBase = tooltipBackgroundColor
+        p.toolTipText = tooltipTextColor
+        p.link = linkColor
+        p.linkVisited = visitedLinkColor
+        p.disabled.windowText = disabledTextColor
+        p.disabled.text = disabledTextColor
+        p.disabled.buttonText = disabledTextColor
+    }
+
+    function applyToAllWindows() {
+        styledWindows = styledWindows.filter(win => win)
+        styledWindows.forEach(win => applyPalette(win))
+    }
+
+    // Deferred so every colour binding has updated before the palette is written.
+    onDarkChanged: Qt.callLater(applyToAllWindows)
+
     onSync: object => {
         const win = object.Window.window
-        const p = win ? win.palette : null
-        if (!p)
+        if (!win || styledWindows.indexOf(win) >= 0)
             return
-        p.window = theme.backgroundColor
-        p.windowText = theme.textColor
-        p.base = theme.viewBackgroundColor
-        p.alternateBase = theme.viewAlternateBackgroundColor
-        p.text = theme.viewTextColor
-        p.button = theme.buttonBackgroundColor
-        p.buttonText = theme.buttonTextColor
-        p.brightText = theme.textColor
-        p.placeholderText = theme.disabledTextColor
-        p.highlight = theme.selectionBackgroundColor
-        p.highlightedText = theme.selectionTextColor
-        p.toolTipBase = theme.tooltipBackgroundColor
-        p.toolTipText = theme.tooltipTextColor
-        p.link = theme.linkColor
-        p.linkVisited = theme.visitedLinkColor
-        p.disabled.windowText = theme.disabledTextColor
-        p.disabled.text = theme.disabledTextColor
-        p.disabled.buttonText = theme.disabledTextColor
+        styledWindows.push(win)
+        applyPalette(win)
     }
 }
