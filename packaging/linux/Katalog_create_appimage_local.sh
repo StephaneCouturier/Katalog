@@ -741,6 +741,16 @@ deploy_k3_qml_modules() {
         mkdir -p "$dest/org/kde"
         cp -rn "$kirigami_src" "$dest/org/kde/"
         print_success "Bundled: org.kde.kirigami"
+
+        # Kirigami colour theme for the Fusion style (DPL-F5 / DPL-C6): without
+        # it the app ignores the host's dark preference and is always light.
+        if [ -f "$PROJECT_ROOT/packaging/Theme.qml" ]; then
+            mkdir -p "$dest/org/kde/kirigami/styles/Fusion"
+            cp "$PROJECT_ROOT/packaging/Theme.qml" "$dest/org/kde/kirigami/styles/Fusion/Theme.qml"
+            print_success "Bundled: Kirigami Fusion Theme.qml"
+        else
+            print_error "Not found: $PROJECT_ROOT/packaging/Theme.qml — the app would always be light"
+        fi
     else
         print_warning "Kirigami QML not found at $kirigami_src"
         print_info "Install libkf6kirigami-dev (or kirigami2) to bundle Kirigami"

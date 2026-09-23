@@ -629,6 +629,15 @@ jobs:
             fi
           fi
 
+          # Kirigami colour theme for the Fusion style (DPL-F5 / DPL-C6).
+          # Without it Kirigami falls back to fixed Breeze Light colours and the
+          # app ignores the host's dark preference.
+          if [ -d "$DEST/org/kde/kirigami" ]; then
+            mkdir -p "$DEST/org/kde/kirigami/styles/Fusion"
+            cp "$GITHUB_WORKSPACE/packaging/Theme.qml" "$DEST/org/kde/kirigami/styles/Fusion/Theme.qml"
+            echo "  Bundled: Kirigami Fusion Theme.qml"
+          fi
+
           # Bundle KDE Frameworks shared libs that the bundled QML plugins depend on.
           # linuxdeploy never sees these plugins so their KF6 deps must be copied manually.
           echo "  Bundling KDE Frameworks dependencies of QML plugins..."
@@ -692,6 +701,16 @@ jobs:
           echo "  OK: libqxdgdesktopportal.so (host native dialogs via portal)"
         else
           echo "  WARNING: no portal platform theme — dialogs will look non-native"
+        fi
+
+        # The Kirigami Fusion theme is what makes the build follow the host's
+        # light/dark preference; its absence is a DPL-F5 failure (DPL-C6).
+        echo "=== Verifying Kirigami colour theme ==="
+        if [ -f "AppDir/usr/qml/org/kde/kirigami/styles/Fusion/Theme.qml" ]; then
+          echo "  OK: org/kde/kirigami/styles/Fusion/Theme.qml (follows host light/dark)"
+        else
+          echo "  FATAL: Kirigami Fusion Theme.qml is missing — the app would always be light."
+          exit 1
         fi
 
         # Phase 3: create the AppImage with the type2 runtime (fuse2 + fuse3 + fuse-free).

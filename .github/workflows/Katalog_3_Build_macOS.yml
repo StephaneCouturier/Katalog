@@ -246,6 +246,21 @@ jobs:
           exit 1
         fi
 
+        # Kirigami colour theme for the Fusion style (DPL-F5 / DPL-C6). Without
+        # it Kirigami falls back to fixed Breeze Light colours and the app
+        # ignores the system's dark mode. Copied before the bundle is signed.
+        KIRIGAMI_DIR="$QML_DIR/org/kde/kirigami"
+        if [ -d "$KIRIGAMI_DIR" ]; then
+          mkdir -p "$KIRIGAMI_DIR/styles/Fusion"
+          cp "$GITHUB_WORKSPACE/packaging/Theme.qml" "$KIRIGAMI_DIR/styles/Fusion/Theme.qml"
+          echo "✅ Kirigami Fusion Theme.qml bundled"
+          echo "- **Kirigami colour theme**: bundled" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ $KIRIGAMI_DIR is missing - Theme.qml cannot be bundled"
+          echo "- **Kirigami colour theme**: MISSING - build rejected" >> $GITHUB_STEP_SUMMARY
+          exit 1
+        fi
+
         # Without the Cocoa platform plugin a Qt app aborts at startup with
         # "no Qt platform plugin could be initialized" - one of the classic
         # "it does not even start" reports. It cannot be caught by running the

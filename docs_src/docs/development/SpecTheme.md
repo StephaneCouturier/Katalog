@@ -37,7 +37,9 @@ preference** of `THM-F7`, which belongs here because it is stored in the same
 (`THM-F8`, `THM-F9`, `THM-C11`) — and the surface of the **Selection page's
 `SEL-F5` reminder row** (`THM-F10`, `THM-C13`, `THM-C14`). *(Scope widened
 2026-09-12, first from colour derivation alone, then to the folder list; widened
-again 2026-09-21 to the reminder row.)*
+again 2026-09-21 to the reminder row.)* — and the operational goal `THM-O2`,
+whose delivery is owned by `SpecK3Deployment.md` (`DPL-F5`). *(Widened
+2026-09-23.)*
 
 **Out of scope (non-goals):**
 
@@ -64,6 +66,7 @@ Goals in real use, independent of how they are built.
 | ID | Requirement | Status |
 |----|-------------|--------|
 | THM-O1 | A user scanning a long file list can tell one row from the next at a glance, and does not lose the line they are reading — under their own desktop colour scheme, light or dark, and whichever Theme value is stored. | [Planned] |
+| THM-O2 | A user who has set their system to dark (or light) sees K3 in that mode as a **whole window**, not a mix of dark surfaces and light controls — in packaged builds on non-Plasma Linux desktops, on Windows and on macOS, as well as on Plasma. Delivered by packaging, per `DPL-F5` / `DPL-C6` (`SpecK3Deployment.md`). | [Planned] |
 
 ## Functional requirements — *what the system does*
 
@@ -142,3 +145,4 @@ For each row: set up the stated condition, look at the result.
 - **THM-F10 (packaged build)** — Repeat the first two checks against the **AppImage** on a non-Plasma desktop, the case that was reported. This is the check that closes the row; until it is confirmed there, `THM-F10` stays `[Planned]`. *Open: the QML is in as of 2026-09-21 and builds, but no visual check has been made on any style — this is the only thing between `THM-F10` and `[Implemented]`.*
 - **THM-C13** — Click the reminder row: the list still scrolls to the selected card and the selection is unchanged (`SEL-F6`, `SEL-C7`). Run `ninja translations_lupdate`: no new untranslated string appears. Review the diff: one `background` in `qt_quick/Main.qml`, nothing under `core/`, and no change to `DeviceIdentity.qml`. *Verified 2026-09-21 by diff review: one file changed, no `core/` file, no `DeviceIdentity.qml`, no `tr(` or `qsTr(` added, changed or removed; `Katalog3_qmllint` reports nothing on the inserted lines and the build links. The click behaviour was not re-run — the change adds a `background` and an `id` and touches no handler.*
 - **THM-C14** — Review the same diff against `SpecK3Deployment.md`: no Breeze icon file is copied into the AppDir and neither `qqc2-desktop-style` nor `frameworkintegration` has been added to the bundle, so `DPL-C4` still holds. The packaged build still resolves to Fusion — and now looks the same as the local build on this row anyway. *Verified 2026-09-21: the diff is one `qt_quick` file and touches no part of the bundle.*
+- **THM-O2** — Run the three `DPL-F5` checks in `SpecK3Deployment.md`. On each OS, set the system to dark: the Search results and Explore lists show the Breeze Dark View/Window row pair (`THM-F1`), and the surrounding controls are dark too. Nothing in the window stays light.

@@ -58,14 +58,17 @@ are `SpecCollectionOpen.md`.
 the modules that bundled modules load at runtime; the platform theme that
 decides whether file and folder selection uses the host's dialog; the fallback
 when the host offers none; and the rule that keeps the hand-written module list
-in step with the sources.
+in step with the sources — and, added 2026-09-23 at the maintainer's direction,
+the **Kirigami colour theme** of packaged builds on **Linux (AppImage), Windows
+(portable) and macOS (portable)**, so that they follow the host's light/dark
+preference (`DPL-F5`, `DPL-C6`).
 
-**Out of scope (non-goals):** the Controls **style** and the **icon theme** of
-packaged builds — recorded below as a known limitation, and deliberately *not*
-planned work (`DPL-C4`). Bundling Breeze icon files, building
+**Out of scope (non-goals):** the Controls **style** of packaged builds, which
+stays Fusion, and the **icon theme** — recorded below as known limitations, and
+deliberately *not* planned work (`DPL-C4`). Bundling Breeze icon files, building
 `qqc2-desktop-style` and building `frameworkintegration` were each considered
-and **not** authorised. The Windows and macOS portable bundles, Flatpak and any
-other downstream manifest. K2 packaging (see
+and **not** authorised. The Windows and macOS portable bundles, **except** for
+`DPL-F5` / `DPL-C6`. Flatpak and any other downstream manifest. K2 packaging (see
 [SpecK2Deployment](SpecK2Deployment.md)). The behaviour of any dialog or page
 once it loads. No `qt_quick` source change is authorised by this page.
 
@@ -107,6 +110,7 @@ Observable behaviour that can be triggered and watched.
 | DPL-F2 | A packaged build that logs `module "X" is not installed`, or `Failed to load non-native ... implementation`, is a **release blocker**. Such a line means a feature is silently unavailable to every user of that package. | [Planned] |
 | DPL-F3 | In a packaged Linux build, file and folder selection uses the **host desktop's own** dialog — Plasma's dialog on Plasma, the host's dialog elsewhere — obtained through Qt's `xdgdesktopportal` platform theme. Verified on openSUSE Leap / Plasma, Linux Mint / Cinnamon and Manjaro / XFCE. | [Implemented] |
 | DPL-F4 | When the host provides no portal backend, file and folder selection degrades to Qt's non-native `QtQuick.Dialogs` implementation and still works. Degradation is a supported path, not an error state. Built and asserted: the launcher selects the portal theme only when the plugin is present and otherwise leaves the theme unset, and the build fails if the fallback's QML module is missing. None of the three hosts tested for `DPL-F3` lacked a portal backend, so the degraded path is implemented but not yet observed on a host that needs it. | [Implemented] |
+| DPL-F5 | A packaged build — Linux AppImage, Windows portable, macOS portable — follows the host's **light/dark preference** as Qt reports it through `Qt.styleHints.colorScheme` (from the XDG desktop portal on Linux, and from the operating system on Windows and macOS). The **whole window** is consistently light or dark: Kirigami surfaces **and** the Controls (buttons, text fields, combo boxes, menus). A dark window with light controls does not satisfy this row. The colours are **Breeze Light** or **Breeze Dark**, **not** the host's own colour scheme: a dark GNOME desktop gets Breeze Dark, not Adwaita Dark. When Qt reports no preference (`Unknown` / `NoPreference`), the build is **light**. When the preference changes while Katalog runs **and Qt reports that change**, the window follows it without a restart. On a host whose preference never reaches Qt, the build stays light, and that is not a defect of this row. | [Planned] |
 
 ## Constructional requirements — *how it is built / limits / MUST-NOTs*
 
@@ -117,21 +121,23 @@ Boundaries and implementation constraints, not user-visible behaviour.
 | DPL-C1 | The AppImage QML module list is a **hand-maintained allow-list**, not a scan of the sources. Adding, changing or removing a QML `import` in any `qt_quick` source therefore MUST update that list in the **same change**. A source import that the list does not cover is the defect recorded in *Context*, and it fails silently. | [Implemented] |
 | DPL-C2 | The `xdgdesktopportal` platform-theme plugin MUST be present in the bundle, otherwise `DPL-F3` cannot take effect however the theme is selected. | [Implemented] |
 | DPL-C3 | `DPL-F1` remains mandatory **after** `DPL-F3` is in place: it is a hard dependency of `DPL-F3`, not an alternative to it, because `DPL-F4` is the path taken on every host without a portal backend. The bundled `Qt.labs.folderlistmodel` MUST NOT be dropped as "no longer needed now that dialogs are native". | [Implemented] |
-| DPL-C4 | The Controls style and icon theme of packaged builds are **not part of this change**. `DPL-F3` addresses the reported appearance by using the host's own dialog instead. Bundling Breeze icon files, building `qqc2-desktop-style` and building `frameworkintegration` were each put to the maintainer for this round and **not** authorised, so no work on them is authorised here. They are not ruled out: introducing any of them is a **separate decision**, to be taken on its own merits, and requires the maintainer's approval and an amendment to this page first. See *Known limitations*. | [Implemented] |
+| DPL-C4 | The Controls style and icon theme of packaged builds are **not part of this change**. `DPL-F3` addresses the reported appearance by using the host's own dialog instead. Bundling Breeze icon files, building `qqc2-desktop-style` and building `frameworkintegration` were each put to the maintainer for this round and **not** authorised, so no work on them is authorised here. They are not ruled out: introducing any of them is a **separate decision**, to be taken on its own merits, and requires the maintainer's approval and an amendment to this page first. See *Known limitations*. *(Amended 2026-09-23: the **Kirigami colour theme** of packaged builds is not the Controls style. It is authorised separately by `DPL-F5` / `DPL-C6`, and that authorisation does not lift anything else in this row.)* | [Implemented] |
 | DPL-C5 | This work adds, changes and removes **no** user-visible string, and changes **no** file under `core/`. It is deployment configuration only. | [Implemented] |
+| DPL-C6 | `DPL-F5` is delivered by **packaging**, through **one** file: `packaging/Theme.qml` in the repository (directly under `packaging/`, no subdirectory, per the maintainer), copied at package time to `org/kde/kirigami/styles/Fusion/Theme.qml` inside the bundled Kirigami module. It selects Breeze Light or Breeze Dark colour values from `Qt.styleHints.colorScheme` for `Kirigami.Theme`, and the **same file** covers the Controls part of `DPL-F5`: its `onSync` pushes the Breeze colours into the synced item's window palette (`Window.window.palette`), which Fusion controls inherit. No second mechanism is authorised. Delivery path per platform: **Linux** — the AppImage workflow (`.github/workflows/Katalog_3_Build_linux_qt6_buildKF6_appimage.yml`) and `packaging/linux/Katalog_create_appimage_local.sh`; **macOS** — `.github/workflows/Katalog_3_Build_macOS.yml`; **Windows** — no workflow: the portable package is built manually on a Windows machine by the maintainer, who copies the file into place by hand. Where a package has a bundle allow-list, the file MUST be on it (`DPL-C1`), and its absence from any package is a failure of `DPL-F5`. The Breeze hex values live **only** in that bundled file; they are not a precedent for literal colours in `qt_quick` QML (`SpecTheme.md` *Context*). The Controls style stays Fusion (`THM-C14`); `DPL-C4` and `DPL-C5` still hold — no Breeze icon files, no `qqc2-desktop-style`, no `frameworkintegration`, no user-visible string, nothing under `core/` — and no `qt_quick` source is changed. | [Planned] |
 
 ---
 
-## Known limitations of packaged Linux builds
+## Known limitations of packaged builds
 
 Recorded so that a future reader does not mistake them for defects introduced
 here, or for work that was agreed.
 
 | Item | Detail |
 |------|--------|
-| Fusion style, not the desktop style | The bundle contains no `qqc2-desktop-style`, so Qt Quick Controls resolve to Fusion. This is visible in a tester's log as `QtQuick/Controls/Fusion/Dialog.qml`. Building that framework into the bundle was **not** authorised. |
+| Fusion style, not the desktop style | The bundle contains no `qqc2-desktop-style`, so Qt Quick Controls resolve to Fusion, visible in a tester's log as `QtQuick/Controls/Fusion/Dialog.qml`. Building that framework into the bundle was **not** authorised. Light/dark following is provided separately by `DPL-F5`. |
 | Generic icon theme | `breeze-icons` is built when the bundle's KF6 stack is built, but only its shared libraries are copied — the icon **files** under `share/icons/breeze` never reach the AppDir, so icons fall back to whatever the host offers. Copying them was **not** authorised. |
 | No KDE platform theme | `frameworkintegration`, which provides the `kde` platform theme plugin, is not built for the bundle. Building it was **not** authorised. `DPL-F3` reaches the host's dialog through the portal instead. |
+| Breeze colours, not the host's scheme | Under `DPL-F5` a packaged build is Breeze Light or Breeze Dark. It does not take the host's own colours (Adwaita, Mint-Y, Windows accent colours). A host whose light/dark preference does not reach Qt stays light. |
 
 These three are the reason a packaged build looks unlike a local build. They are
 listed as **limitations**, not as requirements: none of them is authorised work
@@ -182,3 +188,17 @@ is the difference between the two.
   the bundle's framework build list.
 - **DPL-C5** — Review the diff for `tr(` and `qsTr(`: no addition, no change, no
   removal. Confirm no file under `core/` is modified.
+- **DPL-F5 (Linux, non-Plasma)** — On GNOME or XFCE with the desktop set to
+  dark, launch the AppImage. Every page, including its buttons, fields and
+  menus, is dark in Breeze Dark colours, not Adwaita. Switch the desktop to
+  light while it runs: the window follows if the portal reports the change.
+  Repeat with no portal backend: the window is light.
+- **DPL-F5 (Plasma)** — Repeat on Plasma, light and dark: the packaged build
+  follows as well.
+- **DPL-F5 (Windows, macOS)** — With the OS in dark mode, launch the portable
+  build. The whole window, controls included, is dark. Switch to light mode
+  while it runs: the window follows.
+- **DPL-C6** — List the built AppDir and the macOS bundle, and the manually
+  assembled Windows package: `org/kde/kirigami/styles/Fusion/Theme.qml` is
+  present in each, and is on each allow-list where one exists. Grep `qt_quick/`
+  for new hex colours: there are none.
