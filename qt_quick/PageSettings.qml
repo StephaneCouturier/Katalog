@@ -541,11 +541,22 @@ Kirigami.ScrollablePage {
                 }
 
                 Component.onCompleted: {
+                    // Resolved by code, never by list position: the order is
+                    // arbitrary and its first entry is Bulgarian, so a code that
+                    // is not found must not leave the box sitting on index 0 —
+                    // one click there stored Bulgarian for good (LNG-C1). A
+                    // stored code absent from the list has already been
+                    // sanitised to en_US at startup (LNG-F3), so en_US is the
+                    // language actually in effect and what this shows (LNG-F5).
                     var lang = appManager1.getCurrentLanguage()
                     var langs = appManager1.getLanguageList()
+                    var found = -1
+                    var english = -1
                     for (var i = 0; i < langs.length; i++) {
-                        if (langs[i].code === lang) { currentIndex = i; break }
+                        if (langs[i].code === lang)    found = i
+                        if (langs[i].code === "en_US") english = i
                     }
+                    currentIndex = found >= 0 ? found : english
                 }
 
                 onActivated: {

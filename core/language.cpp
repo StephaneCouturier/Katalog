@@ -96,8 +96,35 @@ QString Language::getDisplayName(const QString& languageCode)
 
 QString Language::getSystemLanguage()
 {
-    QString systemLocale = QLocale::system().name();
-    if (isLanguageSupported(systemLocale)) {
+    // The operating system's reading language first, then its region (LNG-F4).
+    // QLocale::system().name() is the FORMAT/REGION locale, and on macOS and
+    // Windows that is configured independently of the interface language, so on
+    // its own it can name a language the user does not read. uiLanguages() is
+    // the interface-language list, most preferred first.
+    const QStringList supported = getSupportedLanguages();
+    const QStringList uiLanguages = QLocale::system().uiLanguages();
+
+    // Exact match, e.g. "en-US" -> "en_US".
+    for (const QString &tag : uiLanguages) {
+        QString code = tag;
+        code.replace(QLatin1Char('-'), QLatin1Char('_'));
+        if (supported.contains(code))
+            return code;
+    }
+
+    // Then the language alone, e.g. "en-GB" -> the supported "en_US". Resolved
+    // by code, never by list position (LNG-C1).
+    for (const QString &tag : uiLanguages) {
+        const QString language = tag.section(QLatin1Char('-'), 0, 0).toLower();
+        for (const QString &code : supported) {
+            if (code.section(QLatin1Char('_'), 0, 0).compare(language, Qt::CaseInsensitive) == 0)
+                return code;
+        }
+    }
+
+    // Then the region locale, as before.
+    const QString systemLocale = QLocale::system().name();
+    if (supported.contains(systemLocale)) {
         return systemLocale;
     }
     return "en_US"; // Fallback

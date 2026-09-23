@@ -179,16 +179,30 @@ MainWindow::MainWindow(QWidget *parent) : KXmlGuiWindow(parent),
             ui->Settings_label_VersionValue->setText(currentVersion);
             ui->Settings_label_DateValue->setText(releaseDate);
 
-        //Load languages to the Settings combobox, keeping the user's selection
+        //Load languages to the Settings combobox, keeping the user's selection.
+        //Signals stay blocked while it is filled: the generated
+        //currentTextChanged slot writes Settings/Language, and adding the first
+        //item moves the index from -1 to 0 — which stored Bulgarian, the first
+        //entry of the list, on every startup before the user's choice was
+        //restored (LNG-C2). The selection is then resolved by code, never by
+        //position: an unmatched code used to leave the box on index 0, and one
+        //click stored Bulgarian for good (LNG-C1). A stored code absent from the
+        //list has already been sanitised to en_US (LNG-F3), so en_US is the
+        //language actually in effect and what this shows (LNG-F5).
             QString userLanguage = settings.value("Settings/Language").toString();
             const QStringList supportedLanguages = Language::getSupportedLanguages();
+            ui->Settings_comboBox_Language->blockSignals(true);
             for (const QString& code : supportedLanguages) {
                 ui->Settings_comboBox_Language->addItem(
                     Language::getFlagIcon(code),
                     code
                     );
             }
-            ui->Settings_comboBox_Language->setCurrentText(userLanguage);
+            ui->Settings_comboBox_Language->setCurrentIndex(
+                supportedLanguages.indexOf(supportedLanguages.contains(userLanguage)
+                                           ? userLanguage
+                                           : QStringLiteral("en_US")));
+            ui->Settings_comboBox_Language->blockSignals(false);
 
         //Hide some widgets by default
             ui->Statistics_calendarWidget->hide();

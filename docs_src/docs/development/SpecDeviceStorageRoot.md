@@ -169,7 +169,9 @@ Reused verbatim from existing K2 strings — no new translation slots:
 | `Folders found` | result field of the completion message |
 
 In K3 these are reached through the K2→K3 context bridge described in
-`SpecLanguages.md`, which matches on the **byte-exact** source text. `Old path:`
+`.claude/agents/translations.md` — interface language *selection* is
+[SpecLanguages](SpecLanguages.md), which scopes the bridge out — and the bridge
+matches on the **byte-exact** source text. `Old path:`
 and `New path:` carry their colon inside the string and no trailing space; the
 separating space belongs to the surrounding layout.
 
