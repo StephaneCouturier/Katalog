@@ -6,6 +6,9 @@
 #include <QStandardPaths>
 #include <QIcon>
 #include <QQuickStyle>
+#include <QQuickItem>
+#include <QStyleHints>
+#include <QWindow>
 
 #include "appmanager.h"
 #include "core/collection.h"
@@ -50,16 +53,26 @@ int main(int argc, char *argv[])
     // On Linux, the system KDE theme provides icons for QML icon.name;
     // fallback paths cover any icon the theme is missing.
     // On Windows, there is no system theme so we set "breeze" explicitly.
-    {
-        bool darkTheme = (app.palette().window().color().lightness() < 128);
 #ifdef Q_OS_WINDOWS
-        QIcon::setThemeName("breeze");
+    QIcon::setThemeName("breeze");
 #endif
-        QStringList fallbackPaths = QIcon::fallbackSearchPaths();
+    // The fallback set (light or dark) follows the host light/dark preference
+    // Qt reports, the same one the packaged Kirigami Theme.qml follows. The
+    // palette decides only when no preference is reported: packaged builds keep
+    // a light platform palette even on a dark desktop. See SpecTheme.md (THM-F11).
+    const QStringList baseFallbackPaths = QIcon::fallbackSearchPaths();
+    auto applyFallbackIcons = [&app, baseFallbackPaths]() {
+        const Qt::ColorScheme scheme = app.styleHints()->colorScheme();
+        const bool darkTheme = (scheme == Qt::ColorScheme::Dark)
+            || (scheme == Qt::ColorScheme::Unknown
+                && app.palette().window().color().lightness() < 128);
+        QStringList fallbackPaths = baseFallbackPaths;
         fallbackPaths << (darkTheme ? QStringLiteral(":/fallback-icons-dark")
                                     : QStringLiteral(":/fallback-icons"));
-        QIcon::setFallbackSearchPaths(fallbackPaths);
-    }
+        if (fallbackPaths != QIcon::fallbackSearchPaths())
+            QIcon::setFallbackSearchPaths(fallbackPaths);
+    };
+    applyFallbackIcons();
 
     // Application translator. It is installed further down, once AppManager has
     // resolved the settings file path (the same portable-aware file K2 and the
@@ -174,6 +187,33 @@ int main(int argc, char *argv[])
             // rather than refreshDeviceList(): the latter probes the filesystem
             // for active states, which a language change must not trigger.
             appManager->reloadDeviceListModel();
+        });
+
+    // Follow a light/dark change at runtime without restart (THM-F11). The
+    // portal may also report the preference only after startup. Changing the
+    // fallback paths invalidates Qt's icon cache, but icons already on screen
+    // keep their pixmap: Kirigami.Icon reloads when the Kirigami colours change,
+    // Controls icons (QQuickIconImage) only when their name changes, so each one
+    // is given its name again to reload from the new set.
+    QObject::connect(app.styleHints(), &QStyleHints::colorSchemeChanged, &engine,
+        [applyFallbackIcons]() {
+            const QStringList before = QIcon::fallbackSearchPaths();
+            applyFallbackIcons();
+            if (QIcon::fallbackSearchPaths() == before)
+                return;
+            const QWindowList windows = QGuiApplication::topLevelWindows();
+            for (QWindow *window : windows) {
+                const QList<QQuickItem *> items = window->findChildren<QQuickItem *>();
+                for (QQuickItem *item : items) {
+                    if (!item->inherits("QQuickIconImage"))
+                        continue;
+                    const QVariant name = item->property("name");
+                    if (name.toString().isEmpty())
+                        continue;
+                    item->setProperty("name", QString());
+                    item->setProperty("name", name);
+                }
+            }
         });
 
     //appManager->testQuery();
