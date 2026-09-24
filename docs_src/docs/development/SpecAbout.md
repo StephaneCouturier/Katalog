@@ -96,6 +96,8 @@ The complete and exclusive field list authorised by `ABT-F2`.
 | 10 | UI language / locale identifier | locale identifier only |
 | 11 | Database mode | `Memory` / `File` / `Hosted` |
 | 12 | Database schema version | `collection->dbSchemaVersion` |
+| 13 | Display server (Qt platform plugin in use) | `QGuiApplication::platformName()` — e.g. `wayland`, `xcb` (X11), `windows`, `cocoa`. Reports the plugin actually in use: an XWayland session forced with `QT_QPA_PLATFORM=xcb` shows `xcb`, which `XDG_SESSION_TYPE` would not reveal. |
+| 14 | Desktop environment | the single named environment variable `XDG_CURRENT_DESKTOP` (e.g. `KDE`, `GNOME`). When it is empty or absent — the normal case on Windows and macOS — the field shows `unknown`. |
 
 ### Why the database mode and schema version are included
 
@@ -107,6 +109,25 @@ unreportable — a whole class of bugs behaves differently in Memory mode, so a
 report that omits the mode is usually unusable. Only the mode and the schema
 version are included; the database **path**, **host**, **port**, **name**,
 **user** and **password** are excluded by `ABT-C1`.
+
+### Why the display server and desktop environment are included
+
+Both were reviewed against `ABT-C1` and `ABT-C2` and accepted.
+
+- **`ABT-C1` (no identifying content).** Each value comes from a small, fixed
+  set of platform-plugin names (`wayland`, `xcb`, `windows`, `cocoa`, ...) or
+  desktop names (`KDE`, `GNOME`, ...). Neither names the user, the machine, a
+  path or a credential.
+- **`ABT-C2` (allowlist, not a survey).** The display server is read from a
+  Qt API. The desktop environment is one named environment variable,
+  `XDG_CURRENT_DESKTOP`, read explicitly by name. The environment is never
+  iterated or dumped; no other variable is read.
+
+Without them a class of defects is unreportable: behaviour differs between
+Wayland and X11, and some defects are specific to one desktop (see
+`SpecApplicationIcon.md`, a Plasma Wayland-only rendering defect). Beta testers
+report from Windows, macOS and Linux, so the maintainer cannot assume the
+reporter's display server or desktop.
 
 `ABT-C1` blocks the leaks known today. `ABT-C2` blocks the ones that would
 otherwise be introduced later by a convenience change, such as serialising the
@@ -137,9 +158,11 @@ HIG.
 For each row: set up the stated condition, run the operation, confirm the result.
 
 - **ABT-F1** — Open the About page. The action is present next to Close. Trigger it: the notification `Version and system information copied to clipboard` appears and the clipboard is not empty.
-- **ABT-F2** — Paste the block into a text editor. Exactly the twelve fields of *Block content* are present; count them. No thirteenth field.
+- **ABT-F2** — Paste the block into a text editor. Exactly the fourteen fields of *Block content* are present; count them. No fifteenth field.
 - **ABT-F3** — Paste the block into a plain-text field. It is readable as-is, with no markup artefacts and no truncated lines.
 - **ABT-C1** — Search the pasted block for the machine hostname, the user name, and any `/` or `\` path fragment: none is present. Then open a **Hosted** collection with host, port, database name, user and password filled in, copy again, and search the block for each of those five values and for the collection name: none is present.
 - **ABT-C1 / ABT-F2 (mode and schema)** — Copy the block in Memory mode, then in File mode, then in Hosted mode. Each block states the correct mode and the schema version, and nothing more about the database.
+- **ABT-F2 (display server)** — On Linux, copy the block once in a Wayland session, then relaunch with `QT_QPA_PLATFORM=xcb` and copy again. The Display server line shows `wayland`, then `xcb`.
+- **ABT-F2 (desktop environment)** — On Linux, the Desktop environment line matches `echo $XDG_CURRENT_DESKTOP`. On Windows or macOS it shows `unknown`.
 - **ABT-C2** — Add an unrelated key to the collection `.ini` by hand, then copy the block. The new key does not appear, confirming the block is an allowlist and not a settings dump.
 - **ABT-C3** — Confirm the K2 About section is unchanged and that the feature required no `core/` change.

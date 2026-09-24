@@ -1480,6 +1480,11 @@ QString AppManager::systemInformation()
     lines << QStringLiteral("Kernel: %1 %2")
                  .arg(QSysInfo::kernelType(), QSysInfo::kernelVersion());
     lines << QStringLiteral("Architecture: %1").arg(QSysInfo::currentCpuArchitecture());
+    lines << QStringLiteral("Display server: %1").arg(QGuiApplication::platformName());
+    // Read by name, never by iterating the environment (ABT-C2).
+    const QString desktop = qEnvironmentVariable("XDG_CURRENT_DESKTOP");
+    lines << QStringLiteral("Desktop environment: %1")
+                 .arg(desktop.isEmpty() ? QStringLiteral("unknown") : desktop);
     lines << QStringLiteral("Language: %1").arg(QLocale().name());
     lines << QStringLiteral("Database mode: %1 (schema %2)")
                  .arg(getDatabaseMode(), getDatabaseSchemaVersion());
