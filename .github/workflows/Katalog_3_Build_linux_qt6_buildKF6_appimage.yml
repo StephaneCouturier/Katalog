@@ -61,10 +61,10 @@ jobs:
         # breeze-icons generate-24px-versions.py requires lxml
         pip install lxml
 
-    - name: Install Qt 6.10.0
+    - name: Install Qt 6.11.2
       uses: jurplel/install-qt-action@v4
       with:
-        version: '6.10.0'
+        version: '6.11.2'
         host: 'linux'
         target: 'desktop'
         dir: '/opt/qt'
@@ -94,8 +94,8 @@ jobs:
           printf 'if(NOT TARGET Qt6::GuiPrivate)\n'                                >> "${PRIVATE_CFG}"
           printf '  add_library(Qt6::GuiPrivate INTERFACE IMPORTED GLOBAL)\n'      >> "${PRIVATE_CFG}"
           printf '  target_include_directories(Qt6::GuiPrivate INTERFACE\n'        >> "${PRIVATE_CFG}"
-          printf '    "%s/include/QtGui/6.10.0"\n'       "${QT_ROOT_DIR}"          >> "${PRIVATE_CFG}"
-          printf '    "%s/include/QtGui/6.10.0/QtGui")\n' "${QT_ROOT_DIR}"         >> "${PRIVATE_CFG}"
+          printf '    "%s/include/QtGui/6.11.2"\n'       "${QT_ROOT_DIR}"          >> "${PRIVATE_CFG}"
+          printf '    "%s/include/QtGui/6.11.2/QtGui")\n' "${QT_ROOT_DIR}"         >> "${PRIVATE_CFG}"
           printf 'endif()\n'                                                        >> "${PRIVATE_CFG}"
           echo "Created:"
           cat "${PRIVATE_CFG}"
@@ -107,8 +107,9 @@ jobs:
       with:
         path: /opt/kf6
         # K3 uses a separate cache from K2 because it also requires kirigami (a QML
-        # module not needed by the Qt Widgets K2 build).
-        key: kf6.24.0-ubuntu24.04-k3-v22
+        # module not needed by the Qt Widgets K2 build). The Qt version is part of
+        # the key: KF6 uses Qt private API, so it must be rebuilt when Qt changes.
+        key: kf6.24.0-qt6.11.2-ubuntu24.04-k3-v23
 
     - name: Build KF6 from source
       if: steps.kf6-cache.outputs.cache-hit != 'true'
