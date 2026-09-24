@@ -964,13 +964,13 @@ Välj ett annat namn.</translation>
         <location line="-375"/>
         <location line="+60"/>
         <location line="+176"/>
-        <location line="+723"/>
+        <location line="+783"/>
         <location line="+117"/>
         <source>Cancel</source>
         <translation>Avbryt</translation>
     </message>
     <message>
-        <location line="-1176"/>
+        <location line="-1236"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+172"/>
@@ -1028,36 +1028,36 @@ Välj ett annat namn.</translation>
     </message>
     <message>
         <location line="-823"/>
-        <location line="+1096"/>
+        <location line="+1156"/>
         <source>Devices</source>
         <translation>Enheter</translation>
     </message>
     <message>
-        <location line="-1091"/>
-        <location line="+1186"/>
+        <location line="-1151"/>
+        <location line="+1246"/>
         <source>Explore</source>
         <translation>Utforska</translation>
     </message>
     <message>
-        <location line="-1176"/>
-        <location line="+1399"/>
+        <location line="-1236"/>
+        <location line="+1459"/>
         <source>Backup</source>
         <translation>Säkerhetskopia</translation>
     </message>
     <message>
-        <location line="-1394"/>
-        <location line="+1358"/>
+        <location line="-1454"/>
+        <location line="+1418"/>
         <source>Statistics</source>
         <translation>Statistik</translation>
     </message>
     <message>
-        <location line="-1353"/>
-        <location line="+1373"/>
+        <location line="-1413"/>
+        <location line="+1433"/>
         <source>Tags</source>
         <translation>Taggar</translation>
     </message>
     <message>
-        <location line="-1360"/>
+        <location line="-1420"/>
         <source>Documentation</source>
         <translation>Dokumentation</translation>
     </message>
@@ -1341,13 +1341,18 @@ Vill du spara den ändå (katalogen blir tom)?</translation>
     </message>
     <message>
         <location line="-773"/>
-        <location line="+951"/>
+        <location line="+1011"/>
         <location line="+43"/>
         <source>Search</source>
         <translation>Sök</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="-130"/>
+        <source>Name</source>
+        <translation>Namn</translation>
+    </message>
+    <message>
+        <location line="+139"/>
         <source>Resume</source>
         <translation>Återuppta</translation>
     </message>
@@ -1374,8 +1379,8 @@ Vill du spara den ändå (katalogen blir tom)?</translation>
         <translation>Historik</translation>
     </message>
     <message>
-        <location line="-215"/>
-        <location line="+222"/>
+        <location line="-275"/>
+        <location line="+282"/>
         <location line="+37"/>
         <location line="+96"/>
         <location line="+37"/>
@@ -1387,7 +1392,7 @@ Vill du spara den ändå (katalogen blir tom)?</translation>
         <translation>Stäng</translation>
     </message>
     <message>
-        <location line="-1175"/>
+        <location line="-1235"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1406,12 +1411,12 @@ Vill du spara den ändå (katalogen blir tom)?</translation>
         <translation>Versions- och systeminformation kopierad till urklipp</translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+91"/>
         <source>All</source>
         <translation>Alla</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+68"/>
         <source>Show device info</source>
         <translation>Visa enhetsinformation</translation>
     </message>
@@ -1475,8 +1480,8 @@ Vill du spara den ändå (katalogen blir tom)?</translation>
         <translation>Det gick inte att skapa katalogen: </translation>
     </message>
     <message>
-        <location line="-1241"/>
-        <location line="+1231"/>
+        <location line="-1301"/>
+        <location line="+1291"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Skapa</translation>
@@ -1544,7 +1549,7 @@ Vill du spara den ändå (katalogen blir tom)?</translation>
         <translation>Välj databasen att skapa och öppna:</translation>
     </message>
     <message>
-        <location filename="../qt_quick/main.cpp" line="+122"/>
+        <location filename="../qt_quick/main.cpp" line="+135"/>
         <source>Catalog your devices to search, analyze, and backup your files.</source>
         <translation>Katalogisera dina enheter för att söka, analysera och säkerhetskopiera dina filer.</translation>
     </message>
@@ -2426,7 +2431,7 @@ Vill du spara den ändå (katalogen blir tom)?</translation>
     <message>
         <location line="-735"/>
         <location line="+743"/>
-        <location filename="../qt_widgets/mainwindow.cpp" line="+318"/>
+        <location filename="../qt_widgets/mainwindow.cpp" line="+332"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-266"/>
         <source>File</source>
         <translation>Fil</translation>
@@ -8431,12 +8436,12 @@ Fel: %3</translation>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+446"/>
+        <location line="+457"/>
         <source>(none)</source>
         <translation>(ingen)</translation>
     </message>
     <message>
-        <location line="-438"/>
+        <location line="-449"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8652,7 +8657,7 @@ Fel: %3</translation>
         <translation>Språk</translation>
     </message>
     <message>
-        <location line="+85"/>
+        <location line="+96"/>
         <source>Settings file</source>
         <translation>Inställningsfil</translation>
     </message>

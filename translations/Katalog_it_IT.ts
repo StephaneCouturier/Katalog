@@ -964,13 +964,13 @@ Scegliere un nome diverso.</translation>
         <location line="-375"/>
         <location line="+60"/>
         <location line="+176"/>
-        <location line="+723"/>
+        <location line="+783"/>
         <location line="+117"/>
         <source>Cancel</source>
         <translation>Annulla</translation>
     </message>
     <message>
-        <location line="-1176"/>
+        <location line="-1236"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+172"/>
@@ -1028,36 +1028,36 @@ Scegliere un nome diverso.</translation>
     </message>
     <message>
         <location line="-823"/>
-        <location line="+1096"/>
+        <location line="+1156"/>
         <source>Devices</source>
         <translation>Dispositivi</translation>
     </message>
     <message>
-        <location line="-1091"/>
-        <location line="+1186"/>
+        <location line="-1151"/>
+        <location line="+1246"/>
         <source>Explore</source>
         <translation>Esplora</translation>
     </message>
     <message>
-        <location line="-1176"/>
-        <location line="+1399"/>
+        <location line="-1236"/>
+        <location line="+1459"/>
         <source>Backup</source>
         <translation>Backup</translation>
     </message>
     <message>
-        <location line="-1394"/>
-        <location line="+1358"/>
+        <location line="-1454"/>
+        <location line="+1418"/>
         <source>Statistics</source>
         <translation>Statistiche</translation>
     </message>
     <message>
-        <location line="-1353"/>
-        <location line="+1373"/>
+        <location line="-1413"/>
+        <location line="+1433"/>
         <source>Tags</source>
         <translation>Tag</translation>
     </message>
     <message>
-        <location line="-1360"/>
+        <location line="-1420"/>
         <source>Documentation</source>
         <translation>Documentazione</translation>
     </message>
@@ -1341,13 +1341,18 @@ Vuoi salvarlo comunque (il catalogo sarebbe vuoto)?</translation>
     </message>
     <message>
         <location line="-773"/>
-        <location line="+951"/>
+        <location line="+1011"/>
         <location line="+43"/>
         <source>Search</source>
         <translation>Cerca</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="-130"/>
+        <source>Name</source>
+        <translation>Nome</translation>
+    </message>
+    <message>
+        <location line="+139"/>
         <source>Resume</source>
         <translation>Riprendi</translation>
     </message>
@@ -1374,8 +1379,8 @@ Vuoi salvarlo comunque (il catalogo sarebbe vuoto)?</translation>
         <translation>Cronologia</translation>
     </message>
     <message>
-        <location line="-215"/>
-        <location line="+222"/>
+        <location line="-275"/>
+        <location line="+282"/>
         <location line="+37"/>
         <location line="+96"/>
         <location line="+37"/>
@@ -1387,7 +1392,7 @@ Vuoi salvarlo comunque (il catalogo sarebbe vuoto)?</translation>
         <translation>Chiudi</translation>
     </message>
     <message>
-        <location line="-1175"/>
+        <location line="-1235"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1406,12 +1411,12 @@ Vuoi salvarlo comunque (il catalogo sarebbe vuoto)?</translation>
         <translation>Informazioni su versione e sistema copiate negli appunti</translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+91"/>
         <source>All</source>
         <translation>Tutto</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+68"/>
         <source>Show device info</source>
         <translation>Mostra informazioni dispositivo</translation>
     </message>
@@ -1475,8 +1480,8 @@ Vuoi salvarlo comunque (il catalogo sarebbe vuoto)?</translation>
         <translation>Creazione del catalogo non riuscita: </translation>
     </message>
     <message>
-        <location line="-1241"/>
-        <location line="+1231"/>
+        <location line="-1301"/>
+        <location line="+1291"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Crea</translation>
@@ -1544,7 +1549,7 @@ Vuoi salvarlo comunque (il catalogo sarebbe vuoto)?</translation>
         <translation>Seleziona il database da creare e aprire:</translation>
     </message>
     <message>
-        <location filename="../qt_quick/main.cpp" line="+122"/>
+        <location filename="../qt_quick/main.cpp" line="+135"/>
         <source>Catalog your devices to search, analyze, and backup your files.</source>
         <translation>Cataloga i tuoi dispositivi per cercare, analizzare ed eseguire il backup dei tuoi file.</translation>
     </message>
@@ -2443,7 +2448,7 @@ La divisione non è stata eseguita.</translation>
     <message>
         <location line="+191"/>
         <source>Another storage already uses this ID.</source>
-        <translation>Un'altra archiviazione utilizza già questo ID.</translation>
+        <translation>Un&apos;altra archiviazione utilizza già questo ID.</translation>
     </message>
     <message>
         <location line="+316"/>
@@ -4546,7 +4551,7 @@ La divisione non è stata eseguita.</translation>
     <message>
         <location line="-740"/>
         <location line="+753"/>
-        <location filename="../qt_widgets/mainwindow.cpp" line="+317"/>
+        <location filename="../qt_widgets/mainwindow.cpp" line="+331"/>
         <source>Memory</source>
         <translation>Memoria</translation>
     </message>
@@ -6817,7 +6822,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     <message>
         <location line="+90"/>
         <source>Another storage already uses this ID.</source>
-        <translation>Un'altra archiviazione utilizza già questo ID.</translation>
+        <translation>Un&apos;altra archiviazione utilizza già questo ID.</translation>
     </message>
     <message>
         <location line="+19"/>
@@ -8431,12 +8436,12 @@ Errori: %3</translation>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+446"/>
+        <location line="+457"/>
         <source>(none)</source>
         <translation>(nessuno)</translation>
     </message>
     <message>
-        <location line="-438"/>
+        <location line="-449"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8652,7 +8657,7 @@ Errori: %3</translation>
         <translation>Lingua</translation>
     </message>
     <message>
-        <location line="+85"/>
+        <location line="+96"/>
         <source>Settings file</source>
         <translation>File delle impostazioni</translation>
     </message>

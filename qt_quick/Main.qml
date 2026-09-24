@@ -1455,10 +1455,52 @@ Kirigami.ApplicationWindow {
                     rightMargin: Kirigami.Units.gridUnit
                 }
                 spacing: Kirigami.Units.smallSpacing
-                Kirigami.SearchField {
+                // Filters the device list, not files: a filter icon and
+                // placeholder keep it from reading as a file search.
+                // ActionTextField, not SearchField: SearchField draws its own
+                // magnifier, which cannot be replaced. Both icons are plain
+                // Icons, not actions, so they carry no button frame or tooltip:
+                // the filter icon is styled like SearchField's magnifier, the
+                // clear icon like the Search page's (SearchTermList.qml).
+                Kirigami.ActionTextField {
                     id: deviceSearchField
                     Layout.fillWidth: true
+                    placeholderText: qsTr("Name") + "..."
+                    focusSequence: StandardKey.Find
+                    inputMethodHints: Qt.ImhNoPredictiveText
+                    Accessible.searchEdit: true
+                    leftPadding: filterIcon.width + Kirigami.Units.smallSpacing * 3
+                    rightPadding: text.length > 0
+                                  ? Kirigami.Units.iconSizes.small + Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing
+                                  : undefined
                     onTextChanged: appManager1.setDeviceFilter(text)
+
+                    Kirigami.Icon {
+                        id: filterIcon
+                        anchors { left: parent.left; leftMargin: Kirigami.Units.smallSpacing * 2; verticalCenter: parent.verticalCenter }
+                        implicitWidth:  Kirigami.Units.iconSizes.sizeForLabels
+                        implicitHeight: Kirigami.Units.iconSizes.sizeForLabels
+                        color: deviceSearchField.placeholderTextColor
+                        source: "view-filter"
+                    }
+
+                    Kirigami.Icon {
+                        anchors { right: parent.right; rightMargin: Kirigami.Units.smallSpacing * 2; verticalCenter: parent.verticalCenter }
+                        source: parent.LayoutMirroring.enabled ? "edit-clear-locationbar-ltr" : "edit-clear-locationbar-rtl"
+                        implicitWidth: Kirigami.Units.iconSizes.small
+                        implicitHeight: Kirigami.Units.iconSizes.small
+                        visible: deviceSearchField.text.length > 0
+                        opacity: deviceClearTap.pressed ? 0.5 : 1.0
+                        Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration } }
+                        HoverHandler { cursorShape: Qt.ArrowCursor }
+                        TapHandler {
+                            id: deviceClearTap
+                            onTapped: {
+                                deviceSearchField.clear()
+                                deviceSearchField.forceActiveFocus()
+                            }
+                        }
+                    }
                 }
                 Controls.CheckBox {
                     checked: appManager1.showDeviceInfo

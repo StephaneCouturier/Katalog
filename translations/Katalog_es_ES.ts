@@ -964,13 +964,13 @@ Elija un nombre diferente.</translation>
         <location line="-375"/>
         <location line="+60"/>
         <location line="+176"/>
-        <location line="+723"/>
+        <location line="+783"/>
         <location line="+117"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location line="-1176"/>
+        <location line="-1236"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+172"/>
@@ -1028,36 +1028,36 @@ Elija un nombre diferente.</translation>
     </message>
     <message>
         <location line="-823"/>
-        <location line="+1096"/>
+        <location line="+1156"/>
         <source>Devices</source>
         <translation>Dispositivos</translation>
     </message>
     <message>
-        <location line="-1091"/>
-        <location line="+1186"/>
+        <location line="-1151"/>
+        <location line="+1246"/>
         <source>Explore</source>
         <translation>Explorar</translation>
     </message>
     <message>
-        <location line="-1176"/>
-        <location line="+1399"/>
+        <location line="-1236"/>
+        <location line="+1459"/>
         <source>Backup</source>
         <translation>Copia de seguridad</translation>
     </message>
     <message>
-        <location line="-1394"/>
-        <location line="+1358"/>
+        <location line="-1454"/>
+        <location line="+1418"/>
         <source>Statistics</source>
         <translation>Estadísticas</translation>
     </message>
     <message>
-        <location line="-1353"/>
-        <location line="+1373"/>
+        <location line="-1413"/>
+        <location line="+1433"/>
         <source>Tags</source>
         <translation>Etiquetas</translation>
     </message>
     <message>
-        <location line="-1360"/>
+        <location line="-1420"/>
         <source>Documentation</source>
         <translation>Documentación</translation>
     </message>
@@ -1341,13 +1341,18 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     </message>
     <message>
         <location line="-773"/>
-        <location line="+951"/>
+        <location line="+1011"/>
         <location line="+43"/>
         <source>Search</source>
         <translation>Buscar</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="-130"/>
+        <source>Name</source>
+        <translation>Nombre</translation>
+    </message>
+    <message>
+        <location line="+139"/>
         <source>Resume</source>
         <translation>Reanudar</translation>
     </message>
@@ -1374,8 +1379,8 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation>Historial</translation>
     </message>
     <message>
-        <location line="-215"/>
-        <location line="+222"/>
+        <location line="-275"/>
+        <location line="+282"/>
         <location line="+37"/>
         <location line="+96"/>
         <location line="+37"/>
@@ -1387,7 +1392,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation>Cerrar</translation>
     </message>
     <message>
-        <location line="-1175"/>
+        <location line="-1235"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1406,12 +1411,12 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation>Información de versión y sistema copiada al portapapeles</translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+91"/>
         <source>All</source>
         <translation>Todo</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+68"/>
         <source>Show device info</source>
         <translation>Mostrar información del dispositivo</translation>
     </message>
@@ -1475,8 +1480,8 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation>Error al crear el catálogo: </translation>
     </message>
     <message>
-        <location line="-1241"/>
-        <location line="+1231"/>
+        <location line="-1301"/>
+        <location line="+1291"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Crear</translation>
@@ -1544,7 +1549,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation>Seleccione la base de datos a crear y abrir:</translation>
     </message>
     <message>
-        <location filename="../qt_quick/main.cpp" line="+122"/>
+        <location filename="../qt_quick/main.cpp" line="+135"/>
         <source>Catalog your devices to search, analyze, and backup your files.</source>
         <translation>Cataloga tus dispositivos para buscar, analizar y respaldar tus archivos.</translation>
     </message>
@@ -4546,7 +4551,7 @@ No se realizó la división.</translation>
     <message>
         <location line="-740"/>
         <location line="+753"/>
-        <location filename="../qt_widgets/mainwindow.cpp" line="+317"/>
+        <location filename="../qt_widgets/mainwindow.cpp" line="+331"/>
         <source>Memory</source>
         <translation>Memoria</translation>
     </message>
@@ -8431,12 +8436,12 @@ Errores: %3</translation>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+446"/>
+        <location line="+457"/>
         <source>(none)</source>
         <translation>(ninguno)</translation>
     </message>
     <message>
-        <location line="-438"/>
+        <location line="-449"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8652,7 +8657,7 @@ Errores: %3</translation>
         <translation>Idioma</translation>
     </message>
     <message>
-        <location line="+85"/>
+        <location line="+96"/>
         <source>Settings file</source>
         <translation>Archivo de configuración</translation>
     </message>

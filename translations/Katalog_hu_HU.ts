@@ -964,13 +964,13 @@ Válasszon másik nevet.</translation>
         <location line="-375"/>
         <location line="+60"/>
         <location line="+176"/>
-        <location line="+723"/>
+        <location line="+783"/>
         <location line="+117"/>
         <source>Cancel</source>
         <translation>Mégse</translation>
     </message>
     <message>
-        <location line="-1176"/>
+        <location line="-1236"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+172"/>
@@ -1028,36 +1028,36 @@ Válasszon másik nevet.</translation>
     </message>
     <message>
         <location line="-823"/>
-        <location line="+1096"/>
+        <location line="+1156"/>
         <source>Devices</source>
         <translation>Eszközök</translation>
     </message>
     <message>
-        <location line="-1091"/>
-        <location line="+1186"/>
+        <location line="-1151"/>
+        <location line="+1246"/>
         <source>Explore</source>
         <translation>Tallózás</translation>
     </message>
     <message>
-        <location line="-1176"/>
-        <location line="+1399"/>
+        <location line="-1236"/>
+        <location line="+1459"/>
         <source>Backup</source>
         <translation>Biztonsági mentés</translation>
     </message>
     <message>
-        <location line="-1394"/>
-        <location line="+1358"/>
+        <location line="-1454"/>
+        <location line="+1418"/>
         <source>Statistics</source>
         <translation>Statisztikák</translation>
     </message>
     <message>
-        <location line="-1353"/>
-        <location line="+1373"/>
+        <location line="-1413"/>
+        <location line="+1433"/>
         <source>Tags</source>
         <translation>Címkék</translation>
     </message>
     <message>
-        <location line="-1360"/>
+        <location line="-1420"/>
         <source>Documentation</source>
         <translation>Dokumentáció</translation>
     </message>
@@ -1341,13 +1341,18 @@ Mindenképpen menti (a katalógus üres lesz)?</translation>
     </message>
     <message>
         <location line="-773"/>
-        <location line="+951"/>
+        <location line="+1011"/>
         <location line="+43"/>
         <source>Search</source>
         <translation>Keresés</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="-130"/>
+        <source>Name</source>
+        <translation>Név</translation>
+    </message>
+    <message>
+        <location line="+139"/>
         <source>Resume</source>
         <translation>Folytatás</translation>
     </message>
@@ -1374,8 +1379,8 @@ Mindenképpen menti (a katalógus üres lesz)?</translation>
         <translation>Előzmények</translation>
     </message>
     <message>
-        <location line="-215"/>
-        <location line="+222"/>
+        <location line="-275"/>
+        <location line="+282"/>
         <location line="+37"/>
         <location line="+96"/>
         <location line="+37"/>
@@ -1387,7 +1392,7 @@ Mindenképpen menti (a katalógus üres lesz)?</translation>
         <translation>Bezárás</translation>
     </message>
     <message>
-        <location line="-1175"/>
+        <location line="-1235"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1406,12 +1411,12 @@ Mindenképpen menti (a katalógus üres lesz)?</translation>
         <translation>A verzió- és rendszerinformációk a vágólapra másolva</translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+91"/>
         <source>All</source>
         <translation>Minden</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+68"/>
         <source>Show device info</source>
         <translation>Eszközinformációk megjelenítése</translation>
     </message>
@@ -1475,8 +1480,8 @@ Mindenképpen menti (a katalógus üres lesz)?</translation>
         <translation>A katalógus létrehozása sikertelen: </translation>
     </message>
     <message>
-        <location line="-1241"/>
-        <location line="+1231"/>
+        <location line="-1301"/>
+        <location line="+1291"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Létrehozás</translation>
@@ -1544,7 +1549,7 @@ Mindenképpen menti (a katalógus üres lesz)?</translation>
         <translation>Válassza ki a létrehozandó és megnyitandó adatbázist:</translation>
     </message>
     <message>
-        <location filename="../qt_quick/main.cpp" line="+122"/>
+        <location filename="../qt_quick/main.cpp" line="+135"/>
         <source>Catalog your devices to search, analyze, and backup your files.</source>
         <translation>Katalogizálja eszközeit a fájljai kereséséhez, elemzéséhez és biztonsági mentéséhez.</translation>
     </message>
@@ -2426,7 +2431,7 @@ Mindenképpen menti (a katalógus üres lesz)?</translation>
     <message>
         <location line="-735"/>
         <location line="+743"/>
-        <location filename="../qt_widgets/mainwindow.cpp" line="+318"/>
+        <location filename="../qt_widgets/mainwindow.cpp" line="+332"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-266"/>
         <source>File</source>
         <translation>Fájl</translation>
@@ -8430,12 +8435,12 @@ Hibák: %3</translation>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+446"/>
+        <location line="+457"/>
         <source>(none)</source>
         <translation>(nincs)</translation>
     </message>
     <message>
-        <location line="-438"/>
+        <location line="-449"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8651,7 +8656,7 @@ Hibák: %3</translation>
         <translation>Nyelv</translation>
     </message>
     <message>
-        <location line="+85"/>
+        <location line="+96"/>
         <source>Settings file</source>
         <translation>Beállításfájl</translation>
     </message>
