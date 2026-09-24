@@ -947,7 +947,7 @@ Choose a different name.</source>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+936"/>
+        <location filename="../qt_quick/Main.qml" line="+950"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Θέλετε να &lt;b&gt;διαγράψετε&lt;/b&gt; αυτή τη συσκευή %1;&lt;br/&gt;&lt;br/&gt;Όνομα: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -964,13 +964,13 @@ Choose a different name.</source>
         <location line="-375"/>
         <location line="+60"/>
         <location line="+176"/>
-        <location line="+783"/>
-        <location line="+117"/>
+        <location line="+797"/>
+        <location line="+123"/>
         <source>Cancel</source>
         <translation>Ακύρωση</translation>
     </message>
     <message>
-        <location line="-1236"/>
+        <location line="-1256"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+172"/>
@@ -1022,42 +1022,42 @@ Choose a different name.</source>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+833"/>
+        <location line="+835"/>
         <source>Selection</source>
         <translation>Επιλογή</translation>
     </message>
     <message>
-        <location line="-823"/>
-        <location line="+1156"/>
+        <location line="-825"/>
+        <location line="+1163"/>
         <source>Devices</source>
         <translation>Συσκευές</translation>
     </message>
     <message>
-        <location line="-1151"/>
-        <location line="+1246"/>
+        <location line="-1158"/>
+        <location line="+1255"/>
         <source>Explore</source>
         <translation>Εξερεύνηση</translation>
     </message>
     <message>
-        <location line="-1236"/>
-        <location line="+1459"/>
+        <location line="-1245"/>
+        <location line="+1478"/>
         <source>Backup</source>
         <translation>Αντίγραφο ασφαλείας</translation>
     </message>
     <message>
-        <location line="-1454"/>
-        <location line="+1418"/>
+        <location line="-1473"/>
+        <location line="+1433"/>
         <source>Statistics</source>
         <translation>Στατιστικά</translation>
     </message>
     <message>
-        <location line="-1413"/>
-        <location line="+1433"/>
+        <location line="-1428"/>
+        <location line="+1450"/>
         <source>Tags</source>
         <translation>Ετικέτες</translation>
     </message>
     <message>
-        <location line="-1420"/>
+        <location line="-1437"/>
         <source>Documentation</source>
         <translation>Τεκμηρίωση</translation>
     </message>
@@ -1341,18 +1341,18 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="-773"/>
-        <location line="+1011"/>
+        <location line="+1014"/>
         <location line="+43"/>
         <source>Search</source>
         <translation>Αναζήτηση</translation>
     </message>
     <message>
-        <location line="-130"/>
+        <location line="-131"/>
         <source>Name</source>
         <translation>Όνομα</translation>
     </message>
     <message>
-        <location line="+139"/>
+        <location line="+140"/>
         <source>Resume</source>
         <translation>Συνέχεια</translation>
     </message>
@@ -1363,13 +1363,13 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+102"/>
-        <location line="+169"/>
+        <location line="+106"/>
+        <location line="+173"/>
         <source>Stop</source>
         <translation>Διακοπή</translation>
     </message>
     <message>
-        <location line="-264"/>
+        <location line="-272"/>
         <source>Reset</source>
         <translation>Επαναφορά</translation>
     </message>
@@ -1379,20 +1379,20 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Ιστορικό</translation>
     </message>
     <message>
-        <location line="-275"/>
-        <location line="+282"/>
-        <location line="+37"/>
-        <location line="+96"/>
-        <location line="+37"/>
-        <location line="+86"/>
-        <location line="+101"/>
-        <location line="+18"/>
-        <location line="+37"/>
+        <location line="-276"/>
+        <location line="+284"/>
+        <location line="+39"/>
+        <location line="+98"/>
+        <location line="+39"/>
+        <location line="+88"/>
+        <location line="+105"/>
+        <location line="+20"/>
+        <location line="+39"/>
         <source>Close</source>
         <translation>Κλείσιμο</translation>
     </message>
     <message>
-        <location line="-1235"/>
+        <location line="-1255"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1401,7 +1401,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
 </translation>
     </message>
     <message>
-        <location line="+532"/>
+        <location line="+533"/>
         <source>Copy version and system information</source>
         <translation>Αντιγραφή πληροφοριών έκδοσης και συστήματος</translation>
     </message>
@@ -1411,7 +1411,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Οι πληροφορίες έκδοσης και συστήματος αντιγράφηκαν στο πρόχειρο</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+92"/>
         <source>All</source>
         <translation>Όλα</translation>
     </message>
@@ -1431,7 +1431,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Ανάπτυξη ενός επιπέδου</translation>
     </message>
     <message>
-        <location line="+131"/>
+        <location line="+134"/>
         <source>Duplicates (%1)</source>
         <translation>Διπλότυπα (%1)</translation>
     </message>
@@ -1446,7 +1446,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Αποτελέσματα</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+44"/>
         <source>All active</source>
         <translation>Όλα ενεργά</translation>
     </message>
@@ -1470,7 +1470,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation type="vanished">Εισαγωγή</translation>
     </message>
     <message>
-        <location line="+112"/>
+        <location line="+116"/>
         <source>Catalog created successfully.</source>
         <translation>Ο κατάλογος δημιουργήθηκε με επιτυχία.</translation>
     </message>
@@ -1480,14 +1480,14 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Η δημιουργία καταλόγου απέτυχε: </translation>
     </message>
     <message>
-        <location line="-1301"/>
-        <location line="+1291"/>
+        <location line="-1312"/>
+        <location line="+1302"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Δημιουργία</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+33"/>
         <source>Edit Device</source>
         <translation>Επεξεργασία συσκευής</translation>
     </message>
@@ -1519,7 +1519,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation type="vanished">Αντίγραφο ασφαλείας</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+90"/>
         <source>Add</source>
         <translation>Προσθήκη</translation>
     </message>
@@ -1534,7 +1534,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Δημιουργία προφίλ LuckyBackup</translation>
     </message>
     <message>
-        <location line="+92"/>
+        <location line="+93"/>
         <source>Select Collection Folder</source>
         <translation>Επιλέξτε φάκελο συλλογής</translation>
     </message>
@@ -6377,7 +6377,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageBackupMappingForm</name>
     <message>
-        <location filename="../qt_quick/PageBackupMappingForm.qml" line="+14"/>
+        <location filename="../qt_quick/PageBackupMappingForm.qml" line="+15"/>
         <source>Add Link</source>
         <translation>Προσθήκη συνδέσμου</translation>
     </message>
@@ -6392,7 +6392,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Αποθήκευση</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Cancel</source>
         <translation>Ακύρωση</translation>
     </message>
@@ -6500,7 +6500,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageBackupPreviewForm</name>
     <message>
-        <location filename="../qt_quick/PageBackupPreviewForm.qml" line="+9"/>
+        <location filename="../qt_quick/PageBackupPreviewForm.qml" line="+10"/>
         <source>Backup Preview</source>
         <translation>Προεπισκόπηση αντιγράφου ασφαλείας</translation>
     </message>
@@ -6515,7 +6515,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Εξαγωγή σε CSV</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Close</source>
         <translation>Κλείσιμο</translation>
     </message>
@@ -6576,7 +6576,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Χαμηλός χώρος προορισμού - %1 απομένει μετά τη λειτουργία</translation>
     </message>
     <message>
-        <location line="-109"/>
+        <location line="-110"/>
         <source>Status</source>
         <translation>Κατάσταση</translation>
     </message>
@@ -6596,7 +6596,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Μέγεθος</translation>
     </message>
     <message>
-        <location line="+226"/>
+        <location line="+227"/>
         <source>Conflict</source>
         <translation>Σύγκρουση</translation>
     </message>
@@ -8393,12 +8393,12 @@ Errors: %3</source>
 <context>
     <name>PageSettings</name>
     <message>
-        <location filename="../qt_quick/PageSettings.qml" line="+9"/>
+        <location filename="../qt_quick/PageSettings.qml" line="+10"/>
         <source>Settings</source>
         <translation>Ρυθμίσεις</translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+60"/>
         <source>Close</source>
         <translation>Κλείσιμο</translation>
     </message>

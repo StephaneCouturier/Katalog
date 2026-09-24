@@ -6,6 +6,7 @@ import org.kde.kirigami as Kirigami
 
 Kirigami.Page {
     id: root
+    property Kirigami.Action escapeAction: escapeCloseAction  // Esc (KBS-F1)
     title: qsTr("Backup Preview")
     padding: 0
 
@@ -45,6 +46,7 @@ Kirigami.Page {
             }
         },
         Kirigami.Action {
+            id: escapeCloseAction
             text:        qsTr("Close")
             icon.name:   "view-close"
             displayHint: Kirigami.DisplayHint.KeepVisible

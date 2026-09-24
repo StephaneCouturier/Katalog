@@ -6,6 +6,7 @@ import QtQuick.Dialogs
 
 Kirigami.ScrollablePage {
     id: pageSettingsRoot
+    property Kirigami.Action escapeAction: escapeCloseAction  // Esc (KBS-F1)
     title: qsTr("Settings")
 
     // Set to true when opened from Open Collection > Hosted Db menu
@@ -65,6 +66,7 @@ Kirigami.ScrollablePage {
 
     actions: [
         Kirigami.Action {
+            id: escapeCloseAction
             text:        qsTr("Close")
             icon.name:   "view-close"
             displayHint: Kirigami.DisplayHint.KeepVisible

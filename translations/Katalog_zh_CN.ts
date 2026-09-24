@@ -947,7 +947,7 @@ Choose a different name.</source>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+936"/>
+        <location filename="../qt_quick/Main.qml" line="+950"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>是否要&lt;b&gt;删除&lt;/b&gt;此 %1 设备？&lt;br/&gt;&lt;br/&gt;名称：&lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -964,13 +964,13 @@ Choose a different name.</source>
         <location line="-375"/>
         <location line="+60"/>
         <location line="+176"/>
-        <location line="+783"/>
-        <location line="+117"/>
+        <location line="+797"/>
+        <location line="+123"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location line="-1236"/>
+        <location line="-1256"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+172"/>
@@ -1022,42 +1022,42 @@ Choose a different name.</source>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+833"/>
+        <location line="+835"/>
         <source>Selection</source>
         <translation>选择</translation>
     </message>
     <message>
-        <location line="-823"/>
-        <location line="+1156"/>
+        <location line="-825"/>
+        <location line="+1163"/>
         <source>Devices</source>
         <translation>设备</translation>
     </message>
     <message>
-        <location line="-1151"/>
-        <location line="+1246"/>
+        <location line="-1158"/>
+        <location line="+1255"/>
         <source>Explore</source>
         <translation>浏览</translation>
     </message>
     <message>
-        <location line="-1236"/>
-        <location line="+1459"/>
+        <location line="-1245"/>
+        <location line="+1478"/>
         <source>Backup</source>
         <translation>备份</translation>
     </message>
     <message>
-        <location line="-1454"/>
-        <location line="+1418"/>
+        <location line="-1473"/>
+        <location line="+1433"/>
         <source>Statistics</source>
         <translation>统计</translation>
     </message>
     <message>
-        <location line="-1413"/>
-        <location line="+1433"/>
+        <location line="-1428"/>
+        <location line="+1450"/>
         <source>Tags</source>
         <translation>标签</translation>
     </message>
     <message>
-        <location line="-1420"/>
+        <location line="-1437"/>
         <source>Documentation</source>
         <translation>文档</translation>
     </message>
@@ -1341,18 +1341,18 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="-773"/>
-        <location line="+1011"/>
+        <location line="+1014"/>
         <location line="+43"/>
         <source>Search</source>
         <translation>搜索</translation>
     </message>
     <message>
-        <location line="-130"/>
+        <location line="-131"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
     <message>
-        <location line="+139"/>
+        <location line="+140"/>
         <source>Resume</source>
         <translation>恢复</translation>
     </message>
@@ -1363,13 +1363,13 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+102"/>
-        <location line="+169"/>
+        <location line="+106"/>
+        <location line="+173"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location line="-264"/>
+        <location line="-272"/>
         <source>Reset</source>
         <translation>重置</translation>
     </message>
@@ -1379,20 +1379,20 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>历史记录</translation>
     </message>
     <message>
-        <location line="-275"/>
-        <location line="+282"/>
-        <location line="+37"/>
-        <location line="+96"/>
-        <location line="+37"/>
-        <location line="+86"/>
-        <location line="+101"/>
-        <location line="+18"/>
-        <location line="+37"/>
+        <location line="-276"/>
+        <location line="+284"/>
+        <location line="+39"/>
+        <location line="+98"/>
+        <location line="+39"/>
+        <location line="+88"/>
+        <location line="+105"/>
+        <location line="+20"/>
+        <location line="+39"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location line="-1235"/>
+        <location line="-1255"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1401,7 +1401,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
 </translation>
     </message>
     <message>
-        <location line="+532"/>
+        <location line="+533"/>
         <source>Copy version and system information</source>
         <translation>复制版本和系统信息</translation>
     </message>
@@ -1411,7 +1411,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>版本和系统信息已复制到剪贴板</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+92"/>
         <source>All</source>
         <translation>全部</translation>
     </message>
@@ -1431,7 +1431,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>展开一级</translation>
     </message>
     <message>
-        <location line="+131"/>
+        <location line="+134"/>
         <source>Duplicates (%1)</source>
         <translation>重复项 (%1)</translation>
     </message>
@@ -1446,7 +1446,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>结果</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+44"/>
         <source>All active</source>
         <translation>全部激活</translation>
     </message>
@@ -1470,7 +1470,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation type="vanished">导入</translation>
     </message>
     <message>
-        <location line="+112"/>
+        <location line="+116"/>
         <source>Catalog created successfully.</source>
         <translation>目录创建成功。</translation>
     </message>
@@ -1480,14 +1480,14 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>目录创建失败： </translation>
     </message>
     <message>
-        <location line="-1301"/>
-        <location line="+1291"/>
+        <location line="-1312"/>
+        <location line="+1302"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>创建</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+33"/>
         <source>Edit Device</source>
         <translation>编辑设备</translation>
     </message>
@@ -1519,7 +1519,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation type="vanished">备份</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+90"/>
         <source>Add</source>
         <translation>添加</translation>
     </message>
@@ -1534,7 +1534,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>生成 LuckyBackup 配置文件</translation>
     </message>
     <message>
-        <location line="+92"/>
+        <location line="+93"/>
         <source>Select Collection Folder</source>
         <translation>选择收藏夹文件夹</translation>
     </message>
@@ -6376,7 +6376,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageBackupMappingForm</name>
     <message>
-        <location filename="../qt_quick/PageBackupMappingForm.qml" line="+14"/>
+        <location filename="../qt_quick/PageBackupMappingForm.qml" line="+15"/>
         <source>Add Link</source>
         <translation>添加链接</translation>
     </message>
@@ -6391,7 +6391,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>保存</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -6499,7 +6499,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageBackupPreviewForm</name>
     <message>
-        <location filename="../qt_quick/PageBackupPreviewForm.qml" line="+9"/>
+        <location filename="../qt_quick/PageBackupPreviewForm.qml" line="+10"/>
         <source>Backup Preview</source>
         <translation>备份预览</translation>
     </message>
@@ -6514,7 +6514,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>导出为 CSV</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
@@ -6575,7 +6575,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>目标空间不足 - 操作后剩余 %1</translation>
     </message>
     <message>
-        <location line="-109"/>
+        <location line="-110"/>
         <source>Status</source>
         <translation>状态</translation>
     </message>
@@ -6595,7 +6595,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>大小</translation>
     </message>
     <message>
-        <location line="+226"/>
+        <location line="+227"/>
         <source>Conflict</source>
         <translation>冲突</translation>
     </message>
@@ -8392,12 +8392,12 @@ Errors: %3</source>
 <context>
     <name>PageSettings</name>
     <message>
-        <location filename="../qt_quick/PageSettings.qml" line="+9"/>
+        <location filename="../qt_quick/PageSettings.qml" line="+10"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+60"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>

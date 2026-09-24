@@ -5,6 +5,7 @@ import org.kde.kirigami as Kirigami
 
 Kirigami.ScrollablePage {
     id: root
+    property Kirigami.Action escapeAction: escapeCloseAction  // Esc (KBS-F1)
 
     // -1 = creating a new link; >= 0 = editing the link with this mapping id.
     property int editMappingId: -1
@@ -78,6 +79,7 @@ Kirigami.ScrollablePage {
             onTriggered: root.save()
         },
         Kirigami.Action {
+            id: escapeCloseAction
             text:        qsTr("Cancel")
             icon.name:   "dialog-cancel"
             displayHint: Kirigami.DisplayHint.KeepVisible

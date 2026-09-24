@@ -207,3 +207,39 @@ not. Satisfying `OPQ-C14` means the update timer goes the same way and the const
 gets a single definition.
 
 ---
+
+## Keyboard shortcuts — Ctrl+F always targets the Selection filter
+
+**Related requirements:** `SpecKeyboardShortcuts.md` (out of scope there)
+
+This is a **note, not a requirement.** Nothing below is authorised work, and the
+maintainer has not ruled on it.
+
+`Ctrl+F` focuses the Selection page's device filter on every page. The filter is a
+Kirigami `ActionTextField` with `focusSequence: StandardKey.Find` (`qt_quick/Main.qml`,
+the `deviceSearchField`), so the binding is window-wide. The open question is whether
+`Ctrl+F` should focus the Search page's own field while Search is open. To be reviewed
+later.
+
+---
+
+## K3 user-doc pass (3.0) — K3 features not yet in the user documentation
+
+**Related requirements:** see each entry
+
+This is a **to-do list for the 3.0 documentation pass, not a requirement.** The user
+pages in `docs_src/docs/` still describe K2 only. The K3 user-facing behaviours below
+are specified and implemented but not yet documented for end users. Document each
+one (EN/FR/CS) during the 3.0 pass, then remove its entry here.
+
+- **Esc goes back one step** (`SpecKeyboardShortcuts.md`, KBS-F1–F4): Esc works like
+  the Close button of the open panel or page (Cancel on Device Edit), one step at a
+  time. An open dialog, menu or dropdown closes first. On Device Edit and Create,
+  unsaved input is discarded, as with Cancel. Candidate location: a "Keyboard
+  shortcuts" section in `Overview.md`.
+- **Selection device filter** (Selection page, beta-tester feedback 2026-09-24):
+  the field above the device list shows a filter icon and the placeholder "Name...".
+  It filters devices by name, not files; Ctrl+F puts the cursor in it. Candidate
+  location: `Selection.md`.
+
+---

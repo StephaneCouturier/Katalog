@@ -947,7 +947,7 @@ Zvoľte iný názov.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+936"/>
+        <location filename="../qt_quick/Main.qml" line="+950"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Chcete &lt;b&gt;odstrániť&lt;/b&gt; toto zariadenie %1?&lt;br/&gt;&lt;br/&gt;Názov: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -964,13 +964,13 @@ Zvoľte iný názov.</translation>
         <location line="-375"/>
         <location line="+60"/>
         <location line="+176"/>
-        <location line="+783"/>
-        <location line="+117"/>
+        <location line="+797"/>
+        <location line="+123"/>
         <source>Cancel</source>
         <translation>Zrušiť</translation>
     </message>
     <message>
-        <location line="-1236"/>
+        <location line="-1256"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+172"/>
@@ -1022,42 +1022,42 @@ Zvoľte iný názov.</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+833"/>
+        <location line="+835"/>
         <source>Selection</source>
         <translation>Výber</translation>
     </message>
     <message>
-        <location line="-823"/>
-        <location line="+1156"/>
+        <location line="-825"/>
+        <location line="+1163"/>
         <source>Devices</source>
         <translation>Zariadenia</translation>
     </message>
     <message>
-        <location line="-1151"/>
-        <location line="+1246"/>
+        <location line="-1158"/>
+        <location line="+1255"/>
         <source>Explore</source>
         <translation>Prehliadať</translation>
     </message>
     <message>
-        <location line="-1236"/>
-        <location line="+1459"/>
+        <location line="-1245"/>
+        <location line="+1478"/>
         <source>Backup</source>
         <translation>Záloha</translation>
     </message>
     <message>
-        <location line="-1454"/>
-        <location line="+1418"/>
+        <location line="-1473"/>
+        <location line="+1433"/>
         <source>Statistics</source>
         <translation>Štatistiky</translation>
     </message>
     <message>
-        <location line="-1413"/>
-        <location line="+1433"/>
+        <location line="-1428"/>
+        <location line="+1450"/>
         <source>Tags</source>
         <translation>Značky</translation>
     </message>
     <message>
-        <location line="-1420"/>
+        <location line="-1437"/>
         <source>Documentation</source>
         <translation>Dokumentácia</translation>
     </message>
@@ -1341,18 +1341,18 @@ Chcete ho aj tak uložiť (katalóg by bol prázdny)?</translation>
     </message>
     <message>
         <location line="-773"/>
-        <location line="+1011"/>
+        <location line="+1014"/>
         <location line="+43"/>
         <source>Search</source>
         <translation>Hľadať</translation>
     </message>
     <message>
-        <location line="-130"/>
+        <location line="-131"/>
         <source>Name</source>
         <translation>Názov</translation>
     </message>
     <message>
-        <location line="+139"/>
+        <location line="+140"/>
         <source>Resume</source>
         <translation>Pokračovať</translation>
     </message>
@@ -1363,13 +1363,13 @@ Chcete ho aj tak uložiť (katalóg by bol prázdny)?</translation>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+102"/>
-        <location line="+169"/>
+        <location line="+106"/>
+        <location line="+173"/>
         <source>Stop</source>
         <translation>Zastaviť</translation>
     </message>
     <message>
-        <location line="-264"/>
+        <location line="-272"/>
         <source>Reset</source>
         <translation>Resetovať</translation>
     </message>
@@ -1379,20 +1379,20 @@ Chcete ho aj tak uložiť (katalóg by bol prázdny)?</translation>
         <translation>História</translation>
     </message>
     <message>
-        <location line="-275"/>
-        <location line="+282"/>
-        <location line="+37"/>
-        <location line="+96"/>
-        <location line="+37"/>
-        <location line="+86"/>
-        <location line="+101"/>
-        <location line="+18"/>
-        <location line="+37"/>
+        <location line="-276"/>
+        <location line="+284"/>
+        <location line="+39"/>
+        <location line="+98"/>
+        <location line="+39"/>
+        <location line="+88"/>
+        <location line="+105"/>
+        <location line="+20"/>
+        <location line="+39"/>
         <source>Close</source>
         <translation>Zavrieť</translation>
     </message>
     <message>
-        <location line="-1235"/>
+        <location line="-1255"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1401,7 +1401,7 @@ Chcete ho aj tak uložiť (katalóg by bol prázdny)?</translation>
 </translation>
     </message>
     <message>
-        <location line="+532"/>
+        <location line="+533"/>
         <source>Copy version and system information</source>
         <translation>Kopírovať informácie o verzii a systéme</translation>
     </message>
@@ -1411,7 +1411,7 @@ Chcete ho aj tak uložiť (katalóg by bol prázdny)?</translation>
         <translation>Informácie o verzii a systéme skopírované do schránky</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+92"/>
         <source>All</source>
         <translation>Všetko</translation>
     </message>
@@ -1431,7 +1431,7 @@ Chcete ho aj tak uložiť (katalóg by bol prázdny)?</translation>
         <translation>Rozbaliť o jednu úroveň</translation>
     </message>
     <message>
-        <location line="+131"/>
+        <location line="+134"/>
         <source>Duplicates (%1)</source>
         <translation>Duplikáty (%1)</translation>
     </message>
@@ -1446,7 +1446,7 @@ Chcete ho aj tak uložiť (katalóg by bol prázdny)?</translation>
         <translation>Výsledky</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+44"/>
         <source>All active</source>
         <translation>Všetky aktívne</translation>
     </message>
@@ -1470,7 +1470,7 @@ Chcete ho aj tak uložiť (katalóg by bol prázdny)?</translation>
         <translation type="vanished">Importovať</translation>
     </message>
     <message>
-        <location line="+112"/>
+        <location line="+116"/>
         <source>Catalog created successfully.</source>
         <translation>Katalóg bol úspešne vytvorený.</translation>
     </message>
@@ -1480,14 +1480,14 @@ Chcete ho aj tak uložiť (katalóg by bol prázdny)?</translation>
         <translation>Vytvorenie katalógu zlyhalo: </translation>
     </message>
     <message>
-        <location line="-1301"/>
-        <location line="+1291"/>
+        <location line="-1312"/>
+        <location line="+1302"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Vytvoriť</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+33"/>
         <source>Edit Device</source>
         <translation>Upraviť zariadenie</translation>
     </message>
@@ -1519,7 +1519,7 @@ Chcete ho aj tak uložiť (katalóg by bol prázdny)?</translation>
         <translation type="vanished">Záloha</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+90"/>
         <source>Add</source>
         <translation>Pridať</translation>
     </message>
@@ -1534,7 +1534,7 @@ Chcete ho aj tak uložiť (katalóg by bol prázdny)?</translation>
         <translation>Vygenerovať profil LuckyBackup</translation>
     </message>
     <message>
-        <location line="+92"/>
+        <location line="+93"/>
         <source>Select Collection Folder</source>
         <translation>Vyberte priečinok zbierky</translation>
     </message>
@@ -6376,7 +6376,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageBackupMappingForm</name>
     <message>
-        <location filename="../qt_quick/PageBackupMappingForm.qml" line="+14"/>
+        <location filename="../qt_quick/PageBackupMappingForm.qml" line="+15"/>
         <source>Add Link</source>
         <translation>Pridať odkaz</translation>
     </message>
@@ -6391,7 +6391,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Uložiť</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Cancel</source>
         <translation>Zrušiť</translation>
     </message>
@@ -6499,7 +6499,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageBackupPreviewForm</name>
     <message>
-        <location filename="../qt_quick/PageBackupPreviewForm.qml" line="+9"/>
+        <location filename="../qt_quick/PageBackupPreviewForm.qml" line="+10"/>
         <source>Backup Preview</source>
         <translation>Náhľad zálohy</translation>
     </message>
@@ -6514,7 +6514,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Exportovať do CSV</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Close</source>
         <translation>Zavrieť</translation>
     </message>
@@ -6575,7 +6575,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Málo miesta v cieli – po operácii zostáva %1</translation>
     </message>
     <message>
-        <location line="-109"/>
+        <location line="-110"/>
         <source>Status</source>
         <translation>Stav</translation>
     </message>
@@ -6595,7 +6595,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Veľkosť</translation>
     </message>
     <message>
-        <location line="+226"/>
+        <location line="+227"/>
         <source>Conflict</source>
         <translation>Konflikt</translation>
     </message>
@@ -8392,12 +8392,12 @@ Chyby: %3</translation>
 <context>
     <name>PageSettings</name>
     <message>
-        <location filename="../qt_quick/PageSettings.qml" line="+9"/>
+        <location filename="../qt_quick/PageSettings.qml" line="+10"/>
         <source>Settings</source>
         <translation>Nastavenia</translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+60"/>
         <source>Close</source>
         <translation>Zavrieť</translation>
     </message>

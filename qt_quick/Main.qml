@@ -391,6 +391,20 @@ Kirigami.ApplicationWindow {
         pageStack.currentIndex = Math.max(0, pageStack.depth - 1)
     }
 
+    // Esc goes back one step (SpecKeyboardShortcuts.md): it triggers the page's
+    // own Close/Cancel action (its escapeAction) on the open layer, else on the
+    // rightmost page. An open popup keeps its Esc: Qt does not deliver a window
+    // shortcut past it (KBS-F4).
+    Shortcut {
+        sequence: "Esc"
+        onActivated: {
+            let page = pageStack.layers.depth > 1 ? pageStack.layers.currentItem
+                                                  : pageStack.lastItem
+            if (page && page.escapeAction && page.escapeAction.enabled)
+                page.escapeAction.trigger()
+        }
+    }
+
     // Global Drawer
     globalDrawer: Kirigami.GlobalDrawer {
         //isMenu: true
@@ -1333,6 +1347,7 @@ Kirigami.ApplicationWindow {
     Component {
         id: aboutPage
         Kirigami.AboutPage {
+            property Kirigami.Action escapeAction: aboutPageEscapeAction  // Esc (KBS-F1)
             aboutData: About
             actions: [
                 // Filing a bug means quoting versions the user would otherwise
@@ -1350,6 +1365,7 @@ Kirigami.ApplicationWindow {
                     }
                 },
                 Kirigami.Action {
+                    id: aboutPageEscapeAction
                     text: qsTr("Close")
                     icon.name: "view-close"
                     onTriggered: pageStack.layers.pop()
@@ -1552,6 +1568,7 @@ Kirigami.ApplicationWindow {
     //Pages - Search
     Kirigami.ScrollablePage {
         id: pageSearch
+        property Kirigami.Action escapeAction: pageSearchEscapeAction  // Esc (KBS-F1)
         title: qsTr("Search")
 
         // Run the search and show the results page. Shared by the Search action button
@@ -1632,6 +1649,7 @@ Kirigami.ApplicationWindow {
                 onTriggered: pageSearchForm.openHistorySheet()
             },
             Kirigami.Action {
+                id: pageSearchEscapeAction
                 text:        qsTr("Close")
                 icon.name:   "view-close"
                 displayHint: Kirigami.DisplayHint.KeepVisible
@@ -1656,6 +1674,7 @@ Kirigami.ApplicationWindow {
     //Pages - SearchResults
     Kirigami.Page {
         id: pageSearchResults
+        property Kirigami.Action escapeAction: pageSearchResultsEscapeAction  // Esc (KBS-F1)
         visible: false
         title: {
             let n = Number(newSearch1.properties.filesFoundNumber ?? 0).toLocaleString(Qt.locale(), "f", 0)
@@ -1669,6 +1688,7 @@ Kirigami.ApplicationWindow {
 
         actions: [
             Kirigami.Action {
+                id: pageSearchResultsEscapeAction
                 text: qsTr("Close")
                 icon.name: "view-close"
                 onTriggered: {
@@ -1700,6 +1720,7 @@ Kirigami.ApplicationWindow {
     //Pages - Devices
     Kirigami.Page {
         id: pageDevices
+        property Kirigami.Action escapeAction: pageDevicesEscapeAction  // Esc (KBS-F1)
         visible: false
         padding: 0
         title: qsTr("Devices")
@@ -1765,6 +1786,7 @@ Kirigami.ApplicationWindow {
             //     onTriggered: appManager1.gentleStopDeviceUpdate()
             // },
             Kirigami.Action {
+                id: pageDevicesEscapeAction
                 text: qsTr("Close")
                 icon.name: "view-close"
                 onTriggered: root.closeFeaturePage(pageDevices)
@@ -1796,12 +1818,14 @@ Kirigami.ApplicationWindow {
     //Pages - Explore
     Kirigami.Page {
         id: pageExplore
+        property Kirigami.Action escapeAction: pageExploreEscapeAction  // Esc (KBS-F1)
         visible: false
         title: qsTr("Explore")
         padding: 0
 
         actions: [
             Kirigami.Action {
+                id: pageExploreEscapeAction
                 text: qsTr("Close")
                 icon.name: "view-close"
                 onTriggered: root.closeFeaturePage(pageExplore)
@@ -1846,6 +1870,7 @@ Kirigami.ApplicationWindow {
     //Pages - Create
     Kirigami.ScrollablePage {
         id: pageCreate
+        property Kirigami.Action escapeAction: pageCreateEscapeAction  // Esc (KBS-F1)
         visible: false
         title: qsTr("Create")
         Connections {
@@ -1888,6 +1913,7 @@ Kirigami.ApplicationWindow {
                 onTriggered: pageCreate_formLayout_Create.triggerStop()
             },
             Kirigami.Action {
+                id: pageCreateEscapeAction
                 text: qsTr("Close")
                 icon.name: "view-close"
                 onTriggered: root.closeFeaturePage(pageCreate)
@@ -1905,6 +1931,7 @@ Kirigami.ApplicationWindow {
     //Pages - Device Edit
     Kirigami.ScrollablePage {
         id: pageDeviceEdit
+        property Kirigami.Action escapeAction: pageDeviceEditEscapeAction  // Esc (KBS-F1)
         visible: false
         title: qsTr("Edit Device")
         property bool fromDevicesPage: false
@@ -1962,6 +1989,7 @@ Kirigami.ApplicationWindow {
                 }
             },
             Kirigami.Action {
+                id: pageDeviceEditEscapeAction
                 text: qsTr("Cancel")
                 icon.name: "view-close"
                 onTriggered: {
@@ -1983,12 +2011,14 @@ Kirigami.ApplicationWindow {
     //Pages - Statistics
     Kirigami.Page {
         id: pageStatistics
+        property Kirigami.Action escapeAction: pageStatisticsEscapeAction  // Esc (KBS-F1)
         visible: false
         title: qsTr("Statistics")
         padding: 0
 
         actions: [
             Kirigami.Action {
+                id: pageStatisticsEscapeAction
                 text: qsTr("Close")
                 icon.name: "view-close"
                 onTriggered: root.closeFeaturePage(pageStatistics)
@@ -2003,10 +2033,12 @@ Kirigami.ApplicationWindow {
     //Pages - Tags
     Kirigami.ScrollablePage {
         id: pageTags
+        property Kirigami.Action escapeAction: pageTagsEscapeAction  // Esc (KBS-F1)
         visible: false
         title: qsTr("Tags")
         actions: [
             Kirigami.Action {
+                id: pageTagsEscapeAction
                 text: qsTr("Close")
                 icon.name: "view-close"
                 onTriggered: root.closeFeaturePage(pageTags)
@@ -2019,6 +2051,7 @@ Kirigami.ApplicationWindow {
     //Pages - Backup
     Kirigami.ScrollablePage {
         id: pageBackup
+        property Kirigami.Action escapeAction: pageBackupEscapeAction  // Esc (KBS-F1)
         visible: false
         title: qsTr("Backup")
 
@@ -2044,6 +2077,7 @@ Kirigami.ApplicationWindow {
                 }
             },
             Kirigami.Action {
+                id: pageBackupEscapeAction
                 text:      qsTr("Close")
                 icon.name: "view-close"
                 onTriggered: root.closeFeaturePage(pageBackup)
