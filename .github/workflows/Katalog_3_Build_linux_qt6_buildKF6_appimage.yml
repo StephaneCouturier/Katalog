@@ -58,8 +58,6 @@ jobs:
         sudo ln -sf /usr/lib/x86_64-linux-gnu/libxcb-icccm4.so  /usr/lib/x86_64-linux-gnu/libxcb-icccm.so
         sudo ln -sf /usr/lib/x86_64-linux-gnu/libxcb-keysyms1.so /usr/lib/x86_64-linux-gnu/libxcb-keysyms.so
         sudo ln -sf /usr/lib/x86_64-linux-gnu/libxcb-res0.so     /usr/lib/x86_64-linux-gnu/libxcb-res.so
-        # breeze-icons generate-24px-versions.py requires lxml
-        pip install lxml
 
     - name: Install Qt 6.11.2
       uses: jurplel/install-qt-action@v4
@@ -201,6 +199,10 @@ jobs:
         build kcolorscheme
         build kconfigwidgets
         build karchive
+        # breeze-icons generate-24px-versions.py requires lxml. Installed here,
+        # not with the system packages: install-qt-action puts its own Python
+        # first in PATH, and that is the interpreter CMake picks for this script.
+        python3 -m pip install lxml
         build breeze-icons
         build kiconthemes
         build kglobalaccel
