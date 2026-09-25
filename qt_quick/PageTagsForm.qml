@@ -48,8 +48,8 @@ ColumnLayout {
         columnSpacing: Kirigami.Units.largeSpacing
         rowSpacing: Kirigami.Units.smallSpacing
 
-        Kirigami.Heading {
-            level: 3
+        Controls.Label {
+            font.bold: true
             text: qsTr("Add a tag")
             color: Kirigami.Theme.linkColor
             Layout.columnSpan: 2
@@ -124,8 +124,8 @@ ColumnLayout {
         columnSpacing: Kirigami.Units.largeSpacing
         rowSpacing: Kirigami.Units.smallSpacing
 
-        Kirigami.Heading {
-            level: 3
+        Controls.Label {
+            font.bold: true
             text: qsTr("Current folders and tags")
             color: Kirigami.Theme.linkColor
             Layout.fillWidth: true

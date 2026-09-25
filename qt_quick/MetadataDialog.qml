@@ -82,7 +82,6 @@ Kirigami.Dialog {
                 height: parent.height
                 text: qsTr("Field")
                 font.bold: true
-                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
                 verticalAlignment: Text.AlignVCenter
             }
             Rectangle {
@@ -96,7 +95,6 @@ Kirigami.Dialog {
                 height: parent.height
                 text: qsTr("Value")
                 font.bold: true
-                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
                 verticalAlignment: Text.AlignVCenter
             }
         }
@@ -135,7 +133,6 @@ Kirigami.Dialog {
                         y: 5
                         width: colWidth - hPad
                         text: modelData.label
-                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
                         wrapMode: Text.NoWrap
                         elide: Text.ElideRight
                         opacity: 0.8
@@ -157,7 +154,6 @@ Kirigami.Dialog {
                         y: 5
                         width: parent.width - x - hPad
                         text: modelData.value
-                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
                         wrapMode: Text.WrapAnywhere
                         color: Kirigami.Theme.textColor
                     }

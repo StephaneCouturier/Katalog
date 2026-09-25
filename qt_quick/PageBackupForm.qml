@@ -457,7 +457,7 @@ ColumnLayout {
                         color: modelData.mappingType === "Archive"
                                ? Kirigami.Theme.neutralTextColor
                                : Kirigami.Theme.positiveTextColor
-                        font.pixelSize: Kirigami.Units.gridUnit * 0.75 * root.cardScale
+                        font.pointSize: mappingCard.cardFontSize
                         padding: 3
                         background: Rectangle {
                             color:   parent.color

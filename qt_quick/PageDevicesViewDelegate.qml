@@ -254,7 +254,7 @@ Kirigami.AbstractCard {
                         // instead of being cut off (CDT-F1 / DVP-C17).
                         wrapMode: Text.Wrap
                         opacity: 0.7
-                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * card.delegateCardScale * 0.8
+                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * card.delegateCardScale
                     }
                 }
 
@@ -276,7 +276,7 @@ Kirigami.AbstractCard {
                     // Wraps onto as many lines as it needs, so the date at the
                     // end stays readable on a narrow card (CDT-F1 / DVP-F18).
                     wrapMode: Text.Wrap
-                    font.pointSize: Kirigami.Theme.defaultFont.pointSize * card.delegateCardScale * 0.8
+                    font.pointSize: Kirigami.Theme.defaultFont.pointSize * card.delegateCardScale
                     text: {
                         var d = card.modelData
                         var parts = []

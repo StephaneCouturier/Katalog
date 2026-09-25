@@ -97,7 +97,6 @@ ColumnLayout {
             Controls.Label {
                 id: devicePathLabel
                 text: newSearch1.properties.devicePath ?? ""
-                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
                 elide: Text.ElideLeft
                 Layout.fillWidth: true
                 opacity: 0.8
@@ -164,7 +163,6 @@ ColumnLayout {
                     return ""
                 }
                 opacity: 0.7
-                font.pointSize: Kirigami.Theme.smallFont.pointSize
             }
 
             Item { Layout.fillWidth: true }
@@ -310,7 +308,6 @@ ColumnLayout {
                             Layout.fillWidth: true
                             text: display
                             elide: Text.ElideRight
-                            font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
                             color: Kirigami.Theme.textColor
                         }
                     }
@@ -320,7 +317,6 @@ ColumnLayout {
                         anchors { right: parent.right; verticalCenter: parent.verticalCenter; rightMargin: 4 }
                         text: pageSearchResults_column.sortColumn === column
                               ? (pageSearchResults_column.sortAscending ? "▲" : "▼") : ""
-                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.7
                         color: Kirigami.Theme.textColor
                     }
 
@@ -493,7 +489,6 @@ ColumnLayout {
                                : Kirigami.Theme.textColor
                         elide: (column === 3 || column === 7) ? Text.ElideLeft : Text.ElideRight
                         clip: true
-                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
                     }
 
                     MouseArea {
@@ -827,7 +822,6 @@ ColumnLayout {
                 wrapMode: Text.WrapAnywhere
                 Layout.fillWidth: true
                 font.family: "monospace"
-                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
             }
             Controls.Label { text: qsTr("Actual:"); opacity: 0.7 }
             Controls.Label {
@@ -835,7 +829,6 @@ ColumnLayout {
                 wrapMode: Text.WrapAnywhere
                 Layout.fillWidth: true
                 font.family: "monospace"
-                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
             }
         }
     }

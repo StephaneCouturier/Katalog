@@ -167,8 +167,8 @@ Kirigami.ScrollablePage {
                         Layout.topMargin: Kirigami.Units.smallSpacing
                         spacing: 2
 
-                        Kirigami.Heading {
-                            level: 4
+                        Controls.Label {
+                            font.bold: true
                             text: qualityCheckDialog.sectionTitle(checkSection.modelData)
                             wrapMode: Text.WordWrap
                             // Check 4 is informational (QCK-F8): not coloured as a defect
@@ -258,7 +258,6 @@ Kirigami.ScrollablePage {
             Layout.margins: Kirigami.Units.smallSpacing
             text: appManager1.importStatusText
             elide: Text.ElideRight
-            font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
         }
     }
 
@@ -273,8 +272,8 @@ Kirigami.ScrollablePage {
         rowSpacing: Kirigami.Units.smallSpacing
 
         // ── Collection & Database ──────────────────────────────────────
-        Kirigami.Heading {
-            level: 3; text: qsTr("Collection & Database")
+        Controls.Label {
+            font.bold: true; text: qsTr("Collection & Database")
             Layout.columnSpan: 2
             Layout.topMargin: Kirigami.Units.smallSpacing
             color: Kirigami.Theme.linkColor
@@ -466,7 +465,7 @@ Kirigami.ScrollablePage {
         Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2; Layout.topMargin: Kirigami.Units.largeSpacing * 2 }
 
         // ── Import ─────────────────────────────────────────────────────
-        Kirigami.Heading { level: 3; text: qsTr("Collection Import & Synchronization"); Layout.columnSpan: 2; color: Kirigami.Theme.linkColor; font.bold: true }
+        Controls.Label { font.bold: true; text: qsTr("Collection Import & Synchronization"); Layout.columnSpan: 2; color: Kirigami.Theme.linkColor }
 
         Controls.Label { text: qsTr("Data mode"); opacity: 0.7; Layout.alignment: Qt.AlignVCenter; Layout.topMargin: Kirigami.Units.largeSpacing }
         Controls.ComboBox {
@@ -582,7 +581,7 @@ Kirigami.ScrollablePage {
         Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2; Layout.topMargin: Kirigami.Units.largeSpacing * 2 }
 
         // ── Application ────────────────────────────────────────────────
-        Kirigami.Heading { level: 3; text: qsTr("Application"); Layout.columnSpan: 2; color: Kirigami.Theme.linkColor; font.bold: true }
+        Controls.Label { font.bold: true; text: qsTr("Application"); Layout.columnSpan: 2; color: Kirigami.Theme.linkColor }
 
         Controls.Label { text: qsTr("Version"); opacity: 0.7; Layout.alignment: Qt.AlignTop; Layout.topMargin: Kirigami.Units.largeSpacing }
         ColumnLayout {
@@ -785,7 +784,7 @@ Kirigami.ScrollablePage {
         Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2; Layout.topMargin: Kirigami.Units.largeSpacing * 2}
 
         // ── Search ────────────────────────────────────────────────────
-        Kirigami.Heading { level: 3; text: qsTr("Search"); Layout.columnSpan: 2; color: Kirigami.Theme.linkColor; }
+        Controls.Label { font.bold: true; text: qsTr("Search"); Layout.columnSpan: 2; color: Kirigami.Theme.linkColor }
 
         Controls.Label { text: qsTr("Layout"); opacity: 0.7; }
         Controls.CheckBox {

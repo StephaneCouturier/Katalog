@@ -4,7 +4,7 @@ version: "2.13"
 
 # Specifications
 
-![Status](https://img.shields.io/badge/Status-Index-lightgrey) ![Pages](https://img.shields.io/badge/Pages-31-blue)
+![Status](https://img.shields.io/badge/Status-Index-lightgrey) ![Pages](https://img.shields.io/badge/Pages-32-blue)
 
 Every specification page lives in `docs_src/docs/development/`. This page is the
 index: **new specifications are added here, not to the sidebar.**
@@ -44,6 +44,7 @@ specification and the code disagree, the specification is what was agreed.
 | [SpecSelection](SpecSelection.md) | SELECTION — SELECTED DEVICE | Approved | planned | — |
 | [SpecStorageIdentity](SpecStorageIdentity.md) | STORAGE Identity | Approved | planned | [TestStorageIdentity](TestStorageIdentity.md) |
 | [SpecTheme](SpecTheme.md) | Theme, colour derivation and icon size | Draft | partial | — |
+| [SpecTypography](SpecTypography.md) | TYPOGRAPHY — TEXT SIZE DERIVED FROM THE SYSTEM FONT | Approved | planned | — |
 | [SpecValidationRules](SpecValidationRules.md) | Form Validation Rules | Approved | partial | — |
 | [SpecVersions](SpecVersions.md) | Version Numbers | — | — | — |
 

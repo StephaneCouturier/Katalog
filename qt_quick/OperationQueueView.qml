@@ -88,7 +88,6 @@ Controls.ToolBar {
                 text: root.statusText
                 textFormat: Text.StyledText
                 elide: Text.ElideRight
-                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
             }
             Controls.Button {
                 text: qsTr("Stop")
@@ -120,12 +119,10 @@ Controls.ToolBar {
                 text: qsTr("Queue")
                 font.bold: true
                 opacity: 0.8
-                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
             }
             Controls.Label {
                 text: qsTr("%1 waiting").arg(appManager1.operationQueueWaitingCount)
                 opacity: 0.7
-                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
             }
             Item { Layout.fillWidth: true }
             Controls.Button {
@@ -163,7 +160,6 @@ Controls.ToolBar {
                     elide: Text.ElideRight
                     Layout.fillWidth: true
                     opacity: 0.8
-                    font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
                 }
                 IconButton {
                     icon.name: "list-remove"

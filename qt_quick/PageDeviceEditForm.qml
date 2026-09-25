@@ -243,8 +243,8 @@ ColumnLayout {
         rowSpacing: Kirigami.Units.smallSpacing
 
         // ── Section: Identity ─────────────────────────────────────────────────
-        Kirigami.Heading {
-            level: 3
+        Controls.Label {
+            font.bold: true
             text: qsTr("Device")
             color: Kirigami.Theme.linkColor
             Layout.columnSpan: 2
@@ -292,8 +292,8 @@ ColumnLayout {
             Layout.topMargin: Kirigami.Units.largeSpacing
             visible: root.deviceType !== "Virtual"
         }
-        Kirigami.Heading {
-            level: 3
+        Controls.Label {
+            font.bold: true
             text: qsTr("Location")
             color: Kirigami.Theme.linkColor
             Layout.columnSpan: 2
@@ -326,8 +326,8 @@ ColumnLayout {
             Layout.topMargin: Kirigami.Units.largeSpacing
             visible: root.deviceType === "Catalog"
         }
-        Kirigami.Heading {
-            level: 3
+        Controls.Label {
+            font.bold: true
             text: qsTr("Content options")
             color: Kirigami.Theme.linkColor
             Layout.columnSpan: 2
@@ -502,8 +502,8 @@ ColumnLayout {
             Layout.topMargin: Kirigami.Units.largeSpacing
             visible: root.deviceType === "Storage"
         }
-        Kirigami.Heading {
-            level: 3
+        Controls.Label {
+            font.bold: true
             text: qsTr("Storage details")
             color: Kirigami.Theme.linkColor
             Layout.columnSpan: 2

@@ -168,7 +168,7 @@ Kirigami.AbstractCard {
                     wrapMode: Text.WordWrap
                     text: model.description
                     visible: appManager1.showDeviceInfo && model.description.length > 0
-                    font.pointSize: Kirigami.Theme.defaultFont.pointSize * root.cardScale * 0.8
+                    font.pointSize: Kirigami.Theme.defaultFont.pointSize * root.cardScale * 0.80
                     color: card.isSelected ? Kirigami.Theme.highlightedTextColor
                                            : Kirigami.Theme.textColor
                 }

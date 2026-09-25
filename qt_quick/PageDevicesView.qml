@@ -733,7 +733,6 @@ Item {
                         }
                         text: display
                         elide: Text.ElideRight
-                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
                         color: Kirigami.Theme.textColor
                     }
 
@@ -741,7 +740,6 @@ Item {
                         id: sortMark
                         anchors { right: parent.right; verticalCenter: parent.verticalCenter; rightMargin: 4 }
                         text: root.tableSortColumn === column ? (root.tableSortAscending ? "▲" : "▼") : ""
-                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.7
                         color: Kirigami.Theme.textColor
                     }
 
@@ -918,7 +916,6 @@ Item {
                         clip: true
                         font.bold:   bold
                         font.italic: italic
-                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
                         color: deviceTable.selectedRow === row
                                ? Kirigami.Theme.highlightedTextColor
                                : (dimmed ? Kirigami.Theme.disabledTextColor

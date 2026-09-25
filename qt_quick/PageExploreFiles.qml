@@ -193,7 +193,6 @@ Item {
                             Layout.fillWidth: true
                             text: display
                             elide: Text.ElideRight
-                            font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
                             color: Kirigami.Theme.textColor
                         }
                     }
@@ -202,7 +201,6 @@ Item {
                         id: sortIndicator
                         anchors { right: parent.right; verticalCenter: parent.verticalCenter; rightMargin: 4 }
                         text: root.sortColumn === column ? (root.sortAscending ? "▲" : "▼") : ""
-                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.7
                         color: Kirigami.Theme.textColor
                     }
 
@@ -342,7 +340,6 @@ Item {
                                : (column === 0 ? Kirigami.Theme.textColor : Kirigami.Theme.disabledTextColor)
                         elide: column === 3 ? Text.ElideLeft : Text.ElideRight
                         clip: true
-                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
                     }
 
                     MouseArea {
@@ -688,7 +685,6 @@ Item {
                 wrapMode: Text.WrapAnywhere
                 Layout.fillWidth: true
                 font.family: "monospace"
-                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
             }
             Controls.Label { text: qsTr("Actual:"); opacity: 0.7 }
             Controls.Label {
@@ -696,7 +692,6 @@ Item {
                 wrapMode: Text.WrapAnywhere
                 Layout.fillWidth: true
                 font.family: "monospace"
-                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
             }
         }
     }

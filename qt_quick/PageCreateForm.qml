@@ -127,8 +127,8 @@ ColumnLayout {
         rowSpacing: Kirigami.Units.smallSpacing
 
         // ── Section 1: Required ───────────────────────────────────────────────
-        Kirigami.Heading {
-            level: 3
+        Controls.Label {
+            font.bold: true
             text: qsTr("Catalog definition")
             color: Kirigami.Theme.linkColor
             Layout.columnSpan: 2
@@ -187,8 +187,8 @@ ColumnLayout {
         Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2; Layout.topMargin: Kirigami.Units.largeSpacing }
 
         // ── Section 2: Catalog Options ────────────────────────────────────────
-        Kirigami.Heading {
-            level: 3
+        Controls.Label {
+            font.bold: true
             text: qsTr("Content options")
             color: Kirigami.Theme.linkColor
             Layout.columnSpan: 2
@@ -351,8 +351,8 @@ ColumnLayout {
             Layout.fillWidth: true
             Layout.topMargin: Kirigami.Units.smallSpacing
 
-            Kirigami.Heading {
-                level: 3
+            Controls.Label {
+                font.bold: true
                 text: qsTr("Global Parameters")
                 color: Kirigami.Theme.linkColor
                 Layout.fillWidth: true

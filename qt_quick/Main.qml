@@ -664,7 +664,6 @@ Kirigami.ApplicationWindow {
                 Controls.Label {
                     text: windowSettings.drawerPinned ? qsTr("Drawer pinned") : qsTr("Drawer floating")
                     anchors.verticalCenter: parent.verticalCenter
-                    font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
                     opacity: 0.7
                 }
             }
@@ -689,7 +688,6 @@ Kirigami.ApplicationWindow {
                 Controls.Label {
                     text: appManager1.showSelectionPage ? qsTr("Selection shown") : qsTr("Selection hidden")
                     anchors.verticalCenter: parent.verticalCenter
-                    font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
                     opacity: 0.7
                 }
             }
@@ -2139,7 +2137,6 @@ Kirigami.ApplicationWindow {
                 text: backupPrepFooter.prepStatus
                 textFormat: Text.StyledText
                 elide: Text.ElideRight
-                font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.85
             }
             Controls.Button {
                 visible: appManager1.backupPreviewRunning
