@@ -663,7 +663,7 @@ ColumnLayout {
                                 + (root.progressEtaStr   ? " · " + qsTr("ETA %1").arg(root.progressEtaStr) : "")
                                 + (root.progressFile ? " · " + root.progressFile : "")
                             elide: Text.ElideRight
-                            font.pixelSize: Kirigami.Units.gridUnit * 0.85 * root.cardScale
+                            font.pointSize: mappingCard.cardFontSize
                             opacity: 0.8
                         }
                     }
