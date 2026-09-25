@@ -67,7 +67,7 @@ Legend: ✅ Done · 🚧 Partial · 🔲 Not started
 | Screen / Feature    | K2 | K3 | Remaining | New feature vs K2 |
 |---------------------|----|----|-----------|-----------|
 | **Screen/tabs**     | ✅ | ✅ | | - Access via a "Drawer" now, which can be hidden or pinned" |
-| **Open Collection** | ✅ | ✅ | | - Clearer selection of mode and Collection. Open recent collections (last 5 entries). Create collection (File mode)|
+| **Open Collection** | ✅ | ✅ | | - Clearer selection of mode and Collection. Open recent collections (last 10 entries). Create collection (File mode)|
 | **Selection**       | ✅ | ✅ | | - Card like entries with file & storage statistics<br/> - Filter option to limit the list of Devices
 | **Search**          | ✅ | ✅ | |
 | Search Criteria     | ✅ | ✅ | | - Paste/Clean buttons for all text input fields|

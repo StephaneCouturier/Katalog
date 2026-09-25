@@ -42,6 +42,16 @@
 #include <QSqlRecord>
 #include <QRegularExpression>
 
+// One Quality Check result (SpecQualityCheck.md). Each row holds the check's
+// columns in the order of its SELECT; checkNumber is the check's number in the spec.
+// A non-empty error means the query failed and rows cannot be trusted as clean.
+struct QualityCheckResult
+{
+    int checkNumber = 0;
+    QList<QStringList> rows;
+    QString error;
+};
+
 class Collection : public QObject
 {
     Q_OBJECT
@@ -130,6 +140,9 @@ public:
     bool addExcludeDirectory(const QString &path);
     bool removeExcludeDirectory(const QString &path);
     QStringList getExcludeDirectories();
+
+    //Quality check (SpecQualityCheck.md) - read-only, phase 1 reports only
+    QList<QualityCheckResult> runQualityChecks();
 
     //Import source management
     QStringList getImportSourcePaths();

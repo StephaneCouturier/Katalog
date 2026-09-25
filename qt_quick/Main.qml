@@ -531,6 +531,36 @@ Kirigami.ApplicationWindow {
                     text:      appManager1.recentCollections.length > 4 ? appManager1.recentCollections[4].displayName : ""
                     onTriggered: appManager1.openRecentCollection(appManager1.recentCollections[4])
                 }
+                Kirigami.Action {
+                    visible: appManager1.recentCollections.length > 5
+                    icon.name: appManager1.recentCollections.length > 5 ? appManager1.recentCollections[5].iconName : ""
+                    text:      appManager1.recentCollections.length > 5 ? appManager1.recentCollections[5].displayName : ""
+                    onTriggered: appManager1.openRecentCollection(appManager1.recentCollections[5])
+                }
+                Kirigami.Action {
+                    visible: appManager1.recentCollections.length > 6
+                    icon.name: appManager1.recentCollections.length > 6 ? appManager1.recentCollections[6].iconName : ""
+                    text:      appManager1.recentCollections.length > 6 ? appManager1.recentCollections[6].displayName : ""
+                    onTriggered: appManager1.openRecentCollection(appManager1.recentCollections[6])
+                }
+                Kirigami.Action {
+                    visible: appManager1.recentCollections.length > 7
+                    icon.name: appManager1.recentCollections.length > 7 ? appManager1.recentCollections[7].iconName : ""
+                    text:      appManager1.recentCollections.length > 7 ? appManager1.recentCollections[7].displayName : ""
+                    onTriggered: appManager1.openRecentCollection(appManager1.recentCollections[7])
+                }
+                Kirigami.Action {
+                    visible: appManager1.recentCollections.length > 8
+                    icon.name: appManager1.recentCollections.length > 8 ? appManager1.recentCollections[8].iconName : ""
+                    text:      appManager1.recentCollections.length > 8 ? appManager1.recentCollections[8].displayName : ""
+                    onTriggered: appManager1.openRecentCollection(appManager1.recentCollections[8])
+                }
+                Kirigami.Action {
+                    visible: appManager1.recentCollections.length > 9
+                    icon.name: appManager1.recentCollections.length > 9 ? appManager1.recentCollections[9].iconName : ""
+                    text:      appManager1.recentCollections.length > 9 ? appManager1.recentCollections[9].displayName : ""
+                    onTriggered: appManager1.openRecentCollection(appManager1.recentCollections[9])
+                }
             },
             Kirigami.Action {
                 text: qsTr("New...")

@@ -1971,6 +1971,107 @@ QStringList Collection::getImportSourcePaths()
 }
 //----------------------------------------------------------------------
 
+//Quality check ---------------------------------------------------------
+QList<QualityCheckResult> Collection::runQualityChecks()
+{
+    // SpecQualityCheck.md "Detection", checks 1 to 8. Every query is a SELECT:
+    // phase 1 writes nothing (QCK-C7). All three tables are loaded at open in
+    // Memory mode, so no pre-load is needed.
+    static const QStringList queries = {
+        // 1 - Storage devices pointing at a missing storage row
+        QLatin1String(R"(
+            SELECT d.device_id, d.device_name, d.device_external_id
+            FROM   device d
+            LEFT JOIN storage s ON s.storage_id = d.device_external_id
+            WHERE  d.device_type = 'Storage' AND s.storage_id IS NULL
+            ORDER BY d.device_id
+        )"),
+        // 2 - Storage devices pointing at a storage row with a different name
+        QLatin1String(R"(
+            SELECT d.device_id, d.device_name, s.storage_id, s.storage_name
+            FROM   device d
+            JOIN   storage s ON s.storage_id = d.device_external_id
+            WHERE  d.device_type = 'Storage' AND d.device_name <> s.storage_name
+            ORDER BY d.device_id
+        )"),
+        // 3 - Storage rows no Storage device points at
+        QLatin1String(R"(
+            SELECT s.storage_id, s.storage_name
+            FROM   storage s
+            LEFT JOIN device d ON d.device_external_id = s.storage_id
+                              AND d.device_type = 'Storage'
+            WHERE  d.device_id IS NULL
+            ORDER BY s.storage_id
+        )"),
+        // 4 - Storage rows sharing the same written number (informational)
+        QLatin1String(R"(
+            SELECT s.storage_user_id, s.storage_id, s.storage_name
+            FROM   storage s
+            WHERE  s.storage_user_id IS NOT NULL AND s.storage_user_id <> 0
+              AND  s.storage_user_id IN (SELECT storage_user_id FROM storage
+                                         GROUP BY storage_user_id HAVING COUNT(*) > 1)
+            ORDER BY s.storage_user_id, s.storage_id
+        )"),
+        // 5 - Storage rows sharing the same name
+        QLatin1String(R"(
+            SELECT s.storage_name, s.storage_id
+            FROM   storage s
+            WHERE  s.storage_name IN (SELECT storage_name FROM storage
+                                      GROUP BY storage_name HAVING COUNT(*) > 1)
+            ORDER BY s.storage_name, s.storage_id
+        )"),
+        // 6 - Catalog devices pointing at a missing catalog row
+        QLatin1String(R"(
+            SELECT d.device_id, d.device_name, d.device_external_id
+            FROM   device d
+            LEFT JOIN catalog c ON c.catalog_id = d.device_external_id
+            WHERE  d.device_type = 'Catalog' AND c.catalog_id IS NULL
+            ORDER BY d.device_id
+        )"),
+        // 7 - Catalog rows no Catalog device points at
+        QLatin1String(R"(
+            SELECT c.catalog_id, c.catalog_name
+            FROM   catalog c
+            LEFT JOIN device d ON d.device_external_id = c.catalog_id
+                              AND d.device_type = 'Catalog'
+            WHERE  d.device_id IS NULL
+            ORDER BY c.catalog_id
+        )"),
+        // 8 - Devices whose parent does not exist (0 or NULL marks a root)
+        QLatin1String(R"(
+            SELECT d.device_id, d.device_name, d.device_parent_id
+            FROM   device d
+            LEFT JOIN device p ON p.device_id = d.device_parent_id
+            WHERE  d.device_parent_id IS NOT NULL AND d.device_parent_id <> 0
+              AND  p.device_id IS NULL
+            ORDER BY d.device_id
+        )"),
+    };
+
+    QList<QualityCheckResult> results;
+    for (int i = 0; i < queries.size(); ++i) {
+        QualityCheckResult result;
+        result.checkNumber = i + 1;
+
+        QSqlQuery query(QSqlDatabase::database(m_connectionName));
+        if (!query.exec(queries.at(i))) {
+            result.error = query.lastError().text();
+            qWarning() << "WARNING: Quality check" << result.checkNumber
+                       << "failed:" << result.error;
+        }
+        const int columnCount = query.record().count();
+        while (query.next()) {
+            QStringList row;
+            for (int c = 0; c < columnCount; ++c)
+                row << query.value(c).toString();
+            result.rows << row;
+        }
+        results << result;
+    }
+    return results;
+}
+//----------------------------------------------------------------------
+
 //Tag CRUD -------------------------------------------------------------
 bool Collection::createTag(const QString &name, const QString &path, const QString &type, const QDateTime &dateTime)
 {

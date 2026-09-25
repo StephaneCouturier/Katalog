@@ -29,7 +29,7 @@ approved these rows, including the explicit decision to keep the host name in
 the Hosted label rather than showing the database name alone.
 
 The same blank name then turned up in the drawer's **Open** menu, which lists
-the last five collections. That list has a second, worse property: its label is
+the last ten collections. That list has a second, worse property: its label is
 frozen at write time. It is stored alongside the path when the collection is
 opened and read back verbatim, so an entry once written blank stays blank for
 ever — which is why the user saw names that *"were working some time ago"*

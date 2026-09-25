@@ -39,6 +39,175 @@ Kirigami.ScrollablePage {
 
     // ── Dialogs ────────────────────────────────────────────────────────
 
+    // Quality Check report, SpecQualityCheck.md phase 1: read-only, reports only.
+    Kirigami.Dialog {
+        id: qualityCheckDialog
+        property var results: []   // QVariantList of {check, rows, error}
+
+        readonly property var checkTitles: [
+            qsTr("Storage devices linked to a missing storage"),
+            qsTr("Storage devices linked to a storage with a different name"),
+            qsTr("Storage not linked to any device"),
+            qsTr("Storage IDs used by more than one storage"),
+            qsTr("Storage names used by more than one storage"),
+            qsTr("Catalog devices linked to a missing catalog"),
+            qsTr("Catalogs not linked to any device"),
+            qsTr("Devices with a missing parent device")
+        ]
+
+        readonly property int issueCount: {
+            var n = 0
+            for (var i = 0; i < results.length; ++i)
+                n += results[i].rows.length + (results[i].error ? 1 : 0)
+            return n
+        }
+
+        function run() {
+            results = appManager1.runQualityChecks()
+            open()
+        }
+
+        // One line per row, in the column order of the check's SELECT (core).
+        function formatRow(check, r) {
+            switch (check) {
+            case 1: return qsTr("Device") + " " + r[0] + " \u201C" + r[1] + "\u201D \u2192 " + qsTr("Storage") + " " + r[2]
+            case 2: return qsTr("Device") + " " + r[0] + " \u201C" + r[1] + "\u201D \u2192 " + qsTr("Storage") + " " + r[2] + " \u201C" + r[3] + "\u201D"
+            case 3: return qsTr("Storage") + " " + r[0] + " \u201C" + r[1] + "\u201D"
+            case 4: return qsTr("ID") + " " + r[0] + " \u00B7 " + qsTr("Storage") + " " + r[1] + " \u201C" + r[2] + "\u201D"
+            case 5: return qsTr("Storage") + " " + r[1] + " \u201C" + r[0] + "\u201D"
+            case 6: return qsTr("Device") + " " + r[0] + " \u201C" + r[1] + "\u201D \u2192 " + qsTr("Catalog") + " " + r[2]
+            case 7: return qsTr("Catalog") + " " + r[0] + " \u201C" + r[1] + "\u201D"
+            case 8: return qsTr("Device") + " " + r[0] + " \u201C" + r[1] + "\u201D \u2192 " + qsTr("Device") + " " + r[2]
+            }
+            return r.join(" \u00B7 ")
+        }
+
+        function sectionTitle(res) {
+            return res.check + ". " + checkTitles[res.check - 1] + " (" + res.rows.length + ")"
+        }
+
+        // Plain-text report for the clipboard (QCK-F16): same content as shown.
+        function reportText() {
+            var lines = [qsTr("Quality check"), qsTr("Collection") + ": " + collectionLabel(), ""]
+            for (var i = 0; i < results.length; ++i) {
+                var res = results[i]
+                lines.push(sectionTitle(res))
+                if (res.error)
+                    lines.push("    " + qsTr("Error: ") + res.error)
+                else if (res.rows.length === 0)
+                    lines.push("    " + qsTr("Nothing found"))
+                for (var j = 0; j < res.rows.length; ++j)
+                    lines.push("    " + formatRow(res.check, res.rows[j]))
+                lines.push("")
+            }
+            if (issueCount === 0)
+                lines.push(qsTr("No issues found."))
+            return lines.join("\n")
+        }
+
+        function collectionLabel() {
+            var mode = appManager1.databaseMode
+            if (mode === "Memory") return appManager1.getCollectionFolder()
+            if (mode === "File")   return appManager1.getDatabaseFilePath()
+            if (mode === "Hosted") return appManager1.getHostName() + "/" + appManager1.getDatabaseName()
+            return "—"
+        }
+
+        title: qsTr("Quality check")
+        width: Math.min(applicationWindow().width - Kirigami.Units.gridUnit * 4, Kirigami.Units.gridUnit * 40)
+        preferredHeight: Kirigami.Units.gridUnit * 32
+        standardButtons: Kirigami.Dialog.Close
+
+        // Copy is an extra action, not the accept button: leading slot, as in
+        // MetadataDialog (SpecValidationRules D4).
+        footerLeadingComponent: Controls.Button {
+            text: qsTr("Copy to Clipboard")
+            icon.name: "edit-copy"
+            onClicked: {
+                appManager1.copyToClipboard(qualityCheckDialog.reportText())
+                applicationWindow().showPassiveNotification(qsTr("Copied"))
+            }
+        }
+
+        contentItem: Controls.ScrollView {
+            id: qualityCheckScrollView
+            clip: true
+
+            ColumnLayout {
+                width: qualityCheckScrollView.availableWidth
+                spacing: Kirigami.Units.smallSpacing
+
+                Controls.Label {
+                    text: qualityCheckDialog.collectionLabel()
+                    elide: Text.ElideMiddle
+                    opacity: 0.7
+                    Layout.fillWidth: true
+                    Layout.margins: Kirigami.Units.largeSpacing
+                    Layout.bottomMargin: 0
+                }
+
+                // Overall answer for a clean collection (QCK-F7)
+                Kirigami.InlineMessage {
+                    visible: qualityCheckDialog.issueCount === 0
+                    type: Kirigami.MessageType.Positive
+                    text: qsTr("No issues found.")
+                    Layout.fillWidth: true
+                    Layout.leftMargin: Kirigami.Units.largeSpacing
+                    Layout.rightMargin: Kirigami.Units.largeSpacing
+                }
+
+                Repeater {
+                    model: qualityCheckDialog.results
+                    delegate: ColumnLayout {
+                        id: checkSection
+                        required property var modelData
+                        Layout.fillWidth: true
+                        Layout.leftMargin: Kirigami.Units.largeSpacing
+                        Layout.rightMargin: Kirigami.Units.largeSpacing
+                        Layout.topMargin: Kirigami.Units.smallSpacing
+                        spacing: 2
+
+                        Kirigami.Heading {
+                            level: 4
+                            text: qualityCheckDialog.sectionTitle(checkSection.modelData)
+                            wrapMode: Text.WordWrap
+                            // Check 4 is informational (QCK-F8): not coloured as a defect
+                            color: checkSection.modelData.error || (checkSection.modelData.rows.length > 0 && checkSection.modelData.check !== 4)
+                                   ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.textColor
+                            Layout.fillWidth: true
+                        }
+                        // Per-check clean answer (QCK-F15)
+                        Controls.Label {
+                            visible: !checkSection.modelData.error && checkSection.modelData.rows.length === 0
+                            text: qsTr("Nothing found")
+                            opacity: 0.7
+                            Layout.leftMargin: Kirigami.Units.largeSpacing
+                        }
+                        Controls.Label {
+                            visible: !!checkSection.modelData.error
+                            text: qsTr("Error: ") + checkSection.modelData.error
+                            wrapMode: Text.WordWrap
+                            color: Kirigami.Theme.negativeTextColor
+                            Layout.fillWidth: true
+                            Layout.leftMargin: Kirigami.Units.largeSpacing
+                        }
+                        Repeater {
+                            model: checkSection.modelData.rows
+                            delegate: Controls.Label {
+                                required property var modelData
+                                text: qualityCheckDialog.formatRow(checkSection.modelData.check, modelData)
+                                wrapMode: Text.WordWrap
+                                textFormat: Text.PlainText
+                                Layout.fillWidth: true
+                                Layout.leftMargin: Kirigami.Units.largeSpacing
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     FolderDialog {
         id: imageFolderDialog
         onAccepted: appManager1.imageFolderPath = appManager1.pathFromFileUrl(selectedFolder.toString())
@@ -159,8 +328,21 @@ Kirigami.ScrollablePage {
             }
         }
 
-        Controls.Label { text: qsTr("Database Version"); opacity: 0.7 }
-        Controls.Label { text: appManager1.databaseSchemaVersion || "—" }
+        Controls.Label { text: qsTr("Database Version"); opacity: 0.7; Layout.alignment: Qt.AlignVCenter }
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: Kirigami.Units.smallSpacing
+            Controls.Label {
+                text: appManager1.databaseSchemaVersion || "—"
+                Layout.fillWidth: true
+            }
+            // Quality Check, SpecQualityCheck.md QCK-F13
+            Controls.Button {
+                text: qsTr("Quality check")
+                icon.name: "tools-check-spelling"
+                onClicked: qualityCheckDialog.run()
+            }
+        }
 
         // ── Images folder ──────────────────────────────────────────────
         Controls.Label { text: qsTr("Images folder"); opacity: 0.7; Layout.alignment: Qt.AlignVCenter }

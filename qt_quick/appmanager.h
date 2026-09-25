@@ -534,6 +534,8 @@ public slots:
 
     // Collection import
     Q_INVOKABLE QStringList       getImportSourcePaths() const;
+    // Quality check (SpecQualityCheck.md): list of {check, rows, error}
+    Q_INVOKABLE QVariantList      runQualityChecks() const;
     Q_INVOKABLE void              openImportSource(const QString &path);
     Q_INVOKABLE QString           importDevice(int srcDeviceId);
     DeviceListModel              *getImportSourceDeviceModel() const { return m_importSourceDeviceModel; }
@@ -751,6 +753,9 @@ private:
     BackupPreviewModel *m_backupPreviewModel = nullptr;
     FilesView         *m_searchSortModel   = nullptr;
 
+    // Size of the drawer's Open > recent list (SpecCollectionOpen.md OPN-F7).
+    // Main.qml holds one menu action per slot, so it must match this.
+    static constexpr int maxRecentCollections = 10;
     void saveToRecentCollections(const QString &mode, const QString &path,
                                  const QString &displayName,
                                  const QString &hostName = QString(),

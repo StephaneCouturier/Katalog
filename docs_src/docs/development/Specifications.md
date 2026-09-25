@@ -38,7 +38,7 @@ specification and the code disagree, the specification is what was agreed.
 | [SpecLanguages](SpecLanguages.md) | LANGUAGES — INTERFACE LANGUAGE SELECTION | Approved | complete | — |
 | [SpecOperationQueue](SpecOperationQueue.md) | OPERATION Queue | Specified | — | — |
 | [SpecProgressReport](SpecProgressReport.md) | Progress Reporting | — | — | — |
-| [SpecQualityCheck](SpecQualityCheck.md) | QUALITY Check | Draft | backlog | — |
+| [SpecQualityCheck](SpecQualityCheck.md) | QUALITY Check | Draft | planned (phase 1) | — |
 | [SpecSearchList](SpecSearchList.md) | SEARCH List as Input | Approved | — | — |
 | [SpecSearchResultsFilters](SpecSearchResultsFilters.md) | SEARCH RESULTS — QUICK FILTER AND CATALOGS FILTER | Approved | planned | — |
 | [SpecSelection](SpecSelection.md) | SELECTION — SELECTED DEVICE | Approved | planned | — |

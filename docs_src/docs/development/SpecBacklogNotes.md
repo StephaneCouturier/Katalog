@@ -241,5 +241,10 @@ one (EN/FR/CS) during the 3.0 pass, then remove its entry here.
   the field above the device list shows a filter icon and the placeholder "Name...".
   It filters devices by name, not files; Ctrl+F puts the cursor in it. Candidate
   location: `Selection.md`.
+- **Quality check** (`SpecQualityCheck.md`, phase 1, QCK-F1–F4, F7–F16): a "Quality
+  check" button on Settings, on the Database Version row, runs eight read-only checks
+  on the open collection (storage and catalog links, duplicate storage IDs and names,
+  missing parent devices). The report lists what each check found and can be copied
+  to the clipboard. Nothing is repaired. Candidate location: `Settings.md`.
 
 ---

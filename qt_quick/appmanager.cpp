@@ -2207,7 +2207,7 @@ void AppManager::openCollectionHosted(const QString &hostName, const QString &db
 QVariantList AppManager::getRecentCollections() const
 {
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
-    int count = qMin(settings.value("Recent/count", 0).toInt(), 5);
+    int count = qMin(settings.value("Recent/count", 0).toInt(), maxRecentCollections);
     QVariantList result;
     for (int i = 0; i < count; ++i) {
         QVariantMap entry;
@@ -2310,7 +2310,7 @@ void AppManager::saveToRecentCollections(const QString &mode, const QString &pat
                                          int port, const QString &userName, const QString &password)
 {
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
-    int count = qMin(settings.value("Recent/count", 0).toInt(), 5);
+    int count = qMin(settings.value("Recent/count", 0).toInt(), maxRecentCollections);
 
     // Load existing entries
     QVariantList existing;
@@ -2356,8 +2356,8 @@ void AppManager::saveToRecentCollections(const QString &mode, const QString &pat
     newEntry["password"]    = password;
     existing.prepend(newEntry);
 
-    // Trim to 5
-    while (existing.size() > 5)
+    // Trim to the list size
+    while (existing.size() > maxRecentCollections)
         existing.removeLast();
 
     // Persist
@@ -4389,6 +4389,21 @@ void AppManager::setImageFolderPath(const QString &path)
 QStringList AppManager::getImportSourcePaths() const
 {
     return collection->getImportSourcePaths();
+}
+//----------------------------------------------------------------------
+QVariantList AppManager::runQualityChecks() const
+{
+    QVariantList result;
+    const QList<QualityCheckResult> checks = collection->runQualityChecks();
+    for (const QualityCheckResult &check : checks) {
+        QVariantList rows;
+        for (const QStringList &row : check.rows)
+            rows << QVariant(row);
+        result << QVariantMap{ { "check", check.checkNumber },
+                               { "rows",  rows },
+                               { "error", check.error } };
+    }
+    return result;
 }
 //----------------------------------------------------------------------
 void AppManager::openImportSource(const QString &path)
