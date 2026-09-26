@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+176"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+178"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4569"/>
+        <location line="+4603"/>
         <source>Search</source>
         <translation>Keresés</translation>
     </message>
     <message>
-        <location line="-4689"/>
+        <location line="-4723"/>
         <source>Stopped</source>
         <translation>Leállítva</translation>
     </message>
@@ -44,11 +44,11 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2222"/>
+        <location line="+2241"/>
         <location line="+626"/>
         <location line="+26"/>
         <location line="+20"/>
-        <location line="+1245"/>
+        <location line="+1260"/>
         <location line="+11"/>
         <location line="+60"/>
         <location line="+374"/>
@@ -56,14 +56,14 @@
         <translation>Folyamatban</translation>
     </message>
     <message>
-        <location line="-4570"/>
-        <location line="+4177"/>
+        <location line="-4604"/>
+        <location line="+4211"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Befejezve</translation>
     </message>
     <message>
-        <location line="-3526"/>
+        <location line="-3546"/>
         <source>Empty database path provided</source>
         <translation>Üres adatbázis-elérési út lett megadva</translation>
     </message>
@@ -103,7 +103,7 @@
         <translation>Helyi lemez</translation>
     </message>
     <message>
-        <location line="+451"/>
+        <location line="+456"/>
         <source>search_results</source>
         <translation>keresesi_eredmenyek</translation>
     </message>
@@ -149,12 +149,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2611"/>
+        <location line="+2626"/>
         <source>Size</source>
         <translation>Méret</translation>
     </message>
     <message>
-        <location line="-2610"/>
+        <location line="-2625"/>
         <source>Date</source>
         <translation>Dátum</translation>
     </message>
@@ -435,7 +435,7 @@ Válasszon másik nevet.</translation>
         <translation>A kijelölt eszköz nem katalógus</translation>
     </message>
     <message>
-        <location line="+205"/>
+        <location line="+220"/>
         <source>Error: could not open collection</source>
         <translation>Hiba: nem sikerült megnyitni a gyűjteményt</translation>
     </message>
@@ -654,7 +654,7 @@ Válasszon másik nevet.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2607"/>
+        <location filename="../core/collection.cpp" line="+2708"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Ez a mappa memória módú gyűjteményfájlokat tartalmaz, de jelenleg fájl módban van.&lt;br/&gt;Váltson memória módra, vagy válasszon másik mappát.</translation>
     </message>
@@ -947,7 +947,7 @@ Válasszon másik nevet.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+950"/>
+        <location filename="../qt_quick/Main.qml" line="+1025"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Biztosan &lt;b&gt;törli&lt;/b&gt; ezt a(z) %1 eszközt?&lt;br/&gt;&lt;br/&gt;Név: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -964,13 +964,13 @@ Válasszon másik nevet.</translation>
         <location line="-375"/>
         <location line="+60"/>
         <location line="+176"/>
-        <location line="+797"/>
-        <location line="+123"/>
+        <location line="+801"/>
+        <location line="+122"/>
         <source>Cancel</source>
         <translation>Mégse</translation>
     </message>
     <message>
-        <location line="-1256"/>
+        <location line="-1259"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+172"/>
@@ -989,13 +989,13 @@ Válasszon másik nevet.</translation>
         <translation>Rendszer</translation>
     </message>
     <message>
-        <location line="-291"/>
-        <location line="+292"/>
+        <location line="-253"/>
+        <location line="+254"/>
         <source>Settings</source>
         <translation>Beállítások</translation>
     </message>
     <message>
-        <location line="-416"/>
+        <location line="-408"/>
         <source>Open...</source>
         <translation>Megnyitás...</translation>
     </message>
@@ -1006,58 +1006,58 @@ Válasszon másik nevet.</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location line="+57"/>
+        <location line="+87"/>
         <source>SQLite Database...</source>
         <translation>SQLite-adatbázis...</translation>
     </message>
     <message>
-        <location line="-43"/>
+        <location line="-73"/>
         <source>Hosted Database...</source>
         <translation>Üzemeltetett adatbázis...</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+69"/>
         <source>New...</source>
         <translation>Új...</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+835"/>
+        <location line="+797"/>
         <source>Selection</source>
         <translation>Kiválasztás</translation>
     </message>
     <message>
-        <location line="-825"/>
-        <location line="+1163"/>
+        <location line="-787"/>
+        <location line="+1129"/>
         <source>Devices</source>
         <translation>Eszközök</translation>
     </message>
     <message>
-        <location line="-1158"/>
-        <location line="+1255"/>
+        <location line="-1124"/>
+        <location line="+1221"/>
         <source>Explore</source>
         <translation>Tallózás</translation>
     </message>
     <message>
-        <location line="-1245"/>
-        <location line="+1478"/>
+        <location line="-1211"/>
+        <location line="+1444"/>
         <source>Backup</source>
         <translation>Biztonsági mentés</translation>
     </message>
     <message>
-        <location line="-1473"/>
-        <location line="+1433"/>
+        <location line="-1439"/>
+        <location line="+1399"/>
         <source>Statistics</source>
         <translation>Statisztikák</translation>
     </message>
     <message>
-        <location line="-1428"/>
-        <location line="+1450"/>
+        <location line="-1394"/>
+        <location line="+1416"/>
         <source>Tags</source>
         <translation>Címkék</translation>
     </message>
     <message>
-        <location line="-1437"/>
+        <location line="-1403"/>
         <source>Documentation</source>
         <translation>Dokumentáció</translation>
     </message>
@@ -1082,7 +1082,7 @@ Válasszon másik nevet.</translation>
         <translation>Panel lebegő</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+24"/>
         <source>Selection shown</source>
         <translation>Kijelölés látható</translation>
     </message>
@@ -1092,9 +1092,8 @@ Válasszon másik nevet.</translation>
         <translation>Kijelölés rejtve</translation>
     </message>
     <message>
-        <location line="+8"/>
         <source>Card text size</source>
-        <translation>Kártya szövegmérete</translation>
+        <translation type="vanished">Kártya szövegmérete</translation>
     </message>
     <message>
         <source>This is an early alpha version of Katalog intended to support development and gather feedback.
@@ -1105,7 +1104,7 @@ Válasszon másik nevet.</translation>
 </translation>
     </message>
     <message>
-        <location line="+188"/>
+        <location line="+159"/>
         <source>Do not show again</source>
         <translation>Ne jelenjen meg újra</translation>
     </message>
@@ -1340,19 +1339,19 @@ Ez azt jelentheti, hogy a forrás üres, vagy az eszköz nincs csatolva ehhez a 
 Mindenképpen menti (a katalógus üres lesz)?</translation>
     </message>
     <message>
-        <location line="-773"/>
-        <location line="+1014"/>
-        <location line="+43"/>
+        <location line="-735"/>
+        <location line="+979"/>
+        <location line="+44"/>
         <source>Search</source>
         <translation>Keresés</translation>
     </message>
     <message>
-        <location line="-131"/>
+        <location line="-136"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location line="+140"/>
+        <location line="+145"/>
         <source>Resume</source>
         <translation>Folytatás</translation>
     </message>
@@ -1379,8 +1378,8 @@ Mindenképpen menti (a katalógus üres lesz)?</translation>
         <translation>Előzmények</translation>
     </message>
     <message>
-        <location line="-276"/>
-        <location line="+284"/>
+        <location line="-280"/>
+        <location line="+288"/>
         <location line="+39"/>
         <location line="+98"/>
         <location line="+39"/>
@@ -1392,7 +1391,7 @@ Mindenképpen menti (a katalógus üres lesz)?</translation>
         <translation>Bezárás</translation>
     </message>
     <message>
-        <location line="-1255"/>
+        <location line="-1259"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1416,7 +1415,7 @@ Mindenképpen menti (a katalógus üres lesz)?</translation>
         <translation>Minden</translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+67"/>
         <source>Show device info</source>
         <translation>Eszközinformációk megjelenítése</translation>
     </message>
@@ -1431,7 +1430,7 @@ Mindenképpen menti (a katalógus üres lesz)?</translation>
         <translation>Egy szint kibontása</translation>
     </message>
     <message>
-        <location line="+134"/>
+        <location line="+139"/>
         <source>Duplicates (%1)</source>
         <translation>Másolatok (%1)</translation>
     </message>
@@ -1480,8 +1479,8 @@ Mindenképpen menti (a katalógus üres lesz)?</translation>
         <translation>A katalógus létrehozása sikertelen: </translation>
     </message>
     <message>
-        <location line="-1312"/>
-        <location line="+1302"/>
+        <location line="-1278"/>
+        <location line="+1268"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Létrehozás</translation>
@@ -1534,7 +1533,7 @@ Mindenképpen menti (a katalógus üres lesz)?</translation>
         <translation>LuckyBackup-profil létrehozása</translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+99"/>
         <source>Select Collection Folder</source>
         <translation>Válassza ki a gyűjtemény mappáját</translation>
     </message>
@@ -6046,7 +6045,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Mező</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+13"/>
         <source>Value</source>
         <translation>Érték</translation>
     </message>
@@ -6054,7 +6053,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>OperationQueueView</name>
     <message>
-        <location filename="../qt_quick/OperationQueueView.qml" line="+94"/>
+        <location filename="../qt_quick/OperationQueueView.qml" line="+93"/>
         <source>Stop</source>
         <translation>Leállítás</translation>
     </message>
@@ -6064,12 +6063,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Várólista</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>%1 waiting</source>
         <translation>%1 várakozik</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Clear</source>
         <translation>Törlés</translation>
     </message>
@@ -7259,7 +7258,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+29"/>
-        <location line="+146"/>
+        <location line="+144"/>
         <source>No devices</source>
         <translation>Nincs eszköz</translation>
     </message>
@@ -7348,7 +7347,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Törlés</translation>
     </message>
     <message>
-        <location line="+100"/>
+        <location line="+99"/>
         <source>files</source>
         <translation>fájlok</translation>
     </message>
@@ -7421,7 +7420,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Összes méret</translation>
     </message>
     <message>
-        <location line="+230"/>
+        <location line="+227"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>Mappa megnyitása</translation>
@@ -7587,7 +7586,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Elvárt:</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+7"/>
         <source>Actual:</source>
         <translation>Tényleges:</translation>
     </message>
@@ -7733,12 +7732,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Fájlnév</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+18"/>
         <source>text</source>
         <translation>szöveg</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+28"/>
         <source>with</source>
         <translation>ezzel</translation>
     </message>
@@ -7802,18 +7801,18 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>kizár</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+31"/>
         <source>File attributes</source>
         <translation>Fájlattribútumok</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+25"/>
         <source>Type</source>
         <translation>Típus</translation>
     </message>
     <message>
-        <location line="-219"/>
-        <location line="+230"/>
+        <location line="-228"/>
+        <location line="+239"/>
         <source>All</source>
         <translation>Minden</translation>
     </message>
@@ -7829,12 +7828,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+166"/>
+        <location line="+168"/>
         <source>Text</source>
         <translation>Szöveg</translation>
     </message>
     <message>
-        <location line="-165"/>
+        <location line="-167"/>
         <source>Video</source>
         <translation>Videó</translation>
     </message>
@@ -7850,26 +7849,26 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+35"/>
-        <location line="+177"/>
-        <location line="+188"/>
-        <location line="+122"/>
+        <location line="+179"/>
+        <location line="+193"/>
+        <location line="+126"/>
         <source>Size</source>
         <translation>Méret</translation>
     </message>
     <message>
-        <location line="-433"/>
-        <location line="+321"/>
-        <location line="+122"/>
+        <location line="-444"/>
+        <location line="+328"/>
+        <location line="+126"/>
         <source>Date</source>
         <translation>Dátum</translation>
     </message>
     <message>
-        <location line="-386"/>
+        <location line="-397"/>
         <source>File metadata</source>
         <translation>Fájl metaadatok</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+85"/>
         <source>Width</source>
         <translation>Szélesség</translation>
     </message>
@@ -7889,7 +7888,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Mappa feltételek</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+16"/>
         <source>only list folders in results</source>
         <translation>csak mappák listázása az eredményekben</translation>
     </message>
@@ -7904,36 +7903,36 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Másodpéldányok</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <location line="+122"/>
+        <location line="+7"/>
+        <location line="+126"/>
         <source>Duplicates and Differences cannot be used at the same time</source>
         <translation>A másodpéldányok és a különbségek nem használhatók egyszerre</translation>
     </message>
     <message>
-        <location line="-108"/>
-        <location line="+122"/>
+        <location line="-111"/>
+        <location line="+126"/>
         <source>On</source>
         <translation>Itt</translation>
     </message>
     <message>
-        <location line="-114"/>
-        <location line="+122"/>
+        <location line="-117"/>
+        <location line="+126"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location line="-84"/>
-        <location line="+122"/>
+        <location line="-88"/>
+        <location line="+126"/>
         <source>Checksum</source>
         <translation>Ellenőrző összeg</translation>
     </message>
     <message>
-        <location line="-108"/>
+        <location line="-112"/>
         <source>Scope</source>
         <translation>Hatókör</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Within selected device</source>
         <translation>A kiválasztott eszközön belül</translation>
     </message>
@@ -7958,7 +7957,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Eltérések</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+86"/>
         <source>Between</source>
         <translation>Között</translation>
     </message>
@@ -7971,7 +7970,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageSearchResultsForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+135"/>
+        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+134"/>
         <source>%1 duplicate(s) found</source>
         <translation>%1 másodpéldány található</translation>
     </message>
@@ -8001,7 +8000,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Min: %1   Max: %2</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+42"/>
         <source>Export to CSV</source>
         <translation>Exportálás CSV-be</translation>
     </message>
@@ -8012,7 +8011,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+836"/>
+        <location line="+831"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Ellenőrző összegek ellenőrzése</translation>
@@ -8024,30 +8023,30 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Metaadatok befoglalása</translation>
     </message>
     <message>
-        <location line="-887"/>
-        <location line="+523"/>
-        <location line="+309"/>
+        <location line="-882"/>
+        <location line="+520"/>
+        <location line="+307"/>
         <source>Move to Trash</source>
         <translation>Lomtárba helyezés</translation>
     </message>
     <message>
-        <location line="-960"/>
+        <location line="-953"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Az eszköz nem aktív. Lehet, hogy le van választva, vagy megváltozott az elérési útja.</translation>
     </message>
     <message>
-        <location line="+127"/>
+        <location line="+125"/>
         <source>Extract Metadata</source>
         <translation>Metaadatok kinyerése</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+656"/>
+        <location line="+651"/>
         <source>Delete</source>
         <translation>Törlés</translation>
     </message>
     <message>
-        <location line="-598"/>
+        <location line="-593"/>
         <source>Exported to: %1</source>
         <translation>Exportálva ide: %1</translation>
     </message>
@@ -8067,7 +8066,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Az exportálás sikertelen — nincs eredmény vagy adatbázishiba</translation>
     </message>
     <message>
-        <location line="+308"/>
+        <location line="+305"/>
         <source>(no selection)</source>
         <translation>(nincs kijelölés)</translation>
     </message>
@@ -8230,12 +8229,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+5"/>
-        <location line="+58"/>
+        <location line="+56"/>
         <source>Cancel</source>
         <translation>Mégse</translation>
     </message>
     <message>
-        <location line="-47"/>
+        <location line="-45"/>
         <source>Checksum saved to database</source>
         <translation>Az ellenőrző összeg az adatbázisba mentve</translation>
     </message>
@@ -8250,12 +8249,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Elvárt:</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+7"/>
         <source>Actual:</source>
         <translation>Tényleges:</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+13"/>
         <source>Delete File</source>
         <translation>Fájl törlése</translation>
     </message>
@@ -8378,7 +8377,7 @@ Hibák: %3</translation>
         <translation>Szerkesztés</translation>
     </message>
     <message>
-        <location line="+88"/>
+        <location line="+87"/>
         <source>Collapse</source>
         <translation>Összecsukás</translation>
     </message>
@@ -8396,12 +8395,12 @@ Hibák: %3</translation>
         <translation>Beállítások</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+233"/>
         <source>Close</source>
         <translation>Bezárás</translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+37"/>
         <source>Collection &amp; Database</source>
         <translation>Gyűjtemény és adatbázis</translation>
     </message>
@@ -8412,35 +8411,36 @@ Hibák: %3</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location line="+174"/>
+        <location line="+187"/>
         <source>Memory</source>
         <translation>Memória</translation>
     </message>
     <message>
-        <location line="-173"/>
-        <location line="+173"/>
+        <location line="-186"/>
+        <location line="+186"/>
         <source>File</source>
         <translation>Fájl</translation>
     </message>
     <message>
-        <location line="-172"/>
+        <location line="-185"/>
         <source>Hosted</source>
         <translation>Tárhely</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-197"/>
+        <location line="+203"/>
         <source>Collection</source>
         <translation>Gyűjtemény</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+457"/>
+        <location line="+519"/>
         <source>(none)</source>
         <translation>(nincs)</translation>
     </message>
     <message>
-        <location line="-449"/>
+        <location line="-511"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8452,7 +8452,7 @@ Hibák: %3</translation>
         <translation>Adatbázis verziója</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+17"/>
         <source>Images folder</source>
         <translation>Képmappa</translation>
     </message>
@@ -8570,12 +8570,112 @@ Hibák: %3</translation>
         <translation>Elérési út</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="-412"/>
+        <location line="+1"/>
+        <location line="+4"/>
+        <location line="+2"/>
+        <location line="+0"/>
+        <location line="+427"/>
         <source>Device</source>
         <translation>Eszköz</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="-459"/>
+        <source>Storage devices linked to a missing storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Storage devices linked to a storage with a different name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Storage not linked to any device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Storage IDs used by more than one storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Storage names used by more than one storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Catalog devices linked to a missing catalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Catalogs not linked to any device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Devices with a missing parent device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <source>Storage</source>
+        <translation>Tároló</translation>
+    </message>
+    <message>
+        <location line="-1"/>
+        <source>ID</source>
+        <translation>Azonosító</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location line="+1"/>
+        <source>Catalog</source>
+        <translation>Katalógus</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <location line="+25"/>
+        <location line="+224"/>
+        <source>Quality check</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-244"/>
+        <location line="+92"/>
+        <source>Error: </source>
+        <translation>Hiba: </translation>
+    </message>
+    <message>
+        <location line="-90"/>
+        <location line="+84"/>
+        <source>Nothing found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-78"/>
+        <location line="+49"/>
+        <source>No issues found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-29"/>
+        <source>Copy to Clipboard</source>
+        <translation>Másolás a vágólapra</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Copied</source>
+        <translation>Másolva</translation>
+    </message>
+    <message>
+        <location line="+394"/>
         <source>Import</source>
         <translation>Importálás</translation>
     </message>
@@ -8591,12 +8691,12 @@ Hibák: %3</translation>
         <translation>Alkalmazás</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+4"/>
         <source>Version</source>
         <translation>Verzió</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+15"/>
         <source>Release Notes</source>
         <translation>Kiadási megjegyzések</translation>
     </message>
@@ -8606,7 +8706,12 @@ Hibák: %3</translation>
         <translation>Új verzió keresése indításkor</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
+        <source>Behavior</source>
+        <translation>Viselkedés</translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>File sorting is Case Sensitive</source>
         <translation>Fájlrendezés nagybetű-kisbetű érzékeny</translation>
     </message>
@@ -8631,7 +8736,7 @@ Hibák: %3</translation>
         <translation>Téma</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+15"/>
         <source>Desktop Theme</source>
         <translation>Asztal téma</translation>
     </message>
@@ -8651,12 +8756,17 @@ Hibák: %3</translation>
         <translation>Nagyobb ikonméret használata</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
+        <source>Text size</source>
+        <translation>Szövegméret</translation>
+    </message>
+    <message>
+        <location line="+26"/>
         <source>Language</source>
         <translation>Nyelv</translation>
     </message>
     <message>
-        <location line="+96"/>
+        <location line="+97"/>
         <source>Settings file</source>
         <translation>Beállításfájl</translation>
     </message>
@@ -8695,31 +8805,31 @@ Hibák: %3</translation>
     </message>
     <message>
         <location line="+36"/>
-        <location line="+190"/>
+        <location line="+196"/>
         <source>Total</source>
         <translation>Összesen</translation>
     </message>
     <message>
-        <location line="-171"/>
+        <location line="-177"/>
         <location line="+69"/>
-        <location line="+109"/>
+        <location line="+117"/>
         <source>Total File Size</source>
         <translation>Összes fájlméret</translation>
     </message>
     <message>
-        <location line="-178"/>
+        <location line="-186"/>
         <location line="+70"/>
         <source>Number of Files</source>
         <translation>Fájlok száma</translation>
     </message>
     <message>
         <location line="-69"/>
-        <location line="+177"/>
+        <location line="+185"/>
         <source>Catalogs</source>
         <translation>Katalógusok</translation>
     </message>
     <message>
-        <location line="-143"/>
+        <location line="-151"/>
         <source>Device</source>
         <translation>Eszköz</translation>
     </message>
@@ -8784,12 +8894,12 @@ Hibák: %3</translation>
         <translation>1 éve</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+23"/>
         <source>Date</source>
         <translation>Dátum</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+25"/>
         <location line="+10"/>
         <source>Storage</source>
         <translation>Tároló</translation>

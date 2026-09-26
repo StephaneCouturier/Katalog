@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+176"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+178"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4569"/>
+        <location line="+4603"/>
         <source>Search</source>
         <translation>Haku</translation>
     </message>
     <message>
-        <location line="-4689"/>
+        <location line="-4723"/>
         <source>Stopped</source>
         <translation>Pysäytetty</translation>
     </message>
@@ -44,11 +44,11 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2222"/>
+        <location line="+2241"/>
         <location line="+626"/>
         <location line="+26"/>
         <location line="+20"/>
-        <location line="+1245"/>
+        <location line="+1260"/>
         <location line="+11"/>
         <location line="+60"/>
         <location line="+374"/>
@@ -56,14 +56,14 @@
         <translation>Käynnissä</translation>
     </message>
     <message>
-        <location line="-4570"/>
-        <location line="+4177"/>
+        <location line="-4604"/>
+        <location line="+4211"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Valmis</translation>
     </message>
     <message>
-        <location line="-3526"/>
+        <location line="-3546"/>
         <source>Empty database path provided</source>
         <translation>Tyhjä tietokantapolku annettu</translation>
     </message>
@@ -103,7 +103,7 @@
         <translation>Paikallinen levy</translation>
     </message>
     <message>
-        <location line="+451"/>
+        <location line="+456"/>
         <source>search_results</source>
         <translation>hakutulokset</translation>
     </message>
@@ -149,12 +149,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2611"/>
+        <location line="+2626"/>
         <source>Size</source>
         <translation>Koko</translation>
     </message>
     <message>
-        <location line="-2610"/>
+        <location line="-2625"/>
         <source>Date</source>
         <translation>Päivämäärä</translation>
     </message>
@@ -435,7 +435,7 @@ Valitse toinen nimi.</translation>
         <translation>Valittu laite ei ole katalogi</translation>
     </message>
     <message>
-        <location line="+205"/>
+        <location line="+220"/>
         <source>Error: could not open collection</source>
         <translation>Virhe: kokoelmaa ei voitu avata</translation>
     </message>
@@ -654,7 +654,7 @@ Valitse toinen nimi.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2607"/>
+        <location filename="../core/collection.cpp" line="+2708"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Tämä kansio sisältää muistitilan kokoelmatiedostoja, mutta olet tällä hetkellä tiedostotilassa.&lt;br/&gt;Vaihda muistitilaan tai valitse toinen kansio.</translation>
     </message>
@@ -947,7 +947,7 @@ Valitse toinen nimi.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+950"/>
+        <location filename="../qt_quick/Main.qml" line="+1025"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Haluatko &lt;b&gt;poistaa&lt;/b&gt; tämän %1-laitteen?&lt;br/&gt;&lt;br/&gt;Nimi: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -964,13 +964,13 @@ Valitse toinen nimi.</translation>
         <location line="-375"/>
         <location line="+60"/>
         <location line="+176"/>
-        <location line="+797"/>
-        <location line="+123"/>
+        <location line="+801"/>
+        <location line="+122"/>
         <source>Cancel</source>
         <translation>Peruuta</translation>
     </message>
     <message>
-        <location line="-1256"/>
+        <location line="-1259"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+172"/>
@@ -989,13 +989,13 @@ Valitse toinen nimi.</translation>
         <translation>Järjestelmä</translation>
     </message>
     <message>
-        <location line="-291"/>
-        <location line="+292"/>
+        <location line="-253"/>
+        <location line="+254"/>
         <source>Settings</source>
         <translation>Asetukset</translation>
     </message>
     <message>
-        <location line="-416"/>
+        <location line="-408"/>
         <source>Open...</source>
         <translation>Avaa...</translation>
     </message>
@@ -1006,58 +1006,58 @@ Valitse toinen nimi.</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location line="+57"/>
+        <location line="+87"/>
         <source>SQLite Database...</source>
         <translation>SQLite-tietokanta...</translation>
     </message>
     <message>
-        <location line="-43"/>
+        <location line="-73"/>
         <source>Hosted Database...</source>
         <translation>Isännöity tietokanta...</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+69"/>
         <source>New...</source>
         <translation>Uusi...</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+835"/>
+        <location line="+797"/>
         <source>Selection</source>
         <translation>Valinta</translation>
     </message>
     <message>
-        <location line="-825"/>
-        <location line="+1163"/>
+        <location line="-787"/>
+        <location line="+1129"/>
         <source>Devices</source>
         <translation>Laitteet</translation>
     </message>
     <message>
-        <location line="-1158"/>
-        <location line="+1255"/>
+        <location line="-1124"/>
+        <location line="+1221"/>
         <source>Explore</source>
         <translation>Selaa</translation>
     </message>
     <message>
-        <location line="-1245"/>
-        <location line="+1478"/>
+        <location line="-1211"/>
+        <location line="+1444"/>
         <source>Backup</source>
         <translation>Varmuuskopio</translation>
     </message>
     <message>
-        <location line="-1473"/>
-        <location line="+1433"/>
+        <location line="-1439"/>
+        <location line="+1399"/>
         <source>Statistics</source>
         <translation>Tilastot</translation>
     </message>
     <message>
-        <location line="-1428"/>
-        <location line="+1450"/>
+        <location line="-1394"/>
+        <location line="+1416"/>
         <source>Tags</source>
         <translation>Tunnisteet</translation>
     </message>
     <message>
-        <location line="-1437"/>
+        <location line="-1403"/>
         <source>Documentation</source>
         <translation>Dokumentaatio</translation>
     </message>
@@ -1082,7 +1082,7 @@ Valitse toinen nimi.</translation>
         <translation>Paneeli kelluva</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+24"/>
         <source>Selection shown</source>
         <translation>Valinta näkyvissä</translation>
     </message>
@@ -1092,9 +1092,8 @@ Valitse toinen nimi.</translation>
         <translation>Valinta piilotettu</translation>
     </message>
     <message>
-        <location line="+8"/>
         <source>Card text size</source>
-        <translation>Kortin tekstin koko</translation>
+        <translation type="vanished">Kortin tekstin koko</translation>
     </message>
     <message>
         <source>This is an early alpha version of Katalog intended to support development and gather feedback.
@@ -1105,7 +1104,7 @@ Valitse toinen nimi.</translation>
 </translation>
     </message>
     <message>
-        <location line="+188"/>
+        <location line="+159"/>
         <source>Do not show again</source>
         <translation>Älä näytä uudelleen</translation>
     </message>
@@ -1340,19 +1339,19 @@ Tämä voi tarkoittaa, että lähde on tyhjä tai laitetta ei ole liitetty täh�
 Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
     </message>
     <message>
-        <location line="-773"/>
-        <location line="+1014"/>
-        <location line="+43"/>
+        <location line="-735"/>
+        <location line="+979"/>
+        <location line="+44"/>
         <source>Search</source>
         <translation>Haku</translation>
     </message>
     <message>
-        <location line="-131"/>
+        <location line="-136"/>
         <source>Name</source>
         <translation>Nimi</translation>
     </message>
     <message>
-        <location line="+140"/>
+        <location line="+145"/>
         <source>Resume</source>
         <translation>Jatka</translation>
     </message>
@@ -1379,8 +1378,8 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <translation>Historia</translation>
     </message>
     <message>
-        <location line="-276"/>
-        <location line="+284"/>
+        <location line="-280"/>
+        <location line="+288"/>
         <location line="+39"/>
         <location line="+98"/>
         <location line="+39"/>
@@ -1392,7 +1391,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <translation>Sulje</translation>
     </message>
     <message>
-        <location line="-1255"/>
+        <location line="-1259"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1416,7 +1415,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <translation>Kaikki</translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+67"/>
         <source>Show device info</source>
         <translation>Näytä laitetiedot</translation>
     </message>
@@ -1431,7 +1430,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <translation>Laajenna yksi taso</translation>
     </message>
     <message>
-        <location line="+134"/>
+        <location line="+139"/>
         <source>Duplicates (%1)</source>
         <translation>Kaksoiskappaleet (%1)</translation>
     </message>
@@ -1480,8 +1479,8 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <translation>Luettelon luonti epäonnistui: </translation>
     </message>
     <message>
-        <location line="-1312"/>
-        <location line="+1302"/>
+        <location line="-1278"/>
+        <location line="+1268"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Luo</translation>
@@ -1534,7 +1533,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <translation>Luo LuckyBackup-profiili</translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+99"/>
         <source>Select Collection Folder</source>
         <translation>Valitse kokoelmakansio</translation>
     </message>
@@ -6047,7 +6046,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Kenttä</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+13"/>
         <source>Value</source>
         <translation>Arvo</translation>
     </message>
@@ -6055,7 +6054,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>OperationQueueView</name>
     <message>
-        <location filename="../qt_quick/OperationQueueView.qml" line="+94"/>
+        <location filename="../qt_quick/OperationQueueView.qml" line="+93"/>
         <source>Stop</source>
         <translation>Pysäytä</translation>
     </message>
@@ -6065,12 +6064,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Jono</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>%1 waiting</source>
         <translation>%1 odottaa</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Clear</source>
         <translation>Tyhjennä</translation>
     </message>
@@ -7260,7 +7259,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+29"/>
-        <location line="+146"/>
+        <location line="+144"/>
         <source>No devices</source>
         <translation>Ei laitteita</translation>
     </message>
@@ -7349,7 +7348,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Poista</translation>
     </message>
     <message>
-        <location line="+100"/>
+        <location line="+99"/>
         <source>files</source>
         <translation>tiedostot</translation>
     </message>
@@ -7422,7 +7421,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Kokonaiskoko</translation>
     </message>
     <message>
-        <location line="+230"/>
+        <location line="+227"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>Avaa kansio</translation>
@@ -7588,7 +7587,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Odotettu:</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+7"/>
         <source>Actual:</source>
         <translation>Todellinen:</translation>
     </message>
@@ -7734,12 +7733,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Tiedostonimi</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+18"/>
         <source>text</source>
         <translation>teksti</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+28"/>
         <source>with</source>
         <translation>kanssa</translation>
     </message>
@@ -7803,18 +7802,18 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>poissulje</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+31"/>
         <source>File attributes</source>
         <translation>Tiedoston määritteet</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+25"/>
         <source>Type</source>
         <translation>Tyyppi</translation>
     </message>
     <message>
-        <location line="-219"/>
-        <location line="+230"/>
+        <location line="-228"/>
+        <location line="+239"/>
         <source>All</source>
         <translation>Kaikki</translation>
     </message>
@@ -7830,12 +7829,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+166"/>
+        <location line="+168"/>
         <source>Text</source>
         <translation>Teksti</translation>
     </message>
     <message>
-        <location line="-165"/>
+        <location line="-167"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
@@ -7851,26 +7850,26 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+35"/>
-        <location line="+177"/>
-        <location line="+188"/>
-        <location line="+122"/>
+        <location line="+179"/>
+        <location line="+193"/>
+        <location line="+126"/>
         <source>Size</source>
         <translation>Koko</translation>
     </message>
     <message>
-        <location line="-433"/>
-        <location line="+321"/>
-        <location line="+122"/>
+        <location line="-444"/>
+        <location line="+328"/>
+        <location line="+126"/>
         <source>Date</source>
         <translation>Päivämäärä</translation>
     </message>
     <message>
-        <location line="-386"/>
+        <location line="-397"/>
         <source>File metadata</source>
         <translation>Tiedoston metatiedot</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+85"/>
         <source>Width</source>
         <translation>Leveys</translation>
     </message>
@@ -7890,7 +7889,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Kansiokriteerit</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+16"/>
         <source>only list folders in results</source>
         <translation>listaa vain kansiot tuloksissa</translation>
     </message>
@@ -7905,36 +7904,36 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Kaksoiskappaleet</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <location line="+122"/>
+        <location line="+7"/>
+        <location line="+126"/>
         <source>Duplicates and Differences cannot be used at the same time</source>
         <translation>Kaksoiskappaleita ja eroja ei voi käyttää samanaikaisesti</translation>
     </message>
     <message>
-        <location line="-108"/>
-        <location line="+122"/>
+        <location line="-111"/>
+        <location line="+126"/>
         <source>On</source>
         <translation>Kohteessa</translation>
     </message>
     <message>
-        <location line="-114"/>
-        <location line="+122"/>
+        <location line="-117"/>
+        <location line="+126"/>
         <source>Name</source>
         <translation>Nimi</translation>
     </message>
     <message>
-        <location line="-84"/>
-        <location line="+122"/>
+        <location line="-88"/>
+        <location line="+126"/>
         <source>Checksum</source>
         <translation>Tarkistussumma</translation>
     </message>
     <message>
-        <location line="-108"/>
+        <location line="-112"/>
         <source>Scope</source>
         <translation>Laajuus</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Within selected device</source>
         <translation>Valitussa laitteessa</translation>
     </message>
@@ -7959,7 +7958,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Erot</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+86"/>
         <source>Between</source>
         <translation>Välillä</translation>
     </message>
@@ -7972,7 +7971,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageSearchResultsForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+135"/>
+        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+134"/>
         <source>%1 duplicate(s) found</source>
         <translation>%1 kaksoiskappale(tta) löytyi</translation>
     </message>
@@ -8002,7 +8001,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Min: %1   Maks: %2</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+42"/>
         <source>Export to CSV</source>
         <translation>Vie CSV-muotoon</translation>
     </message>
@@ -8013,7 +8012,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+836"/>
+        <location line="+831"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Tarkista tarkistussummat</translation>
@@ -8025,30 +8024,30 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Sisällytä metatiedot</translation>
     </message>
     <message>
-        <location line="-887"/>
-        <location line="+523"/>
-        <location line="+309"/>
+        <location line="-882"/>
+        <location line="+520"/>
+        <location line="+307"/>
         <source>Move to Trash</source>
         <translation>Siirrä roskakoriin</translation>
     </message>
     <message>
-        <location line="-960"/>
+        <location line="-953"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Laite ei ole aktiivinen. Se voi olla irrotettu tai sen polku on saattanut muuttua.</translation>
     </message>
     <message>
-        <location line="+127"/>
+        <location line="+125"/>
         <source>Extract Metadata</source>
         <translation>Pura metatiedot</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+656"/>
+        <location line="+651"/>
         <source>Delete</source>
         <translation>Poista</translation>
     </message>
     <message>
-        <location line="-598"/>
+        <location line="-593"/>
         <source>Exported to: %1</source>
         <translation>Viety kohteeseen: %1</translation>
     </message>
@@ -8068,7 +8067,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Vienti epäonnistui — ei tuloksia tai tietokantavirhe</translation>
     </message>
     <message>
-        <location line="+308"/>
+        <location line="+305"/>
         <source>(no selection)</source>
         <translation>(ei valintaa)</translation>
     </message>
@@ -8231,12 +8230,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+5"/>
-        <location line="+58"/>
+        <location line="+56"/>
         <source>Cancel</source>
         <translation>Peruuta</translation>
     </message>
     <message>
-        <location line="-47"/>
+        <location line="-45"/>
         <source>Checksum saved to database</source>
         <translation>Tarkistussumma tallennettu tietokantaan</translation>
     </message>
@@ -8251,12 +8250,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Odotettu:</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+7"/>
         <source>Actual:</source>
         <translation>Todellinen:</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+13"/>
         <source>Delete File</source>
         <translation>Poista tiedosto</translation>
     </message>
@@ -8379,7 +8378,7 @@ Virheitä: %3</translation>
         <translation>Muokkaa</translation>
     </message>
     <message>
-        <location line="+88"/>
+        <location line="+87"/>
         <source>Collapse</source>
         <translation>Tiivistä</translation>
     </message>
@@ -8397,12 +8396,12 @@ Virheitä: %3</translation>
         <translation>Asetukset</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+233"/>
         <source>Close</source>
         <translation>Sulje</translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+37"/>
         <source>Collection &amp; Database</source>
         <translation>Kokoelma ja tietokanta</translation>
     </message>
@@ -8413,35 +8412,36 @@ Virheitä: %3</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location line="+174"/>
+        <location line="+187"/>
         <source>Memory</source>
         <translation>Muisti</translation>
     </message>
     <message>
-        <location line="-173"/>
-        <location line="+173"/>
+        <location line="-186"/>
+        <location line="+186"/>
         <source>File</source>
         <translation>Tiedosto</translation>
     </message>
     <message>
-        <location line="-172"/>
+        <location line="-185"/>
         <source>Hosted</source>
         <translation>Isännöity</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-197"/>
+        <location line="+203"/>
         <source>Collection</source>
         <translation>Kokoelma</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+457"/>
+        <location line="+519"/>
         <source>(none)</source>
         <translation>(ei mitään)</translation>
     </message>
     <message>
-        <location line="-449"/>
+        <location line="-511"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8453,7 +8453,7 @@ Virheitä: %3</translation>
         <translation>Tietokannan versio</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+17"/>
         <source>Images folder</source>
         <translation>Kuvakansio</translation>
     </message>
@@ -8571,12 +8571,112 @@ Virheitä: %3</translation>
         <translation>Polku</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="-412"/>
+        <location line="+1"/>
+        <location line="+4"/>
+        <location line="+2"/>
+        <location line="+0"/>
+        <location line="+427"/>
         <source>Device</source>
         <translation>Laite</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="-459"/>
+        <source>Storage devices linked to a missing storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Storage devices linked to a storage with a different name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Storage not linked to any device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Storage IDs used by more than one storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Storage names used by more than one storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Catalog devices linked to a missing catalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Catalogs not linked to any device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Devices with a missing parent device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <source>Storage</source>
+        <translation>Tallennustila</translation>
+    </message>
+    <message>
+        <location line="-1"/>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location line="+1"/>
+        <source>Catalog</source>
+        <translation>Katalogi</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <location line="+25"/>
+        <location line="+224"/>
+        <source>Quality check</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-244"/>
+        <location line="+92"/>
+        <source>Error: </source>
+        <translation>Virhe: </translation>
+    </message>
+    <message>
+        <location line="-90"/>
+        <location line="+84"/>
+        <source>Nothing found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-78"/>
+        <location line="+49"/>
+        <source>No issues found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-29"/>
+        <source>Copy to Clipboard</source>
+        <translation>Kopioi leikepöydälle</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Copied</source>
+        <translation>Kopioitu</translation>
+    </message>
+    <message>
+        <location line="+394"/>
         <source>Import</source>
         <translation>Tuo</translation>
     </message>
@@ -8592,12 +8692,12 @@ Virheitä: %3</translation>
         <translation>Sovellus</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+4"/>
         <source>Version</source>
         <translation>Versio</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+15"/>
         <source>Release Notes</source>
         <translation>Julkaisumuistiinpanot</translation>
     </message>
@@ -8607,7 +8707,12 @@ Virheitä: %3</translation>
         <translation>Tarkista uusi versio käynnistyksen yhteydessä</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
+        <source>Behavior</source>
+        <translation>Toiminta</translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>File sorting is Case Sensitive</source>
         <translation>Tiedostojen lajittelu on kirjainkoon huomioiva</translation>
     </message>
@@ -8632,7 +8737,7 @@ Virheitä: %3</translation>
         <translation>Teema</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+15"/>
         <source>Desktop Theme</source>
         <translation>Työpöytäteema</translation>
     </message>
@@ -8652,12 +8757,17 @@ Virheitä: %3</translation>
         <translation>Käytä suurempaa kuvakekokoa</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
+        <source>Text size</source>
+        <translation>Tekstin koko</translation>
+    </message>
+    <message>
+        <location line="+26"/>
         <source>Language</source>
         <translation>Kieli</translation>
     </message>
     <message>
-        <location line="+96"/>
+        <location line="+97"/>
         <source>Settings file</source>
         <translation>Asetustiedosto</translation>
     </message>
@@ -8696,31 +8806,31 @@ Virheitä: %3</translation>
     </message>
     <message>
         <location line="+36"/>
-        <location line="+190"/>
+        <location line="+196"/>
         <source>Total</source>
         <translation>Yhteensä</translation>
     </message>
     <message>
-        <location line="-171"/>
+        <location line="-177"/>
         <location line="+69"/>
-        <location line="+109"/>
+        <location line="+117"/>
         <source>Total File Size</source>
         <translation>Tiedostojen kokonaiskoko</translation>
     </message>
     <message>
-        <location line="-178"/>
+        <location line="-186"/>
         <location line="+70"/>
         <source>Number of Files</source>
         <translation>Tiedostojen määrä</translation>
     </message>
     <message>
         <location line="-69"/>
-        <location line="+177"/>
+        <location line="+185"/>
         <source>Catalogs</source>
         <translation>Katalogit</translation>
     </message>
     <message>
-        <location line="-143"/>
+        <location line="-151"/>
         <source>Device</source>
         <translation>Laite</translation>
     </message>
@@ -8785,12 +8895,12 @@ Virheitä: %3</translation>
         <translation>1 vuosi sitten</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+23"/>
         <source>Date</source>
         <translation>Päivämäärä</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+25"/>
         <location line="+10"/>
         <source>Storage</source>
         <translation>Tallennustila</translation>

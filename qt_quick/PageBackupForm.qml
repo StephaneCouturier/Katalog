@@ -383,8 +383,8 @@ ColumnLayout {
             required property var modelData
             required property int index
 
-            // The drawer slider scales the application font, which defaultFont follows (TYP-F7).
-            readonly property real cardFontSize: Kirigami.Theme.defaultFont.pointSize
+            // Current text size, already scaled by the text-size setting (TYP-F7).
+            readonly property real cardFontSize: appManager1.textPointSize
 
             Layout.fillWidth:    true
             Layout.topMargin:    Kirigami.Units.smallSpacing

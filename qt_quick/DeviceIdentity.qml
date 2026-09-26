@@ -71,7 +71,7 @@ RowLayout {
         wrapMode:  identity.nameWraps ? Text.Wrap : Text.NoWrap
         elide:     identity.nameWraps ? Text.ElideNone : Text.ElideRight
         maximumLineCount: identity.nameWraps ? Number.MAX_VALUE : 1
-        font.pointSize: Kirigami.Theme.defaultFont.pointSize
+        font.pointSize: appManager1.textPointSize
 
         // font.weight, not font.bold: Kirigami.Heading binds font.weight from its
         // own level, and that binding overwrites whatever font.bold sets.

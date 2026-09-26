@@ -85,8 +85,9 @@ Kirigami.ApplicationWindow {
     signal searchTriggered()
     property real cardScale: 1.0
 
-    // App-wide text size (TYP-F7): scales the application font, which
-    // Kirigami.Theme.defaultFont follows, so no QML item multiplies by it again.
+    // App-wide text size (TYP-F7): scales the application font. QML sizes read
+    // appManager1.textPointSize (already scaled), never Kirigami.Theme.defaultFont,
+    // which only follows the application font on Linux.
     // The window font carries it to the controls too: Qt Quick Controls take
     // their default font per control type from the platform theme, not from
     // the application font, so buttons would not follow otherwise.
@@ -160,7 +161,7 @@ Kirigami.ApplicationWindow {
             pinHeaderFont(item.children[i])
     }
 
-    font.pointSize: Kirigami.Theme.defaultFont.pointSize
+    font.pointSize: appManager1.textPointSize
 
     // The height the platform's own toolbar takes, measured rather than assumed:
     // Breeze and Fusion pad differently, so any fixed number is right on one

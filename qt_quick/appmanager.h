@@ -20,6 +20,8 @@
 #include <QSaveFile>
 #include <QSettings>
 #include <QFont>
+#include <QFontInfo>
+#include <QGuiApplication>
 //QtGui
 #include <QFileSystemModel>
 #include <QClipboard>
@@ -81,6 +83,10 @@ class AppManager : public QObject
     Q_OBJECT
     Q_PROPERTY(DeviceListModel* deviceListModel READ getDeviceListModel NOTIFY deviceListModelChanged)
     Q_PROPERTY(qreal systemTextPointSize READ getSystemTextPointSize CONSTANT)
+    // Current text size (system size × setting). QML reads this rather than
+    // Kirigami.Theme.defaultFont, which on Windows/macOS is a startup snapshot
+    // and does not follow the application font.
+    Q_PROPERTY(qreal textPointSize READ getTextPointSize NOTIFY textPointSizeChanged)
     Q_PROPERTY(QSortFilterProxyModel* deviceFilterModel  READ getDeviceFilterModel  CONSTANT)
     Q_PROPERTY(QAbstractItemModel*    searchSortModel   READ getSearchSortModel    CONSTANT)
     Q_PROPERTY(QAbstractItemModel*    exploreSortModel  READ getExploreSortModel   CONSTANT)
@@ -274,7 +280,8 @@ public slots:
     Q_INVOKABLE QVariantMap getWindowGeometry() const;
     Q_INVOKABLE void        saveWindowGeometry(int x, int y, int width, int height, bool maximized);
     Q_INVOKABLE void        setTextScale(qreal scale);
-    qreal                   getSystemTextPointSize() const { return m_systemFont.pointSizeF(); }
+    qreal                   getSystemTextPointSize() const { return QFontInfo(m_systemFont).pointSizeF(); }
+    qreal                   getTextPointSize() const { return QFontInfo(QGuiApplication::font()).pointSizeF(); }
 
     void selectDeviceById(int deviceId);
     QString getSelectedDeviceName() const;
@@ -551,6 +558,7 @@ public slots:
     Q_INVOKABLE void         setLanguage(const QString &languageCode);
 
 signals:
+    void textPointSizeChanged();
     void searchStateChanged();
     void searchStatusTextChanged();
     void searchFiltersChanged();

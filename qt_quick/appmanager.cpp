@@ -935,6 +935,7 @@ void AppManager::setTextScale(qreal scale)
     else
         font.setPixelSize(qRound(m_systemFont.pixelSize() * scale));
     QGuiApplication::setFont(font);
+    emit textPointSizeChanged();
 }
 //----------------------------------------------------------------------
 void AppManager::saveWindowGeometry(int x, int y, int width, int height, bool maximized)
