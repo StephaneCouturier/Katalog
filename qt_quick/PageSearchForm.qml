@@ -689,19 +689,6 @@ ColumnLayout {
                     {text: qsTr("Any Word"),      value: "Any Word"},
                     {text: qsTr("Regex"),         value: "Regex"}
                 ]
-                onCurrentIndexChanged: {
-                    if (currentIndex === 2) {
-                        search_ComboBox_TextCriteriaIn.model = [
-                            {text: qsTr("File names only"), value: "File names only"}
-                        ];
-                    } else {
-                        search_ComboBox_TextCriteriaIn.model = [
-                            {text: qsTr("File names only"),            value: "File names only"},
-                            {text: qsTr("File names or Folder paths"), value: "File names or Folder paths"},
-                            {text: qsTr("Folder path only"),           value: "Folder path only"}
-                        ];
-                    }
-                }
             }
         }
         RowLayout {
@@ -710,11 +697,15 @@ ColumnLayout {
                 id: search_ComboBox_TextCriteriaIn
                 textRole: "text"
                 valueRole: "value"
-                model: [
-                    {text: qsTr("File names only"),            value: "File names only"},
-                    {text: qsTr("File names or Folder paths"), value: "File names or Folder paths"},
-                    {text: qsTr("Folder path only"),           value: "Folder path only"}
-                ]
+                // A binding, not an assignment from the "with" combo's handler: an
+                // assigned array keeps the words of the language it was built in,
+                // so a language switch left this list untranslated. "Begins With"
+                // matches file names only.
+                model: search_ComboBox_TextCriteriaWith.currentIndex === 2
+                       ? [ {text: qsTr("File names only"),            value: "File names only"} ]
+                       : [ {text: qsTr("File names only"),            value: "File names only"},
+                           {text: qsTr("File names or Folder paths"), value: "File names or Folder paths"},
+                           {text: qsTr("Folder path only"),           value: "Folder path only"} ]
             }
         }
         RowLayout {
