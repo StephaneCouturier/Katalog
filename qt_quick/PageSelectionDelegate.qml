@@ -177,7 +177,8 @@ Kirigami.AbstractCard {
             // go. A Catalog can never hold children, so its slot was simply
             // absent and its card came out shorter than a Storage or Virtual
             // one; reserving the space — as the Explore folder tree does —
-            // makes every card the same height. Both labels already existed.
+            // makes every card the same height. No tooltip: the hidden button
+            // still reports hover, so it showed on Catalogs too.
             Controls.ToolButton {
                 Layout.columnSpan: 1
                 icon.name: model.isCollapsed ? "go-down" : "go-up"
@@ -194,8 +195,6 @@ Kirigami.AbstractCard {
                     else
                         appManager1.collapseDevice(model.deviceId)
                 }
-                Controls.ToolTip.text: model.isCollapsed ? qsTr("Expand") : qsTr("Collapse")
-                Controls.ToolTip.visible: hovered
             }
         }
         Rectangle {
