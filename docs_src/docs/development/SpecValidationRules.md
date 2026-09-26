@@ -135,6 +135,18 @@ string is added, reworded, moved or deleted** by this change — in particular
 `Delete`, `Update Checksum`, `Copy JSON`, `Keep Last 10`, `Clear` and `Continue`
 are untouched.
 
+## Field label alignment (how)
+
+An app-wide K3 layout convention for forms, recorded here because this page
+already holds the app-wide K3 form rules. Raised by the user on 2026-09-26 on
+the Search page: in the File name section, the "text" and "exclude" labels beside
+the term lists sat top-aligned rather than level with the first line of the
+list. Approved by the user the same day. Rules use the `L` prefix.
+
+| # | Rule | Applies to | Status |
+|---|------|------------|--------|
+| L1 | A field label is vertically centred on the first line of the input it names. When the input grows to several lines (a list of terms, a wrapping row of options), the label stays level with that first line, not with the middle of the whole block. Likewise, a text shown in a row beside a button (e.g. the version number beside "Release Notes" in Settings) is vertically centred on that button. *Coverage on 2026-09-26: Search — File name "text" and "exclude" labels (the reported case), and the "On" / "Scope" labels of the duplicates and differences sections; Settings — Application row labels (Version, Behavior, Theme, Language) and the version number / release date beside the Release Notes button. Other forms are not yet audited against this rule.* | K3 (`qt_quick/`) | [Implemented] |
+
 ## Copy style
 
 - No "Please"; no bare imperative orders. State the requirement in sentence case.
@@ -222,6 +234,16 @@ For the dialog button rules (D*), in K3:
 - Run listed links / `BKP-F19` — re-run the `BKP-F19` charter rows in
   `SpecBackup.md` unchanged: the four conditional lines, the counts, and
   `Cancel` starting nothing. On KDE, `Continue` is still left of `Cancel`.
+
+For the field label alignment rule (L*), in K3:
+
+- L1 — on the Search page, add three or more terms to the File name "text" and
+  "exclude" lists: each label stays level with the **first** term, not with the
+  middle of the list. Check the same for the "On" / "Scope" labels in the
+  duplicates and differences sections, narrowing the window so their options
+  wrap. In Settings, Application section, the Version, Behavior, Theme and
+  Language labels sit level with the first line of their row, and the version
+  number and release date are vertically centred on the Release Notes button.
 
 For the normalization rules (N*), in K3:
 

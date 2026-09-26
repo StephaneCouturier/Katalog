@@ -587,16 +587,23 @@ Kirigami.ScrollablePage {
         // ── Application ────────────────────────────────────────────────
         Controls.Label { font.bold: true; text: qsTr("Application"); Layout.columnSpan: 2; color: Kirigami.Theme.linkColor }
 
-        Controls.Label { text: qsTr("Version"); opacity: 0.7; Layout.alignment: Qt.AlignTop; Layout.topMargin: Kirigami.Units.largeSpacing }
+        // Row labels are centred on the first line of their column (the first
+        // control), not on the whole column.
+        Controls.Label { text: qsTr("Version"); opacity: 0.7; Layout.alignment: Qt.AlignTop
+                         Layout.topMargin: Kirigami.Units.largeSpacing + Math.max(0, (releaseNotesButton.height - implicitHeight) / 2) }
         ColumnLayout {
             spacing: Kirigami.Units.smallSpacing
             Layout.topMargin: Kirigami.Units.largeSpacing
             Flow {
                 spacing: Kirigami.Units.largeSpacing
                 Layout.fillWidth: true
-                Controls.Label { text: About.version; font.bold: true }
-                Controls.Label { text: appManager1.appReleaseDate; opacity: 0.7 }
+                // Same height as the button beside them, text centred on it.
+                Controls.Label { text: About.version; font.bold: true
+                                 height: releaseNotesButton.height; verticalAlignment: Text.AlignVCenter }
+                Controls.Label { text: appManager1.appReleaseDate; opacity: 0.7
+                                 height: releaseNotesButton.height; verticalAlignment: Text.AlignVCenter }
                 Controls.Button {
+                    id: releaseNotesButton
                     text: qsTr("Release Notes")
                     icon.name: "view-list-text"
                     //onClicked: Qt.openUrlExternally("https://github.com/StephaneCouturier/Katalog/releases")
@@ -610,11 +617,13 @@ Kirigami.ScrollablePage {
             }
         }
 
-        Controls.Label { text: qsTr("Behavior"); opacity: 0.7; Layout.alignment: Qt.AlignTop; Layout.topMargin: Kirigami.Units.largeSpacing * 2 }
+        Controls.Label { text: qsTr("Behavior"); opacity: 0.7; Layout.alignment: Qt.AlignTop
+                         Layout.topMargin: Kirigami.Units.largeSpacing * 2 + Math.max(0, (caseSensitiveCheckBox.height - implicitHeight) / 2) }
         ColumnLayout {
             spacing: Kirigami.Units.smallSpacing
             Layout.topMargin: Kirigami.Units.largeSpacing * 2
             Controls.CheckBox {
+                id: caseSensitiveCheckBox
                 text: qsTr("File sorting is Case Sensitive")
                 checked: appManager1.fileSortCaseSensitive
                 onCheckedChanged: appManager1.fileSortCaseSensitive = checked
@@ -633,7 +642,8 @@ Kirigami.ScrollablePage {
             }
         }
 
-        Controls.Label { text: qsTr("Theme"); opacity: 0.7; Layout.alignment: Qt.AlignTop; Layout.topMargin: Kirigami.Units.largeSpacing * 2 }
+        Controls.Label { text: qsTr("Theme"); opacity: 0.7; Layout.alignment: Qt.AlignTop
+                         Layout.topMargin: Kirigami.Units.largeSpacing * 2 + Math.max(0, (themeComboBox.height - implicitHeight) / 2) }
         ColumnLayout {
             spacing: Kirigami.Units.smallSpacing
             Layout.topMargin: Kirigami.Units.largeSpacing * 2
@@ -709,7 +719,8 @@ Kirigami.ScrollablePage {
             }
         }
 
-        Controls.Label { text: qsTr("Language"); opacity: 0.7; Layout.topMargin: Kirigami.Units.largeSpacing * 2; Layout.alignment: Qt.AlignTop }
+        Controls.Label { text: qsTr("Language"); opacity: 0.7; Layout.alignment: Qt.AlignTop
+                         Layout.topMargin: Kirigami.Units.largeSpacing * 2 + Math.max(0, (languageComboBox.height - implicitHeight) / 2) }
         ColumnLayout {
             spacing: Kirigami.Units.smallSpacing
             Layout.topMargin: Kirigami.Units.largeSpacing * 2

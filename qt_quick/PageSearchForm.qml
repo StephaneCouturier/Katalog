@@ -637,7 +637,9 @@ ColumnLayout {
 
         RowLayout {
             Layout.fillWidth: true
-            Controls.Label { text: qsTr("text"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop }
+            // Centred on the first term row, not on the whole list.
+            Controls.Label { text: qsTr("text"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop
+                             Layout.topMargin: Math.max(0, (search_TextField_FileNameText.firstRowHeight - implicitHeight) / 2) }
             SearchTermList {
                 id: search_TextField_FileNameText
                 Layout.fillWidth: true
@@ -714,7 +716,8 @@ ColumnLayout {
         }
         RowLayout {
             Layout.fillWidth: true
-            Controls.Label { text: qsTr("exclude"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop }
+            Controls.Label { text: qsTr("exclude"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop
+                             Layout.topMargin: Math.max(0, (search_TextField_FileNameExclude.firstRowHeight - implicitHeight) / 2) }
             SearchTermList {
                 id: search_TextField_FileNameExclude
                 Layout.fillWidth: true
@@ -1166,7 +1169,8 @@ ColumnLayout {
 
         RowLayout {
             Layout.fillWidth: true
-            Controls.Label { text: qsTr("On"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop }
+            Controls.Label { text: qsTr("On"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop
+                             Layout.topMargin: Math.max(0, (search_checkBox_DuplicatesOnName.height - implicitHeight) / 2) }
             Flow {
                 Layout.fillWidth: true
                 spacing: Kirigami.Units.largeSpacing
@@ -1226,7 +1230,8 @@ ColumnLayout {
 
         RowLayout {
             Layout.fillWidth: true
-            Controls.Label { text: qsTr("Scope"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop }
+            Controls.Label { text: qsTr("Scope"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop
+                             Layout.topMargin: Math.max(0, (search_radioButton_DuplicatesWithinSelectedDevice.height - implicitHeight) / 2) }
             Flow {
                 Layout.fillWidth: true
                 spacing: Kirigami.Units.largeSpacing
@@ -1288,7 +1293,8 @@ ColumnLayout {
 
         RowLayout {
             Layout.fillWidth: true
-            Controls.Label { text: qsTr("On"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop }
+            Controls.Label { text: qsTr("On"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop
+                             Layout.topMargin: Math.max(0, (search_checkBox_DifferencesOnName.height - implicitHeight) / 2) }
             Flow {
                 Layout.fillWidth: true
                 spacing: Kirigami.Units.largeSpacing

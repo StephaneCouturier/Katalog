@@ -22,6 +22,10 @@ ColumnLayout {
 
     // SpecSearchList.md P4 / P7
     readonly property int maxVisibleRows: 6
+    // Height of the first term row, so a label beside the list can centre on it
+    // rather than on the whole list, which grows with the terms.
+    readonly property real firstRowHeight: rowsRepeater.count > 0 && rowsRepeater.itemAt(0)
+                                           ? rowsRepeater.itemAt(0).height : 0
     readonly property int pasteRowCap: 100
 
     signal accepted()
