@@ -696,6 +696,8 @@ Kirigami.ScrollablePage {
                 Controls.Label { text: qsTr("Text size") }
                 Controls.ToolButton {
                     icon.name: "zoom-out"
+                    Controls.ToolTip.text: qsTr("Decrease text size")
+                    Controls.ToolTip.visible: hovered
                     enabled: textSizeSlider.value > textSizeSlider.from
                     onClicked: pageSettingsRoot.textScaleEdited(
                                    Math.max(textSizeSlider.from, textSizeSlider.value - textSizeSlider.stepSize))
@@ -712,6 +714,8 @@ Kirigami.ScrollablePage {
                 }
                 Controls.ToolButton {
                     icon.name: "zoom-in"
+                    Controls.ToolTip.text: qsTr("Increase text size")
+                    Controls.ToolTip.visible: hovered
                     enabled: textSizeSlider.value < textSizeSlider.to
                     onClicked: pageSettingsRoot.textScaleEdited(
                                    Math.min(textSizeSlider.to, textSizeSlider.value + textSizeSlider.stepSize))

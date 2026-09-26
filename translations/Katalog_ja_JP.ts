@@ -964,13 +964,13 @@ Choose a different name.</source>
         <location line="-375"/>
         <location line="+60"/>
         <location line="+176"/>
-        <location line="+801"/>
+        <location line="+803"/>
         <location line="+122"/>
         <source>Cancel</source>
         <translation>キャンセル</translation>
     </message>
     <message>
-        <location line="-1259"/>
+        <location line="-1261"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+172"/>
@@ -1028,36 +1028,36 @@ Choose a different name.</source>
     </message>
     <message>
         <location line="-787"/>
-        <location line="+1129"/>
+        <location line="+1131"/>
         <source>Devices</source>
         <translation>デバイス</translation>
     </message>
     <message>
-        <location line="-1124"/>
-        <location line="+1221"/>
+        <location line="-1126"/>
+        <location line="+1223"/>
         <source>Explore</source>
         <translation>エクスプローラ</translation>
     </message>
     <message>
-        <location line="-1211"/>
-        <location line="+1444"/>
+        <location line="-1213"/>
+        <location line="+1446"/>
         <source>Backup</source>
         <translation>バックアップ</translation>
     </message>
     <message>
-        <location line="-1439"/>
-        <location line="+1399"/>
+        <location line="-1441"/>
+        <location line="+1401"/>
         <source>Statistics</source>
         <translation>統計</translation>
     </message>
     <message>
-        <location line="-1394"/>
-        <location line="+1416"/>
+        <location line="-1396"/>
+        <location line="+1418"/>
         <source>Tags</source>
         <translation>タグ</translation>
     </message>
     <message>
-        <location line="-1403"/>
+        <location line="-1405"/>
         <source>Documentation</source>
         <translation>ドキュメンテーション</translation>
     </message>
@@ -1340,18 +1340,18 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="-735"/>
-        <location line="+979"/>
+        <location line="+981"/>
         <location line="+44"/>
         <source>Search</source>
         <translation>検索</translation>
     </message>
     <message>
-        <location line="-136"/>
+        <location line="-138"/>
         <source>Name</source>
         <translation>名前</translation>
     </message>
     <message>
-        <location line="+145"/>
+        <location line="+147"/>
         <source>Resume</source>
         <translation>再開</translation>
     </message>
@@ -1378,8 +1378,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>履歴</translation>
     </message>
     <message>
-        <location line="-280"/>
-        <location line="+288"/>
+        <location line="-282"/>
+        <location line="+290"/>
         <location line="+39"/>
         <location line="+98"/>
         <location line="+39"/>
@@ -1391,7 +1391,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>閉じる</translation>
     </message>
     <message>
-        <location line="-1259"/>
+        <location line="-1261"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1415,7 +1415,12 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>すべて</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+55"/>
+        <source>Clear</source>
+        <translation>クリア</translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>Show device info</source>
         <translation>デバイス情報を表示</translation>
     </message>
@@ -1479,8 +1484,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>カタログの作成に失敗しました: </translation>
     </message>
     <message>
-        <location line="-1278"/>
-        <location line="+1268"/>
+        <location line="-1280"/>
+        <location line="+1270"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>作成</translation>
@@ -6082,6 +6087,11 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <source>Update</source>
         <translation>更新</translation>
     </message>
+    <message>
+        <location line="+8"/>
+        <source>Remove</source>
+        <translation>削除</translation>
+    </message>
 </context>
 <context>
     <name>PageBackupForm</name>
@@ -6620,7 +6630,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageCreateForm</name>
     <message>
-        <location filename="../qt_quick/PageCreateForm.qml" line="+206"/>
+        <location filename="../qt_quick/PageCreateForm.qml" line="+207"/>
         <location line="+46"/>
         <source>All</source>
         <translation>すべて</translation>
@@ -6636,7 +6646,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>オーディオ</translation>
     </message>
     <message>
-        <location line="-184"/>
+        <location line="-185"/>
         <source>Provide a name for this new catalog.</source>
         <translation>この新しいカタログの名前を入力してください。</translation>
     </message>
@@ -6668,7 +6678,14 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>インデックスを作成するパス</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+6"/>
+        <location line="+153"/>
+        <location line="+85"/>
+        <source>Select the path</source>
+        <translation>パスを選択</translation>
+    </message>
+    <message>
+        <location line="-229"/>
         <source>Storage</source>
         <translation>ストレージ</translation>
     </message>
@@ -6779,18 +6796,34 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="vanished">除外するパス</translation>
     </message>
     <message>
-        <location line="+13"/>
-        <location line="+82"/>
+        <location line="+14"/>
+        <location line="+85"/>
         <source>Add</source>
         <translation>追加</translation>
     </message>
     <message>
-        <location line="-36"/>
+        <location line="-57"/>
+        <location line="+88"/>
+        <source>Remove</source>
+        <translation>削除</translation>
+    </message>
+    <message>
+        <location line="-69"/>
         <source>Global Parameters</source>
         <translation>グローバルパラメーター</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+6"/>
+        <source>Collapse</source>
+        <translation>折りたたむ</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Expand</source>
+        <translation>展開</translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Global exclude directory</source>
         <translation>グローバル除外ディレクトリ</translation>
     </message>
@@ -6829,12 +6862,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+6"/>
-        <location line="+269"/>
+        <location line="+272"/>
         <source>Type</source>
         <translation>タイプ</translation>
     </message>
     <message>
-        <location line="-266"/>
+        <location line="-269"/>
         <source>Name</source>
         <translation>名前</translation>
     </message>
@@ -6859,7 +6892,13 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>ソースパス</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+11"/>
+        <location line="+136"/>
+        <source>Select the path</source>
+        <translation>パスを選択</translation>
+    </message>
+    <message>
+        <location line="-119"/>
         <source>Content options</source>
         <translation>コンテンツオプション</translation>
     </message>
@@ -6970,12 +7009,17 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="vanished">除外するパス</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+14"/>
         <source>Add</source>
         <translation>追加</translation>
     </message>
     <message>
-        <location line="+49"/>
+        <location line="+27"/>
+        <source>Remove</source>
+        <translation>削除</translation>
+    </message>
+    <message>
+        <location line="+23"/>
         <source>Storage details</source>
         <translation>ストレージの詳細</translation>
     </message>
@@ -7367,7 +7411,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>合計</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+26"/>
         <source>Expand</source>
         <translation>展開</translation>
     </message>
@@ -7633,11 +7677,13 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     <name>PageSearchForm</name>
     <message>
         <location filename="../qt_quick/PageSearchForm.qml" line="+336"/>
+        <location line="+584"/>
+        <location line="+18"/>
         <source>Select a date</source>
         <translation>日付を選択</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-597"/>
         <source>Now</source>
         <translation>今</translation>
     </message>
@@ -7698,11 +7744,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+6"/>
+        <location line="+530"/>
         <source>Clear</source>
         <translation>クリア</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-524"/>
         <source>Cancel</source>
         <translation>キャンセル</translation>
     </message>
@@ -7727,17 +7774,35 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>接続されたドライブまたはフォルダーへのパス</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+4"/>
+        <source>Select the path</source>
+        <translation>パスを選択</translation>
+    </message>
+    <message>
+        <location line="+13"/>
         <source>File name</source>
         <translation>ファイル名</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+22"/>
         <source>text</source>
         <translation>テキスト</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+17"/>
+        <location line="+77"/>
+        <location line="+266"/>
+        <source>Paste the text from the clipboard</source>
+        <translation>クリップボードからテキストを貼り付け</translation>
+    </message>
+    <message>
+        <location line="-337"/>
+        <location line="+77"/>
+        <source>Clean the search Text from characters such as _ - . ,</source>
+        <translation>検索テキストから _ - . , などの文字を削除</translation>
+    </message>
+    <message>
+        <location line="-70"/>
         <source>with</source>
         <translation>条件</translation>
     </message>
@@ -7796,12 +7861,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>大文字小文字を区別</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>exclude</source>
         <translation>除外</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+33"/>
         <source>File attributes</source>
         <translation>ファイル属性</translation>
     </message>
@@ -7811,8 +7876,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>タイプ</translation>
     </message>
     <message>
-        <location line="-228"/>
-        <location line="+239"/>
+        <location line="-238"/>
+        <location line="+249"/>
         <source>All</source>
         <translation>すべて</translation>
     </message>
@@ -7828,12 +7893,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+168"/>
+        <location line="+170"/>
         <source>Text</source>
         <translation>テキスト</translation>
     </message>
     <message>
-        <location line="-167"/>
+        <location line="-169"/>
         <source>Video</source>
         <translation>ビデオ</translation>
     </message>
@@ -7849,26 +7914,26 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+35"/>
-        <location line="+179"/>
+        <location line="+184"/>
         <location line="+193"/>
         <location line="+126"/>
         <source>Size</source>
         <translation>サイズ</translation>
     </message>
     <message>
-        <location line="-444"/>
-        <location line="+328"/>
+        <location line="-449"/>
+        <location line="+333"/>
         <location line="+126"/>
         <source>Date</source>
         <translation>日付</translation>
     </message>
     <message>
-        <location line="-397"/>
+        <location line="-400"/>
         <source>File metadata</source>
         <translation>ファイルメタデータ</translation>
     </message>
     <message>
-        <location line="+85"/>
+        <location line="+88"/>
         <source>Width</source>
         <translation>幅</translation>
     </message>
@@ -8046,7 +8111,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>削除</translation>
     </message>
     <message>
-        <location line="-593"/>
+        <location line="-601"/>
+        <source>Run process on all results</source>
+        <translation>すべての結果でプロセスを実行</translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Exported to: %1</source>
         <translation>エクスポート先: %1</translation>
     </message>
@@ -8377,14 +8447,12 @@ Errors: %3</source>
         <translation>編集</translation>
     </message>
     <message>
-        <location line="+87"/>
         <source>Collapse</source>
-        <translation>折りたたむ</translation>
+        <translation type="vanished">折りたたむ</translation>
     </message>
     <message>
-        <location line="+0"/>
         <source>Expand</source>
-        <translation>展開</translation>
+        <translation type="vanished">展開</translation>
     </message>
 </context>
 <context>
@@ -8435,12 +8503,12 @@ Errors: %3</source>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+519"/>
+        <location line="+523"/>
         <source>(none)</source>
         <translation>(なし)</translation>
     </message>
     <message>
-        <location line="-511"/>
+        <location line="-515"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8761,7 +8829,17 @@ Errors: %3</source>
         <translation>文字サイズ</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+3"/>
+        <source>Decrease text size</source>
+        <translation>文字サイズを小さくする</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Increase text size</source>
+        <translation>文字サイズを大きくする</translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>Language</source>
         <translation>言語</translation>
     </message>
@@ -8805,31 +8883,31 @@ Errors: %3</source>
     </message>
     <message>
         <location line="+36"/>
-        <location line="+196"/>
+        <location line="+198"/>
         <source>Total</source>
         <translation>合計</translation>
     </message>
     <message>
-        <location line="-177"/>
+        <location line="-179"/>
         <location line="+69"/>
-        <location line="+117"/>
+        <location line="+119"/>
         <source>Total File Size</source>
         <translation>総ファイルサイズ</translation>
     </message>
     <message>
-        <location line="-186"/>
+        <location line="-188"/>
         <location line="+70"/>
         <source>Number of Files</source>
         <translation>ファイル数</translation>
     </message>
     <message>
         <location line="-69"/>
-        <location line="+185"/>
+        <location line="+187"/>
         <source>Catalogs</source>
         <translation>カタログ</translation>
     </message>
     <message>
-        <location line="-151"/>
+        <location line="-153"/>
         <source>Device</source>
         <translation>デバイス</translation>
     </message>
@@ -8864,7 +8942,17 @@ Errors: %3</source>
         <translation>開始日</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+11"/>
+        <source>Select a date</source>
+        <translation>日付を選択</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Clear</source>
+        <translation>クリア</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Display each value</source>
         <translation>各値を表示</translation>
     </message>
@@ -8924,17 +9012,22 @@ Errors: %3</source>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+86"/>
+        <location line="+87"/>
         <source>Folder</source>
         <translation>フォルダ</translation>
     </message>
     <message>
-        <location line="-80"/>
+        <location line="-81"/>
         <source>Folder path</source>
         <translation>フォルダのパス</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+5"/>
+        <source>Select a folder</source>
+        <translation>フォルダを選択</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <location line="+72"/>
         <source>Tag</source>
         <translation>タグ</translation>
@@ -8969,7 +9062,12 @@ Errors: %3</source>
         <translation>すべて</translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+43"/>
+        <source>Remove this tag</source>
+        <translation>このタグを削除</translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>No tags</source>
         <translation>タグがありません</translation>
     </message>
@@ -9005,6 +9103,24 @@ Errors: %3</source>
         <location line="+38"/>
         <source>Collection</source>
         <translation>コレクション</translation>
+    </message>
+</context>
+<context>
+    <name>SearchTermList</name>
+    <message>
+        <location filename="../qt_quick/SearchTermList.qml" line="+289"/>
+        <source>Clear</source>
+        <translation>クリア</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Remove this term</source>
+        <translation>この語句を削除</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Add a term</source>
+        <translation>語句を追加</translation>
     </message>
 </context>
 <context>

@@ -326,8 +326,10 @@ Kirigami.AbstractCard {
                 opacity: card.cardHasChildren ? 1.0 : 0.0
                 enabled: card.cardHasChildren
                 onClicked: card.collapseToggleRequested(card.devId)
-                Controls.ToolTip.text: card.cardIsCollapsed ? qsTr("Expand") : qsTr("Collapse")
-                Controls.ToolTip.visible: hovered
+                // The text stays for accessibility, but no tooltip: per-item
+                // chevrons are the exception to ICB-F1 (SpecIconButtons.md ICB-C3).
+                text: card.cardIsCollapsed ? qsTr("Expand") : qsTr("Collapse")
+                display: Controls.AbstractButton.IconOnly
             }
 
             IconButton { flat: true;

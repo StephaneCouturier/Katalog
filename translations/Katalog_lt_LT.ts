@@ -964,13 +964,13 @@ Pasirinkite kitą pavadinimą.</translation>
         <location line="-375"/>
         <location line="+60"/>
         <location line="+176"/>
-        <location line="+801"/>
+        <location line="+803"/>
         <location line="+122"/>
         <source>Cancel</source>
         <translation>Atšaukti</translation>
     </message>
     <message>
-        <location line="-1259"/>
+        <location line="-1261"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+172"/>
@@ -1028,36 +1028,36 @@ Pasirinkite kitą pavadinimą.</translation>
     </message>
     <message>
         <location line="-787"/>
-        <location line="+1129"/>
+        <location line="+1131"/>
         <source>Devices</source>
         <translation>Įrenginiai</translation>
     </message>
     <message>
-        <location line="-1124"/>
-        <location line="+1221"/>
+        <location line="-1126"/>
+        <location line="+1223"/>
         <source>Explore</source>
         <translation>Naršyti</translation>
     </message>
     <message>
-        <location line="-1211"/>
-        <location line="+1444"/>
+        <location line="-1213"/>
+        <location line="+1446"/>
         <source>Backup</source>
         <translation>Atsarginė kopija</translation>
     </message>
     <message>
-        <location line="-1439"/>
-        <location line="+1399"/>
+        <location line="-1441"/>
+        <location line="+1401"/>
         <source>Statistics</source>
         <translation>Statistika</translation>
     </message>
     <message>
-        <location line="-1394"/>
-        <location line="+1416"/>
+        <location line="-1396"/>
+        <location line="+1418"/>
         <source>Tags</source>
         <translation>Žymos</translation>
     </message>
     <message>
-        <location line="-1403"/>
+        <location line="-1405"/>
         <source>Documentation</source>
         <translation>Dokumentacija</translation>
     </message>
@@ -1340,18 +1340,18 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
     </message>
     <message>
         <location line="-735"/>
-        <location line="+979"/>
+        <location line="+981"/>
         <location line="+44"/>
         <source>Search</source>
         <translation>Paieška</translation>
     </message>
     <message>
-        <location line="-136"/>
+        <location line="-138"/>
         <source>Name</source>
         <translation>Pavadinimas</translation>
     </message>
     <message>
-        <location line="+145"/>
+        <location line="+147"/>
         <source>Resume</source>
         <translation>Tęsti</translation>
     </message>
@@ -1378,8 +1378,8 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
         <translation>Istorija</translation>
     </message>
     <message>
-        <location line="-280"/>
-        <location line="+288"/>
+        <location line="-282"/>
+        <location line="+290"/>
         <location line="+39"/>
         <location line="+98"/>
         <location line="+39"/>
@@ -1391,7 +1391,7 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
         <translation>Uždaryti</translation>
     </message>
     <message>
-        <location line="-1259"/>
+        <location line="-1261"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1415,7 +1415,12 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
         <translation>Visi</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+55"/>
+        <source>Clear</source>
+        <translation>Išvalyti</translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>Show device info</source>
         <translation>Rodyti įrenginio informaciją</translation>
     </message>
@@ -1479,8 +1484,8 @@ Ar vis tiek norite jį išsaugoti (katalogas būtų tuščias)?</translation>
         <translation>Nepavyko sukurti katalogo: </translation>
     </message>
     <message>
-        <location line="-1278"/>
-        <location line="+1268"/>
+        <location line="-1280"/>
+        <location line="+1270"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Sukurti</translation>
@@ -6082,6 +6087,11 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <source>Update</source>
         <translation>Atnaujinti</translation>
     </message>
+    <message>
+        <location line="+8"/>
+        <source>Remove</source>
+        <translation>Šalinti</translation>
+    </message>
 </context>
 <context>
     <name>PageBackupForm</name>
@@ -6620,7 +6630,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageCreateForm</name>
     <message>
-        <location filename="../qt_quick/PageCreateForm.qml" line="+206"/>
+        <location filename="../qt_quick/PageCreateForm.qml" line="+207"/>
         <location line="+46"/>
         <source>All</source>
         <translation>Visi</translation>
@@ -6636,7 +6646,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Garso įrašas</translation>
     </message>
     <message>
-        <location line="-184"/>
+        <location line="-185"/>
         <source>Provide a name for this new catalog.</source>
         <translation>Nurodykite šio naujo katalogo pavadinimą.</translation>
     </message>
@@ -6668,7 +6678,14 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Indeksuojamas kelias</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+6"/>
+        <location line="+153"/>
+        <location line="+85"/>
+        <source>Select the path</source>
+        <translation>Pasirinkti kelią</translation>
+    </message>
+    <message>
+        <location line="-229"/>
         <source>Storage</source>
         <translation>Saugykla</translation>
     </message>
@@ -6779,18 +6796,34 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="vanished">Neįtrauktinas kelias</translation>
     </message>
     <message>
-        <location line="+13"/>
-        <location line="+82"/>
+        <location line="+14"/>
+        <location line="+85"/>
         <source>Add</source>
         <translation>Pridėti</translation>
     </message>
     <message>
-        <location line="-36"/>
+        <location line="-57"/>
+        <location line="+88"/>
+        <source>Remove</source>
+        <translation>Šalinti</translation>
+    </message>
+    <message>
+        <location line="-69"/>
         <source>Global Parameters</source>
         <translation>Globalūs parametrai</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+6"/>
+        <source>Collapse</source>
+        <translation>Suskleisti</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Expand</source>
+        <translation>Išskleisti</translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Global exclude directory</source>
         <translation>Visuotinis išskyrimo katalogas</translation>
     </message>
@@ -6829,12 +6862,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+6"/>
-        <location line="+269"/>
+        <location line="+272"/>
         <source>Type</source>
         <translation>Tipas</translation>
     </message>
     <message>
-        <location line="-266"/>
+        <location line="-269"/>
         <source>Name</source>
         <translation>Pavadinimas</translation>
     </message>
@@ -6859,7 +6892,13 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Šaltinio kelias</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+11"/>
+        <location line="+136"/>
+        <source>Select the path</source>
+        <translation>Pasirinkti kelią</translation>
+    </message>
+    <message>
+        <location line="-119"/>
         <source>Content options</source>
         <translation>Turinio parinktys</translation>
     </message>
@@ -6970,12 +7009,17 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="vanished">Neįtrauktinas kelias</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+14"/>
         <source>Add</source>
         <translation>Pridėti</translation>
     </message>
     <message>
-        <location line="+49"/>
+        <location line="+27"/>
+        <source>Remove</source>
+        <translation>Šalinti</translation>
+    </message>
+    <message>
+        <location line="+23"/>
         <source>Storage details</source>
         <translation>Saugyklos informacija</translation>
     </message>
@@ -7367,7 +7411,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>iš viso</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+26"/>
         <source>Expand</source>
         <translation>Išskleisti</translation>
     </message>
@@ -7633,11 +7677,13 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     <name>PageSearchForm</name>
     <message>
         <location filename="../qt_quick/PageSearchForm.qml" line="+336"/>
+        <location line="+584"/>
+        <location line="+18"/>
         <source>Select a date</source>
         <translation>Pasirinkite datą</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-597"/>
         <source>Now</source>
         <translation>Dabar</translation>
     </message>
@@ -7698,11 +7744,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+6"/>
+        <location line="+530"/>
         <source>Clear</source>
         <translation>Išvalyti</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-524"/>
         <source>Cancel</source>
         <translation>Atšaukti</translation>
     </message>
@@ -7727,17 +7774,35 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Kelias iki prijungto disko ar aplanko</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+4"/>
+        <source>Select the path</source>
+        <translation>Pasirinkti kelią</translation>
+    </message>
+    <message>
+        <location line="+13"/>
         <source>File name</source>
         <translation>Failo pavadinimas</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+22"/>
         <source>text</source>
         <translation>tekstas</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+17"/>
+        <location line="+77"/>
+        <location line="+266"/>
+        <source>Paste the text from the clipboard</source>
+        <translation>Įklijuoti tekstą iš iškarpinės</translation>
+    </message>
+    <message>
+        <location line="-337"/>
+        <location line="+77"/>
+        <source>Clean the search Text from characters such as _ - . ,</source>
+        <translation>Išvalyti paieškos tekstą nuo simbolių tokių kaip _ - . ,</translation>
+    </message>
+    <message>
+        <location line="-70"/>
         <source>with</source>
         <translation>su</translation>
     </message>
@@ -7796,12 +7861,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>skirtingos raidės</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>exclude</source>
         <translation>išskirti</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+33"/>
         <source>File attributes</source>
         <translation>Failo atributai</translation>
     </message>
@@ -7811,8 +7876,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Tipas</translation>
     </message>
     <message>
-        <location line="-228"/>
-        <location line="+239"/>
+        <location line="-238"/>
+        <location line="+249"/>
         <source>All</source>
         <translation>Visi</translation>
     </message>
@@ -7828,12 +7893,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+168"/>
+        <location line="+170"/>
         <source>Text</source>
         <translation>Tekstas</translation>
     </message>
     <message>
-        <location line="-167"/>
+        <location line="-169"/>
         <source>Video</source>
         <translation>Vaizdo įrašas</translation>
     </message>
@@ -7849,26 +7914,26 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+35"/>
-        <location line="+179"/>
+        <location line="+184"/>
         <location line="+193"/>
         <location line="+126"/>
         <source>Size</source>
         <translation>Dydis</translation>
     </message>
     <message>
-        <location line="-444"/>
-        <location line="+328"/>
+        <location line="-449"/>
+        <location line="+333"/>
         <location line="+126"/>
         <source>Date</source>
         <translation>Data</translation>
     </message>
     <message>
-        <location line="-397"/>
+        <location line="-400"/>
         <source>File metadata</source>
         <translation>Failo metaduomenys</translation>
     </message>
     <message>
-        <location line="+85"/>
+        <location line="+88"/>
         <source>Width</source>
         <translation>Plotis</translation>
     </message>
@@ -8046,7 +8111,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Ištrinti</translation>
     </message>
     <message>
-        <location line="-593"/>
+        <location line="-601"/>
+        <source>Run process on all results</source>
+        <translation>Vykdyti procesą su visais rezultatais</translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Exported to: %1</source>
         <translation>Eksportuota į: %1</translation>
     </message>
@@ -8377,14 +8447,12 @@ Klaidų: %3</translation>
         <translation>Redaguoti</translation>
     </message>
     <message>
-        <location line="+87"/>
         <source>Collapse</source>
-        <translation>Suskleisti</translation>
+        <translation type="vanished">Suskleisti</translation>
     </message>
     <message>
-        <location line="+0"/>
         <source>Expand</source>
-        <translation>Išskleisti</translation>
+        <translation type="vanished">Išskleisti</translation>
     </message>
 </context>
 <context>
@@ -8435,12 +8503,12 @@ Klaidų: %3</translation>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+519"/>
+        <location line="+523"/>
         <source>(none)</source>
         <translation>(nėra)</translation>
     </message>
     <message>
-        <location line="-511"/>
+        <location line="-515"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8761,7 +8829,17 @@ Klaidų: %3</translation>
         <translation>Teksto dydis</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+3"/>
+        <source>Decrease text size</source>
+        <translation>Sumažinti teksto dydį</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Increase text size</source>
+        <translation>Padidinti teksto dydį</translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>Language</source>
         <translation>Kalba</translation>
     </message>
@@ -8805,31 +8883,31 @@ Klaidų: %3</translation>
     </message>
     <message>
         <location line="+36"/>
-        <location line="+196"/>
+        <location line="+198"/>
         <source>Total</source>
         <translation>Iš viso</translation>
     </message>
     <message>
-        <location line="-177"/>
+        <location line="-179"/>
         <location line="+69"/>
-        <location line="+117"/>
+        <location line="+119"/>
         <source>Total File Size</source>
         <translation>Bendras failų dydis</translation>
     </message>
     <message>
-        <location line="-186"/>
+        <location line="-188"/>
         <location line="+70"/>
         <source>Number of Files</source>
         <translation>Failų skaičius</translation>
     </message>
     <message>
         <location line="-69"/>
-        <location line="+185"/>
+        <location line="+187"/>
         <source>Catalogs</source>
         <translation>Katalogai</translation>
     </message>
     <message>
-        <location line="-151"/>
+        <location line="-153"/>
         <source>Device</source>
         <translation>Įrenginys</translation>
     </message>
@@ -8864,7 +8942,17 @@ Klaidų: %3</translation>
         <translation>Nuo datos</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+11"/>
+        <source>Select a date</source>
+        <translation>Pasirinkite datą</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Clear</source>
+        <translation>Išvalyti</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Display each value</source>
         <translation>Rodyti kiekvieną reikšmę</translation>
     </message>
@@ -8924,17 +9012,22 @@ Klaidų: %3</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+86"/>
+        <location line="+87"/>
         <source>Folder</source>
         <translation>Aplankas</translation>
     </message>
     <message>
-        <location line="-80"/>
+        <location line="-81"/>
         <source>Folder path</source>
         <translation>Aplanko kelias</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+5"/>
+        <source>Select a folder</source>
+        <translation>Pasirinkti aplanką</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <location line="+72"/>
         <source>Tag</source>
         <translation>Žyma</translation>
@@ -8969,7 +9062,12 @@ Klaidų: %3</translation>
         <translation>Visi</translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+43"/>
+        <source>Remove this tag</source>
+        <translation>Pašalinti šią žymą</translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>No tags</source>
         <translation>Žymų nėra</translation>
     </message>
@@ -9005,6 +9103,24 @@ Klaidų: %3</translation>
         <location line="+38"/>
         <source>Collection</source>
         <translation>Kolekcija</translation>
+    </message>
+</context>
+<context>
+    <name>SearchTermList</name>
+    <message>
+        <location filename="../qt_quick/SearchTermList.qml" line="+289"/>
+        <source>Clear</source>
+        <translation>Išvalyti</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Remove this term</source>
+        <translation>Pašalinti šį terminą</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Add a term</source>
+        <translation>Pridėti terminą</translation>
     </message>
 </context>
 <context>

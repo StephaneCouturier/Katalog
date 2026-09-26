@@ -964,13 +964,13 @@ Vælg et andet navn.</translation>
         <location line="-375"/>
         <location line="+60"/>
         <location line="+176"/>
-        <location line="+801"/>
+        <location line="+803"/>
         <location line="+122"/>
         <source>Cancel</source>
         <translation>Annuller</translation>
     </message>
     <message>
-        <location line="-1259"/>
+        <location line="-1261"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+172"/>
@@ -1028,36 +1028,36 @@ Vælg et andet navn.</translation>
     </message>
     <message>
         <location line="-787"/>
-        <location line="+1129"/>
+        <location line="+1131"/>
         <source>Devices</source>
         <translation>Enheder</translation>
     </message>
     <message>
-        <location line="-1124"/>
-        <location line="+1221"/>
+        <location line="-1126"/>
+        <location line="+1223"/>
         <source>Explore</source>
         <translation>Udforsk</translation>
     </message>
     <message>
-        <location line="-1211"/>
-        <location line="+1444"/>
+        <location line="-1213"/>
+        <location line="+1446"/>
         <source>Backup</source>
         <translation>Sikkerhedskopi</translation>
     </message>
     <message>
-        <location line="-1439"/>
-        <location line="+1399"/>
+        <location line="-1441"/>
+        <location line="+1401"/>
         <source>Statistics</source>
         <translation>Statistik</translation>
     </message>
     <message>
-        <location line="-1394"/>
-        <location line="+1416"/>
+        <location line="-1396"/>
+        <location line="+1418"/>
         <source>Tags</source>
         <translation>Tags</translation>
     </message>
     <message>
-        <location line="-1403"/>
+        <location line="-1405"/>
         <source>Documentation</source>
         <translation>Dokumentation</translation>
     </message>
@@ -1340,18 +1340,18 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
     </message>
     <message>
         <location line="-735"/>
-        <location line="+979"/>
+        <location line="+981"/>
         <location line="+44"/>
         <source>Search</source>
         <translation>Søg</translation>
     </message>
     <message>
-        <location line="-136"/>
+        <location line="-138"/>
         <source>Name</source>
         <translation>Navn</translation>
     </message>
     <message>
-        <location line="+145"/>
+        <location line="+147"/>
         <source>Resume</source>
         <translation>Fortsæt</translation>
     </message>
@@ -1378,8 +1378,8 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <translation>Historik</translation>
     </message>
     <message>
-        <location line="-280"/>
-        <location line="+288"/>
+        <location line="-282"/>
+        <location line="+290"/>
         <location line="+39"/>
         <location line="+98"/>
         <location line="+39"/>
@@ -1391,7 +1391,7 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <translation>Luk</translation>
     </message>
     <message>
-        <location line="-1259"/>
+        <location line="-1261"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1415,7 +1415,12 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <translation>Alle</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+55"/>
+        <source>Clear</source>
+        <translation>Ryd</translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>Show device info</source>
         <translation>Vis enhedsinfo</translation>
     </message>
@@ -1479,8 +1484,8 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
         <translation>Oprettelse af katalog mislykkedes: </translation>
     </message>
     <message>
-        <location line="-1278"/>
-        <location line="+1268"/>
+        <location line="-1280"/>
+        <location line="+1270"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Opret</translation>
@@ -6083,6 +6088,11 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <source>Update</source>
         <translation>Opdater</translation>
     </message>
+    <message>
+        <location line="+8"/>
+        <source>Remove</source>
+        <translation>Fjern</translation>
+    </message>
 </context>
 <context>
     <name>PageBackupForm</name>
@@ -6621,7 +6631,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageCreateForm</name>
     <message>
-        <location filename="../qt_quick/PageCreateForm.qml" line="+206"/>
+        <location filename="../qt_quick/PageCreateForm.qml" line="+207"/>
         <location line="+46"/>
         <source>All</source>
         <translation>Alle</translation>
@@ -6637,7 +6647,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Audio</translation>
     </message>
     <message>
-        <location line="-184"/>
+        <location line="-185"/>
         <source>Provide a name for this new catalog.</source>
         <translation>Angiv et navn til dette nye katalog.</translation>
     </message>
@@ -6669,7 +6679,14 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Sti der skal indekseres</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+6"/>
+        <location line="+153"/>
+        <location line="+85"/>
+        <source>Select the path</source>
+        <translation>Vælg stien</translation>
+    </message>
+    <message>
+        <location line="-229"/>
         <source>Storage</source>
         <translation>Lager</translation>
     </message>
@@ -6780,18 +6797,34 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="vanished">Sti der skal udelades</translation>
     </message>
     <message>
-        <location line="+13"/>
-        <location line="+82"/>
+        <location line="+14"/>
+        <location line="+85"/>
         <source>Add</source>
         <translation>Tilføj</translation>
     </message>
     <message>
-        <location line="-36"/>
+        <location line="-57"/>
+        <location line="+88"/>
+        <source>Remove</source>
+        <translation>Fjern</translation>
+    </message>
+    <message>
+        <location line="-69"/>
         <source>Global Parameters</source>
         <translation>Globale parametre</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+6"/>
+        <source>Collapse</source>
+        <translation>Skjul</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Expand</source>
+        <translation>Udvid</translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Global exclude directory</source>
         <translation>Global udelukkelsesmappe</translation>
     </message>
@@ -6830,12 +6863,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+6"/>
-        <location line="+269"/>
+        <location line="+272"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
     <message>
-        <location line="-266"/>
+        <location line="-269"/>
         <source>Name</source>
         <translation>Navn</translation>
     </message>
@@ -6860,7 +6893,13 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Kildesti</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+11"/>
+        <location line="+136"/>
+        <source>Select the path</source>
+        <translation>Vælg stien</translation>
+    </message>
+    <message>
+        <location line="-119"/>
         <source>Content options</source>
         <translation>Indholdsindstillinger</translation>
     </message>
@@ -6971,12 +7010,17 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="vanished">Sti der skal udelades</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+14"/>
         <source>Add</source>
         <translation>Tilføj</translation>
     </message>
     <message>
-        <location line="+49"/>
+        <location line="+27"/>
+        <source>Remove</source>
+        <translation>Fjern</translation>
+    </message>
+    <message>
+        <location line="+23"/>
         <source>Storage details</source>
         <translation>Lagerdetaljer</translation>
     </message>
@@ -7368,7 +7412,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>i alt</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+26"/>
         <source>Expand</source>
         <translation>Udvid</translation>
     </message>
@@ -7634,11 +7678,13 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     <name>PageSearchForm</name>
     <message>
         <location filename="../qt_quick/PageSearchForm.qml" line="+336"/>
+        <location line="+584"/>
+        <location line="+18"/>
         <source>Select a date</source>
         <translation>Vælg en dato</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-597"/>
         <source>Now</source>
         <translation>Nu</translation>
     </message>
@@ -7699,11 +7745,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+6"/>
+        <location line="+530"/>
         <source>Clear</source>
         <translation>Ryd</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-524"/>
         <source>Cancel</source>
         <translation>Annuller</translation>
     </message>
@@ -7728,17 +7775,35 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Sti til tilsluttet drev eller mappe</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+4"/>
+        <source>Select the path</source>
+        <translation>Vælg stien</translation>
+    </message>
+    <message>
+        <location line="+13"/>
         <source>File name</source>
         <translation>Filnavn</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+22"/>
         <source>text</source>
         <translation>tekst</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+17"/>
+        <location line="+77"/>
+        <location line="+266"/>
+        <source>Paste the text from the clipboard</source>
+        <translation>Indsæt tekst fra udklipsholderen</translation>
+    </message>
+    <message>
+        <location line="-337"/>
+        <location line="+77"/>
+        <source>Clean the search Text from characters such as _ - . ,</source>
+        <translation>Rens søgeteksten for tegn som _ - . ,</translation>
+    </message>
+    <message>
+        <location line="-70"/>
         <source>with</source>
         <translation>med</translation>
     </message>
@@ -7797,12 +7862,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>versalfølsom</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>exclude</source>
         <translation>udeluk</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+33"/>
         <source>File attributes</source>
         <translation>Filattributter</translation>
     </message>
@@ -7812,8 +7877,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Type</translation>
     </message>
     <message>
-        <location line="-228"/>
-        <location line="+239"/>
+        <location line="-238"/>
+        <location line="+249"/>
         <source>All</source>
         <translation>Alle</translation>
     </message>
@@ -7829,12 +7894,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+168"/>
+        <location line="+170"/>
         <source>Text</source>
         <translation>Tekst</translation>
     </message>
     <message>
-        <location line="-167"/>
+        <location line="-169"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
@@ -7850,26 +7915,26 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+35"/>
-        <location line="+179"/>
+        <location line="+184"/>
         <location line="+193"/>
         <location line="+126"/>
         <source>Size</source>
         <translation>Størrelse</translation>
     </message>
     <message>
-        <location line="-444"/>
-        <location line="+328"/>
+        <location line="-449"/>
+        <location line="+333"/>
         <location line="+126"/>
         <source>Date</source>
         <translation>Dato</translation>
     </message>
     <message>
-        <location line="-397"/>
+        <location line="-400"/>
         <source>File metadata</source>
         <translation>Filmetadata</translation>
     </message>
     <message>
-        <location line="+85"/>
+        <location line="+88"/>
         <source>Width</source>
         <translation>Bredde</translation>
     </message>
@@ -8047,7 +8112,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Slet</translation>
     </message>
     <message>
-        <location line="-593"/>
+        <location line="-601"/>
+        <source>Run process on all results</source>
+        <translation>Kør proces på alle resultater</translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Exported to: %1</source>
         <translation>Eksporteret til: %1</translation>
     </message>
@@ -8378,14 +8448,12 @@ Fejl: %3</translation>
         <translation>Rediger</translation>
     </message>
     <message>
-        <location line="+87"/>
         <source>Collapse</source>
-        <translation>Skjul</translation>
+        <translation type="vanished">Skjul</translation>
     </message>
     <message>
-        <location line="+0"/>
         <source>Expand</source>
-        <translation>Udvid</translation>
+        <translation type="vanished">Udvid</translation>
     </message>
 </context>
 <context>
@@ -8436,12 +8504,12 @@ Fejl: %3</translation>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+519"/>
+        <location line="+523"/>
         <source>(none)</source>
         <translation>(ingen)</translation>
     </message>
     <message>
-        <location line="-511"/>
+        <location line="-515"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8762,7 +8830,17 @@ Fejl: %3</translation>
         <translation>Tekststørrelse</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+3"/>
+        <source>Decrease text size</source>
+        <translation>Formindsk tekststørrelse</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Increase text size</source>
+        <translation>Forøg tekststørrelse</translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>Language</source>
         <translation>Sprog</translation>
     </message>
@@ -8806,31 +8884,31 @@ Fejl: %3</translation>
     </message>
     <message>
         <location line="+36"/>
-        <location line="+196"/>
+        <location line="+198"/>
         <source>Total</source>
         <translation>I alt</translation>
     </message>
     <message>
-        <location line="-177"/>
+        <location line="-179"/>
         <location line="+69"/>
-        <location line="+117"/>
+        <location line="+119"/>
         <source>Total File Size</source>
         <translation>Samlet filstørrelse</translation>
     </message>
     <message>
-        <location line="-186"/>
+        <location line="-188"/>
         <location line="+70"/>
         <source>Number of Files</source>
         <translation>Antal filer</translation>
     </message>
     <message>
         <location line="-69"/>
-        <location line="+185"/>
+        <location line="+187"/>
         <source>Catalogs</source>
         <translation>Kataloger</translation>
     </message>
     <message>
-        <location line="-151"/>
+        <location line="-153"/>
         <source>Device</source>
         <translation>Enhed</translation>
     </message>
@@ -8865,7 +8943,17 @@ Fejl: %3</translation>
         <translation>Fra dato</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+11"/>
+        <source>Select a date</source>
+        <translation>Vælg en dato</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Clear</source>
+        <translation>Ryd</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Display each value</source>
         <translation>Vis hver værdi</translation>
     </message>
@@ -8925,17 +9013,22 @@ Fejl: %3</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+86"/>
+        <location line="+87"/>
         <source>Folder</source>
         <translation>Mappe</translation>
     </message>
     <message>
-        <location line="-80"/>
+        <location line="-81"/>
         <source>Folder path</source>
         <translation>Mappesti</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+5"/>
+        <source>Select a folder</source>
+        <translation>Vælg en mappe</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <location line="+72"/>
         <source>Tag</source>
         <translation>Tag</translation>
@@ -8970,7 +9063,12 @@ Fejl: %3</translation>
         <translation>Alle</translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+43"/>
+        <source>Remove this tag</source>
+        <translation>Fjern dette tag</translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>No tags</source>
         <translation>Ingen tags</translation>
     </message>
@@ -9006,6 +9104,24 @@ Fejl: %3</translation>
         <location line="+38"/>
         <source>Collection</source>
         <translation>Samling</translation>
+    </message>
+</context>
+<context>
+    <name>SearchTermList</name>
+    <message>
+        <location filename="../qt_quick/SearchTermList.qml" line="+289"/>
+        <source>Clear</source>
+        <translation>Ryd</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Remove this term</source>
+        <translation>Fjern dette udtryk</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Add a term</source>
+        <translation>Tilføj et udtryk</translation>
     </message>
 </context>
 <context>

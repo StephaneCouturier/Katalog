@@ -312,6 +312,7 @@ ColumnLayout {
             }
             IconButton {
                 icon.name: "folder-open"
+                text: qsTr("Select the path")
                 onClicked: {
                     var p = edit_lineEdit_Path.text.trim()
                     if (p !== "") editPathDialog.currentFolder = appManager1.pathToFileUrl(p)
@@ -447,6 +448,7 @@ ColumnLayout {
             }
             IconButton {
                 icon.name: "folder-open"
+                text: qsTr("Select the path")
                 onClicked: {
                     var p = edit_lineEdit_Path.text.trim()
                     if (p !== "") editExcludeDialog.currentFolder = appManager1.pathToFileUrl(p)
@@ -482,6 +484,7 @@ ColumnLayout {
                     Controls.Label { text: folderPath; elide: Text.ElideMiddle; Layout.fillWidth: true }
                     IconButton {
                         icon.name: "edit-delete"; flat: true
+                        text: qsTr("Remove")
                         onClicked: {
                             // Set before removing: remove() destroys this very
                             // delegate, and anything after it in the handler is

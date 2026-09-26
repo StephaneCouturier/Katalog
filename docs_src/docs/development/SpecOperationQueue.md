@@ -220,9 +220,10 @@ one. The running entry is described by the activity panel's status row, which
 already carries `In Progress`. Should a per-entry marker ever be added, it reuses
 `In Progress` — no new string.
 
-The per-entry remove control is **icon-only** (`list-remove`), with no label and
-no tooltip, consistent with the icon buttons in `SearchTermList` and the search
-toolbar. Device names are data, not translatable strings.
+The per-entry remove control is **icon-only** (`list-remove`), with no label. Its
+tooltip falls under `ICB-F1` (`SpecIconButtons.md`): `Remove`, approved,
+reused verbatim from K2 (`ICB-C1`).
+*(Amended 2026-09-26: was "no tooltip"; string approved.)* Device names are data, not translatable strings.
 
 Any further string requires its own approval before it is written.
 

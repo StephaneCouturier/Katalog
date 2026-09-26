@@ -1582,7 +1582,9 @@ Kirigami.ApplicationWindow {
                         visible: deviceSearchField.text.length > 0
                         opacity: deviceClearTap.pressed ? 0.5 : 1.0
                         Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration } }
-                        HoverHandler { cursorShape: Qt.ArrowCursor }
+                        HoverHandler { id: deviceClearHover; cursorShape: Qt.ArrowCursor }
+                        Controls.ToolTip.text: qsTr("Clear")
+                        Controls.ToolTip.visible: deviceClearHover.hovered
                         TapHandler {
                             id: deviceClearTap
                             onTapped: {

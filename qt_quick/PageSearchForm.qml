@@ -612,6 +612,7 @@ ColumnLayout {
         }
         IconButton {
             icon.name: "folder-open"
+            text: qsTr("Select the path")
             onClicked: connectedDirectoryDialog.open()
         }
     }
@@ -641,6 +642,10 @@ ColumnLayout {
 
         RowLayout {
             Layout.fillWidth: true
+            // Capped at the visible width: the "in" combo can be wider than a
+            // narrow column, and the section stretches its rows to match it,
+            // which pushed the Paste and Clean buttons past the edge.
+            Layout.maximumWidth: pageSearchForm.width - search_FormLayout_FileNameCriteria.Layout.leftMargin
             // Centred on the first term row, not on the whole list.
             Controls.Label { text: qsTr("text"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop
                              Layout.topMargin: Math.max(0, (search_TextField_FileNameText.firstRowHeight - implicitHeight) / 2) }
@@ -659,11 +664,13 @@ ColumnLayout {
                 spacing: Kirigami.Units.smallSpacing
                 IconButton {
                     id: search_Button_PasteClipboard
+                    text: qsTr("Paste the text from the clipboard")
                     icon.name: "edit-paste"
                     onClicked: search_TextField_FileNameText.pasteReplaceAll()
                 }
                 IconButton {
                     id: search_Button_CleanText
+                    text: qsTr("Clean the search Text from characters such as _ - . ,")
                     icon.name: "edit-clear-history"
                     onClicked: search_TextField_FileNameText.cleanAll()
                 }
@@ -720,6 +727,7 @@ ColumnLayout {
         }
         RowLayout {
             Layout.fillWidth: true
+            Layout.maximumWidth: pageSearchForm.width - search_FormLayout_FileNameCriteria.Layout.leftMargin
             Controls.Label { text: qsTr("exclude"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop
                              Layout.topMargin: Math.max(0, (search_TextField_FileNameExclude.firstRowHeight - implicitHeight) / 2) }
             SearchTermList {
@@ -733,11 +741,13 @@ ColumnLayout {
                 spacing: Kirigami.Units.smallSpacing
                 IconButton {
                     id: search_Button_ExcludePasteClipboard
+                    text: qsTr("Paste the text from the clipboard")
                     icon.name: "edit-paste"
                     onClicked: search_TextField_FileNameExclude.pasteReplaceAll()
                 }
                 IconButton {
                     id: search_Button_ExcludeCleanText
+                    text: qsTr("Clean the search Text from characters such as _ - . ,")
                     icon.name: "edit-clear-history"
                     onClicked: search_TextField_FileNameExclude.cleanAll()
                 }
@@ -907,6 +917,7 @@ ColumnLayout {
                     }
                     IconButton {
                         id: search_button_ShowMinDateCalendar
+                        text: qsTr("Select a date")
                         enabled: false
                         icon.name: "view-calendar"
                         onClicked: { dateDialog.selectedDateField = "Min"; dateDialog.open() }
@@ -924,6 +935,7 @@ ColumnLayout {
                     }
                     IconButton {
                         id: search_button_ShowMaxDateCalendar
+                        text: qsTr("Select a date")
                         enabled: false
                         icon.name: "view-calendar"
                         onClicked: { dateDialog.selectedDateField = "Max"; dateDialog.open() }
@@ -978,7 +990,9 @@ ColumnLayout {
                     visible: parent.text.length > 0
                     opacity: metaClearTap.pressed ? 0.5 : 1.0
                     Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration } }
-                    HoverHandler { cursorShape: Qt.ArrowCursor }
+                    HoverHandler { id: metaClearHover; cursorShape: Qt.ArrowCursor }
+                    Controls.ToolTip.text: qsTr("Clear")
+                    Controls.ToolTip.visible: metaClearHover.hovered
                     TapHandler {
                         id: metaClearTap
                         // Focus follows the clear, so the user can retype straight
@@ -993,6 +1007,7 @@ ColumnLayout {
             IconButton {
                 icon.name: "edit-paste"
                 enabled: search_checkBox_MetadataText.checked
+                text: qsTr("Paste the text from the clipboard")
                 onClicked: search_lineEdit_MetadataText.text = pageSearch1.returnClipboard()
             }
             IconButton {

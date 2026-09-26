@@ -4,7 +4,7 @@ version: "2.13"
 
 # Specifications
 
-![Status](https://img.shields.io/badge/Status-Index-lightgrey) ![Pages](https://img.shields.io/badge/Pages-32-blue)
+![Status](https://img.shields.io/badge/Status-Index-lightgrey) ![Pages](https://img.shields.io/badge/Pages-33-blue)
 
 Every specification page lives in `docs_src/docs/development/`. This page is the
 index: **new specifications are added here, not to the sidebar.**
@@ -31,6 +31,7 @@ specification and the code disagree, the specification is what was agreed.
 | [SpecDevicesPage](SpecDevicesPage.md) | DEVICES PAGE — CARDS AND TABLE DISPLAY | Approved | planned | — |
 | [SpecDevicesSplit](SpecDevicesSplit.md) | DEVICES: Split a Catalog | — | — | — |
 | [SpecExplore](SpecExplore.md) | EXPLORE — DIRECTORY TREE | Approved | complete | — |
+| [SpecIconButtons](SpecIconButtons.md) | ICON BUTTONS — TOOLTIPS ON ICON-ONLY BUTTONS | Approved | planned | — |
 | [SpecImportVVV2K](SpecImportVVV2K.md) | Feature Specification: VVV2K — Full Import of a VVV Database into Katalog | — | — | — |
 | [SpecKeyboardShortcuts](SpecKeyboardShortcuts.md) | KEYBOARD SHORTCUTS — ESC GOES BACK ONE STEP | Approved | complete | — |
 | [SpecK2Deployment](SpecK2Deployment.md) | K2 DEPLOYMENT — STARTUP OF THE LINUX APPIMAGE ON ANY DESKTOP | Approved | mostly complete | — |

@@ -67,6 +67,7 @@ ColumnLayout {
             }
             IconButton {
                 icon.name: "folder-open"
+                text: qsTr("Select a folder")
                 onClicked: {
                     var p = folderPathField.text.trim()
                     tagFolderDialog.currentFolder = appManager1.pathToFileUrl(
@@ -176,6 +177,7 @@ ColumnLayout {
                     }
                     IconButton {
                         icon.name: "edit-delete"
+                        text: qsTr("Remove this tag")
                         flat: true
                         onClicked: appManager1.deleteTag(modelData.tagId)
                     }

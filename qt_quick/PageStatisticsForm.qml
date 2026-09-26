@@ -199,10 +199,12 @@ ColumnLayout {
             }
             IconButton {
                 icon.name: "view-calendar"
+                text: qsTr("Select a date")
                 onClicked: statsDateDialog.open()
             }
             IconButton {
                 icon.name: "edit-clear-history"
+                text: qsTr("Clear")
                 onClicked: {
                     startDateField.text = ""
                     root.startDateText  = ""

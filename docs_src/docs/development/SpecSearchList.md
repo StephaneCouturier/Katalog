@@ -522,17 +522,27 @@ A single-term search renders exactly as it does today: `"holidays france"`.
 
 ### Translation impact
 
-**Zero new translatable strings.** This is a hard requirement of the design:
+**Zero new translatable strings**, except approved tooltips (`SRL-C6`):
 
 - `+` and `−` are icon-only (`list-add` / `list-remove`), matching the adjacent
-  `✕` / `📋` / `⌫` buttons, which carry no tooltip in K3 today.
+  `✕` / `📋` / `⌫` buttons. Their tooltips are governed by `ICB-F1`
+  (`SpecIconButtons.md`), see below.
 - The history summary joins terms with quotes and `", "` — punctuation only, no
   `tr()`.
 - No placeholder text is added to the rows.
 
-If tooltips are ever wanted on `+` / `−`, they must be added to all five buttons
-in the row together, with per-string approval, and must reuse the existing K2
-tooltip strings where one fits (`mainwindow.ui:945`).
+*Superseded 2026-09-26 by `ICB-F1` (`SpecIconButtons.md`).* The earlier note
+required tooltips to be added to all five buttons together. Instead, every
+icon-only button carries a tooltip once its string is approved (`ICB-C1`), on
+both the text list and the exclude list:
+
+- `📋` Paste: `Paste the text from the clipboard` — approved, reused verbatim
+  from K2 (`mainwindow.ui:945`).
+- `⌫` Clean: `Clean the search Text from characters such as _ - . ,` —
+  approved, reused verbatim from K2.
+- `+`: `Add a term` — approved, new string.
+- `−`: `Remove this term` — approved, new string.
+- Inline clear icon: `Clear` — approved, reused from K3.
 
 ### Validation
 
@@ -604,14 +614,14 @@ covered by the original exclude-row approval. Both are now approved.
 
 | ID | Requirement | Status |
 |----|-------------|--------|
-| SRL-F1 | The text criterion is a list of rows, one term per row, showing exactly one row when empty. | [Planned] |
-| SRL-F2 | `+` appends an empty row and focuses it. `−` deletes its row and is hidden when only one row exists, so the last row cannot be deleted. | [Planned] |
+| SRL-F1 | The text criterion is a list of rows, one term per row, showing exactly one row when empty. | [Implemented] |
+| SRL-F2 | `+` appends an empty row and focuses it. `−` deletes its row and is hidden when only one row exists, so the last row cannot be deleted. | [Implemented] |
 | SRL-F3 | Terms are combined with **OR**: a file matches if it matches any row. The `with` mode applies to each row independently. | [Implemented] |
-| SRL-F4 | The exclude criterion is the same row list. Exclude terms are combined with **AND NOT**. | [Planned] |
+| SRL-F4 | The exclude criterion is the same row list. Exclude terms are combined with **AND NOT**. | [Implemented] |
 | SRL-F5 | `Enter` runs the search from any row — unchanged from today and from K2. | [Implemented] |
-| SRL-F6 | The `📋` Paste button replaces the whole list with the clipboard, one row per non-empty line. | [Planned] |
-| SRL-F7 | `Ctrl+V` of multi-line clipboard content splices the lines in at the cursor as new rows; single-line content pastes normally. Newlines are never silently dropped. | [Planned] |
-| SRL-F8 | The inline clear icon empties its own row and leaves focus in it. `⌫` Clean applies `returnCleanedText()` to every row. | [Planned] |
+| SRL-F6 | The `📋` Paste button replaces the whole list with the clipboard, one row per non-empty line. | [Implemented] |
+| SRL-F7 | `Ctrl+V` of multi-line clipboard content splices the lines in at the cursor as new rows; single-line content pastes normally. Newlines are never silently dropped. | [Implemented] |
+| SRL-F8 | The inline clear icon empties its own row and leaves focus in it. `⌫` Clean applies `returnCleanedText()` to every row. | [Implemented] |
 | SRL-F9 | On launch, rows are trimmed and blank rows are excluded from the criteria; an all-blank list is equivalent to an empty field. | [Planned] |
 | SRL-F10 | A multi-term search is saved to history and restored from it with every term, in order, alongside all other criteria. | [Planned] |
 | SRL-F11 | The history summary renders each term quoted and joined with `", "`, on a single line, with the criteria suffix appended once. | [Planned] |
@@ -625,7 +635,7 @@ covered by the original exclude-row approval. Both are now approved.
 | SRL-C3 | **Approved core change.** The exclude splitter in `Search::prepareSearchPatterns()` becomes `split(QRegularExpression("\\s+"), Qt::SkipEmptyParts)` so a newline is treated as a separator. Behaviour is unchanged for any input whose only whitespace is the space character. | [Planned] |
 | SRL-C4 | `prepareSearchPatterns()` MUST guard against an empty term list before indexing `lineFieldList[0]` (`core/search.cpp:357`). **Approved core change.** | [Planned] |
 | SRL-C5 | Search history MUST survive a multi-line `text_phrase` in **Memory** mode. `Collection::saveSearchHistoryTableToFile()` / `loadSearchHistoryFileToTable()` escape and unescape the `\t` and `\n` delimiters. **Approved core change.** | [Planned] |
-| SRL-C6 | The phase MUST add **zero** new translatable strings. `+` / `−` are icon-only; the history separator is punctuation. | [Planned] |
+| SRL-C6 | The phase MUST add **zero** new translatable strings, except tooltip strings approved under `ICB-F1` / `ICB-C1` (`SpecIconButtons.md`). `+` / `−` are icon-only; the history separator is punctuation. *(Amended 2026-09-26: tooltip exception added.)* | [Planned] |
 | SRL-C10 | A term pattern MUST NOT contain a **top-level alternation**: the exclude clause is prefixed to it and `\|` binds looser than concatenation, so a bare `a\|b` leaves the exclude guarding only `a`. *Any Word* and *Regex* term patterns, and the multi-term join, are wrapped in `(?:…)`. | [Planned] |
 | SRL-C11 | The exclude clause is anchored with `^`, so the search pattern MUST be combined with it as a **lookahead** (`^(?!…)(?=.*PATTERN)`), never by concatenation. Concatenating forces the search to match at position 0, turning *Exact Phrase*, *Any Word* and *Regex* into "starts with" searches whenever an exclude term is present. | [Planned] |
 | SRL-C7 | K2 MUST NOT change. Both versions keep writing the same `\n`-joined format to the same `search` table, and each restores the other's saved searches. | [Planned] |
@@ -656,7 +666,7 @@ For each row: set up the stated condition, run the operation, confirm the result
 - **SRL-C5** — **In Memory mode**, run a three-term search, close and reopen the collection. The history entry survives intact, with all criteria, and no bogus extra entries appear.
 - **SRL-C7** — Save a multi-term search in K3, open the same collection in K2: the phrase appears as multiple lines. Save a multi-line search in K2, open in K3: it appears as multiple rows.
 - **SRL-C9** — List search history from the command line with `--verbose`. Each entry prints on one line.
-- **SRL-C6** — Run `ninja translations_lupdate`. No new untranslated string appears for the search form.
+- **SRL-C6** — Run `ninja translations_lupdate`. No new untranslated string appears for the search form, other than tooltip strings approved under `ICB-C1` (`SpecIconButtons.md`).
 - **P4** — Enter 10 rows. The list scrolls within a bounded height instead of pushing the rest of the form off screen.
 
 ---

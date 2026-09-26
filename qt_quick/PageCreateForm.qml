@@ -147,6 +147,7 @@ ColumnLayout {
             }
             IconButton {
                 icon.name: "folder-open"
+                text: qsTr("Select the path")
                 onClicked: {
                     var p = create_lineEdit_NewCatalogPath.text.trim()
                     if (p !== "") sourcePathDialog.currentFolder = appManager1.pathToFileUrl(p)
@@ -299,6 +300,7 @@ ColumnLayout {
             }
             IconButton {
                 icon.name: "folder-open"
+                text: qsTr("Select the path")
                 onClicked: {
                     var p = create_lineEdit_NewCatalogPath.text.trim()
                     if (p !== "") perCatalogExcludeDialog.currentFolder = appManager1.pathToFileUrl(p)
@@ -335,6 +337,7 @@ ColumnLayout {
                     }
                     IconButton {
                         icon.name: "edit-delete"
+                        text: qsTr("Remove")
                         flat: true
                         onClicked: pendingExcludesModel.remove(index)
                     }
@@ -359,6 +362,7 @@ ColumnLayout {
             }
             IconButton {
                 id: create_button_ToggleGlobalParams
+                text: globalParamsExpanded ? qsTr("Collapse") : qsTr("Expand")
                 icon.name: globalParamsExpanded ? "go-up" : "go-down"
                 flat: true
                 onClicked: globalParamsExpanded = !globalParamsExpanded
@@ -381,6 +385,7 @@ ColumnLayout {
             }
             IconButton {
                 icon.name: "folder-open"
+                text: qsTr("Select the path")
                 onClicked: {
                     var p = create_lineEdit_NewCatalogPath.text.trim()
                     if (p !== "") globalExcludeDialog.currentFolder = appManager1.pathToFileUrl(p)
@@ -420,6 +425,7 @@ ColumnLayout {
                     }
                     IconButton {
                         icon.name: "edit-delete"
+                        text: qsTr("Remove")
                         flat: true
                         onClicked: appManager1.removeExcludeDirectory(modelData)
                     }

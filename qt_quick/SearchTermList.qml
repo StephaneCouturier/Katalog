@@ -285,7 +285,9 @@ ColumnLayout {
                             visible: root.showInlineClear && parent.text.length > 0
                             opacity: rowClearTap.pressed ? 0.5 : 1.0
                             Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration } }
-                            HoverHandler { cursorShape: Qt.ArrowCursor }
+                            HoverHandler { id: rowClearHover; cursorShape: Qt.ArrowCursor }
+                            Controls.ToolTip.text: qsTr("Clear")
+                            Controls.ToolTip.visible: rowClearHover.hovered
                             TapHandler {
                                 id: rowClearTap
                                 // Focus follows the clear, so the user can retype
@@ -302,6 +304,7 @@ ColumnLayout {
 
                     IconButton {
                         icon.name: "list-remove"
+                        text: qsTr("Remove this term")
                         flat: true
                         // Hidden on a single-row list, so the last row can never be
                         // removed and a one-term search looks unchanged.
@@ -315,6 +318,7 @@ ColumnLayout {
 
     IconButton {
         icon.name: "list-add"
+        text: qsTr("Add a term")
         flat: true
         Layout.alignment: Qt.AlignLeft
         onClicked: root._addRowAfter(termsModel.count - 1)

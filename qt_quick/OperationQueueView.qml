@@ -163,6 +163,7 @@ Controls.ToolBar {
                 }
                 IconButton {
                     icon.name: "list-remove"
+                    text: qsTr("Remove")
                     flat: true
                     // Waiting entries only; the running one is stopped above.
                     onClicked: appManager1.removeQueuedOperation(

@@ -245,8 +245,8 @@ ColumnLayout {
             }
 
             IconButton {
-                //text: qsTr("Run")
                 icon.name: "document-export"
+                text: qsTr("Run process on all results")
                 enabled: (newSearch1.properties.filesFoundNumber ?? 0) > 0
                 onClicked: {
                     let action = batchActionCombo.currentValue
