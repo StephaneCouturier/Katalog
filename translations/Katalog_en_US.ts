@@ -8378,7 +8378,7 @@ Errors: %3</source>
     </message>
     <message>
         <location line="+5"/>
-        <source>Allow deleting files from Katalog</source>
+        <source>Authorize actions that delete files (no recovery)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

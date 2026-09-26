@@ -8728,8 +8728,8 @@ Erros: %3</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Allow deleting files from Katalog</source>
-        <translation>Permitir que o Katalog elimine ficheiros</translation>
+        <source>Authorize actions that delete files (no recovery)</source>
+        <translation>Autorizar ações que eliminam ficheiros (sem recuperação)</translation>
     </message>
     <message>
         <location line="+6"/>

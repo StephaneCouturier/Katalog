@@ -636,7 +636,7 @@ Kirigami.ScrollablePage {
                 onCheckedChanged: appManager1.refreshDeviceStatusOnActivation = checked
             }
             Controls.CheckBox {
-                text: qsTr("Allow deleting files from Katalog")
+                text: qsTr("Authorize actions that delete files (no recovery)")
                 checked: appManager1.allowFileDeletion
                 onCheckedChanged: appManager1.allowFileDeletion = checked
             }

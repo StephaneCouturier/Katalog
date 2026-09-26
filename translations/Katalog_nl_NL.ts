@@ -8727,8 +8727,8 @@ Fouten: %3</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Allow deleting files from Katalog</source>
-        <translation>Toestaan dat Katalog bestanden verwijdert</translation>
+        <source>Authorize actions that delete files (no recovery)</source>
+        <translation>Acties toestaan die bestanden verwijderen (geen herstel)</translation>
     </message>
     <message>
         <location line="+6"/>

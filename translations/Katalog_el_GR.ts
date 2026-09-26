@@ -8729,8 +8729,8 @@ Errors: %3</source>
     </message>
     <message>
         <location line="+5"/>
-        <source>Allow deleting files from Katalog</source>
-        <translation>Να επιτρέπεται στο Katalog η διαγραφή αρχείων</translation>
+        <source>Authorize actions that delete files (no recovery)</source>
+        <translation>Να επιτρέπονται ενέργειες που διαγράφουν αρχεία (χωρίς ανάκτηση)</translation>
     </message>
     <message>
         <location line="+6"/>

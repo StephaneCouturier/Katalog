@@ -8728,8 +8728,8 @@ Fejl: %3</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Allow deleting files from Katalog</source>
-        <translation>Tillad Katalog at slette filer</translation>
+        <source>Authorize actions that delete files (no recovery)</source>
+        <translation>Tillad handlinger, der sletter filer (ingen gendannelse)</translation>
     </message>
     <message>
         <location line="+6"/>

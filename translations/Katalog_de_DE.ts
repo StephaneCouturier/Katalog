@@ -8728,8 +8728,8 @@ Fehler: %3</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Allow deleting files from Katalog</source>
-        <translation>Katalog das Löschen von Dateien erlauben</translation>
+        <source>Authorize actions that delete files (no recovery)</source>
+        <translation>Aktionen erlauben, die Dateien löschen (keine Wiederherstellung)</translation>
     </message>
     <message>
         <location line="+6"/>

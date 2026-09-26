@@ -8728,8 +8728,8 @@ Virheitä: %3</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Allow deleting files from Katalog</source>
-        <translation>Salli Katalogin poistaa tiedostoja</translation>
+        <source>Authorize actions that delete files (no recovery)</source>
+        <translation>Salli toiminnot, jotka poistavat tiedostoja (ei palautusta)</translation>
     </message>
     <message>
         <location line="+6"/>

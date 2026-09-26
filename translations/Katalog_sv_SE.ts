@@ -8728,8 +8728,8 @@ Fel: %3</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Allow deleting files from Katalog</source>
-        <translation>Tillåt Katalog att ta bort filer</translation>
+        <source>Authorize actions that delete files (no recovery)</source>
+        <translation>Tillåt åtgärder som tar bort filer (ingen återställning)</translation>
     </message>
     <message>
         <location line="+6"/>

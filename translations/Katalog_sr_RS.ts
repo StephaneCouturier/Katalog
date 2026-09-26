@@ -8728,8 +8728,8 @@ Errors: %3</source>
     </message>
     <message>
         <location line="+5"/>
-        <source>Allow deleting files from Katalog</source>
-        <translation>Dozvoli Katalogu da briše datoteke</translation>
+        <source>Authorize actions that delete files (no recovery)</source>
+        <translation>Dozvoli radnje koje brišu datoteke (bez oporavka)</translation>
     </message>
     <message>
         <location line="+6"/>

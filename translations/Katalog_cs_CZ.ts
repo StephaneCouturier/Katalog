@@ -8728,8 +8728,8 @@ Chyby: %3</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Allow deleting files from Katalog</source>
-        <translation>Povolit aplikaci Katalog mazat soubory</translation>
+        <source>Authorize actions that delete files (no recovery)</source>
+        <translation>Povolit akce, které mažou soubory (bez možnosti obnovení)</translation>
     </message>
     <message>
         <location line="+6"/>

@@ -8728,8 +8728,8 @@ Errors: %3</source>
     </message>
     <message>
         <location line="+5"/>
-        <source>Allow deleting files from Katalog</source>
-        <translation>允许 Katalog 删除文件</translation>
+        <source>Authorize actions that delete files (no recovery)</source>
+        <translation>允许删除文件的操作（无法恢复）</translation>
     </message>
     <message>
         <location line="+6"/>

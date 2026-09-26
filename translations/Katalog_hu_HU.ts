@@ -8727,8 +8727,8 @@ Hibák: %3</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Allow deleting files from Katalog</source>
-        <translation>A Katalog törölhet fájlokat</translation>
+        <source>Authorize actions that delete files (no recovery)</source>
+        <translation>Fájlokat törlő műveletek engedélyezése (nem visszaállítható)</translation>
     </message>
     <message>
         <location line="+6"/>

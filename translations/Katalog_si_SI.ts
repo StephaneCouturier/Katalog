@@ -8729,8 +8729,8 @@ Napake: %3</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Allow deleting files from Katalog</source>
-        <translation>Dovoli programu Katalog brisanje datotek</translation>
+        <source>Authorize actions that delete files (no recovery)</source>
+        <translation>Dovoli dejanja, ki brišejo datoteke (brez obnovitve)</translation>
     </message>
     <message>
         <location line="+6"/>

@@ -8728,8 +8728,8 @@ Vigu: %3</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Allow deleting files from Katalog</source>
-        <translation>Luba Katalogil faile kustutada</translation>
+        <source>Authorize actions that delete files (no recovery)</source>
+        <translation>Luba toimingud, mis kustutavad faile (taastamine pole võimalik)</translation>
     </message>
     <message>
         <location line="+6"/>

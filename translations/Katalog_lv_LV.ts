@@ -8728,8 +8728,8 @@ Kļūdas: %3</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Allow deleting files from Katalog</source>
-        <translation>Atļaut Katalog dzēst failus</translation>
+        <source>Authorize actions that delete files (no recovery)</source>
+        <translation>Atļaut darbības, kas dzēš failus (bez atkopšanas)</translation>
     </message>
     <message>
         <location line="+6"/>

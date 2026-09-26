@@ -8728,8 +8728,8 @@ Kesalahan: %3</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Allow deleting files from Katalog</source>
-        <translation>Izinkan Katalog menghapus file</translation>
+        <source>Authorize actions that delete files (no recovery)</source>
+        <translation>Izinkan tindakan yang menghapus file (tanpa pemulihan)</translation>
     </message>
     <message>
         <location line="+6"/>

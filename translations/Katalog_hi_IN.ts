@@ -8727,8 +8727,8 @@ Errors: %3</source>
     </message>
     <message>
         <location line="+5"/>
-        <source>Allow deleting files from Katalog</source>
-        <translation>Katalog को फ़ाइलें डिलीट करने की अनुमति दें</translation>
+        <source>Authorize actions that delete files (no recovery)</source>
+        <translation>फ़ाइलें डिलीट करने वाली क्रियाओं की अनुमति दें (पुनर्प्राप्ति संभव नहीं)</translation>
     </message>
     <message>
         <location line="+6"/>
