@@ -18,9 +18,6 @@ RowLayout {
     required property string deviceName
     property bool deviceIsActive: false
 
-    // Scales with the Selection page's card-size setting.
-    property real fontScale: 1.0
-
     // Overridden when the name sits on a filled highlight, where the ordinary
     // text colour would have too little contrast.
     property color nameColor: Kirigami.Theme.textColor
@@ -74,7 +71,7 @@ RowLayout {
         wrapMode:  identity.nameWraps ? Text.Wrap : Text.NoWrap
         elide:     identity.nameWraps ? Text.ElideNone : Text.ElideRight
         maximumLineCount: identity.nameWraps ? Number.MAX_VALUE : 1
-        font.pointSize: Kirigami.Theme.defaultFont.pointSize * identity.fontScale
+        font.pointSize: Kirigami.Theme.defaultFont.pointSize
 
         // font.weight, not font.bold: Kirigami.Heading binds font.weight from its
         // own level, and that binding overwrites whatever font.bold sets.

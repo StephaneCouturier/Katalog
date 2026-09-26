@@ -272,15 +272,23 @@ ColumnLayout {
         antialiasing: true
         legend.visible:    true
         legend.alignment:  Qt.AlignBottom
+        // Charts copy the application font once at creation; bound here so the
+        // text-size setting reaches them (TYP-F7).
+        legend.font.pointSize:       Kirigami.Theme.defaultFont.pointSize
+        titleFont.pointSize:         Kirigami.Theme.defaultFont.pointSize
 
         DateTimeAxis {
             id: axisX
             format:    "yyyy-MM-dd"
             titleText: qsTr("Date")
+            labelsFont.pointSize: Kirigami.Theme.defaultFont.pointSize
+            titleFont.pointSize:  Kirigami.Theme.defaultFont.pointSize
         }
         ValueAxis {
             id: axisY
             titleText: qsTr("Total")
+            labelsFont.pointSize: Kirigami.Theme.defaultFont.pointSize
+            titleFont.pointSize:  Kirigami.Theme.defaultFont.pointSize
             min: 0
             max: 100
         }

@@ -237,7 +237,6 @@ Kirigami.AbstractCard {
                         deviceType:     card.devType
                         deviceName:     card.devName
                         deviceIsActive: card.devActive
-                        fontScale:      card.delegateCardScale
                     }
 
                     // The user's own note, beside the name when there is one.
@@ -254,7 +253,7 @@ Kirigami.AbstractCard {
                         // instead of being cut off (CDT-F1 / DVP-C17).
                         wrapMode: Text.Wrap
                         opacity: 0.7
-                        font.pointSize: Kirigami.Theme.defaultFont.pointSize * card.delegateCardScale
+                        font.pointSize: Kirigami.Theme.defaultFont.pointSize
                     }
                 }
 
@@ -276,7 +275,7 @@ Kirigami.AbstractCard {
                     // Wraps onto as many lines as it needs, so the date at the
                     // end stays readable on a narrow card (CDT-F1 / DVP-F18).
                     wrapMode: Text.Wrap
-                    font.pointSize: Kirigami.Theme.defaultFont.pointSize * card.delegateCardScale
+                    font.pointSize: Kirigami.Theme.defaultFont.pointSize
                     text: {
                         var d = card.modelData
                         var parts = []

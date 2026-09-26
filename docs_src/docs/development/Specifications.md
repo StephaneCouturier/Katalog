@@ -44,7 +44,7 @@ specification and the code disagree, the specification is what was agreed.
 | [SpecSelection](SpecSelection.md) | SELECTION — SELECTED DEVICE | Approved | planned | — |
 | [SpecStorageIdentity](SpecStorageIdentity.md) | STORAGE Identity | Approved | planned | [TestStorageIdentity](TestStorageIdentity.md) |
 | [SpecTheme](SpecTheme.md) | Theme, colour derivation and icon size | Draft | partial | — |
-| [SpecTypography](SpecTypography.md) | TYPOGRAPHY — TEXT SIZE DERIVED FROM THE SYSTEM FONT | Approved | planned | — |
+| [SpecTypography](SpecTypography.md) | TYPOGRAPHY — TEXT SIZE DERIVED FROM THE SYSTEM FONT | Approved | partial | — |
 | [SpecValidationRules](SpecValidationRules.md) | Form Validation Rules | Approved | partial | — |
 | [SpecVersions](SpecVersions.md) | Version Numbers | — | — | — |
 

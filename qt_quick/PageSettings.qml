@@ -12,6 +12,10 @@ Kirigami.ScrollablePage {
     // Set to true when opened from Open Collection > Hosted Db menu
     property bool showHostedForm: false
 
+    // Text-size setting (TYP-F2 / TYP-F9): owned and persisted by Main.qml.
+    property real textScale: 1.0
+    signal textScaleEdited(real value)
+
     Connections {
         target: appManager1
         function onDatabaseModeChanged() {
@@ -604,6 +608,12 @@ Kirigami.ScrollablePage {
                 checked: appManager1.checkVersionChoice
                 onCheckedChanged: appManager1.checkVersionChoice = checked
             }
+        }
+
+        Controls.Label { text: qsTr("Behavior"); opacity: 0.7; Layout.alignment: Qt.AlignTop; Layout.topMargin: Kirigami.Units.largeSpacing * 2 }
+        ColumnLayout {
+            spacing: Kirigami.Units.smallSpacing
+            Layout.topMargin: Kirigami.Units.largeSpacing * 2
             Controls.CheckBox {
                 text: qsTr("File sorting is Case Sensitive")
                 checked: appManager1.fileSortCaseSensitive
@@ -621,9 +631,14 @@ Kirigami.ScrollablePage {
                 checked: appManager1.allowFileDeletion
                 onCheckedChanged: appManager1.allowFileDeletion = checked
             }
+        }
+
+        Controls.Label { text: qsTr("Theme"); opacity: 0.7; Layout.alignment: Qt.AlignTop; Layout.topMargin: Kirigami.Units.largeSpacing * 2 }
+        ColumnLayout {
+            spacing: Kirigami.Units.smallSpacing
+            Layout.topMargin: Kirigami.Units.largeSpacing * 2
             RowLayout {
                 spacing: Kirigami.Units.largeSpacing
-                Controls.Label { text: qsTr("Theme"); opacity: 0.7 }
                 Controls.ComboBox {
                     id: themeComboBox
                     // Listed with the two desktop variants together, but the
@@ -664,6 +679,33 @@ Kirigami.ScrollablePage {
                 text: qsTr("Use bigger icon size")
                 checked: appManager1.biggerIconSize
                 onToggled: appManager1.biggerIconSize = checked
+            }
+            // App-wide text size (TYP-F9): 0.8 to 1.2, step 0.1.
+            RowLayout {
+                spacing: Kirigami.Units.smallSpacing
+                Controls.Label { text: qsTr("Text size") }
+                Controls.ToolButton {
+                    icon.name: "zoom-out"
+                    enabled: textSizeSlider.value > textSizeSlider.from
+                    onClicked: pageSettingsRoot.textScaleEdited(
+                                   Math.max(textSizeSlider.from, textSizeSlider.value - textSizeSlider.stepSize))
+                }
+                Controls.Slider {
+                    id: textSizeSlider
+                    from: 0.8
+                    to: 1.2
+                    stepSize: 0.1
+                    snapMode: Controls.Slider.SnapAlways
+                    value: pageSettingsRoot.textScale
+                    onMoved: pageSettingsRoot.textScaleEdited(value)
+                    Layout.preferredWidth: Kirigami.Units.gridUnit * 8
+                }
+                Controls.ToolButton {
+                    icon.name: "zoom-in"
+                    enabled: textSizeSlider.value < textSizeSlider.to
+                    onClicked: pageSettingsRoot.textScaleEdited(
+                                   Math.min(textSizeSlider.to, textSizeSlider.value + textSizeSlider.stepSize))
+                }
             }
         }
 

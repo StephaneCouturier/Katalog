@@ -60,6 +60,8 @@ QString quoteSearchTerms(const QString &stored)
 
 AppManager::AppManager(QObject *parent) : QObject(parent)
 {
+    // Created before the QML engine loads, so this is still the OS font.
+    m_systemFont = QGuiApplication::font();
     m_importSourceDeviceModel = new DeviceListModel(this);
     m_importSourceDeviceModel->setIncludeCollectionRoot(true);
 }
@@ -920,6 +922,19 @@ QVariantMap AppManager::getWindowGeometry() const
     }
 
     return geometry;
+}
+//----------------------------------------------------------------------
+void AppManager::setTextScale(qreal scale)
+{
+    // App-wide text size (TYP-F7): scaling the application font reaches every
+    // control, including those the style or Kirigami draw with the application
+    // font (combo boxes, toolbar buttons, drawer entries, headings).
+    QFont font = m_systemFont;
+    if (m_systemFont.pointSizeF() > 0)
+        font.setPointSizeF(m_systemFont.pointSizeF() * scale);
+    else
+        font.setPixelSize(qRound(m_systemFont.pixelSize() * scale));
+    QGuiApplication::setFont(font);
 }
 //----------------------------------------------------------------------
 void AppManager::saveWindowGeometry(int x, int y, int width, int height, bool maximized)

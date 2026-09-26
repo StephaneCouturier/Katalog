@@ -145,7 +145,6 @@ Kirigami.AbstractCard {
                     deviceName:     model.name
                     deviceIsActive: model.isActive
                     iconSize:       card.deviceIconSize
-                    fontScale:      root.cardScale
                     // The selected card is filled with the highlight colour, so
                     // the name needs the colour meant to sit on it.
                     nameColor:      card.isSelected ? Kirigami.Theme.highlightedTextColor
@@ -168,7 +167,7 @@ Kirigami.AbstractCard {
                     wrapMode: Text.WordWrap
                     text: model.description
                     visible: appManager1.showDeviceInfo && model.description.length > 0
-                    font.pointSize: Kirigami.Theme.defaultFont.pointSize * root.cardScale * 0.80
+                    font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.80
                     color: card.isSelected ? Kirigami.Theme.highlightedTextColor
                                            : Kirigami.Theme.textColor
                 }

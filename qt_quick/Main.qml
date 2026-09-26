@@ -6,6 +6,7 @@ import org.kde.kirigami as Kirigami
 import QtQuick.Dialogs as Dialogs
 import Qt.labs.platform
 import QtCore
+import QtQml.Models
 import Katalog 3.0
 
 // Provides basic features needed for all kirigami applications
@@ -83,6 +84,83 @@ Kirigami.ApplicationWindow {
 
     signal searchTriggered()
     property real cardScale: 1.0
+
+    // App-wide text size (TYP-F7): scales the application font, which
+    // Kirigami.Theme.defaultFont follows, so no QML item multiplies by it again.
+    // The window font carries it to the controls too: Qt Quick Controls take
+    // their default font per control type from the platform theme, not from
+    // the application font, so buttons would not follow otherwise.
+    onCardScaleChanged: appManager1.setTextScale(cardScale)
+
+    // A page hidden while the text size changes gets the new font values but
+    // keeps drawing with the old ones (style-drawn controls do not repaint while
+    // hidden). When such a page is shown again, the size is nudged and restored
+    // in the same frame, which makes every item redraw at the current size.
+    property var _pageTextScale: new Map()
+    function refreshTextIfStale(page) {
+        let shownAt = _pageTextScale.get(page)
+        _pageTextScale.set(page, cardScale)
+        // A page never shown yet counts as stale too: hidden pages are drawn
+        // at creation, before the saved or changed size reaches them.
+        if (shownAt !== cardScale) {
+            appManager1.setTextScale(cardScale + 0.01)
+            appManager1.setTextScale(cardScale)
+        }
+    }
+
+    // The top line of the window (drawer collection name, page title, page
+    // toolbar buttons) keeps the system size: the text-size setting does not
+    // apply to it. Kirigami builds the page header itself, rebuilds it every
+    // time the page is shown (its loader is only active while the page is
+    // visible), and creates the toolbar buttons asynchronously afterwards. So
+    // the header is pinned each time Kirigami creates it. Items get the system
+    // size explicitly (whole-font
+    // assignment, replacing Kirigami's own font binding); headings keep
+    // Kirigami's level factors.
+    Instantiator {
+        model: [pageSelection, pageSearch, pageSearchResults, pageDevices, pageExplore,
+                pageCreate, pageDeviceEdit, pageStatistics, pageTags, pageBackup]
+        delegate: Connections {
+            required property var modelData
+            target: modelData
+            function onGlobalToolBarItemChanged() { root.pinHeaderFont(modelData.globalToolBarItem) }
+        }
+    }
+    Connections {
+        target: pageStack.layers.currentItem
+        ignoreUnknownSignals: true
+        function onGlobalToolBarItemChanged() { root.pinHeaderFont(pageStack.layers.currentItem.globalToolBarItem) }
+    }
+    // A layer's header is created during the push, before the connection above
+    // retargets to it, so it is also pinned once the layer becomes current.
+    Connections {
+        target: pageStack.layers
+        function onCurrentItemChanged() {
+            Qt.callLater(function() {
+                let layer = pageStack.layers.currentItem
+                if (layer && pageStack.layers.depth > 1)
+                    root.pinHeaderFont(layer.globalToolBarItem)
+            })
+        }
+    }
+    function pinHeaderFont(item) {
+        if (!item)
+            return
+        const base = appManager1.systemTextPointSize
+        const headingFactor = {1: 1.35, 2: 1.20, 3: 1.15, 4: 1.10}
+        if (item.font !== undefined) {
+            let factor = ("level" in item) ? (headingFactor[item.level] || 1.0) : 1.0
+            if (item.font.pointSize !== base * factor) {
+                let f = item.font
+                f.pointSize = base * factor
+                item.font = f
+            }
+        }
+        for (let i = 0; i < item.children.length; ++i)
+            pinHeaderFont(item.children[i])
+    }
+
+    font.pointSize: Kirigami.Theme.defaultFont.pointSize
 
     // The height the platform's own toolbar takes, measured rather than assumed:
     // Breeze and Fusion pad differently, so any fixed number is right on one
@@ -269,9 +347,11 @@ Kirigami.ApplicationWindow {
             for (var j = pages.length - 1; j >= 0; j--)
                 pageStack.removePage(pages[j])
             pageSelection.visible = true
+            refreshTextIfStale(pageSelection)
             pageStack.push(pageSelection)
             for (var k = 0; k < pages.length; k++) {
                 pages[k].visible = true
+                refreshTextIfStale(pages[k])
                 pageStack.push(pages[k])
             }
             pageStack.currentIndex = pageStack.depth - 1
@@ -356,6 +436,7 @@ Kirigami.ApplicationWindow {
         // Selection if it is hidden so the feature page becomes column 0.
         removeAllFeaturePages()
         page.visible = true
+        refreshTextIfStale(page)
         pageStack.push(page)
         featureOpen = true
         syncSelectionVisibility()
@@ -452,6 +533,7 @@ Kirigami.ApplicationWindow {
                     Controls.Label {
                         text: appManager1.currentCollectionDisplayName
                         font.bold: true
+                        font.pointSize: appManager1.systemTextPointSize   // top line keeps the system size
                         elide: Text.ElideRight
                         color: Kirigami.Theme.highlightedTextColor
                         Layout.fillWidth: true
@@ -691,46 +773,6 @@ Kirigami.ApplicationWindow {
                     opacity: 0.7
                 }
             }
-
-            Controls.Label {
-                text: qsTr("Card text size")
-                //font.bold: true
-                width: parent.width
-            }
-
-            Row {
-                width: parent.width
-                spacing: Kirigami.Units.smallSpacing
-
-                Controls.ToolButton {
-                    icon.name: "zoom-out"
-                    implicitWidth:  Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing * 2
-                    implicitHeight: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing * 2
-                    onClicked: cardSizeSlider.value = Math.max(cardSizeSlider.from,
-                                   cardSizeSlider.value - cardSizeSlider.stepSize)
-                }
-
-                Controls.Slider {
-                    id: cardSizeSlider
-                    from: 0.7
-                    to: 1.3
-                    value: windowSettings.savedCardScale
-                    stepSize: 0.1
-                    width: parent.width - 80
-                    onValueChanged: {
-                        root.cardScale = value
-                        windowSettings.savedCardScale = value
-                    }
-                }
-
-                Controls.ToolButton {
-                    icon.name: "zoom-in"
-                    implicitWidth:  Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing * 2
-                    implicitHeight: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing * 2
-                    onClicked: cardSizeSlider.value = Math.min(cardSizeSlider.to,
-                                   cardSizeSlider.value + cardSizeSlider.stepSize)
-                }
-            }
         }
     }
 
@@ -782,7 +824,8 @@ Kirigami.ApplicationWindow {
             visibility = Window.Maximized
         root._geometryRestored = true
 
-        root.cardScale = windowSettings.savedCardScale
+        // Clamped to the setting's range (TYP-F10): earlier builds allowed 0.7 to 1.3.
+        root.cardScale = Math.min(1.2, Math.max(0.8, windowSettings.savedCardScale))
 
         if (appManager1.isFirstRun) {
             firstRunWelcomeDialog.open()
@@ -820,6 +863,9 @@ Kirigami.ApplicationWindow {
             if (last !== "Selection" && pageMap[last])
                 root.showPage(pageMap[last])
         }
+        // Headers that already exist before the connections above could see them.
+        for (let i = 0; i < pageStack.depth; ++i)
+            root.pinHeaderFont(pageStack.get(i).globalToolBarItem)
     }
 
     onXChanged:      root.trackWindowedGeometry()
@@ -1483,7 +1529,6 @@ Kirigami.ApplicationWindow {
                     deviceName: appManager1.selectedDeviceId > 0
                                 ? appManager1.selectedDeviceName : qsTr("All")
                     deviceIsActive: appManager1.selectedDeviceIsActive
-                    fontScale:  root.cardScale
                 }
             }
 
@@ -1596,6 +1641,10 @@ Kirigami.ApplicationWindow {
     //Pages - Search
     Kirigami.ScrollablePage {
         id: pageSearch
+        // Hidden until pushed, like every other feature page: when the app opens
+        // on another page, Search is never pushed and would otherwise stay drawn
+        // on the window behind the page stack.
+        visible: false
         property Kirigami.Action escapeAction: pageSearchEscapeAction  // Esc (KBS-F1)
         title: qsTr("Search")
 
@@ -1634,6 +1683,7 @@ Kirigami.ApplicationWindow {
                 // the user back-navigated without removing pages, push() would drop Search.
                 pageStack.currentIndex = searchIdx
                 pageSearchResults.visible = true
+                root.refreshTextIfStale(pageSearchResults)
                 pageStack.push(pageSearchResults)
             }
         }
@@ -2182,7 +2232,14 @@ Kirigami.ApplicationWindow {
     //Pages - Settings
     Component {
         id: settingsPageComponent
-        PageSettings {}
+        PageSettings {
+            textScale: root.cardScale
+            onTextScaleEdited: function(value) {
+                value = Math.round(value * 10) / 10   // keep exact steps (0.8 … 1.2)
+                root.cardScale = value
+                windowSettings.savedCardScale = value
+            }
+        }
     }
 
     // Dialogs - triggered from Open Collection menu

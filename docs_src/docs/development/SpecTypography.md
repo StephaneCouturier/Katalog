@@ -7,7 +7,7 @@ version: "2.13"
 
 # TYPOGRAPHY — TEXT SIZE DERIVED FROM THE SYSTEM FONT
 
-![Status](https://img.shields.io/badge/Status-Approved-brightgreen) ![Version](https://img.shields.io/badge/Version-2.13-blue) ![Implementation](https://img.shields.io/badge/Implementation-planned-lightgrey)
+![Status](https://img.shields.io/badge/Status-Approved-brightgreen) ![Version](https://img.shields.io/badge/Version-2.13-blue) ![Implementation](https://img.shields.io/badge/Implementation-partial-yellow)
 
 ## Context
 
@@ -16,20 +16,27 @@ font size, aligned by default with the system**: the operating system's default
 font. Every text size in K3 is derived from it, so a user who changes the system
 font size sees K3 follow.
 
-**Decision of 2026-09-26 (open questions 1 and 3).** The maintainer decided that
-all K3 text is at the default size, except the sizes Kirigami components apply by
-themselves. Section headings that K3 places itself go back to the base size;
-hierarchy comes from bold only, as in K2. Kirigami built-in sizing that K3 does
-not set stays as Kirigami draws it: the page title in the header bar, the
-empty-state (`PlaceholderMessage`) title and `FormLayout` section titles. See
-TYP-F3, TYP-F4, TYP-F5 and TYP-C3.
+**Decision of 2026-09-26.** All K3 text is at the base size. Section headings
+that K3 places itself are at the base size, in bold: hierarchy comes from weight,
+as in K2. The only sizes K3 does not set are those Kirigami components apply by
+themselves (page title, empty-state title, `FormLayout` section titles); Kirigami
+derives them from the same base (`Heading` level factors: 1: 1.35, 2: 1.20,
+3: 1.15, 4: 1.10). The one exception K3 sets itself is the Selection card second
+line (TYP-F6), kept on one line at the default card size.
 
-**Audit of 2026-09-25.**
+**Decision of 2026-09-26 (text-size setting).** As a first step, the text-size
+setting scales **text only**, app-wide; it does not scale icons or spacing. The
+existing drawer "Card text size" slider becomes that setting: its value now
+applies to all K3 text, not only to cards. Its label, range, placement and
+persistence are kept unchanged for now.
 
-- The progress line in `qt_quick/PageBackupForm.qml` used a `font.pixelSize`
-  computed from `Kirigami.Units.gridUnit`. This was fixed.
-- The type badge at `qt_quick/PageBackupForm.qml:460` still derives its size
-  from `gridUnit`. This is a **known non-compliance** with TYP-C2.
+**Decision of 2026-09-26 (setting moved to Settings).** The text-size setting
+leaves the global drawer and moves to the Settings page, Application section, in
+a "Theme" row together with the theme selector and "Use bigger icon size". Its
+label becomes "Text size" (the drawer label "Card text size" is removed), and its
+range narrows to 0.8 to 1.2 (TYP-F9). A saved value outside the new range is
+clamped (TYP-F10). The top line of the window keeps the system size (TYP-F11).
+Persistence is unchanged for now (open question 2).
 
 **K2 practice (reference, not a requirement).** `qt_widgets/mainwindow.ui` sets
 no font size: K2 uses the system font everywhere and marks emphasis with bold or
@@ -65,20 +72,36 @@ text-size setting acts on it.
 
 | ID | Requirement | Status |
 |----|-------------|--------|
-| TYP-F1 | Every text size in K3 is a ratio of one base size, the system default font (`Kirigami.Theme.defaultFont`). | [Planned] |
+| TYP-F1 | Every text size in K3 is a ratio of one base size, the system default font (`Kirigami.Theme.defaultFont`). | [Implemented] |
 | TYP-F2 | A user-facing text-size setting multiplies the base size of TYP-F1. It does not replace it. | [Planned] |
-| TYP-F3 | Apart from the Kirigami built-ins of TYP-F5 and the one K3-set exception of TYP-F6, every K3 text is displayed at the base size of TYP-F1, multiplied only by the text-size setting of TYP-F2. K3 uses no smaller or larger text roles: no ratios, and not `Kirigami.Theme.smallFont`. | [Planned] |
-| TYP-F4 | K3 expresses hierarchy and emphasis by weight (bold), and by its existing italic, opacity or colour, never by size. A section heading that K3 places itself is displayed at the base size, in bold. | [Planned] |
-| TYP-F5 | The only Kirigami built-in exceptions to TYP-F3 (see TYP-F6 for the one K3-set exception) are the sizes a Kirigami component applies by itself where K3 sets no size: the page title in the header bar, the empty-state (`PlaceholderMessage`) title, and `FormLayout` section titles (`FormData.isSection`). | [Planned] |
-| TYP-F6 | On the Selection page only, the device card's second line (the device description: files, size, used space) is displayed at 0.8 × the base size of TYP-F1 × the card text-size setting, so that a Storage device's line fits on one line at the default card size with one slider step to spare. The Devices page cards stay at the base size. | [Implemented] |
+| TYP-F3 | Apart from the Kirigami built-ins of TYP-F5 and the one K3-set exception of TYP-F6, every K3 text is displayed at the base size of TYP-F1, multiplied only by the text-size setting of TYP-F2. K3 uses no smaller or larger text roles: no ratios, and not `Kirigami.Theme.smallFont`. | [Implemented] |
+| TYP-F4 | K3 expresses hierarchy and emphasis by weight (bold), and by its existing italic, opacity or colour, never by size. A section heading that K3 places itself is displayed at the base size, in bold. | [Implemented] |
+| TYP-F5 | The only Kirigami built-in exceptions to TYP-F3 (see TYP-F6 for the one K3-set exception) are the sizes a Kirigami component applies by itself where K3 sets no size: the page title in the header bar, the empty-state (`PlaceholderMessage`) title, and `FormLayout` section titles (`FormData.isSection`). | [Implemented] |
+| TYP-F6 | On the Selection page only, the device card's second line (the device description: files, size, used space) is displayed at 0.8 × the base size of TYP-F1 × the text-size setting of TYP-F2, so that a Storage device's line fits on one line at the default card size with one slider step to spare. The Devices page cards stay at the base size. | [Implemented] |
+| TYP-F7 | The text-size setting of TYP-F2 applies to all K3 text (every page, table, form, dialog, the drawer and device cards), not only to device cards. | [Planned] |
+| TYP-F8 | The text-size setting of TYP-F2 scales text only: it does not change icon sizes or spacing. A layout measure that depends on text size (such as the Backup card narrow-layout width) may follow it, as TYP-C2 allows. | [Planned] |
+| TYP-F9 | The text-size setting of TYP-F2 is a slider on the Settings page, Application section, in the "Theme" row together with the theme selector and "Use bigger icon size". It is labelled "Text size", with range 0.8 to 1.2, step 0.1, default 1.0, and zoom-out / zoom-in buttons that move it by one step. It is no longer in the global drawer, and the drawer label "Card text size" is removed. *(Amended 2026-09-26: was the drawer slider "Card text size", range 0.7 to 1.3.)* | [Planned] |
+| TYP-F10 | A value already saved for the text-size setting (including by beta testers) is reused at startup; it is not reset. A saved value outside the range of TYP-F9 (0.7 or 1.3, possible from an earlier build) is clamped to the nearest limit (0.8 or 1.2); a value within the range is reused unchanged. *(Amended 2026-09-26: clamping added with the narrower range.)* | [Planned] |
+| TYP-F11 | The top line of the window keeps the system size and does not follow the text-size setting of TYP-F2: the collection name at the top of the drawer and the page titles, including those of the Settings and About layers. This is an exception to TYP-F7. | [Planned] |
+
+**Known limitation (first step).** The Kirigami built-in sizes of TYP-F5 (page
+title, empty-state title, `FormLayout` section titles) are derived by Kirigami
+from `defaultFont`. They follow the OS font (TYP-O1) but are **not** required to
+follow the text-size setting of TYP-F2 in this first step.
+
+**Known limitation (page toolbar buttons, Linux).** Under the KDE style on Linux,
+the text of the page toolbar buttons is drawn with the application font, so those
+buttons currently follow the text-size setting even though they sit on the top
+line of TYP-F11. This is not a requirement; a decision on it is pending with the
+maintainer.
 
 ## Constructional requirements — *how it is built / limits / MUST-NOTs*
 
 | ID | Requirement | Status |
 |----|-------------|--------|
-| TYP-C1 | No K3 text size MUST be an absolute value (fixed points or pixels). | [Planned] |
-| TYP-C2 | No K3 text size MUST be derived from a layout unit (`Kirigami.Units.gridUnit`, spacing tokens). Layout measures may scale with the text-size setting; font sizes must not come from layout units. | [Planned] |
-| TYP-C3 | K3 code MUST NOT set a font size other than the base of TYP-F1 multiplied by the text-size setting of TYP-F2, except the one exception of TYP-F6. A heading placed by K3 MUST NOT rely on a `Kirigami.Heading` level for its size. | [Planned] |
+| TYP-C1 | No K3 text size MUST be an absolute value (fixed points or pixels). | [Implemented] |
+| TYP-C2 | No K3 text size MUST be derived from a layout unit (`Kirigami.Units.gridUnit`, spacing tokens). Layout measures may scale with the text-size setting; font sizes must not come from layout units. | [Implemented] |
+| TYP-C3 | K3 code MUST NOT set a font size other than the base of TYP-F1 multiplied by the text-size setting of TYP-F2, except the one exception of TYP-F6. A heading placed by K3 MUST NOT rely on a `Kirigami.Heading` level for its size. | [Implemented] |
 
 ---
 
@@ -87,97 +110,12 @@ text-size setting acts on it.
 These are not requirements. Each open item needs a maintainer decision before
 it can become a row above.
 
-1. **Text roles and ratios — resolved on 2026-09-26.** K3 mixed ratios of 0.7,
-   0.8, 0.85 and 0.9. The maintainer chose a single size with hierarchy
-   expressed by weight, as K2 does: see TYP-F3, TYP-F4, TYP-F5 and TYP-C3. The
-   inventory below (2026-09-25) lists every K3 element whose text is **not** at
-   the system default size, with its target size.
-2. **Scope of the text-size setting.** The maintainer wants to evaluate an
-   app-wide setting (a user feedback request). Still open: whether it also
-   scales icons and spacing. An app-wide setting would also have to cover
-   headings explicitly: `Kirigami.Heading` does not follow a user text-size
-   multiplier unless a page overrides its `font.pointSize`, as
-   `qt_quick/DeviceIdentity.qml` does with its `fontScale` (see item 5). Also
-   open: the Kirigami built-in sizes kept by TYP-F5 (page title, empty-state
-   title, `FormLayout` section titles) are derived from `defaultFont` and so
-   would not follow a K3 text-size multiplier.
-3. **`Kirigami.Theme.smallFont` — resolved on 2026-09-26.** Used at
-   `qt_quick/PageSearchResultsForm.qml:167`. It is not an accepted text role:
-   see TYP-F3.
-4. **Existing "Card text size" slider — drift.** The drawer slider in
-   `qt_quick/Main.qml` (around lines 697-736, range 0.7 to 1.3, step 0.1) has no
-   requirement row. Open: its label, range, placement and persistence. It is
-   currently persisted by a QML `Settings` block (`savedCardScale`) in the
-   platform-native store, not in `katalog3_prerelease_settings.ini`. Beta
-   testers already have a value on disk. The maintainer leans towards keeping
-   the existing value and extending it app-wide.
-5. **`Kirigami.Heading` and TYP-F1 — resolved.** Verified on 2026-09-25 in the
-   installed Kirigami (`controls/Heading.qml`): Heading sets `font.pointSize`
-   to `Theme.defaultFont.pointSize` times a level factor (level 1: 1.35,
-   2: 1.20, 3: 1.15, 4: 1.10, other levels: 1.0). It uses weight DemiBold for
-   the Primary type and opacity 0.75 for the Secondary type. Headings therefore
-   comply with TYP-F1. The remaining point, their behaviour under TYP-F2, is
-   part of item 2.
-
-### Inventory for open question 1 — text not at the system default size
-
-Snapshot of 2026-09-25. "Base" is `Kirigami.Theme.defaultFont.pointSize`. The
-target column records the maintainer's decision of 2026-09-26 (TYP-F3, TYP-F4,
-TYP-F5).
-
-**Smaller than base**
-
-| Page / view | Item | Current size | Source | Target |
-|---|---|---|---|---|
-| Explore — file table | Sort mark ▲▼ in the column header | base × 0.7 | `PageExploreFiles.qml:205` | base |
-| Search results — table | Sort mark ▲▼ in the column header | base × 0.7 | `PageSearchResultsForm.qml:323` | base |
-| Devices — table | Sort mark ▲▼ in the column header | base × 0.7 | `PageDevicesView.qml:744` | base |
-| Selection — device card | Description line under the name | base × card slider × 0.8 | `PageSelectionDelegate.qml:171` | base × card slider × 0.8 (TYP-F6) |
-| Devices — device card | Comment beside the name | base × card slider × 0.8 | `PageDevicesViewDelegate.qml:257` | base |
-| Devices — device card | Detail line (wraps, ends with the date) | base × card slider × 0.8 | `PageDevicesViewDelegate.qml:279` | base |
-| Backup — link card | "Backup" / "Archive" type badge | `gridUnit` × 0.75 × card slider, in pixels (breaks TYP-C1/C2) | `PageBackupForm.qml:460` | base |
-| Main — Backup prep footer | Preparation status text | base × 0.85 | `Main.qml:2142` | base |
-| Operation queue | Status text | base × 0.85 | `OperationQueueView.qml:91` | base |
-| Operation queue | "Queue" label | base × 0.85 | `OperationQueueView.qml:123` | base |
-| Operation queue | "%1 waiting" count | base × 0.85 | `OperationQueueView.qml:128` | base |
-| Operation queue | Queue entry ("Create" / "Update" …) | base × 0.85 | `OperationQueueView.qml:166` | base |
-| Settings | Import status text | base × 0.85 | `PageSettings.qml:261` | base |
-| Explore — checksum mismatch dialog | Expected / actual checksum values (monospace) | base × 0.85 | `PageExploreFiles.qml:691`, `:699` | base |
-| Search results — checksum mismatch dialog | Expected / actual checksum values (monospace) | base × 0.85 | `PageSearchResultsForm.qml:830`, `:838` | base |
-| Main — global drawer | "Drawer pinned" / "Drawer floating" | base × 0.9 | `Main.qml:667` | base |
-| Main — global drawer | "Selection shown" / "Selection hidden" | base × 0.9 | `Main.qml:692` | base |
-| Explore — file table | Column header text | base × 0.9 | `PageExploreFiles.qml:196` | base |
-| Explore — file table | Cell text | base × 0.9 | `PageExploreFiles.qml:345` | base |
-| Search results — table | Column header text | base × 0.9 | `PageSearchResultsForm.qml:313` | base |
-| Search results — table | Cell text | base × 0.9 | `PageSearchResultsForm.qml:496` | base |
-| Search results — header | Device path | base × 0.9 | `PageSearchResultsForm.qml:100` | base |
-| Devices — table | Column header text | base × 0.9 | `PageDevicesView.qml:736` | base |
-| Devices — table | Cell text | base × 0.9 | `PageDevicesView.qml:921` | base |
-| Metadata dialog | "Field" / "Value" column headers | base × 0.9 | `MetadataDialog.qml:85`, `:99` | base |
-| Metadata dialog | Field labels and values | base × 0.9 | `MetadataDialog.qml:138`, `:160` | base |
-| Search results — header | Date range text | `Kirigami.Theme.smallFont` (OS-defined, see question 3) | `PageSearchResultsForm.qml:167` | base |
-
-**Larger than base (Kirigami headings, factors verified in item 5)**
-
-| Page / view | Item | Current size | Source | Target |
-|---|---|---|---|---|
-| Every page | Page title in the header bar | Heading, default level (× 1.35) | Kirigami page title | Kirigami built-in (TYP-F5) |
-| Backup — link list, Backup preview, Devices | Empty-state messages (`PlaceholderMessage` title) | Heading, default level (× 1.35) | `PageBackupForm.qml:361`, `PageBackupPreviewForm.qml:62`, `:259`, `PageDevicesView.qml:629`, `:775` | Kirigami built-in (TYP-F5) |
-| Create | "Catalog definition", "Content options", "Global Parameters" | Heading level 3 (× 1.15) | `PageCreateForm.qml:130`, `:190`, `:354` | base, bold |
-| Device edit | "Device", "Location", "Content options", "Storage details" | Heading level 3 (× 1.15) | `PageDeviceEditForm.qml:246`, `:295`, `:329`, `:505` | base, bold |
-| Tags | "Add a tag", "Current folders and tags" | Heading level 3 (× 1.15) | `PageTagsForm.qml:51`, `:127` | base, bold |
-| Settings | "Collection & Database" | Heading level 3 (× 1.15) | `PageSettings.qml:276` | base, bold |
-| Settings | "Collection Import & Synchronization", "Application" (link colour, bold) | Heading level 3 (× 1.15) | `PageSettings.qml:469`, `:585` | base, bold |
-| Settings | "Search" (link colour, not bold) | Heading level 3 (× 1.15) | `PageSettings.qml:788` | base, bold |
-| Backup mapping form | "Source", "Target", "Options" form section titles (`FormData.isSection`) | Heading level 3 (× 1.15) | `PageBackupMappingForm.qml:108`, `:121`, `:134` | Kirigami built-in (TYP-F5) |
-| Settings — quality check dialog | Section titles | Heading level 4 (× 1.10) | `PageSettings.qml:170` | base, bold |
-
-**Follows the card slider only (base × slider — equal to base at the default 1.0)**
-
-| Page / view | Item | Source |
-|---|---|---|
-| Every page with a device header | Selected device name (a level-2 Heading whose size is overridden, so it is **not** × 1.20) | `DeviceIdentity.qml:77` |
-| Backup — link card | Link name, Source / Target / Diff labels and values, last-run info, progress line | `PageBackupForm.qml:451`–`:666` |
+1. ~~**Final label of the text-size slider.**~~ Resolved 2026-09-26: the label
+   is "Text size" (TYP-F9).
+2. **Persistence location.** The slider value is currently persisted by a QML
+   `Settings` block (`savedCardScale`) in the platform-native store, not in
+   `katalog3_prerelease_settings.ini`. Kept as-is for now; whether to move it is
+   not decided. Any move must still honour TYP-F10 (no reset of the saved value).
 
 ---
 
@@ -185,6 +123,11 @@ TYP-F5).
 
 - **TYP-O1 / F1**: change the OS default font size, restart K3, and confirm that the text on every page follows.
 - **TYP-F2**: move the text-size setting and confirm that the affected text scales from the new OS base.
+- **TYP-F7**: move the text-size setting and confirm that text scales in a results table, a form (for example Create), a dialog, the drawer itself and the device cards.
+- **TYP-F8**: move the text-size setting from 0.8 to 1.2 and confirm that icons and spacing keep their size; only text (and text-dependent layout measures such as the Backup card narrow-layout width) changes.
+- **TYP-F9**: open Settings, Application section, and confirm the "Theme" row holds the theme selector, "Use bigger icon size" and the "Text size" slider; confirm the slider runs from 0.8 to 1.2 in steps of 0.1, starts at 1.0 on a fresh settings store, and that each zoom-out / zoom-in button moves it by one step, stopping at the limits. Confirm the global drawer no longer shows a "Card text size" slider.
+- **TYP-F10**: with a value already saved by an earlier build, start the new build: a saved 1.1 starts at 1.1; a saved 1.3 starts at 1.2; a saved 0.7 starts at 0.8. In each case the slider and all K3 text start at that value.
+- **TYP-F11**: set the text size to 0.8 then 1.2 and confirm the collection name at the top of the drawer and the page titles (including the Settings and About layers) keep the same size, while the rest of the text changes.
 - **TYP-C1 / C2**: search `qt_quick/*.qml` for `font.pixelSize`, for a numeric `font.pointSize`, and for `gridUnit` or `Units.*Spacing` inside a font expression. There must be no hits.
 - **TYP-F3 / C3**: search `qt_quick/*.qml` for `defaultFont.pointSize *` followed by a ratio (such as `0.9`) and for `smallFont`. The only allowed multiplier is the text-size setting; there must be no other hits, except the × 0.8 of TYP-F6 in `PageSelectionDelegate.qml`.
 - **TYP-F4 / C3**: search `qt_quick/*.qml` for `Kirigami.Heading`. A K3-placed section heading must not take its size from a Heading level; open Create, Device edit, Tags, Settings and the quality-check dialog and confirm their section headings are at the size of the surrounding text, in bold.
@@ -198,4 +141,6 @@ TYP-F5).
 - K2 (`qt_widgets/`): it is in maintenance mode, and its fixed-size exceptions
   listed in Context are recorded for reference only.
 - Font family, weight and colour choices.
-- Icon and spacing sizes, except as raised in open question 2.
+- Icon and spacing sizes: the text-size setting does not scale them (TYP-F8).
+- Making the Kirigami built-in sizes of TYP-F5 follow the text-size setting
+  (known limitation of the first step).

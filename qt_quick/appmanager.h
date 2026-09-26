@@ -19,6 +19,7 @@
 #include <QTextStream>
 #include <QSaveFile>
 #include <QSettings>
+#include <QFont>
 //QtGui
 #include <QFileSystemModel>
 #include <QClipboard>
@@ -79,6 +80,7 @@ class AppManager : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(DeviceListModel* deviceListModel READ getDeviceListModel NOTIFY deviceListModelChanged)
+    Q_PROPERTY(qreal systemTextPointSize READ getSystemTextPointSize CONSTANT)
     Q_PROPERTY(QSortFilterProxyModel* deviceFilterModel  READ getDeviceFilterModel  CONSTANT)
     Q_PROPERTY(QAbstractItemModel*    searchSortModel   READ getSearchSortModel    CONSTANT)
     Q_PROPERTY(QAbstractItemModel*    exploreSortModel  READ getExploreSortModel   CONSTANT)
@@ -271,6 +273,8 @@ public slots:
     Q_INVOKABLE QString getLastPage() const;
     Q_INVOKABLE QVariantMap getWindowGeometry() const;
     Q_INVOKABLE void        saveWindowGeometry(int x, int y, int width, int height, bool maximized);
+    Q_INVOKABLE void        setTextScale(qreal scale);
+    qreal                   getSystemTextPointSize() const { return m_systemFont.pointSizeF(); }
 
     void selectDeviceById(int deviceId);
     QString getSelectedDeviceName() const;
@@ -641,6 +645,7 @@ private:
     QString m_importStatusText;
     QString m_importReportText;
     DeviceListModel        *m_importSourceDeviceModel = nullptr;
+    QFont                   m_systemFont;   // OS font captured at startup: base of the text-size setting (TYP-F1)
 
     void setupDeviceUpdateManager();
     void onCatalogCreationCompleted(const QList<qint64> &results);
