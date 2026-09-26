@@ -626,11 +626,15 @@ ColumnLayout {
         checked: true
         text: qsTr("File name")
         Layout.leftMargin: Kirigami.Units.smallSpacing
-        font.bold: checked ? true : false
+        // Section title, styled like the section headings on the other pages
+        // (bold, link colour); the checkbox still switches the section on.
+        font.bold: true
+        Binding { target: search_checkBox_FileNameCriteria.contentItem; property: "color"; value: Kirigami.Theme.linkColor }
         onCheckedChanged: search_FormLayout_FileNameCriteria.visible = checked
     }
     ColumnLayout {
         id: search_FormLayout_FileNameCriteria
+        Layout.topMargin: Kirigami.Units.smallSpacing   // gap under the section title
         Layout.leftMargin: Kirigami.Units.smallSpacing
         Layout.fillWidth: true
         spacing: Kirigami.Units.smallSpacing
@@ -749,7 +753,8 @@ ColumnLayout {
         checked: false
         text: qsTr("File attributes")
         Layout.leftMargin: Kirigami.Units.smallSpacing
-        font.bold: checked ? true : false
+        font.bold: true
+        Binding { target: checkBoxFileAttributesCriteria.contentItem; property: "color"; value: Kirigami.Theme.linkColor }
         onCheckedChanged: {
             fileAtrributeCriteria.visible = checked
             // Convenience: enabling File attributes while Type is still the default
@@ -761,6 +766,7 @@ ColumnLayout {
     }
     ColumnLayout {
         id: fileAtrributeCriteria
+        Layout.topMargin: Kirigami.Units.smallSpacing   // gap under the section title
         visible: false
         Layout.leftMargin: Kirigami.Units.largeSpacing
         Layout.fillWidth: true
@@ -935,11 +941,13 @@ ColumnLayout {
         checked: false
         text: qsTr("File metadata")
         Layout.leftMargin: Kirigami.Units.smallSpacing
-        font.bold: checked ? true : false
+        font.bold: true
+        Binding { target: search_checkBox_FileMetadata.contentItem; property: "color"; value: Kirigami.Theme.linkColor }
         onCheckedChanged: search_FormLayout_FileMetadata.visible = checked
     }
     ColumnLayout {
         id: search_FormLayout_FileMetadata
+        Layout.topMargin: Kirigami.Units.smallSpacing   // gap under the section title
         visible: false
         Layout.leftMargin: Kirigami.Units.largeSpacing
         Layout.fillWidth: true
@@ -1113,11 +1121,13 @@ ColumnLayout {
         checked: false
         text: qsTr("Folder criteria")
         Layout.leftMargin: Kirigami.Units.smallSpacing
-        font.bold: checked ? true : false
+        font.bold: true
+        Binding { target: search_checkBox_FolderCriteria.contentItem; property: "color"; value: Kirigami.Theme.linkColor }
         onCheckedChanged: search_FormLayout_folderCriteria.visible = checked
     }
     ColumnLayout {
         id: search_FormLayout_folderCriteria
+        Layout.topMargin: Kirigami.Units.smallSpacing   // gap under the section title
         visible: false
         Layout.leftMargin: Kirigami.Units.largeSpacing
         spacing: Kirigami.Units.smallSpacing
@@ -1151,7 +1161,8 @@ ColumnLayout {
         checked: false
         text: qsTr("Duplicates")
         Layout.leftMargin: Kirigami.Units.smallSpacing
-        font.bold: checked ? true : false
+        font.bold: true
+        Binding { target: search_checkBox_Duplicates.contentItem; property: "color"; value: Kirigami.Theme.linkColor }
         onCheckedChanged: {
             search_FormLayout_Duplicates.visible = checked
             if (checked && search_checkBox_Differences.checked) {
@@ -1162,6 +1173,7 @@ ColumnLayout {
     }
     ColumnLayout {
         id: search_FormLayout_Duplicates
+        Layout.topMargin: Kirigami.Units.smallSpacing   // gap under the section title
         visible: false
         Layout.leftMargin: Kirigami.Units.largeSpacing
         Layout.fillWidth: true
@@ -1275,7 +1287,8 @@ ColumnLayout {
         enabled: search_radioButton_SearchInCatalogs.checked
         text: qsTr("Differences")
         Layout.leftMargin: Kirigami.Units.smallSpacing
-        font.bold: checked ? true : false
+        font.bold: true
+        Binding { target: search_checkBox_Differences.contentItem; property: "color"; value: Kirigami.Theme.linkColor }
         onCheckedChanged: {
             search_FormLayout_Differences.visible = checked
             if (checked && search_checkBox_Duplicates.checked) {
@@ -1286,6 +1299,7 @@ ColumnLayout {
     }
     ColumnLayout {
         id: search_FormLayout_Differences
+        Layout.topMargin: Kirigami.Units.smallSpacing   // gap under the section title
         visible: false
         Layout.leftMargin: Kirigami.Units.largeSpacing
         Layout.fillWidth: true
