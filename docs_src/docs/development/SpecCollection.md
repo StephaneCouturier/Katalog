@@ -93,7 +93,7 @@ Button enabled when selected target device **or any descendant** has a Collectio
 
 | Scope | Default policy |
 |-------|---------------|
-| `catalog_name` (UNIQUE) | Rename: append ` (2)`, ` (3)`, … |
+| Catalog device name (unique among Catalog devices, `SpecStorageIdentity.md` `STI-C18`) | Rename the imported Catalog device: append ` (2)`, ` (3)`, … — its `.idx` file and `file_catalog` follow (`STI-F15`) |
 | `device_name` within parent | Rename |
 | Virtual ancestor | Reuse existing if name matches |
 

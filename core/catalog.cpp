@@ -268,7 +268,6 @@ void Catalog::insertCatalog()
                                 INSERT INTO catalog(
                                                         catalog_id,
                                                         catalog_file_path,
-                                                        catalog_name,
                                                         catalog_date_updated,
                                                         catalog_source_path,
                                                         catalog_file_count,
@@ -285,7 +284,6 @@ void Catalog::insertCatalog()
                                                         )
                                         VALUES(         :catalog_id,
                                                         :catalog_file_path,
-                                                        :catalog_name,
                                                         :catalog_date_updated,
                                                         :catalog_source_path,
                                                         :catalog_file_count,
@@ -304,7 +302,6 @@ void Catalog::insertCatalog()
     insertCatalogQuery.prepare(insertCatalogQuerySQL);
     insertCatalogQuery.bindValue(":catalog_id", ID);
     insertCatalogQuery.bindValue(":catalog_file_path", filePath);
-    insertCatalogQuery.bindValue(":catalog_name", name);
     insertCatalogQuery.bindValue(":catalog_date_updated", dateUpdated);
     insertCatalogQuery.bindValue(":catalog_source_path", sourcePath);
     insertCatalogQuery.bindValue(":catalog_file_count", fileCount);
@@ -354,8 +351,7 @@ void Catalog::saveCatalog()
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
         UPDATE catalog
-        SET catalog_name              =:catalog_name,
-            catalog_source_path       =:catalog_source_path,
+        SET catalog_source_path       =:catalog_source_path,
             catalog_file_type         =:catalog_file_type,
             catalog_include_hidden    =:catalog_include_hidden,
             catalog_include_metadata  =:catalog_include_metadata,
@@ -367,7 +363,6 @@ void Catalog::saveCatalog()
     )");
     query.prepare(querySQL);
     query.bindValue(":catalog_id", ID);
-    query.bindValue(":catalog_name", name);
     query.bindValue(":catalog_source_path", sourcePath);
     query.bindValue(":catalog_file_type", fileType);
     query.bindValue(":catalog_include_hidden", includeHidden);
@@ -463,7 +458,6 @@ void Catalog::loadCatalog()
                             SELECT
                                 catalog_id                   ,
                                 catalog_file_path            ,
-                                catalog_name                 ,
                                 catalog_date_updated         ,
                                 catalog_source_path          ,
                                 catalog_file_count           ,
@@ -488,39 +482,26 @@ void Catalog::loadCatalog()
     if (query.next()){
         ID                 = query.value(0).toInt();
         filePath           = query.value(1).toString();
-        name               = query.value(2).toString();
-        dateUpdated        = query.value(3).toDateTime();
-        sourcePath         = query.value(4).toString();
-        fileCount          = query.value(5).toLongLong();
-        totalFileSize      = query.value(6).toLongLong();
-        includeHidden      = query.value(7).toBool();
-        fileType           = query.value(8).toString();
-        includeSymblinks   = query.value(9).toBool();
-        isFullDevice       = query.value(10).toBool();
-        dateLoaded         = query.value(11).toDateTime();
-        includeMetadata    = query.value(12).toString();
-        includeChecksum    = query.value(13).toString();
-        appVersion         = query.value(14).toString();
-        includeSubDir      = query.value(15).isNull() ? true : query.value(15).toBool();
+        dateUpdated        = query.value(2).toDateTime();
+        sourcePath         = query.value(3).toString();
+        fileCount          = query.value(4).toLongLong();
+        totalFileSize      = query.value(5).toLongLong();
+        includeHidden      = query.value(6).toBool();
+        fileType           = query.value(7).toString();
+        includeSymblinks   = query.value(8).toBool();
+        isFullDevice       = query.value(9).toBool();
+        dateLoaded         = query.value(10).toDateTime();
+        includeMetadata    = query.value(11).toString();
+        includeChecksum    = query.value(12).toString();
+        appVersion         = query.value(13).toString();
+        includeSubDir      = query.value(14).isNull() ? true : query.value(14).toBool();
     }
 }
 
 void Catalog::renameCatalog(QString newCatalogName)
 {
-
-    //Update db
-    QSqlQuery query(QSqlDatabase::database(m_connectionName));
-    QString querySQL = QLatin1String(R"(
-                                UPDATE catalog
-                                SET   catalog_name=:new_catalog_name
-                                WHERE catalog_id=:catalog_id
-                            )");
-    query.prepare(querySQL);
-    query.bindValue(":new_catalog_name",newCatalogName);
-    query.bindValue(":catalog_id",ID);
-    query.exec();
-
-    // Keep denormalized file_catalog display copy in sync
+    // The device holds the name; file_catalog is the synced display copy on
+    // every file row (SpecStorageIdentity.md STI-F14).
     QSqlQuery syncQuery(QSqlDatabase::database(m_connectionName));
     syncQuery.prepare(QLatin1String(R"(
                                 UPDATE file
@@ -533,7 +514,6 @@ void Catalog::renameCatalog(QString newCatalogName)
 
     //Rename value of current object
     name = newCatalogName;
-
 }
 
 void Catalog::renameCatalogFile(QString newCatalogName)
@@ -1580,15 +1560,20 @@ QList<Catalog*> Catalog::executeSplitBySubDirectory(const QString &databaseMode,
     QList<Catalog*> created;
 
     // Find a unique catalog name (append _2, _3, ... on collision)
+    // Also unique within this split: the new devices are only inserted afterwards.
+    QStringList usedNames;
     auto makeUniqueName = [&](const QString &baseName) -> QString {
         QString candidate = baseName;
         int suffix = 2;
         while (true) {
             QSqlQuery chk(QSqlDatabase::database(m_connectionName));
-            chk.prepare("SELECT COUNT(*) FROM catalog WHERE catalog_name = :n");
+            chk.prepare("SELECT COUNT(*) FROM device WHERE device_type = 'Catalog' AND device_name = :n");
             chk.bindValue(":n", candidate);
-            if (chk.exec() && chk.next() && chk.value(0).toInt() == 0)
+            if (chk.exec() && chk.next() && chk.value(0).toInt() == 0
+                && !usedNames.contains(candidate)) {
+                usedNames << candidate;
                 return candidate;
+            }
             candidate = baseName + "_" + QString::number(suffix++);
         }
     };
@@ -1741,15 +1726,20 @@ QList<Catalog*> Catalog::executeSplitByFileType(const QString &databaseMode,
     QList<Catalog*> created;
 
     // Find a unique catalog name (append _2, _3, ... on collision)
+    // Also unique within this split: the new devices are only inserted afterwards.
+    QStringList usedNames;
     auto makeUniqueName = [&](const QString &baseName) -> QString {
         QString candidate = baseName;
         int suffix = 2;
         while (true) {
             QSqlQuery chk(QSqlDatabase::database(m_connectionName));
-            chk.prepare("SELECT COUNT(*) FROM catalog WHERE catalog_name = :n");
+            chk.prepare("SELECT COUNT(*) FROM device WHERE device_type = 'Catalog' AND device_name = :n");
             chk.bindValue(":n", candidate);
-            if (chk.exec() && chk.next() && chk.value(0).toInt() == 0)
+            if (chk.exec() && chk.next() && chk.value(0).toInt() == 0
+                && !usedNames.contains(candidate)) {
+                usedNames << candidate;
                 return candidate;
+            }
             candidate = baseName + "_" + QString::number(suffix++);
         }
     };

@@ -29,6 +29,7 @@
 /////////////////////////////////////////////////////////////////////////////
 */
 #include "database.h"
+#include <QRegularExpression>
 #include "collection.h"
 #include <QSettings>
 #include <QFile>
@@ -66,46 +67,32 @@ QString Database::getSQLCreateTableDevice(DatabaseType dbType)
 
 QString Database::getSQLCreateTableCatalog(DatabaseType databaseType)
 {
+    // No catalog_name: device_name is the only catalog name, and the uniqueness
+    // of catalog names is enforced on devices (SpecStorageIdentity.md STI-C13).
     QString catalogIdType;
-    QString catalogNameType;
     QString largeNumeric;
-    QString primaryKey;
-    QString uniqueCatalogName;
 
     switch (databaseType) {
     case DatabaseType::SQLite:
-        catalogIdType     = "NUMERIC";
-        catalogNameType   = "TEXT";
-        largeNumeric      = "NUMERIC";
-        primaryKey        = "PRIMARY KEY(catalog_id)";
-        uniqueCatalogName = "UNIQUE(catalog_name)";
+        catalogIdType = "NUMERIC";
+        largeNumeric  = "NUMERIC";
         break;
     case DatabaseType::MySQL:
-        catalogIdType     = "BIGINT NOT NULL";
-        catalogNameType   = "VARCHAR(500)";
-        largeNumeric      = "BIGINT";
-        primaryKey        = "PRIMARY KEY(catalog_id)";
-        uniqueCatalogName = "UNIQUE KEY (catalog_name(500))";
-        break;
     case DatabaseType::PostgreSQL:
-        catalogIdType     = "BIGINT NOT NULL";
-        catalogNameType   = "VARCHAR(500)";
-        largeNumeric      = "BIGINT";
-        primaryKey        = "PRIMARY KEY(catalog_id)";
-        uniqueCatalogName = "UNIQUE(catalog_name)";
+        catalogIdType = "BIGINT NOT NULL";
+        largeNumeric  = "BIGINT";
         break;
     }
 
     return QString(R"(
                 CREATE TABLE IF NOT EXISTS catalog(
-                    catalog_id                    %3,
+                    catalog_id                    %2,
                     catalog_file_path             TEXT,
-                    catalog_name                  %1,
                     catalog_date_updated          TEXT,
                     catalog_source_path           TEXT,
-                    catalog_file_count            %2 default 0,
-                    catalog_total_file_size       %2 default 0,
-                    catalog_source_path_is_active %2,
+                    catalog_file_count            %1 default 0,
+                    catalog_total_file_size       %1 default 0,
+                    catalog_source_path_is_active %1,
                     catalog_include_hidden        TEXT,
                     catalog_file_type             TEXT,
                     catalog_include_symblinks     TEXT,
@@ -115,9 +102,8 @@ QString Database::getSQLCreateTableCatalog(DatabaseType databaseType)
                     catalog_include_checksum      TEXT,
                     catalog_app_version           TEXT,
                     catalog_include_sub_dir       TEXT,
-                    %4,
-                    %5)
-    )").arg(catalogNameType, largeNumeric, catalogIdType, primaryKey, uniqueCatalogName);
+                    PRIMARY KEY(catalog_id))
+    )").arg(largeNumeric, catalogIdType);
 }
 
 QString Database::getSQLCreateTableStorage(DatabaseType dbType)
@@ -1276,8 +1262,8 @@ QSqlError Database::runMigration_3_0(const QString &connectionName)
     err = ensureMappingIncludeEmptyDirsColumn(connectionName);
     if (err.type() != QSqlError::NoError) return err;
 
-    // storage.storage_name and catalog.catalog_storage: dead v1.xx copies of
-    // device names, removed (SpecStorageIdentity.md STI-C13, STI-C16).
+    // storage.storage_name, catalog.catalog_storage and catalog.catalog_name:
+    // copies of device names, removed (SpecStorageIdentity.md STI-C13, STI-C16).
     if (getTableColumns(connectionName, "storage").contains("storage_name")) {
         err = executeSql(connectionName, "ALTER TABLE storage DROP COLUMN storage_name");
         if (err.type() != QSqlError::NoError) {
@@ -1290,6 +1276,52 @@ QSqlError Database::runMigration_3_0(const QString &connectionName)
         if (err.type() != QSqlError::NoError) {
             qWarning() << "WARNING: Failed to drop catalog_storage:" << err.text();
             return err;
+        }
+    }
+    const QStringList oldCatalogColumns = getTableColumns(connectionName, "catalog");
+    if (oldCatalogColumns.contains("catalog_name")) {
+        if (getDatabaseType(connectionName) == DatabaseType::SQLite) {
+            // SQLite cannot drop a column that carries a UNIQUE constraint:
+            // rebuild the table, copying every column the new one keeps.
+            const QString createNew = getSQLCreateTableCatalog(DatabaseType::SQLite)
+                .replace("CREATE TABLE IF NOT EXISTS catalog(", "CREATE TABLE catalog_new(");
+            // Columns kept = the new table's columns the old one has. Worked out
+            // before the transaction: no SELECT cursor inside it (see 2.11 above).
+            QStringList kept;
+            static const QRegularExpression columnLine(QStringLiteral("^\\s*(catalog_\\w+)\\s"));
+            for (const QString &line : createNew.split('\n')) {
+                const QRegularExpressionMatch m = columnLine.match(line);
+                if (m.hasMatch() && oldCatalogColumns.contains(m.captured(1)))
+                    kept << m.captured(1);
+            }
+            const QString columns = kept.join(", ");
+
+            if (!beginTransaction(connectionName))
+                return QSqlError("transaction", "Failed to begin transaction for catalog_name removal",
+                                 QSqlError::UnknownError);
+            err = executeSql(connectionName, "DROP TABLE IF EXISTS catalog_new");
+            if (err.type() == QSqlError::NoError)
+                err = executeSql(connectionName, createNew);
+            if (err.type() == QSqlError::NoError)
+                err = executeSql(connectionName, QString("INSERT INTO catalog_new (%1) SELECT %1 FROM catalog").arg(columns));
+            if (err.type() == QSqlError::NoError)
+                err = executeSql(connectionName, "DROP TABLE catalog");
+            if (err.type() == QSqlError::NoError)
+                err = executeSql(connectionName, "ALTER TABLE catalog_new RENAME TO catalog");
+            if (err.type() != QSqlError::NoError || !commitTransaction(connectionName)) {
+                rollbackTransaction(connectionName);
+                qWarning() << "WARNING: Failed to remove catalog_name:" << err.text();
+                return err.type() != QSqlError::NoError
+                    ? err : QSqlError("transaction", "Failed to commit catalog_name removal",
+                                      QSqlError::UnknownError);
+            }
+        } else {
+            // MySQL / PostgreSQL drop the column together with its unique key.
+            err = executeSql(connectionName, "ALTER TABLE catalog DROP COLUMN catalog_name");
+            if (err.type() != QSqlError::NoError) {
+                qWarning() << "WARNING: Failed to drop catalog_name:" << err.text();
+                return err;
+            }
         }
     }
     return QSqlError();

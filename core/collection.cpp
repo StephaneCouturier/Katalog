@@ -619,7 +619,6 @@ void Collection::loadCatalogFilesToTable()
                 newCatalog.setConnectionName(m_connectionName); // use this collection's connection
                 newCatalog.ID               = catalogValues[12].toInt(); //catalog_id
                 newCatalog.filePath         = path; //catalog_file_path
-                newCatalog.name             = catalogFileInfo.completeBaseName(); //catalog_name
                 newCatalog.dateUpdated      = catalogFileInfo.lastModified();//.toString("yyyy-MM-dd hh:mm:ss"); //catalog_date_updated
                 newCatalog.sourcePath       = catalogValues[0]; //catalog_source_path
                 newCatalog.fileCount        = catalogValues[1].toLongLong(); //catalog_file_count
@@ -2016,7 +2015,7 @@ QList<QualityCheckResult> Collection::runQualityChecks()
         )") },
         // 7 - Catalog rows no Catalog device points at
         { 7, QLatin1String(R"(
-            SELECT c.catalog_id, c.catalog_name
+            SELECT c.catalog_id, c.catalog_file_path
             FROM   catalog c
             LEFT JOIN device d ON d.device_external_id = c.catalog_id
                               AND d.device_type = 'Catalog'
@@ -2796,6 +2795,7 @@ void Collection::applySplitResult(Device *activeDevice, const QList<Catalog*> &n
 
     for (Catalog *c : std::as_const(newCatalogs)) {
         Device newDev;
+        newDev.setConnectionName(m_connectionName);  // this collection, not the default connection
         newDev.ID             = Device::generateNextDeviceID(m_connectionName);
         newDev.parentID       = parentDevice.ID;
         newDev.name           = c->name;
@@ -2844,6 +2844,7 @@ void Collection::applySplitResult(Device *activeDevice, const QList<Catalog*> &n
 
         for (Catalog *c : std::as_const(newCatalogs)) {
             Device newDev;
+            newDev.setConnectionName(m_connectionName);  // this collection, not the default connection
             newDev.ID             = Device::generateNextDeviceID(m_connectionName);
             newDev.parentID       = virtualParentID;
             newDev.name           = c->name;

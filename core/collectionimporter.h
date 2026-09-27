@@ -158,7 +158,7 @@ signals:
 
 private:
     // Internal helpers
-    int  remapAndInsertCatalog(int srcCatalogId);
+    int  remapAndInsertCatalog(int srcCatalogId, const QString &catalogName);
     int  remapAndInsertDevice(int srcDeviceId, int newParentId);
     void insertFileData(int srcCatalogId, int newCatalogId, const QString &catalogName);
     void insertCatalogFilter(int srcCatalogId, int newCatalogId);

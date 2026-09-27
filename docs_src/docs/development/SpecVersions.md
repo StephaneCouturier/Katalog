@@ -313,8 +313,9 @@ Decided by the user before this section was written, recorded here on
 - **Consequence for development:** every migration step written during the
   2.13 cycle MUST be idempotent — it must run safely on a database already
   stamped 2.13, where some or all of its changes are already present (for
-  example `SpecStorageIdentity.md` `STI-C16`, dropping two columns that a beta
-  database may or may not still have).
+  example `SpecStorageIdentity.md` `STI-C16` and `STI-C17`, removing columns
+  that a beta database may or may not still have). The migration is
+  `Database::runMigration_3_0`; until release it runs on every open.
 
 ### Facts (verified by code reading, 2026-09-27)
 
@@ -353,7 +354,7 @@ opened by 3.0. It cannot protect against 2.12.
 | 2b | Storages created by 2.12 get `storage_user_id` = 0 (column default) | File / Hosted | 2.12 creates a storage | Medium |
 | 3 | `device_comment`: 2.12's `device.csv` writer has 14 columns and no comment, so all device comments are lost | Memory | Any 2.12 save of the device table (nearly every device action) | High |
 | 4 | `mapping_include_empty_dirs`: 2.12's backup mapping writer lacks it, so the setting reverts to its default 1 (replicate empty folders) | Memory | 2.12 saves backup mappings | Medium |
-| 5 | `storage_name` / `catalog_storage` are dropped by the 2.12 → 3.0 migration (`STI-C16`). K2 ≤ 2.12 and the K2 2.13 binary published with beta2 name these columns in their SQL, so storage details fail to load, and creating a storage, creating a catalog or saving a catalog fails | File / Hosted | Opening the collection after the 3.0 migration | High — accepted by the user: no return from K3 3.0 to older K2, expected for a major version |
+| 5 | `storage_name` / `catalog_storage` (`STI-C16`) and `catalog_name` (`STI-C17`) are removed by the 2.12 → 3.0 migration. K2 ≤ 2.12 and the K2 2.13 binary published with beta2 name these columns in their SQL, so storage details fail to load, catalogs fail to load, and creating a storage, creating a catalog or saving a catalog fails | File / Hosted | Opening the collection after the 3.0 migration | High — accepted by the user: no return from K3 3.0 to older K2, expected for a major version |
 | 5b | Memory-mode file formats are unchanged, so these applications still open the collection; but the storage "Name" column of `storage.csv` and the `<catalogStorage>` line of each `.idx` are written empty by 3.0. 2.12's Collection Import resolves a catalog's storage by `catalog_storage` → `storage_name` (`v2.12.1` `core/collectionimporter.cpp` ~1260-1290), so importing from such a collection finds no storage row | Memory | An older application imports from a collection saved by 3.0 | Low-medium |
 
 ### What this means for users
@@ -377,8 +378,8 @@ above.
   folders. *(risk 4)*
 - If you use Katalog 2.12 or older, or the Katalog 2.13 published with the 3.0
   beta, with a collection saved in a database file or on a database server
-  after Katalog 3.0 opened it, then storage details do not load, and creating a
-  storage device or a catalog, or saving a catalog, fails. *(risk 5)*
+  after Katalog 3.0 opened it, then storage details and catalogs do not load,
+  and creating a storage device or a catalog, or saving a catalog, fails. *(risk 5)*
 - If you use Katalog 2.12 or older, or the Katalog 2.13 published with the 3.0
   beta, and you import from a collection saved in memory mode by Katalog 3.0,
   then the storage device details of the imported catalogs can be

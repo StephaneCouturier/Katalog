@@ -353,11 +353,11 @@ QString CollectionImporter::resolveNameConflict(const QString &name,
 //----------------------------------------------------------------------
 // Catalog insert
 //----------------------------------------------------------------------
-int CollectionImporter::remapAndInsertCatalog(int srcCatalogId)
+int CollectionImporter::remapAndInsertCatalog(int srcCatalogId, const QString &catalogName)
 {
     QSqlQuery srcQ(QSqlDatabase::database(m_sourceConnectionName));
     srcQ.prepare(QLatin1String(R"(
-        SELECT catalog_id, catalog_file_path, catalog_name, catalog_date_updated,
+        SELECT catalog_id, catalog_file_path, catalog_date_updated,
                catalog_source_path, catalog_file_count, catalog_total_file_size,
                catalog_source_path_is_active, catalog_include_hidden, catalog_file_type,
                catalog_include_symblinks, catalog_is_full_device,
@@ -373,35 +373,26 @@ int CollectionImporter::remapAndInsertCatalog(int srcCatalogId)
     }
 
     int    newCatalogId = srcCatalogId + m_catalogIdOffset;
-    QString srcName     = srcQ.value(2).toString();
-
-    // Resolve catalog name conflict against existing target catalog names
     QString tgtConn = m_target->connectionName();
-    QSqlQuery namesQ(QSqlDatabase::database(tgtConn));
-    namesQ.exec("SELECT catalog_name FROM catalog");
-    QStringList existingNames;
-    while (namesQ.next())
-        existingNames << namesQ.value(0).toString();
-    QString newName = resolveNameConflict(srcName, existingNames);
 
     // Derive the file_path for the target
     QString newFilePath;
     if (m_target->databaseMode == "Memory")
-        newFilePath = m_target->folder + "/" + newName + ".idx";
+        newFilePath = m_target->folder + "/" + catalogName + ".idx";
     else
         newFilePath = srcQ.value(1).toString();
 
     QSqlQuery ins(QSqlDatabase::database(tgtConn));
     ins.prepare(QLatin1String(R"(
         INSERT INTO catalog (
-            catalog_id, catalog_file_path, catalog_name, catalog_date_updated,
+            catalog_id, catalog_file_path, catalog_date_updated,
             catalog_source_path, catalog_file_count, catalog_total_file_size,
             catalog_source_path_is_active, catalog_include_hidden, catalog_file_type,
             catalog_include_symblinks, catalog_is_full_device,
             catalog_date_loaded, catalog_include_metadata, catalog_include_checksum,
             catalog_app_version)
         VALUES (
-            :catalog_id, :catalog_file_path, :catalog_name, :catalog_date_updated,
+            :catalog_id, :catalog_file_path, :catalog_date_updated,
             :catalog_source_path, :catalog_file_count, :catalog_total_file_size,
             :catalog_source_path_is_active, :catalog_include_hidden, :catalog_file_type,
             :catalog_include_symblinks, :catalog_is_full_device,
@@ -410,20 +401,19 @@ int CollectionImporter::remapAndInsertCatalog(int srcCatalogId)
     )"));
     ins.bindValue(":catalog_id",                    newCatalogId);
     ins.bindValue(":catalog_file_path",              newFilePath);
-    ins.bindValue(":catalog_name",                   newName);
-    ins.bindValue(":catalog_date_updated",           srcQ.value(3));
-    ins.bindValue(":catalog_source_path",            srcQ.value(4));
-    ins.bindValue(":catalog_file_count",             srcQ.value(5));
-    ins.bindValue(":catalog_total_file_size",        srcQ.value(6));
-    ins.bindValue(":catalog_source_path_is_active",  srcQ.value(7));
-    ins.bindValue(":catalog_include_hidden",         srcQ.value(8));
-    ins.bindValue(":catalog_file_type",              srcQ.value(9));
-    ins.bindValue(":catalog_include_symblinks",      srcQ.value(10));
-    ins.bindValue(":catalog_is_full_device",         srcQ.value(11));
-    ins.bindValue(":catalog_date_loaded",            srcQ.value(12));
-    ins.bindValue(":catalog_include_metadata",       srcQ.value(13));
-    ins.bindValue(":catalog_include_checksum",       srcQ.value(14));
-    ins.bindValue(":catalog_app_version",            srcQ.value(15));
+    ins.bindValue(":catalog_date_updated",           srcQ.value(2));
+    ins.bindValue(":catalog_source_path",            srcQ.value(3));
+    ins.bindValue(":catalog_file_count",             srcQ.value(4));
+    ins.bindValue(":catalog_total_file_size",        srcQ.value(5));
+    ins.bindValue(":catalog_source_path_is_active",  srcQ.value(6));
+    ins.bindValue(":catalog_include_hidden",         srcQ.value(7));
+    ins.bindValue(":catalog_file_type",              srcQ.value(8));
+    ins.bindValue(":catalog_include_symblinks",      srcQ.value(9));
+    ins.bindValue(":catalog_is_full_device",         srcQ.value(10));
+    ins.bindValue(":catalog_date_loaded",            srcQ.value(11));
+    ins.bindValue(":catalog_include_metadata",       srcQ.value(12));
+    ins.bindValue(":catalog_include_checksum",       srcQ.value(13));
+    ins.bindValue(":catalog_app_version",            srcQ.value(14));
 
     if (!ins.exec()) {
         m_lastError = ins.lastError().text();
@@ -473,6 +463,18 @@ int CollectionImporter::remapAndInsertDevice(int srcDeviceId, int newParentId)
         }
     }
 
+    // Catalog names are unique among Catalog devices (STI-C18): a clash renames
+    // the imported device, and its .idx file and file_catalog follow (STI-F15).
+    QString deviceName = srcQ.value(1).toString();
+    if (deviceType == "Catalog") {
+        QStringList existingNames;
+        QSqlQuery namesQ(QSqlDatabase::database(tgtConn));
+        namesQ.exec("SELECT device_name FROM device WHERE device_type = 'Catalog'");
+        while (namesQ.next())
+            existingNames << namesQ.value(0).toString();
+        deviceName = resolveNameConflict(deviceName, existingNames);
+    }
+
     QSqlQuery ins(QSqlDatabase::database(tgtConn));
     ins.prepare(QLatin1String(R"(
         INSERT INTO device (
@@ -488,7 +490,7 @@ int CollectionImporter::remapAndInsertDevice(int srcDeviceId, int newParentId)
     )"));
     ins.bindValue(":device_id",              newDeviceId);
     ins.bindValue(":device_parent_id",       newParentId == 0 ? QVariant() : QVariant(newParentId));
-    ins.bindValue(":device_name",            srcQ.value(1));
+    ins.bindValue(":device_name",            deviceName);
     ins.bindValue(":device_type",            deviceType);
     ins.bindValue(":device_external_id",     newExternalId);
     ins.bindValue(":device_path",            srcQ.value(4));
@@ -519,7 +521,7 @@ void CollectionImporter::insertFileData(int srcCatalogId, int newCatalogId,
     if (m_sourceMode == "Memory") {
         // Load .idx file into source connection so we can query it uniformly
         QSqlQuery pathQ(QSqlDatabase::database(m_sourceConnectionName));
-        pathQ.prepare("SELECT catalog_file_path, catalog_name, catalog_app_version "
+        pathQ.prepare("SELECT catalog_file_path, catalog_app_version "
                       "FROM catalog WHERE catalog_id = :id");
         pathQ.bindValue(":id", srcCatalogId);
         pathQ.exec();
@@ -528,9 +530,9 @@ void CollectionImporter::insertFileData(int srcCatalogId, int newCatalogId,
 
         Catalog tmpCat;
         tmpCat.ID         = srcCatalogId;
-        tmpCat.name       = pathQ.value(1).toString();
         tmpCat.filePath   = pathQ.value(0).toString();
-        tmpCat.appVersion = pathQ.value(2).toString();
+        tmpCat.name       = QFileInfo(tmpCat.filePath).completeBaseName();
+        tmpCat.appVersion = pathQ.value(1).toString();
         tmpCat.dateUpdated = QDateTime::currentDateTime();
         tmpCat.dateLoaded  = QDateTime();
         tmpCat.setConnectionName(m_sourceConnectionName);
@@ -543,74 +545,31 @@ void CollectionImporter::insertFileData(int srcCatalogId, int newCatalogId,
 
     QString tgtConn = m_target->connectionName();
 
-    // Robustness: source DBs exported from Memory collections and then migrated
-    // with the old migration code may have file_catalog_id = 0 for all rows even
-    // though catalog.catalog_id has been repaired to rowid values.  In that case
-    // fall back to matching via the file_catalog string column (catalog name).
-    QString srcCatalogNameFallback;
-    if (m_sourceMode != "Memory") {
-        QSqlQuery cntQ(QSqlDatabase::database(m_sourceConnectionName));
-        cntQ.prepare("SELECT COUNT(*) FROM file WHERE file_catalog_id = :id");
-        cntQ.bindValue(":id", srcCatalogId);
-        cntQ.exec();
-        bool hasRowsById = cntQ.next() && cntQ.value(0).toInt() > 0;
-        if (!hasRowsById) {
-            QSqlQuery nameQ(QSqlDatabase::database(m_sourceConnectionName));
-            nameQ.prepare("SELECT catalog_name FROM catalog WHERE catalog_id = :id");
-            nameQ.bindValue(":id", srcCatalogId);
-            nameQ.exec();
-            if (nameQ.next())
-                srcCatalogNameFallback = nameQ.value(0).toString();
-        }
-    }
-
     // Copy file rows: source → target with remapped catalog_id
     {
         QSqlQuery srcQ(QSqlDatabase::database(m_sourceConnectionName));
-        if (srcCatalogNameFallback.isEmpty()) {
-            srcQ.prepare(QLatin1String(R"(
-                SELECT file_name, file_folder_path, file_size, file_date_updated,
-                       file_catalog, file_full_path, file_extension, file_type,
-                       mime_type, mime_verified, type_mismatch,
-                       image_width, image_height, image_orientation,
-                       video_duration_seconds, video_width, video_height, video_codec,
-                       video_framerate, video_bitrate,
-                       audio_duration_seconds, audio_artist, audio_album, audio_title,
-                       audio_genre, audio_year, audio_track_number, audio_bitrate, audio_sample_rate,
-                       metadata_extended, metadata_extraction_date,
-                       checksum_sha256, checksum_extraction_date
-                FROM file WHERE file_catalog_id = :id
-            )"));
-            srcQ.bindValue(":id", srcCatalogId);
-        } else {
-            srcQ.prepare(QLatin1String(R"(
-                SELECT file_name, file_folder_path, file_size, file_date_updated,
-                       file_catalog, file_full_path, file_extension, file_type,
-                       mime_type, mime_verified, type_mismatch,
-                       image_width, image_height, image_orientation,
-                       video_duration_seconds, video_width, video_height, video_codec,
-                       video_framerate, video_bitrate,
-                       audio_duration_seconds, audio_artist, audio_album, audio_title,
-                       audio_genre, audio_year, audio_track_number, audio_bitrate, audio_sample_rate,
-                       metadata_extended, metadata_extraction_date,
-                       checksum_sha256, checksum_extraction_date
-                FROM file WHERE file_catalog = :name
-            )"));
-            srcQ.bindValue(":name", srcCatalogNameFallback);
-        }
+        srcQ.prepare(QLatin1String(R"(
+            SELECT file_name, file_folder_path, file_size, file_date_updated,
+                   file_catalog, file_full_path, file_extension, file_type,
+                   mime_type, mime_verified, type_mismatch,
+                   image_width, image_height, image_orientation,
+                   video_duration_seconds, video_width, video_height, video_codec,
+                   video_framerate, video_bitrate,
+                   audio_duration_seconds, audio_artist, audio_album, audio_title,
+                   audio_genre, audio_year, audio_track_number, audio_bitrate, audio_sample_rate,
+                   metadata_extended, metadata_extraction_date,
+                   checksum_sha256, checksum_extraction_date
+            FROM file WHERE file_catalog_id = :id
+        )"));
+        srcQ.bindValue(":id", srcCatalogId);
         srcQ.exec();
 
         // Count total rows so the UI can show progress + ETA.
         qint64 totalFileRows = 0;
         {
             QSqlQuery cntQ(QSqlDatabase::database(m_sourceConnectionName));
-            if (srcCatalogNameFallback.isEmpty()) {
-                cntQ.prepare("SELECT COUNT(*) FROM file WHERE file_catalog_id = :id");
-                cntQ.bindValue(":id", srcCatalogId);
-            } else {
-                cntQ.prepare("SELECT COUNT(*) FROM file WHERE file_catalog = :name");
-                cntQ.bindValue(":name", srcCatalogNameFallback);
-            }
+            cntQ.prepare("SELECT COUNT(*) FROM file WHERE file_catalog_id = :id");
+            cntQ.bindValue(":id", srcCatalogId);
             cntQ.exec();
             if (cntQ.next())
                 totalFileRows = cntQ.value(0).toLongLong();
@@ -650,7 +609,7 @@ void CollectionImporter::insertFileData(int srcCatalogId, int newCatalogId,
             ins.bindValue(":folder",        srcQ.value(1));
             ins.bindValue(":size",          srcQ.value(2));
             ins.bindValue(":date",          srcQ.value(3));
-            ins.bindValue(":catalog",       srcQ.value(4));
+            ins.bindValue(":catalog",       catalogName);   // the imported device's name (STI-F15)
             ins.bindValue(":full_path",     srcQ.value(5));
             ins.bindValue(":ext",           srcQ.value(6));
             ins.bindValue(":type",          srcQ.value(7));
@@ -695,15 +654,8 @@ void CollectionImporter::insertFileData(int srcCatalogId, int newCatalogId,
     // Copy folder rows (deduplicated)
     {
         QSqlQuery srcQ(QSqlDatabase::database(m_sourceConnectionName));
-        if (srcCatalogNameFallback.isEmpty()) {
-            srcQ.prepare("SELECT DISTINCT folder_path FROM folder WHERE folder_catalog_id = :id");
-            srcQ.bindValue(":id", srcCatalogId);
-        } else {
-            // folder table has no catalog-name column; derive from files of this catalog.
-            srcQ.prepare(
-                "SELECT DISTINCT file_folder_path FROM file WHERE file_catalog = :name");
-            srcQ.bindValue(":name", srcCatalogNameFallback);
-        }
+        srcQ.prepare("SELECT DISTINCT folder_path FROM folder WHERE folder_catalog_id = :id");
+        srcQ.bindValue(":id", srcCatalogId);
         srcQ.exec();
 
         QSqlQuery ins(QSqlDatabase::database(tgtConn));
@@ -724,7 +676,7 @@ void CollectionImporter::insertFileData(int srcCatalogId, int newCatalogId,
         // Load full catalog metadata so the .idx header is complete
         QSqlQuery catQ(QSqlDatabase::database(tgtConn));
         catQ.prepare(QLatin1String(R"(
-            SELECT catalog_name, catalog_source_path, catalog_file_count,
+            SELECT catalog_source_path, catalog_file_count,
                    catalog_total_file_size, catalog_include_hidden, catalog_file_type,
                    catalog_include_symblinks, catalog_is_full_device,
                    catalog_include_metadata, catalog_include_checksum, catalog_app_version
@@ -737,17 +689,17 @@ void CollectionImporter::insertFileData(int srcCatalogId, int newCatalogId,
                        << "not found in target DB — skipping .idx write";
             return;
         }
-        saveCat.name             = catQ.value(0).toString();
-        saveCat.sourcePath       = catQ.value(1).toString();
-        saveCat.fileCount        = catQ.value(2).toLongLong();
-        saveCat.totalFileSize    = catQ.value(3).toLongLong();
-        saveCat.includeHidden    = catQ.value(4).toBool();
-        saveCat.fileType         = catQ.value(5).toString();
-        saveCat.includeSymblinks = catQ.value(6).toBool();
-        saveCat.isFullDevice     = catQ.value(7).toBool();
-        saveCat.includeMetadata  = catQ.value(8).toString();
-        saveCat.includeChecksum  = catQ.value(9).toString();
-        saveCat.appVersion       = catQ.value(10).toString();
+        saveCat.name             = catalogName;
+        saveCat.sourcePath       = catQ.value(0).toString();
+        saveCat.fileCount        = catQ.value(1).toLongLong();
+        saveCat.totalFileSize    = catQ.value(2).toLongLong();
+        saveCat.includeHidden    = catQ.value(3).toBool();
+        saveCat.fileType         = catQ.value(4).toString();
+        saveCat.includeSymblinks = catQ.value(5).toBool();
+        saveCat.isFullDevice     = catQ.value(6).toBool();
+        saveCat.includeMetadata  = catQ.value(7).toString();
+        saveCat.includeChecksum  = catQ.value(8).toString();
+        saveCat.appVersion       = catQ.value(9).toString();
 
         if (!saveCat.saveCatalogToFile(m_target->databaseMode, m_target->folder))
             qWarning() << "WARNING: insertFileData: failed to write .idx for catalog" << newCatalogId;
@@ -827,31 +779,20 @@ bool CollectionImporter::importSubTree(int srcDeviceId, int targetParentId,
             int srcCatalogId = extQ.value(0).toInt();
             ++m_catalogImportIndex;
 
-            // Robustness: if device_external_id doesn't point to a real catalog
-            // (can happen in source DBs exported from Memory collections, where all
-            // catalog_ids were 0 before migration and device_external_id was left
-            // stale), fall back to finding the catalog by the device's name.
+            QString catalogName;
             {
-                QSqlQuery chkQ(QSqlDatabase::database(m_sourceConnectionName));
-                chkQ.prepare("SELECT COUNT(*) FROM catalog WHERE catalog_id = :id");
-                chkQ.bindValue(":id", srcCatalogId);
-                chkQ.exec();
-                if (chkQ.next() && chkQ.value(0).toInt() == 0) {
-                    QSqlQuery nameQ(QSqlDatabase::database(m_sourceConnectionName));
-                    nameQ.prepare("SELECT catalog_id FROM catalog WHERE catalog_name = :name");
-                    nameQ.bindValue(":name", srcDeviceName(srcDeviceId));
-                    nameQ.exec();
-                    if (nameQ.next())
-                        srcCatalogId = nameQ.value(0).toInt();
-                }
+                QSqlQuery nameQ(QSqlDatabase::database(m_target->connectionName()));
+                nameQ.prepare("SELECT device_name FROM device WHERE device_id = :id");
+                nameQ.bindValue(":id", newDeviceId);
+                nameQ.exec();
+                if (nameQ.next())
+                    catalogName = nameQ.value(0).toString();
             }
 
-            // No storage row is imported from here: a storage belongs to its
-            // Storage device, imported in the branch below (STI-F13).
-            int newCatalogId = remapAndInsertCatalog(srcCatalogId);
+            int newCatalogId = remapAndInsertCatalog(srcCatalogId, catalogName);
             if (newCatalogId > 0) {
                 m_catalogIdMap[srcCatalogId] = newCatalogId;
-                insertFileData(srcCatalogId, newCatalogId, srcDeviceName(srcDeviceId));
+                insertFileData(srcCatalogId, newCatalogId, catalogName);
                 insertCatalogFilter(srcCatalogId, newCatalogId);
             }
         }

@@ -3698,7 +3698,11 @@ QString AppManager::importFromVVV(const QString &path)
     for (const QString &catName : uniqueNames) {
         Device *d = new Device();
         d->generateDeviceID();
+        // Catalog names are unique among devices (STI-C18): a clash gets " (2)",
+        // " (3)"… as Collection Import does.
         d->name     = catName;
+        for (int suffix = 2; d->verifyDeviceNameExists(); ++suffix)
+            d->name = QString("%1 (%2)").arg(catName).arg(suffix);
         d->type     = "Catalog";
         d->parentID = importVirtual.ID;
         d->groupID  = 1;
@@ -3748,7 +3752,7 @@ QString AppManager::importFromVVV(const QString &path)
         insFile.bindValue(":path", folder);
         insFile.bindValue(":size", f[3].toLongLong());
         insFile.bindValue(":date", f[5]);
-        insFile.bindValue(":cat",  catName);
+        insFile.bindValue(":cat",  nameToDev.contains(catName) ? nameToDev.value(catName)->name : catName);
         insFile.exec();
         insFolder.bindValue(":cid",  catId);
         insFolder.bindValue(":path", folder);

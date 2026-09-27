@@ -505,7 +505,7 @@ void Device::writeNameCopies(const QString &databaseMode)
         return;
 
     catalog->setConnectionName(m_connectionName);
-    catalog->renameCatalog(name);   // catalog_name + file_catalog (STI-F14)
+    catalog->renameCatalog(name);   // file_catalog (STI-F14)
 
     // The .idx file is named after the catalog, and its name is what Memory mode
     // loads the catalog name from.

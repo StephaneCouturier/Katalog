@@ -160,12 +160,16 @@ WHERE  d.device_type = 'Catalog' AND c.catalog_id IS NULL;
 **Check 7 — catalog rows no Catalog device points at**
 
 ```sql
-SELECT c.catalog_id, c.catalog_name
+SELECT c.catalog_id, c.catalog_file_path
 FROM   catalog c
 LEFT JOIN device d ON d.device_external_id = c.catalog_id
                   AND d.device_type = 'Catalog'
 WHERE  d.device_id IS NULL;
 ```
+
+No device points at these rows, so they have no name to show (`catalog_name`
+is removed, `SpecStorageIdentity.md` `STI-C17`): they are listed by id and by
+their catalog file path.
 
 **Check 8 — devices whose parent does not exist**
 
@@ -190,8 +194,8 @@ imports done before the import fix of `SpecStorageIdentity.md` (`STI-F1` to
 it, is retired.
 
 **Tables each check reads.** Checks 1, 3 and 4: `device`, `storage`. Checks 6 and 7: `device`, `catalog`. Check 8: `device`. No check
-reads `file`, `filetemp` or `folder`. `storage_name` and `catalog_storage` no
-longer exist (`STI-C13`).
+reads `file`, `filetemp` or `folder`. `storage_name`, `catalog_storage` and
+`catalog_name` no longer exist (`STI-C13`, `STI-C17`).
 
 **Memory mode.** All three tables are loaded when the collection is opened
 (`Collection::load()`): `device` from `device.csv`, `storage` from
