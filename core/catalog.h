@@ -125,8 +125,6 @@ public:
 
     void loadCatalogFileListToTable(QMutex &mutex, bool &stopRequested);
     void loadFoldersToTable();
-    void saveStatistics(QDateTime dateTime);
-    void saveStatisticsToFile(QString filePath, QDateTime dateTime);
     bool catalogNameExists();
 
     void populateFileData( const QList<QString> &fileNames,

@@ -85,11 +85,6 @@ public:
     QString deviceFilePath;
     QString searchHistoryFilePath;
     QString storageFilePath;
-    QString deviceCatalogFilePath;
-    QString statisticsCatalogFileName;
-    QString statisticsCatalogFilePath;
-    QString statisticsStorageFileName;
-    QString statisticsStorageFilePath;
     QString statisticsDeviceFileName;
     QString statisticsDeviceFilePath;
     QString parameterFilePath;

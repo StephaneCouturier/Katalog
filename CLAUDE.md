@@ -65,6 +65,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 > **Steps in `runMigration_3_0` (unreleased — editable in place):**
 > - Resets `device.device_order` to 0 (never populated before; harmless to repeat only while no feature stores a non-zero order).
 > - Adds `device_mapping.mapping_source_collection`, `device.device_comment`, `storage.storage_user_id` (back-filled from `storage_id`), `device_mapping.mapping_include_empty_dirs` when missing.
+> - Drops the v1.22 tables `statistics_catalog`, `statistics_storage`, `virtual_storage`, `virtual_storage_catalog`, `device_catalog` if they exist (never created or used since 2.0).
 > - Drops `storage.storage_name` and `catalog.catalog_storage` when present (dead v1.xx name copies; `device_name` is the only name — `SpecStorageIdentity.md` STI-C13/C16). Memory-mode files keep their slots, written empty.
 
 ## Project Overview

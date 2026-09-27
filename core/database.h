@@ -40,61 +40,6 @@
 // Forward declaration
 class Collection;
 
-namespace DatabaseSQL {
-
-// MIGRATION 1.22 to 2.0 ------------------------------------------------
-
-// STATISTICS -----------------------------------------------------------
-
-const auto SQL_CREATE_STATISTICS_CATALOG = QLatin1String(R"(
-                        CREATE TABLE IF NOT EXISTS  statistics_catalog(
-                            date_time               TEXT,
-                            catalog_id              NUMERIC,
-                            catalog_name            TEXT,
-                            catalog_file_count      NUMERIC,
-                            catalog_total_file_size NUMERIC,
-                            record_type             TEXT)
-            )");
-
-const auto SQL_CREATE_STATISTICS_STORAGE = QLatin1String(R"(
-                        CREATE TABLE IF NOT EXISTS  statistics_storage(
-                            date_time               TEXT,
-                            storage_id              TEXT,
-                            storage_name            TEXT,
-                            storage_free_space      NUMERIC,
-                            storage_total_space     NUMERIC,
-                            record_type             TEXT)
-            )");
-
-// VIRTUALSTORAGE  ------------------------------------------------------
-
-const auto SQL_CREATE_VIRTUAL_STORAGE = QLatin1String(R"(
-                       CREATE TABLE IF NOT EXISTS virtual_storage(
-                            virtual_storage_id          NUMERIC,
-                            virtual_storage_parent_id   NUMERIC,
-                            virtual_storage_name        TEXT)
-            )");
-
-// VIRTUALSTORAGE CATALOG ------------------------------------------------------
-
-const auto SQL_CREATE_VIRTUAL_STORAGE_CATALOG = QLatin1String(R"(
-                       CREATE TABLE IF NOT EXISTS virtual_storage_catalog(
-                            virtual_storage_id      NUMERIC,
-                            catalog_name            TEXT,
-                            directory_path          TEXT)
-            )");
-
-// DEVICE CATALOG ------------------------------------------------------
-
-const auto SQL_CREATE_DEVICE_CATALOG = QLatin1String(R"(
-                        CREATE TABLE IF NOT EXISTS device_catalog(
-                            device_id           NUMERIC,
-                            catalog_name        TEXT,
-                            directory_path      TEXT)
-            )");
-
-}
-
 class Database
 {
 public:

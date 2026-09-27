@@ -202,13 +202,6 @@ void Collection::generateCollectionFilesPaths()
     tagFilePath                 = folder + "/" + "tags.csv";
     mappingFilePath             = folder + "/" + "device_mapping.csv";
     catalogFilterFilePath       = folder + "/" + "catalog_filter.csv";
-
-    //v1.22 files
-    deviceCatalogFilePath       = folder + "/" + "device_catalog.csv";
-    statisticsCatalogFileName   = "statistics_catalog.csv";
-    statisticsCatalogFilePath   = folder + "/" + statisticsCatalogFileName;
-    statisticsStorageFileName   = "statistics_storage.csv";
-    statisticsStorageFilePath   = folder + "/" + statisticsStorageFileName;
 }
 
 void Collection::generateCollectionFiles()
@@ -354,11 +347,6 @@ void Collection::clearDatabaseData()
         QSqlQuery queryDelete(db);
 
         //QSqlQuery queryDelete(QSqlDatabase::database(m_connectionName));
-        queryDelete.exec("DELETE FROM device_catalog");
-        queryDelete.exec("DELETE FROM virtual_storage_catalog");
-        queryDelete.exec("DELETE FROM virtual_storage");
-        queryDelete.exec("DELETE FROM statistics_catalog");
-        queryDelete.exec("DELETE FROM statistics_storage");
         queryDelete.exec("DELETE FROM statistics_device");
         queryDelete.exec("DELETE FROM device_mapping");
         queryDelete.exec("DELETE FROM catalog_filter");
@@ -371,13 +359,6 @@ void Collection::clearDatabaseData()
         queryDelete.exec("DELETE FROM catalog");
         queryDelete.exec("DELETE FROM storage");
         queryDelete.exec("DELETE FROM device");
-
-        //MIGRATION 1.22 to 2.0
-        queryDelete.exec("DELETE FROM statistics_catalog");
-        queryDelete.exec("DELETE FROM statistics_storage");
-        queryDelete.exec("DELETE FROM virtual_storage");
-        queryDelete.exec("DELETE FROM virtual_storage_catalog");
-        queryDelete.exec("DELETE FROM device_catalog");
 
         // Re-enable foreign key constraints (SQLite-specific)
         if (Database::getDatabaseType(m_connectionName) == Database::DatabaseType::SQLite) {

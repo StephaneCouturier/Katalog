@@ -1278,6 +1278,17 @@ QSqlError Database::runMigration_3_0(const QString &connectionName)
             return err;
         }
     }
+    // v1.22 tables, never created or used since 2.0 (statistics are in
+    // statistics_device); old collections may still carry them.
+    for (const char *table : {"statistics_catalog", "statistics_storage", "virtual_storage",
+                              "virtual_storage_catalog", "device_catalog"}) {
+        err = executeSql(connectionName, QString("DROP TABLE IF EXISTS %1").arg(table));
+        if (err.type() != QSqlError::NoError) {
+            qWarning() << "WARNING: Failed to drop" << table << ":" << err.text();
+            return err;
+        }
+    }
+
     const QStringList oldCatalogColumns = getTableColumns(connectionName, "catalog");
     if (oldCatalogColumns.contains("catalog_name")) {
         if (getDatabaseType(connectionName) == DatabaseType::SQLite) {
