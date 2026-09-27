@@ -252,7 +252,7 @@ unambiguously is reported, never guessed.
 | QCK-F11 | It reports every catalog row that no Catalog device points at (check 7). | [Planned] |
 | QCK-F12 | It reports every device whose `device_parent_id` is neither 0/NULL (root) nor an existing `device.device_id` (check 8). | [Planned] |
 | QCK-F13 | In K3, the Quality Check is started by a button on the Settings page, in the "Collection & Database" section, on the "Database Version" row, placed next to the version value — the same value-plus-button pattern as the Collection row's Edit button. K2 gets no entry point. | [Planned] |
-| QCK-F14 | The report is shown in a window with one section per check. Each section shows the number of rows found and lists them by their ids and names. | [Planned] |
+| QCK-F14 | The report is shown in a window with one section per check. Each section shows the number of rows found and lists them; each row identifies the item by its id, and also by its name when a device holds one. Checks 3 and 7 list records that no device points at, so they show ids only: check 3 shows `storage_id` and `storage_user_id`, check 7 shows `catalog_id` and `catalog_file_path`. | [Planned] |
 | QCK-F15 | Each check that finds nothing says so explicitly in its own section, in addition to the overall statement of `QCK-F7`. | [Planned] |
 | QCK-F16 | The report window has a Copy action that puts the whole report on the clipboard as plain text, and confirms it with a transient passive notification. | [Planned] |
 
@@ -297,7 +297,7 @@ is written. No wording is proposed here.
 - **QCK-F11** — Leave a catalog row no Catalog device points at. Run the check: the catalog is listed.
 - **QCK-F12** — Set a device's `device_parent_id` to an id no device has. Run the check: the device is listed; root devices (parent 0) are not.
 - **QCK-F13** — In K3, open Settings: the button sits on the "Database Version" row next to the version value, laid out like the Collection row's Edit button, and starts the check. In K2 nothing has changed.
-- **QCK-F14** — Run the check on a damaged collection: the window shows one section per check, each with its count and the ids and names of the rows found.
+- **QCK-F14** — Run the check on a damaged collection: the window shows one section per check, each with its count and its rows identified by id, plus the device name where a device holds one (checks 3 and 7: ids only).
 - **QCK-F15** — Run the check on a collection with only one kind of damage: every other section says it found nothing.
 - **QCK-F16** — Use Copy, paste into a text editor: the whole report arrives as plain text, and a passive notification confirmed the copy.
 - **QCK-C7** — On a File-mode collection, note the database file's modification time and checksum; on a Memory-mode collection, those of every `.csv`, `.idx` and `.ini` in the collection folder. Run the check. Nothing has changed.
