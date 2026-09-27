@@ -1298,11 +1298,7 @@ QSqlError Database::runMigration_3_0(const QString &connectionName)
 
 QSqlError Database::ensureDeviceCommentColumn(const QString &connectionName)
 {
-    // Unconditional column guard, not a step inside runMigration_2_13: the field
-    // was added to the 2.13 cycle after databases had already been stamped 2.13,
-    // so the versioned migration no longer runs for them and the column would
-    // never appear. Same situation, and same remedy, as
-    // ensureMappingSourceCollectionColumn below (SpecDeviceComment.md).
+    // Step of runMigration_3_0: adds the column when missing (SpecDeviceComment.md).
     QStringList deviceColumns = getTableColumns(connectionName, "device");
     if (!deviceColumns.contains("device_comment")) {
         QSqlError err = executeSql(connectionName,
@@ -1318,10 +1314,8 @@ QSqlError Database::ensureDeviceCommentColumn(const QString &connectionName)
 
 QSqlError Database::ensureStorageUserIdColumn(const QString &connectionName)
 {
-    // Unconditional column guard rather than a step inside runMigration_2_13: the
-    // field joined the 2.13 cycle after databases had already been stamped 2.13,
-    // so the versioned migration no longer runs for them (SpecStorageIdentity.md
-    // STI-C4, same remedy as ensureDeviceCommentColumn above).
+    // Step of runMigration_3_0: adds the column when missing (SpecStorageIdentity.md
+    // STI-C4).
     //
     // storage_id is the internal key; storage_user_id is the number the user
     // writes on the disk. Existing rows are back-filled from storage_id so every
@@ -1347,10 +1341,7 @@ QSqlError Database::ensureStorageUserIdColumn(const QString &connectionName)
 
 QSqlError Database::ensureMappingIncludeEmptyDirsColumn(const QString &connectionName)
 {
-    // Unconditional column guard rather than a step inside runMigration_2_13: the
-    // field was added to the 2.13 cycle after databases had already been stamped
-    // 2.13, so the versioned migration no longer runs for them and the column
-    // would never appear. Default 1 keeps every existing mapping replicating empty
+    // Step of runMigration_3_0: adds the column when missing. Default 1 keeps every existing mapping replicating empty
     // directories, the behaviour specified before the option existed
     // (SpecBackup.md BKP-F17, BKP-C9).
     QStringList mappingColumns = getTableColumns(connectionName, "device_mapping");

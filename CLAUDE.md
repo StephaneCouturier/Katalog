@@ -57,12 +57,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 > - Last **released** version: **2.12** (schema 2.12 is shipped — its migrations are frozen, do NOT edit them in place)
 > - **K3 3.0 beta1 is released** — portable builds only (Linux, Windows, macOS), published on SourceForge only. It is in users' hands: K3 behaviour changes now have real testers, and bug reports arrive from **Windows and macOS**, not only from the Linux/KDE development machine. When diagnosing a K3 report, consider platform-specific behaviour (window manager, QSettings backend, icon theme, Qt Quick Controls style) before assuming a logic bug.
 > - beta1 writes its own settings file `katalog3_prerelease_settings.ini` (see `AppManager::initiateApp`). Testers already have one on disk, so a change to what K3 persists must stay readable for an existing beta1 file — state the impact on beta testers up front.
-> - Current **development** version: **K2 2.13 / K3 3.0** (branch `katalog_development`), database schema **2.13**
-> - Database migrations 2.13 are introduced **during** the 2.13/3.0 development cycle and have **never been shipped**. Any field added by those migrations can be changed in-place (schema + migration ALTER TABLE) — no additional migration step is needed *while 2.13 stays unreleased*.
-> - **Rule:** When a new DB field is introduced in the current development version, note it here so future work knows it has not been released yet and can be edited directly rather than adding a new migration.
+> - Current **development** version: **K2 2.13 / K3 3.0** (branch `katalog_development`). Latest published: **K3 3.0 beta2 + K2 2.13** (2026-09-21).
+> - **Schema target at release: 3.0.** "2.13" is only the working stamp used by betas and RCs. At Release 3.0 every collection — including beta/RC databases already stamped 2.13 — runs the full **2.12 → 3.0** migration (`SpecVersions.md` "Schema number at release: 3.0").
+> - **Until release:** all 3.0-cycle schema steps live in `Database::runMigration_3_0`, which `DatabaseManager::runMigrations` calls on **every open** (no version condition), while the stamp written stays **2.13**. Every step must therefore be harmless to repeat (check "already done?" first). New steps go into that function — no separate guard functions, no version bump needed.
+> - **At Release 3.0** (the only time): wrap that block in `if (schemaVersion < QVersionNumber::fromString("3.0"))` and stamp "3.0" there and in `Collection::load()`.
 >
-> **Schema changes in 2.13 (unreleased — edit in place, no extra migration needed):**
-> - `Database::runMigration_2_13` — normalizes `device.device_order` to 0 for existing collections. The field was reserved earlier but never populated (`Device::order` was uninitialised at insert); the device-tree sort now uses it as a secondary key after `device_group_id`, so leftover indeterminate values are reset. New collections stamp schema 2.13 (`Collection::load`).
+> **Steps in `runMigration_3_0` (unreleased — editable in place):**
+> - Resets `device.device_order` to 0 (never populated before; harmless to repeat only while no feature stores a non-zero order).
+> - Adds `device_mapping.mapping_source_collection`, `device.device_comment`, `storage.storage_user_id` (back-filled from `storage_id`), `device_mapping.mapping_include_empty_dirs` when missing.
+> - Drops `storage.storage_name` and `catalog.catalog_storage` when present (dead v1.xx name copies; `device_name` is the only name — `SpecStorageIdentity.md` STI-C13/C16). Memory-mode files keep their slots, written empty.
 
 ## Project Overview
 
