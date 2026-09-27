@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+178"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4603"/>
+        <location line="+4618"/>
         <source>Search</source>
         <translation>Chercher</translation>
     </message>
     <message>
-        <location line="-4723"/>
+        <location line="-4738"/>
         <source>Stopped</source>
         <translation>Arrêté</translation>
     </message>
@@ -44,11 +44,11 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2241"/>
-        <location line="+626"/>
+        <location line="+2240"/>
+        <location line="+625"/>
         <location line="+26"/>
         <location line="+20"/>
-        <location line="+1260"/>
+        <location line="+1277"/>
         <location line="+11"/>
         <location line="+60"/>
         <location line="+374"/>
@@ -56,14 +56,14 @@
         <translation>En cours</translation>
     </message>
     <message>
-        <location line="-4604"/>
-        <location line="+4211"/>
+        <location line="-4619"/>
+        <location line="+4226"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Terminé</translation>
     </message>
     <message>
-        <location line="-3546"/>
+        <location line="-3561"/>
         <source>Empty database path provided</source>
         <translation>Chemin de base de données vide fourni</translation>
     </message>
@@ -149,12 +149,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2626"/>
+        <location line="+2641"/>
         <source>Size</source>
         <translation>Taille</translation>
     </message>
     <message>
-        <location line="-2625"/>
+        <location line="-2640"/>
         <source>Date</source>
         <translation>Date</translation>
     </message>
@@ -247,13 +247,13 @@ Choisissez un autre nom et réessayez.</translation>
         <translation>Une opération de périphérique est déjà en cours.</translation>
     </message>
     <message>
-        <location line="+85"/>
-        <location line="+651"/>
+        <location line="+84"/>
+        <location line="+650"/>
         <source>Create</source>
         <translation>Créer</translation>
     </message>
     <message>
-        <location line="-544"/>
+        <location line="-543"/>
         <source>Catalog creation was stopped.</source>
         <translation>La création du catalogue a été arrêtée.</translation>
     </message>
@@ -279,12 +279,12 @@ Choisissez un autre nom et réessayez.</translation>
         <translation>Virtuel</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+28"/>
         <source>Storage</source>
         <translation>Stockage</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+37"/>
         <source>Error: %1</source>
         <translation>Erreur : %1</translation>
     </message>
@@ -351,12 +351,12 @@ Choisissez un autre nom et réessayez.</translation>
         <translation>Aucune donnée de catalogue trouvée dans le fichier.</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+58"/>
         <source>Could not open file: %1</source>
         <translation>Impossible d’ouvrir le fichier : %1</translation>
     </message>
     <message>
-        <location line="+155"/>
+        <location line="+156"/>
         <source>There is already a catalog with this name: %1
 Choose a different name.</source>
         <translation>Il existe déjà un catalogue portant ce nom : %1
@@ -368,7 +368,7 @@ Choisissez un autre nom.</translation>
         <translation>Un catalogue du groupe Physique ne peut être placé que sous un périphérique de stockage.</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+68"/>
         <source>File type: %1 → %2</source>
         <translation>Type de fichier : %1 → %2</translation>
     </message>
@@ -440,7 +440,12 @@ Choisissez un autre nom.</translation>
         <translation>Erreur : impossible d’ouvrir la collection</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+11"/>
+        <source>Schema version mismatch. Import cancelled. (%1)</source>
+        <translation>Incompatibilité de version de schéma. Import annulé. (%1)</translation>
+    </message>
+    <message>
+        <location line="+18"/>
         <source>No source collection is open.</source>
         <translation>Aucune collection source n&apos;est ouverte.</translation>
     </message>
@@ -621,7 +626,7 @@ Choisissez un autre nom.</translation>
         <translation>Catalogue</translation>
     </message>
     <message>
-        <location line="+1566"/>
+        <location line="+1543"/>
         <source>root</source>
         <translation>racine</translation>
     </message>
@@ -654,7 +659,7 @@ Choisissez un autre nom.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2708"/>
+        <location filename="../core/collection.cpp" line="+2691"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Ce dossier contient des fichiers de collection en mode Mémoire, mais vous êtes actuellement en mode Fichier.&lt;br/&gt;Passez en mode Mémoire ou sélectionnez un autre dossier.</translation>
     </message>
@@ -672,7 +677,7 @@ Choisissez un autre nom.</translation>
 <context>
     <name>CollectionImporter</name>
     <message>
-        <location filename="../core/collectionimporter.cpp" line="+1770"/>
+        <location filename="../core/collectionimporter.cpp" line="+1637"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
@@ -911,7 +916,7 @@ Choisissez un autre nom.</translation>
 <context>
     <name>DeviceTreeComboBox</name>
     <message>
-        <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+133"/>
+        <location filename="../qt_quick/DeviceTreeComboBox.qml" line="+158"/>
         <source>Select a Storage</source>
         <translation>Sélectionner un stockage</translation>
     </message>
@@ -1566,7 +1571,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+2486"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+2424"/>
         <source>Include Checksum</source>
         <translation>Inclure la somme de contrôle</translation>
     </message>
@@ -2071,7 +2076,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <translation>Vérifier les types MIME</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+503"/>
+        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+502"/>
         <location line="+19"/>
         <location line="+11"/>
         <source>Other</source>
@@ -2233,7 +2238,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <translation>Complet étendu</translation>
     </message>
     <message>
-        <location filename="../core/device.cpp" line="+704"/>
+        <location filename="../core/device.cpp" line="+727"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
         <translation>Voulez-vous &lt;span style=&apos;color: red&apos;;&gt;supprimer&lt;/span&gt; ce périphérique %1 ?</translation>
     </message>
@@ -2254,7 +2259,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clic : Arrêter immédiatement (arrêt brutal)&lt;/p&gt;&lt;p&gt;Ctrl+Clic : Arrêter après le catalogue actuel (arrêt en douceur)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-235"/>
+        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-234"/>
         <source>The source directory does not exist.</source>
         <translation>Le répertoire source n&apos;existe pas.</translation>
     </message>
@@ -2265,8 +2270,8 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <translation>Le dossier source ne contient aucun fichier.&lt;br/&gt;Cela pourrait signifier que la source est vide ou que le périphérique n&apos;est pas monté dans ce dossier.&lt;br/&gt;Voulez-vous l&apos;enregistrer quand même (le catalogue serait vide) ?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+82"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-3116"/>
+        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+81"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-3054"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-490"/>
         <location line="+117"/>
         <location line="+72"/>
@@ -2278,7 +2283,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <translation>Une opération de périphérique est déjà en cours.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1936"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1874"/>
         <location filename="../core/deviceupdatemanager.cpp" line="+898"/>
         <source>Operation cancelled</source>
         <translation>Opération annulée</translation>
@@ -2311,8 +2316,8 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     <message>
         <location line="-6914"/>
         <location line="+6893"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1656"/>
-        <location line="+2859"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1592"/>
+        <location line="+2795"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+16"/>
         <location line="+2"/>
         <source>Storage</source>
@@ -3203,7 +3208,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <translation type="vanished">Le périphérique sélectionné doit être un catalogue. Essayez avec un autre identifiant de périphérique</translation>
     </message>
     <message>
-        <location line="-2557"/>
+        <location line="-2497"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>Il existe déjà un catalogue portant ce nom&#xa0;:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
@@ -3213,7 +3218,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <translation>Un catalogue dans le groupe Physique ne peut être défini que sous un stockage ou ce groupe. Sélectionnez un stockage dans ce groupe.&lt;br/&gt;&lt;br/&gt;Pour utiliser ce catalogue sous un périphérique dans un groupe virtuel, utilisez la commande Attribuer.&lt;b&gt;</translation>
     </message>
     <message>
-        <location line="+555"/>
+        <location line="+495"/>
         <location line="+240"/>
         <location line="+255"/>
         <source>Free space</source>
@@ -3397,7 +3402,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     </message>
     <message>
         <location line="-11704"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2616"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2554"/>
         <source>Virtual</source>
         <translation>Virtuel</translation>
     </message>
@@ -3425,7 +3430,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     </message>
     <message>
         <location line="+1022"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1030"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+968"/>
         <source>Brand</source>
         <translation>Marque</translation>
     </message>
@@ -4013,8 +4018,8 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <location line="+11"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+4"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+341"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-765"/>
-        <location line="+1796"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-705"/>
+        <location line="+1736"/>
         <source>Skip</source>
         <translation>Ignorer</translation>
     </message>
@@ -4160,7 +4165,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <translation>Dossiers trouvés</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-467"/>
+        <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-466"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+77"/>
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+34"/>
         <location filename="../qt_widgets/mainwindow_tab_tags.cpp" line="+44"/>
@@ -4686,7 +4691,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2137"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2077"/>
         <source>Choose a different name and try again.</source>
         <translation>Choisissez un autre nom et réessayez.</translation>
     </message>
@@ -4710,7 +4715,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <translation>Sauver</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1826"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1766"/>
         <source>(The catalog must be updated to reflect these changes)</source>
         <translation>(Le catalogue doit être actualisé pour refléter ces changements)</translation>
     </message>
@@ -4745,7 +4750,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     <message>
         <location line="-200"/>
         <location line="+3286"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2304"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2242"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1112"/>
         <location line="+117"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-157"/>
@@ -4765,7 +4770,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <translation>Ceci est la version: v%1 &lt;br/&gt;&lt;br/&gt;Une nouvelle version est disponible : &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Voir la liste de nouvelles fonctionnalités dans les &lt;a href=&apos;%3&apos;&gt;Notes de Version&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Voulez-vous la télécharger ?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1579"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1517"/>
         <source>App Version</source>
         <translation>Version de l&apos;application</translation>
     </message>
@@ -4787,7 +4792,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <translation>Attribuer le catalogue sélectionné</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1695"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1633"/>
         <source>The catalog is already assigned to this Virtual device.</source>
         <translation>Le catalogue est déjà attribué à ce périphérique virtuel.</translation>
     </message>
@@ -4864,46 +4869,46 @@ La division n&apos;a pas été effectuée.</translation>
         <translation type="vanished">Choisissez un autre identifiant et réessayez.</translation>
     </message>
     <message>
-        <location line="+488"/>
+        <location line="+486"/>
         <source>The storage path changed.</source>
         <translation>Le chemin du stockage a changé.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+1796"/>
+        <location line="+1736"/>
         <source>Old path:</source>
         <translation>Ancien chemin :</translation>
     </message>
     <message>
-        <location line="-1795"/>
-        <location line="+1796"/>
+        <location line="-1735"/>
+        <location line="+1736"/>
         <source>New path:</source>
         <translation>Nouveau chemin :</translation>
     </message>
     <message>
-        <location line="-1794"/>
-        <location line="+1796"/>
+        <location line="-1734"/>
+        <location line="+1736"/>
         <source>How should the catalog indexes be updated?</source>
         <translation>Comment les index du catalogue doivent-ils être mis à jour ?</translation>
     </message>
     <message>
-        <location line="-1794"/>
-        <location line="+1796"/>
+        <location line="-1734"/>
+        <location line="+1736"/>
         <source>Replace path root</source>
         <translation>Remplacer la racine du chemin</translation>
     </message>
     <message>
-        <location line="-1795"/>
+        <location line="-1735"/>
         <source>Full re-scan</source>
         <translation>Ré-analyse complète</translation>
     </message>
     <message>
-        <location line="+191"/>
+        <location line="+122"/>
         <source>Another storage already uses this ID.</source>
         <translation>Un autre stockage utilise déjà cet ID.</translation>
     </message>
     <message>
-        <location line="+839"/>
+        <location line="+848"/>
         <source>File Path</source>
         <translation>Chemin du fichier</translation>
     </message>
@@ -4962,7 +4967,7 @@ La division n&apos;a pas été effectuée.</translation>
 </translation>
     </message>
     <message>
-        <location line="-2223"/>
+        <location line="-2161"/>
         <source>&lt;br/&gt;A snapshot of this collection was recorded:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Catalogs&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Number of files: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total file size: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Storage&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage free space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage total space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>&lt;br/&gt;Un instantané de cette collection a été enregistré&#xa0;:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Catalogues&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Nombre de fichiers&#xa0;: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (ajouté : &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Taille totale du fichier&#xa0;: &lt;/td&gt;&lt;td style=&apos;text-align&#xa0;: right&#xa0;;&apos;&gt;&lt;b&gt;&#xa0;%3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (ajouté&#xa0;: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Stockage&lt;/b &gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Espace de stockage libre&#xa0;: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt; &lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (ajouté&#xa0;: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Espace de stockage total&#xa0;: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (ajouté&#xa0;: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
@@ -4972,7 +4977,7 @@ La division n&apos;a pas été effectuée.</translation>
         <translation>Groupe virtuel</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+918"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+856"/>
         <location line="+240"/>
         <location line="+255"/>
         <source>Date updated</source>
@@ -6003,7 +6008,7 @@ to the trash?</source>
         <translation>%1 sur %2 (%3 %)</translation>
     </message>
     <message>
-        <location filename="../core/storage.cpp" line="+218"/>
+        <location filename="../core/storage.cpp" line="+212"/>
         <source>No Path was provided for the Storage: %1. Edit the device to provide one and try again.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6133,7 +6138,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+604"/>
+        <location line="+605"/>
         <source>Errors: %1</source>
         <translation>Erreurs : %1</translation>
     </message>
@@ -6406,7 +6411,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Annuler</translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+58"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
@@ -6436,7 +6441,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Archive</translation>
     </message>
     <message>
-        <location line="-54"/>
+        <location line="-56"/>
         <source>Source</source>
         <translation>Source</translation>
     </message>
@@ -6446,7 +6451,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Catalogue source</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Target</source>
         <translation>Cible</translation>
     </message>
@@ -6456,7 +6461,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Catalogue cible</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Options</source>
         <translation>Options</translation>
     </message>
@@ -6632,13 +6637,13 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageCreateForm</name>
     <message>
-        <location filename="../qt_quick/PageCreateForm.qml" line="+207"/>
-        <location line="+46"/>
+        <location filename="../qt_quick/PageCreateForm.qml" line="+213"/>
+        <location line="+47"/>
         <source>All</source>
         <translation>Tous</translation>
     </message>
     <message>
-        <location line="-44"/>
+        <location line="-45"/>
         <source>Image</source>
         <translation>Image</translation>
     </message>
@@ -6648,7 +6653,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Audio</translation>
     </message>
     <message>
-        <location line="-185"/>
+        <location line="-191"/>
         <source>Provide a name for this new catalog.</source>
         <translation>Indiquez un nom pour ce nouveau catalogue.</translation>
     </message>
@@ -6665,7 +6670,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 (Panneau de sélection à gauche et liste déroulante)</translation>
     </message>
     <message>
-        <location line="+101"/>
+        <location line="+104"/>
         <source>Catalog definition</source>
         <translation>Définition du catalogue</translation>
     </message>
@@ -6681,18 +6686,18 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+6"/>
-        <location line="+153"/>
+        <location line="+159"/>
         <location line="+85"/>
         <source>Select the path</source>
         <translation>Sélectionner le chemin</translation>
     </message>
     <message>
-        <location line="-229"/>
+        <location line="-235"/>
         <source>Storage</source>
         <translation>Stockage</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Catalog name</source>
         <translation>Nom du catalogue</translation>
     </message>
@@ -6717,7 +6722,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Type de fichier</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+13"/>
         <source>Text</source>
         <translation>Texte</translation>
     </message>
@@ -6733,14 +6738,14 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+40"/>
-        <location line="+11"/>
-        <location line="+15"/>
+        <location line="+41"/>
+        <location line="+12"/>
+        <location line="+16"/>
         <source>None</source>
         <translation>Aucun</translation>
     </message>
     <message>
-        <location line="-36"/>
+        <location line="-39"/>
         <source>Include subdirectories</source>
         <translation>Inclure les sous-dossiers</translation>
     </message>
@@ -6750,12 +6755,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Inclure les fichiers cachés</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Include metadata</source>
         <translation>Inclure les métadonnées</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Media Basic</source>
         <translation>Média basique</translation>
     </message>
@@ -6775,7 +6780,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Inclure la somme de contrôle</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+16"/>
         <source>Exclude folders or files</source>
         <translation>Exclure les dossiers ou fichiers</translation>
     </message>
@@ -6864,12 +6869,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+6"/>
-        <location line="+272"/>
+        <location line="+277"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
     <message>
-        <location line="-269"/>
+        <location line="-274"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
@@ -6895,12 +6900,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+11"/>
-        <location line="+136"/>
+        <location line="+141"/>
         <source>Select the path</source>
         <translation>Sélectionner le chemin</translation>
     </message>
     <message>
-        <location line="-119"/>
+        <location line="-124"/>
         <source>Content options</source>
         <translation>Options de contenu</translation>
     </message>
@@ -6910,13 +6915,13 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Type de fichier</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <location line="+48"/>
+        <location line="+11"/>
+        <location line="+49"/>
         <source>All</source>
         <translation>Tous</translation>
     </message>
     <message>
-        <location line="-47"/>
+        <location line="-48"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
@@ -6942,14 +6947,14 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+42"/>
-        <location line="+12"/>
-        <location line="+16"/>
+        <location line="+43"/>
+        <location line="+13"/>
+        <location line="+17"/>
         <source>None</source>
         <translation>Aucun</translation>
     </message>
     <message>
-        <location line="-40"/>
+        <location line="-43"/>
         <source>Include subdirectories</source>
         <translation>Inclure les sous-dossiers</translation>
     </message>
@@ -6959,12 +6964,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Inclure les fichiers cachés</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>Include metadata</source>
         <translation>Inclure les métadonnées</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>Media Basic</source>
         <translation>Média basique</translation>
     </message>
@@ -6984,7 +6989,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Inclure la somme de contrôle</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+17"/>
         <source>Exclude folders or files</source>
         <translation>Exclure les dossiers ou fichiers</translation>
     </message>
@@ -7096,7 +7101,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Image</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Reload pictures</source>
         <translation>Recharger les images</translation>
     </message>
@@ -7679,13 +7684,13 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     <name>PageSearchForm</name>
     <message>
         <location filename="../qt_quick/PageSearchForm.qml" line="+336"/>
-        <location line="+584"/>
+        <location line="+579"/>
         <location line="+18"/>
         <source>Select a date</source>
         <translation>Sélectionner une date</translation>
     </message>
     <message>
-        <location line="-597"/>
+        <location line="-592"/>
         <source>Now</source>
         <translation>Maintenant</translation>
     </message>
@@ -7746,12 +7751,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+6"/>
-        <location line="+530"/>
+        <location line="+525"/>
         <source>Clear</source>
         <translation>Effacer</translation>
     </message>
     <message>
-        <location line="-524"/>
+        <location line="-519"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
@@ -7792,19 +7797,19 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+17"/>
-        <location line="+77"/>
-        <location line="+266"/>
+        <location line="+70"/>
+        <location line="+268"/>
         <source>Paste the text from the clipboard</source>
         <translation>Coller depuis le presse-papier</translation>
     </message>
     <message>
-        <location line="-337"/>
-        <location line="+77"/>
+        <location line="-332"/>
+        <location line="+70"/>
         <source>Clean the search Text from characters such as _ - . ,</source>
         <translation>Nettoyer le Texte de recherche des caractères comme _ - . ,</translation>
     </message>
     <message>
-        <location line="-70"/>
+        <location line="-62"/>
         <source>with</source>
         <translation>avec</translation>
     </message>
@@ -7834,31 +7839,28 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Regex</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <location line="+4"/>
-        <location line="+15"/>
+        <location line="+16"/>
+        <location line="+1"/>
         <source>File names only</source>
         <translation>Noms de Fichers uniquement</translation>
     </message>
     <message>
-        <location line="-14"/>
-        <location line="+15"/>
+        <location line="+1"/>
         <source>File names or Folder paths</source>
         <translation>Noms de Fichers ou Chemin des Dossiers</translation>
     </message>
     <message>
-        <location line="-14"/>
-        <location line="+15"/>
+        <location line="+1"/>
         <source>Folder path only</source>
         <translation>Chemins des Dossiers uniquement</translation>
     </message>
     <message>
-        <location line="-8"/>
+        <location line="-13"/>
         <source>in</source>
         <translation>dans</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+21"/>
         <source>case sensitive</source>
         <translation>sensible à la casse</translation>
     </message>
@@ -7873,13 +7875,13 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Attributs de fichier</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+26"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
     <message>
-        <location line="-238"/>
-        <location line="+249"/>
+        <location line="-232"/>
+        <location line="+244"/>
         <source>All</source>
         <translation>Tous</translation>
     </message>
@@ -7917,20 +7919,20 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     <message>
         <location line="+35"/>
         <location line="+184"/>
-        <location line="+193"/>
-        <location line="+126"/>
+        <location line="+200"/>
+        <location line="+128"/>
         <source>Size</source>
         <translation>Taille</translation>
     </message>
     <message>
-        <location line="-449"/>
-        <location line="+333"/>
-        <location line="+126"/>
+        <location line="-458"/>
+        <location line="+340"/>
+        <location line="+128"/>
         <source>Date</source>
         <translation>Date</translation>
     </message>
     <message>
-        <location line="-400"/>
+        <location line="-409"/>
         <source>File metadata</source>
         <translation>Métadonnées du fichier</translation>
     </message>
@@ -7955,12 +7957,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Critères de dossier</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+17"/>
         <source>only list folders in results</source>
         <translation>lister uniquement les dossiers dans les résultats</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+12"/>
         <source>Tag</source>
         <translation>Etiquette</translation>
     </message>
@@ -7971,30 +7973,30 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+7"/>
-        <location line="+126"/>
+        <location line="+128"/>
         <source>Duplicates and Differences cannot be used at the same time</source>
         <translation>Les doublons et les différences ne peuvent pas être utilisés en même temps</translation>
     </message>
     <message>
-        <location line="-111"/>
-        <location line="+126"/>
+        <location line="-113"/>
+        <location line="+128"/>
         <source>On</source>
         <translation>Sur</translation>
     </message>
     <message>
-        <location line="-117"/>
-        <location line="+126"/>
+        <location line="-119"/>
+        <location line="+128"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
     <message>
-        <location line="-88"/>
-        <location line="+126"/>
+        <location line="-90"/>
+        <location line="+128"/>
         <source>Checksum</source>
         <translation>Somme de contrôle</translation>
     </message>
     <message>
-        <location line="-112"/>
+        <location line="-114"/>
         <source>Scope</source>
         <translation>Portée</translation>
     </message>
@@ -8009,12 +8011,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Comparer deux périphériques</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+15"/>
         <source>Device 1</source>
         <translation>Périphérique 1</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Device 2</source>
         <translation>Périphérique 2</translation>
     </message>
@@ -8024,12 +8026,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Différences</translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+87"/>
         <source>Between</source>
         <translation>Entre</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>And</source>
         <translation>Et</translation>
     </message>
@@ -8067,7 +8069,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Min : %1   Max : %2</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+26"/>
         <source>Export to CSV</source>
         <translation>Exporter en CSV</translation>
     </message>
@@ -8097,12 +8099,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Déplacer dans la corbeille</translation>
     </message>
     <message>
-        <location line="-953"/>
+        <location line="-937"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Le périphérique n&apos;est pas actif. Il est peut-être déconnecté, ou son chemin a peut-être changé.</translation>
     </message>
     <message>
-        <location line="+125"/>
+        <location line="+109"/>
         <source>Extract Metadata</source>
         <translation>Extraire les métadonnées</translation>
     </message>
@@ -8465,7 +8467,7 @@ Erreurs : %3</translation>
         <translation>Réglages</translation>
     </message>
     <message>
-        <location line="+233"/>
+        <location line="+235"/>
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
@@ -8505,12 +8507,12 @@ Erreurs : %3</translation>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+523"/>
+        <location line="+529"/>
         <source>(none)</source>
         <translation>(aucun)</translation>
     </message>
     <message>
-        <location line="-515"/>
+        <location line="-521"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8528,7 +8530,7 @@ Erreurs : %3</translation>
     </message>
     <message>
         <location line="+11"/>
-        <location line="+132"/>
+        <location line="+133"/>
         <source>Select</source>
         <translation>Sélectionner</translation>
     </message>
@@ -8553,7 +8555,7 @@ Erreurs : %3</translation>
         <translation type="vanished">Mot de passe :</translation>
     </message>
     <message>
-        <location line="-121"/>
+        <location line="-122"/>
         <source>Host Name</source>
         <translation>Nom d&apos;hôte</translation>
     </message>
@@ -8625,7 +8627,7 @@ Erreurs : %3</translation>
         <translation>Valeurs séparées par des tabulations</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Source</source>
         <translation>Source</translation>
     </message>
@@ -8640,23 +8642,17 @@ Erreurs : %3</translation>
         <translation>Chemin</translation>
     </message>
     <message>
-        <location line="-412"/>
-        <location line="+1"/>
-        <location line="+4"/>
+        <location line="-415"/>
+        <location line="+3"/>
         <location line="+2"/>
         <location line="+0"/>
-        <location line="+427"/>
+        <location line="+432"/>
         <source>Device</source>
         <translation>Périphérique</translation>
     </message>
     <message>
-        <location line="-459"/>
+        <location line="-460"/>
         <source>Storage devices linked to a missing storage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Storage devices linked to a storage with a different name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8667,11 +8663,6 @@ Erreurs : %3</translation>
     <message>
         <location line="+1"/>
         <source>Storage IDs used by more than one storage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Storage names used by more than one storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8693,24 +8684,23 @@ Erreurs : %3</translation>
         <location line="+18"/>
         <location line="+1"/>
         <location line="+1"/>
-        <location line="+1"/>
-        <location line="+1"/>
         <source>Storage</source>
         <translation>Stockage</translation>
     </message>
     <message>
         <location line="-1"/>
+        <location line="+1"/>
         <source>ID</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <location line="+1"/>
         <source>Catalog</source>
         <translation>Catalogue</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+16"/>
         <location line="+25"/>
         <location line="+224"/>
         <source>Quality check</source>
@@ -8745,13 +8735,13 @@ Erreurs : %3</translation>
         <translation>Copié</translation>
     </message>
     <message>
-        <location line="+394"/>
+        <location line="+396"/>
         <source>Import</source>
         <translation>Importer</translation>
     </message>
     <message>
         <location line="+20"/>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>Update</source>
         <translation>Actualiser</translation>
     </message>
@@ -8821,7 +8811,7 @@ Erreurs : %3</translation>
         <translation>Couleurs de Katalog</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+28"/>
         <source>Use bigger icon size</source>
         <translation>Utiliser une taille d&apos;icône plus grande</translation>
     </message>
@@ -8846,7 +8836,7 @@ Erreurs : %3</translation>
         <translation>Langue</translation>
     </message>
     <message>
-        <location line="+97"/>
+        <location line="+99"/>
         <source>Settings file</source>
         <translation>Fichier de configuration</translation>
     </message>
@@ -8885,31 +8875,31 @@ Erreurs : %3</translation>
     </message>
     <message>
         <location line="+36"/>
-        <location line="+198"/>
+        <location line="+214"/>
         <source>Total</source>
         <translation>Total</translation>
     </message>
     <message>
-        <location line="-179"/>
+        <location line="-195"/>
         <location line="+69"/>
-        <location line="+119"/>
+        <location line="+135"/>
         <source>Total File Size</source>
         <translation>Taille Totale des Fichiers</translation>
     </message>
     <message>
-        <location line="-188"/>
+        <location line="-204"/>
         <location line="+70"/>
         <source>Number of Files</source>
         <translation>Nombre de Fichiers</translation>
     </message>
     <message>
         <location line="-69"/>
-        <location line="+187"/>
+        <location line="+203"/>
         <source>Catalogs</source>
         <translation>Catalogues</translation>
     </message>
     <message>
-        <location line="-153"/>
+        <location line="-169"/>
         <source>Device</source>
         <translation>Périphérique</translation>
     </message>
@@ -8984,7 +8974,7 @@ Erreurs : %3</translation>
         <translation>Il y a 1 an</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+39"/>
         <source>Date</source>
         <translation>Date</translation>
     </message>
@@ -9014,12 +9004,12 @@ Erreurs : %3</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+87"/>
+        <location line="+88"/>
         <source>Folder</source>
         <translation>Dossier</translation>
     </message>
     <message>
-        <location line="-81"/>
+        <location line="-82"/>
         <source>Folder path</source>
         <translation>Chemin du dossier</translation>
     </message>
@@ -9030,7 +9020,7 @@ Erreurs : %3</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location line="+72"/>
+        <location line="+73"/>
         <source>Tag</source>
         <translation>Etiquette</translation>
     </message>
