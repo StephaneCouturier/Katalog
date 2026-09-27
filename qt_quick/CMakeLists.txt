@@ -46,7 +46,6 @@ set(UI_SOURCES
     PageSearch.h PageSearch.cpp
     appmanager.h appmanager.cpp
     filesview.h filesview.cpp
-    database.h
 )
 
 # URI uses reverse-domain path (io/github/stephanecouturier/Katalog/) — no conflict with Katalog3 binary
