@@ -3,7 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls as Controls
 import org.kde.kirigami as Kirigami
 
-Kirigami.ScrollablePage {
+ScrollablePageFitted {
     id: root
     property Kirigami.Action escapeAction: escapeCloseAction  // Esc (KBS-F1)
 
@@ -112,6 +112,7 @@ Kirigami.ScrollablePage {
                 id: sourceCombo
                 Kirigami.FormData.label: qsTr("Source catalog")
                 Layout.preferredWidth: Kirigami.Units.gridUnit * 24
+                Layout.maximumWidth: Kirigami.Units.gridUnit * 24  // set width, shrinks only to fit (CBX-C7)
                 catalogOnly: true
             }
 
@@ -125,6 +126,7 @@ Kirigami.ScrollablePage {
                 id: targetCombo
                 Kirigami.FormData.label: qsTr("Target catalog")
                 Layout.preferredWidth: Kirigami.Units.gridUnit * 24
+                Layout.maximumWidth: Kirigami.Units.gridUnit * 24  // set width, shrinks only to fit (CBX-C7)
                 catalogOnly: true
             }
 
@@ -151,7 +153,7 @@ Kirigami.ScrollablePage {
             }
 
             // Type
-            Controls.ComboBox {
+            ComboBoxFitted {
                 id: typeCombo
                 Kirigami.FormData.label: qsTr("Type")
                 textRole:  "text"
@@ -181,7 +183,7 @@ Kirigami.ScrollablePage {
                 checked: true
             }
 
-            Controls.ComboBox {
+            ComboBoxFitted {
                 id: conflictModeCombo
                 Kirigami.FormData.label: qsTr("On conflict")
                 textRole:  "text"

@@ -168,25 +168,9 @@ ColumnLayout {
             Item { Layout.fillWidth: true }
 
 
-            FontMetrics {
-                id: batchComboFontMetrics
-                font: batchActionCombo.font
-            }
-
-            Controls.ComboBox {
+            ComboBoxFitted {
                 id: batchActionCombo
-                implicitWidth: {
-                    var maxW = 0
-                    for (var i = 0; i < model.length; i++) {
-                        var w = batchComboFontMetrics.advanceWidth(model[i].text || "")
-                        if (w > maxW) maxW = w
-                    }
-                    return maxW
-                         + Kirigami.Units.iconSizes.small
-                         + Kirigami.Units.smallSpacing * 3
-                         + leftPadding + rightPadding
-                         + (indicator ? indicator.width : 0)
-                }
+                rowLeadingWidth: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing * 2  // row icon
                 textRole: "text"
                 valueRole: "value"
                 displayText: ""
@@ -199,7 +183,7 @@ ColumnLayout {
                     { text: qsTr("Delete"),            value: "delete",           iconName: "edit-delete"      }
                 ]
                 delegate: Controls.ItemDelegate {
-                    width:  batchActionCombo.width
+                    width:  ListView.view ? ListView.view.width : batchActionCombo.width  // fills the list, which may be wider than the box
                     height: modelData.value === "---" ? 9 : implicitHeight
                     text:      modelData.value === "---" ? "" : modelData.text
                     icon.name: modelData.value === "---" ? "" : modelData.iconName

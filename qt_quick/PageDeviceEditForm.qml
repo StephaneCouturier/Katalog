@@ -337,9 +337,11 @@ ColumnLayout {
         }
 
         Controls.Label { text: qsTr("File type"); opacity: 0.7; visible: root.deviceType === "Catalog" }
-        Controls.ComboBox {
+        ComboBoxFitted {
             id: edit_comboBox_FileType
             Layout.fillWidth: true
+            Layout.maximumWidth: Number.POSITIVE_INFINITY  // stretches with the form (CBX-C7)
+            rowLeadingWidth: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing * 2  // row icon
             visible: root.deviceType === "Catalog"
             textRole: "text"
             valueRole: "value"
@@ -355,7 +357,7 @@ ColumnLayout {
             ]
             currentIndex: 0
             delegate: Controls.ItemDelegate {
-                width: edit_comboBox_FileType.width
+                width: ListView.view ? ListView.view.width : edit_comboBox_FileType.width  // fills the list, which may be wider than the box
                 text: modelData.text
                 icon.name: modelData.iconName
                 highlighted: edit_comboBox_FileType.highlightedIndex === index
@@ -389,18 +391,20 @@ ColumnLayout {
         }
 
         Controls.Label { text: qsTr("Include hidden files"); opacity: 0.7; visible: root.deviceType === "Catalog" }
-        Controls.ComboBox {
+        ComboBoxFitted {
             id: edit_comboBox_IncludeHidden
             Layout.fillWidth: true
+            Layout.maximumWidth: Number.POSITIVE_INFINITY  // stretches with the form (CBX-C7)
             visible: root.deviceType === "Catalog"
             model: [ qsTr("None"), qsTr("All") ]
             currentIndex: 0
         }
 
         Controls.Label { text: qsTr("Include metadata"); opacity: 0.7; visible: root.deviceType === "Catalog" }
-        Controls.ComboBox {
+        ComboBoxFitted {
             id: edit_comboBox_Metadata
             Layout.fillWidth: true
+            Layout.maximumWidth: Number.POSITIVE_INFINITY  // stretches with the form (CBX-C7)
             visible: root.deviceType === "Catalog"
             textRole: "text"
             valueRole: "value"
@@ -414,9 +418,10 @@ ColumnLayout {
         }
 
         Controls.Label { text: qsTr("Include checksum"); opacity: 0.7; visible: root.deviceType === "Catalog" }
-        Controls.ComboBox {
+        ComboBoxFitted {
             id: edit_comboBox_Checksum
             Layout.fillWidth: true
+            Layout.maximumWidth: Number.POSITIVE_INFINITY  // stretches with the form (CBX-C7)
             visible: root.deviceType === "Catalog"
             textRole: "text"
             valueRole: "value"
@@ -625,9 +630,10 @@ ColumnLayout {
         RowLayout {
             Layout.fillWidth: true
             visible: root.deviceType === "Storage"
-            Controls.ComboBox {
+            ComboBoxFitted {
                 id: edit_comboBox_StoragePicture
                 Layout.fillWidth: true
+                Layout.maximumWidth: Number.POSITIVE_INFINITY  // stretches with the form (CBX-C7)
                 model: root.storagePictureList
             }
             IconButton {

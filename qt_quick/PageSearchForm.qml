@@ -677,8 +677,9 @@ ColumnLayout {
             }
         }
         RowLayout {
+            Layout.fillWidth: true
             Controls.Label { text: qsTr("with"); Layout.preferredWidth: pageSearchForm.labelW }
-            Controls.ComboBox {
+            ComboBoxFitted {
                 id: search_ComboBox_TextCriteriaWith
                 textRole: "text"
                 valueRole: "value"
@@ -692,8 +693,9 @@ ColumnLayout {
             }
         }
         RowLayout {
+            Layout.fillWidth: true
             Controls.Label { text: qsTr("in"); Layout.preferredWidth: pageSearchForm.labelW }
-            Controls.ComboBox {
+            ComboBoxFitted {
                 id: search_ComboBox_TextCriteriaIn
                 textRole: "text"
                 valueRole: "value"
@@ -774,6 +776,7 @@ ColumnLayout {
         spacing: Kirigami.Units.smallSpacing
 
         RowLayout {
+            Layout.fillWidth: true
             Controls.CheckBox {
                 id: search_checkBox_Type
                 checked: false
@@ -781,8 +784,9 @@ ColumnLayout {
                 Layout.preferredWidth: pageSearchForm.labelW
                 onCheckedChanged: search_comboBox_FileType.enabled = checked
             }
-            Controls.ComboBox {
+            ComboBoxFitted {
                 id: search_comboBox_FileType
+                rowLeadingWidth: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing * 2  // row icon
                 enabled: false
                 textRole: "text"
                 valueRole: "value"
@@ -797,7 +801,7 @@ ColumnLayout {
                     {text: qsTr("None"),  value: "None",  iconName: "application-x-zerosize"}
                 ]
                 delegate: Controls.ItemDelegate {
-                    width: search_comboBox_FileType.width
+                    width: ListView.view ? ListView.view.width : search_comboBox_FileType.width  // fills the list, which may be wider than the box
                     text: modelData.text
                     icon.name: modelData.iconName
                     highlighted: search_comboBox_FileType.highlightedIndex === index
@@ -843,6 +847,7 @@ ColumnLayout {
                 Layout.fillWidth: true
                 spacing: Kirigami.Units.largeSpacing
                 RowLayout {
+                    width: Math.min(implicitWidth, parent.width)  // lets its combo box shrink (CBX-F2)
                     Controls.Label { text: ">" }
                     Controls.SpinBox {
                         id: search_spinBox_MinimumSize
@@ -851,14 +856,14 @@ ColumnLayout {
                         from: 0; value: 0; to: 1000
                         implicitWidth: 110
                     }
-                    Controls.ComboBox {
+                    ComboBoxFitted {
                         id: search_comboBox_MinSizeUnit
                         enabled: false
                         model: ["Bytes", "KiB", "MiB", "GiB", "TiB"]
-                        implicitWidth: 75
                     }
                 }
                 RowLayout {
+                    width: Math.min(implicitWidth, parent.width)  // lets its combo box shrink (CBX-F2)
                     Controls.Label { text: "<" }
                     Controls.SpinBox {
                         id: search_spinBox_MaximumSize
@@ -867,12 +872,11 @@ ColumnLayout {
                         from: 0; value: 1000; to: 1000
                         implicitWidth: 110
                     }
-                    Controls.ComboBox {
+                    ComboBoxFitted {
                         id: search_comboBox_MaxSizeUnit
                         enabled: false
                         model: ["Bytes", "KiB", "MiB", "GiB", "TiB"]
                         currentIndex: 3
-                        implicitWidth: 75
                     }
                 }
             }
@@ -1132,6 +1136,7 @@ ColumnLayout {
         onCheckedChanged: search_FormLayout_folderCriteria.visible = checked
     }
     ColumnLayout {
+        Layout.fillWidth: true
         id: search_FormLayout_folderCriteria
         Layout.topMargin: Kirigami.Units.smallSpacing   // gap under the section title
         visible: false
@@ -1142,8 +1147,14 @@ ColumnLayout {
             id: search_checkBox_ShowFoldersOnly
             checked: false
             text: qsTr("only list folders in results")
+            // Wraps rather than hold the section at its one-line width: in
+            // French it was the widest item, and every row stretched to it,
+            // under the scrollbar of a narrow Search column (PGL-F4).
+            Layout.fillWidth: true
+            Binding { target: search_checkBox_ShowFoldersOnly.contentItem; property: "wrapMode"; value: Text.WordWrap }
         }
         RowLayout {
+            Layout.fillWidth: true
             Controls.CheckBox {
                 id: search_checkBox_SearchOnTags
                 checked: false
@@ -1151,7 +1162,7 @@ ColumnLayout {
                 Layout.preferredWidth: pageSearchForm.labelW
                 onCheckedChanged: search_comboBox_FolderTag.enabled = checked
             }
-            Controls.ComboBox {
+            ComboBoxFitted {
                 id: search_comboBox_FolderTag
                 enabled: false
                 model: pageSearchForm.tagNames
@@ -1225,10 +1236,10 @@ ColumnLayout {
                     }
                 }
                 RowLayout {
-                    Controls.ComboBox {
+                    width: Math.min(implicitWidth, parent.width)  // lets its combo box shrink (CBX-F2)
+                    ComboBoxFitted {
                         id: search_comboBox_DuplicateChecksumSign
                         model: ["=", "≠"]
-                        implicitWidth: 60
                         enabled: search_checkBox_DuplicatesOnChecksum.checked
                     }
                     Controls.CheckBox {
@@ -1274,10 +1285,12 @@ ColumnLayout {
             spacing: Kirigami.Units.largeSpacing
 
             RowLayout {
+                width: Math.min(implicitWidth, parent.width)  // lets its combo box shrink (CBX-F2)
                 Controls.Label { text: qsTr("Device 1") }
                 DeviceTreeComboBox { id: search_comboBox_DuplicatesDevice1 }
             }
             RowLayout {
+                width: Math.min(implicitWidth, parent.width)  // lets its combo box shrink (CBX-F2)
                 Controls.Label { text: qsTr("Device 2") }
                 DeviceTreeComboBox { id: search_comboBox_DuplicatesDevice2 }
             }
@@ -1351,10 +1364,10 @@ ColumnLayout {
                     }
                 }
                 RowLayout {
-                    Controls.ComboBox {
+                    width: Math.min(implicitWidth, parent.width)  // lets its combo box shrink (CBX-F2)
+                    ComboBoxFitted {
                         id: search_comboBox_DifferenceChecksumSign
                         model: ["=", "≠"]
-                        implicitWidth: 60
                         enabled: search_checkBox_DifferencesOnChecksum.checked
                     }
                     Controls.CheckBox {
@@ -1377,10 +1390,12 @@ ColumnLayout {
             Layout.fillWidth: true
             spacing: Kirigami.Units.largeSpacing
             RowLayout {
+                width: Math.min(implicitWidth, parent.width)  // lets its combo box shrink (CBX-F2)
                 Controls.Label { text: qsTr("Between") }
                 DeviceTreeComboBox { id: search_comboBox_DifferencesDevice1 }
             }
             RowLayout {
+                width: Math.min(implicitWidth, parent.width)  // lets its combo box shrink (CBX-F2)
                 Controls.Label { text: qsTr("And") }
                 DeviceTreeComboBox { id: search_comboBox_DifferencesDevice2 }
             }

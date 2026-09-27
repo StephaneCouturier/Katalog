@@ -104,9 +104,33 @@ Controls.Button {
     }
 
     // ── Button appearance ─────────────────────────────────────────────────
-    implicitWidth: 200
+    // Natural width from the widest device name (or prompt), with the icon and
+    // arrow either side; it may shrink to fit and elide (SpecComboBoxes.md,
+    // CBX-C5 / F1 / F2). A call site that stretches the button sets its own
+    // Layout width.
     leftPadding:  Kirigami.Units.smallSpacing * 2
     rightPadding: Kirigami.Units.smallSpacing * 2
+
+    // Bumped when the device list changes, so the widths below are measured again.
+    property int _listRevision: 0
+    Connections {
+        target: control.sourceModel
+        function onModelReset()   { control._listRevision++ }
+        function onRowsInserted() { control._listRevision++ }
+        function onRowsRemoved()  { control._listRevision++ }
+        function onDataChanged()  { control._listRevision++ }
+    }
+
+    implicitWidth: {
+        _listRevision
+        var widest = rowMetrics.advanceWidth(contentLabel.text)
+        for (var i = 0; i < sourceModel.rowCount(); i++)
+            widest = Math.max(widest, rowMetrics.advanceWidth(sourceModel.data(sourceModel.index(i, 0), 258)))
+        return Math.ceil(widest) + Kirigami.Units.iconSizes.small * 2
+               + Kirigami.Units.smallSpacing * 2 + leftPadding + rightPadding
+    }
+    Layout.fillWidth: true
+    Layout.maximumWidth: implicitWidth
 
     onClicked: popup.open()
 
@@ -128,6 +152,7 @@ Controls.Button {
         }
 
         Controls.Label {
+            id: contentLabel
             text:               control.selectedDeviceName.length > 0
                                     ? control.selectedDeviceName
                                     : control.storageOnly  ? qsTr("Select a Storage")
@@ -149,14 +174,57 @@ Controls.Button {
     }
 
     // ── Drop-down popup ───────────────────────────────────────────────────
+    // Sized and placed like every other combo box list (SpecComboBoxes.md,
+    // CBX-C5): at least as wide as the button, wide enough for the longest
+    // name at its indent, inside the window, and opened on the side with room.
+    FontMetrics { id: rowMetrics; font: control.font }
+
+    // DeviceListModel roles: NameRole=258, LevelRole=262
+    function _widestRow() {
+        var widest = 0
+        for (var i = 0; i < sourceModel.rowCount(); i++) {
+            var idx = sourceModel.index(i, 0)
+            widest = Math.max(widest, rowMetrics.advanceWidth(sourceModel.data(idx, 258))
+                                      + sourceModel.data(idx, 262) * Kirigami.Units.gridUnit)
+        }
+        // Row padding and icon, as the delegate lays them out, plus the popup's
+        // padding and room for the scroll bar.
+        return widest + Kirigami.Units.smallSpacing * 4 + Kirigami.Units.iconSizes.small
+               + Kirigami.Units.largeSpacing * 2 + popup.leftPadding + popup.rightPadding
+    }
+
+    // Called on open: the list's own height is not known yet, so the side is
+    // chosen from an estimate, and the height then follows the list itself.
+    function _placePopup() {
+        var win = control.Window.window
+        if (!win) return
+        popup.width = Math.min(win.width, Math.max(control.width, _widestRow()))
+        var top     = control.mapToItem(null, 0, 0).y
+        var below   = win.height - (top + control.height + 2)
+        var above   = top - 2
+        var chrome  = popup.topPadding + popup.bottomPadding
+        var wanted  = Math.min(300, sourceModel.rowCount()
+                                    * (rowMetrics.height + Kirigami.Units.largeSpacing * 2)) + chrome
+        popup.downward = below >= wanted || below >= above
+        popup.room     = (popup.downward ? below : above) - chrome
+    }
+
     Controls.Popup {
         id: popup
 
-        y:      control.height + 2
-        width:  Math.max(control.width, 250)
-        padding: 2
+        property bool downward: true
+        property real room: 300
 
-        contentHeight: Math.min(listView.contentHeight, 300)
+        y:      downward ? control.height + 2 : -height - 2
+        width:  control.width
+        padding: 2
+        // Qt then shifts the popup back inside the window instead of letting a
+        // wide list run off its side.
+        leftMargin:  0
+        rightMargin: 0
+
+        contentHeight: Math.min(listView.contentHeight, 300, room)
+        onAboutToShow: control._placePopup()
 
         closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutside
 

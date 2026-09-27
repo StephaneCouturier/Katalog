@@ -195,9 +195,10 @@ ColumnLayout {
         spacing: Kirigami.Units.largeSpacing
 
         RowLayout {
+            width: Math.min(implicitWidth, parent.width)  // lets its combo box shrink (CBX-F2)
             spacing: Kirigami.Units.smallSpacing
             Controls.Label { text: qsTr("Type"); opacity: 0.7 }
-            Controls.ComboBox {
+            ComboBoxFitted {
                 id: typeFilterCombo
                 textRole:  "text"
                 valueRole: "value"

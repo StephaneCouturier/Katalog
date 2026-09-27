@@ -4,7 +4,7 @@ version: "2.13"
 
 # Specifications
 
-![Status](https://img.shields.io/badge/Status-Index-lightgrey) ![Pages](https://img.shields.io/badge/Pages-33-blue)
+![Status](https://img.shields.io/badge/Status-Index-lightgrey) ![Pages](https://img.shields.io/badge/Pages-35-blue)
 
 Every specification page lives in `docs_src/docs/development/`. This page is the
 index: **new specifications are added here, not to the sidebar.**
@@ -25,6 +25,7 @@ specification and the code disagree, the specification is what was agreed.
 | [SpecCollection](SpecCollection.md) | SpecCollection — Import / Update across Collections (#750) | — | — | — |
 | [SpecCollectionIdentity](SpecCollectionIdentity.md) | COLLECTION IDENTITY — NAMING COLLECTIONS IN THE K3 DRAWER | Approved | planned | — |
 | [SpecCollectionOpen](SpecCollectionOpen.md) | COLLECTION OPEN — FIRST RUN AND NEW DATABASE | Approved | complete | — |
+| [SpecComboBoxes](SpecComboBoxes.md) | COMBO BOXES — WIDTH AND DROP-DOWN LIST | Approved | planned | — |
 | [SpecDeviceActiveStatus](SpecDeviceActiveStatus.md) | DEVICE Active Status | Approved | — | — |
 | [SpecDeviceComment](SpecDeviceComment.md) | DEVICE Comment | Approved | complete | — |
 | [SpecDeviceStorageRoot](SpecDeviceStorageRoot.md) | DEVICE Storage Root | Approved | partial | — |
@@ -37,6 +38,7 @@ specification and the code disagree, the specification is what was agreed.
 | [SpecK2Deployment](SpecK2Deployment.md) | K2 DEPLOYMENT — STARTUP OF THE LINUX APPIMAGE ON ANY DESKTOP | Approved | mostly complete | — |
 | [SpecK3Deployment](SpecK3Deployment.md) | K3 DEPLOYMENT — QML MODULES AND PLATFORM INTEGRATION IN PACKAGED BUILDS | Approved | mostly complete | — |
 | [SpecLanguages](SpecLanguages.md) | LANGUAGES — INTERFACE LANGUAGE SELECTION | Approved | complete | — |
+| [SpecPageLayout](SpecPageLayout.md) | PAGE LAYOUT — CONTENT AND THE VERTICAL SCROLLBAR | Approved | planned | — |
 | [SpecOperationQueue](SpecOperationQueue.md) | OPERATION Queue | Specified | — | — |
 | [SpecProgressReport](SpecProgressReport.md) | Progress Reporting | — | — | — |
 | [SpecQualityCheck](SpecQualityCheck.md) | QUALITY Check | Draft | planned (phase 1) | — |

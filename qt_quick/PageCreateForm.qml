@@ -162,6 +162,7 @@ ColumnLayout {
             storageOnly: true
             hideCatalogs: true
             Layout.fillWidth: true
+            Layout.maximumWidth: Number.POSITIVE_INFINITY  // stretches with the form (CBX-C7)
         }
 
         Controls.Label { text: qsTr("Catalog name"); opacity: 0.7 }
@@ -197,9 +198,11 @@ ColumnLayout {
         }
 
         Controls.Label { text: qsTr("File type"); opacity: 0.7 }
-        Controls.ComboBox {
+        ComboBoxFitted {
             id: create_comboBox_FileType
             Layout.fillWidth: true
+            Layout.maximumWidth: Number.POSITIVE_INFINITY  // stretches with the form (CBX-C7)
+            rowLeadingWidth: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing * 2  // row icon
             textRole: "text"
             valueRole: "value"
             displayText: ""
@@ -214,7 +217,7 @@ ColumnLayout {
             ]
             currentIndex: 0
             delegate: Controls.ItemDelegate {
-                width: create_comboBox_FileType.width
+                width: ListView.view ? ListView.view.width : create_comboBox_FileType.width  // fills the list, which may be wider than the box
                 text: modelData.text
                 icon.name: modelData.iconName
                 highlighted: create_comboBox_FileType.highlightedIndex === index
@@ -247,17 +250,19 @@ ColumnLayout {
         }
 
         Controls.Label { text: qsTr("Include hidden files"); opacity: 0.7 }
-        Controls.ComboBox {
+        ComboBoxFitted {
             id: create_comboBox_IncludeHidden
             Layout.fillWidth: true
+            Layout.maximumWidth: Number.POSITIVE_INFINITY  // stretches with the form (CBX-C7)
             model: [ qsTr("None"), qsTr("All") ]
             currentIndex: 0
         }
 
         Controls.Label { text: qsTr("Include metadata"); opacity: 0.7 }
-        Controls.ComboBox {
+        ComboBoxFitted {
             id: create_comboBox_Metadata
             Layout.fillWidth: true
+            Layout.maximumWidth: Number.POSITIVE_INFINITY  // stretches with the form (CBX-C7)
             textRole: "text"
             valueRole: "value"
             model: [
@@ -270,9 +275,10 @@ ColumnLayout {
         }
 
         Controls.Label { text: qsTr("Include checksum"); opacity: 0.7 }
-        Controls.ComboBox {
+        ComboBoxFitted {
             id: create_comboBox_Checksum
             Layout.fillWidth: true
+            Layout.maximumWidth: Number.POSITIVE_INFINITY  // stretches with the form (CBX-C7)
             textRole: "text"
             valueRole: "value"
             model: [

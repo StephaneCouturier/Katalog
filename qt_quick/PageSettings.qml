@@ -4,7 +4,7 @@ import QtQuick.Controls as Controls
 import org.kde.kirigami as Kirigami
 import QtQuick.Dialogs
 
-Kirigami.ScrollablePage {
+ScrollablePageFitted {
     id: pageSettingsRoot
     property Kirigami.Action escapeAction: escapeCloseAction  // Esc (KBS-F1)
     title: qsTr("Settings")
@@ -472,10 +472,11 @@ Kirigami.ScrollablePage {
         Controls.Label { font.bold: true; text: qsTr("Collection Import & Synchronization"); Layout.columnSpan: 2; color: Kirigami.Theme.linkColor }
 
         Controls.Label { text: qsTr("Data mode"); opacity: 0.7; Layout.alignment: Qt.AlignVCenter; Layout.topMargin: Kirigami.Units.largeSpacing }
-        Controls.ComboBox {
+        ComboBoxFitted {
             id: importModeCombo
             model: ["Katalog / " + qsTr("File"), "Katalog / " + qsTr("Memory"), "VVV / " + qsTr("Tab Separated Values")]
             Layout.fillWidth: true
+            Layout.maximumWidth: Number.POSITIVE_INFINITY  // stretches with the form (CBX-C7)
             onCurrentIndexChanged: importPathField.text = ""
             Layout.topMargin: Kirigami.Units.largeSpacing
         }
@@ -515,6 +516,7 @@ Kirigami.ScrollablePage {
             DeviceTreeComboBox {
                 id: importDeviceCombo
                 Layout.fillWidth: true
+                Layout.maximumWidth: Number.POSITIVE_INFINITY  // stretches with the form (CBX-C7)
                 sourceModel: appManager1.importSourceDeviceModel
                 // The import source picker must not track the app-selected device:
                 // source-collection IDs are independent, so following the app
@@ -547,9 +549,10 @@ Kirigami.ScrollablePage {
         RowLayout {
             Layout.fillWidth: true
             spacing: Kirigami.Units.smallSpacing
-            Controls.ComboBox {
+            ComboBoxFitted {
                 id: importUpdateSourceCombo
                 Layout.fillWidth: true
+                Layout.maximumWidth: Number.POSITIVE_INFINITY  // stretches with the form (CBX-C7)
                 enabled: importModeCombo.currentIndex < 2 && !appManager1.importIsRunning
             }
             Controls.Button {
@@ -649,7 +652,7 @@ Kirigami.ScrollablePage {
             Layout.topMargin: Kirigami.Units.largeSpacing * 2
             RowLayout {
                 spacing: Kirigami.Units.largeSpacing
-                Controls.ComboBox {
+                ComboBoxFitted {
                     id: themeComboBox
                     // Listed with the two desktop variants together, but the
                     // stored numbers are unchanged: 0 Desktop Theme, 1 Katalog
@@ -679,6 +682,7 @@ Kirigami.ScrollablePage {
                         }
                     }
                     Layout.preferredWidth: Kirigami.Units.gridUnit * 12
+                    Layout.maximumWidth: Kirigami.Units.gridUnit * 12  // set width, shrinks only to fit (CBX-C7)
                 }
             }
             // K2's own option, on K2's own key, so a choice made in either
@@ -729,9 +733,11 @@ Kirigami.ScrollablePage {
             spacing: Kirigami.Units.smallSpacing
             Layout.topMargin: Kirigami.Units.largeSpacing * 2
 
-            Controls.ComboBox {
+            ComboBoxFitted {
                 id: languageComboBox
                 Layout.fillWidth: true
+                Layout.maximumWidth: Number.POSITIVE_INFINITY  // stretches with the form (CBX-C7)
+                rowLeadingWidth: 20 + Kirigami.Units.smallSpacing  // flag
                 textRole: "displayName"
                 valueRole: "code"
                 // Suppress the style's built-in text so only the custom
@@ -763,7 +769,7 @@ Kirigami.ScrollablePage {
                 }
 
                 delegate: Controls.ItemDelegate {
-                    width: languageComboBox.width
+                    width: ListView.view ? ListView.view.width : languageComboBox.width  // fills the list, which may be wider than the box
                     contentItem: RowLayout {
                         spacing: Kirigami.Units.smallSpacing
                         Image {

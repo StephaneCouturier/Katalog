@@ -156,7 +156,7 @@ ColumnLayout {
         }
 
         Controls.Label { text: qsTr("Source"); opacity: 0.7 }
-        Controls.ComboBox {
+        ComboBoxFitted {
             id: sourceCombo
             textRole: "text"
             valueRole: "value"
@@ -173,7 +173,7 @@ ColumnLayout {
         }
 
         Controls.Label { text: qsTr("Data"); opacity: 0.7 }
-        Controls.ComboBox {
+        ComboBoxFitted {
             id: dataTypeCombo
             textRole: "text"
             valueRole: "value"

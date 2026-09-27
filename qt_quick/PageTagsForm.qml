@@ -80,9 +80,10 @@ ColumnLayout {
         Controls.Label { text: qsTr("Tag"); opacity: 0.7 }
         RowLayout {
             Layout.fillWidth: true
-            Controls.ComboBox {
+            ComboBoxFitted {
                 id: tagNameCombo
                 Layout.fillWidth: true
+                Layout.maximumWidth: Number.POSITIVE_INFINITY  // stretches with the form (CBX-C7)
                 editable: true
                 model: root.tagNames
                 onEditTextChanged: tagValidationMessage.visible = false
@@ -132,7 +133,7 @@ ColumnLayout {
             Layout.fillWidth: true
             Layout.topMargin: Kirigami.Units.smallSpacing
         }
-        Controls.ComboBox {
+        ComboBoxFitted {
             id: filterCombo
             model: [qsTr("All")].concat(root.tagNames)
             onActivated: {

@@ -58,6 +58,8 @@ qt_add_qml_module(Katalog3
         PageSearchForm.qml
         DeviceIdentity.qml
         IconButton.qml
+        ComboBoxFitted.qml
+        ScrollablePageFitted.qml
         PageSelectionDelegate.qml
         PageSearchResultsForm.qml
         PageSettings.qml

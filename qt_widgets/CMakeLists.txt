@@ -87,6 +87,8 @@ set(K3_QML_FILES
     ${CMAKE_SOURCE_DIR}/qt_quick/PageSearchResultsForm.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/DeviceIdentity.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/IconButton.qml
+    ${CMAKE_SOURCE_DIR}/qt_quick/ComboBoxFitted.qml
+    ${CMAKE_SOURCE_DIR}/qt_quick/ScrollablePageFitted.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/PageSelectionDelegate.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/PageSelectionView.qml
     ${CMAKE_SOURCE_DIR}/qt_quick/PageSettings.qml

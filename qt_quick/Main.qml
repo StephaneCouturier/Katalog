@@ -1450,7 +1450,7 @@ Kirigami.ApplicationWindow {
     }
 
     //Pages - Selection
-    Kirigami.ScrollablePage {
+    ScrollablePageFitted {
         id: pageSelection
 
         // Tinted rather than plain: white cards on a white page gave no contrast.
@@ -1642,7 +1642,7 @@ Kirigami.ApplicationWindow {
     }
 
     //Pages - Search
-    Kirigami.ScrollablePage {
+    ScrollablePageFitted {
         id: pageSearch
         // Hidden until pushed, like every other feature page: when the app opens
         // on another page, Search is never pushed and would otherwise stay drawn
@@ -1949,7 +1949,7 @@ Kirigami.ApplicationWindow {
     }
 
     //Pages - Create
-    Kirigami.ScrollablePage {
+    ScrollablePageFitted {
         id: pageCreate
         property Kirigami.Action escapeAction: pageCreateEscapeAction  // Esc (KBS-F1)
         visible: false
@@ -2010,7 +2010,7 @@ Kirigami.ApplicationWindow {
     }
 
     //Pages - Device Edit
-    Kirigami.ScrollablePage {
+    ScrollablePageFitted {
         id: pageDeviceEdit
         property Kirigami.Action escapeAction: pageDeviceEditEscapeAction  // Esc (KBS-F1)
         visible: false
@@ -2112,7 +2112,7 @@ Kirigami.ApplicationWindow {
     }
 
     //Pages - Tags
-    Kirigami.ScrollablePage {
+    ScrollablePageFitted {
         id: pageTags
         property Kirigami.Action escapeAction: pageTagsEscapeAction  // Esc (KBS-F1)
         visible: false
@@ -2130,7 +2130,7 @@ Kirigami.ApplicationWindow {
     }
 
     //Pages - Backup
-    Kirigami.ScrollablePage {
+    ScrollablePageFitted {
         id: pageBackup
         property Kirigami.Action escapeAction: pageBackupEscapeAction  // Esc (KBS-F1)
         visible: false
