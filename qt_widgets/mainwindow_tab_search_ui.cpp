@@ -1830,7 +1830,7 @@
                     catalogMetadata.prepend("<catalogIncludeMetadata>");
                     catalogMetadata.prepend("<catalogIsFullDevice>");
                     catalogMetadata.prepend("<catalogIncludeSymblinks>");
-                    catalogMetadata.prepend("<catalogStorage>EXPORT");
+                    catalogMetadata.prepend("<catalogStorage>");
                     catalogMetadata.prepend("<catalogFileType>" + newDevice->catalog->fileType);
                     catalogMetadata.prepend("<catalogIncludeHidden>false");
                     catalogMetadata.prepend("<catalogTotalFileSize>" + QString::number(newDevice->totalFileSize));

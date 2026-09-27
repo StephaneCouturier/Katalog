@@ -647,7 +647,6 @@ void MainWindow::saveDeviceForm()
 
     //Keep previous values
     activeDevice->loadDevice(m_connectionName);
-    int previousExternalID = activeDevice->externalID;
     QString previousName = activeDevice->name;
     QString previousPath = activeDevice->path;
     Device previousParentDevice;
@@ -788,9 +787,6 @@ void MainWindow::saveDeviceForm()
     //If device is Storage, rename in storage table and update device values
     if(activeDevice->type == "Storage"){
 
-        QString currentStorageName = activeDevice->name;
-        QString newStorageName     = ui->Devices_lineEdit_Name->text();
-
         //Update Storage path and user number
         QString queryUpdateStorageSQL = QLatin1String(R"(
                                     UPDATE storage
@@ -818,26 +814,6 @@ void MainWindow::saveDeviceForm()
 
         //Save data to file
         collection->saveStorageTableToFile();
-
-        //Update name in statistics and catalogs
-        if (currentStorageName != newStorageName){
-            //Update statistics
-            QString updateNameQuerySQL = QLatin1String(R"(
-                                    UPDATE statistics_storage
-                                    SET storage_name = :new_storage_name
-                                    WHERE storage_id =:storage_id
-                                )");
-
-            QSqlQuery updateNameQuery(QSqlDatabase::database(m_connectionName));
-            updateNameQuery.prepare(updateNameQuerySQL);
-            updateNameQuery.bindValue(":new_storage_name", newStorageName);
-            updateNameQuery.bindValue(":storage_id", selectedDevice->storage->ID);
-            updateNameQuery.exec();
-
-            if (collection->databaseMode=="Memory"){
-                collection->saveStatiticsTableToFile();
-            }
-        }
 
         //Save changes to selected Storage device from the edition panel
 

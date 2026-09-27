@@ -392,8 +392,6 @@ class MainWindow : public KXmlGuiWindow
                                       const QString &password,
                                       const QString &currentPath);
 
-            QStringList storageNameList;
-
             QString fileMetadataString;
 
             void loadFileSystem(QString newCatalogPath);
