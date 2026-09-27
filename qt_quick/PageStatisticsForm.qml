@@ -279,6 +279,22 @@ ColumnLayout {
         legend.font.pointSize:       appManager1.textPointSize
         titleFont.pointSize:         appManager1.textPointSize
 
+        // Follows the desktop's light/dark mode (SpecTheme THM-F14, THM-C17).
+        // isDarkDesktop() is called inside the binding so a live scheme change
+        // re-evaluates it — see its comment in Main.qml. A theme switch resets
+        // the series colours, so they are re-applied after every switch.
+        readonly property bool darkDesktop: applicationWindow().isDarkDesktop()
+        theme: darkDesktop ? ChartView.ChartThemeDark : ChartView.ChartThemeLight
+        onDarkDesktopChanged: Qt.callLater(applySeriesColors)
+        Component.onCompleted: Qt.callLater(applySeriesColors)
+
+        // K2-matching series colours; kept across theme switches (THM-C17).
+        function applySeriesColors() {
+            series1Line.color = "#209fdf"
+            series2Line.color = "#f6a625"
+            series3Line.color = "#99ca53"
+        }
+
         DateTimeAxis {
             id: axisX
             format:    "yyyy-MM-dd"
