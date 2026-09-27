@@ -89,6 +89,9 @@ ColumnLayout {
 
     Component.onCompleted: {
         globalExcludes = appManager1.getExcludeDirectories()
+        // The last selected device is restored before QML loads (initiateApp), so no
+        // selectedDeviceChanged reaches this page at startup: seed the path here (K2 parity).
+        create_lineEdit_NewCatalogPath.text = appManager1.normalizeSourcePath(appManager1.selectedDevicePath)
     }
 
     // ── Folder dialogs ─────────────────────────────────────────────────────────
