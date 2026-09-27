@@ -508,9 +508,9 @@ void MainWindow::addDeviceStorage(int parentID)
     Device *newDevice = new Device();
     newDevice->generateDeviceID();
     newDevice->parentID = parentID;
-    newDevice->name = tr("Storage") + "_" + QString::number(newDevice->ID);
     newDevice->type = "Storage";
     newDevice->storage->generateID();
+    newDevice->name = tr("Storage") + "_" + QString::number(newDevice->storage->userID);
     newDevice->externalID = newDevice->storage->ID;
     newDevice->groupID = 0;
     newDevice->insertDevice();

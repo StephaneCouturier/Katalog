@@ -37,7 +37,7 @@
 //storage data operation
 
 void Storage::generateID()
-{//Generate ID and add it to name
+{//Generate the internal ID and the user's Storage ID
     QSqlQuery queryDeviceNumber(QSqlDatabase::database(m_connectionName));
     QString queryDeviceNumberSQL = QLatin1String(R"(
                                         SELECT MAX(storage_id)
@@ -48,11 +48,12 @@ void Storage::generateID()
     queryDeviceNumber.next();
     int maxID = queryDeviceNumber.value(0).toInt();
     ID = maxID + 1;
-    // At creation there is no number on the disk yet, so the user number starts
-    // as the internal one; the user edits it afterwards. The name suffix uses the
-    // user number, not the internal key (STI-F7).
-    userID = ID;
-    name = name + "_"+QString::number(userID);
+
+    // The user's Storage ID is independent of the internal key: it continues
+    // from the highest one already used; the user may edit it afterwards (STI-F7).
+    QSqlQuery queryUserID(QSqlDatabase::database(m_connectionName));
+    queryUserID.exec("SELECT MAX(storage_user_id) FROM storage");
+    userID = (queryUserID.next() ? queryUserID.value(0).toInt() : 0) + 1;
 }
 
 void Storage::insertStorage()

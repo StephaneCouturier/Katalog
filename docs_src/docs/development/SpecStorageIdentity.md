@@ -262,7 +262,7 @@ Observable behaviour that can be triggered and watched.
 |----|-------------|--------|
 | STI-F5 | A storage carries a user-facing number stored in `storage.storage_user_id`, NUMERIC. The "Storage ID" field of the device edit form reads and writes **this field only**, in both K2 and K3. Zero means "no number written on this disk" and is a normal, valid state; it is the value a non-numeric entry falls back to. | [Planned] |
 | STI-F6 | Saving a storage whose user number is already used by another storage in the same collection shows a **warning** and **completes the save**. A duplicate user number is never a reason to refuse a save. Zero is exempt: several unnumbered disks do not warn. | [Planned] |
-| STI-F7 | A newly created storage has `storage_user_id` stamped from the internal `storage_id` assigned to it at creation, and `Storage::generateID()` appends **that user number** to the storage name. The user may then edit the number freely. | [Planned] |
+| STI-F7 | A newly created storage gets `storage_user_id` = the highest `storage_user_id` in the collection + 1 (1 in a collection without any), independently of its internal `storage_id` (still the highest `storage_id` + 1). `Storage::generateID()` appends nothing to any name. In K2 and K3 the new Storage device is named `Storage_<that user number>`, built from the existing translated "Storage" string, never from the internal `device_id`. The user may then edit the number and the name freely. | [Planned] |
 | STI-F8 | Collection Import copies `storage_user_id` verbatim. Update from an external collection does **not** overwrite the target's `storage_user_id`. | [Planned] |
 | STI-F9 | On upgrade, every existing storage row receives `storage_user_id` = its current `storage_id`, so every device shows the same number after the upgrade as before it. | [Planned] |
 | STI-F10 | The "Storage ID" column in the K2 storage tree and in the K3 Devices storage table displays `storage_user_id`, and keeps the numeric sorting and right alignment it has today. | [Planned] |
@@ -338,7 +338,7 @@ For each row: set up the stated condition, perform the action, confirm the resul
 - **STI-F5** — Edit a Storage device, change the Storage ID, save, reopen the form: the new number is shown. Confirm no other device's details changed.
 - **STI-F5 (zero)** — Set the Storage ID to 0 and save. It saves without complaint and the field reads 0 on reopen.
 - **STI-F6** — Give two storage devices the same number. A warning appears and **both saves succeed**. Set a third to 0 while another is already 0: no warning.
-- **STI-F7** — Create a new Storage device. Its Storage ID field is pre-filled and its name carries the same number as a suffix.
+- **STI-F7** — In a collection whose highest Storage ID is 12 and whose highest internal storage id is different, create a new Storage device in K2 and in K3. Its Storage ID field shows 13, and it is named `Storage_13` (with "Storage" in the interface language).
 - **STI-F8 (import)** — Import a collection whose storages are numbered 3, 7 and 12 into a target already holding storages 1 and 2. The imported devices still read 3, 7 and 12 — never 4, 8, 13, and never `3 (2)`.
 - **STI-F8 (update)** — Change a storage's number in the target, then run Update from the source collection. The target's number is **not** overwritten.
 - **STI-F9** — Open a collection created before this change. Every storage device shows exactly the number it showed before the upgrade.

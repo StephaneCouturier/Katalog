@@ -2871,10 +2871,10 @@ int AppManager::addDeviceStorage(int parentId)
     Device *newDevice = new Device();
     newDevice->generateDeviceID();
     newDevice->type     = QStringLiteral("Storage");
-    newDevice->name     = tr("Storage") + "_" + QString::number(newDevice->ID);
     newDevice->parentID = parentId;
     newDevice->groupID  = 0;
     newDevice->storage->generateID();
+    newDevice->name     = tr("Storage") + "_" + QString::number(newDevice->storage->userID);
     newDevice->externalID = newDevice->storage->ID;
     newDevice->insertDevice();
     newDevice->storage->insertStorage();
