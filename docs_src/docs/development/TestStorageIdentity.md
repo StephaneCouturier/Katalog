@@ -23,20 +23,21 @@ defect, because the ID offsets are then 1 and nothing collides.
 | **Target** | A different, **non-empty** collection — at least one Storage device with a catalog, so `MAX(storage_id)` is greater than 0. |
 | **Back it up** | These tests import into the target and change it. Work on copies. |
 
-**The check query.** Several cases end with "the links are correct". That means
-this returns no rows:
+**The check query.** Several cases end with "the check query returns no rows".
+It finds every Storage device pointing at no storage row, by id only:
 
 ```sql
-SELECT d.device_id, d.device_name, d.device_external_id, s.storage_id, s.storage_name
+SELECT d.device_id, d.device_name, d.device_external_id
 FROM   device d
 LEFT JOIN storage s ON s.storage_id = d.device_external_id
-WHERE  d.device_type = 'Storage'
-  AND (s.storage_id IS NULL OR d.device_name <> s.storage_name);
+WHERE  d.device_type = 'Storage' AND s.storage_id IS NULL;
 ```
 
-It catches both failure modes at once: a device pointing at nothing, and a
-device pointing at the wrong disk. The three separate queries are in
-`SpecQualityCheck.md` if you want to tell them apart.
+It does **not** compare names: the storage row has no name any more
+(`STI-C13`), and a name could not tell a correct link from a wrong one anyway. A device
+pointing at the **wrong** disk is caught by reading the device's own details —
+brand, model and serial — which is why the source storages must carry
+recognisable values.
 
 ---
 
@@ -46,12 +47,25 @@ device pointing at the wrong disk. The three separate queries are in
 |----|----------|------|
 | STI-T1 | STI-F1, STI-C2 | Import the source into the **non-empty** target. For every imported Storage device, open it and read its brand, model and serial: each shows **its own** values, not blank and not another disk's. The check query returns no rows. *(Before the fix this is where storages came out blank or wearing another disk's identity.)* |
 | STI-T2 | STI-F2 | In the same import, find the Storage device that had **no catalogs** under it. It exists in the target **and has a storage row**: its brand/model/serial are present, not blank. |
-| STI-T3 | STI-F3 | Rename a storage in the source so its name matches one already in the target. Import. The target now holds **both**: the original, untouched, and a second row named `<name> (2)`. The imported device points at `(2)`, the pre-existing device still points at the original. |
-| STI-T4 | STI-F4 | Continuing STI-T3: open the catalogs that came in with the renamed storage. Each is attached to `<name> (2)`, **not** to the target's original. Then open a catalog that was already in the target under the original name — it is still attached to the original. *(Getting STI-F3 without STI-F4 moves the mismatch instead of fixing it, and this case is the only one that catches that.)* |
-| STI-T5 | STI-F8, STI-C3 | Note the Storage ID shown for a storage in the source. Import it. The imported storage shows **the same number**, unchanged — no offset, no `(2)` appended to the number. The name may have been disambiguated; the number never is. |
+| STI-T3 | STI-F3, STI-C14 | Rename a Storage device in the source so its name matches a storage already in the target. Import. The target now holds **both** storage rows, with **different internal ids**, and both devices keep their shared name — no `(2)` suffix. The imported device points at the new row and shows **its own** brand/model/serial; the pre-existing device still shows the original's. The check query returns no rows. |
+| STI-T4 | STI-F3, STI-C14 | Continuing STI-T3: the catalogs that came in with the imported Storage device sit **under that device** in the tree, not under the target's same-name storage. A catalog that was already in the target under the original storage still sits under it, unchanged. |
+| STI-T5 | STI-F8, STI-C3 | Note the Storage ID shown for a storage in the source. Import it. The imported storage shows **the same number**, unchanged — no offset, no `(2)` appended. |
 | STI-T6 | STI-F8 | Use *update from an external collection* on a storage whose user number differs between source and target. Afterwards the target keeps **its own** number, while the disk's details (brand, model, free space) are refreshed from the source. |
 | STI-T7 | STI-F1 | Import twice into the same target **in one session**, without restarting. The second import's links are as correct as the first's; the check query returns no rows. *(Guards the per-run id maps: if they are not reset, the second import reuses ids from the first.)* |
-| STI-T8 | STI-F2, STI-F3 | Import a source where **five catalogs sit on one storage**. The target gains **one** storage row for it, not five. |
+| STI-T8 | STI-F2, STI-C14 | Import a source where **five catalogs sit under one Storage device**. The target gains **one** storage row for it — the one imported with the Storage device — not five, and all five catalogs sit under that device. |
+| STI-T23 | STI-F13 | Import **only a Catalog device**, without its parent Storage device, into a non-empty target. Count the target's storage rows before and after: **no** storage row is added. |
+| STI-T24 | STI-C14 | Give two source devices the same names as devices already in the target (one Storage, one Catalog beneath it). Import. Every imported device sits under **its own imported parent**, and each points at its own imported storage or catalog row — none attaches to a same-name target device. |
+
+## Part A2 — name copies and removed columns
+
+| ID | Verifies | Test |
+|----|----------|------|
+| STI-T25 | STI-F12, STI-C15 | *Retired: `storage_name` and `catalog_storage` are removed (`STI-C13`, `STI-C16`); `STI-F12` is `[Removed]`.* |
+| STI-T26 | STI-F12, STI-C15 | *Retired: `storage_name` and `catalog_storage` are removed (`STI-C13`, `STI-C16`); `STI-F12` is `[Removed]`.* |
+| STI-T27 | STI-C13 | *Retired: `storage_name` and `catalog_storage` are removed (`STI-C13`, `STI-C16`); `STI-F12` is `[Removed]`.* |
+| STI-T28 | STI-F14 | In **File mode**, rename a catalog **in K3**. Every `file` row of that catalog has the new name in `file.file_catalog`, and a duplicate search lists its files under the new name, never the old one. Repeat in K2, and in Hosted mode: same result. |
+| STI-T29 | STI-C14 | Import from a **Memory-mode collection written before 2.8** (catalog ids load as 0). Its catalogs and their files arrive in the target (legacy name fallback). Then import from a 2.13 collection in which one catalog row's `catalog_name` was changed directly to a new, unique value that no longer matches its device's name: that catalog device still brings **its own** catalog and files, found by id. |
+| STI-T30 | STI-C13, STI-C16 | Open a **2.12 collection in File mode** with 3.0: the `storage` and `catalog` tables have **no** `storage_name` / `catalog_storage` column, and every device, storage detail and catalog shows as before. Open a **File-mode database already stamped 2.13** by a beta: the migration completes without error and the columns are gone. Open a **2.12 collection in Memory mode** with 3.0, change a storage and a catalog, save, close: `storage.csv` still has its "Name" column, empty, and each `.idx` still has an empty `<catalogStorage>` header line. Reopen with 3.0: the collection opens and shows everything as before. |
 
 ## Part B — the identity split
 
@@ -102,5 +116,6 @@ following, which are not runnable tests:
 ## Related
 
 - [SpecStorageIdentity](SpecStorageIdentity.md) — the requirements these cases verify
+- [SpecVersions](SpecVersions.md) — "Compatibility with older versions": schema 3.0 at release and what older applications do without the removed columns
 - [SpecQualityCheck](SpecQualityCheck.md) — detecting and repairing collections already damaged
 - [Test plan index](Tests.md)

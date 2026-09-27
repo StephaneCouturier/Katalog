@@ -48,16 +48,16 @@ ScrollablePageFitted {
         id: qualityCheckDialog
         property var results: []   // QVariantList of {check, rows, error}
 
-        readonly property var checkTitles: [
-            qsTr("Storage devices linked to a missing storage"),
-            qsTr("Storage devices linked to a storage with a different name"),
-            qsTr("Storage not linked to any device"),
-            qsTr("Storage IDs used by more than one storage"),
-            qsTr("Storage names used by more than one storage"),
-            qsTr("Catalog devices linked to a missing catalog"),
-            qsTr("Catalogs not linked to any device"),
-            qsTr("Devices with a missing parent device")
-        ]
+        // Keyed by check number: checks 2 and 5 are retired and the others keep
+        // their numbers (SpecQualityCheck.md).
+        readonly property var checkTitles: ({
+            1: qsTr("Storage devices linked to a missing storage"),
+            3: qsTr("Storage not linked to any device"),
+            4: qsTr("Storage IDs used by more than one storage"),
+            6: qsTr("Catalog devices linked to a missing catalog"),
+            7: qsTr("Catalogs not linked to any device"),
+            8: qsTr("Devices with a missing parent device")
+        })
 
         readonly property int issueCount: {
             var n = 0
@@ -75,10 +75,8 @@ ScrollablePageFitted {
         function formatRow(check, r) {
             switch (check) {
             case 1: return qsTr("Device") + " " + r[0] + " \u201C" + r[1] + "\u201D \u2192 " + qsTr("Storage") + " " + r[2]
-            case 2: return qsTr("Device") + " " + r[0] + " \u201C" + r[1] + "\u201D \u2192 " + qsTr("Storage") + " " + r[2] + " \u201C" + r[3] + "\u201D"
-            case 3: return qsTr("Storage") + " " + r[0] + " \u201C" + r[1] + "\u201D"
+            case 3: return qsTr("Storage") + " " + r[0] + " \u00B7 " + qsTr("ID") + " " + r[1]
             case 4: return qsTr("ID") + " " + r[0] + " \u00B7 " + qsTr("Storage") + " " + r[1] + " \u201C" + r[2] + "\u201D"
-            case 5: return qsTr("Storage") + " " + r[1] + " \u201C" + r[0] + "\u201D"
             case 6: return qsTr("Device") + " " + r[0] + " \u201C" + r[1] + "\u201D \u2192 " + qsTr("Catalog") + " " + r[2]
             case 7: return qsTr("Catalog") + " " + r[0] + " \u201C" + r[1] + "\u201D"
             case 8: return qsTr("Device") + " " + r[0] + " \u201C" + r[1] + "\u201D \u2192 " + qsTr("Device") + " " + r[2]
@@ -86,8 +84,12 @@ ScrollablePageFitted {
             return r.join(" \u00B7 ")
         }
 
+        // Numbered by position, so the retired checks leave no gap in the report.
         function sectionTitle(res) {
-            return res.check + ". " + checkTitles[res.check - 1] + " (" + res.rows.length + ")"
+            var position = 0
+            for (var i = 0; i < results.length; ++i)
+                if (results[i].check === res.check) position = i + 1
+            return position + ". " + checkTitles[res.check] + " (" + res.rows.length + ")"
         }
 
         // Plain-text report for the clipboard (QCK-F16): same content as shown.

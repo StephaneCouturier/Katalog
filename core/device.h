@@ -162,6 +162,10 @@ public:
         void generateDeviceID();
         void insertDevice();
         void saveDevice();
+        // Keeps a catalog's synced copies of its name (catalog_name,
+        // file_catalog, Memory .idx file name) equal to the device name after a
+        // rename; call it after saveDevice() (SpecStorageIdentity.md STI-F14).
+        void writeNameCopies(const QString &databaseMode);
         void saveStatistics(QDateTime dateTime, QString requestSource);
         void setActiveFromString(const QString& activeStr);
 

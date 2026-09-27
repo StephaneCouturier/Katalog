@@ -2472,7 +2472,7 @@ QString AppManager::createCatalog(const QString &name, const QString &path,
     newDevice->path       = path;
     newDevice->insertDevice();
 
-    // Load storage name for catalog record
+    // Parent Storage, for its path below
     Device parentDevice;
     parentDevice.ID = storageId;
     parentDevice.loadDevice(m_connectionName);
@@ -2487,7 +2487,6 @@ QString AppManager::createCatalog(const QString &name, const QString &path,
     newDevice->catalog->isFullDevice     = isFullDevice;
     newDevice->catalog->includeMetadata  = includeMetadata;
     newDevice->catalog->includeChecksum  = includeChecksum;
-    newDevice->catalog->storageName      = parentDevice.name;
     newDevice->catalog->appVersion       = currentVersion;
     newDevice->catalog->insertCatalog();
 
@@ -2878,7 +2877,6 @@ int AppManager::addDeviceStorage(int parentId)
     newDevice->storage->generateID();
     newDevice->externalID = newDevice->storage->ID;
     newDevice->insertDevice();
-    newDevice->storage->name = newDevice->name;
     newDevice->storage->insertStorage();
 
     collection->saveDeviceTableToFile();
@@ -3877,6 +3875,7 @@ QString AppManager::saveDeviceBasicFields(int deviceId, const QString &name, int
     // Remember the parent the device had before this edit, so a re-parent can
     // refresh the chain it was moved away from (see end of method).
     const int previousParentId = dev.parentID;
+    const QString previousName = dev.name;
 
     // Device id 1 is the reserved " Physical Group" root: its parent is fixed at
     // root (which keeps it in the Physical group, id 0). Force it here so no UI
@@ -3930,6 +3929,10 @@ QString AppManager::saveDeviceBasicFields(int deviceId, const QString &name, int
     dev.parentID = parentId;
     dev.groupID  = newGroupId;
     dev.saveDevice();
+
+    // A catalog's synced copies of its name (SpecStorageIdentity.md STI-F14)
+    if (name != previousName)
+        dev.writeNameCopies(collection->databaseMode);
 
     // On a re-parent, recompute the file count / size / space of the parent the
     // device left and the parent it joined, then propagate up to their Virtual

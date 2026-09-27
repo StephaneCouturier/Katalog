@@ -188,21 +188,11 @@ private:
 
     // Extended data
     /**
-     * Import the source storage row of this name into the target and return the
-     * target storage_id it was given, or 0 if it could not be imported.
-     * Called once per storage per import run: the second caller for the same
-     * name gets the id the first one created, so one disk yields one row
-     * however many catalogs sit on it (STI-F1, STI-F2, STI-F3).
+     * Import the source storage row with this id into the target as a new row
+     * and return the target storage_id it was given, or 0 if it could not be
+     * imported. Resolved by id only, never by name (STI-F3, STI-C14).
      */
-    int  importStorageByName(const QString &storageName);
-    /**
-     * Point the catalogs imported so far at a storage that had to be renamed.
-     * catalog.catalog_storage links a catalog to its storage by NAME, so a
-     * rename leaves them naming the target's own disk unless they follow
-     * (STI-F4). Only catalogs imported by this run are touched.
-     */
-    void applyStorageRenameToImportedCatalogs(const QString &oldName, const QString &newName);
-    void importStorageForCatalog(int srcCatalogId);
+    int  importStorageById(int srcStorageId);
     void updateStorageRecord(int srcStorageId, int targetStorageId);
     void importStatisticsForDevice(int srcDeviceId, int newDeviceId);
     void importBackupMappings();
@@ -234,11 +224,8 @@ private:
 
     // srcCatalogId → newCatalogId, populated during import for Phase 2 tag/storage tracking
     QMap<int, int>  m_catalogIdMap;
-    // Source storage name -> target storage_id, for storage imported by this run.
-    QMap<QString, int>     m_storageIdMap;
-    // Source storage name -> target storage name, non-empty only where a name
-    // collision forced a rename. Catalogs imported afterwards follow it.
-    QMap<QString, QString> m_storageNameMap;
+    // Source storage_id -> target storage_id, for storage imported by this run.
+    QMap<int, int>  m_storageIdMap;
 
     QAtomicInt m_stopRequested{0};
 };

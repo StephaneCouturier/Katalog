@@ -61,7 +61,6 @@ void Storage::insertStorage()
     QString querySQL = QLatin1String(R"(
             INSERT INTO storage(
                             storage_id,
-                            storage_name,
                             storage_type,
                             storage_path,
                             storage_label,
@@ -78,7 +77,6 @@ void Storage::insertStorage()
                             storage_user_id)
                       VALUES(
                             :new_id,
-                            :storage_name,
                             "",
                             "",
                             "",
@@ -99,9 +97,6 @@ void Storage::insertStorage()
     insertQuery.prepare(querySQL);
     insertQuery.bindValue(":new_id", ID);
     insertQuery.bindValue(":storage_user_id", userID > 0 ? userID : ID);
-    insertQuery.bindValue(":storage_name", name);
-    if(name=="")
-        insertQuery.bindValue(":storage_name","");
 
     insertQuery.exec();
 }
@@ -124,7 +119,6 @@ void Storage::loadStorage(QString connectionName)
     QSqlQuery query(QSqlDatabase::database(connectionName));
     QString querySQL = QLatin1String(R"(
                             SELECT
-                                storage_name,
                                 storage_type,
                                 storage_path,
                                 storage_label,
@@ -148,22 +142,21 @@ void Storage::loadStorage(QString connectionName)
 
     if (query.exec()) {
         if (query.next()) {
-            name         = query.value(0).toString();
-            type         = query.value(1).toString();
-            path         = query.value(2).toString();
-            label        = query.value(3).toString();
-            fileSystem   = query.value(4).toString();
-            totalSpace   = query.value(5).toLongLong();
-            freeSpace    = query.value(6).toLongLong();
-            brand        = query.value(7).toString();
-            model        = query.value(8).toString();
-            serialNumber = query.value(9).toString();
-            buildDate    = query.value(10).toString();
-            comment1     = query.value(11).toString();
-            comment2     = query.value(12).toString();
-            comment3     = query.value(13).toString();
-            picturePath  = query.value(14).toString();
-            userID       = query.value(15).toInt();
+            type         = query.value(0).toString();
+            path         = query.value(1).toString();
+            label        = query.value(2).toString();
+            fileSystem   = query.value(3).toString();
+            totalSpace   = query.value(4).toLongLong();
+            freeSpace    = query.value(5).toLongLong();
+            brand        = query.value(6).toString();
+            model        = query.value(7).toString();
+            serialNumber = query.value(8).toString();
+            buildDate    = query.value(9).toString();
+            comment1     = query.value(10).toString();
+            comment2     = query.value(11).toString();
+            comment3     = query.value(12).toString();
+            picturePath  = query.value(13).toString();
+            userID       = query.value(14).toInt();
         } else {
         }
     } else {

@@ -116,40 +116,19 @@ QSqlError DatabaseManager::runMigrations(const QString &connectionName, Collecti
         collection->setDatabaseSchemaVersion();
     }
 
-    if (schemaVersion < QVersionNumber::fromString("2.13")) {
+    // 2.12 -> 3.0 (SpecVersions.md "Schema number at release: 3.0"). Until
+    // Release 3.0 this block runs on EVERY open, so beta and RC collections get
+    // each step as soon as it is added; every step must therefore be harmless to
+    // repeat. The stamp stays "2.13" until then, so databases opened by a beta
+    // or an RC still run the released migration.
+    // AT RELEASE 3.0: wrap this block in
+    //     if (schemaVersion < QVersionNumber::fromString("3.0"))
+    // and stamp "3.0" here and in Collection::load().
+    {
         collection->dbSchemaVersion = "2.13";
-        QSqlError err = Database::runMigration_2_13(connectionName);
+        QSqlError err = Database::runMigration_3_0(connectionName);
         if (err.type() != QSqlError::NoError) return err;
         collection->setDatabaseSchemaVersion();
-    }
-
-    // Unconditional column guard: mapping_source_collection was added to runMigration_2_11
-    // after some databases had already been migrated to schema 2.11, so it may be absent
-    // even when schemaVersion == "2.11".
-    {
-        QSqlError err = Database::ensureMappingSourceCollectionColumn(connectionName);
-        if (err.type() != QSqlError::NoError) return err;
-    }
-
-    // Same reason: device_comment joined the 2.13 cycle after collections had
-    // already been stamped 2.13, so runMigration_2_13 no longer runs for them.
-    {
-        QSqlError err = Database::ensureDeviceCommentColumn(connectionName);
-        if (err.type() != QSqlError::NoError) return err;
-    }
-
-    // Same reason again: storage_user_id joined the 2.13 cycle after collections
-    // had already been stamped 2.13 (SpecStorageIdentity.md STI-C4).
-    {
-        QSqlError err = Database::ensureStorageUserIdColumn(connectionName);
-        if (err.type() != QSqlError::NoError) return err;
-    }
-
-    // Same reason again: mapping_include_empty_dirs joined the 2.13 cycle after
-    // collections had already been stamped 2.13 (SpecBackup.md BKP-C9).
-    {
-        QSqlError err = Database::ensureMappingIncludeEmptyDirsColumn(connectionName);
-        if (err.type() != QSqlError::NoError) return err;
     }
 
     return QSqlError();

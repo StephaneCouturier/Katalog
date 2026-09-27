@@ -293,3 +293,99 @@ if (!hasFilesNeedingMigration() && appVersion < "2.8") {
 
 ---
 
+## **Compatibility with older versions**
+
+What happens when a collection that has been opened by Katalog 3.0 is opened
+again with an older application: Katalog 2.12 or earlier, or the K2 2.13 binary
+published alongside the 3.0 betas. This section
+states facts and risks; it does not add a requirement. The release notes link to
+the user-facing list below.
+
+### Schema number at release: 3.0
+
+Decided by the user before this section was written, recorded here on
+2026-09-27:
+
+- **2.13 is only the beta working number** of the schema. At release, the target
+  schema number is **3.0**.
+- **Everyone runs the full 2.12 → 3.0 migration**, including beta testers whose
+  databases are already stamped 2.13.
+- **Consequence for development:** every migration step written during the
+  2.13 cycle MUST be idempotent — it must run safely on a database already
+  stamped 2.13, where some or all of its changes are already present (for
+  example `SpecStorageIdentity.md` `STI-C16`, dropping two columns that a beta
+  database may or may not still have).
+
+### Facts (verified by code reading, 2026-09-27)
+
+- **2.12 has no newer-schema check.** The released 2.12 (tag `v2.12.1`,
+  `core/databasemanager.cpp` `runMigrations`) only migrates schemas *older*
+  than itself. It opens a 2.13 collection silently, and writes back only the
+  columns it knows.
+- **One core library, one migration.** The K2 built from the current tree
+  (released together with 3.0) and K3 3.0 share the same core library and the
+  same migration dispatcher. Both run the same unconditional column guards on
+  open: `ensureDeviceCommentColumn`, `ensureStorageUserIdColumn`,
+  `ensureMappingIncludeEmptyDirsColumn`, `ensureMappingSourceCollectionColumn`,
+  and both run without `storage.storage_name` and `catalog.catalog_storage`,
+  which the 2.12 → 3.0 migration drops (`SpecStorageIdentity.md` `STI-C13`,
+  `STI-C16`). K2's only raw UI writes on these tables (storage update in
+  `qt_widgets/mainwindow_tab_device_pr.cpp`, backup mapping insert in
+  `qt_widgets/mainwindow_tab_backup.cpp`) include the 2.13 columns. So that K2
+  and 3.0 can be used alternately on the same collection.
+- **The K2 2.13 binary published with 3.0 beta2 is an older application.** It
+  predates the column removal and names `storage_name` / `catalog_storage` in
+  its SQL, exactly like 2.12 — see risk 5.
+- **2.12 cannot be patched.** Anything that protects a collection from an older
+  application must already be in that older application.
+
+**Open option, not decided:** a newer-schema guard (refuse, or open read-only,
+a collection whose schema is newer than the application) would protect
+collections from *future* older versions only — for example a 3.x collection
+opened by 3.0. It cannot protect against 2.12.
+
+### Technical risks — a 3.0 collection used with K2 2.12 or older, or with the K2 2.13 beta2 binary
+
+| # | What is lost or wrong | Modes | Triggered when | Severity |
+|---|---|---|---|---|
+| 1 | `device_order`: 2.12 inserts devices with an uninitialised `device_order`, so the device tree can show them in the wrong order | All | 2.12 creates a device | Low — known; guidance is acceptable |
+| 2 | `storage_user_id`: 2.12's `storage.csv` writer has no UserID column (`v2.12.1` `core/collection.cpp` `saveStorageTableToFile`). On reopen in 2.13/3.0 the loader falls back to `storage_id` (`core/collection.cpp` ~745), so user-edited Storage IDs are lost | Memory | Any 2.12 save of the storage table (create, rename or update a storage) | High — the Storage ID is the number written on the physical disk |
+| 2b | Storages created by 2.12 get `storage_user_id` = 0 (column default) | File / Hosted | 2.12 creates a storage | Medium |
+| 3 | `device_comment`: 2.12's `device.csv` writer has 14 columns and no comment, so all device comments are lost | Memory | Any 2.12 save of the device table (nearly every device action) | High |
+| 4 | `mapping_include_empty_dirs`: 2.12's backup mapping writer lacks it, so the setting reverts to its default 1 (replicate empty folders) | Memory | 2.12 saves backup mappings | Medium |
+| 5 | `storage_name` / `catalog_storage` are dropped by the 2.12 → 3.0 migration (`STI-C16`). K2 ≤ 2.12 and the K2 2.13 binary published with beta2 name these columns in their SQL, so storage details fail to load, and creating a storage, creating a catalog or saving a catalog fails | File / Hosted | Opening the collection after the 3.0 migration | High — accepted by the user: no return from K3 3.0 to older K2, expected for a major version |
+| 5b | Memory-mode file formats are unchanged, so these applications still open the collection; but the storage "Name" column of `storage.csv` and the `<catalogStorage>` line of each `.idx` are written empty by 3.0. 2.12's Collection Import resolves a catalog's storage by `catalog_storage` → `storage_name` (`v2.12.1` `core/collectionimporter.cpp` ~1260-1290), so importing from such a collection finds no storage row | Memory | An older application imports from a collection saved by 3.0 | Low-medium |
+
+### What this means for users
+
+This is the list the release notes link to. Plain language, one entry per risk
+above.
+
+- If you use Katalog 2.12 or older and you add a device, then the new device can
+  appear in the wrong place in the device list. *(risk 1)*
+- If you use Katalog 2.12 or older with a collection saved in memory mode and you
+  create, rename or edit a storage device, then the Storage ID numbers you
+  entered are replaced by internal numbers. *(risk 2)*
+- If you use Katalog 2.12 or older with a collection saved in a database file or
+  on a database server and you create a storage device, then that storage device
+  has no Storage ID. *(risk 2b)*
+- If you use Katalog 2.12 or older with a collection saved in memory mode and you
+  change almost anything about your devices, then all device comments are
+  lost. *(risk 3)*
+- If you use Katalog 2.12 or older with a collection saved in memory mode and you
+  save your backup settings, then every backup goes back to copying empty
+  folders. *(risk 4)*
+- If you use Katalog 2.12 or older, or the Katalog 2.13 published with the 3.0
+  beta, with a collection saved in a database file or on a database server
+  after Katalog 3.0 opened it, then storage details do not load, and creating a
+  storage device or a catalog, or saving a catalog, fails. *(risk 5)*
+- If you use Katalog 2.12 or older, or the Katalog 2.13 published with the 3.0
+  beta, and you import from a collection saved in memory mode by Katalog 3.0,
+  then the storage device details of the imported catalogs can be
+  missing. *(risk 5b)*
+
+**Recommendation:** a collection opened with Katalog 3.0 is best used only with
+Katalog 3.0, or the Katalog 2 released together with it, from then on, and a
+backup copy of it is needed before it is opened with an older version.
+
+---

@@ -66,7 +66,6 @@ public:
         qint64  totalFileSize = 0;
         bool    includeHidden;
         QString fileType;
-        QString storageName;
         bool    includeSymblinks;
         bool    includeSubDir;
         bool    isFullDevice;
@@ -101,7 +100,6 @@ public:
     void setSourcePath(QString selectedSourcePath);
     void updateFileCount();
     void updateTotalFileSize();
-    void setStorageName(QString selectedStorageName);
     void setDateLoaded(QDateTime dateTime);
     void setDateUpdated(QDateTime dateTime);
 

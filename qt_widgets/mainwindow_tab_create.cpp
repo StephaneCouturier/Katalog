@@ -373,7 +373,6 @@
         newCatalogDevice->catalog->sourcePath = ui->Create_lineEdit_NewCatalogPath->text();
         newCatalogDevice->catalog->includeHidden = ui->Create_comboBox_IncludeHidden->itemData(
                                                                                         ui->Create_comboBox_IncludeHidden->currentIndex(), Qt::UserRole).toBool();
-        newCatalogDevice->catalog->storageName = ui->Create_comboBox_StorageSelection->currentText();
         newCatalogDevice->catalog->includeSymblinks = ui->Create_checkBox_IncludeSymblinks->isChecked();
         newCatalogDevice->catalog->isFullDevice = ui->Create_checkBox_isFullDevice->isChecked();
         newCatalogDevice->catalog->includeMetadata = ui->Create_comboBox_MetadataOption->itemData(ui->Create_comboBox_MetadataOption->currentIndex(), Qt::UserRole).toString();

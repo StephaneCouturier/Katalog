@@ -626,7 +626,7 @@ void Collection::loadCatalogFilesToTable()
                 newCatalog.totalFileSize    = catalogValues[2].toLongLong(); //catalog_total_file_size
                 newCatalog.includeHidden    = catalogValues[3].compare("true", Qt::CaseInsensitive) == 0; //catalog_include_hidden
                 newCatalog.fileType         = catalogValues[4]; //catalog_file_type
-                newCatalog.storageName      = catalogValues[5]; //catalog_storage
+                // catalogValues[5] is the <catalogStorage> slot, never read (STI-C13)
                 newCatalog.includeSymblinks = catalogValues[6].compare("true", Qt::CaseInsensitive) == 0; //catalog_include_symblinks
                 newCatalog.includeSubDir    = catalogValues[7].compare("true", Qt::CaseInsensitive) == 0; //catalog_include_sub_dir
                 newCatalog.isFullDevice     = catalogValues[8].compare("true", Qt::CaseInsensitive) == 0; //catalog_is_full_device
@@ -689,7 +689,6 @@ void Collection::loadStorageFileToTable()
                     QString querySQL = QLatin1String(R"(
                         INSERT INTO storage(
                                         storage_id,
-                                        storage_name,
                                         storage_type,
                                         storage_location,
                                         storage_path,
@@ -708,7 +707,6 @@ void Collection::loadStorageFileToTable()
                                         storage_user_id)
                                   values(
                                         :storage_id,
-                                        :storage_name,
                                         :storage_type,
                                         :storage_location,
                                         :storage_path,
@@ -730,7 +728,8 @@ void Collection::loadStorageFileToTable()
                     QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
                     insertQuery.prepare(querySQL);
                     insertQuery.bindValue(":storage_id",            fieldList[0].toInt());
-                    insertQuery.bindValue(":storage_name",          fieldList[1]);
+                    // fieldList[1] is the Name column, kept in the file format
+                    // but never read: the device name is the only name (STI-C13).
                     insertQuery.bindValue(":storage_type",          fieldList[2]);
                     insertQuery.bindValue(":storage_location",      fieldList[3]);
                     insertQuery.bindValue(":storage_path",          fieldList[4]);
@@ -1437,7 +1436,7 @@ void Collection::saveStorageTableToFile()
         QString querySQL = QLatin1String(R"(
                          SELECT
                             storage_id            ,
-                            storage_name          ,
+                            ''  AS storage_name   , -- Name column kept in the file format
                             storage_type          ,
                             storage_location      ,
                             storage_path          ,
@@ -1976,85 +1975,72 @@ QList<QualityCheckResult> Collection::runQualityChecks()
 {
     // SpecQualityCheck.md "Detection", checks 1 to 8. Every query is a SELECT:
     // phase 1 writes nothing (QCK-C7). All three tables are loaded at open in
-    // Memory mode, so no pre-load is needed.
-    static const QStringList queries = {
+    // Memory mode, so no pre-load is needed. Checks 2 and 5 are retired
+    // (storage names no longer exist, STI-C13); the others keep their numbers.
+    static const QList<QPair<int, QString>> queries = {
         // 1 - Storage devices pointing at a missing storage row
-        QLatin1String(R"(
+        { 1, QLatin1String(R"(
             SELECT d.device_id, d.device_name, d.device_external_id
             FROM   device d
             LEFT JOIN storage s ON s.storage_id = d.device_external_id
             WHERE  d.device_type = 'Storage' AND s.storage_id IS NULL
             ORDER BY d.device_id
-        )"),
-        // 2 - Storage devices pointing at a storage row with a different name
-        QLatin1String(R"(
-            SELECT d.device_id, d.device_name, s.storage_id, s.storage_name
-            FROM   device d
-            JOIN   storage s ON s.storage_id = d.device_external_id
-            WHERE  d.device_type = 'Storage' AND d.device_name <> s.storage_name
-            ORDER BY d.device_id
-        )"),
+        )") },
         // 3 - Storage rows no Storage device points at
-        QLatin1String(R"(
-            SELECT s.storage_id, s.storage_name
+        { 3, QLatin1String(R"(
+            SELECT s.storage_id, s.storage_user_id
             FROM   storage s
             LEFT JOIN device d ON d.device_external_id = s.storage_id
                               AND d.device_type = 'Storage'
             WHERE  d.device_id IS NULL
             ORDER BY s.storage_id
-        )"),
+        )") },
         // 4 - Storage rows sharing the same written number (informational)
-        QLatin1String(R"(
-            SELECT s.storage_user_id, s.storage_id, s.storage_name
+        { 4, QLatin1String(R"(
+            SELECT s.storage_user_id, s.storage_id, COALESCE(d.device_name, '')
             FROM   storage s
+            LEFT JOIN device d ON d.device_external_id = s.storage_id
+                              AND d.device_type = 'Storage'
             WHERE  s.storage_user_id IS NOT NULL AND s.storage_user_id <> 0
               AND  s.storage_user_id IN (SELECT storage_user_id FROM storage
                                          GROUP BY storage_user_id HAVING COUNT(*) > 1)
             ORDER BY s.storage_user_id, s.storage_id
-        )"),
-        // 5 - Storage rows sharing the same name
-        QLatin1String(R"(
-            SELECT s.storage_name, s.storage_id
-            FROM   storage s
-            WHERE  s.storage_name IN (SELECT storage_name FROM storage
-                                      GROUP BY storage_name HAVING COUNT(*) > 1)
-            ORDER BY s.storage_name, s.storage_id
-        )"),
+        )") },
         // 6 - Catalog devices pointing at a missing catalog row
-        QLatin1String(R"(
+        { 6, QLatin1String(R"(
             SELECT d.device_id, d.device_name, d.device_external_id
             FROM   device d
             LEFT JOIN catalog c ON c.catalog_id = d.device_external_id
             WHERE  d.device_type = 'Catalog' AND c.catalog_id IS NULL
             ORDER BY d.device_id
-        )"),
+        )") },
         // 7 - Catalog rows no Catalog device points at
-        QLatin1String(R"(
+        { 7, QLatin1String(R"(
             SELECT c.catalog_id, c.catalog_name
             FROM   catalog c
             LEFT JOIN device d ON d.device_external_id = c.catalog_id
                               AND d.device_type = 'Catalog'
             WHERE  d.device_id IS NULL
             ORDER BY c.catalog_id
-        )"),
+        )") },
         // 8 - Devices whose parent does not exist (0 or NULL marks a root)
-        QLatin1String(R"(
+        { 8, QLatin1String(R"(
             SELECT d.device_id, d.device_name, d.device_parent_id
             FROM   device d
             LEFT JOIN device p ON p.device_id = d.device_parent_id
             WHERE  d.device_parent_id IS NOT NULL AND d.device_parent_id <> 0
               AND  p.device_id IS NULL
             ORDER BY d.device_id
-        )"),
+        )") },
     };
 
     QList<QualityCheckResult> results;
     for (int i = 0; i < queries.size(); ++i) {
         QualityCheckResult result;
-        result.checkNumber = i + 1;
+        result.checkNumber = queries.at(i).first;
 
         QSqlQuery query(QSqlDatabase::database(m_connectionName));
-        if (!query.exec(queries.at(i))) {
+        if (!query.exec(queries.at(i).second)) {
             result.error = query.lastError().text();
             qWarning() << "WARNING: Quality check" << result.checkNumber
                        << "failed:" << result.error;
@@ -2304,7 +2290,7 @@ bool Collection::exportAllCatalogFiles(const QString &outputFolder,
         // Get additional catalog metadata
         QSqlQuery catalogMetaQuery(QSqlDatabase::database(m_connectionName));
         QString catalogMetaQuerySQL = QLatin1String(R"(
-            SELECT catalog_include_hidden, catalog_file_type, catalog_storage,
+            SELECT catalog_include_hidden, catalog_file_type,
                    catalog_include_symblinks, catalog_is_full_device,
                    catalog_include_metadata, catalog_include_checksum, catalog_app_version
             FROM catalog
@@ -2320,12 +2306,11 @@ bool Collection::exportAllCatalogFiles(const QString &outputFolder,
 
         QString includeHidden = catalogMetaQuery.value(0).toString();
         QString fileType = catalogMetaQuery.value(1).toString();
-        QString storageName = catalogMetaQuery.value(2).toString();
-        QString includeSymblinks = catalogMetaQuery.value(3).toString();
-        QString isFullDevice = catalogMetaQuery.value(4).toString();
-        QString includeMetadata = catalogMetaQuery.value(5).toString();
-        QString includeChecksum = catalogMetaQuery.value(6).toString();
-        QString appVersion = catalogMetaQuery.value(7).toString();
+        QString includeSymblinks = catalogMetaQuery.value(2).toString();
+        QString isFullDevice = catalogMetaQuery.value(3).toString();
+        QString includeMetadata = catalogMetaQuery.value(4).toString();
+        QString includeChecksum = catalogMetaQuery.value(5).toString();
+        QString appVersion = catalogMetaQuery.value(6).toString();
 
         // Create the idx file
         QString idxFilePath = outputFolder + "/" + deviceName + ".idx";
@@ -2344,7 +2329,7 @@ bool Collection::exportAllCatalogFiles(const QString &outputFolder,
         idxStream << "<catalogTotalFileSize>" << QString::number(totalFileSize) << "\n";
         idxStream << "<catalogIncludeHidden>" << includeHidden << "\n";
         idxStream << "<catalogFileType>" << fileType << "\n";
-        idxStream << "<catalogStorage>" << storageName << "\n";
+        idxStream << "<catalogStorage>" << "\n";   // slot kept for the file format, never read
         idxStream << "<catalogIncludeSymblinks>" << includeSymblinks << "\n";
         idxStream << "<catalogIsFullDevice>" << isFullDevice << "\n";
         idxStream << "<catalogIncludeMetadata>" << includeMetadata << "\n";
@@ -2531,7 +2516,6 @@ bool Collection::insertPhysicalStorageGroup() {
         newStorageDevice->externalID = newStorageDevice->storage->ID;
         newStorageDevice->groupID = 0;
         newStorageDevice->insertDevice();
-        newStorageDevice->storage->name = newStorageDevice->name;
         newStorageDevice->storage->insertStorage();
         newStorageDevice->saveDevice();
         newStorageDevice->updateStorageOnly("create");

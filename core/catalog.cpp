@@ -275,7 +275,6 @@ void Catalog::insertCatalog()
                                                         catalog_total_file_size,
                                                         catalog_include_hidden,
                                                         catalog_file_type,
-                                                        catalog_storage,
                                                         catalog_include_symblinks,
                                                         catalog_is_full_device,
                                                         catalog_date_loaded,
@@ -293,7 +292,6 @@ void Catalog::insertCatalog()
                                                         :catalog_total_file_size,
                                                         :catalog_include_hidden,
                                                         :catalog_file_type,
-                                                        :catalog_storage,
                                                         :catalog_include_symblinks,
                                                         :catalog_is_full_device,
                                                         :catalog_date_loaded,
@@ -313,7 +311,6 @@ void Catalog::insertCatalog()
     insertCatalogQuery.bindValue(":catalog_total_file_size", totalFileSize);
     insertCatalogQuery.bindValue(":catalog_include_hidden", includeHidden);
     insertCatalogQuery.bindValue(":catalog_file_type", fileType);
-    insertCatalogQuery.bindValue(":catalog_storage", storageName);
     insertCatalogQuery.bindValue(":catalog_include_symblinks", includeSymblinks);
     insertCatalogQuery.bindValue(":catalog_is_full_device", isFullDevice);
     insertCatalogQuery.bindValue(":catalog_date_loaded", dateLoaded);
@@ -359,7 +356,6 @@ void Catalog::saveCatalog()
         UPDATE catalog
         SET catalog_name              =:catalog_name,
             catalog_source_path       =:catalog_source_path,
-            catalog_storage           =:catalog_storage,
             catalog_file_type         =:catalog_file_type,
             catalog_include_hidden    =:catalog_include_hidden,
             catalog_include_metadata  =:catalog_include_metadata,
@@ -373,7 +369,6 @@ void Catalog::saveCatalog()
     query.bindValue(":catalog_id", ID);
     query.bindValue(":catalog_name", name);
     query.bindValue(":catalog_source_path", sourcePath);
-    query.bindValue(":catalog_storage", storageName);
     query.bindValue(":catalog_file_type", fileType);
     query.bindValue(":catalog_include_hidden", includeHidden);
     query.bindValue(":catalog_include_metadata", includeMetadata);
@@ -431,7 +426,7 @@ bool Catalog::updateCatalogFileHeaders(QString databaseMode)
         fullFileText.append("<catalogTotalFileSize>" + QVariant(totalFileSize).toString() +"\n");
         fullFileText.append("<catalogIncludeHidden>" + QVariant(includeHidden).toString() +"\n");
         fullFileText.append("<catalogFileType>" + fileType +"\n");
-        fullFileText.append("<catalogStorage>" + storageName +"\n");
+        fullFileText.append("<catalogStorage>\n"); // slot kept for the file format, never read
         fullFileText.append("<catalogIncludeSymblinks>" + QVariant(includeSymblinks).toString() +"\n");
         fullFileText.append("<catalogIncludeSubDir>"   + QVariant(includeSubDir).toString()   +"\n");
         fullFileText.append("<catalogIsFullDevice>" + QVariant(isFullDevice).toString() +"\n");
@@ -475,7 +470,6 @@ void Catalog::loadCatalog()
                                 catalog_total_file_size      ,
                                 catalog_include_hidden       ,
                                 catalog_file_type            ,
-                                catalog_storage              ,
                                 catalog_include_symblinks    ,
                                 catalog_is_full_device       ,
                                 catalog_date_loaded          ,
@@ -501,14 +495,13 @@ void Catalog::loadCatalog()
         totalFileSize      = query.value(6).toLongLong();
         includeHidden      = query.value(7).toBool();
         fileType           = query.value(8).toString();
-        storageName        = query.value(9).toString();
-        includeSymblinks   = query.value(10).toBool();
-        isFullDevice       = query.value(11).toBool();
-        dateLoaded         = query.value(12).toDateTime();
-        includeMetadata    = query.value(13).toString();
-        includeChecksum    = query.value(14).toString();
-        appVersion         = query.value(15).toString();
-        includeSubDir      = query.value(16).isNull() ? true : query.value(16).toBool();
+        includeSymblinks   = query.value(9).toBool();
+        isFullDevice       = query.value(10).toBool();
+        dateLoaded         = query.value(11).toDateTime();
+        includeMetadata    = query.value(12).toString();
+        includeChecksum    = query.value(13).toString();
+        appVersion         = query.value(14).toString();
+        includeSubDir      = query.value(15).isNull() ? true : query.value(15).toBool();
     }
 }
 
@@ -1313,7 +1306,7 @@ bool Catalog::saveCatalogToFile(QString databaseMode, QString collectionFolder)
         fileList.prepend("<catalogIsFullDevice>"    + QVariant(isFullDevice).toString());
         fileList.prepend("<catalogIncludeSubDir>"   + QVariant(includeSubDir).toString());
         fileList.prepend("<catalogIncludeSymblinks>"+ QVariant(includeSymblinks).toString());
-        fileList.prepend("<catalogStorage>"         + storageName);
+        fileList.prepend("<catalogStorage>");  // slot kept for the file format, never read
         fileList.prepend("<catalogFileType>"        + fileType);
         fileList.prepend("<catalogIncludeHidden>"   + QVariant(includeHidden).toString());
         fileList.prepend("<catalogTotalFileSize>"   + QString::number(totalFileSize));
@@ -1612,7 +1605,6 @@ QList<Catalog*> Catalog::executeSplitBySubDirectory(const QString &databaseMode,
         c->includeHidden    = includeHidden;
         c->includeSymblinks = includeSymblinks;
         c->fileType         = fileType;
-        c->storageName      = storageName;
         c->isFullDevice     = isFullDevice;
         c->includeMetadata  = includeMetadata;
         c->includeChecksum  = includeChecksum;
@@ -1790,7 +1782,6 @@ QList<Catalog*> Catalog::executeSplitByFileType(const QString &databaseMode,
         c->includeHidden    = includeHidden;
         c->includeSymblinks = includeSymblinks;
         c->fileType         = g.fileType;   // scanner will filter by this on next update
-        c->storageName      = storageName;
         c->isFullDevice     = isFullDevice;
         c->includeMetadata  = includeMetadata;
         c->includeChecksum  = includeChecksum;

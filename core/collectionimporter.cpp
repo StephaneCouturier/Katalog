@@ -130,7 +130,6 @@ void CollectionImporter::close()
     m_deviceIdMap.clear();
     m_catalogIdMap.clear();
     m_storageIdMap.clear();
-    m_storageNameMap.clear();
     m_storageIdOffset = 0;
 }
 
@@ -357,7 +356,7 @@ int CollectionImporter::remapAndInsertCatalog(int srcCatalogId)
         SELECT catalog_id, catalog_file_path, catalog_name, catalog_date_updated,
                catalog_source_path, catalog_file_count, catalog_total_file_size,
                catalog_source_path_is_active, catalog_include_hidden, catalog_file_type,
-               catalog_storage, catalog_include_symblinks, catalog_is_full_device,
+               catalog_include_symblinks, catalog_is_full_device,
                catalog_date_loaded, catalog_include_metadata, catalog_include_checksum,
                catalog_app_version
         FROM catalog WHERE catalog_id = :id
@@ -394,14 +393,14 @@ int CollectionImporter::remapAndInsertCatalog(int srcCatalogId)
             catalog_id, catalog_file_path, catalog_name, catalog_date_updated,
             catalog_source_path, catalog_file_count, catalog_total_file_size,
             catalog_source_path_is_active, catalog_include_hidden, catalog_file_type,
-            catalog_storage, catalog_include_symblinks, catalog_is_full_device,
+            catalog_include_symblinks, catalog_is_full_device,
             catalog_date_loaded, catalog_include_metadata, catalog_include_checksum,
             catalog_app_version)
         VALUES (
             :catalog_id, :catalog_file_path, :catalog_name, :catalog_date_updated,
             :catalog_source_path, :catalog_file_count, :catalog_total_file_size,
             :catalog_source_path_is_active, :catalog_include_hidden, :catalog_file_type,
-            :catalog_storage, :catalog_include_symblinks, :catalog_is_full_device,
+            :catalog_include_symblinks, :catalog_is_full_device,
             :catalog_date_loaded, :catalog_include_metadata, :catalog_include_checksum,
             :catalog_app_version)
     )"));
@@ -415,18 +414,12 @@ int CollectionImporter::remapAndInsertCatalog(int srcCatalogId)
     ins.bindValue(":catalog_source_path_is_active",  srcQ.value(7));
     ins.bindValue(":catalog_include_hidden",         srcQ.value(8));
     ins.bindValue(":catalog_file_type",              srcQ.value(9));
-    // Follows a storage renamed by STI-F3. Catalogs imported before the rename
-    // are corrected by applyStorageRenameToImportedCatalogs(); these are the
-    // ones that come after it.
-    ins.bindValue(":catalog_storage",                m_storageNameMap.value(
-                                                         srcQ.value(10).toString(),
-                                                         srcQ.value(10).toString()));
-    ins.bindValue(":catalog_include_symblinks",      srcQ.value(11));
-    ins.bindValue(":catalog_is_full_device",         srcQ.value(12));
-    ins.bindValue(":catalog_date_loaded",            srcQ.value(13));
-    ins.bindValue(":catalog_include_metadata",       srcQ.value(14));
-    ins.bindValue(":catalog_include_checksum",       srcQ.value(15));
-    ins.bindValue(":catalog_app_version",            srcQ.value(16));
+    ins.bindValue(":catalog_include_symblinks",      srcQ.value(10));
+    ins.bindValue(":catalog_is_full_device",         srcQ.value(11));
+    ins.bindValue(":catalog_date_loaded",            srcQ.value(12));
+    ins.bindValue(":catalog_include_metadata",       srcQ.value(13));
+    ins.bindValue(":catalog_include_checksum",       srcQ.value(14));
+    ins.bindValue(":catalog_app_version",            srcQ.value(15));
 
     if (!ins.exec()) {
         m_lastError = ins.lastError().text();
@@ -729,7 +722,7 @@ void CollectionImporter::insertFileData(int srcCatalogId, int newCatalogId,
         catQ.prepare(QLatin1String(R"(
             SELECT catalog_name, catalog_source_path, catalog_file_count,
                    catalog_total_file_size, catalog_include_hidden, catalog_file_type,
-                   catalog_storage, catalog_include_symblinks, catalog_is_full_device,
+                   catalog_include_symblinks, catalog_is_full_device,
                    catalog_include_metadata, catalog_include_checksum, catalog_app_version
             FROM catalog WHERE catalog_id = :id
         )"));
@@ -746,12 +739,11 @@ void CollectionImporter::insertFileData(int srcCatalogId, int newCatalogId,
         saveCat.totalFileSize    = catQ.value(3).toLongLong();
         saveCat.includeHidden    = catQ.value(4).toBool();
         saveCat.fileType         = catQ.value(5).toString();
-        saveCat.storageName      = catQ.value(6).toString();
-        saveCat.includeSymblinks = catQ.value(7).toBool();
-        saveCat.isFullDevice     = catQ.value(8).toBool();
-        saveCat.includeMetadata  = catQ.value(9).toString();
-        saveCat.includeChecksum  = catQ.value(10).toString();
-        saveCat.appVersion       = catQ.value(11).toString();
+        saveCat.includeSymblinks = catQ.value(6).toBool();
+        saveCat.isFullDevice     = catQ.value(7).toBool();
+        saveCat.includeMetadata  = catQ.value(8).toString();
+        saveCat.includeChecksum  = catQ.value(9).toString();
+        saveCat.appVersion       = catQ.value(10).toString();
 
         if (!saveCat.saveCatalogToFile(m_target->databaseMode, m_target->folder))
             qWarning() << "WARNING: insertFileData: failed to write .idx for catalog" << newCatalogId;
@@ -850,43 +842,33 @@ bool CollectionImporter::importSubTree(int srcDeviceId, int targetParentId,
                 }
             }
 
+            // No storage row is imported from here: a storage belongs to its
+            // Storage device, imported in the branch below (STI-F13).
             int newCatalogId = remapAndInsertCatalog(srcCatalogId);
             if (newCatalogId > 0) {
                 m_catalogIdMap[srcCatalogId] = newCatalogId;
                 insertFileData(srcCatalogId, newCatalogId, srcDeviceName(srcDeviceId));
                 insertCatalogFilter(srcCatalogId, newCatalogId);
-                importStorageForCatalog(srcCatalogId);
             }
         }
     }
     else if (deviceType == "Storage") {
         // A Storage device's own storage row, whether or not any catalog sits
-        // beneath it (STI-F2) — importStorageForCatalog only ever ran from the
-        // Catalog branch, so a catalog-less Storage device got no row at all.
-        // The external id is then set from the id actually created, so it can
-        // never point at a row that does not exist (STI-F1, STI-C2). Before
-        // this, the source id was carried over while the row was renumbered.
-        QString storageName;
+        // beneath it (STI-F2), resolved by the id the device points at, never by
+        // name (STI-F3, STI-C14). The external id is then set from the id
+        // actually created, so it can never point at a row that does not exist
+        // (STI-F1, STI-C2).
+        int srcStorageId = 0;
         {
-            // Prefer the storage the device actually points at; fall back to the
-            // device name, the way the Catalog branch falls back above.
             QSqlQuery extQ(QSqlDatabase::database(m_sourceConnectionName));
             extQ.prepare("SELECT device_external_id FROM device WHERE device_id = :id");
             extQ.bindValue(":id", srcDeviceId);
             extQ.exec();
-            if (extQ.next()) {
-                QSqlQuery nameQ(QSqlDatabase::database(m_sourceConnectionName));
-                nameQ.prepare("SELECT storage_name FROM storage WHERE storage_id = :sid");
-                nameQ.bindValue(":sid", extQ.value(0).toInt());
-                nameQ.exec();
-                if (nameQ.next())
-                    storageName = nameQ.value(0).toString();
-            }
-            if (storageName.isEmpty())
-                storageName = srcDeviceName(srcDeviceId);
+            if (extQ.next())
+                srcStorageId = extQ.value(0).toInt();
         }
 
-        const int newStorageId = importStorageByName(storageName);
+        const int newStorageId = importStorageById(srcStorageId);
         if (newStorageId > 0) {
             QSqlQuery upd(QSqlDatabase::database(m_target->connectionName()));
             upd.prepare("UPDATE device SET device_external_id = :ext WHERE device_id = :id");
@@ -897,7 +879,7 @@ bool CollectionImporter::importSubTree(int srcDeviceId, int targetParentId,
                            << upd.lastError().text();
         } else {
             qWarning() << "WARNING: CollectionImporter: no storage row imported for Storage device"
-                       << srcDeviceId << storageName;
+                       << srcDeviceId << "storage id" << srcStorageId;
         }
     }
 
@@ -938,7 +920,6 @@ bool CollectionImporter::importDevice(int sourceDeviceId)
     m_deviceIdMap.clear();
     m_catalogIdMap.clear();
     m_storageIdMap.clear();
-    m_storageNameMap.clear();
     buildIdOffsets();
 
     // Count Catalog-type devices in the sub-tree being imported for progress display.
@@ -1011,7 +992,6 @@ int CollectionImporter::importAllDevices()
     m_deviceIdMap.clear();
     m_catalogIdMap.clear();
     m_storageIdMap.clear();
-    m_storageNameMap.clear();
     buildIdOffsets();
 
     // Count all Catalog-type devices in the source for per-catalog progress display.
@@ -1331,52 +1311,36 @@ void CollectionImporter::copyStorageImage(const QString &picturePath)
         QFile::copy(src, dst);
 }
 
-int CollectionImporter::importStorageByName(const QString &storageName)
+int CollectionImporter::importStorageById(int srcStorageId)
 {
-    if (storageName.isEmpty())
+    if (srcStorageId <= 0)
         return 0;
 
-    // One row per disk per run: five catalogs on the same disk must not create
-    // five storage rows.
-    if (m_storageIdMap.contains(storageName))
-        return m_storageIdMap.value(storageName);
+    // One row per source storage per run.
+    if (m_storageIdMap.contains(srcStorageId))
+        return m_storageIdMap.value(srcStorageId);
 
     const QString tgtConn = m_target->connectionName();
 
     // Read the full source storage row
     QSqlQuery srcQ(QSqlDatabase::database(m_sourceConnectionName));
     srcQ.prepare(QLatin1String(R"(
-        SELECT storage_id, storage_name, storage_type, storage_location, storage_path,
+        SELECT storage_id, storage_type, storage_location, storage_path,
                storage_label, storage_file_system, storage_total_space, storage_free_space,
                storage_brand, storage_model, storage_serial_number, storage_build_date,
                storage_comment1, storage_comment2, storage_comment3, storage_picture_path,
                storage_user_id
-        FROM storage WHERE storage_name = :n
+        FROM storage WHERE storage_id = :id
     )"));
-    srcQ.bindValue(":n", storageName);
+    srcQ.bindValue(":id", srcStorageId);
     srcQ.exec();
     if (!srcQ.next()) {
-        qWarning() << "WARNING: CollectionImporter: no source storage row named" << storageName;
+        qWarning() << "WARNING: CollectionImporter: no source storage row with id" << srcStorageId;
         return 0;
     }
 
-    // Target name. A storage of this name already in the target is treated as a
-    // different disk, so the imported one is disambiguated rather than merged
-    // into it (STI-F3). Previously this returned early and created nothing,
-    // which left the imported device pointing at no storage row at all.
-    const QString srcName = srcQ.value(1).toString();
-    QString newName;
-    {
-        QStringList existingNames;
-        QSqlQuery namesQ(QSqlDatabase::database(tgtConn));
-        namesQ.exec("SELECT storage_name FROM storage");
-        while (namesQ.next())
-            existingNames << namesQ.value(0).toString();
-        newName = resolveNameConflict(srcName, existingNames);
-    }
-
-    // Target id
-    int newStorageId = srcQ.value(0).toInt() + m_storageIdOffset;
+    // Target id: always a new row, never merged into an existing one (STI-F3).
+    int newStorageId = srcStorageId + m_storageIdOffset;
     {
         QSqlQuery chkId(QSqlDatabase::database(tgtConn));
         chkId.prepare("SELECT COUNT(*) FROM storage WHERE storage_id = :id");
@@ -1392,86 +1356,46 @@ int CollectionImporter::importStorageByName(const QString &storageName)
     QSqlQuery ins(QSqlDatabase::database(tgtConn));
     ins.prepare(QLatin1String(R"(
         INSERT INTO storage (
-            storage_id, storage_name, storage_type, storage_location, storage_path,
+            storage_id, storage_type, storage_location, storage_path,
             storage_label, storage_file_system, storage_total_space, storage_free_space,
             storage_brand, storage_model, storage_serial_number, storage_build_date,
             storage_comment1, storage_comment2, storage_comment3, storage_picture_path,
             storage_user_id)
         VALUES (
-            :id, :name, :type, :loc, :path,
+            :id, :type, :loc, :path,
             :label, :fs, :total, :free,
             :brand, :model, :serial, :build,
             :c1, :c2, :c3, :pic, :userid)
     )"));
     ins.bindValue(":id",     newStorageId);
-    ins.bindValue(":name",   newName);
-    ins.bindValue(":type",   srcQ.value(2));
-    ins.bindValue(":loc",    srcQ.value(3));
-    ins.bindValue(":path",   srcQ.value(4));
-    ins.bindValue(":label",  srcQ.value(5));
-    ins.bindValue(":fs",     srcQ.value(6));
-    ins.bindValue(":total",  srcQ.value(7));
-    ins.bindValue(":free",   srcQ.value(8));
-    ins.bindValue(":brand",  srcQ.value(9));
-    ins.bindValue(":model",  srcQ.value(10));
-    ins.bindValue(":serial", srcQ.value(11));
-    ins.bindValue(":build",  srcQ.value(12));
-    ins.bindValue(":c1",     srcQ.value(13));
-    ins.bindValue(":c2",     srcQ.value(14));
-    ins.bindValue(":c3",     srcQ.value(15));
-    ins.bindValue(":pic",    srcQ.value(16));
+    ins.bindValue(":type",   srcQ.value(1));
+    ins.bindValue(":loc",    srcQ.value(2));
+    ins.bindValue(":path",   srcQ.value(3));
+    ins.bindValue(":label",  srcQ.value(4));
+    ins.bindValue(":fs",     srcQ.value(5));
+    ins.bindValue(":total",  srcQ.value(6));
+    ins.bindValue(":free",   srcQ.value(7));
+    ins.bindValue(":brand",  srcQ.value(8));
+    ins.bindValue(":model",  srcQ.value(9));
+    ins.bindValue(":serial", srcQ.value(10));
+    ins.bindValue(":build",  srcQ.value(11));
+    ins.bindValue(":c1",     srcQ.value(12));
+    ins.bindValue(":c2",     srcQ.value(13));
+    ins.bindValue(":c3",     srcQ.value(14));
+    ins.bindValue(":pic",    srcQ.value(15));
     // Copied verbatim: the number is written on a physical disk, so import never
-    // offsets, suffixes or disambiguates it. Only the NAME is disambiguated
-    // (STI-C3); a duplicate number is surfaced to the user, not resolved silently.
-    ins.bindValue(":userid", srcQ.value(17));
+    // offsets, suffixes or disambiguates it (STI-C3); a duplicate number is
+    // surfaced to the user, not resolved silently.
+    ins.bindValue(":userid", srcQ.value(16));
     if (!ins.exec()) {
         qWarning() << "WARNING: CollectionImporter: storage INSERT failed:" << ins.lastError().text();
         return 0;
     }
 
-    copyStorageImage(srcQ.value(16).toString());
+    copyStorageImage(srcQ.value(15).toString());
 
-    m_storageIdMap.insert(storageName, newStorageId);
-    if (newName != srcName) {
-        m_storageNameMap.insert(srcName, newName);
-        applyStorageRenameToImportedCatalogs(srcName, newName);
-    }
-
+    m_storageIdMap.insert(srcStorageId, newStorageId);
     return newStorageId;
-}
-//----------------------------------------------------------------------
-void CollectionImporter::applyStorageRenameToImportedCatalogs(const QString &oldName,
-                                                              const QString &newName)
-{
-    if (m_catalogIdMap.isEmpty())
-        return;
-
-    // Only catalogs this run imported. Catalogs already in the target that name
-    // the same storage belong to the target's own disk and MUST NOT be moved.
-    QStringList idList;
-    for (int catalogId : m_catalogIdMap)
-        idList << QString::number(catalogId);
-
-    QSqlQuery q(QSqlDatabase::database(m_target->connectionName()));
-    q.prepare(QString(QLatin1String("UPDATE catalog SET catalog_storage = :new "
-                                    "WHERE catalog_storage = :old AND catalog_id IN (%1)"))
-                  .arg(idList.join(QLatin1Char(','))));
-    q.bindValue(":new", newName);
-    q.bindValue(":old", oldName);
-    if (!q.exec())
-        qWarning() << "WARNING: CollectionImporter: catalog_storage rename failed:" << q.lastError().text();
-}
-//----------------------------------------------------------------------
-void CollectionImporter::importStorageForCatalog(int srcCatalogId)
-{
-    // Identify the storage name referenced by this catalog, then delegate: a
-    // catalog and a Storage device must resolve storage the same way.
-    QSqlQuery catQ(QSqlDatabase::database(m_sourceConnectionName));
-    catQ.prepare("SELECT catalog_storage FROM catalog WHERE catalog_id = :id");
-    catQ.bindValue(":id", srcCatalogId);
-    catQ.exec();
-    if (!catQ.next()) return;
-    importStorageByName(catQ.value(0).toString());
 }
 //----------------------------------------------------------------------
 // storage_user_id is deliberately absent from the UPDATE below: updating from an
@@ -1481,7 +1405,7 @@ void CollectionImporter::updateStorageRecord(int srcStorageId, int targetStorage
 {
     QSqlQuery srcQ(QSqlDatabase::database(m_sourceConnectionName));
     srcQ.prepare(QLatin1String(R"(
-        SELECT storage_name, storage_type, storage_location, storage_path,
+        SELECT storage_type, storage_location, storage_path,
                storage_label, storage_file_system, storage_total_space, storage_free_space,
                storage_brand, storage_model, storage_serial_number, storage_build_date,
                storage_comment1, storage_comment2, storage_comment3, storage_picture_path
@@ -1494,7 +1418,6 @@ void CollectionImporter::updateStorageRecord(int srcStorageId, int targetStorage
     QSqlQuery upd(QSqlDatabase::database(m_target->connectionName()));
     upd.prepare(QLatin1String(R"(
         UPDATE storage SET
-            storage_name           = :name,
             storage_type           = :type,
             storage_location       = :loc,
             storage_path           = :path,
@@ -1512,26 +1435,25 @@ void CollectionImporter::updateStorageRecord(int srcStorageId, int targetStorage
             storage_picture_path   = :pic
         WHERE storage_id = :id
     )"));
-    upd.bindValue(":name",   srcQ.value(0));
-    upd.bindValue(":type",   srcQ.value(1));
-    upd.bindValue(":loc",    srcQ.value(2));
-    upd.bindValue(":path",   srcQ.value(3));
-    upd.bindValue(":label",  srcQ.value(4));
-    upd.bindValue(":fs",     srcQ.value(5));
-    upd.bindValue(":total",  srcQ.value(6));
-    upd.bindValue(":free",   srcQ.value(7));
-    upd.bindValue(":brand",  srcQ.value(8));
-    upd.bindValue(":model",  srcQ.value(9));
-    upd.bindValue(":serial", srcQ.value(10));
-    upd.bindValue(":build",  srcQ.value(11));
-    upd.bindValue(":c1",     srcQ.value(12));
-    upd.bindValue(":c2",     srcQ.value(13));
-    upd.bindValue(":c3",     srcQ.value(14));
-    upd.bindValue(":pic",    srcQ.value(15));
+    upd.bindValue(":type",   srcQ.value(0));
+    upd.bindValue(":loc",    srcQ.value(1));
+    upd.bindValue(":path",   srcQ.value(2));
+    upd.bindValue(":label",  srcQ.value(3));
+    upd.bindValue(":fs",     srcQ.value(4));
+    upd.bindValue(":total",  srcQ.value(5));
+    upd.bindValue(":free",   srcQ.value(6));
+    upd.bindValue(":brand",  srcQ.value(7));
+    upd.bindValue(":model",  srcQ.value(8));
+    upd.bindValue(":serial", srcQ.value(9));
+    upd.bindValue(":build",  srcQ.value(10));
+    upd.bindValue(":c1",     srcQ.value(11));
+    upd.bindValue(":c2",     srcQ.value(12));
+    upd.bindValue(":c3",     srcQ.value(13));
+    upd.bindValue(":pic",    srcQ.value(14));
     upd.bindValue(":id",     targetStorageId);
     upd.exec();
 
-    copyStorageImage(srcQ.value(15).toString());
+    copyStorageImage(srcQ.value(14).toString());
 }
 
 //----------------------------------------------------------------------

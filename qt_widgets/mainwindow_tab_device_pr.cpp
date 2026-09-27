@@ -514,7 +514,6 @@ void MainWindow::addDeviceStorage(int parentID)
     newDevice->externalID = newDevice->storage->ID;
     newDevice->groupID = 0;
     newDevice->insertDevice();
-    newDevice->storage->name = newDevice->name;
     newDevice->storage->insertStorage();
 
     //Save data to file
@@ -781,7 +780,6 @@ void MainWindow::saveDeviceForm()
 
     //If device is a catalog, save catalog changes
     if(activeDevice->type == "Catalog"){
-        activeDevice->catalog->storageName = newParentDevice.name;
         saveCatalogChanges(previousPath);
         updateCatalogsScreenStatistics();
         loadDevicesTreeToModel("Filters");
@@ -793,18 +791,16 @@ void MainWindow::saveDeviceForm()
         QString currentStorageName = activeDevice->name;
         QString newStorageName     = ui->Devices_lineEdit_Name->text();
 
-        //Update Storage name
+        //Update Storage path and user number
         QString queryUpdateStorageSQL = QLatin1String(R"(
                                     UPDATE storage
-                                    SET storage_name    =:storage_name,
-                                        storage_path    =:storage_path,
+                                    SET storage_path    =:storage_path,
                                         storage_user_id =:storage_user_id
                                     WHERE storage_id    =:storage_id
                                 )");
 
         QSqlQuery updateQuery(QSqlDatabase::database(m_connectionName));
         updateQuery.prepare(queryUpdateStorageSQL);
-        updateQuery.bindValue(":storage_name", activeDevice->name);
         // storage_path follows the save, not the path-root replacement (DSR-C8):
         // written on every branch, so Skip and Full re-scan no longer leave it
         // holding the old path while device_path holds the new one.
@@ -840,49 +836,6 @@ void MainWindow::saveDeviceForm()
 
             if (collection->databaseMode=="Memory"){
                 collection->saveStatiticsTableToFile();
-            }
-
-            //Update catalogs (database mode)
-            QString updateCatalogQuerySQL = QLatin1String(R"(
-                                    UPDATE catalog
-                                    SET catalog_storage = :new_storage_name
-                                    WHERE catalog_storage =:current_storage_name
-                                )");
-
-            QSqlQuery updateCatalogQuery(QSqlDatabase::database(m_connectionName));
-            updateCatalogQuery.prepare(updateCatalogQuerySQL);
-            updateCatalogQuery.bindValue(":current_storage_name", currentStorageName);
-            updateCatalogQuery.bindValue(":new_storage_name", newStorageName);
-            updateCatalogQuery.exec();
-
-            //Update catalogs (memory mode)
-            if (collection->databaseMode=="Memory"){
-
-                //List catalogs
-                QString listCatalogQuerySQL = QLatin1String(R"(
-                                    SELECT catalog_name
-                                    FROM catalog
-                                    WHERE catalog_storage =:new_storage_name
-                                )");
-
-                QSqlQuery listCatalogQuery(QSqlDatabase::database(m_connectionName));
-                listCatalogQuery.prepare(listCatalogQuerySQL);
-                listCatalogQuery.bindValue(":new_storage_name", newStorageName);
-                listCatalogQuery.exec();
-
-                //Edit and save each one
-                Device loopCatalog;
-                while (listCatalogQuery.next()){
-                    loopCatalog.catalog = new Catalog;
-                    loopCatalog.name = listCatalogQuery.value(0).toString();
-                    loopCatalog.catalog->loadCatalog();
-                    loopCatalog.catalog->storageName = newStorageName;
-                    loopCatalog.catalog->updateCatalogFileHeaders(collection->databaseMode);
-                }
-
-                //Refresh
-                if(collection->databaseMode=="Memory")
-                    collection->loadCatalogFilesToTable();
             }
         }
 
@@ -945,6 +898,15 @@ void MainWindow::saveDeviceForm()
             msgBox.setIcon(QMessageBox::Warning);
             msgBox.exec();
         }
+    }
+
+    // A catalog's synced copies of its name (SpecStorageIdentity.md STI-F14).
+    // Reloaded from the database so options the user cancelled are not used.
+    if (previousName != activeDevice->name) {
+        Device savedDevice;
+        savedDevice.ID = activeDevice->ID;
+        savedDevice.loadDevice(m_connectionName);
+        savedDevice.writeNameCopies(collection->databaseMode);
     }
 
     //Update previous and new parent device values

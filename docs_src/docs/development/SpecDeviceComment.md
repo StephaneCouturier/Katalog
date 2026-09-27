@@ -129,21 +129,14 @@ learned.
 
 ---
 
-## Open question — cross-version collection compatibility
+## Cross-version collection compatibility
 
-**Unresolved, deliberately not decided here.** It is not established whether the
-project supports opening a 2.13 / 3.0 collection with a released **2.12** binary
-at all; `SpecVersions.md` is silent on backward compatibility of a collection
-with an older application.
-
-The known consequence, recorded without ruling on it: in Memory mode, a device
-saved by a 2.12 binary **drops its comment**, because 2.12's
-`saveDeviceTableToFile` writes only the 14 columns it knows about. `DCM-C3`
-protects the *reading* side against corruption but cannot preserve a value that
-an older writer never wrote.
-
-Deciding this belongs in `SpecVersions.md`, as a general policy for all schema
-additions, not as a device-comment special case.
+Covered by `SpecVersions.md`, section "Compatibility with older versions",
+which states the policy for all schema additions. The device-comment instance is
+risk 3 there: in Memory mode, a device saved by a 2.12 binary **drops its
+comment**, because 2.12's `saveDeviceTableToFile` writes only the 14 columns it
+knows about. `DCM-C3` protects the *reading* side against corruption but cannot
+preserve a value that an older writer never wrote.
 
 ---
 

@@ -35,6 +35,7 @@
 #include <QCoreApplication>
 #include <qelapsedtimer.h>
 #include <QDir>
+#include <QFileInfo>
 #include <QMutex>
 
 void Device::loadDevice(QString connectionName){
@@ -116,6 +117,7 @@ void Device::loadDevice(QString connectionName){
         storage->ID = externalID;
         storage->setConnectionName(connectionName);
         storage->loadStorage(connectionName);
+        storage->name = name;   // the device name is the only name (STI-C13)
         storage->path = path;
         storage->totalSpace = totalSpace;
         storage->freeSpace  = freeSpace;
@@ -495,6 +497,27 @@ void Device::saveDevice()
     // blank the comment. Every caller must loadDevice() first (SpecDeviceComment.md).
     query.bindValue(":device_comment", comment);
     query.exec();
+}
+
+void Device::writeNameCopies(const QString &databaseMode)
+{
+    if (type != "Catalog")
+        return;
+
+    catalog->setConnectionName(m_connectionName);
+    catalog->renameCatalog(name);   // catalog_name + file_catalog (STI-F14)
+
+    // The .idx file is named after the catalog, and its name is what Memory mode
+    // loads the catalog name from.
+    if (databaseMode == "Memory"
+        && QFileInfo(catalog->filePath).completeBaseName() != name) {
+        catalog->renameCatalogFile(name);
+        QSqlQuery pathQuery(QSqlDatabase::database(m_connectionName));
+        pathQuery.prepare("UPDATE catalog SET catalog_file_path = :path WHERE catalog_id = :id");
+        pathQuery.bindValue(":path", catalog->filePath);
+        pathQuery.bindValue(":id",   catalog->ID);
+        pathQuery.exec();
+    }
 }
 
 void Device::updateNumbersFromChildren()

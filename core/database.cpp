@@ -108,7 +108,6 @@ QString Database::getSQLCreateTableCatalog(DatabaseType databaseType)
                     catalog_source_path_is_active %2,
                     catalog_include_hidden        TEXT,
                     catalog_file_type             TEXT,
-                    catalog_storage               TEXT,
                     catalog_include_symblinks     TEXT,
                     catalog_is_full_device        TEXT,
                     catalog_date_loaded           TEXT,
@@ -130,7 +129,6 @@ QString Database::getSQLCreateTableStorage(DatabaseType dbType)
                 CREATE TABLE IF NOT EXISTS storage(
                     storage_id            %1  primary key default 0,
                     storage_user_id       %1 default 0,
-                    storage_name          TEXT,
                     storage_type          TEXT,
                     storage_location      TEXT,
                     storage_path          TEXT,
@@ -1250,8 +1248,11 @@ QSqlError Database::runMigration_2_12(const QString &connectionName)
 }
 //----------------------------------------------------------------------
 
-QSqlError Database::runMigration_2_13(const QString &connectionName)
+QSqlError Database::runMigration_3_0(const QString &connectionName)
 {
+    // Every step below must be harmless to repeat: until Release 3.0 this runs
+    // on every open (DatabaseManager::runMigrations).
+
     // device_order was reserved in the schema but never populated before 2.13
     // (Device::order was uninitialised at insert time, so existing rows hold
     // indeterminate values). The device-tree sort uses device_order as a secondary
@@ -1262,6 +1263,32 @@ QSqlError Database::runMigration_2_13(const QString &connectionName)
         QSqlError err = executeSql(connectionName, "UPDATE device SET device_order = 0");
         if (err.type() != QSqlError::NoError) {
             qWarning() << "WARNING: Failed to normalize device_order:" << err.text();
+            return err;
+        }
+    }
+
+    QSqlError err = ensureMappingSourceCollectionColumn(connectionName);
+    if (err.type() != QSqlError::NoError) return err;
+    err = ensureDeviceCommentColumn(connectionName);
+    if (err.type() != QSqlError::NoError) return err;
+    err = ensureStorageUserIdColumn(connectionName);
+    if (err.type() != QSqlError::NoError) return err;
+    err = ensureMappingIncludeEmptyDirsColumn(connectionName);
+    if (err.type() != QSqlError::NoError) return err;
+
+    // storage.storage_name and catalog.catalog_storage: dead v1.xx copies of
+    // device names, removed (SpecStorageIdentity.md STI-C13, STI-C16).
+    if (getTableColumns(connectionName, "storage").contains("storage_name")) {
+        err = executeSql(connectionName, "ALTER TABLE storage DROP COLUMN storage_name");
+        if (err.type() != QSqlError::NoError) {
+            qWarning() << "WARNING: Failed to drop storage_name:" << err.text();
+            return err;
+        }
+    }
+    if (getTableColumns(connectionName, "catalog").contains("catalog_storage")) {
+        err = executeSql(connectionName, "ALTER TABLE catalog DROP COLUMN catalog_storage");
+        if (err.type() != QSqlError::NoError) {
+            qWarning() << "WARNING: Failed to drop catalog_storage:" << err.text();
             return err;
         }
     }
