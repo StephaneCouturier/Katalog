@@ -735,8 +735,8 @@ ScrollablePageFitted {
 
             ComboBoxFitted {
                 id: languageComboBox
-                Layout.fillWidth: true
-                Layout.maximumWidth: Number.POSITIVE_INFINITY  // stretches with the form (CBX-C7)
+                Layout.preferredWidth: Kirigami.Units.gridUnit * 12
+                Layout.maximumWidth: Kirigami.Units.gridUnit * 12  // set width, same as Theme; shrinks only to fit (CBX-C7)
                 rowLeadingWidth: 20 + Kirigami.Units.smallSpacing  // flag
                 textRole: "displayName"
                 valueRole: "code"
