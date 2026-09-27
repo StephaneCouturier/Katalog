@@ -4440,8 +4440,16 @@ void AppManager::openImportSource(const QString &path)
         return;
     }
 
+    // Strict abort, as K2 (SpecCollection.md): the source must first be opened,
+    // and so migrated, by this version.
     if (!m_importer->checkSchemaCompatibility()) {
-        qWarning() << "AppManager::openImportSource: schema mismatch (proceeding):" << m_importer->lastError();
+        qWarning() << "AppManager::openImportSource: schema mismatch:" << m_importer->lastError();
+        m_importStatusText = tr("Schema version mismatch. Import cancelled. (%1)").arg(m_importer->lastError());
+        emit importStatusTextChanged();
+        m_importer->close();
+        m_importSourceDeviceModel->clear();
+        emit importSourceChanged();
+        return;
     }
 
     m_importSourceDeviceModel->loadFromConnection(m_importer->sourceConnectionName());

@@ -274,18 +274,22 @@ int CollectionImporter::ensureAncestors(int srcDeviceId)
 
         QString ancestorName = srcDeviceName(srcAncestorId);
 
-        // Check if a device with this name already exists in the target at this level
+        // Reuse the ancestor only if an earlier import from this same source
+        // created it, found by id through its import link — never by name: a
+        // target device that merely shares the name is a different device
+        // (SpecStorageIdentity.md STI-C14).
         QSqlQuery findQ(QSqlDatabase::database(tgtConn));
-        if (targetParentId == 0) {
-            findQ.prepare("SELECT device_id FROM device "
-                          "WHERE device_name = :name AND (device_parent_id IS NULL OR device_parent_id = 0)");
-            findQ.bindValue(":name", ancestorName);
-        } else {
-            findQ.prepare("SELECT device_id FROM device "
-                          "WHERE device_name = :name AND device_parent_id = :parent");
-            findQ.bindValue(":name",   ancestorName);
-            findQ.bindValue(":parent", targetParentId);
-        }
+        findQ.prepare(QLatin1String(R"(
+            SELECT m.mapping_device_target_id
+            FROM   device_mapping m
+            JOIN   device d ON d.device_id = m.mapping_device_target_id
+            WHERE  m.mapping_type = 'CollectionImport'
+              AND  m.mapping_device_source_id = :src
+              AND  m.mapping_source_collection = :coll
+            ORDER BY m.mapping_device_target_id DESC
+        )"));
+        findQ.bindValue(":src",  srcAncestorId);
+        findQ.bindValue(":coll", m_sourcePath);
         findQ.exec();
 
         if (findQ.next()) {
