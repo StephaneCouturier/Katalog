@@ -342,7 +342,7 @@ ScrollablePageFitted {
             // Quality Check, SpecQualityCheck.md QCK-F13
             Controls.Button {
                 text: qsTr("Quality check")
-                icon.name: "tools-check-spelling"
+                icon.name: "checkmark"
                 onClicked: qualityCheckDialog.run()
             }
         }
