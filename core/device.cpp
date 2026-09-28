@@ -1248,6 +1248,24 @@ int Device::getFirstStorageDescendantId(int virtualDeviceId, const QString &conn
     return 0;
 }
 //----------------------------------------------------------------------
+// Memory mode: load a catalog's files and ALL its folders into the tables
+// before a path-root replacement. The folder rows are cleared and read back from
+// .folders.idx first: the file-list load only recreates folders that hold files,
+// and once it has run, loadFoldersToTable() skips the file (root folders would be
+// left out of the replacement and of the save).
+static void loadCatalogForRootReplace(Catalog *catalog, const QString &connectionName)
+{
+    QSqlQuery clearFolders(QSqlDatabase::database(connectionName));
+    clearFolders.prepare("DELETE FROM folder WHERE folder_catalog_id = :id");
+    clearFolders.bindValue(":id", catalog->ID);
+    clearFolders.exec();
+    catalog->loadFoldersToTable();
+
+    QMutex mutex;
+    bool stop = false;
+    catalog->loadCatalogFileListToTable(mutex, stop);
+}
+
 Device::StorageRootReplaceResult Device::replaceStorageRootInIndexes(
     const QString& oldRoot,
     const QString& newRoot,
@@ -1279,12 +1297,8 @@ Device::StorageRootReplaceResult Device::replaceStorageRootInIndexes(
         const int catId   = catalog->ID;
         const int startPos = oldLen + 1;
 
-        if (databaseMode == "Memory") {
-            QMutex mutex;
-            bool stop = false;
-            catalog->loadCatalogFileListToTable(mutex, stop);
-            catalog->loadFoldersToTable();
-        }
+        if (databaseMode == "Memory")
+            loadCatalogForRootReplace(catalog, connectionName);
 
         QSqlQuery fileQ(db);
         fileQ.prepare(QLatin1String(R"(
@@ -1321,8 +1335,10 @@ Device::StorageRootReplaceResult Device::replaceStorageRootInIndexes(
         else
             qWarning() << "WARNING: replaceStorageRootInIndexes(Catalog): folder UPDATE failed:" << folderQ.lastError().text();
 
-        if (databaseMode == "Memory")
+        if (databaseMode == "Memory") {
             catalog->saveCatalogToFile(databaseMode, collectionFolder);
+            catalog->saveFoldersToFile(databaseMode, collectionFolder);
+        }
 
         result.catalogsUpdated = 1;
         return result;
@@ -1373,12 +1389,8 @@ Device::StorageRootReplaceResult Device::replaceStorageRootInIndexes(
         const int catId = catalogDev.catalog->ID;
 
         // Memory mode: ensure file/folder data is loaded into the in-memory tables
-        if (databaseMode == "Memory") {
-            QMutex mutex;
-            bool stop = false;
-            catalogDev.catalog->loadCatalogFileListToTable(mutex, stop);
-            catalogDev.catalog->loadFoldersToTable();
-        }
+        if (databaseMode == "Memory")
+            loadCatalogForRootReplace(catalogDev.catalog, connectionName);
 
         // Precompute start position (1-based) for SUBSTR — avoids in-SQL arithmetic
         // and prevents Qt/QSQLITE silent failure when the same named param appears
@@ -1435,8 +1447,10 @@ Device::StorageRootReplaceResult Device::replaceStorageRootInIndexes(
             qWarning() << "WARNING: replaceStorageRootInIndexes: device_path UPDATE failed:" << devPathQ.lastError().text();
 
         // Memory mode: persist corrected data back to .idx / .folders.idx files
-        if (databaseMode == "Memory")
+        if (databaseMode == "Memory") {
             catalogDev.catalog->saveCatalogToFile(databaseMode, collectionFolder);
+            catalogDev.catalog->saveFoldersToFile(databaseMode, collectionFolder);
+        }
 
         result.catalogsUpdated++;
     }
