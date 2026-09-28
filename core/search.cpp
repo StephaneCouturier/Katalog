@@ -29,10 +29,13 @@
 /////////////////////////////////////////////////////////////////////////////
 */
 #include "search.h"
+#include "database.h"
 #include "filemetadata.h"
 #include "filetypemapping.h"
 #include <algorithm>
 #include <QFileInfo>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 #include <QCoreApplication>
 
 // Constants
@@ -1298,4 +1301,97 @@ int Search::mapSizeUnitToComboBoxIndex(const QString& internalValue)
     if (internalValue == SIZE_UNIT_BYTES) return 4;
 
     return 0; // Default to Bytes
+}
+//----------------------------------------------------------------------
+void Search::saveResultsToCatalog(int catalogId, const QString &connectionName)
+{
+    const Database::DatabaseType dbType = Database::getDatabaseType(connectionName);
+    const QString insertFolderSQL = QString(R"(
+        %1 INTO folder(folder_catalog_id, folder_path)
+        VALUES(:folder_catalog_id, :folder_path)
+    )").arg(Database::getInsertOrIgnorePrefix(dbType))
+     + (dbType == Database::DatabaseType::PostgreSQL
+        ? " ON CONFLICT (folder_catalog_id, folder_path) DO NOTHING" : "");
+
+    const QString insertFileSQL = QLatin1String(R"(
+        INSERT INTO file(
+            file_catalog_id, file_name, file_folder_path, file_size,
+            file_date_updated, file_catalog, file_full_path,
+            file_extension, file_type, mime_type, mime_verified, type_mismatch,
+            image_width, image_height, image_orientation,
+            video_duration_seconds, video_width, video_height,
+            video_codec, video_framerate, video_bitrate,
+            audio_duration_seconds, audio_artist, audio_album, audio_title,
+            audio_genre, audio_year, audio_track_number,
+            audio_bitrate, audio_sample_rate,
+            metadata_extended, metadata_extraction_date,
+            checksum_sha256, checksum_extraction_date
+        ) VALUES(
+            :file_catalog_id, :file_name, :file_folder_path, :file_size,
+            :file_date_updated, :file_catalog, :file_full_path,
+            :file_extension, :file_type, :mime_type, :mime_verified, :type_mismatch,
+            :image_width, :image_height, :image_orientation,
+            :video_duration_seconds, :video_width, :video_height,
+            :video_codec, :video_framerate, :video_bitrate,
+            :audio_duration_seconds, :audio_artist, :audio_album, :audio_title,
+            :audio_genre, :audio_year, :audio_track_number,
+            :audio_bitrate, :audio_sample_rate,
+            :metadata_extended, :metadata_extraction_date,
+            :checksum_sha256, :checksum_extraction_date
+        )
+    )");
+
+    QSqlQuery folderQ(QSqlDatabase::database(connectionName));
+    QSqlQuery fileQ(QSqlDatabase::database(connectionName));
+    folderQ.prepare(insertFolderSQL);
+    fileQ.prepare(insertFileSQL);
+
+    const int n = fileNames.size();
+    for (int i = 0; i < n; ++i) {
+        folderQ.bindValue(":folder_catalog_id", catalogId);
+        folderQ.bindValue(":folder_path", filePaths.value(i));
+        folderQ.exec();
+
+        // Metadata lists may be shorter than the results: missing values are NULL.
+        auto sv = [&](const QList<QString> &v) -> QVariant { return i < v.size() ? QVariant(v[i]) : QVariant(); };
+        auto iv = [&](const QList<int>     &v) -> QVariant { return i < v.size() ? QVariant(v[i]) : QVariant(); };
+        auto bv = [&](const QList<bool>    &v) -> QVariant { return i < v.size() ? QVariant(v[i]) : QVariant(); };
+        auto dv = [&](const QList<double>  &v) -> QVariant { return i < v.size() ? QVariant(v[i]) : QVariant(); };
+
+        fileQ.bindValue(":file_catalog_id",          catalogId);
+        fileQ.bindValue(":file_name",                fileNames.value(i));
+        fileQ.bindValue(":file_folder_path",         filePaths.value(i));
+        fileQ.bindValue(":file_size",                fileSizes.value(i));
+        fileQ.bindValue(":file_date_updated",        fileDateTimes.value(i));
+        fileQ.bindValue(":file_catalog",             fileCatalogs.value(i));
+        fileQ.bindValue(":file_full_path",           filePaths.value(i));
+        fileQ.bindValue(":file_extension",           sv(fileExtensions));
+        fileQ.bindValue(":file_type",                sv(fileTypes));
+        fileQ.bindValue(":mime_type",                sv(mimeTypes));
+        fileQ.bindValue(":mime_verified",            bv(mimeVerified));
+        fileQ.bindValue(":type_mismatch",            bv(typeMismatch));
+        fileQ.bindValue(":image_width",              iv(imageWidths));
+        fileQ.bindValue(":image_height",             iv(imageHeights));
+        fileQ.bindValue(":image_orientation",        iv(imageOrientations));
+        fileQ.bindValue(":video_duration_seconds",   iv(videoDurations));
+        fileQ.bindValue(":video_width",              iv(videoWidths));
+        fileQ.bindValue(":video_height",             iv(videoHeights));
+        fileQ.bindValue(":video_codec",              sv(videoCodecs));
+        fileQ.bindValue(":video_framerate",          dv(videoFramerates));
+        fileQ.bindValue(":video_bitrate",            iv(videoBitrates));
+        fileQ.bindValue(":audio_duration_seconds",   iv(audioDurations));
+        fileQ.bindValue(":audio_artist",             sv(audioArtists));
+        fileQ.bindValue(":audio_album",              sv(audioAlbums));
+        fileQ.bindValue(":audio_title",              sv(audioTitles));
+        fileQ.bindValue(":audio_genre",              sv(audioGenres));
+        fileQ.bindValue(":audio_year",               iv(audioYears));
+        fileQ.bindValue(":audio_track_number",       iv(audioTrackNumbers));
+        fileQ.bindValue(":audio_bitrate",            iv(audioBitrates));
+        fileQ.bindValue(":audio_sample_rate",        iv(audioSampleRates));
+        fileQ.bindValue(":metadata_extended",        sv(metadataExtendeds));
+        fileQ.bindValue(":metadata_extraction_date", sv(metadataExtractionDates));
+        fileQ.bindValue(":checksum_sha256",          sv(checksumSha256s));
+        fileQ.bindValue(":checksum_extraction_date", sv(checksumExtractionDates));
+        fileQ.exec();
+    }
 }

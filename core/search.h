@@ -253,6 +253,9 @@ public:
     virtual void processDuplicates(const QString &connectionName);
     virtual void processDifferences(const QString &connectionName);
     void saveSearchHistoryToTable(const QString &connectionName);
+    // Inserts the folders and files of the current results into the given
+    // catalog ("save search results as a catalog").
+    void saveResultsToCatalog(int catalogId, const QString &connectionName);
     void loadSearchHistoryCriteria(const QString &connectionName);
 
     // Abstract methods to be implemented by derived classes
