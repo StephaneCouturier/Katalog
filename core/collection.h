@@ -112,6 +112,13 @@ public:
     void saveDeviceTableToFile();
     void saveStorageTableToFile();
     void saveStatiticsTableToFile();
+    // Saves the current statistics of every device as a "snapshot" dated
+    // dateTime, then writes the statistics file (Memory mode).
+    // Memory mode: the file is rewritten from the statistics_device table, so
+    // the caller must have loaded it (loadStatisticsDeviceFileToTable) or the
+    // saved history is lost. Not done here: it would drop rows an update added
+    // to the table but not yet written to the file.
+    void recordDevicesSnapshot(const QDateTime &dateTime);
     void saveParameterTableToFile();
     void saveSearchHistoryTableToFile();
     void saveTagTableToFile();

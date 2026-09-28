@@ -89,3 +89,20 @@ StatChartData Statistics::getChartData(
 
     return result;
 }
+//----------------------------------------------------------------------
+QList<qint64> Statistics::latestSnapshotTotals(const QString &connectionName,
+                                               const QString &deviceType)
+{
+    QSqlQuery q(QSqlDatabase::database(connectionName));
+    q.prepare(QStringLiteral(
+        "SELECT SUM(device_file_count),SUM(device_total_file_size),"
+        "       SUM(device_free_space),SUM(device_total_space)"
+        " FROM statistics_device"
+        " WHERE date_time=(SELECT MAX(date_time) FROM statistics_device WHERE record_type='snapshot')"
+        "   AND device_type=:t GROUP BY date_time"));
+    q.bindValue(":t", deviceType);
+    q.exec();
+    q.next();
+    return {q.value(0).toLongLong(), q.value(1).toLongLong(),
+            q.value(2).toLongLong(), q.value(3).toLongLong()};
+}

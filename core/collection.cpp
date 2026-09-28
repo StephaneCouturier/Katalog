@@ -2015,6 +2015,21 @@ QStringList Collection::getImportSourcePaths()
 }
 //----------------------------------------------------------------------
 
+//Statistics snapshot ---------------------------------------------------
+void Collection::recordDevicesSnapshot(const QDateTime &dateTime)
+{
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    query.exec("SELECT device_id FROM device");
+    while (query.next()) {
+        Device device;
+        device.ID = query.value(0).toInt();
+        device.loadDevice(m_connectionName);
+        device.saveStatistics(dateTime, "snapshot");
+    }
+    saveStatiticsTableToFile();
+}
+//----------------------------------------------------------------------
+
 //Search history --------------------------------------------------------
 QList<QVariantMap> Collection::loadSearchHistory()
 {

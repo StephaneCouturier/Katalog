@@ -3327,37 +3327,13 @@ QVariantMap AppManager::recordDevicesSnapshot()
     // K2's recordAllDeviceStats().
     collection->loadStatisticsDeviceFileToTable();
 
-    auto sumQuery = [&](const QString &type) -> QList<qint64> {
-        QSqlQuery q(QSqlDatabase::database(conn));
-        q.prepare(QStringLiteral(
-            "SELECT SUM(device_file_count),SUM(device_total_file_size),"
-            "       SUM(device_free_space),SUM(device_total_space)"
-            " FROM statistics_device"
-            " WHERE date_time=(SELECT MAX(date_time) FROM statistics_device WHERE record_type='snapshot')"
-            "   AND device_type=:t GROUP BY date_time"));
-        q.bindValue(":t", type);
-        q.exec(); q.next();
-        return {q.value(0).toLongLong(), q.value(1).toLongLong(),
-                q.value(2).toLongLong(), q.value(3).toLongLong()};
-    };
+    auto prevCat = Statistics::latestSnapshotTotals(conn, "Catalog");
+    auto prevSto = Statistics::latestSnapshotTotals(conn, "Storage");
 
-    auto prevCat = sumQuery("Catalog");
-    auto prevSto = sumQuery("Storage");
+    collection->recordDevicesSnapshot(QDateTime::currentDateTime());
 
-    // Record current values
-    QDateTime now = QDateTime::currentDateTime();
-    QSqlQuery all(QSqlDatabase::database(conn));
-    all.exec("SELECT device_id FROM device");
-    while (all.next()) {
-        Device dev;
-        dev.ID = all.value(0).toInt();
-        dev.loadDevice(conn);
-        dev.saveStatistics(now, "snapshot");
-    }
-    collection->saveStatiticsTableToFile();
-
-    auto newCat = sumQuery("Catalog");
-    auto newSto = sumQuery("Storage");
+    auto newCat = Statistics::latestSnapshotTotals(conn, "Catalog");
+    auto newSto = Statistics::latestSnapshotTotals(conn, "Storage");
 
     QVariantMap result;
     result["newCatalogFileCount"]  = newCat.value(0, 0);

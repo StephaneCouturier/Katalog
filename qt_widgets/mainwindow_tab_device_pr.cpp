@@ -857,29 +857,7 @@ void MainWindow::saveDeviceForm()
 void MainWindow::recordAllDeviceStats(QDateTime dateTime)
 {// Save the values (free space and total space) of all storage devices, completing a snapshop of the collection.
 
-    //Get the list of storage devices
-    QSqlQuery query(QSqlDatabase::database(m_connectionName));
-    QString querySQL = QLatin1String(R"(
-                                        SELECT
-                                            device_id,
-                                            device_name,
-                                            device_total_file_size,
-                                            device_total_file_count,
-                                            device_total_space,
-                                            device_free_space
-                                        FROM device
-                                    )");
-    query.prepare(querySQL);
-    query.exec();
-
-    //Save values for each storage device
-    Device loopDevice;
-    while(query.next()){
-        loopDevice.ID = query.value(0).toInt();
-        loopDevice.loadDevice(m_connectionName);
-        loopDevice.saveStatistics(dateTime,"snapshot");
-    }
-    collection->saveStatiticsTableToFile();
+    collection->recordDevicesSnapshot(dateTime);
 
     //Refresh
     collection->loadStatisticsDeviceFileToTable();

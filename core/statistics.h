@@ -34,6 +34,11 @@ public:
         const QString   &dataType,
         const QDateTime &startDate
     );
+
+    // Summed {file count, total file size, free space, total space} of the
+    // latest snapshot for one device type ("Catalog" / "Storage"); zeros if none.
+    static QList<qint64> latestSnapshotTotals(const QString &connectionName,
+                                              const QString &deviceType);
 };
 
 #endif // STATISTICS_H
