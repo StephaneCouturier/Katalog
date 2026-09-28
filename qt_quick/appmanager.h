@@ -55,7 +55,6 @@
 
 //KF6
 #include <KArchive>
-#include <KZip>
 
 //Katalog object classes
 #include "core/collection.h"
@@ -207,7 +206,6 @@ public slots:
 
     //Database
     QString startDatabase();
-    QString testQuery();
 
     // Collection management
     Q_INVOKABLE QString getDatabaseMode() const;

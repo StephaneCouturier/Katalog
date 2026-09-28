@@ -216,7 +216,6 @@ int main(int argc, char *argv[])
             }
         });
 
-    //appManager->testQuery();
 
     return app.exec();
 }

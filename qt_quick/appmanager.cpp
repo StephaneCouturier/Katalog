@@ -959,33 +959,6 @@ bool AppManager::canCollapseDevices() const
     return m_deviceExpandLevel != 0; // 0 means only top-level visible
 }
 //----------------------------------------------------------------------
-QString AppManager::testQuery()
-{
-    qDebug()<<"AppManager::testQuery ------start-------";
-
-    QSqlQuery query;
-    QString querySQL = QLatin1String(R"(
-                                    SELECT device_name
-                                    FROM device
-                                    WHERE device_id = 2
-                                )");
-    query.prepare(querySQL);
-    if(!query.exec())
-        qDebug()<<"AppManager::testQuery: "<<query.lastError();
-
-    query.next();
-    qDebug()<<"AppManager::testQuery / query result: "<<query.value(0).toString();
-
-    //Test using KZip, list contents
-    KZip zip("/home/stephane/Developments/archive.zip");
-    if (!zip.open(QIODevice::ReadOnly)) return {};
-    qDebug()<<"AppManager::testQuery / test zip: " <<zip.directory()->entries();
-    zip.close();
-
-    qDebug()<<"AppManager::testQuery ------end-------";
-    return query.value(0).toString();
-}
-//----------------------------------------------------------------------
 void AppManager::selectSQLiteDatabase()
 {
     qDebug() << "AppManager::selectSQLiteDatabase() called";
@@ -1093,10 +1066,14 @@ void AppManager::createNewSQLiteCollection(const QString &path)
         renameDevice(1, tr(" Physical Group"));
         renameDevice(2, tr("Virtual device"));
 
-        QSqlQuery q(QSqlDatabase::database(conn));
-        q.prepare("SELECT device_id FROM device WHERE device_type='Storage' AND device_name='Local disk' LIMIT 1");
-        if (q.exec() && q.next())
-            renameDevice(q.value(0).toInt(), tr("Local disk"));
+        // The collection is new: the device insertPhysicalStorageGroup() just
+        // named "Local disk" is the only one with that name.
+        Device localDisk;
+        localDisk.setConnectionName(conn);
+        localDisk.name = QStringLiteral("Local disk");
+        localDisk.getIDFromDeviceName();
+        if (localDisk.ID > 0)
+            renameDevice(localDisk.ID, tr("Local disk"));
 
         refreshAllUI();
     }

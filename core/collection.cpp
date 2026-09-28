@@ -950,7 +950,7 @@ void Collection::loadSearchHistoryFileToTable()
                             field = unescapeHistoryField(field);
 
                         //add empty values to support the addition of new fields to files from older versions
-                        int  targetFieldsCount = 43;
+                        int  targetFieldsCount = 56;
                         int currentFiledsCount = fieldList.count();
                         int    diffFieldsCount = targetFieldsCount - currentFiledsCount;
                         if(diffFieldsCount !=0){
@@ -1004,7 +1004,20 @@ void Collection::loadSearchHistoryFileToTable()
                                                     duplicates_checksum_equal,
                                                     duplicates_compare_checked,
                                                     duplicates_device1_ID,
-                                                    duplicates_device2_ID
+                                                    duplicates_device2_ID,
+                                                    differences_checksum,
+                                                    differences_checksum_equal,
+                                                    metadata_checked,
+                                                    metadata_text_checked,
+                                                    metadata_text_search,
+                                                    metadata_size_checked,
+                                                    metadata_size_min_height,
+                                                    metadata_size_max_height,
+                                                    metadata_size_min_width,
+                                                    metadata_size_max_width,
+                                                    metadata_duration_checked,
+                                                    metadata_duration_min,
+                                                    metadata_duration_max
                                                     )
                                                 VALUES(
                                                     :date_time,
@@ -1049,7 +1062,20 @@ void Collection::loadSearchHistoryFileToTable()
                                                     :duplicates_checksum_equal,
                                                     :duplicates_compare_checked,
                                                     :duplicates_device1_ID,
-                                                    :duplicates_device2_ID
+                                                    :duplicates_device2_ID,
+                                                    :differences_checksum,
+                                                    :differences_checksum_equal,
+                                                    :metadata_checked,
+                                                    :metadata_text_checked,
+                                                    :metadata_text_search,
+                                                    :metadata_size_checked,
+                                                    :metadata_size_min_height,
+                                                    :metadata_size_max_height,
+                                                    :metadata_size_min_width,
+                                                    :metadata_size_max_width,
+                                                    :metadata_duration_checked,
+                                                    :metadata_duration_min,
+                                                    :metadata_duration_max
                                                     )
                                                 )");
 
@@ -1097,6 +1123,19 @@ void Collection::loadSearchHistoryFileToTable()
                         insertQuery.bindValue(":duplicates_compare_checked",fieldList[40]);
                         insertQuery.bindValue(":duplicates_device1_ID",     fieldList[41]);
                         insertQuery.bindValue(":duplicates_device2_ID",     fieldList[42]);
+                        insertQuery.bindValue(":differences_checksum",       fieldList[43]);
+                        insertQuery.bindValue(":differences_checksum_equal",  fieldList[44]);
+                        insertQuery.bindValue(":metadata_checked",           fieldList[45]);
+                        insertQuery.bindValue(":metadata_text_checked",      fieldList[46]);
+                        insertQuery.bindValue(":metadata_text_search",       fieldList[47]);
+                        insertQuery.bindValue(":metadata_size_checked",      fieldList[48]);
+                        insertQuery.bindValue(":metadata_size_min_height",   fieldList[49]);
+                        insertQuery.bindValue(":metadata_size_max_height",   fieldList[50]);
+                        insertQuery.bindValue(":metadata_size_min_width",    fieldList[51]);
+                        insertQuery.bindValue(":metadata_size_max_width",    fieldList[52]);
+                        insertQuery.bindValue(":metadata_duration_checked",  fieldList[53]);
+                        insertQuery.bindValue(":metadata_duration_min",      fieldList[54]);
+                        insertQuery.bindValue(":metadata_duration_max",      fieldList[55]);
                         insertQuery.exec();
                     }
             }
@@ -1626,6 +1665,19 @@ void Collection::saveSearchHistoryTableToFile()
                 << "duplicates_compare_devices" << "\t"
                 << "duplicates_device1"         << "\t"
                 << "duplicates_device2"         << "\t"
+                << "differences_checksum"      << "\t"
+                << "differences_checksum_equal"  << "\t"
+                << "metadata_checked"          << "\t"
+                << "metadata_text_checked"     << "\t"
+                << "metadata_text_search"      << "\t"
+                << "metadata_size_checked"     << "\t"
+                << "metadata_size_min_height"  << "\t"
+                << "metadata_size_max_height"  << "\t"
+                << "metadata_size_min_width"   << "\t"
+                << "metadata_size_max_width"   << "\t"
+                << "metadata_duration_checked"  << "\t"
+                << "metadata_duration_min"     << "\t"
+                << "metadata_duration_max"     << "\t"
                 << '\n';
 
             //Get data
@@ -1674,7 +1726,20 @@ void Collection::saveSearchHistoryTableToFile()
                                             duplicates_checksum_equal,
                                             duplicates_compare_checked,
                                             duplicates_device1_ID,
-                                            duplicates_device2_ID
+                                            duplicates_device2_ID,
+                                            differences_checksum,
+                                            differences_checksum_equal,
+                                            metadata_checked,
+                                            metadata_text_checked,
+                                            metadata_text_search,
+                                            metadata_size_checked,
+                                            metadata_size_min_height,
+                                            metadata_size_max_height,
+                                            metadata_size_min_width,
+                                            metadata_size_max_width,
+                                            metadata_duration_checked,
+                                            metadata_duration_min,
+                                            metadata_duration_max
                                         FROM search
                                         ORDER BY date_time DESC
                                        )");
