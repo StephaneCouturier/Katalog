@@ -3478,7 +3478,6 @@ QString AppManager::unassignDevice(int deviceId, int parentId)
 //----------------------------------------------------------------------
 QString AppManager::importFromVVV(const QString &path)
 {
-    const QString conn = m_connectionName;
     QFile sourceFile(path);
 
     if (!sourceFile.open(QIODevice::ReadOnly))
@@ -3519,7 +3518,6 @@ QString AppManager::importFromVVV(const QString &path)
     importVirtual.insertDevice();
     collection->saveDeviceTableToFile();
 
-    QMap<QString, qint64>   nameToId;
     QMap<QString, Device*>  nameToDev;
 
     for (const QString &catName : uniqueNames) {
@@ -3547,19 +3545,13 @@ QString AppManager::importFromVVV(const QString &path)
         d->catalog->includeMetadata   = Catalog::METADATA_NONE;
         d->catalog->appVersion        = currentVersion;
         d->catalog->insertCatalog();
-        nameToId[catName]  = d->catalog->ID;
         nameToDev[catName] = d;
     }
 
-    // No clearing of the file/folder tables here: in File and Hosted mode they
-    // hold every catalog of the collection. Everything below reads and writes
-    // by the new catalogs' ids only.
-    QSqlQuery insFile(QSqlDatabase::database(conn));
-    insFile.prepare("INSERT INTO file(file_catalog_id,file_name,file_folder_path,file_size,file_date_updated,file_catalog)"
-                    " VALUES(:cid,:name,:path,:size,:date,:cat)");
-
-    QSqlQuery insFolder(QSqlDatabase::database(conn));
-    insFolder.prepare("INSERT OR IGNORE INTO folder(folder_catalog_id,folder_path) VALUES(:cid,:path)");
+    // Second pass: group the file lines by catalog. No clearing of the
+    // file/folder tables: in File and Hosted mode they hold every catalog.
+    struct CatalogFiles { QList<QString> names, folders, dates; QList<qint64> sizes; };
+    QMap<QString, CatalogFiles> filesByCatalog;
 
     if (!sourceFile.open(QIODevice::ReadOnly))
         return tr("Could not open file: %1").arg(path);
@@ -3570,71 +3562,28 @@ QString AppManager::importFromVVV(const QString &path)
         if (line.isEmpty()) continue;
         QStringList f = line.split('\t');
         if (f.count() != 7) continue;
-        QString catName  = QString(f[0]).remove('"').replace('/', '_') + dt;
-        qint64 catId     = nameToId.value(catName, 0);
-        QString folder   = "/import" + QString(f[1]).remove('"');
-        insFile.bindValue(":cid",  catId);
-        insFile.bindValue(":name", QString(f[2]).remove('"'));
-        insFile.bindValue(":path", folder);
-        insFile.bindValue(":size", f[3].toLongLong());
-        insFile.bindValue(":date", f[5]);
-        insFile.bindValue(":cat",  nameToDev.contains(catName) ? nameToDev.value(catName)->name : catName);
-        insFile.exec();
-        insFolder.bindValue(":cid",  catId);
-        insFolder.bindValue(":path", folder);
-        insFolder.exec();
+        QString catName = QString(f[0]).remove('"').replace('/', '_') + dt;
+        if (!nameToDev.contains(catName)) continue;
+        CatalogFiles &files = filesByCatalog[catName];
+        files.names   << QString(f[2]).remove('"');
+        files.folders << "/import" + QString(f[1]).remove('"');
+        files.sizes   << f[3].toLongLong();
+        files.dates   << f[5];
     }
     sourceFile.close();
 
-    // Root folders
-    for (auto it = nameToId.begin(); it != nameToId.end(); ++it) {
-        insFolder.bindValue(":cid",  it.value());
-        insFolder.bindValue(":path", "/import");
-        insFolder.exec();
-    }
-
-    // Export catalog files and update stats
+    // Insert, count, and write the Memory-mode .idx files (core)
     for (auto it = nameToDev.begin(); it != nameToDev.end(); ++it) {
         Device *d = it.value();
-        QSqlQuery stats(QSqlDatabase::database(conn));
-        stats.prepare("SELECT COUNT(*),SUM(file_size) FROM file WHERE file_catalog_id=:id");
-        stats.bindValue(":id", d->externalID);
-        stats.exec(); stats.next();
-        d->totalFileCount = stats.value(0).toLongLong();
-        d->totalFileSize  = stats.value(1).toLongLong();
+        const CatalogFiles files = filesByCatalog.value(it.key());
+        d->catalog->insertFileList(files.names, files.folders, files.sizes, files.dates, "/import");
+        d->catalog->updateFileCount();
+        d->catalog->updateTotalFileSize();
+        d->totalFileCount = d->catalog->fileCount;
+        d->totalFileSize  = d->catalog->totalFileSize;
         d->saveDevice();
-
-        QFile out(d->catalog->filePath);
-        if (out.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-            QTextStream s(&out);
-            s << "<catalogSourcePath>/import\n"
-              << "<catalogFileCount>" << d->totalFileCount << "\n"
-              << "<catalogTotalFileSize>" << d->totalFileSize << "\n"
-              << "<catalogIncludeHidden>\n<catalogFileType>\n<catalogStorage>\n"
-              << "<catalogIncludeSymblinks>\n<catalogIsFullDevice>\n<catalogIncludeMetadata>\n"
-              << "<catalogAppVersion>" << currentVersion << "\n"
-              << "<catalogID>" << d->externalID << "\n";
-            QSqlQuery files(QSqlDatabase::database(conn));
-            files.prepare("SELECT file_folder_path,file_name,file_size,file_date_updated FROM file WHERE file_catalog_id=:id");
-            files.bindValue(":id", d->externalID);
-            files.exec();
-            while (files.next())
-                s << files.value(0).toString() << "/" << files.value(1).toString()
-                  << "\t" << files.value(2).toString() << "\t" << files.value(3).toString() << "\n";
-            out.close();
-        }
-
-        QFile fout(collection->folder + "/" + d->name + ".folders.idx");
-        if (fout.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-            QTextStream s(&fout);
-            QSqlQuery folders(QSqlDatabase::database(conn));
-            folders.prepare("SELECT folder_catalog_id,folder_path FROM folder WHERE folder_catalog_id=:id");
-            folders.bindValue(":id", d->externalID);
-            folders.exec();
-            while (folders.next())
-                s << folders.value(0).toString() << "\t" << folders.value(1).toString() << "\n";
-            fout.close();
-        }
+        d->catalog->saveCatalogToFile(collection->databaseMode, collection->folder);
+        d->catalog->saveFoldersToFile(collection->databaseMode, collection->folder);
     }
 
     qDeleteAll(nameToDev);

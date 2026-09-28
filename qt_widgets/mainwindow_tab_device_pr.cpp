@@ -2587,7 +2587,6 @@ void MainWindow::importFromVVV()
         collection->saveDeviceTableToFile();
 
         // Map catalog name -> catalog ID and Device pointer
-        QMap<QString, qint64> catalogNameToId;
         QMap<QString, Device*> catalogNameToDevice;
 
         for (const QString& catalogName : uniqueCatalogNames) {
@@ -2616,7 +2615,6 @@ void MainWindow::importFromVVV()
             importedDevice->catalog->insertCatalog();
 
             // Store mapping
-            catalogNameToId[catalogName] = importedDevice->catalog->ID;
             catalogNameToDevice[catalogName] = importedDevice;
         }
 
@@ -2624,55 +2622,6 @@ void MainWindow::importFromVVV()
 
         // No clearing of the file/folder tables here: in File and Hosted mode
         // they hold every catalog of the collection.
-
-        //Prepare query to load file info
-        QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
-        QString insertSQL = QLatin1String(R"(
-                                        INSERT INTO file (
-                                                        file_catalog_id,
-                                                        file_name,
-                                                        file_folder_path,
-                                                        file_size,
-                                                        file_date_updated,
-                                                        file_catalog )
-                                        VALUES(
-                                                        :file_catalog_id,
-                                                        :file_name,
-                                                        :file_folder_path,
-                                                        :file_size,
-                                                        :file_date_updated,
-                                                        :file_catalog )
-                                                    )");
-        insertQuery.prepare(insertSQL);
-
-        //Prepare insert query for folder
-        QSqlQuery insertFolderQuery(QSqlDatabase::database(m_connectionName));
-        Database::DatabaseType dbType = Database::getDatabaseType(m_connectionName);
-        QString insertFolderSQL;
-        if (dbType == Database::DatabaseType::PostgreSQL) {
-            // PostgreSQL requires ON CONFLICT clause
-            insertFolderSQL = QString(R"(
-                                            %1 INTO folder(
-                                                folder_catalog_id,
-                                                folder_path
-                                             )
-                                            VALUES(
-                                                :folder_catalog_id,
-                                                :folder_path)
-                                            ON CONFLICT (folder_catalog_id, folder_path) DO NOTHING
-                                            )").arg(Database::getInsertOrIgnorePrefix(dbType));
-        } else {
-            insertFolderSQL = QString(R"(
-                                            %1 INTO folder(
-                                                folder_catalog_id,
-                                                folder_path
-                                             )
-                                            VALUES(
-                                                :folder_catalog_id,
-                                                :folder_path)
-                                            )").arg(Database::getInsertOrIgnorePrefix(dbType));
-        }
-        insertFolderQuery.prepare(insertFolderSQL);
 
         //Re-open file for second pass
         if(!sourceFile.open(QIODevice::ReadOnly)) {
@@ -2684,6 +2633,9 @@ void MainWindow::importFromVVV()
         textStream.setDevice(&sourceFile);
         textStream.readLine(); // Skip header
 
+        //Group the file lines by catalog
+        struct CatalogFiles { QList<QString> names, folders, dates; QList<qint64> sizes; };
+        QMap<QString, CatalogFiles> filesByCatalog;
         while (!textStream.atEnd()) {
             line = textStream.readLine();
             if (!line.isEmpty()) {
@@ -2693,34 +2645,25 @@ void MainWindow::importFromVVV()
                     catalogName.remove("\"");
                     catalogName.replace("/", "_");
                     catalogName += dateTimeForCatalogName;
+                    if (!catalogNameToDevice.contains(catalogName))
+                        continue;
 
-                    qint64 catalogId = catalogNameToId.value(catalogName, 0);
-                    QString folderPath = virtualCatalogFolder + QString(fieldList[1]).remove("\"");
-
-                    //Append file data to the database
-                    insertQuery.bindValue(":file_catalog_id", catalogId);
-                    insertQuery.bindValue(":file_name", QString(fieldList[2]).remove("\""));
-                    insertQuery.bindValue(":file_folder_path", folderPath);
-                    insertQuery.bindValue(":file_size", fieldList[3].toLongLong());
-                    insertQuery.bindValue(":file_date_updated", fieldList[5]);
-                    insertQuery.bindValue(":file_catalog", catalogName);
-                    insertQuery.exec();
-
-                    //Append folder data to the database
-                    insertFolderQuery.bindValue(":folder_catalog_id", catalogId);
-                    insertFolderQuery.bindValue(":folder_path", folderPath);
-                    insertFolderQuery.exec();
+                    CatalogFiles &files = filesByCatalog[catalogName];
+                    files.names   << QString(fieldList[2]).remove("\"");
+                    files.folders << virtualCatalogFolder + QString(fieldList[1]).remove("\"");
+                    files.sizes   << fieldList[3].toLongLong();
+                    files.dates   << fieldList[5];
                 }
             }
         }
 
         sourceFile.close();
 
-        //Insert root folder for each catalog
-        for (auto it = catalogNameToId.begin(); it != catalogNameToId.end(); ++it) {
-            insertFolderQuery.bindValue(":folder_catalog_id", it.value());
-            insertFolderQuery.bindValue(":folder_path", virtualCatalogFolder);
-            insertFolderQuery.exec();
+        //Insert files, folders and the root folder of each catalog
+        for (auto it = catalogNameToDevice.begin(); it != catalogNameToDevice.end(); ++it) {
+            const CatalogFiles files = filesByCatalog.value(it.key());
+            it.value()->catalog->insertFileList(files.names, files.folders, files.sizes,
+                                                files.dates, virtualCatalogFolder);
         }
 
         //Complete table for missing folders

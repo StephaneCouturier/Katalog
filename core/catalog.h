@@ -127,6 +127,15 @@ public:
     void loadFoldersToTable();
     bool catalogNameExists();
 
+    // Inserts files into this catalog (file_catalog = name, file_full_path =
+    // folder/name) and their folders, duplicates ignored; rootFolder, if not
+    // empty, is added as a folder too. Used by the VVV import.
+    void insertFileList(const QList<QString> &fileNames,
+                        const QList<QString> &folderPaths,
+                        const QList<qint64>  &fileSizes,
+                        const QList<QString> &fileDateTimes,
+                        const QString        &rootFolder);
+
     void populateFileData( const QList<QString> &fileNames,
                            const QList<qint64>  &fileSizes,
                            const QList<QString> &filePaths,

@@ -30,6 +30,7 @@
 */
 
 #include "catalog.h"
+#include "database.h"
 #include "filetypemapping.h"
 #include "filemetadata.h"
 #include <QCoreApplication>
@@ -973,6 +974,51 @@ bool Catalog::catalogNameExists()
 
     query.next();
     return query.value(0).toInt() > 0;
+}
+
+void Catalog::insertFileList(const QList<QString> &fileNamesToInsert,
+                             const QList<QString> &folderPaths,
+                             const QList<qint64>  &fileSizesToInsert,
+                             const QList<QString> &fileDateTimesToInsert,
+                             const QString        &rootFolder)
+{
+    QSqlQuery fileQuery(QSqlDatabase::database(m_connectionName));
+    fileQuery.prepare(QLatin1String(R"(
+        INSERT INTO file(file_catalog_id, file_name, file_folder_path, file_size,
+                         file_date_updated, file_catalog, file_full_path)
+        VALUES(:catalog_id, :name, :folder, :size, :date, :catalog, :full_path)
+    )"));
+
+    const Database::DatabaseType dbType = Database::getDatabaseType(m_connectionName);
+    QSqlQuery folderQuery(QSqlDatabase::database(m_connectionName));
+    folderQuery.prepare(QString(R"(
+        %1 INTO folder(folder_catalog_id, folder_path)
+        VALUES(:catalog_id, :folder)
+    )").arg(Database::getInsertOrIgnorePrefix(dbType))
+        + (dbType == Database::DatabaseType::PostgreSQL
+           ? " ON CONFLICT (folder_catalog_id, folder_path) DO NOTHING" : ""));
+
+    for (int i = 0; i < fileNamesToInsert.size(); ++i) {
+        const QString folder = folderPaths.value(i);
+        fileQuery.bindValue(":catalog_id", ID);
+        fileQuery.bindValue(":name",       fileNamesToInsert.at(i));
+        fileQuery.bindValue(":folder",     folder);
+        fileQuery.bindValue(":size",       fileSizesToInsert.value(i));
+        fileQuery.bindValue(":date",       fileDateTimesToInsert.value(i));
+        fileQuery.bindValue(":catalog",    name);
+        fileQuery.bindValue(":full_path",  folder + "/" + fileNamesToInsert.at(i));
+        fileQuery.exec();
+
+        folderQuery.bindValue(":catalog_id", ID);
+        folderQuery.bindValue(":folder",     folder);
+        folderQuery.exec();
+    }
+
+    if (!rootFolder.isEmpty()) {
+        folderQuery.bindValue(":catalog_id", ID);
+        folderQuery.bindValue(":folder",     rootFolder);
+        folderQuery.exec();
+    }
 }
 
 void Catalog::populateFileData( const QList<QString> &cfileName,
