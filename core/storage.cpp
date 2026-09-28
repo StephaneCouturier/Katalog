@@ -65,8 +65,6 @@ void Storage::insertStorage()
                             storage_type,
                             storage_label,
                             storage_file_system,
-                            storage_total_space,
-                            storage_free_space,
                             storage_brand,
                             storage_model,
                             storage_serial_number,
@@ -80,8 +78,6 @@ void Storage::insertStorage()
                             "",
                             "",
                             "",
-                            0,
-                            0,
                             "",
                             "",
                             "",
@@ -115,8 +111,7 @@ void Storage::deleteStorage()
 
 QString Storage::saveStorage()
 {
-    // storage_location is not written: nothing reads it and Storage has no
-    // member for it, so not writing it is how it is preserved (STI-F11).
+    // Path, total and free space live on the device only (STI-C19, STI-C20).
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
     query.prepare(QLatin1String(R"(
         UPDATE storage
@@ -124,8 +119,6 @@ QString Storage::saveStorage()
             storage_type          = :type,
             storage_label         = :label,
             storage_file_system   = :fs,
-            storage_total_space   = :total,
-            storage_free_space    = :free,
             storage_brand         = :brand,
             storage_model         = :model,
             storage_serial_number = :serial,
@@ -140,8 +133,6 @@ QString Storage::saveStorage()
     query.bindValue(":type",    type);
     query.bindValue(":label",   label);
     query.bindValue(":fs",      fileSystem);
-    query.bindValue(":total",   totalSpace);
-    query.bindValue(":free",    freeSpace);
     query.bindValue(":brand",   brand);
     query.bindValue(":model",   model);
     query.bindValue(":serial",  serialNumber);
@@ -170,8 +161,14 @@ void Storage::loadStorage(QString connectionName)
                                   LIMIT 1),
                                 storage_label,
                                 storage_file_system,
-                                storage_total_space,
-                                storage_free_space,
+                                (SELECT d.device_total_space FROM device d
+                                  WHERE d.device_type = 'Storage'
+                                    AND d.device_external_id = storage.storage_id
+                                  LIMIT 1),
+                                (SELECT d.device_free_space FROM device d
+                                  WHERE d.device_type = 'Storage'
+                                    AND d.device_external_id = storage.storage_id
+                                  LIMIT 1),
                                 storage_brand,
                                 storage_model,
                                 storage_serial_number,
@@ -288,15 +285,11 @@ Storage::UpdateResult Storage::updateStorageInfo()
     QSqlQuery queryTotalSpace(QSqlDatabase::database(m_connectionName));
     QString queryTotalSpaceSQL = QLatin1String(R"(
                                     UPDATE storage
-                                    SET storage_total_space = :storage_total_space,
-                                        storage_free_space  = :storage_free_space,
-                                        storage_label       = :storage_label,
+                                    SET storage_label       = :storage_label,
                                         storage_file_system = :storage_file_system
                                     WHERE storage_id = :storage_id
                                     )");
     queryTotalSpace.prepare(queryTotalSpaceSQL);
-    queryTotalSpace.bindValue(":storage_total_space", totalSpace);
-    queryTotalSpace.bindValue(":storage_free_space", freeSpace);
     queryTotalSpace.bindValue(":storage_label", label);
     queryTotalSpace.bindValue(":storage_file_system", fileSystem);
     queryTotalSpace.bindValue(":storage_id", ID);

@@ -223,6 +223,20 @@ later.
 
 ---
 
+## Duplicated data — further candidates, not decided
+
+**Status:** candidates only, recorded 2026-09-28 from the redundancy diagnosis
+that led to `STI-C16`, `STI-C17`, `STI-C19` and `STI-C20` (`SpecStorageIdentity.md`).
+Nothing below is authorised work; each needs its own user decision.
+
+- **`search.search_location`** — never given a value.
+- **`search.search_storage` / `search.search_catalog`** — pre-2.6 search scope;
+  still read by K2's 2.6 upgrade step.
+- **`file.file_full_path`** — equals `file_folder_path + "/" + file_name`.
+- **`catalog.catalog_file_path`** — derivable in Memory mode.
+
+---
+
 ## K3 user-doc pass (3.0) — K3 features not yet in the user documentation
 
 **Related requirements:** see each entry

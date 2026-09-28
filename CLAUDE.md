@@ -68,6 +68,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 > - Drops the v1.22 tables `statistics_catalog`, `statistics_storage`, `virtual_storage`, `virtual_storage_catalog`, `device_catalog` if they exist (never created or used since 2.0).
 > - Removes `catalog.catalog_name` (SQLite: table rebuild, because of its UNIQUE constraint).
 > - Drops `storage.storage_path`, `catalog.catalog_source_path`, `catalog.catalog_source_path_is_active` when present (`device.device_path` is the only path).
+> - Drops `catalog.catalog_file_count`, `catalog.catalog_total_file_size`, `storage.storage_total_space`, `storage.storage_free_space`, `storage.storage_location` when present (the device holds totals and space).
 > - Drops `storage.storage_name` and `catalog.catalog_storage` when present (dead v1.xx name copies; `device_name` is the only name — `SpecStorageIdentity.md` STI-C13/C16). Memory-mode files keep their slots, written empty.
 
 ## Project Overview

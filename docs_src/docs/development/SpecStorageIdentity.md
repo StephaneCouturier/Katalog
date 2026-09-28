@@ -46,6 +46,14 @@ Read this first.
   file slots: the "Path" column of `storage.csv` is written empty, and the
   `<catalogSourcePath>` line of each `.idx` header keeps holding the device path
   for readability — neither is read back.
+- **Duplicated totals removed too (`STI-C20`).** `catalog.catalog_file_count`,
+  `catalog.catalog_total_file_size`, `storage.storage_total_space`,
+  `storage.storage_free_space` and the never-read `storage.storage_location` are
+  removed by the same migration. The device row holds the only file totals and
+  space figures; nothing a user sees changes. Memory mode keeps its file slots:
+  the "Location", "TotalSpace" and "FreeSpace" columns of `storage.csv` are
+  written empty, and the `.idx` `<catalogFileCount>` / `<catalogTotalFileSize>`
+  lines keep holding the device values.
 - **No return to older K2.** After the migration, K2 2.12 and older, and the K2
   2.13 binary published with 3.0 beta2, name these columns in their SQL and fail
   on File and Hosted collections. Accepted by the user for a major version; see
@@ -190,28 +198,13 @@ it being complete:
   (`imageFolderPath + "/" + <id> + ".jpg"`). It keeps following the internal key
   — see `STI-C8`.
 
-### The shadow columns on `storage`
+### The shadow columns on `storage` — removed
 
-Discovered while specifying `STI-C6`, and recorded because it changes how urgent
-`STI-F11` is:
-
-- **`storage_location` is dead.** `Storage` has no `location` member and
-  `Storage::loadStorage()` does not select it. It is written by the Memory-mode
-  CSV loader and by Collection Import, and read by nothing. Blanking it loses
-  nothing a user can see today.
-- **`storage_total_space` and `storage_free_space` are shadow copies.**
-  `Storage::loadStorage()` does read them, but `Device::loadDevice()`
-  immediately overwrites them from the **device** row — exactly as it did for
-  the former `storage_path` (removed, `STI-C19`). The authoritative runtime values are `device_total_space` and
-  `device_free_space`. The stale storage-row copies still matter in three
-  places: they are written to `storage.csv` in Memory mode, they are carried
-  into other collections by Collection Import, and
-  `Device::assignStorageToDevice()` seeds a new device row from them.
-
-So the K2 blanking defect is **low severity, not zero**: it corrupts a row that
-is copied across collections and persisted to disk, but nothing a user reads in
-normal use comes from it. It is fixed here only because `STI-C6` rewrites that
-exact statement anyway.
+`storage_location` (never read), `storage_total_space` and `storage_free_space`
+(copies that `Device::loadDevice()` overwrote from the device row) are removed,
+together with the catalog's `catalog_file_count` and `catalog_total_file_size`
+(`STI-C20`). The device row is the only source; `STI-F11` and `STI-C11`, which
+kept the copies correct, are retired.
 
 ---
 
@@ -278,7 +271,7 @@ Observable behaviour that can be triggered and watched.
 | STI-F8 | Collection Import copies `storage_user_id` verbatim. Update from an external collection does **not** overwrite the target's `storage_user_id`. | [Planned] |
 | STI-F9 | On upgrade, every existing storage row receives `storage_user_id` = its current `storage_id`, so every device shows the same number after the upgrade as before it. | [Planned] |
 | STI-F10 | The "Storage ID" column in the K2 storage tree and in the K3 Devices storage table displays `storage_user_id`, and keeps the numeric sorting and right alignment it has today. | [Planned] |
-| STI-F11 | Saving a storage from the device edit form preserves `storage_location`, `storage_total_space` and `storage_free_space`. Today the K2 statement names all three as bind placeholders and binds none of them, so every K2 storage save writes them NULL. | [Planned] |
+| STI-F11 | Saving a storage from the device edit form preserves `storage_location`, `storage_total_space` and `storage_free_space`. Today the K2 statement names all three as bind placeholders and binds none of them, so every K2 storage save writes them NULL. *Retired: the three columns are removed (`STI-C20`); the space figures live on the device row only.* | [Removed] |
 | STI-F12 | The legacy name copies of `STI-C13` are kept current, in K2 and K3: `storage.storage_name` is written when the storage is created and updated when the Storage device is renamed. `catalog.catalog_storage` holds the name of the catalog's direct parent device, whatever its type: it is written when the catalog is created; set to the new direct parent's name when the catalog is moved (empty when moved to the root); and updated for every Catalog device directly beneath a device of **any** type (Storage, Virtual, …) when that device is renamed. The children are found through the device tree, never by matching the old name in `catalog_storage`. K3 today writes it at creation only (`qt_quick/appmanager.cpp` ~2490); K2 updates it by name (`qt_widgets/mainwindow_tab_device_pr.cpp` ~796-880). *Retired: both columns are removed (`STI-C13`, `STI-C16`); nothing is kept current.* | [Removed] |
 | STI-F13 | Importing a Catalog device without its parent Storage device imports **no** storage row: no storage row is looked up from the catalog's `catalog_storage` or created for it. | [Planned] |
 | STI-F14 | Renaming a Catalog device updates `file.file_catalog` and, in Memory mode, the `.idx` file name (and `catalog_file_path`) in the same operation, in K2 and K3, in every database mode, so no file row or file keeps the old catalog name. | [Planned] |
@@ -300,7 +293,7 @@ Boundaries and implementation constraints, not user-visible behaviour.
 | STI-C8 | The storage picture filename stays keyed on the internal `storage_id`, never on `storage_user_id`. A user number is editable, and keying an image file on an editable value orphans the image the first time it changes. | [Planned] |
 | STI-C9 | `storage_user_id` is NUMERIC. A non-numeric marking such as `A12` **cannot** be recorded; it falls back to zero. This is an accepted trade-off, taken deliberately to keep the numeric sorting and right alignment of the existing "Storage ID" columns in both UIs. Changing it to TEXT requires a new requirement **and** a decision about how those columns then sort. | [Planned] |
 | STI-C10 | This page's scope is **stopping new damage**. It MUST NOT add an automatic repair pass over existing collections, on open, on import or otherwise. Detecting and repairing collections already damaged is `SpecQualityCheck.md` (issue #809), which is user-triggered by `QCK-C2`. | [Planned] |
-| STI-C11 | `storage_total_space` and `storage_free_space` are shadow copies of the authoritative `device_total_space` and `device_free_space`. They MUST NOT be made authoritative, and no new read path may prefer them. `STI-F11` keeps them correct because they are persisted and copied across collections, not because anything displays them. The former `storage_path` copy is removed (`STI-C19`); removing the space copies is a later topic. | [Planned] |
+| STI-C11 | `storage_total_space` and `storage_free_space` are shadow copies of the authoritative `device_total_space` and `device_free_space`. They MUST NOT be made authoritative, and no new read path may prefer them. `STI-F11` keeps them correct because they are persisted and copied across collections, not because anything displays them. The former `storage_path` copy is removed (`STI-C19`); removing the space copies is a later topic. *Retired — fully resolved: no copy of path, space or location is left on the storage row (`STI-C19`, `STI-C20`).* | [Removed] |
 | STI-C12 | `qt_quick/database.h` was a stale, unused copy of the schema — listed in `qt_quick/CMakeLists.txt` but never included, since `appmanager.cpp` includes `core/database.h`. It MUST NOT be edited by this work. *Retired: the file was deleted and removed from `qt_quick/CMakeLists.txt` with the user's approval (2026-09-28); the only schema is `core/database.h` / `core/database.cpp`.* | [Removed] |
 | STI-C13 | A device's name lives in `device.device_name`, which is the **only** name. `storage.storage_name`, `catalog.catalog_storage` (`STI-C16`) and `catalog.catalog_name` (`STI-C17`) are removed: no code in K2, K3 or `core/` (including Collection Import and the Quality Check) reads or writes them. In Memory mode the slots of the first two — the "Name" column of `storage.csv` and the `<catalogStorage>` line of the `.idx` header — stay for format stability, written empty and never read. `Storage::name` is an in-memory field filled from `device_name`. `file.file_catalog` and the Memory-mode `.idx` file name are synced copies that remain in use and are kept equal to the device name on rename (`STI-F14`). | [Planned] |
 | STI-C14 | Collection Import resolves the device hierarchy (`device_parent_id`) and the storage and catalog links (`device_external_id`) by internal ids only, never by names. Names are written from the imported data; they are never used to find, match or de-duplicate a row. There is **no exception**: the former pre-2.8 fallback by `catalog_name` is removed. Import requires identical schema stamps in source and target, in K2 and K3 (`SpecCollection.md`, strict abort), so an older source must first be opened — and migrated — by 3.0. | [Planned] |
@@ -309,6 +302,7 @@ Boundaries and implementation constraints, not user-visible behaviour.
 | STI-C17 | `catalog.catalog_name` is removed: no code reads or writes it, it leaves the `catalog` CREATE TABLE, and the 2.12 → 3.0 migration (`Database::runMigration_3_0`, which runs on every open until release) removes it from existing File and Hosted databases. The step is **idempotent**. On SQLite it rebuilds the `catalog` table, because the column carries a UNIQUE constraint and cannot simply be dropped; the rebuild keeps every catalog row, its `catalog_id` and all other columns. | [Planned] |
 | STI-C18 | No two Catalog devices in a collection may share a `device_name`, because Memory mode stores each catalog as `<name>.idx`. The rule is enforced by the application, no longer by a database UNIQUE constraint: **create and rename** refuse a name already in use (existing K2/K3 dialogs; the check, `Device::verifyDeviceNameExists`, covers devices of every type, not only Catalog devices — stricter than needed, accepted); **split** gives each new catalog a unique name by appending `_2`, `_3`, … (checked against Catalog device names and against names already chosen in the same split); **import** appends ` (2)`, ` (3)`, … (`STI-F15`). | [Planned] |
 | STI-C19 | `device.device_path` is the **only** path of a Storage or Catalog device. `storage.storage_path`, `catalog.catalog_source_path` and `catalog.catalog_source_path_is_active` (never read; activity is `device_active`) are removed: no code reads or writes them, they leave the CREATE TABLE statements, and `Database::runMigration_3_0` (every open until release) drops them from existing File and Hosted databases, **idempotently**. In memory, `Catalog::sourcePath` and `Storage::path` are the owning device's path: `Device::loadDevice()` sets them, and a standalone `Catalog::loadCatalog()` / `Storage::loadStorage()` reads `device_path` of the owning device (for a catalog, the one with the lowest `device_group_id`, i.e. the Physical one first). Memory-mode file slots are kept: the "Path" column of `storage.csv` is written empty and never read; the `<catalogSourcePath>` line of the `.idx` header keeps holding the device path, for readability, and is never read back as a source. | [Planned] |
+| STI-C20 | `device.device_total_file_count` and `device.device_total_file_size` are the **only** file totals of a Catalog device; `device.device_total_space` and `device.device_free_space` the **only** space figures of a Storage device. `catalog.catalog_file_count`, `catalog.catalog_total_file_size`, `storage.storage_total_space`, `storage.storage_free_space` and the never-read `storage.storage_location` are removed: no code reads or writes them, they leave the CREATE TABLE statements, and `Database::runMigration_3_0` drops them, **idempotently**. In memory, `Catalog::fileCount` / `totalFileSize` and `Storage::totalSpace` / `freeSpace` come from the owning device (`Device::loadDevice()`; a standalone `loadCatalog()` / `loadStorage()` reads them from the device row). `Storage::updateStorageInfo()` writes only label and file system to the storage row; the space figures reach the device through its callers. A catalog split writes no counts to the catalog row; the new devices take them. Memory-mode file slots are kept: `storage.csv` "Location", "TotalSpace" and "FreeSpace" are written empty and never read; the `.idx` `<catalogFileCount>` / `<catalogTotalFileSize>` lines keep holding the device values (read into memory only). | [Planned] |
 
 ---
 
@@ -359,12 +353,13 @@ For each row: set up the stated condition, perform the action, confirm the resul
 - **STI-F8 (update)** — Change a storage's number in the target, then run Update from the source collection. The target's number is **not** overwritten.
 - **STI-F9** — Open a collection created before this change. Every storage device shows exactly the number it showed before the upgrade.
 - **STI-F10** — Sort the Devices storage table by Storage ID. It sorts numerically (10 after 9, not before it) and the column is right-aligned.
-- **STI-F11** — In Memory mode, note a storage's recorded total and free space, save the device from the edit form without changing them, then reopen the collection. The values are still there and `storage.csv` does not contain empty fields in their place.
+- **STI-F11** — *(Removed.)*
 - **STI-F12** — *(Removed.)*
 - **STI-F14** — Rename a catalog in K2 and in K3. File mode: every `file` row of that catalog carries the new name in `file_catalog`, and duplicate search shows the new name. Memory mode: the `.idx` file carries the new name and the catalog reopens.
 - **STI-F15** — Import a catalog whose name is already used by a Catalog device in the target. The imported device, its `.idx` file and its `file_catalog` values are all `<name> (2)`.
 - **STI-C17 / STI-C18** — Open a 2.12 and a beta-2.13 collection with 3.0: `catalog_name` is gone, catalog count, ids and files are intact; reopen three times without error. Creating or renaming a catalog to a name another device already has is refused; splitting a catalog whose new name is taken gives it `_2`, `_3`, ….
 - **STI-C19** — Open a 2.12 and a beta-2.13 collection with 3.0: `storage_path`, `catalog_source_path` and `catalog_source_path_is_active` are gone, and every catalog still updates (scans) from its device path. In Memory mode, after a save, `storage.csv` has an empty "Path" column and each `.idx` has `<catalogSourcePath>` holding the device path.
+- **STI-C20** — After opening a 2.12 and a beta-2.13 collection with 3.0, the five columns are gone; catalog totals and storage space figures equal the device values. In Memory mode, after a save, `storage.csv` has empty Location/TotalSpace/FreeSpace columns and each `.idx` count/size line equals the device totals.
 - **STI-F13** — Import only a Catalog device, without its parent Storage device, into a non-empty target. No storage row is added to the target.
 - **STI-C14** — Import a source in which two devices share a name with devices already in the target. Every imported device sits under its own imported parent and points at its own imported storage or catalog row.
 - **STI-C14 (no name fallback)** — Import from a collection whose schema stamp differs from the target's: the import aborts. Open that source with 3.0 first, then import: it succeeds, and each catalog is found by id.

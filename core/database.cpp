@@ -70,27 +70,22 @@ QString Database::getSQLCreateTableCatalog(DatabaseType databaseType)
     // No catalog_name: device_name is the only catalog name, and the uniqueness
     // of catalog names is enforced on devices (SpecStorageIdentity.md STI-C13).
     QString catalogIdType;
-    QString largeNumeric;
 
     switch (databaseType) {
     case DatabaseType::SQLite:
         catalogIdType = "NUMERIC";
-        largeNumeric  = "NUMERIC";
         break;
     case DatabaseType::MySQL:
     case DatabaseType::PostgreSQL:
         catalogIdType = "BIGINT NOT NULL";
-        largeNumeric  = "BIGINT";
         break;
     }
 
     return QString(R"(
                 CREATE TABLE IF NOT EXISTS catalog(
-                    catalog_id                    %2,
+                    catalog_id                    %1,
                     catalog_file_path             TEXT,
                     catalog_date_updated          TEXT,
-                    catalog_file_count            %1 default 0,
-                    catalog_total_file_size       %1 default 0,
                     catalog_include_hidden        TEXT,
                     catalog_file_type             TEXT,
                     catalog_include_symblinks     TEXT,
@@ -101,7 +96,7 @@ QString Database::getSQLCreateTableCatalog(DatabaseType databaseType)
                     catalog_app_version           TEXT,
                     catalog_include_sub_dir       TEXT,
                     PRIMARY KEY(catalog_id))
-    )").arg(largeNumeric, catalogIdType);
+    )").arg(catalogIdType);
 }
 
 QString Database::getSQLCreateTableStorage(DatabaseType dbType)
@@ -114,11 +109,8 @@ QString Database::getSQLCreateTableStorage(DatabaseType dbType)
                     storage_id            %1  primary key default 0,
                     storage_user_id       %1 default 0,
                     storage_type          TEXT,
-                    storage_location      TEXT,
                     storage_label         TEXT,
                     storage_file_system   TEXT,
-                    storage_total_space   %1 default 0,
-                    storage_free_space    %1 default 0,
                     storage_brand         TEXT,
                     storage_model         TEXT,
                     storage_serial_number TEXT,
@@ -1333,14 +1325,20 @@ QSqlError Database::runMigration_3_0(const QString &connectionName)
         }
     }
 
-    // Copies of device.device_path, and a flag replaced by device_active: the
-    // device is the only place these live (SpecStorageIdentity.md STI-C19).
+    // Copies of device.device_path / file totals / space, a flag replaced by
+    // device_active, and the never-read storage_location: the device is the
+    // only place these live (SpecStorageIdentity.md STI-C19, STI-C20).
     // On SQLite the catalog rebuild above already left them out; this covers
     // databases rebuilt earlier and MySQL / PostgreSQL.
     const QList<QPair<QString, QString>> deviceCopies = {
         {"storage", "storage_path"},
         {"catalog", "catalog_source_path"},
         {"catalog", "catalog_source_path_is_active"},
+        {"catalog", "catalog_file_count"},
+        {"catalog", "catalog_total_file_size"},
+        {"storage", "storage_location"},
+        {"storage", "storage_total_space"},
+        {"storage", "storage_free_space"},
     };
     for (const auto &column : deviceCopies) {
         if (getTableColumns(connectionName, column.first).contains(column.second)) {

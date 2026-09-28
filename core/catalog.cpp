@@ -270,8 +270,6 @@ void Catalog::insertCatalog()
                                                         catalog_id,
                                                         catalog_file_path,
                                                         catalog_date_updated,
-                                                        catalog_file_count,
-                                                        catalog_total_file_size,
                                                         catalog_include_hidden,
                                                         catalog_file_type,
                                                         catalog_include_symblinks,
@@ -285,8 +283,6 @@ void Catalog::insertCatalog()
                                         VALUES(         :catalog_id,
                                                         :catalog_file_path,
                                                         :catalog_date_updated,
-                                                        :catalog_file_count,
-                                                        :catalog_total_file_size,
                                                         :catalog_include_hidden,
                                                         :catalog_file_type,
                                                         :catalog_include_symblinks,
@@ -302,8 +298,6 @@ void Catalog::insertCatalog()
     insertCatalogQuery.bindValue(":catalog_id", ID);
     insertCatalogQuery.bindValue(":catalog_file_path", filePath);
     insertCatalogQuery.bindValue(":catalog_date_updated", dateUpdated);
-    insertCatalogQuery.bindValue(":catalog_file_count", fileCount);
-    insertCatalogQuery.bindValue(":catalog_total_file_size", totalFileSize);
     insertCatalogQuery.bindValue(":catalog_include_hidden", includeHidden);
     insertCatalogQuery.bindValue(":catalog_file_type", fileType);
     insertCatalogQuery.bindValue(":catalog_include_symblinks", includeSymblinks);
@@ -459,8 +453,14 @@ void Catalog::loadCatalog()
                                   WHERE d.device_type = 'Catalog'
                                     AND d.device_external_id = catalog.catalog_id
                                   ORDER BY d.device_group_id LIMIT 1),
-                                catalog_file_count           ,
-                                catalog_total_file_size      ,
+                                (SELECT d.device_total_file_count FROM device d
+                                  WHERE d.device_type = 'Catalog'
+                                    AND d.device_external_id = catalog.catalog_id
+                                  ORDER BY d.device_group_id LIMIT 1),
+                                (SELECT d.device_total_file_size FROM device d
+                                  WHERE d.device_type = 'Catalog'
+                                    AND d.device_external_id = catalog.catalog_id
+                                  ORDER BY d.device_group_id LIMIT 1),
                                 catalog_include_hidden       ,
                                 catalog_file_type            ,
                                 catalog_include_symblinks    ,
@@ -1643,19 +1643,9 @@ QList<Catalog*> Catalog::executeSplitBySubDirectory(const QString &databaseMode,
         q.exec();
     };
 
-    // Update the catalog row's file count and total size from the actual file data
+    // File count and total size from the actual file data; the new device
+    // rows take them from here (the device holds the totals, STI-C20).
     auto updateCounts = [&](Catalog *c) {
-        QSqlQuery q(QSqlDatabase::database(m_connectionName));
-        q.prepare(QLatin1String(R"(
-            UPDATE catalog
-            SET catalog_file_count      = (SELECT COUNT(*)                    FROM file WHERE file_catalog_id = :id),
-                catalog_total_file_size = (SELECT COALESCE(SUM(file_size), 0) FROM file WHERE file_catalog_id = :id2)
-            WHERE catalog_id = :id3
-        )"));
-        q.bindValue(":id",  c->ID);
-        q.bindValue(":id2", c->ID);
-        q.bindValue(":id3", c->ID);
-        q.exec();
         c->updateFileCount();
         c->updateTotalFileSize();
     };
@@ -1734,19 +1724,9 @@ QList<Catalog*> Catalog::executeSplitByFileType(const QString &databaseMode,
         }
     };
 
-    // Update the catalog row's file count and total size from the actual file data
+    // File count and total size from the actual file data; the new device
+    // rows take them from here (the device holds the totals, STI-C20).
     auto updateCounts = [&](Catalog *c) {
-        QSqlQuery q(QSqlDatabase::database(m_connectionName));
-        q.prepare(QLatin1String(R"(
-            UPDATE catalog
-            SET catalog_file_count      = (SELECT COUNT(*)                    FROM file WHERE file_catalog_id = :id),
-                catalog_total_file_size = (SELECT COALESCE(SUM(file_size), 0) FROM file WHERE file_catalog_id = :id2)
-            WHERE catalog_id = :id3
-        )"));
-        q.bindValue(":id",  c->ID);
-        q.bindValue(":id2", c->ID);
-        q.bindValue(":id3", c->ID);
-        q.exec();
         c->updateFileCount();
         c->updateTotalFileSize();
     };

@@ -602,8 +602,8 @@ void Collection::loadCatalogFilesToTable()
                 newCatalog.filePath         = path; //catalog_file_path
                 newCatalog.dateUpdated      = catalogFileInfo.lastModified();//.toString("yyyy-MM-dd hh:mm:ss"); //catalog_date_updated
                 newCatalog.sourcePath       = catalogValues[0]; // in memory only: the device holds the path
-                newCatalog.fileCount        = catalogValues[1].toLongLong(); //catalog_file_count
-                newCatalog.totalFileSize    = catalogValues[2].toLongLong(); //catalog_total_file_size
+                newCatalog.fileCount        = catalogValues[1].toLongLong(); // in memory only: the device holds the totals
+                newCatalog.totalFileSize    = catalogValues[2].toLongLong(); // in memory only: the device holds the totals
                 newCatalog.includeHidden    = catalogValues[3].compare("true", Qt::CaseInsensitive) == 0; //catalog_include_hidden
                 newCatalog.fileType         = catalogValues[4]; //catalog_file_type
                 // catalogValues[5] is the <catalogStorage> slot, never read (STI-C13)
@@ -670,11 +670,8 @@ void Collection::loadStorageFileToTable()
                         INSERT INTO storage(
                                         storage_id,
                                         storage_type,
-                                        storage_location,
                                         storage_label,
                                         storage_file_system,
-                                        storage_total_space,
-                                        storage_free_space,
                                         storage_brand,
                                         storage_model,
                                         storage_serial_number,
@@ -687,11 +684,8 @@ void Collection::loadStorageFileToTable()
                                   values(
                                         :storage_id,
                                         :storage_type,
-                                        :storage_location,
                                         :storage_label,
                                         :storage_file_system,
-                                        :storage_total_space,
-                                        :storage_free_space,
                                         :storage_brand,
                                         :storage_model,
                                         :storage_serial_number,
@@ -709,13 +703,12 @@ void Collection::loadStorageFileToTable()
                     // fieldList[1] is the Name column, kept in the file format
                     // but never read: the device name is the only name (STI-C13).
                     insertQuery.bindValue(":storage_type",          fieldList[2]);
-                    insertQuery.bindValue(":storage_location",      fieldList[3]);
                     // fieldList[4] is the Path column, kept in the file format
                     // but never read: the path lives on the device (STI-C19).
                     insertQuery.bindValue(":storage_label",         fieldList[5]);
                     insertQuery.bindValue(":storage_file_system",   fieldList[6]);
-                    insertQuery.bindValue(":storage_total_space",   fieldList[7].toLongLong());
-                    insertQuery.bindValue(":storage_free_space",    fieldList[8].toLongLong());
+                    // fieldList[3] (Location), [7] (TotalSpace) and [8] (FreeSpace) are
+                    // kept in the file format but never read: STI-C20.
                     insertQuery.bindValue(":storage_brand",         fieldList[9]);
                     insertQuery.bindValue(":storage_model",         fieldList[10]);
                     insertQuery.bindValue(":storage_serial_number", fieldList[11]);
@@ -1456,12 +1449,12 @@ void Collection::saveStorageTableToFile()
                             storage_id            ,
                             ''  AS storage_name   , -- Name column kept in the file format
                             storage_type          ,
-                            storage_location      ,
+                            ''  AS storage_location , -- column kept in the file format
                             ''  AS storage_path   , -- Path column kept in the file format
                             storage_label         ,
                             storage_file_system   ,
-                            storage_total_space   ,
-                            storage_free_space    ,
+                            ''  AS storage_total_space , -- column kept in the file format
+                            ''  AS storage_free_space  , -- column kept in the file format
                             storage_brand         ,
                             storage_model         ,
                             storage_serial_number ,

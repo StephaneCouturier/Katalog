@@ -111,10 +111,13 @@ void CatalogJob::start()
     emit catalogStarted();
 
     // Configure the catalog engine
+    // The job works on the collection the device was loaded from, never on the
+    // default connection by accident.
     m_catalogEngine->configureOperation(m_targetDevice,
                                         m_operationType,
                                         m_databaseMode,
-                                        m_collectionFolder);
+                                        m_collectionFolder,
+                                        m_targetDevice->connectionName());
 
     // Set total amount if we have an estimate
     if (m_catalogEngine->getCountedTotalFiles() > 0) {
