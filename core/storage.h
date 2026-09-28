@@ -94,7 +94,8 @@ public:
     void insertStorage();
     void deleteStorage();
     void loadStorage(QString connectionName);
-    // Writes every field the edit forms change, keyed on the internal ID (never
+    // Writes every field the edit forms change except the path, which lives on
+    // the device only. Keyed on the internal ID (never
     // on the user's number, STI-C6). Returns an empty string, or the SQL error.
     QString saveStorage();
 

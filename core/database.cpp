@@ -89,10 +89,8 @@ QString Database::getSQLCreateTableCatalog(DatabaseType databaseType)
                     catalog_id                    %2,
                     catalog_file_path             TEXT,
                     catalog_date_updated          TEXT,
-                    catalog_source_path           TEXT,
                     catalog_file_count            %1 default 0,
                     catalog_total_file_size       %1 default 0,
-                    catalog_source_path_is_active %1,
                     catalog_include_hidden        TEXT,
                     catalog_file_type             TEXT,
                     catalog_include_symblinks     TEXT,
@@ -117,7 +115,6 @@ QString Database::getSQLCreateTableStorage(DatabaseType dbType)
                     storage_user_id       %1 default 0,
                     storage_type          TEXT,
                     storage_location      TEXT,
-                    storage_path          TEXT,
                     storage_label         TEXT,
                     storage_file_system   TEXT,
                     storage_total_space   %1 default 0,
@@ -1331,6 +1328,26 @@ QSqlError Database::runMigration_3_0(const QString &connectionName)
             err = executeSql(connectionName, "ALTER TABLE catalog DROP COLUMN catalog_name");
             if (err.type() != QSqlError::NoError) {
                 qWarning() << "WARNING: Failed to drop catalog_name:" << err.text();
+                return err;
+            }
+        }
+    }
+
+    // Copies of device.device_path, and a flag replaced by device_active: the
+    // device is the only place these live (SpecStorageIdentity.md STI-C19).
+    // On SQLite the catalog rebuild above already left them out; this covers
+    // databases rebuilt earlier and MySQL / PostgreSQL.
+    const QList<QPair<QString, QString>> deviceCopies = {
+        {"storage", "storage_path"},
+        {"catalog", "catalog_source_path"},
+        {"catalog", "catalog_source_path_is_active"},
+    };
+    for (const auto &column : deviceCopies) {
+        if (getTableColumns(connectionName, column.first).contains(column.second)) {
+            err = executeSql(connectionName, QString("ALTER TABLE %1 DROP COLUMN %2")
+                                                 .arg(column.first, column.second));
+            if (err.type() != QSqlError::NoError) {
+                qWarning() << "WARNING: Failed to drop" << column.second << ":" << err.text();
                 return err;
             }
         }

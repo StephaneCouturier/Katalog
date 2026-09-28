@@ -3856,10 +3856,6 @@ QString AppManager::saveStorageDetails(int deviceId, const QVariantMap &fields)
     dev.storage->comment3     = fields.value("storageComment3",     dev.storage->comment3).toString();
     dev.storage->picturePath  = fields.value("storagePicturePath",  dev.storage->picturePath).toString();
 
-    // storage_path follows the save, not the path-root replacement (DSR-C8):
-    // written on every branch, so Skip and Full re-index no longer leave it
-    // holding the old path while device_path holds the new one.
-    dev.storage->path       = dev.path;
     dev.storage->totalSpace = dev.totalSpace;
     dev.storage->freeSpace  = dev.freeSpace;
     dev.storage->userID     = newUserId;

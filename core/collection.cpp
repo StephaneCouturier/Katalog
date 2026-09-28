@@ -601,7 +601,7 @@ void Collection::loadCatalogFilesToTable()
                 newCatalog.ID               = catalogValues[12].toInt(); //catalog_id
                 newCatalog.filePath         = path; //catalog_file_path
                 newCatalog.dateUpdated      = catalogFileInfo.lastModified();//.toString("yyyy-MM-dd hh:mm:ss"); //catalog_date_updated
-                newCatalog.sourcePath       = catalogValues[0]; //catalog_source_path
+                newCatalog.sourcePath       = catalogValues[0]; // in memory only: the device holds the path
                 newCatalog.fileCount        = catalogValues[1].toLongLong(); //catalog_file_count
                 newCatalog.totalFileSize    = catalogValues[2].toLongLong(); //catalog_total_file_size
                 newCatalog.includeHidden    = catalogValues[3].compare("true", Qt::CaseInsensitive) == 0; //catalog_include_hidden
@@ -671,7 +671,6 @@ void Collection::loadStorageFileToTable()
                                         storage_id,
                                         storage_type,
                                         storage_location,
-                                        storage_path,
                                         storage_label,
                                         storage_file_system,
                                         storage_total_space,
@@ -689,7 +688,6 @@ void Collection::loadStorageFileToTable()
                                         :storage_id,
                                         :storage_type,
                                         :storage_location,
-                                        :storage_path,
                                         :storage_label,
                                         :storage_file_system,
                                         :storage_total_space,
@@ -712,7 +710,8 @@ void Collection::loadStorageFileToTable()
                     // but never read: the device name is the only name (STI-C13).
                     insertQuery.bindValue(":storage_type",          fieldList[2]);
                     insertQuery.bindValue(":storage_location",      fieldList[3]);
-                    insertQuery.bindValue(":storage_path",          fieldList[4]);
+                    // fieldList[4] is the Path column, kept in the file format
+                    // but never read: the path lives on the device (STI-C19).
                     insertQuery.bindValue(":storage_label",         fieldList[5]);
                     insertQuery.bindValue(":storage_file_system",   fieldList[6]);
                     insertQuery.bindValue(":storage_total_space",   fieldList[7].toLongLong());
@@ -1458,7 +1457,7 @@ void Collection::saveStorageTableToFile()
                             ''  AS storage_name   , -- Name column kept in the file format
                             storage_type          ,
                             storage_location      ,
-                            storage_path          ,
+                            ''  AS storage_path   , -- Path column kept in the file format
                             storage_label         ,
                             storage_file_system   ,
                             storage_total_space   ,
@@ -2677,7 +2676,7 @@ bool Collection::updateAllDeviceActive(bool skipNetworkPaths)
     query.prepare(querySQL);
     query.exec();
 
-    //Update and Save sourcePathIsActive for each catalog
+    //Update and save the active state of each Storage and Catalog device
     //loadDevice() already calls updateActiveState() internally, so probing again
     //here would cost a second QDir::exists() and a second UPDATE per device.
     bool anyChanged = false;

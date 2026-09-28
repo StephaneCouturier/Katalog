@@ -270,7 +270,6 @@ void Catalog::insertCatalog()
                                                         catalog_id,
                                                         catalog_file_path,
                                                         catalog_date_updated,
-                                                        catalog_source_path,
                                                         catalog_file_count,
                                                         catalog_total_file_size,
                                                         catalog_include_hidden,
@@ -286,7 +285,6 @@ void Catalog::insertCatalog()
                                         VALUES(         :catalog_id,
                                                         :catalog_file_path,
                                                         :catalog_date_updated,
-                                                        :catalog_source_path,
                                                         :catalog_file_count,
                                                         :catalog_total_file_size,
                                                         :catalog_include_hidden,
@@ -304,7 +302,6 @@ void Catalog::insertCatalog()
     insertCatalogQuery.bindValue(":catalog_id", ID);
     insertCatalogQuery.bindValue(":catalog_file_path", filePath);
     insertCatalogQuery.bindValue(":catalog_date_updated", dateUpdated);
-    insertCatalogQuery.bindValue(":catalog_source_path", sourcePath);
     insertCatalogQuery.bindValue(":catalog_file_count", fileCount);
     insertCatalogQuery.bindValue(":catalog_total_file_size", totalFileSize);
     insertCatalogQuery.bindValue(":catalog_include_hidden", includeHidden);
@@ -352,8 +349,7 @@ void Catalog::saveCatalog()
     QSqlQuery query(QSqlDatabase::database(m_connectionName));
     QString querySQL = QLatin1String(R"(
         UPDATE catalog
-        SET catalog_source_path       =:catalog_source_path,
-            catalog_file_type         =:catalog_file_type,
+        SET catalog_file_type         =:catalog_file_type,
             catalog_include_hidden    =:catalog_include_hidden,
             catalog_include_metadata  =:catalog_include_metadata,
             catalog_include_checksum  =:catalog_include_checksum,
@@ -364,7 +360,6 @@ void Catalog::saveCatalog()
     )");
     query.prepare(querySQL);
     query.bindValue(":catalog_id", ID);
-    query.bindValue(":catalog_source_path", sourcePath);
     query.bindValue(":catalog_file_type", fileType);
     query.bindValue(":catalog_include_hidden", includeHidden);
     query.bindValue(":catalog_include_metadata", includeMetadata);
@@ -460,7 +455,10 @@ void Catalog::loadCatalog()
                                 catalog_id                   ,
                                 catalog_file_path            ,
                                 catalog_date_updated         ,
-                                catalog_source_path          ,
+                                (SELECT d.device_path FROM device d
+                                  WHERE d.device_type = 'Catalog'
+                                    AND d.device_external_id = catalog.catalog_id
+                                  ORDER BY d.device_group_id LIMIT 1),
                                 catalog_file_count           ,
                                 catalog_total_file_size      ,
                                 catalog_include_hidden       ,
@@ -484,7 +482,7 @@ void Catalog::loadCatalog()
         ID                 = query.value(0).toInt();
         filePath           = query.value(1).toString();
         dateUpdated        = query.value(2).toDateTime();
-        sourcePath         = query.value(3).toString();
+        sourcePath         = query.value(3).toString();   // the device's path (no copy in catalog)
         fileCount          = query.value(4).toLongLong();
         totalFileSize      = query.value(5).toLongLong();
         includeHidden      = query.value(6).toBool();

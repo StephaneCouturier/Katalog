@@ -39,6 +39,13 @@ Read this first.
   constraint); every catalog row and id is kept. The catalog's name is its
   device's name, and uniqueness among Catalog devices is enforced by the
   application instead.
+- **Duplicated paths removed too (`STI-C19`).** `storage.storage_path`,
+  `catalog.catalog_source_path` and the dead `catalog.catalog_source_path_is_active`
+  are removed by the same migration. `device.device_path` is the only path of a
+  Storage or Catalog device; nothing a user sees changes. Memory mode keeps its
+  file slots: the "Path" column of `storage.csv` is written empty, and the
+  `<catalogSourcePath>` line of each `.idx` header keeps holding the device path
+  for readability — neither is read back.
 - **No return to older K2.** After the migration, K2 2.12 and older, and the K2
   2.13 binary published with 3.0 beta2, name these columns in their SQL and fail
   on File and Hosted collections. Accepted by the user for a major version; see
@@ -194,8 +201,8 @@ Discovered while specifying `STI-C6`, and recorded because it changes how urgent
   nothing a user can see today.
 - **`storage_total_space` and `storage_free_space` are shadow copies.**
   `Storage::loadStorage()` does read them, but `Device::loadDevice()`
-  immediately overwrites them from the **device** row — exactly as it does for
-  `storage_path`. The authoritative runtime values are `device_total_space` and
+  immediately overwrites them from the **device** row — exactly as it did for
+  the former `storage_path` (removed, `STI-C19`). The authoritative runtime values are `device_total_space` and
   `device_free_space`. The stale storage-row copies still matter in three
   places: they are written to `storage.csv` in Memory mode, they are carried
   into other collections by Collection Import, and
@@ -293,7 +300,7 @@ Boundaries and implementation constraints, not user-visible behaviour.
 | STI-C8 | The storage picture filename stays keyed on the internal `storage_id`, never on `storage_user_id`. A user number is editable, and keying an image file on an editable value orphans the image the first time it changes. | [Planned] |
 | STI-C9 | `storage_user_id` is NUMERIC. A non-numeric marking such as `A12` **cannot** be recorded; it falls back to zero. This is an accepted trade-off, taken deliberately to keep the numeric sorting and right alignment of the existing "Storage ID" columns in both UIs. Changing it to TEXT requires a new requirement **and** a decision about how those columns then sort. | [Planned] |
 | STI-C10 | This page's scope is **stopping new damage**. It MUST NOT add an automatic repair pass over existing collections, on open, on import or otherwise. Detecting and repairing collections already damaged is `SpecQualityCheck.md` (issue #809), which is user-triggered by `QCK-C2`. | [Planned] |
-| STI-C11 | `storage_path`, `storage_total_space` and `storage_free_space` are shadow copies of the authoritative `device_path`, `device_total_space` and `device_free_space`. They MUST NOT be made authoritative, and no new read path may prefer them. `STI-F11` keeps them correct because they are persisted and copied across collections, not because anything displays them. | [Planned] |
+| STI-C11 | `storage_total_space` and `storage_free_space` are shadow copies of the authoritative `device_total_space` and `device_free_space`. They MUST NOT be made authoritative, and no new read path may prefer them. `STI-F11` keeps them correct because they are persisted and copied across collections, not because anything displays them. The former `storage_path` copy is removed (`STI-C19`); removing the space copies is a later topic. | [Planned] |
 | STI-C12 | `qt_quick/database.h` was a stale, unused copy of the schema — listed in `qt_quick/CMakeLists.txt` but never included, since `appmanager.cpp` includes `core/database.h`. It MUST NOT be edited by this work. *Retired: the file was deleted and removed from `qt_quick/CMakeLists.txt` with the user's approval (2026-09-28); the only schema is `core/database.h` / `core/database.cpp`.* | [Removed] |
 | STI-C13 | A device's name lives in `device.device_name`, which is the **only** name. `storage.storage_name`, `catalog.catalog_storage` (`STI-C16`) and `catalog.catalog_name` (`STI-C17`) are removed: no code in K2, K3 or `core/` (including Collection Import and the Quality Check) reads or writes them. In Memory mode the slots of the first two — the "Name" column of `storage.csv` and the `<catalogStorage>` line of the `.idx` header — stay for format stability, written empty and never read. `Storage::name` is an in-memory field filled from `device_name`. `file.file_catalog` and the Memory-mode `.idx` file name are synced copies that remain in use and are kept equal to the device name on rename (`STI-F14`). | [Planned] |
 | STI-C14 | Collection Import resolves the device hierarchy (`device_parent_id`) and the storage and catalog links (`device_external_id`) by internal ids only, never by names. Names are written from the imported data; they are never used to find, match or de-duplicate a row. There is **no exception**: the former pre-2.8 fallback by `catalog_name` is removed. Import requires identical schema stamps in source and target, in K2 and K3 (`SpecCollection.md`, strict abort), so an older source must first be opened — and migrated — by 3.0. | [Planned] |
@@ -301,6 +308,7 @@ Boundaries and implementation constraints, not user-visible behaviour.
 | STI-C16 | The `storage` and `catalog` CREATE TABLE statements no longer declare `storage_name` and `catalog_storage`, and the 2.12 → 3.0 migration drops both columns from existing File and Hosted databases. The drop is **idempotent**: it runs safely on a database already stamped 2.13 by a beta, and on one where the columns are already gone. Memory-mode file formats are not changed. | [Planned] |
 | STI-C17 | `catalog.catalog_name` is removed: no code reads or writes it, it leaves the `catalog` CREATE TABLE, and the 2.12 → 3.0 migration (`Database::runMigration_3_0`, which runs on every open until release) removes it from existing File and Hosted databases. The step is **idempotent**. On SQLite it rebuilds the `catalog` table, because the column carries a UNIQUE constraint and cannot simply be dropped; the rebuild keeps every catalog row, its `catalog_id` and all other columns. | [Planned] |
 | STI-C18 | No two Catalog devices in a collection may share a `device_name`, because Memory mode stores each catalog as `<name>.idx`. The rule is enforced by the application, no longer by a database UNIQUE constraint: **create and rename** refuse a name already in use (existing K2/K3 dialogs; the check, `Device::verifyDeviceNameExists`, covers devices of every type, not only Catalog devices — stricter than needed, accepted); **split** gives each new catalog a unique name by appending `_2`, `_3`, … (checked against Catalog device names and against names already chosen in the same split); **import** appends ` (2)`, ` (3)`, … (`STI-F15`). | [Planned] |
+| STI-C19 | `device.device_path` is the **only** path of a Storage or Catalog device. `storage.storage_path`, `catalog.catalog_source_path` and `catalog.catalog_source_path_is_active` (never read; activity is `device_active`) are removed: no code reads or writes them, they leave the CREATE TABLE statements, and `Database::runMigration_3_0` (every open until release) drops them from existing File and Hosted databases, **idempotently**. In memory, `Catalog::sourcePath` and `Storage::path` are the owning device's path: `Device::loadDevice()` sets them, and a standalone `Catalog::loadCatalog()` / `Storage::loadStorage()` reads `device_path` of the owning device (for a catalog, the one with the lowest `device_group_id`, i.e. the Physical one first). Memory-mode file slots are kept: the "Path" column of `storage.csv` is written empty and never read; the `<catalogSourcePath>` line of the `.idx` header keeps holding the device path, for readability, and is never read back as a source. | [Planned] |
 
 ---
 
@@ -356,6 +364,7 @@ For each row: set up the stated condition, perform the action, confirm the resul
 - **STI-F14** — Rename a catalog in K2 and in K3. File mode: every `file` row of that catalog carries the new name in `file_catalog`, and duplicate search shows the new name. Memory mode: the `.idx` file carries the new name and the catalog reopens.
 - **STI-F15** — Import a catalog whose name is already used by a Catalog device in the target. The imported device, its `.idx` file and its `file_catalog` values are all `<name> (2)`.
 - **STI-C17 / STI-C18** — Open a 2.12 and a beta-2.13 collection with 3.0: `catalog_name` is gone, catalog count, ids and files are intact; reopen three times without error. Creating or renaming a catalog to a name another device already has is refused; splitting a catalog whose new name is taken gives it `_2`, `_3`, ….
+- **STI-C19** — Open a 2.12 and a beta-2.13 collection with 3.0: `storage_path`, `catalog_source_path` and `catalog_source_path_is_active` are gone, and every catalog still updates (scans) from its device path. In Memory mode, after a save, `storage.csv` has an empty "Path" column and each `.idx` has `<catalogSourcePath>` holding the device path.
 - **STI-F13** — Import only a Catalog device, without its parent Storage device, into a non-empty target. No storage row is added to the target.
 - **STI-C14** — Import a source in which two devices share a name with devices already in the target. Every imported device sits under its own imported parent and points at its own imported storage or catalog row.
 - **STI-C14 (no name fallback)** — Import from a collection whose schema stamp differs from the target's: the import aborts. Open that source with 3.0 first, then import: it succeeds, and each catalog is found by id.
@@ -376,4 +385,4 @@ For each row: set up the stated condition, perform the action, confirm the resul
 - `SpecQualityCheck.md` — detecting and repairing collections **already** damaged by the import defect (issue #809). This page stops new damage; that one cleans up the old.
 - `SpecCollection.md` — the Import / Update design note. Its "ID remapping" section documents `device_id_offset` and `catalog_id_offset` only; `storage_id_offset` appears in no document, which is how the defect stayed invisible.
 - `SpecDeviceComment.md` — `DCM-C4`, the column-guard rule this page reuses.
-- `SpecDeviceStorageRoot.md` — `DSR-C8`, the neighbouring rule about `storage_path` following the save.
+- `SpecDeviceStorageRoot.md` — `DSR-C8` (now `[Removed]`), the former rule keeping `storage_path` in step with the save; superseded by `STI-C19`.

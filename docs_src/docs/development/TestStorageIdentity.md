@@ -67,6 +67,7 @@ recognisable values.
 | STI-T29 | STI-C14 | *Retired: the pre-2.8 `catalog_name` fallback is removed; import requires identical schema stamps (`SpecCollection.md`). Replaced by STI-T32.* |
 | STI-T30 | STI-C13, STI-C16 | Open a **2.12 collection in File mode** with 3.0: the `storage` and `catalog` tables have **no** `storage_name` / `catalog_storage` column, and every device, storage detail and catalog shows as before. Open a **File-mode database already stamped 2.13** by a beta: the migration completes without error and the columns are gone. Open a **2.12 collection in Memory mode** with 3.0, change a storage and a catalog, save, close: `storage.csv` still has its "Name" column, empty, and each `.idx` still has an empty `<catalogStorage>` header line. Reopen with 3.0: the collection opens and shows everything as before. |
 | STI-T31 | STI-C17, STI-C18 | Open a **2.12** collection and a **beta-2.13** collection, each in **File** and in **Memory** mode, with 3.0. File mode: the `catalog` table has **no** `catalog_name` column; the number of catalogs, their ids and their files are unchanged. Close and reopen **three times**: no error, nothing changes (the migration is idempotent). Then try to create or rename a catalog to a name another device already has: it is refused. Split a catalog so that a new catalog's name is already taken (by an existing Catalog device, or by another catalog of the same split): it is named `<name>_2`, `<name>_3`, …, and no two Catalog devices share a name. |
+| STI-T33 | STI-C19 | Open a **2.12** collection and a **beta-2.13** collection, each in **File** and in **Memory** mode, with 3.0. File mode: `storage.storage_path`, `catalog.catalog_source_path` and `catalog.catalog_source_path_is_active` are **gone**. Every Storage and Catalog device still shows its path, and updating a catalog scans from its **device path**. Memory mode: change a storage and update a catalog, save, close: `storage.csv` has its "Path" column **empty**, and each `.idx` header's `<catalogSourcePath>` line holds the **device path**. Reopen: everything shows as before. |
 | STI-T32 | STI-F15, STI-C14 | Import a source containing a catalog named `NAME` into a target that already has a Catalog device `NAME`. The imported device is `NAME (2)`, its `.idx` file (Memory mode) is `NAME (2).idx`, and its files carry `NAME (2)` in `file_catalog`. Then import from a source whose schema stamp differs from the target's: the import aborts. |
 
 ## Part B — the identity split
@@ -110,7 +111,7 @@ following, which are not runnable tests:
 | STI-O1, STI-O2, STI-O3 | Operational intent. They are covered in substance by STI-T5, STI-T1 and STI-T11 respectively. |
 | STI-C4 | Schema mechanics, verified by STI-T9 (the upgrade works) rather than by inspecting the guard. |
 | STI-C7 | Internal refactor with no user-visible behaviour of its own; its effect is STI-T11. |
-| STI-C11 | Records why three columns are shadow copies. STI-T16 covers the behaviour that depends on it. |
+| STI-C11 | Records why two columns are shadow copies (the path copy is removed, `STI-C19`). STI-T16 covers the behaviour that depends on it. |
 | STI-C12 | Removed: the file it protected, `qt_quick/database.h`, was deleted. |
 
 ---

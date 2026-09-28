@@ -787,12 +787,8 @@ void MainWindow::saveDeviceForm()
     //If device is Storage, rename in storage table and update device values
     if(activeDevice->type == "Storage"){
 
-        // storage_path follows the save, not the path-root replacement (DSR-C8):
-        // written on every branch, so Skip and Full re-scan no longer leave it
-        // holding the old path while device_path holds the new one. Keyed on the
-        // internal id, which the form cannot change (STI-C6).
+        // Keyed on the internal id, which the form cannot change (STI-C6).
         activeDevice->storage->userID       = newStorageUserID;
-        activeDevice->storage->path         = activeDevice->path;
         activeDevice->storage->type         = ui->Storage_lineEdit_Panel_Type->text();
         activeDevice->storage->label        = ui->Storage_lineEdit_Panel_Label->text();
         activeDevice->storage->fileSystem   = ui->Storage_lineEdit_Panel_FileSystem->text();

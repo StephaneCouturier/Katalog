@@ -39,7 +39,7 @@ This is a **note, not a requirement.** Nothing below is authorised work.
 N1 normalizes a path only at the moment it is picked or typed. A device whose
 path was stored **with** a trailing separator before N1 existed keeps that stored
 value until the user re-picks or re-edits the path; nothing sweeps the existing
-`device.device_path` / `catalog.catalog_source_path` rows.
+`device.device_path` rows (`catalog.catalog_source_path` is removed, `STI-C19`).
 
 Two propagation points bypass the single core rule:
 

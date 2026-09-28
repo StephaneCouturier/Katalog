@@ -79,9 +79,9 @@ How should the catalog indexes be updated?
 | ID | Requirement | Status |
 |----|-------------|--------|
 | DSR-F1 | Saving a **Storage** device whose path changed, when the previous path was not empty, asks how the catalog indexes should be updated and offers exactly three buttons: *Replace path root*, *Full re-scan*, *Skip*. | [Implemented] |
-| DSR-F2 | *Replace path root* on a Storage device replaces the old root with the new one at the start of `catalog.catalog_source_path` for every Catalog device below it, and of `file.file_full_path`, `file.file_folder_path` and `folder.folder_path` in those catalogs. `device.device_path` of each catalog is written with the same new value, so it keeps matching `catalog_source_path`. | [Implemented] |
+| DSR-F2 | *Replace path root* on a Storage device replaces the old root with the new one at the start of `device.device_path` for every Catalog device below it, and of `file.file_full_path`, `file.file_folder_path` and `folder.folder_path` in those catalogs. `device.device_path` is the only path of a catalog (`SpecStorageIdentity.md` `STI-C19`). | [Implemented] |
 | DSR-F3 | Saving a **Catalog** device whose source path changed offers the same three buttons, and *Replace path root* rewrites that one catalog's own `file` and `folder` rows. (The Catalog dialog labels the middle button *Full re-index*, not *Full re-scan* — see User-visible text.) | [Implemented] |
-| DSR-F4 | A catalog whose `catalog_source_path` does not start with the old root is skipped: none of its rows are touched and it is not included in the catalog count reported by DSR-F7. | [Implemented] |
+| DSR-F4 | A catalog whose device path (`device.device_path`) does not start with the old root is skipped: none of its rows are touched and it is not included in the catalog count reported by DSR-F7. | [Implemented] |
 | DSR-F5 | In Memory mode the `file` and `folder` tables are empty until loaded, so the replacement calls `loadCatalogFileListToTable()` and `loadFoldersToTable()` first, and `saveCatalogToFile()` afterwards to write the corrected rows back to `.idx` and `.folders.idx`. Without the write-back the repair is lost on restart. | [Implemented] |
 | DSR-F6 | The replacement runs with the drive unplugged. It reads and writes the collection only — it never opens the device's own files. | [Implemented] |
 | DSR-F7 | When a replacement completes, its result is reported as a single status message built with `StatusBarMessageBuilder`: operation `Update`, status `Completed`, device context `Catalog N of N \| <device name>` where N is the number of catalogs updated, process `Paths Updated: F of F (100%)` where F is the number of file rows rewritten, and result `Folders found: D` where D is the number of folder rows rewritten. When no catalog matched, `StatusBarMessageBuilder` omits the device-context field (it drops it whenever the total is 0), so the message reads `UPDATE | Completed | Paths Updated: 0 | Folders found: 0`. That is accepted rather than worked around: the message still appears, and the builder is shared by every status message in the application. | [Planned] |
@@ -98,7 +98,7 @@ How should the catalog indexes be updated?
 | DSR-C5 | The message of DSR-F7 is built once, in `core/`, and translated in the `MainWindow` context, so K2 and K3 render identical text from one set of translations. A UI layer MUST NOT compose its own variant, and the message MUST NOT be assembled as a raw concatenated string — `StatusBarMessageBuilder` is the only permitted producer. | [Planned] |
 | DSR-C6 | A path-root replacement is a device operation: in K3 it MUST be requested through the same single entry point as a device update, and queued as an *update* entry, so that the one-operation-at-a-time guard (`OPQ-C4`, `OPQ-C15`) and the synchronous running flag (`OPQ-C13`) apply to it unchanged. It MUST NOT drive `DeviceUpdateManager` directly. | [Planned] |
 | DSR-C7 | A replacement MUST NOT call `finishRunningOperation()` or `scheduleNextOperation()` unless it is itself the entry that is running — otherwise it ends somebody else's operation and lets the next one start on top of it. It MUST NOT emit `catalogCreationCompleted`, which today makes a replacement announce *"Catalog created successfully."* whenever the Create page is open. | [Planned] |
-| DSR-C8 | The path of a Storage device is stored twice: `device.device_path` and `storage.storage_path`. Saving the device MUST write **both**, from the same value — K2 `saveDeviceForm()` and K3 `AppManager::saveStorageDetails()`, neither of which writes `storage_path` today. `Device::replaceStorageRootInIndexes()` MUST stop writing it: it is currently the only code that does, so pressing *Full re-scan* or *Skip* leaves `storage_path` at the old path while `device_path` holds the new one. | [Planned] |
+| DSR-C8 | The path of a Storage device is stored twice: `device.device_path` and `storage.storage_path`. Saving the device MUST write **both**, from the same value — K2 `saveDeviceForm()` and K3 `AppManager::saveStorageDetails()`, neither of which writes `storage_path` today. `Device::replaceStorageRootInIndexes()` MUST stop writing it: it is currently the only code that does, so pressing *Full re-scan* or *Skip* leaves `storage_path` at the old path while `device_path` holds the new one. *Superseded by `SpecStorageIdentity.md` `STI-C19`: `storage.storage_path` is removed; `device.device_path` is the only path.* | [Removed] |
 
 ---
 
@@ -125,25 +125,12 @@ stored update is sufficient and both extra steps are skipped (DSR-F5).
 
 ## Note on `storage.storage_path`
 
-The path of a Storage device is stored in two columns, `device.device_path` and
-`storage.storage_path`. **Only the first one is ever read.**
-
-`Storage::loadStorage()` does read `storage_path` into `Storage::path`, but
-`Device::loadDevice()` overwrites it from `device_path` on the very next line,
-and every other assignment to `Storage::path` in the codebase copies
-`device->path` into it the same way. The one place a `Storage` is loaded on its
-own — the K3 devices page detail — does not read `.path` at all. What remains
-writes the column, saves it to `storage.csv`, reads it back and copies it when a
-collection is imported; nothing acts on the value.
-
-It is legacy, from before `device` became the object that owns the hierarchy.
-The column is **kept, not dropped**: `storage.csv` is positional, so removing a
-field shifts every one after it and a released 2.12 binary would misread
-collections written by a newer version. DSR-C8 keeps it truthful instead, which
-costs a few lines and removes the question permanently.
-
-**If you are reading this because you found `storage_path` and wondered whether
-you need to maintain it: you do not need to do anything beyond DSR-C8.**
+`storage.storage_path` (and `catalog.catalog_source_path`) used to duplicate
+`device.device_path`. Both are removed in the 2.12 → 3.0 migration
+(`SpecStorageIdentity.md` `STI-C19`); `device.device_path` is the only path, and
+DSR-C8 is retired. In Memory mode the "Path" column of `storage.csv` stays,
+written empty; the `.idx` header's `<catalogSourcePath>` line keeps holding the
+device path for readability but is never read back.
 
 ---
 
@@ -201,7 +188,7 @@ For each row: set up the stated condition, perform the action, confirm the resul
 - **DSR-C5** — Run the same replacement in K2 and in K3 with the language set to French: the two messages are identical, word for word.
 - **DSR-C6** — In K3, start a long device update, then change a storage path and choose *Replace path root*. It is accepted as a queued entry, appears in the queue, and runs only after the update finishes. Repeat while a search runs: it is refused, as any update would be.
 - **DSR-C7** — In K3, queue two device updates, then trigger a replacement. The running update keeps its place in the panel and the queue does not jump ahead. With the Create page open, run a replacement: no *"Catalog created successfully."* notice appears.
-- **DSR-C8** — Change a Storage device's path and choose *Skip*. The storage record's path matches the new device path. Repeat choosing *Full re-scan*, and again choosing *Replace path root*: all three agree.
+- **DSR-C8** — *(Removed; see `STI-C19` in `SpecStorageIdentity.md`.)*
 
 ---
 

@@ -358,8 +358,8 @@ int CollectionImporter::remapAndInsertCatalog(int srcCatalogId, const QString &c
     QSqlQuery srcQ(QSqlDatabase::database(m_sourceConnectionName));
     srcQ.prepare(QLatin1String(R"(
         SELECT catalog_id, catalog_file_path, catalog_date_updated,
-               catalog_source_path, catalog_file_count, catalog_total_file_size,
-               catalog_source_path_is_active, catalog_include_hidden, catalog_file_type,
+               catalog_file_count, catalog_total_file_size,
+               catalog_include_hidden, catalog_file_type,
                catalog_include_symblinks, catalog_is_full_device,
                catalog_date_loaded, catalog_include_metadata, catalog_include_checksum,
                catalog_app_version
@@ -386,15 +386,15 @@ int CollectionImporter::remapAndInsertCatalog(int srcCatalogId, const QString &c
     ins.prepare(QLatin1String(R"(
         INSERT INTO catalog (
             catalog_id, catalog_file_path, catalog_date_updated,
-            catalog_source_path, catalog_file_count, catalog_total_file_size,
-            catalog_source_path_is_active, catalog_include_hidden, catalog_file_type,
+            catalog_file_count, catalog_total_file_size,
+            catalog_include_hidden, catalog_file_type,
             catalog_include_symblinks, catalog_is_full_device,
             catalog_date_loaded, catalog_include_metadata, catalog_include_checksum,
             catalog_app_version)
         VALUES (
             :catalog_id, :catalog_file_path, :catalog_date_updated,
-            :catalog_source_path, :catalog_file_count, :catalog_total_file_size,
-            :catalog_source_path_is_active, :catalog_include_hidden, :catalog_file_type,
+            :catalog_file_count, :catalog_total_file_size,
+            :catalog_include_hidden, :catalog_file_type,
             :catalog_include_symblinks, :catalog_is_full_device,
             :catalog_date_loaded, :catalog_include_metadata, :catalog_include_checksum,
             :catalog_app_version)
@@ -402,18 +402,16 @@ int CollectionImporter::remapAndInsertCatalog(int srcCatalogId, const QString &c
     ins.bindValue(":catalog_id",                    newCatalogId);
     ins.bindValue(":catalog_file_path",              newFilePath);
     ins.bindValue(":catalog_date_updated",           srcQ.value(2));
-    ins.bindValue(":catalog_source_path",            srcQ.value(3));
-    ins.bindValue(":catalog_file_count",             srcQ.value(4));
-    ins.bindValue(":catalog_total_file_size",        srcQ.value(5));
-    ins.bindValue(":catalog_source_path_is_active",  srcQ.value(6));
-    ins.bindValue(":catalog_include_hidden",         srcQ.value(7));
-    ins.bindValue(":catalog_file_type",              srcQ.value(8));
-    ins.bindValue(":catalog_include_symblinks",      srcQ.value(9));
-    ins.bindValue(":catalog_is_full_device",         srcQ.value(10));
-    ins.bindValue(":catalog_date_loaded",            srcQ.value(11));
-    ins.bindValue(":catalog_include_metadata",       srcQ.value(12));
-    ins.bindValue(":catalog_include_checksum",       srcQ.value(13));
-    ins.bindValue(":catalog_app_version",            srcQ.value(14));
+    ins.bindValue(":catalog_file_count",             srcQ.value(3));
+    ins.bindValue(":catalog_total_file_size",        srcQ.value(4));
+    ins.bindValue(":catalog_include_hidden",         srcQ.value(5));
+    ins.bindValue(":catalog_file_type",              srcQ.value(6));
+    ins.bindValue(":catalog_include_symblinks",      srcQ.value(7));
+    ins.bindValue(":catalog_is_full_device",         srcQ.value(8));
+    ins.bindValue(":catalog_date_loaded",            srcQ.value(9));
+    ins.bindValue(":catalog_include_metadata",       srcQ.value(10));
+    ins.bindValue(":catalog_include_checksum",       srcQ.value(11));
+    ins.bindValue(":catalog_app_version",            srcQ.value(12));
 
     if (!ins.exec()) {
         m_lastError = ins.lastError().text();
@@ -676,7 +674,10 @@ void CollectionImporter::insertFileData(int srcCatalogId, int newCatalogId,
         // Load full catalog metadata so the .idx header is complete
         QSqlQuery catQ(QSqlDatabase::database(tgtConn));
         catQ.prepare(QLatin1String(R"(
-            SELECT catalog_source_path, catalog_file_count,
+            SELECT (SELECT d.device_path FROM device d
+                     WHERE d.device_type = 'Catalog' AND d.device_external_id = catalog.catalog_id
+                     ORDER BY d.device_group_id LIMIT 1),
+                   catalog_file_count,
                    catalog_total_file_size, catalog_include_hidden, catalog_file_type,
                    catalog_include_symblinks, catalog_is_full_device,
                    catalog_include_metadata, catalog_include_checksum, catalog_app_version
@@ -1270,7 +1271,7 @@ int CollectionImporter::importStorageById(int srcStorageId)
     // Read the full source storage row
     QSqlQuery srcQ(QSqlDatabase::database(m_sourceConnectionName));
     srcQ.prepare(QLatin1String(R"(
-        SELECT storage_id, storage_type, storage_location, storage_path,
+        SELECT storage_id, storage_type, storage_location,
                storage_label, storage_file_system, storage_total_space, storage_free_space,
                storage_brand, storage_model, storage_serial_number, storage_build_date,
                storage_comment1, storage_comment2, storage_comment3, storage_picture_path,
@@ -1301,13 +1302,13 @@ int CollectionImporter::importStorageById(int srcStorageId)
     QSqlQuery ins(QSqlDatabase::database(tgtConn));
     ins.prepare(QLatin1String(R"(
         INSERT INTO storage (
-            storage_id, storage_type, storage_location, storage_path,
+            storage_id, storage_type, storage_location,
             storage_label, storage_file_system, storage_total_space, storage_free_space,
             storage_brand, storage_model, storage_serial_number, storage_build_date,
             storage_comment1, storage_comment2, storage_comment3, storage_picture_path,
             storage_user_id)
         VALUES (
-            :id, :type, :loc, :path,
+            :id, :type, :loc,
             :label, :fs, :total, :free,
             :brand, :model, :serial, :build,
             :c1, :c2, :c3, :pic, :userid)
@@ -1315,29 +1316,28 @@ int CollectionImporter::importStorageById(int srcStorageId)
     ins.bindValue(":id",     newStorageId);
     ins.bindValue(":type",   srcQ.value(1));
     ins.bindValue(":loc",    srcQ.value(2));
-    ins.bindValue(":path",   srcQ.value(3));
-    ins.bindValue(":label",  srcQ.value(4));
-    ins.bindValue(":fs",     srcQ.value(5));
-    ins.bindValue(":total",  srcQ.value(6));
-    ins.bindValue(":free",   srcQ.value(7));
-    ins.bindValue(":brand",  srcQ.value(8));
-    ins.bindValue(":model",  srcQ.value(9));
-    ins.bindValue(":serial", srcQ.value(10));
-    ins.bindValue(":build",  srcQ.value(11));
-    ins.bindValue(":c1",     srcQ.value(12));
-    ins.bindValue(":c2",     srcQ.value(13));
-    ins.bindValue(":c3",     srcQ.value(14));
-    ins.bindValue(":pic",    srcQ.value(15));
+    ins.bindValue(":label",  srcQ.value(3));
+    ins.bindValue(":fs",     srcQ.value(4));
+    ins.bindValue(":total",  srcQ.value(5));
+    ins.bindValue(":free",   srcQ.value(6));
+    ins.bindValue(":brand",  srcQ.value(7));
+    ins.bindValue(":model",  srcQ.value(8));
+    ins.bindValue(":serial", srcQ.value(9));
+    ins.bindValue(":build",  srcQ.value(10));
+    ins.bindValue(":c1",     srcQ.value(11));
+    ins.bindValue(":c2",     srcQ.value(12));
+    ins.bindValue(":c3",     srcQ.value(13));
+    ins.bindValue(":pic",    srcQ.value(14));
     // Copied verbatim: the number is written on a physical disk, so import never
     // offsets, suffixes or disambiguates it (STI-C3); a duplicate number is
     // surfaced to the user, not resolved silently.
-    ins.bindValue(":userid", srcQ.value(16));
+    ins.bindValue(":userid", srcQ.value(15));
     if (!ins.exec()) {
         qWarning() << "WARNING: CollectionImporter: storage INSERT failed:" << ins.lastError().text();
         return 0;
     }
 
-    copyStorageImage(srcQ.value(15).toString());
+    copyStorageImage(srcQ.value(14).toString());
 
     m_storageIdMap.insert(srcStorageId, newStorageId);
     return newStorageId;
@@ -1350,7 +1350,7 @@ void CollectionImporter::updateStorageRecord(int srcStorageId, int targetStorage
 {
     QSqlQuery srcQ(QSqlDatabase::database(m_sourceConnectionName));
     srcQ.prepare(QLatin1String(R"(
-        SELECT storage_type, storage_location, storage_path,
+        SELECT storage_type, storage_location,
                storage_label, storage_file_system, storage_total_space, storage_free_space,
                storage_brand, storage_model, storage_serial_number, storage_build_date,
                storage_comment1, storage_comment2, storage_comment3, storage_picture_path
@@ -1365,7 +1365,6 @@ void CollectionImporter::updateStorageRecord(int srcStorageId, int targetStorage
         UPDATE storage SET
             storage_type           = :type,
             storage_location       = :loc,
-            storage_path           = :path,
             storage_label          = :label,
             storage_file_system    = :fs,
             storage_total_space    = :total,
@@ -1382,23 +1381,22 @@ void CollectionImporter::updateStorageRecord(int srcStorageId, int targetStorage
     )"));
     upd.bindValue(":type",   srcQ.value(0));
     upd.bindValue(":loc",    srcQ.value(1));
-    upd.bindValue(":path",   srcQ.value(2));
-    upd.bindValue(":label",  srcQ.value(3));
-    upd.bindValue(":fs",     srcQ.value(4));
-    upd.bindValue(":total",  srcQ.value(5));
-    upd.bindValue(":free",   srcQ.value(6));
-    upd.bindValue(":brand",  srcQ.value(7));
-    upd.bindValue(":model",  srcQ.value(8));
-    upd.bindValue(":serial", srcQ.value(9));
-    upd.bindValue(":build",  srcQ.value(10));
-    upd.bindValue(":c1",     srcQ.value(11));
-    upd.bindValue(":c2",     srcQ.value(12));
-    upd.bindValue(":c3",     srcQ.value(13));
-    upd.bindValue(":pic",    srcQ.value(14));
+    upd.bindValue(":label",  srcQ.value(2));
+    upd.bindValue(":fs",     srcQ.value(3));
+    upd.bindValue(":total",  srcQ.value(4));
+    upd.bindValue(":free",   srcQ.value(5));
+    upd.bindValue(":brand",  srcQ.value(6));
+    upd.bindValue(":model",  srcQ.value(7));
+    upd.bindValue(":serial", srcQ.value(8));
+    upd.bindValue(":build",  srcQ.value(9));
+    upd.bindValue(":c1",     srcQ.value(10));
+    upd.bindValue(":c2",     srcQ.value(11));
+    upd.bindValue(":c3",     srcQ.value(12));
+    upd.bindValue(":pic",    srcQ.value(13));
     upd.bindValue(":id",     targetStorageId);
     upd.exec();
 
-    copyStorageImage(srcQ.value(14).toString());
+    copyStorageImage(srcQ.value(13).toString());
 }
 
 //----------------------------------------------------------------------

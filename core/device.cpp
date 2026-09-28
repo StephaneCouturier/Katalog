@@ -1274,7 +1274,7 @@ Device::StorageRootReplaceResult Device::replaceStorageRootInIndexes(
     const int     oldLen  = oldN.length();
 
     // --- Catalog device: update its own file/folder tables directly ---
-    // device.device_path and catalog.catalog_source_path already saved by saveDeviceForm/saveCatalogChanges.
+    // device.device_path (the only copy of the path) already saved by saveDeviceForm/saveCatalogChanges.
     if (type == "Catalog") {
         const int catId   = catalog->ID;
         const int startPos = oldLen + 1;
@@ -1422,12 +1422,11 @@ Device::StorageRootReplaceResult Device::replaceStorageRootInIndexes(
         else
             qWarning() << "WARNING: replaceStorageRootInIndexes: folder UPDATE failed:" << folderQ.lastError().text();
 
-        // UPDATE catalog source path in the catalog table, device table, and C++ object
+        // The catalog's path is its device's path (STI-C19): update the device
+        // row, and the C++ object for the .idx header below.
         const QString newSrc = newN + src.mid(oldLen);
         catalogDev.catalog->sourcePath = newSrc;
-        catalogDev.catalog->saveCatalog();
 
-        // Keep device.device_path in sync with catalog.catalog_source_path
         QSqlQuery devPathQ(db);
         devPathQ.prepare("UPDATE device SET device_path = :newPath WHERE device_id = :devId");
         devPathQ.bindValue(":newPath", newSrc);
@@ -1442,10 +1441,8 @@ Device::StorageRootReplaceResult Device::replaceStorageRootInIndexes(
         result.catalogsUpdated++;
     }
 
-    // storage.storage_path is deliberately NOT written here (DSR-C8). It is a
-    // second copy of device.device_path, written when the device is saved; the
-    // save runs on every branch of the path-change question, this operation only
-    // on one. Maintaining it in both places is what let the two drift apart.
+    // The storage has no path of its own: device.device_path is the only copy
+    // (DSR-C8, STI-C19).
 
     return result;
 }

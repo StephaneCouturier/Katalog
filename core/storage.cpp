@@ -63,7 +63,6 @@ void Storage::insertStorage()
             INSERT INTO storage(
                             storage_id,
                             storage_type,
-                            storage_path,
                             storage_label,
                             storage_file_system,
                             storage_total_space,
@@ -78,7 +77,6 @@ void Storage::insertStorage()
                             storage_user_id)
                       VALUES(
                             :new_id,
-                            "",
                             "",
                             "",
                             "",
@@ -123,7 +121,6 @@ QString Storage::saveStorage()
     query.prepare(QLatin1String(R"(
         UPDATE storage
         SET storage_user_id       = :user_id,
-            storage_path          = :path,
             storage_type          = :type,
             storage_label         = :label,
             storage_file_system   = :fs,
@@ -140,7 +137,6 @@ QString Storage::saveStorage()
         WHERE storage_id = :id
     )"));
     query.bindValue(":user_id", userID);
-    query.bindValue(":path",    path);
     query.bindValue(":type",    type);
     query.bindValue(":label",   label);
     query.bindValue(":fs",      fileSystem);
@@ -168,7 +164,10 @@ void Storage::loadStorage(QString connectionName)
     QString querySQL = QLatin1String(R"(
                             SELECT
                                 storage_type,
-                                storage_path,
+                                (SELECT d.device_path FROM device d
+                                  WHERE d.device_type = 'Storage'
+                                    AND d.device_external_id = storage.storage_id
+                                  LIMIT 1),
                                 storage_label,
                                 storage_file_system,
                                 storage_total_space,
@@ -191,7 +190,7 @@ void Storage::loadStorage(QString connectionName)
     if (query.exec()) {
         if (query.next()) {
             type         = query.value(0).toString();
-            path         = query.value(1).toString();
+            path         = query.value(1).toString();   // the device's path (no copy in storage)
             label        = query.value(2).toString();
             fileSystem   = query.value(3).toString();
             totalSpace   = query.value(4).toLongLong();
