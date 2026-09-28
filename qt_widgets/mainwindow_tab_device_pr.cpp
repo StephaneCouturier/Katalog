@@ -787,79 +787,27 @@ void MainWindow::saveDeviceForm()
     //If device is Storage, rename in storage table and update device values
     if(activeDevice->type == "Storage"){
 
-        //Update Storage path and user number
-        QString queryUpdateStorageSQL = QLatin1String(R"(
-                                    UPDATE storage
-                                    SET storage_path    =:storage_path,
-                                        storage_user_id =:storage_user_id
-                                    WHERE storage_id    =:storage_id
-                                )");
-
-        QSqlQuery updateQuery(QSqlDatabase::database(m_connectionName));
-        updateQuery.prepare(queryUpdateStorageSQL);
         // storage_path follows the save, not the path-root replacement (DSR-C8):
         // written on every branch, so Skip and Full re-scan no longer leave it
-        // holding the old path while device_path holds the new one.
-        updateQuery.bindValue(":storage_path", activeDevice->path);
-        updateQuery.bindValue(":storage_user_id", newStorageUserID);
-        // Keyed on the internal id, which the form cannot change (STI-C6). The
-        // previous statement set storage_id from the edited field and matched on
-        // the new value, so on an ID change it updated nothing at all.
-        updateQuery.bindValue(":storage_id", activeDevice->externalID);
-        updateQuery.exec();
-        activeDevice->storage->userID = newStorageUserID;
+        // holding the old path while device_path holds the new one. Keyed on the
+        // internal id, which the form cannot change (STI-C6).
+        activeDevice->storage->userID       = newStorageUserID;
+        activeDevice->storage->path         = activeDevice->path;
+        activeDevice->storage->type         = ui->Storage_lineEdit_Panel_Type->text();
+        activeDevice->storage->label        = ui->Storage_lineEdit_Panel_Label->text();
+        activeDevice->storage->fileSystem   = ui->Storage_lineEdit_Panel_FileSystem->text();
+        activeDevice->storage->brand        = ui->Storage_lineEdit_Panel_Brand->text();
+        activeDevice->storage->model        = ui->Storage_lineEdit_Panel_Model->text();
+        activeDevice->storage->serialNumber = ui->Storage_lineEdit_Panel_SerialNumber->text();
+        activeDevice->storage->buildDate    = ui->Storage_lineEdit_Panel_BuildDate->text();
+        activeDevice->storage->comment1     = ui->Storage_lineEdit_Panel_Comment1->text();
+        activeDevice->storage->comment2     = ui->Storage_lineEdit_Panel_Comment2->text();
+        activeDevice->storage->comment3     = ui->Storage_lineEdit_Panel_Comment3->text();
+        activeDevice->storage->picturePath  = ui->Storage_comboBox_PicturePath->currentText();
+        activeDevice->storage->totalSpace   = activeDevice->totalSpace;
+        activeDevice->storage->freeSpace    = activeDevice->freeSpace;
+        activeDevice->storage->saveStorage();
 
-        //loadStorageTableToModel();
-        updateStorageSelectionStatistics();
-
-        //Save data to file
-        collection->saveStorageTableToFile();
-
-        //Save changes to selected Storage device from the edition panel
-
-        //Update storage
-        QSqlQuery queryStorage(QSqlDatabase::database(m_connectionName));
-        QString queryStorageSQL = QLatin1String(R"(
-                                    UPDATE storage
-                                    SET storage_type =:storage_type,
-                                        storage_label =:storage_label,
-                                        storage_file_system =:storage_file_system,
-                                        storage_total_space =:storage_total_space,
-                                        storage_free_space =:storage_free_space,
-                                        storage_brand =:storage_brand,
-                                        storage_model =:storage_model,
-                                        storage_serial_number =:storage_serial_number,
-                                        storage_build_date =:storage_build_date,
-                                        storage_comment1 =:storage_comment1,
-                                        storage_comment2 =:storage_comment2,
-                                        storage_comment3 =:storage_comment3,
-                                        storage_picture_path =:storage_picture_path
-                                    WHERE storage_id =:storage_id
-                                )");
-
-        queryStorage.prepare(queryStorageSQL);
-        queryStorage.bindValue(":storage_type",          ui->Storage_lineEdit_Panel_Type->text());
-        queryStorage.bindValue(":storage_label",         ui->Storage_lineEdit_Panel_Label->text());
-        queryStorage.bindValue(":storage_file_system",   ui->Storage_lineEdit_Panel_FileSystem->text());
-        queryStorage.bindValue(":storage_brand",         ui->Storage_lineEdit_Panel_Brand->text());
-        queryStorage.bindValue(":storage_model",         ui->Storage_lineEdit_Panel_Model->text());
-        queryStorage.bindValue(":storage_serial_number", ui->Storage_lineEdit_Panel_SerialNumber->text());
-        queryStorage.bindValue(":storage_build_date",    ui->Storage_lineEdit_Panel_BuildDate->text());
-        queryStorage.bindValue(":storage_comment1",      ui->Storage_lineEdit_Panel_Comment1->text());
-        queryStorage.bindValue(":storage_comment2",      ui->Storage_lineEdit_Panel_Comment2->text());
-        queryStorage.bindValue(":storage_comment3",      ui->Storage_lineEdit_Panel_Comment3->text());
-        queryStorage.bindValue(":storage_picture_path",  ui->Storage_comboBox_PicturePath->currentText());
-        // Bound at last (STI-F11). These were named in the SET clause but never
-        // bound, so an unbound placeholder went in as NULL and every Storage save
-        // silently blanked them. storage_location is dropped from the statement
-        // instead: nothing reads it and Storage has no member for it, so the way
-        // to preserve it is not to write it.
-        queryStorage.bindValue(":storage_total_space",   activeDevice->totalSpace);
-        queryStorage.bindValue(":storage_free_space",    activeDevice->freeSpace);
-        queryStorage.bindValue(":storage_id",            activeDevice->storage->ID);
-        queryStorage.exec();
-
-        //loadStorageTableToModel();
         updateStorageSelectionStatistics();
 
         //Save data to file

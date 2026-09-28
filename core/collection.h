@@ -120,6 +120,8 @@ public:
 
     //Search history management
     void clearSearchHistory(const QString &connectionName);
+    // Every saved search, newest first; one map per search, keyed by column name.
+    QList<QVariantMap> loadSearchHistory();
     void keepLastSearchHistory(int count, const QString &connectionName);
 
     //File deleting

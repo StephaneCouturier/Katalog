@@ -1819,12 +1819,11 @@ bool AppManager::deleteSingleFile(const QString &fullPath)
 //----------------------------------------------------------------------
 bool AppManager::catalogIncludesExtendedMetadata(int catalogId)
 {
-    QSqlQuery query(QSqlDatabase::database(m_connectionName));
-    query.prepare(QLatin1String("SELECT catalog_include_metadata FROM catalog WHERE catalog_id = :id"));
-    query.bindValue(":id", catalogId);
-    if (query.exec() && query.next())
-        return query.value(0).toString().contains("Extended");
-    return false;
+    Catalog catalog;
+    catalog.ID = catalogId;
+    catalog.setConnectionName(m_connectionName);
+    catalog.loadCatalog();
+    return catalog.includeMetadata.contains("Extended");
 }
 //----------------------------------------------------------------------
 QString AppManager::getFileMetadataJson(int catalogId, const QString &fileName, const QString &folderPath)
@@ -1875,49 +1874,18 @@ QString AppManager::verifyFileChecksum(const QString &filePath, const QString &e
 //----------------------------------------------------------------------
 QVariantList AppManager::getSearchHistory() const
 {
-    // Column index map (matches SELECT order below):
-    // 0  date_time
-    // 1  text_checked         2  text_phrase      3  text_criteria
-    // 4  case_sensitive       5  text_exclude
-    // 6  file_criteria_checked
-    // 7  file_type_checked    8  file_type
-    // 9  file_size_checked    10 file_size_min     11 file_size_min_unit
-    //                         12 file_size_max     13 file_size_max_unit
-    // 14 date_modified_checked 15 date_modified_min 16 date_modified_max
-    // 17 metadata_checked
-    // 18 duplicates_checked   19 dup_name  20 dup_size  21 dup_date  22 dup_checksum
-    // 23 differences_checked
-    // 24 folder_criteria_checked  25 show_folders  26 tag_checked  27 tag
-
     QVariantList result;
     // One lookup per distinct device rather than per row: a long history is
     // usually a handful of devices searched repeatedly.
     QHash<int, QString> deviceNameById;
-    QSqlQuery query(QSqlDatabase::database(m_connectionName));
-    query.prepare(QLatin1String(R"(
-        SELECT date_time,
-               text_checked, text_phrase, text_criteria, case_sensitive, text_exclude,
-               file_criteria_checked,
-               file_type_checked, file_type,
-               file_size_checked, file_size_min, file_size_min_unit, file_size_max, file_size_max_unit,
-               date_modified_checked, date_modified_min, date_modified_max,
-               metadata_checked,
-               duplicates_checked, duplicates_name, duplicates_size, duplicates_date_modified, duplicates_checksum,
-               differences_checked,
-               folder_criteria_checked, show_folders, tag_checked, tag,
-               selected_device_ID_list
-        FROM search ORDER BY date_time DESC
-    )"));
-    if (!query.exec())
-        return result;
-
-    while (query.next()) {
+    const QList<QVariantMap> rows = collection->loadSearchHistory();
+    for (const QVariantMap &row : rows) {
         QStringList parts;
 
         // ── File name ──────────────────────────────────────────────────────
-        if (query.value(1).toBool()) {
-            QString phrase = query.value(2).toString();
-            QString criteria = query.value(3).toString();
+        if (row.value(QStringLiteral("text_checked")).toBool()) {
+            QString phrase = row.value(QStringLiteral("text_phrase")).toString();
+            QString criteria = row.value(QStringLiteral("text_criteria")).toString();
             if (!phrase.isEmpty()) {
                 // A multi-term phrase holds its terms joined with '\n'. The
                 // delegate is a single line, so quote each term and join them
@@ -1928,60 +1896,60 @@ QVariantList AppManager::getSearchHistory() const
                     item += QLatin1String(" (") + criteria + QLatin1Char(')');
                 parts << item;
             }
-            if (query.value(4).toBool())
+            if (row.value(QStringLiteral("case_sensitive")).toBool())
                 parts << tr("Case sensitive");
-            QString exclude = query.value(5).toString();
+            QString exclude = row.value(QStringLiteral("text_exclude")).toString();
             if (!exclude.isEmpty())
                 parts << tr("Exclude: %1").arg(quoteSearchTerms(exclude));
         }
 
         // ── File criteria ──────────────────────────────────────────────────
-        if (query.value(6).toBool()) {
-            if (query.value(7).toBool())
-                parts << tr("Type: %1").arg(query.value(8).toString());
-            if (query.value(9).toBool())
+        if (row.value(QStringLiteral("file_criteria_checked")).toBool()) {
+            if (row.value(QStringLiteral("file_type_checked")).toBool())
+                parts << tr("Type: %1").arg(row.value(QStringLiteral("file_type")).toString());
+            if (row.value(QStringLiteral("file_size_checked")).toBool())
                 parts << tr("Size: %1 %2 – %3 %4")
-                          .arg(query.value(10).toString(), query.value(11).toString(),
-                               query.value(12).toString(), query.value(13).toString());
-            if (query.value(14).toBool())
+                          .arg(row.value(QStringLiteral("file_size_min")).toString(), row.value(QStringLiteral("file_size_min_unit")).toString(),
+                               row.value(QStringLiteral("file_size_max")).toString(), row.value(QStringLiteral("file_size_max_unit")).toString());
+            if (row.value(QStringLiteral("date_modified_checked")).toBool())
                 parts << tr("Date: %1 – %2")
-                          .arg(query.value(15).toString(), query.value(16).toString());
+                          .arg(row.value(QStringLiteral("date_modified_min")).toString(), row.value(QStringLiteral("date_modified_max")).toString());
         }
 
         // ── Metadata ───────────────────────────────────────────────────────
-        if (query.value(17).toBool())
+        if (row.value(QStringLiteral("metadata_checked")).toBool())
             parts << tr("Metadata");
 
         // ── Duplicates ─────────────────────────────────────────────────────
-        if (query.value(18).toBool()) {
+        if (row.value(QStringLiteral("duplicates_checked")).toBool()) {
             QStringList dup;
-            if (query.value(19).toBool()) dup << tr("Name");
-            if (query.value(20).toBool()) dup << tr("Size");
-            if (query.value(21).toBool()) dup << tr("Date");
-            if (query.value(22).toBool()) dup << tr("Checksum");
+            if (row.value(QStringLiteral("duplicates_name")).toBool()) dup << tr("Name");
+            if (row.value(QStringLiteral("duplicates_size")).toBool()) dup << tr("Size");
+            if (row.value(QStringLiteral("duplicates_date_modified")).toBool()) dup << tr("Date");
+            if (row.value(QStringLiteral("duplicates_checksum")).toBool()) dup << tr("Checksum");
             parts << tr("Duplicates: %1").arg(dup.isEmpty() ? QStringLiteral("–") : dup.join(QLatin1String(", ")));
         }
 
         // ── Differences ────────────────────────────────────────────────────
-        if (query.value(23).toBool())
+        if (row.value(QStringLiteral("differences_checked")).toBool())
             parts << tr("Differences");
 
         // ── Folder criteria ────────────────────────────────────────────────
-        if (query.value(24).toBool()) {
-            if (query.value(25).toBool()) parts << tr("Folders only");
-            if (query.value(26).toBool()) {
-                QString tag = query.value(27).toString();
+        if (row.value(QStringLiteral("folder_criteria_checked")).toBool()) {
+            if (row.value(QStringLiteral("show_folders")).toBool()) parts << tr("Folders only");
+            if (row.value(QStringLiteral("tag_checked")).toBool()) {
+                QString tag = row.value(QStringLiteral("tag")).toString();
                 parts << (tag.isEmpty() ? tr("Tag") : tr("Tag: %1").arg(tag));
             }
         }
 
         // Device the search was run against (SpecSelection.md SEL-F2). Only the
-        // stored id comes from this query; the name is resolved through the
+        // stored id comes from the history row; the name is resolved through the
         // ordinary Device accessor rather than by joining the device table here
         // (SEL-C5). Empty means "all devices" — QML supplies the wording, so no
         // new translatable string is introduced (SEL-C4).
         QString deviceName;
-        const QString storedIds = query.value(28).toString();
+        const QString storedIds = row.value(QStringLiteral("selected_device_ID_list")).toString();
         const int scopeId = storedIds.section(QLatin1Char(','), 0, 0).toInt();
         if (scopeId > 0) {
             auto cached = deviceNameById.constFind(scopeId);
@@ -1998,7 +1966,7 @@ QVariantList AppManager::getSearchHistory() const
         }
 
         QVariantMap entry;
-        entry["dateTime"]   = query.value(0).toString();
+        entry["dateTime"]   = row.value(QStringLiteral("date_time")).toString();
         entry["deviceName"] = deviceName;
         entry["summary"]    = parts.join(QLatin1String("  |  "));
         result.append(entry);
@@ -4080,50 +4048,17 @@ QString AppManager::saveStorageDetails(int deviceId, const QVariantMap &fields)
     dev.storage->comment3     = fields.value("storageComment3",     dev.storage->comment3).toString();
     dev.storage->picturePath  = fields.value("storagePicturePath",  dev.storage->picturePath).toString();
 
-    // Persist via SQL (mirrors K2 saveDeviceForm Storage branch)
-    QSqlQuery q(QSqlDatabase::database(conn));
-    q.prepare(QLatin1String(R"(
-        UPDATE storage
-        SET storage_user_id      = :user_id,
-            storage_path         = :path,
-            storage_type         = :type,
-            storage_label        = :label,
-            storage_file_system  = :fs,
-            storage_total_space  = :total,
-            storage_free_space   = :free,
-            storage_brand        = :brand,
-            storage_model        = :model,
-            storage_serial_number= :serial,
-            storage_build_date   = :build,
-            storage_comment1     = :c1,
-            storage_comment2     = :c2,
-            storage_comment3     = :c3,
-            storage_picture_path = :pic
-        WHERE storage_id = :old_id
-    )"));
-    q.bindValue(":user_id", newUserId);
     // storage_path follows the save, not the path-root replacement (DSR-C8):
     // written on every branch, so Skip and Full re-index no longer leave it
     // holding the old path while device_path holds the new one.
-    q.bindValue(":path",   dev.path);
-    q.bindValue(":type",   dev.storage->type);
-    q.bindValue(":label",  dev.storage->label);
-    q.bindValue(":fs",     dev.storage->fileSystem);
-    q.bindValue(":total",  dev.totalSpace);
-    q.bindValue(":free",   dev.freeSpace);
-    q.bindValue(":brand",  dev.storage->brand);
-    q.bindValue(":model",  dev.storage->model);
-    q.bindValue(":serial", dev.storage->serialNumber);
-    q.bindValue(":build",  dev.storage->buildDate);
-    q.bindValue(":c1",     dev.storage->comment1);
-    q.bindValue(":c2",     dev.storage->comment2);
-    q.bindValue(":c3",     dev.storage->comment3);
-    q.bindValue(":pic",    dev.storage->picturePath);
-    q.bindValue(":old_id", dev.externalID);
-    if (!q.exec())
-        return q.lastError().text();
+    dev.storage->path       = dev.path;
+    dev.storage->totalSpace = dev.totalSpace;
+    dev.storage->freeSpace  = dev.freeSpace;
+    dev.storage->userID     = newUserId;
+    const QString error = dev.storage->saveStorage();
+    if (!error.isEmpty())
+        return error;
 
-    dev.storage->userID = newUserId;
     collection->saveStorageTableToFile();
 
     if (userIdIsDuplicate)

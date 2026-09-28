@@ -115,6 +115,53 @@ void Storage::deleteStorage()
     queryDeviceNumber.exec();
 }
 
+QString Storage::saveStorage()
+{
+    // storage_location is not written: nothing reads it and Storage has no
+    // member for it, so not writing it is how it is preserved (STI-F11).
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    query.prepare(QLatin1String(R"(
+        UPDATE storage
+        SET storage_user_id       = :user_id,
+            storage_path          = :path,
+            storage_type          = :type,
+            storage_label         = :label,
+            storage_file_system   = :fs,
+            storage_total_space   = :total,
+            storage_free_space    = :free,
+            storage_brand         = :brand,
+            storage_model         = :model,
+            storage_serial_number = :serial,
+            storage_build_date    = :build,
+            storage_comment1      = :c1,
+            storage_comment2      = :c2,
+            storage_comment3      = :c3,
+            storage_picture_path  = :pic
+        WHERE storage_id = :id
+    )"));
+    query.bindValue(":user_id", userID);
+    query.bindValue(":path",    path);
+    query.bindValue(":type",    type);
+    query.bindValue(":label",   label);
+    query.bindValue(":fs",      fileSystem);
+    query.bindValue(":total",   totalSpace);
+    query.bindValue(":free",    freeSpace);
+    query.bindValue(":brand",   brand);
+    query.bindValue(":model",   model);
+    query.bindValue(":serial",  serialNumber);
+    query.bindValue(":build",   buildDate);
+    query.bindValue(":c1",      comment1);
+    query.bindValue(":c2",      comment2);
+    query.bindValue(":c3",      comment3);
+    query.bindValue(":pic",     picturePath);
+    query.bindValue(":id",      ID);
+    if (!query.exec()) {
+        qWarning() << "WARNING: Storage::saveStorage failed:" << query.lastError().text();
+        return query.lastError().text();
+    }
+    return {};
+}
+
 void Storage::loadStorage(QString connectionName)
 {
     QSqlQuery query(QSqlDatabase::database(connectionName));

@@ -94,6 +94,9 @@ public:
     void insertStorage();
     void deleteStorage();
     void loadStorage(QString connectionName);
+    // Writes every field the edit forms change, keyed on the internal ID (never
+    // on the user's number, STI-C6). Returns an empty string, or the SQL error.
+    QString saveStorage();
 
     // Updated method signature - returns structured result instead of mixed list
     UpdateResult updateStorageInfo();

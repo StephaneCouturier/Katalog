@@ -1950,6 +1950,26 @@ QStringList Collection::getImportSourcePaths()
 }
 //----------------------------------------------------------------------
 
+//Search history --------------------------------------------------------
+QList<QVariantMap> Collection::loadSearchHistory()
+{
+    QList<QVariantMap> rows;
+    QSqlQuery query(QSqlDatabase::database(m_connectionName));
+    if (!query.exec(QStringLiteral("SELECT * FROM search ORDER BY date_time DESC"))) {
+        qWarning() << "WARNING: Collection::loadSearchHistory failed:" << query.lastError().text();
+        return rows;
+    }
+    while (query.next()) {
+        const QSqlRecord record = query.record();
+        QVariantMap row;
+        for (int i = 0; i < record.count(); ++i)
+            row.insert(record.fieldName(i), record.value(i));
+        rows << row;
+    }
+    return rows;
+}
+//----------------------------------------------------------------------
+
 //Quality check ---------------------------------------------------------
 QList<QualityCheckResult> Collection::runQualityChecks()
 {
