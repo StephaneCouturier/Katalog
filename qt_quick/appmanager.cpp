@@ -3724,10 +3724,9 @@ QString AppManager::importFromVVV(const QString &path)
         nameToDev[catName] = d;
     }
 
-    QSqlQuery delQ(QSqlDatabase::database(conn));
-    delQ.exec("DELETE FROM file");
-    delQ.exec("DELETE FROM folder");
-
+    // No clearing of the file/folder tables here: in File and Hosted mode they
+    // hold every catalog of the collection. Everything below reads and writes
+    // by the new catalogs' ids only.
     QSqlQuery insFile(QSqlDatabase::database(conn));
     insFile.prepare("INSERT INTO file(file_catalog_id,file_name,file_folder_path,file_size,file_date_updated,file_catalog)"
                     " VALUES(:cid,:name,:path,:size,:date,:cat)");

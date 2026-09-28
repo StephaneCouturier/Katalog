@@ -2696,10 +2696,8 @@ void MainWindow::importFromVVV()
 
     // SECOND PASS: Import files and folders with correct IDs
 
-        //Clear database tables
-        QSqlQuery deleteQuery(QSqlDatabase::database(m_connectionName));
-        deleteQuery.exec("DELETE FROM file");
-        deleteQuery.exec("DELETE FROM folder");
+        // No clearing of the file/folder tables here: in File and Hosted mode
+        // they hold every catalog of the collection.
 
         //Prepare query to load file info
         QSqlQuery insertQuery(QSqlDatabase::database(m_connectionName));
