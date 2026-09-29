@@ -309,7 +309,6 @@ QString Database::getSQLCreateTableSearch(DatabaseType databaseType)
                     show_folders                NUMERIC,
                     tag_checked                 NUMERIC,
                     tag                         TEXT,
-                    search_location             TEXT,
                     search_storage              TEXT,
                     search_catalog              TEXT,
                     search_catalog_checked      NUMERIC,
@@ -1339,6 +1338,7 @@ QSqlError Database::runMigration_3_0(const QString &connectionName)
         {"storage", "storage_location"},
         {"storage", "storage_total_space"},
         {"storage", "storage_free_space"},
+        {"search",  "search_location"},      // never given a value
     };
     for (const auto &column : deviceCopies) {
         if (getTableColumns(connectionName, column.first).contains(column.second)) {

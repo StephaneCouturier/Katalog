@@ -1982,7 +1982,7 @@
                                                     show_folders,
                                                     tag_checked,
                                                     tag,
-                                                    search_location,
+                                                    '' AS search_location,
                                                     search_storage,
                                                     search_catalog,
                                                     search_catalog_checked,

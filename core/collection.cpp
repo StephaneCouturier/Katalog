@@ -980,7 +980,6 @@ void Collection::loadSearchHistoryFileToTable()
                                                     show_folders,
                                                     tag_checked,
                                                     tag,
-                                                    search_location,
                                                     search_storage,
                                                     search_catalog,
                                                     search_catalog_checked,
@@ -1038,7 +1037,6 @@ void Collection::loadSearchHistoryFileToTable()
                                                     :show_folders,
                                                     :tag_checked,
                                                     :tag,
-                                                    :search_location,
                                                     :search_storage,
                                                     :search_catalog,
                                                     :search_catalog_checked,
@@ -1093,7 +1091,7 @@ void Collection::loadSearchHistoryFileToTable()
                         insertQuery.bindValue(":show_folders",              fieldList[18]);
                         insertQuery.bindValue(":tag_checked",               fieldList[19]);
                         insertQuery.bindValue(":tag",                       fieldList[20]);
-                        insertQuery.bindValue(":search_location",           fieldList[21]);
+                        // fieldList[21] (search_location) kept in the file format, never read
                         insertQuery.bindValue(":search_storage",            fieldList[22]);
                         insertQuery.bindValue(":search_catalog",            fieldList[23]);
                         insertQuery.bindValue(":search_catalog_checked",    fieldList[24]);
@@ -1697,7 +1695,7 @@ void Collection::saveSearchHistoryTableToFile()
                                             show_folders,
                                             tag_checked,
                                             tag,
-                                            search_location,
+                                            '' AS search_location,   -- column kept in the file format
                                             search_storage,
                                             search_catalog,
                                             search_catalog_checked,
