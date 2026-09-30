@@ -91,7 +91,7 @@ on the K3 form pages Settings, Search, Create, Tags, Device Edit and the Backup
 | PGL-C3 | Adds no user-visible string; no qsTr / tr change. | [Planned] |
 | PGL-C4 | K2 (qt_widgets/) is not changed. | [Planned] |
 | PGL-C5 | Every K3 scrollable page uses one shared page component, qt_quick/ScrollablePageFitted.qml, carrying PGL-F1/F2; no page carries its own copy. | [Planned] |
-| PGL-C6 | A section title keeps its text (same qsTr string) and colour (Kirigami.Theme.linkColor); its weight follows TYP-F4. Only the separator changes. No core/ change, no persisted setting, no effect on existing collections or settings files, including beta testers'. | [Planned] |
+| PGL-C6 | A section title keeps its text (same qsTr string) and its colour: the application title colour of THM-F17 (`SpecTheme.md`), which is Kirigami.Theme.linkColor under theme ids 0 and 2; its weight follows TYP-F4. *(Amended 2026-09-30: was Kirigami.Theme.linkColor under every theme.)* Only the separator changes. No core/ change, no persisted setting, no effect on existing collections or settings files, including beta testers'. | [Planned] |
 
 ---
 
@@ -103,7 +103,7 @@ Run with the interface in French, on Linux (Breeze) and on Windows (Fusion).
 - **PGL-F2**: make the window tall enough that the scrollbar disappears: the right margin returns to the normal page padding.
 - **PGL-F3**: repeat both checks on Selection, Create, Device Edit, Tags, Backup, Backup mapping and Settings.
 - **PGL-C1**: a code search finds no literal scrollbar width.
-- **PGL-F8 / F9 (Backup)**: open Backup, then "Add Link" and "Edit Link" on an existing link. "Source", "Target" and "Options" are in link colour, regular weight, each followed by a line on the same row. Field labels sit left-aligned in the left column, dimmed like the Create form, fields in the right column, in the same order as before; every field still works (catalog pickers, name, type, directories, strict copy, on conflict, source mode) and saving a link behaves as before.
+- **PGL-F8 / F9 (Backup)**: open Backup, then "Add Link" and "Edit Link" on an existing link. "Source", "Target" and "Options" are in the title colour of THM-F17 (link colour under themes 0 and 2), regular weight, each followed by a line on the same row. Field labels sit left-aligned in the left column, dimmed like the Create form, fields in the right column, in the same order as before; every field still works (catalog pickers, name, type, directories, strict copy, on conflict, source mode) and saving a link behaves as before.
 - **PGL-C3**: `git diff` shows no `qsTr` / `tr` string change.
 - **PGL-O2 / F5 to F8 / C6**: open Settings, Search, Create, Tags and Device Edit (for a Catalog, a Storage and a Virtual device), in French and English. Each title listed in PGL-F8, including the first one on the page, shows its text followed by a line on the same row, vertically centred, filling up to the page margin (PGL-F1). There is no full-width separator on its own row above any of these titles. On Create "Global Parameters" and Tags "Current folders and tags", the line stops before the button or combo. On Search the line follows each section checkbox. On Tags, "Current folders and tags" and its line span the full width, with the tag filter combo on the row below, above the "Tag" column header. `git diff` shows no qsTr change and nothing under core/ or qt_widgets/.
 

@@ -283,7 +283,7 @@ ScrollablePageFitted {
             Layout.fillWidth: true
             Layout.topMargin: Kirigami.Units.smallSpacing
             spacing: Kirigami.Units.largeSpacing
-            Controls.Label { text: qsTr("Collection & Database"); color: Kirigami.Theme.linkColor }
+            Controls.Label { text: qsTr("Collection & Database"); color: applicationWindow().titleColor }
             Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
         }
 
@@ -475,7 +475,7 @@ ScrollablePageFitted {
             Layout.fillWidth: true
             Layout.topMargin: Kirigami.Units.largeSpacing * 2
             spacing: Kirigami.Units.largeSpacing
-            Controls.Label { text: qsTr("Collection Import & Synchronization"); color: Kirigami.Theme.linkColor }
+            Controls.Label { text: qsTr("Collection Import & Synchronization"); color: applicationWindow().titleColor }
             Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
         }
 
@@ -598,7 +598,7 @@ ScrollablePageFitted {
             Layout.fillWidth: true
             Layout.topMargin: Kirigami.Units.largeSpacing * 2
             spacing: Kirigami.Units.largeSpacing
-            Controls.Label { text: qsTr("Application"); color: Kirigami.Theme.linkColor }
+            Controls.Label { text: qsTr("Application"); color: applicationWindow().titleColor }
             Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
         }
 
@@ -862,7 +862,7 @@ ScrollablePageFitted {
             Layout.fillWidth: true
             Layout.topMargin: Kirigami.Units.largeSpacing * 2
             spacing: Kirigami.Units.largeSpacing
-            Controls.Label { text: qsTr("Search"); color: Kirigami.Theme.linkColor }
+            Controls.Label { text: qsTr("Search"); color: applicationWindow().titleColor }
             Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
         }
 

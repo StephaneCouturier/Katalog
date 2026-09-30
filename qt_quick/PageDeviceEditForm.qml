@@ -248,7 +248,7 @@ ColumnLayout {
             Layout.fillWidth: true
             Layout.topMargin: Kirigami.Units.smallSpacing
             spacing: Kirigami.Units.largeSpacing
-            Controls.Label { text: qsTr("Device"); color: Kirigami.Theme.linkColor }
+            Controls.Label { text: qsTr("Device"); color: applicationWindow().titleColor }
             Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
         }
 
@@ -294,7 +294,7 @@ ColumnLayout {
             Layout.topMargin: Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing
             visible: root.deviceType !== "Virtual"
             spacing: Kirigami.Units.largeSpacing
-            Controls.Label { text: qsTr("Location"); color: Kirigami.Theme.linkColor }
+            Controls.Label { text: qsTr("Location"); color: applicationWindow().titleColor }
             Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
         }
 
@@ -325,7 +325,7 @@ ColumnLayout {
             Layout.topMargin: Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing
             visible: root.deviceType === "Catalog"
             spacing: Kirigami.Units.largeSpacing
-            Controls.Label { text: qsTr("Content options"); color: Kirigami.Theme.linkColor }
+            Controls.Label { text: qsTr("Content options"); color: applicationWindow().titleColor }
             Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
         }
 
@@ -503,7 +503,7 @@ ColumnLayout {
             Layout.topMargin: Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing
             visible: root.deviceType === "Storage"
             spacing: Kirigami.Units.largeSpacing
-            Controls.Label { text: qsTr("Storage details"); color: Kirigami.Theme.linkColor }
+            Controls.Label { text: qsTr("Storage details"); color: applicationWindow().titleColor }
             Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
         }
 

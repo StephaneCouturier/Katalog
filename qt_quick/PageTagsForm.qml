@@ -53,7 +53,7 @@ ColumnLayout {
             Layout.topMargin: Kirigami.Units.smallSpacing
             Layout.fillWidth: true
             spacing: Kirigami.Units.largeSpacing
-            Controls.Label { text: qsTr("Add a tag"); color: Kirigami.Theme.linkColor }
+            Controls.Label { text: qsTr("Add a tag"); color: applicationWindow().titleColor }
             Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
         }
 
@@ -126,7 +126,7 @@ ColumnLayout {
             Layout.fillWidth: true
             Layout.topMargin: Kirigami.Units.smallSpacing
             spacing: Kirigami.Units.largeSpacing
-            Controls.Label { text: qsTr("Current folders and tags"); color: Kirigami.Theme.linkColor }
+            Controls.Label { text: qsTr("Current folders and tags"); color: applicationWindow().titleColor }
             Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
         }
         // Tag filter on the row below the title, above the Tag column (PGL-F7)

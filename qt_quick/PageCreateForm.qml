@@ -135,7 +135,7 @@ ColumnLayout {
             Layout.topMargin: Kirigami.Units.smallSpacing
             Layout.fillWidth: true
             spacing: Kirigami.Units.largeSpacing
-            Controls.Label { text: qsTr("Catalog definition"); color: Kirigami.Theme.linkColor }
+            Controls.Label { text: qsTr("Catalog definition"); color: applicationWindow().titleColor }
             Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
         }
 
@@ -196,7 +196,7 @@ ColumnLayout {
             Layout.topMargin: Kirigami.Units.smallSpacing
             Layout.fillWidth: true
             spacing: Kirigami.Units.largeSpacing
-            Controls.Label { text: qsTr("Content options"); color: Kirigami.Theme.linkColor }
+            Controls.Label { text: qsTr("Content options"); color: applicationWindow().titleColor }
             Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
         }
 
@@ -362,7 +362,7 @@ ColumnLayout {
 
             Controls.Label {
                 text: qsTr("Global Parameters")
-                color: Kirigami.Theme.linkColor
+                color: applicationWindow().titleColor
             }
             Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
             IconButton {

@@ -222,6 +222,23 @@ Kirigami.ApplicationWindow {
     // The two tinted surfaces, defined once for every theme so they always agree.
     // In both cases the logo band is the darker of the two, so it reads as a
     // header above the page.
+    // Katalog Colors palette (theme 1), copied from K2: tabwidget_blue_light.css /
+    // tabwidget_blue_dark.css and loadCustomThemeLight/Dark (SpecTheme THM-C20).
+    // The only hex literals of the theme colours; nothing else may re-declare them.
+    readonly property color katalogBlueLight:     "#39b2e5"
+    readonly property color katalogBlue:          "#10a2df"
+    readonly property color katalogBlueDark:      "#0D79A6"
+    readonly property color katalogBlueDarkest:   "#095676"
+    readonly property color katalogBlueLightest:  "#e9f7fc"
+    readonly property color katalogAlternateDark: "#161b1d"
+
+    // Section titles and in-text links (THM-F17, PGL-C6): K2's title blue under
+    // Katalog Colors, the desktop link colour otherwise.
+    readonly property color titleColor:
+        appManager1.themeId === 1
+        ? (root.isDarkDesktop() ? root.katalogBlueLight : root.katalogBlueDarkest)
+        : Kirigami.Theme.linkColor
+
     // Both surfaces are built from the desktop's ACCENT
     // (Kirigami.Theme.highlightColor), not from its background. The background is
     // a grey, so lightening or darkening it only ever yields more grey; the
@@ -237,12 +254,13 @@ Kirigami.ApplicationWindow {
     // desktop's BACKGROUND rather than its accent: no hue at all, just a step
     // away from the window colour, for anyone who finds the tinted version too
     // strong.
-    // Theme 1, "Katalog Colors", no longer forces the brand blues — the brand
-    // palette was retired from K3 and theme 1 renders exactly as theme 0, not as
-    // theme 2 (SpecTheme THM-C2). The stored value and its Settings entry are
-    // kept, so no string and no translation slot moves (THM-C3).
+    // Theme 1, "Katalog Colors", paints these surfaces from K2's own palette
+    // (THM-C20), light or dark by isDarkDesktop() as K2 picks it; everything it
+    // does not name renders as theme 0 (THM-C2).
     readonly property color selectionPageColor:
-        appManager1.themeId === 2
+        appManager1.themeId === 1
+        ? (root.isDarkDesktop() ? root.katalogBlueDarkest : root.katalogBlueLightest)
+        : appManager1.themeId === 2
         ? (root.isDarkDesktop() ? Qt.lighter(Kirigami.Theme.backgroundColor, 1.25)
                                 : Qt.darker(Kirigami.Theme.backgroundColor, 1.06))
         : (root.isDarkDesktop() ? Qt.darker(Kirigami.Theme.highlightColor, 2.6)
@@ -253,7 +271,8 @@ Kirigami.ApplicationWindow {
     // Selection highlight. One definition for every list in the application —
     // Selection cards, search results, explore files and folders, device combos —
     // and every theme hands it back to the desktop (SpecTheme THM-C2).
-    readonly property color selectionHighlightColor: Kirigami.Theme.highlightColor
+    readonly property color selectionHighlightColor:
+        appManager1.themeId === 1 ? root.katalogBlueDark : Kirigami.Theme.highlightColor
 
     // The two file-list row surfaces, for the Search results list and the Explore
     // file list. Even rows take the desktop's View background — its brightest
@@ -275,7 +294,7 @@ Kirigami.ApplicationWindow {
     // hardcoded stripe, light or dark as K2 picks it.
     readonly property color rowStripeColor:
         appManager1.themeId === 1
-          ? (root.isDarkDesktop() ? "#161b1d" : "#e9f7fc")
+          ? (root.isDarkDesktop() ? root.katalogAlternateDark : root.katalogBlueLightest)
           : appManager1.themeId === 2
             ? Kirigami.Theme.backgroundColor
             : Qt.tint(root.viewBackgroundColor,
@@ -287,7 +306,9 @@ Kirigami.ApplicationWindow {
     // colour a selected card is filled with; on a dark one the page is already a
     // darkened accent, so the band is darkened further still.
     readonly property color logoBandColor:
-        appManager1.themeId === 2
+        appManager1.themeId === 1
+        ? (root.isDarkDesktop() ? Qt.darker(root.katalogBlueDarkest, 1.6) : root.katalogBlueDark)
+        : appManager1.themeId === 2
           // Grey: on a dark desktop the page was lightened, so the band stays at
           // the plain background; on a light one it steps further down.
           ? (root.isDarkDesktop() ? Kirigami.Theme.backgroundColor
@@ -925,7 +946,7 @@ Kirigami.ApplicationWindow {
                 Layout.fillWidth: true
                 wrapMode: Text.WrapAnywhere
                 textFormat: Text.StyledText
-                linkColor: Kirigami.Theme.linkColor
+                linkColor: root.titleColor
                 text: "<a href=\"https://github.com/StephaneCouturier/Katalog/discussions/categories/announcements\">Github: Katalog/discussions/categories/announcements</a>"
                 onLinkActivated: (link) => Qt.openUrlExternally(link)
                 // And one blank line between the link and the buttons below.
@@ -1521,8 +1542,11 @@ Kirigami.ApplicationWindow {
                 // (THM-C13). Not a list row: no stripe and no highlighted state,
                 // it mirrors the selection rather than being selectable.
                 background: Rectangle {
-                    color: selectionReminder.hovered ? Kirigami.Theme.hoverColor
-                                                     : "transparent"
+                    color: !selectionReminder.hovered ? "transparent"
+                         : appManager1.themeId === 1   // THM-F21
+                           ? Qt.rgba(root.katalogBlueLight.r, root.katalogBlueLight.g,
+                                     root.katalogBlueLight.b, 0.20)
+                           : Kirigami.Theme.hoverColor
                 }
 
                 // Scrolls the list to the selected card — the "where is it?" half

@@ -631,7 +631,7 @@ ColumnLayout {
             text: qsTr("File name")
             // Section title, styled like the section headings on the other pages
             // (link colour, line after the text); the checkbox still switches the section on.
-            Binding { target: search_checkBox_FileNameCriteria.contentItem; property: "color"; value: Kirigami.Theme.linkColor }
+            Binding { target: search_checkBox_FileNameCriteria.contentItem; property: "color"; value: applicationWindow().titleColor }
             onCheckedChanged: search_FormLayout_FileNameCriteria.visible = checked
         }
         Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
@@ -762,7 +762,7 @@ ColumnLayout {
             id: checkBoxFileAttributesCriteria
             checked: false
             text: qsTr("File attributes")
-            Binding { target: checkBoxFileAttributesCriteria.contentItem; property: "color"; value: Kirigami.Theme.linkColor }
+            Binding { target: checkBoxFileAttributesCriteria.contentItem; property: "color"; value: applicationWindow().titleColor }
             onCheckedChanged: {
                 fileAtrributeCriteria.visible = checked
                 // Convenience: enabling File attributes while Type is still the default
@@ -958,7 +958,7 @@ ColumnLayout {
             id: search_checkBox_FileMetadata
             checked: false
             text: qsTr("File metadata")
-            Binding { target: search_checkBox_FileMetadata.contentItem; property: "color"; value: Kirigami.Theme.linkColor }
+            Binding { target: search_checkBox_FileMetadata.contentItem; property: "color"; value: applicationWindow().titleColor }
             onCheckedChanged: search_FormLayout_FileMetadata.visible = checked
         }
         Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
@@ -1145,7 +1145,7 @@ ColumnLayout {
             id: search_checkBox_FolderCriteria
             checked: false
             text: qsTr("Folder criteria")
-            Binding { target: search_checkBox_FolderCriteria.contentItem; property: "color"; value: Kirigami.Theme.linkColor }
+            Binding { target: search_checkBox_FolderCriteria.contentItem; property: "color"; value: applicationWindow().titleColor }
             onCheckedChanged: search_FormLayout_folderCriteria.visible = checked
         }
         Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
@@ -1196,7 +1196,7 @@ ColumnLayout {
             id: search_checkBox_Duplicates
             checked: false
             text: qsTr("Duplicates")
-            Binding { target: search_checkBox_Duplicates.contentItem; property: "color"; value: Kirigami.Theme.linkColor }
+            Binding { target: search_checkBox_Duplicates.contentItem; property: "color"; value: applicationWindow().titleColor }
             onCheckedChanged: {
                 search_FormLayout_Duplicates.visible = checked
                 if (checked && search_checkBox_Differences.checked) {
@@ -1328,7 +1328,7 @@ ColumnLayout {
             checked: false
             enabled: search_radioButton_SearchInCatalogs.checked
             text: qsTr("Differences")
-            Binding { target: search_checkBox_Differences.contentItem; property: "color"; value: Kirigami.Theme.linkColor }
+            Binding { target: search_checkBox_Differences.contentItem; property: "color"; value: applicationWindow().titleColor }
             onCheckedChanged: {
                 search_FormLayout_Differences.visible = checked
                 if (checked && search_checkBox_Duplicates.checked) {
