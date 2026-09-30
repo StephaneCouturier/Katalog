@@ -130,12 +130,13 @@ ColumnLayout {
         rowSpacing: Kirigami.Units.smallSpacing
 
         // ── Section 1: Required ───────────────────────────────────────────────
-        Controls.Label {
-            font.bold: true
-            text: qsTr("Catalog definition")
-            color: Kirigami.Theme.linkColor
+        RowLayout {
             Layout.columnSpan: 2
             Layout.topMargin: Kirigami.Units.smallSpacing
+            Layout.fillWidth: true
+            spacing: Kirigami.Units.largeSpacing
+            Controls.Label { text: qsTr("Catalog definition"); color: Kirigami.Theme.linkColor }
+            Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
         }
 
         Controls.Label { text: qsTr("Source path"); opacity: 0.7 }
@@ -189,15 +190,14 @@ ColumnLayout {
             }
         }
 
-        Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2; Layout.topMargin: Kirigami.Units.largeSpacing }
-
         // ── Section 2: Catalog Options ────────────────────────────────────────
-        Controls.Label {
-            font.bold: true
-            text: qsTr("Content options")
-            color: Kirigami.Theme.linkColor
+        RowLayout {
             Layout.columnSpan: 2
             Layout.topMargin: Kirigami.Units.smallSpacing
+            Layout.fillWidth: true
+            spacing: Kirigami.Units.largeSpacing
+            Controls.Label { text: qsTr("Content options"); color: Kirigami.Theme.linkColor }
+            Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
         }
 
         Controls.Label { text: qsTr("File type"); opacity: 0.7 }
@@ -294,7 +294,6 @@ ColumnLayout {
         //Folder exclusion (catalog only)
         Controls.Label {
             text: qsTr("Exclude folders or files")
-            font.bold: true
             Layout.columnSpan: 2
             Layout.topMargin: Kirigami.Units.smallSpacing
         }
@@ -354,8 +353,6 @@ ColumnLayout {
             }
         }
 
-        Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2; Layout.topMargin: Kirigami.Units.largeSpacing }
-
 
         // Global Parameters (collapsible) ────────────────────────
         RowLayout {
@@ -364,11 +361,10 @@ ColumnLayout {
             Layout.topMargin: Kirigami.Units.smallSpacing
 
             Controls.Label {
-                font.bold: true
                 text: qsTr("Global Parameters")
                 color: Kirigami.Theme.linkColor
-                Layout.fillWidth: true
             }
+            Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
             IconButton {
                 id: create_button_ToggleGlobalParams
                 text: globalParamsExpanded ? qsTr("Collapse") : qsTr("Expand")

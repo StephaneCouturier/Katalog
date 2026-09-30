@@ -174,7 +174,7 @@ ScrollablePageFitted {
                         spacing: 2
 
                         Controls.Label {
-                            font.bold: true
+
                             text: qualityCheckDialog.sectionTitle(checkSection.modelData)
                             wrapMode: Text.WordWrap
                             // Check 4 is informational (QCK-F8): not coloured as a defect
@@ -278,11 +278,13 @@ ScrollablePageFitted {
         rowSpacing: Kirigami.Units.smallSpacing
 
         // ── Collection & Database ──────────────────────────────────────
-        Controls.Label {
-            font.bold: true; text: qsTr("Collection & Database")
+        RowLayout {
             Layout.columnSpan: 2
+            Layout.fillWidth: true
             Layout.topMargin: Kirigami.Units.smallSpacing
-            color: Kirigami.Theme.linkColor
+            spacing: Kirigami.Units.largeSpacing
+            Controls.Label { text: qsTr("Collection & Database"); color: Kirigami.Theme.linkColor }
+            Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
         }
 
         Controls.Label { text: qsTr("Database Mode"); opacity: 0.7; Layout.topMargin: Kirigami.Units.largeSpacing }
@@ -294,7 +296,7 @@ ScrollablePageFitted {
                 if (m === "Hosted") return qsTr("Hosted")
                 return "—"
             }
-            font.bold: true ; Layout.topMargin: Kirigami.Units.largeSpacing
+            Layout.topMargin: Kirigami.Units.largeSpacing
         }
 
         Controls.Label { text: qsTr("Collection"); opacity: 0.7 }
@@ -467,11 +469,15 @@ ScrollablePageFitted {
             }
         }
 
-        // ── Separator ──────────────────────────────────────────────────
-        Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2; Layout.topMargin: Kirigami.Units.largeSpacing * 2 }
-
         // ── Import ─────────────────────────────────────────────────────
-        Controls.Label { font.bold: true; text: qsTr("Collection Import & Synchronization"); Layout.columnSpan: 2; color: Kirigami.Theme.linkColor }
+        RowLayout {
+            Layout.columnSpan: 2
+            Layout.fillWidth: true
+            Layout.topMargin: Kirigami.Units.largeSpacing * 2
+            spacing: Kirigami.Units.largeSpacing
+            Controls.Label { text: qsTr("Collection Import & Synchronization"); color: Kirigami.Theme.linkColor }
+            Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
+        }
 
         Controls.Label { text: qsTr("Data mode"); opacity: 0.7; Layout.alignment: Qt.AlignVCenter; Layout.topMargin: Kirigami.Units.largeSpacing }
         ComboBoxFitted {
@@ -586,11 +592,15 @@ ScrollablePageFitted {
             showCloseButton: true
         }
 
-        // ── Separator ──────────────────────────────────────────────────
-        Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2; Layout.topMargin: Kirigami.Units.largeSpacing * 2 }
-
         // ── Application ────────────────────────────────────────────────
-        Controls.Label { font.bold: true; text: qsTr("Application"); Layout.columnSpan: 2; color: Kirigami.Theme.linkColor }
+        RowLayout {
+            Layout.columnSpan: 2
+            Layout.fillWidth: true
+            Layout.topMargin: Kirigami.Units.largeSpacing * 2
+            spacing: Kirigami.Units.largeSpacing
+            Controls.Label { text: qsTr("Application"); color: Kirigami.Theme.linkColor }
+            Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
+        }
 
         // Row labels are centred on the first line of their column (the first
         // control), not on the whole column.
@@ -603,7 +613,7 @@ ScrollablePageFitted {
                 spacing: Kirigami.Units.largeSpacing
                 Layout.fillWidth: true
                 // Same height as the button beside them, text centred on it.
-                Controls.Label { text: About.version; font.bold: true
+                Controls.Label { text: About.version;
                                  height: releaseNotesButton.height; verticalAlignment: Text.AlignVCenter }
                 Controls.Label { text: appManager1.appReleaseDate; opacity: 0.7
                                  height: releaseNotesButton.height; verticalAlignment: Text.AlignVCenter }
@@ -846,10 +856,15 @@ ScrollablePageFitted {
         }
         /*
         // ── Separator ──────────────────────────────────────────────────
-        Kirigami.Separator { Layout.fillWidth: true; Layout.columnSpan: 2; Layout.topMargin: Kirigami.Units.largeSpacing * 2}
-
         // ── Search ────────────────────────────────────────────────────
-        Controls.Label { font.bold: true; text: qsTr("Search"); Layout.columnSpan: 2; color: Kirigami.Theme.linkColor }
+        RowLayout {
+            Layout.columnSpan: 2
+            Layout.fillWidth: true
+            Layout.topMargin: Kirigami.Units.largeSpacing * 2
+            spacing: Kirigami.Units.largeSpacing
+            Controls.Label { text: qsTr("Search"); color: Kirigami.Theme.linkColor }
+            Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
+        }
 
         Controls.Label { text: qsTr("Layout"); opacity: 0.7; }
         Controls.CheckBox {

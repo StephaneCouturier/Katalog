@@ -48,12 +48,13 @@ ColumnLayout {
         columnSpacing: Kirigami.Units.largeSpacing
         rowSpacing: Kirigami.Units.smallSpacing
 
-        Controls.Label {
-            font.bold: true
-            text: qsTr("Add a tag")
-            color: Kirigami.Theme.linkColor
+        RowLayout {
             Layout.columnSpan: 2
             Layout.topMargin: Kirigami.Units.smallSpacing
+            Layout.fillWidth: true
+            spacing: Kirigami.Units.largeSpacing
+            Controls.Label { text: qsTr("Add a tag"); color: Kirigami.Theme.linkColor }
+            Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
         }
 
         Controls.Label { text: qsTr("Folder"); opacity: 0.7 }
@@ -112,12 +113,6 @@ ColumnLayout {
         }
     }
 
-    Kirigami.Separator {
-        Layout.fillWidth: true
-        Layout.leftMargin:  Kirigami.Units.gridUnit
-        Layout.rightMargin: Kirigami.Units.gridUnit
-    }
-
     // ═══ Current folders and tags ════════════════════════════════════════════
     GridLayout {
         Layout.fillWidth: true
@@ -126,13 +121,16 @@ ColumnLayout {
         columnSpacing: Kirigami.Units.largeSpacing
         rowSpacing: Kirigami.Units.smallSpacing
 
-        Controls.Label {
-            font.bold: true
-            text: qsTr("Current folders and tags")
-            color: Kirigami.Theme.linkColor
+        RowLayout {
+            Layout.columnSpan: 2
             Layout.fillWidth: true
             Layout.topMargin: Kirigami.Units.smallSpacing
+            spacing: Kirigami.Units.largeSpacing
+            Controls.Label { text: qsTr("Current folders and tags"); color: Kirigami.Theme.linkColor }
+            Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
         }
+        // Tag filter on the row below the title, above the Tag column (PGL-F7)
+        Item { Layout.fillWidth: true }
         ComboBoxFitted {
             id: filterCombo
             model: [qsTr("All")].concat(root.tagNames)
@@ -145,13 +143,11 @@ ColumnLayout {
         // Column headers
         Controls.Label {
             text: qsTr("Folder")
-            font.bold: true
             opacity: 0.7
             Layout.fillWidth: true
         }
         Controls.Label {
             text: qsTr("Tag")
-            font.bold: true
             opacity: 0.7
         }
 

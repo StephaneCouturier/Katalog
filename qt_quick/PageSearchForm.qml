@@ -561,7 +561,6 @@ ColumnLayout {
                         // rather than cutting the criteria short.
                         text: model.summary.length > 0 ? model.summary : qsTr("(no text filter)")
                         Layout.fillWidth: true
-                        font.bold: true
                         font.italic: model.summary.length === 0
                     }
                 }
@@ -619,19 +618,23 @@ ColumnLayout {
 
     Controls.Label { text: ""}
 
-    Kirigami.Separator { Layout.fillWidth: true; Layout.topMargin: Kirigami.Units.smallSpacing; Layout.bottomMargin: Kirigami.Units.smallSpacing }
 
     // ── Section 1: File name ──────────────────────────────────────────────────
-    Controls.CheckBox {
-        id: search_checkBox_FileNameCriteria
-        checked: true
-        text: qsTr("File name")
+    RowLayout {
+        Layout.fillWidth: true
         Layout.leftMargin: Kirigami.Units.smallSpacing
-        // Section title, styled like the section headings on the other pages
-        // (bold, link colour); the checkbox still switches the section on.
-        font.bold: true
-        Binding { target: search_checkBox_FileNameCriteria.contentItem; property: "color"; value: Kirigami.Theme.linkColor }
-        onCheckedChanged: search_FormLayout_FileNameCriteria.visible = checked
+        Layout.topMargin: Kirigami.Units.smallSpacing
+        spacing: Kirigami.Units.largeSpacing
+        Controls.CheckBox {
+            id: search_checkBox_FileNameCriteria
+            checked: true
+            text: qsTr("File name")
+            // Section title, styled like the section headings on the other pages
+            // (link colour, line after the text); the checkbox still switches the section on.
+            Binding { target: search_checkBox_FileNameCriteria.contentItem; property: "color"; value: Kirigami.Theme.linkColor }
+            onCheckedChanged: search_FormLayout_FileNameCriteria.visible = checked
+        }
+        Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
     }
     ColumnLayout {
         id: search_FormLayout_FileNameCriteria
@@ -750,22 +753,26 @@ ColumnLayout {
     Controls.Label { text: ""}
 
     // ── Section 2: File attributes ────────────────────────────────────────────
-    Kirigami.Separator { Layout.fillWidth: true; Layout.topMargin: Kirigami.Units.smallSpacing; Layout.bottomMargin: Kirigami.Units.smallSpacing }
-    Controls.CheckBox {
-        id: checkBoxFileAttributesCriteria
-        checked: false
-        text: qsTr("File attributes")
+    RowLayout {
+        Layout.fillWidth: true
         Layout.leftMargin: Kirigami.Units.smallSpacing
-        font.bold: true
-        Binding { target: checkBoxFileAttributesCriteria.contentItem; property: "color"; value: Kirigami.Theme.linkColor }
-        onCheckedChanged: {
-            fileAtrributeCriteria.visible = checked
-            // Convenience: enabling File attributes while Type is still the default
-            // "All" auto-ticks Type so the combo is ready — one less click to pick
-            // another type. "All" applies no type filter, so this changes nothing.
-            if (checked && search_comboBox_FileType.currentValue === "All")
-                search_checkBox_Type.checked = true
+        Layout.topMargin: Kirigami.Units.smallSpacing
+        spacing: Kirigami.Units.largeSpacing
+        Controls.CheckBox {
+            id: checkBoxFileAttributesCriteria
+            checked: false
+            text: qsTr("File attributes")
+            Binding { target: checkBoxFileAttributesCriteria.contentItem; property: "color"; value: Kirigami.Theme.linkColor }
+            onCheckedChanged: {
+                fileAtrributeCriteria.visible = checked
+                // Convenience: enabling File attributes while Type is still the default
+                // "All" auto-ticks Type so the combo is ready — one less click to pick
+                // another type. "All" applies no type filter, so this changes nothing.
+                if (checked && search_comboBox_FileType.currentValue === "All")
+                    search_checkBox_Type.checked = true
+            }
         }
+        Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
     }
     ColumnLayout {
         id: fileAtrributeCriteria
@@ -942,15 +949,19 @@ ColumnLayout {
     Controls.Label { text: ""}
 
     // ── Section 3: File metadata ──────────────────────────────────────────────
-    Kirigami.Separator { Layout.fillWidth: true; Layout.topMargin: Kirigami.Units.smallSpacing; Layout.bottomMargin: Kirigami.Units.smallSpacing }
-    Controls.CheckBox {
-        id: search_checkBox_FileMetadata
-        checked: false
-        text: qsTr("File metadata")
+    RowLayout {
+        Layout.fillWidth: true
         Layout.leftMargin: Kirigami.Units.smallSpacing
-        font.bold: true
-        Binding { target: search_checkBox_FileMetadata.contentItem; property: "color"; value: Kirigami.Theme.linkColor }
-        onCheckedChanged: search_FormLayout_FileMetadata.visible = checked
+        Layout.topMargin: Kirigami.Units.smallSpacing
+        spacing: Kirigami.Units.largeSpacing
+        Controls.CheckBox {
+            id: search_checkBox_FileMetadata
+            checked: false
+            text: qsTr("File metadata")
+            Binding { target: search_checkBox_FileMetadata.contentItem; property: "color"; value: Kirigami.Theme.linkColor }
+            onCheckedChanged: search_FormLayout_FileMetadata.visible = checked
+        }
+        Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
     }
     ColumnLayout {
         id: search_FormLayout_FileMetadata
@@ -1125,15 +1136,19 @@ ColumnLayout {
     Controls.Label { text: ""}
 
     // ── Section 4: Folder criteria ────────────────────────────────────────────
-    Kirigami.Separator { Layout.fillWidth: true; Layout.topMargin: Kirigami.Units.smallSpacing; Layout.bottomMargin: Kirigami.Units.smallSpacing }
-    Controls.CheckBox {
-        id: search_checkBox_FolderCriteria
-        checked: false
-        text: qsTr("Folder criteria")
+    RowLayout {
+        Layout.fillWidth: true
         Layout.leftMargin: Kirigami.Units.smallSpacing
-        font.bold: true
-        Binding { target: search_checkBox_FolderCriteria.contentItem; property: "color"; value: Kirigami.Theme.linkColor }
-        onCheckedChanged: search_FormLayout_folderCriteria.visible = checked
+        Layout.topMargin: Kirigami.Units.smallSpacing
+        spacing: Kirigami.Units.largeSpacing
+        Controls.CheckBox {
+            id: search_checkBox_FolderCriteria
+            checked: false
+            text: qsTr("Folder criteria")
+            Binding { target: search_checkBox_FolderCriteria.contentItem; property: "color"; value: Kirigami.Theme.linkColor }
+            onCheckedChanged: search_FormLayout_folderCriteria.visible = checked
+        }
+        Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
     }
     ColumnLayout {
         Layout.fillWidth: true
@@ -1172,21 +1187,25 @@ ColumnLayout {
     Controls.Label { text: ""}
 
     // ── Section 5: Duplicates ─────────────────────────────────────────────────
-    Kirigami.Separator { Layout.fillWidth: true; Layout.topMargin: Kirigami.Units.smallSpacing; Layout.bottomMargin: Kirigami.Units.smallSpacing }
-    Controls.CheckBox {
-        id: search_checkBox_Duplicates
-        checked: false
-        text: qsTr("Duplicates")
+    RowLayout {
+        Layout.fillWidth: true
         Layout.leftMargin: Kirigami.Units.smallSpacing
-        font.bold: true
-        Binding { target: search_checkBox_Duplicates.contentItem; property: "color"; value: Kirigami.Theme.linkColor }
-        onCheckedChanged: {
-            search_FormLayout_Duplicates.visible = checked
-            if (checked && search_checkBox_Differences.checked) {
-                showPassiveNotification(qsTr("Duplicates and Differences cannot be used at the same time"))
-                search_checkBox_Differences.checked = false
+        Layout.topMargin: Kirigami.Units.smallSpacing
+        spacing: Kirigami.Units.largeSpacing
+        Controls.CheckBox {
+            id: search_checkBox_Duplicates
+            checked: false
+            text: qsTr("Duplicates")
+            Binding { target: search_checkBox_Duplicates.contentItem; property: "color"; value: Kirigami.Theme.linkColor }
+            onCheckedChanged: {
+                search_FormLayout_Duplicates.visible = checked
+                if (checked && search_checkBox_Differences.checked) {
+                    showPassiveNotification(qsTr("Duplicates and Differences cannot be used at the same time"))
+                    search_checkBox_Differences.checked = false
+                }
             }
         }
+        Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
     }
     ColumnLayout {
         id: search_FormLayout_Duplicates
@@ -1299,22 +1318,26 @@ ColumnLayout {
     Controls.Label { text: ""}
 
     // ── Section 6: Differences ────────────────────────────────────────────────
-    Kirigami.Separator { Layout.fillWidth: true; Layout.topMargin: Kirigami.Units.smallSpacing; Layout.bottomMargin: Kirigami.Units.smallSpacing }
-    Controls.CheckBox {
-        id: search_checkBox_Differences
-        checked: false
-        enabled: search_radioButton_SearchInCatalogs.checked
-        text: qsTr("Differences")
+    RowLayout {
+        Layout.fillWidth: true
         Layout.leftMargin: Kirigami.Units.smallSpacing
-        font.bold: true
-        Binding { target: search_checkBox_Differences.contentItem; property: "color"; value: Kirigami.Theme.linkColor }
-        onCheckedChanged: {
-            search_FormLayout_Differences.visible = checked
-            if (checked && search_checkBox_Duplicates.checked) {
-                showPassiveNotification(qsTr("Duplicates and Differences cannot be used at the same time"))
-                search_checkBox_Duplicates.checked = false
+        Layout.topMargin: Kirigami.Units.smallSpacing
+        spacing: Kirigami.Units.largeSpacing
+        Controls.CheckBox {
+            id: search_checkBox_Differences
+            checked: false
+            enabled: search_radioButton_SearchInCatalogs.checked
+            text: qsTr("Differences")
+            Binding { target: search_checkBox_Differences.contentItem; property: "color"; value: Kirigami.Theme.linkColor }
+            onCheckedChanged: {
+                search_FormLayout_Differences.visible = checked
+                if (checked && search_checkBox_Duplicates.checked) {
+                    showPassiveNotification(qsTr("Duplicates and Differences cannot be used at the same time"))
+                    search_checkBox_Duplicates.checked = false
+                }
             }
         }
+        Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
     }
     ColumnLayout {
         id: search_FormLayout_Differences

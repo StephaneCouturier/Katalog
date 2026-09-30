@@ -243,12 +243,13 @@ ColumnLayout {
         rowSpacing: Kirigami.Units.smallSpacing
 
         // ── Section: Identity ─────────────────────────────────────────────────
-        Controls.Label {
-            font.bold: true
-            text: qsTr("Device")
-            color: Kirigami.Theme.linkColor
+        RowLayout {
             Layout.columnSpan: 2
+            Layout.fillWidth: true
             Layout.topMargin: Kirigami.Units.smallSpacing
+            spacing: Kirigami.Units.largeSpacing
+            Controls.Label { text: qsTr("Device"); color: Kirigami.Theme.linkColor }
+            Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
         }
 
         Controls.Label { text: qsTr("Type"); opacity: 0.7 }
@@ -287,18 +288,14 @@ ColumnLayout {
         }
 
         // ── Section: Path (Storage + Catalog) ─────────────────────────────────
-        Kirigami.Separator {
-            Layout.fillWidth: true; Layout.columnSpan: 2
-            Layout.topMargin: Kirigami.Units.largeSpacing
-            visible: root.deviceType !== "Virtual"
-        }
-        Controls.Label {
-            font.bold: true
-            text: qsTr("Location")
-            color: Kirigami.Theme.linkColor
+        RowLayout {
             Layout.columnSpan: 2
-            Layout.topMargin: Kirigami.Units.smallSpacing
+            Layout.fillWidth: true
+            Layout.topMargin: Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing
             visible: root.deviceType !== "Virtual"
+            spacing: Kirigami.Units.largeSpacing
+            Controls.Label { text: qsTr("Location"); color: Kirigami.Theme.linkColor }
+            Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
         }
 
         Controls.Label { text: qsTr("Source path"); opacity: 0.7; visible: root.deviceType !== "Virtual" }
@@ -322,18 +319,14 @@ ColumnLayout {
         }
 
         // ── Section: Catalog options ───────────────────────────────────────────
-        Kirigami.Separator {
-            Layout.fillWidth: true; Layout.columnSpan: 2
-            Layout.topMargin: Kirigami.Units.largeSpacing
-            visible: root.deviceType === "Catalog"
-        }
-        Controls.Label {
-            font.bold: true
-            text: qsTr("Content options")
-            color: Kirigami.Theme.linkColor
+        RowLayout {
             Layout.columnSpan: 2
-            Layout.topMargin: Kirigami.Units.smallSpacing
+            Layout.fillWidth: true
+            Layout.topMargin: Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing
             visible: root.deviceType === "Catalog"
+            spacing: Kirigami.Units.largeSpacing
+            Controls.Label { text: qsTr("Content options"); color: Kirigami.Theme.linkColor }
+            Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
         }
 
         Controls.Label { text: qsTr("File type"); opacity: 0.7; visible: root.deviceType === "Catalog" }
@@ -435,7 +428,6 @@ ColumnLayout {
         // ── Exclude folders or files (Catalog) — sub-title within Content options ─
         Controls.Label {
             text: qsTr("Exclude folders or files")
-            font.bold: true
             Layout.columnSpan: 2
             Layout.topMargin: Kirigami.Units.smallSpacing
             visible: root.deviceType === "Catalog"
@@ -505,18 +497,14 @@ ColumnLayout {
         }
 
         // ── Section: Storage details ───────────────────────────────────────────
-        Kirigami.Separator {
-            Layout.fillWidth: true; Layout.columnSpan: 2
-            Layout.topMargin: Kirigami.Units.largeSpacing
-            visible: root.deviceType === "Storage"
-        }
-        Controls.Label {
-            font.bold: true
-            text: qsTr("Storage details")
-            color: Kirigami.Theme.linkColor
+        RowLayout {
             Layout.columnSpan: 2
-            Layout.topMargin: Kirigami.Units.smallSpacing
+            Layout.fillWidth: true
+            Layout.topMargin: Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing
             visible: root.deviceType === "Storage"
+            spacing: Kirigami.Units.largeSpacing
+            Controls.Label { text: qsTr("Storage details"); color: Kirigami.Theme.linkColor }
+            Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
         }
 
         Controls.Label { text: qsTr("Storage ID"); opacity: 0.7; visible: root.deviceType === "Storage" }

@@ -99,46 +99,61 @@ ScrollablePageFitted {
             showCloseButton: true
         }
 
-        Kirigami.FormLayout {
+        GridLayout {
             Layout.fillWidth: true
+            columns: 2
+            columnSpacing: Kirigami.Units.largeSpacing
+            rowSpacing: Kirigami.Units.smallSpacing
 
             // Source
-            Kirigami.Separator {
-                Kirigami.FormData.label: qsTr("Source")
-                Kirigami.FormData.isSection: true
+            RowLayout {
+                Layout.columnSpan: 2
+                Layout.fillWidth: true
+                Layout.topMargin: Kirigami.Units.smallSpacing
+                spacing: Kirigami.Units.largeSpacing
+                Controls.Label { text: qsTr("Source"); color: Kirigami.Theme.linkColor }
+                Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
             }
 
+            Controls.Label { text: qsTr("Source catalog"); opacity: 0.7 }
             DeviceTreeComboBox {
                 id: sourceCombo
-                Kirigami.FormData.label: qsTr("Source catalog")
                 Layout.preferredWidth: Kirigami.Units.gridUnit * 24
                 Layout.maximumWidth: Kirigami.Units.gridUnit * 24  // set width, shrinks only to fit (CBX-C7)
                 catalogOnly: true
             }
 
             // Target
-            Kirigami.Separator {
-                Kirigami.FormData.label: qsTr("Target")
-                Kirigami.FormData.isSection: true
+            RowLayout {
+                Layout.columnSpan: 2
+                Layout.fillWidth: true
+                Layout.topMargin: Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing
+                spacing: Kirigami.Units.largeSpacing
+                Controls.Label { text: qsTr("Target"); color: Kirigami.Theme.linkColor }
+                Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
             }
 
+            Controls.Label { text: qsTr("Target catalog"); opacity: 0.7 }
             DeviceTreeComboBox {
                 id: targetCombo
-                Kirigami.FormData.label: qsTr("Target catalog")
                 Layout.preferredWidth: Kirigami.Units.gridUnit * 24
                 Layout.maximumWidth: Kirigami.Units.gridUnit * 24  // set width, shrinks only to fit (CBX-C7)
                 catalogOnly: true
             }
 
             // Options
-            Kirigami.Separator {
-                Kirigami.FormData.label: qsTr("Options")
-                Kirigami.FormData.isSection: true
+            RowLayout {
+                Layout.columnSpan: 2
+                Layout.fillWidth: true
+                Layout.topMargin: Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing
+                spacing: Kirigami.Units.largeSpacing
+                Controls.Label { text: qsTr("Options"); color: Kirigami.Theme.linkColor }
+                Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
             }
 
             // Name + auto-generate
+            Controls.Label { text: qsTr("Name"); opacity: 0.7 }
             RowLayout {
-                Kirigami.FormData.label: qsTr("Name")
                 Controls.TextField {
                     id: nameField
                     placeholderText: qsTr("e.g. Docs → NAS_Docs")
@@ -153,9 +168,9 @@ ScrollablePageFitted {
             }
 
             // Type
+            Controls.Label { text: qsTr("Type"); opacity: 0.7 }
             ComboBoxFitted {
                 id: typeCombo
-                Kirigami.FormData.label: qsTr("Type")
                 textRole:  "text"
                 valueRole: "value"
                 model: [
@@ -169,23 +184,23 @@ ScrollablePageFitted {
                 }
             }
 
+            Controls.Label { text: qsTr("Directories"); opacity: 0.7 }
             Controls.CheckBox {
                 id: includeEmptyDirsCheck
-                Kirigami.FormData.label: qsTr("Directories")
                 text: qsTr("Include empty")
                 checked: true
             }
 
+            Controls.Label { text: qsTr("Strict copy"); opacity: 0.7 }
             Controls.CheckBox {
                 id: strictCopyCheck
-                Kirigami.FormData.label: qsTr("Strict copy")
                 text: qsTr("Mirror folder structure exactly (default)")
                 checked: true
             }
 
+            Controls.Label { text: qsTr("On conflict"); opacity: 0.7 }
             ComboBoxFitted {
                 id: conflictModeCombo
-                Kirigami.FormData.label: qsTr("On conflict")
                 textRole:  "text"
                 valueRole: "value"
                 model: [
@@ -194,9 +209,9 @@ ScrollablePageFitted {
                 ]
             }
 
+            Controls.Label { text: qsTr("Source mode"); opacity: 0.7 }
             Controls.CheckBox {
                 id: sourceDriveCheck
-                Kirigami.FormData.label: qsTr("Source mode")
                 text: qsTr("Scan source drive directly (requires connected source)")
             }
         }

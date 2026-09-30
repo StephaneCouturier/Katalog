@@ -38,7 +38,7 @@ specification and the code disagree, the specification is what was agreed.
 | [SpecK2Deployment](SpecK2Deployment.md) | K2 DEPLOYMENT — STARTUP OF THE LINUX APPIMAGE ON ANY DESKTOP | Approved | mostly complete | — |
 | [SpecK3Deployment](SpecK3Deployment.md) | K3 DEPLOYMENT — QML MODULES AND PLATFORM INTEGRATION IN PACKAGED BUILDS | Approved | mostly complete | — |
 | [SpecLanguages](SpecLanguages.md) | LANGUAGES — INTERFACE LANGUAGE SELECTION | Approved | complete | — |
-| [SpecPageLayout](SpecPageLayout.md) | PAGE LAYOUT — CONTENT AND THE VERTICAL SCROLLBAR | Approved | planned | — |
+| [SpecPageLayout](SpecPageLayout.md) | PAGE LAYOUT — SCROLLBAR MARGIN AND SECTION TITLES | Approved | planned | — |
 | [SpecOperationQueue](SpecOperationQueue.md) | OPERATION Queue | Specified | — | — |
 | [SpecProgressReport](SpecProgressReport.md) | Progress Reporting | — | — | — |
 | [SpecQualityCheck](SpecQualityCheck.md) | QUALITY Check | Draft | planned (phase 1) | — |

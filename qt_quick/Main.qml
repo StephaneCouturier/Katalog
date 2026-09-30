@@ -268,7 +268,19 @@ Kirigami.ApplicationWindow {
     // covered only the two file lists and the folder list consumed neither:
     // the comment was an intention, not a requirement (THM-C12).
     readonly property color rowBaseColor:   root.viewBackgroundColor
-    readonly property color rowStripeColor: Kirigami.Theme.backgroundColor
+    // The odd-row stripe follows the Theme setting (THM-F4, THM-C19):
+    // Desktop Theme lays the desktop accent at 11% over the View surface (K2's
+    // #e9f7fc is the Breeze accent at about that strength over white); Desktop
+    // Theme (gray) keeps the Window background; Katalog Colors uses K2's own
+    // hardcoded stripe, light or dark as K2 picks it.
+    readonly property color rowStripeColor:
+        appManager1.themeId === 1
+          ? (root.isDarkDesktop() ? "#161b1d" : "#e9f7fc")
+          : appManager1.themeId === 2
+            ? Kirigami.Theme.backgroundColor
+            : Qt.tint(root.viewBackgroundColor,
+                      Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g,
+                              Kirigami.Theme.highlightColor.b, 0.11))
 
     // Always at least as dark as a selected card, and always darker than the
     // page beneath it. On a light desktop that is the full accent — the very

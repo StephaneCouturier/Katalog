@@ -24,6 +24,18 @@ derives them from the same base (`Heading` level factors: 1: 1.35, 2: 1.20,
 3: 1.15, 4: 1.10). The one exception K3 sets itself is the Selection card second
 line (TYP-F6), kept on one line at the default card size.
 
+**Decision of 2026-09-30 (section titles not bold).** Section headings that K3
+places itself are now at the base size in **regular** weight, no longer bold.
+They are set apart by their link colour and by the line that follows them on the
+same row (`SpecPageLayout.md` PGL-F5). This amends TYP-F4 and the 2026-09-26
+decision above ("in bold").
+
+**Decision of 2026-09-30 (Backup link form).** The maintainer: "Backup: same
+design principles to be applied to the form to add a link (including colors, no
+bold & line)". The Backup "Add Link" / "Edit Link" form leaves Kirigami.FormLayout
+(`SpecPageLayout.md` PGL-F9), so K3 no longer shows any `FormLayout` section
+title; that exception is removed from TYP-F5.
+
 **Decision of 2026-09-26 (text-size setting).** As a first step, the text-size
 setting scales **text only**, app-wide; it does not scale icons or spacing. The
 existing drawer "Card text size" slider becomes that setting: its value now
@@ -75,8 +87,8 @@ text-size setting acts on it.
 | TYP-F1 | Every text size in K3 is a ratio of one base size, the system default font (`Kirigami.Theme.defaultFont`). | [Implemented] |
 | TYP-F2 | A user-facing text-size setting multiplies the base size of TYP-F1. It does not replace it. | [Planned] |
 | TYP-F3 | Apart from the Kirigami built-ins of TYP-F5 and the one K3-set exception of TYP-F6, every K3 text is displayed at the base size of TYP-F1, multiplied only by the text-size setting of TYP-F2. K3 uses no smaller or larger text roles: no ratios, and not `Kirigami.Theme.smallFont`. | [Implemented] |
-| TYP-F4 | K3 expresses hierarchy and emphasis by weight (bold), and by its existing italic, opacity or colour, never by size. A section heading that K3 places itself is displayed at the base size, in bold. | [Implemented] |
-| TYP-F5 | The only Kirigami built-in exceptions to TYP-F3 (see TYP-F6 for the one K3-set exception) are the sizes a Kirigami component applies by itself where K3 sets no size: the page title in the header bar, the empty-state (`PlaceholderMessage`) title, and `FormLayout` section titles (`FormData.isSection`). | [Implemented] |
+| TYP-F4 | K3 expresses hierarchy and emphasis by weight (bold), and by its existing italic, opacity or colour, never by size. A section heading that K3 places itself is displayed at the base size, in regular weight (not bold). *(Amended 2026-09-30: was "in bold"; on form pages the heading is set apart by its colour and by the line of PGL-F5.)* | [Planned] |
+| TYP-F5 | The only Kirigami built-in exceptions to TYP-F3 (see TYP-F6 for the one K3-set exception) are the sizes a Kirigami component applies by itself where K3 sets no size: the page title in the header bar and the empty-state (`PlaceholderMessage`) title. *(Amended 2026-09-30: `FormLayout` section titles removed; the Backup link form titles now follow TYP-F4.)* | [Planned] |
 | TYP-F6 | On the Selection page only, the device card's second line (the device description: files, size, used space) is displayed at 0.8 × the base size of TYP-F1 × the text-size setting of TYP-F2, so that a Storage device's line fits on one line at the default card size with one slider step to spare. The Devices page cards stay at the base size. | [Implemented] |
 | TYP-F7 | The text-size setting of TYP-F2 applies to all K3 text (every page, table, form, dialog, the drawer and device cards), not only to device cards. | [Planned] |
 | TYP-F8 | The text-size setting of TYP-F2 scales text only: it does not change icon sizes or spacing. A layout measure that depends on text size (such as the Backup card narrow-layout width) may follow it, as TYP-C2 allows. | [Planned] |
@@ -85,7 +97,7 @@ text-size setting acts on it.
 | TYP-F11 | The top line of the window keeps the system size and does not follow the text-size setting of TYP-F2: the collection name at the top of the drawer and the page titles, including those of the Settings and About layers. This is an exception to TYP-F7. | [Planned] |
 
 **Known limitation (first step).** The Kirigami built-in sizes of TYP-F5 (page
-title, empty-state title, `FormLayout` section titles) are derived by Kirigami
+title, empty-state title) are derived by Kirigami
 from `defaultFont`. They follow the OS font (TYP-O1) but are **not** required to
 follow the text-size setting of TYP-F2 in this first step.
 
@@ -130,8 +142,8 @@ it can become a row above.
 - **TYP-F11**: set the text size to 0.8 then 1.2 and confirm the collection name at the top of the drawer and the page titles (including the Settings and About layers) keep the same size, while the rest of the text changes.
 - **TYP-C1 / C2**: search `qt_quick/*.qml` for `font.pixelSize`, for a numeric `font.pointSize`, and for `gridUnit` or `Units.*Spacing` inside a font expression. There must be no hits.
 - **TYP-F3 / C3**: search `qt_quick/*.qml` for `defaultFont.pointSize *` followed by a ratio (such as `0.9`) and for `smallFont`. The only allowed multiplier is the text-size setting; there must be no other hits, except the × 0.8 of TYP-F6 in `PageSelectionDelegate.qml`.
-- **TYP-F4 / C3**: search `qt_quick/*.qml` for `Kirigami.Heading`. A K3-placed section heading must not take its size from a Heading level; open Create, Device edit, Tags, Settings and the quality-check dialog and confirm their section headings are at the size of the surrounding text, in bold.
-- **TYP-F5**: confirm that the page title in the header bar, the empty-state title (for example an empty Backup link list) and the Backup mapping form section titles ("Source", "Target", "Options") keep the size Kirigami gives them, with no size set by K3.
+- **TYP-F4 / C3**: search `qt_quick/*.qml` for `Kirigami.Heading`. A K3-placed section heading must not take its size from a Heading level; open Create, Device edit, Tags, Settings and the quality-check dialog and confirm their section headings are at the size of the surrounding text, in regular weight (not bold).
+- **TYP-F5**: confirm that the page title in the header bar and the empty-state title (for example an empty Backup link list) keep the size Kirigami gives them, with no size set by K3. Confirm the Backup "Add Link" form titles ("Source", "Target", "Options") are at the base size in regular weight (TYP-F4).
 - **TYP-F6**: at the default card size, confirm that a Storage device's second line on the Selection page fits on one line, and still does after one slider step up (+0.1).
 
 ---
