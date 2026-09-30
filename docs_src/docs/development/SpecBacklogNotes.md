@@ -271,3 +271,29 @@ one (EN/FR/CS) during the 3.0 pass, then remove its entry here.
   to the clipboard. Nothing is repaired. Candidate location: `Settings.md`.
 
 ---
+
+## Progress report: catalog name in theme colour (K3)
+
+**Identified:** 2026-09-30
+**Affects:** K3 (progress/status messages built by `StatusBarMessageBuilder`)
+**Related requirements:** `SpecProgressReport.md` — Component Breakdown, Part 3 (Device Context)
+
+This is a **note, not a requirement.** Nothing below is authorised work.
+
+The catalog name in the Device Context part ("Catalog X of Y | CatalogName") is
+specified as **bold, no colour** in K2 and K3. It was previously #39b2e5 blue,
+but K3 renders these messages with Qt Quick `Text.StyledText`, which ignores
+`<span style='color:…'>`, so the blue never showed in K3. The preferred colour
+is the theme's `Kirigami.Theme.linkColor` (same colour as the K3 Settings section
+titles), but `core/` is UI-agnostic and K2 has no Kirigami, so a theme colour
+would need a core-level colour-injection mechanism, which the user declined.
+
+**When to take it up:** once K2 is discontinued and K3 can implement it without
+the K2/K3-agnostic core constraint, display the catalog name in
+`Kirigami.Theme.linkColor`.
+
+**Technical note:** `Text.StyledText` needs `<font color="…">` rather than
+`<span style="color:…">` (span colour is ignored). Switching to `Text.RichText`
+would render the span but loses eliding.
+
+---

@@ -28,7 +28,7 @@ CREATE | Completed   | Catalog 1 of 1 | MyPhotos | Indexed: 2000 of 2000 (100%)
 |----------|----------------|-------------------------|-----------|
 | **1** | **Operation** | **Catalog operations:**<br/>• "Create" (→ "CREATE")<br/>• "Search" (→ "SEARCH")<br/>• "Explore" (→ "EXPLORE")<br/>• "Update" (→ "UPDATE")<br/><br/>**BackUp operations:**<br/>• "BackUp" (→ "BACKUP")<br/>• "Archive" (→ "ARCHIVE")<br/>• "Replicate" (→ "REPLICATE")<br/>• "Report" (→ "REPORT")<br/><br/>**Search result operations:**<br/>• "Verify Checksums" (→ "VERIFY CHECKSUMS")<br/>• "Include Metadata" (→ "INCLUDE METADATA")<br/><br/>**Collection Import operations:**<br/>• "Collection Import" (→ "COLLECTION IMPORT")<br/>• "Collection Update" (→ "COLLECTION UPDATE") | Translated as normal case,<br/>auto-converted to uppercase by builder. |
 | **2** | **Status** | • "In Progress"<br/>• "Paused"<br/>• "Stopped"<br/>• "Cancelled"<br/>• "Completed"<br/>• "Error"<br/>• "Loading" (device checksum loading)<br/>• "Verifying" (device checksum verification) | Standard values: In Progress / Paused / Stopped / Cancelled / Completed.<br/>Cancelled = no data saved; Stopped = some data saved or displayed.<br/>"Loading" and "Verifying" are extended values used for device-level checksum operations. |
-| **3** | **Device Context** | • "Catalog X of Y \| CatalogName"<br/> | Format: "Catalog 1 of 5 \| MyPhotos"<br/>CatalogName displayed in HTML color (#39b2e5 blue)<br/>Shown for all catalog operations (even 1 of 1) |
+| **3** | **Device Context** | • "Catalog X of Y \| CatalogName"<br/> | Format: "Catalog 1 of 5 \| MyPhotos"<br/>CatalogName displayed in bold, no colour (K2 and K3)<br/>Shown for all catalog operations (even 1 of 1) |
 | **4** | **Process Title** | **Search Operations:**<br/>• "File Types Updated" (populate file type)<br/>• "Loaded" (catalog index loading)<br/>• "Evaluated" (file criteria matching)<br/><br/>**Update Operations:**<br/>• "Loaded" (only for Memory mode and catalogs that include Metadata)<br/>• "Counted"<br/>• "Indexed" (files scanned/updated in catalog)<br/>• "File Types Updated"<br/>• "Metadata Extracted"<br/>• "Paths Updated" (path-root replacement — see `SpecDeviceStorageRoot.md` DSR-F7; this is a *process* title, distinct from the existing *result* title "Updated")<br/><br/>**Create Operations:**<br/>• "Counted"<br/>• "Indexed" (files added to new catalog)<br/>• "Metadata Extracted"<br/><br/>**Explore Operations:**<br/>• "File Types Updated"<br/>• "Loaded" (catalog loading)<br/><br/>**BackUp Operations:**<br/>• "Copying" (file copy in progress)<br/>• "Moving" (file move / archive in progress)<br/>• "Files" (import file count)<br/><br/>**Verify Checksums / Include Metadata (on search results):**<br/>• "Evaluated" (files processed — same term as search, covers both checksum and metadata operations) | Process being executed, dynamically set by operation |
 | **5** | **Current Count** | Any integer ≥ 0 |  Items processed so far |
 | **6** | **Total Count** | Any integer > 0, or 0 (unknown) |  Total items (0 = unknown, shows only current) |
@@ -414,7 +414,7 @@ QString message = StatusBarMessageBuilder()
 - **"In Progress"** replaces "Running" for clearer translations across 30 languages
 - **"Evaluated"** used for search file matching (comparing files against criteria)
 - **"Indexed"** used for catalog create/update operations (files added to or scanned in catalog database)
-- **Device Context format:** "Catalog X of Y | CatalogName" (pipe separator, catalog name in theme blue color)
+- **Device Context format:** "Catalog X of Y | CatalogName" (pipe separator, catalog name in bold, no colour)
 - **Device Context always shown:** Even for single catalogs (1 of 1) to maintain consistency
 
 #### Other Requirements
@@ -441,7 +441,7 @@ QString message = StatusBarMessageBuilder()
    - Added `QLabel* statusBarLabel` to MainWindow for HTML-formatted messages
    - Messages now support bold, colors, and italic formatting
    - Operation names displayed in bold by default
-   - Catalog names displayed in theme blue (#39b2e5)
+   - Catalog names displayed in bold, no colour (changed 2026-09-30 from #39b2e5 blue, which K3's Text.StyledText never rendered)
 
 2. **Status Field**
    - Added dedicated Status field to StatusBarMessageBuilder
@@ -477,7 +477,7 @@ struct FormatOptions {
     bool operationBold = true;           // Operation text in bold
     bool operationUppercase = true;      // Auto-convert to uppercase
     QString operationColor = "";         // Operation color (empty = default)
-    QString catalogNameColor = "#39b2e5"; // Catalog name color (Katalog theme blue)
+    bool catalogNameBold = true;         // Make catalog name bold
     bool resultsBold = true;             // Result numbers in bold
     QString processColor = "";           // Process text color (empty = default)
     bool currentItemItalic = true;       // Current item in italic
@@ -511,20 +511,21 @@ struct FormatOptions {
 
 #### Added
 - **"Indexed"** process title for CREATE and UPDATE catalog operations
-- HTML color formatting note for catalog names (#39b2e5 blue)
+- HTML color formatting note for catalog names (#39b2e5 blue) — superseded 2026-09-30: bold, no colour
 - Device Context shown even for single catalogs (1 of 1)
 - CREATE completion examples showing proper format
 - Known Issues section documenting current problems
 
 #### Changed
 - **Process Title table**: Added "Indexed" to Update and Create operations
-- **Device Context description**: Clarified catalog name uses HTML color and shown for all operations
+- **Device Context description**: Clarified catalog name uses HTML color and shown for all operations (colour superseded 2026-09-30: bold, no colour)
+- **Device Context catalog name (2026-09-30)**: bold, no colour, in K2 and K3 — replaces #39b2e5 blue, which K3's `Text.StyledText` ignored (`<span style='color:…'>`); theme colour deferred (see `SpecBacklogNotes.md`)
 - **Examples**: Updated to use "Indexed" instead of "Processed" for catalog operations
 - **Message Examples section**: Added proper CREATE completion format
 - **Terminology Notes**: Added "Indexed" definition and Device Context clarifications
 
 #### Clarified
-- Device Context format includes HTML-colored catalog name
+- Device Context format includes the catalog name in bold, no colour
 - Both CREATE and UPDATE operations use "Indexed" for file processing
 - Completion messages should use StatusBarMessageBuilder consistently
                    

@@ -208,7 +208,7 @@ StatusBarMessageBuilder::FormatOptions StatusBarMessageBuilder::defaultFormatOpt
     FormatOptions options;
     options.operationBold = true;
     options.operationColor = "";
-    options.catalogNameColor = "#39b2e5";  // Katalog theme blue
+    options.catalogNameBold = true;
     options.resultsBold = true;
     options.processColor = "";
     options.currentItemItalic = true;
@@ -268,13 +268,10 @@ QString StatusBarMessageBuilder::formatDeviceContext() const
     if (!m_catalogName.isEmpty()) {
         QString safeName = m_catalogName.toHtmlEscaped();
 
-        if (!m_formatOptions.catalogNameColor.isEmpty()) {
-            // Apply catalog name color
-            deviceText += " | "+ QString("<span style='color:%1;'>%2</span>")
-                              .arg(m_formatOptions.catalogNameColor, safeName);
-        } else {
-            deviceText += QString(" (%1)").arg(safeName);
+        if (m_formatOptions.catalogNameBold) {
+            safeName = QString("<b>%1</b>").arg(safeName);
         }
+        deviceText += " | " + safeName;
     }
 
     return deviceText;

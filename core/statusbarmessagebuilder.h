@@ -71,7 +71,7 @@ public:
         bool operationBold = true;           // Make operation text bold
         QString operationColor = "";         // Operation text color (empty = default)
         bool operationUppercase = true;      // Auto-convert operation to uppercase
-        QString catalogNameColor = "#39b2e5"; // Catalog name color (Katalog theme blue)
+        bool catalogNameBold = true;         // Make catalog name bold
         bool resultsBold = true;             // Make result numbers bold
         QString processColor = "";           // Process text color (empty = default)
         bool currentItemItalic = true;       // Make current item path italic
