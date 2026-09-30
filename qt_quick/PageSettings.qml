@@ -648,12 +648,12 @@ ScrollablePageFitted {
             Controls.CheckBox {
                 text: qsTr("Refresh device status when returning to the application")
                 checked: appManager1.refreshDeviceStatusOnActivation
-                onCheckedChanged: appManager1.refreshDeviceStatusOnActivation = checked
+                onToggled: appManager1.refreshDeviceStatusOnActivation = checked
             }
             Controls.CheckBox {
                 text: qsTr("Authorize actions that delete files (no recovery)")
                 checked: appManager1.allowFileDeletion
-                onCheckedChanged: appManager1.allowFileDeletion = checked
+                onToggled: appManager1.allowFileDeletion = checked
             }
         }
 

@@ -879,15 +879,6 @@ Kirigami.ApplicationWindow {
 
         pageSearchForm.restoreLastSearch()
 
-        console.warn("PROBE toolBarProbe.implicitHeight =", toolBarProbe.implicitHeight)
-        console.warn("PROBE gridUnit =", Kirigami.Units.gridUnit)
-        console.warn("PROBE headerRowHeight =", root.headerRowHeight)
-        try {
-            console.warn("PROBE gtb.preferredHeight =", pageStack.globalToolBar.preferredHeight)
-            console.warn("PROBE gtb.minimumHeight   =", pageStack.globalToolBar.minimumHeight)
-            console.warn("PROBE gtb.maximumHeight   =", pageStack.globalToolBar.maximumHeight)
-        } catch (e) { console.warn("PROBE gtb unavailable:", e) }
-
         // Restore last active page
         var last = appManager1.getLastPage()
         if (last === "Settings") {

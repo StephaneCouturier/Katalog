@@ -7,9 +7,10 @@ import Qt.labs.platform
 Kirigami.AbstractCard {
     id: card
 
-    anchors.left: parent.left
+    // Guarded: a card being released by its list briefly has no parent.
+    anchors.left: parent ? parent.left : undefined
     anchors.leftMargin: model.level * Kirigami.Units.gridUnit
-    anchors.right: parent.right
+    anchors.right: parent ? parent.right : undefined
 
     // Tightened to fit more devices on screen. The vertical padding is what
     // stacks up over a long list, so it is trimmed hardest; the horizontal
