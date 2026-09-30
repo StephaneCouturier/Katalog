@@ -233,10 +233,12 @@ Kirigami.ApplicationWindow {
     readonly property color katalogAlternateDark: "#161b1d"
 
     // Section titles and in-text links (THM-F17, PGL-C6): K2's title blue under
-    // Katalog Colors, the desktop link colour otherwise.
+    // Katalog Colors, the plain text colour under Desktop Theme (gray), the
+    // desktop link colour under Desktop Theme.
     readonly property color titleColor:
         appManager1.themeId === 1
         ? (root.isDarkDesktop() ? root.katalogBlueLight : root.katalogBlueDarkest)
+        : appManager1.themeId === 2 ? Kirigami.Theme.textColor
         : Kirigami.Theme.linkColor
 
     // Both surfaces are built from the desktop's ACCENT
@@ -271,8 +273,14 @@ Kirigami.ApplicationWindow {
     // Selection highlight. One definition for every list in the application —
     // Selection cards, search results, explore files and folders, device combos —
     // and every theme hands it back to the desktop (SpecTheme THM-C2).
+    // Desktop Theme (gray): a dark grey from the desktop's own text/background
+    // colours, dark enough for the highlighted (white) text (THM-F18, THM-C22).
     readonly property color selectionHighlightColor:
-        appManager1.themeId === 1 ? root.katalogBlueDark : Kirigami.Theme.highlightColor
+        appManager1.themeId === 1 ? root.katalogBlueDark
+        : appManager1.themeId === 2
+          ? (root.isDarkDesktop() ? Qt.lighter(Kirigami.Theme.backgroundColor, 1.9)
+                                  : Qt.lighter(Kirigami.Theme.textColor, 2.0))
+        : Kirigami.Theme.highlightColor
 
     // The two file-list row surfaces, for the Search results list and the Explore
     // file list. Even rows take the desktop's View background — its brightest
@@ -1546,7 +1554,10 @@ Kirigami.ApplicationWindow {
                          : appManager1.themeId === 1   // THM-F21
                            ? Qt.rgba(root.katalogBlueLight.r, root.katalogBlueLight.g,
                                      root.katalogBlueLight.b, 0.20)
-                           : Kirigami.Theme.hoverColor
+                           : appManager1.themeId === 2   // THM-F21, THM-C22
+                             ? Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g,
+                                       Kirigami.Theme.textColor.b, 0.08)
+                             : Kirigami.Theme.hoverColor
                 }
 
                 // Scrolls the list to the selected card — the "where is it?" half
