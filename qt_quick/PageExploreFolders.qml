@@ -31,7 +31,13 @@ Item {
     // 30 in Kirigami's units, so the two match without hard-coding a number
     // here. The icon inside stays iconSizes.small on both - it is the click
     // TARGET that grows, not the chevron.
-    readonly property real rowButton: Kirigami.Units.iconSizes.smallMedium + Kirigami.Units.largeSpacing
+    // The folder icon follows the icon size the user chose (THM-F16), and the
+    // row with it, exactly as the Devices table rows do; with the option off it
+    // is still the same 30.
+    readonly property real rowIconSize: appManager1.biggerIconSize
+                                        ? Kirigami.Units.iconSizes.medium
+                                        : Kirigami.Units.iconSizes.smallMedium
+    readonly property real rowButton: rowIconSize + Kirigami.Units.largeSpacing
 
     // How far each level of the tree steps in.
     readonly property real indentStep: Kirigami.Units.gridUnit
@@ -440,8 +446,8 @@ Item {
 
                         Kirigami.Icon {
                             source: "folder"
-                            implicitWidth:  Kirigami.Units.iconSizes.small
-                            implicitHeight: Kirigami.Units.iconSizes.small
+                            implicitWidth:  root.rowIconSize
+                            implicitHeight: root.rowIconSize
                         }
 
                         Controls.Label {

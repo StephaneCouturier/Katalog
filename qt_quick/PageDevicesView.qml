@@ -5,6 +5,17 @@ import org.kde.kirigami as Kirigami
 
 Item {
     id: root
+
+    // The row icon follows the icon size the user chose, shared with K2
+    // (THM-F7). The row grows with it: smallMedium + largeSpacing is the
+    // table's 30px, so with the option off nothing moves.
+    readonly property real rowIconSize: appManager1.biggerIconSize
+                                        ? Kirigami.Units.iconSizes.medium
+                                        : Kirigami.Units.iconSizes.smallMedium
+    readonly property real rowHeight: rowIconSize + Kirigami.Units.largeSpacing
+    // rowHeightProvider is not a binding: the table must be told to ask again.
+    onRowHeightChanged: deviceTable.forceLayout()
+
     anchors.fill: parent
 
     signal editDeviceRequested(int deviceId)
@@ -792,7 +803,7 @@ Item {
                 Controls.ScrollBar.vertical:   Controls.ScrollBar { policy: Controls.ScrollBar.AsNeeded }
                 Controls.ScrollBar.horizontal: Controls.ScrollBar { policy: Controls.ScrollBar.AsNeeded }
 
-                rowHeightProvider: function(row) { return 30 }
+                rowHeightProvider: function(row) { return root.rowHeight }
                 columnWidthProvider: function(column) {
                     let w = deviceTable.explicitColumnWidth(column)
                     if (w >= 0) return w
@@ -820,7 +831,7 @@ Item {
 
                     readonly property real treeIndent: level * Kirigami.Units.gridUnit
 
-                    implicitHeight: 30
+                    implicitHeight: root.rowHeight
 
                     color: deviceTable.selectedRow === row
                            ? applicationWindow().selectionHighlightColor
@@ -888,8 +899,8 @@ Item {
                                            ? treeBranchIcon.width : 0)
                         }
                         source: iconName
-                        implicitWidth:  Kirigami.Units.iconSizes.small
-                        implicitHeight: Kirigami.Units.iconSizes.small
+                        implicitWidth:  root.rowIconSize
+                        implicitHeight: root.rowIconSize
                     }
 
                     // Boolean columns carry a tick rather than a word (DVP-F5).

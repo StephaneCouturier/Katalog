@@ -6,6 +6,17 @@ import org.kde.kirigami as Kirigami
 
 ColumnLayout {
     id: pageSearchResults_column
+
+    // The row icon follows the icon size the user chose, shared with K2
+    // (THM-F7). The row grows with it: smallMedium + largeSpacing is the
+    // table's 30px, so with the option off nothing moves.
+    readonly property real rowIconSize: appManager1.biggerIconSize
+                                        ? Kirigami.Units.iconSizes.medium
+                                        : Kirigami.Units.iconSizes.smallMedium
+    readonly property real rowHeight: rowIconSize + Kirigami.Units.largeSpacing
+    // rowHeightProvider is not a binding: the table must be told to ask again.
+    onRowHeightChanged: tableView.forceLayout()
+
     spacing: 0
 
     signal closeRequested()
@@ -352,7 +363,7 @@ ColumnLayout {
 
                 ScrollBar.vertical:   ScrollBar { policy: ScrollBar.AsNeeded }
 
-                rowHeightProvider: function(row) { return 30 }
+                rowHeightProvider: function(row) { return pageSearchResults_column.rowHeight }
 
                 columnWidthProvider: function(column) {
                     let w = tableView.explicitColumnWidth(column)
@@ -388,7 +399,7 @@ ColumnLayout {
                     required property int     column
                     required property var     display
                     required property string  fileType
-                    implicitHeight: 30
+                    implicitHeight: pageSearchResults_column.rowHeight
 
                     function iconForType(ft) {
                         switch (ft) {
@@ -431,8 +442,8 @@ ColumnLayout {
                             leftMargin: 6
                         }
                         source: iconForType(fileType)
-                        implicitWidth:  Kirigami.Units.iconSizes.small
-                        implicitHeight: Kirigami.Units.iconSizes.small
+                        implicitWidth:  pageSearchResults_column.rowIconSize
+                        implicitHeight: pageSearchResults_column.rowIconSize
                     }
 
                     Controls.Label {

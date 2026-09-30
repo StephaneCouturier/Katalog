@@ -8,6 +8,16 @@ import org.kde.kirigami as Kirigami
 Item {
     id: root
 
+    // The row icon follows the icon size the user chose, shared with K2
+    // (THM-F7). The row grows with it: smallMedium + largeSpacing is the
+    // table's 30px, so with the option off nothing moves.
+    readonly property real rowIconSize: appManager1.biggerIconSize
+                                        ? Kirigami.Units.iconSizes.medium
+                                        : Kirigami.Units.iconSizes.smallMedium
+    readonly property real rowHeight: rowIconSize + Kirigami.Units.largeSpacing
+    // rowHeightProvider is not a binding: the table must be told to ask again.
+    onRowHeightChanged: exploreTableView.forceLayout()
+
     property int    catalogId:         0
     property string currentFolderPath: ""
     property string catalogPath:       ""
@@ -242,7 +252,7 @@ Item {
                 ScrollBar.vertical:   ScrollBar { policy: ScrollBar.AsNeeded }
                 ScrollBar.horizontal: ScrollBar { policy: ScrollBar.AsNeeded }
 
-                rowHeightProvider: function(row) { return 30 }
+                rowHeightProvider: function(row) { return root.rowHeight }
 
                 columnWidthProvider: function(column) {
                     let w = exploreTableView.explicitColumnWidth(column)
@@ -267,7 +277,7 @@ Item {
                     required property string folderPath
                     required property string name
                     required property string checksumSha256
-                    implicitHeight: 30
+                    implicitHeight: root.rowHeight
 
                     readonly property string checksum: checksumSha256
 
@@ -310,8 +320,8 @@ Item {
                                 default:       return "application-x-zerosize"
                             }
                         }
-                        implicitWidth:  Kirigami.Units.iconSizes.small
-                        implicitHeight: Kirigami.Units.iconSizes.small
+                        implicitWidth:  root.rowIconSize
+                        implicitHeight: root.rowIconSize
                     }
 
                     Controls.Label {
