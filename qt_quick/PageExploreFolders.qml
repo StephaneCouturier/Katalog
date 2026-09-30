@@ -370,6 +370,9 @@ Item {
             Layout.fillHeight: true
             Controls.ScrollBar.vertical.policy:   Controls.ScrollBar.AsNeeded
             Controls.ScrollBar.horizontal.policy: Controls.ScrollBar.AsNeeded
+            background: Rectangle { // List background (empty area)
+                color: applicationWindow().listBackgroundColor
+            }
 
             ListView {
                 id: folderListView

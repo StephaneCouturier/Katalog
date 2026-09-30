@@ -342,6 +342,11 @@ ColumnLayout {
             anchors { top: headerView.bottom; left: parent.left; right: parent.right }
         }
 
+        Rectangle { // List background (empty area)
+            anchors.fill: tableView
+            color: applicationWindow().listBackgroundColor
+        }
+
         TableView {
             id: tableView
             // Stops above the horizontal bar rather than running under it. The

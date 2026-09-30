@@ -240,6 +240,11 @@ Item {
                 anchors { top: exploreHeaderView.bottom; left: parent.left; right: parent.right }
             }
 
+            Rectangle { // List background (empty area)
+                anchors.fill: exploreTableView
+                color: applicationWindow().listBackgroundColor
+            }
+
             TableView {
                 id: exploreTableView
                 anchors { top: exploreHeaderSep.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }

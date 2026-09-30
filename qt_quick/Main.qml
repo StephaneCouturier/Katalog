@@ -271,29 +271,25 @@ Kirigami.ApplicationWindow {
                                       Kirigami.Theme.highlightColor.b, 0.12))
 
     // Selection highlight. One definition for every list in the application —
-    // Selection cards, search results, explore files and folders, device combos —
-    // and every theme hands it back to the desktop (SpecTheme THM-C2).
-    // Desktop Theme (gray): a dark grey from the desktop's own text/background
-    // colours, dark enough for the highlighted (white) text (THM-F18, THM-C22).
+    // Selection cards, search results, explore files and folders, device combos.
+    // Desktop Theme: the desktop accent. Katalog Colors: K2's dark blue
+    // (THM-C2). Desktop Theme (gray): a grey from the desktop's own
+    // text/background colours, the lightest that keeps the highlighted (white)
+    // text readable (THM-F18, THM-C22); also the gray drawer band (THM-F20).
     readonly property color selectionHighlightColor:
         appManager1.themeId === 1 ? root.katalogBlueDark
         : appManager1.themeId === 2
           ? (root.isDarkDesktop() ? Qt.lighter(Kirigami.Theme.backgroundColor, 1.9)
-                                  : Qt.lighter(Kirigami.Theme.textColor, 2.0))
+                                  : Qt.lighter(Kirigami.Theme.textColor, 3.0))
         : Kirigami.Theme.highlightColor
 
-    // The two file-list row surfaces, for the Search results list and the Explore
-    // file list. Even rows take the desktop's View background — its brightest
-    // surface on a light scheme, its darkest on a dark one — and odd rows the
-    // Window background beside it, so the pair is two neighbouring steps of the
-    // desktop's own scale rather than a tint of its own (SpecTheme THM-F1/F2),
-    // the same pair under every stored Theme value (THM-F4). Defined here and
-    // consumed by three delegates - the Search results list, the Explore file
-    // list and, since THM-F8, the Explore folder list - none of which may
-    // re-derive either colour inline (THM-C1 / THM-C11). Until THM-F8 this
-    // comment already claimed the folder list as a consumer while the spec
-    // covered only the two file lists and the folder list consumed neither:
-    // the comment was an intention, not a requirement (THM-C12).
+    // The two list row surfaces. Even rows take the desktop's View background —
+    // its brightest surface on a light scheme, its darkest on a dark one — under
+    // every Theme value (SpecTheme THM-F1/F2); odd rows take the stripe below,
+    // which depends on the Theme setting (THM-F4). Defined here and consumed by
+    // three delegates - the Search results list, the Explore file list and the
+    // Explore folder list (THM-F8) - none of which may re-derive either colour
+    // inline (THM-C1 / THM-C11).
     readonly property color rowBaseColor:   root.viewBackgroundColor
     // The odd-row stripe follows the Theme setting (THM-F4, THM-C19):
     // Desktop Theme lays the desktop accent at 11% over the View surface (K2's
@@ -309,6 +305,12 @@ Kirigami.ApplicationWindow {
                       Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g,
                               Kirigami.Theme.highlightColor.b, 0.11))
 
+    // Background of the empty area of the file/folder lists (below the
+    // last row): the alternate row colour under Katalog Colors, the even-row
+    // (View) colour under both Desktop Themes.
+    readonly property color listBackgroundColor:
+        appManager1.themeId === 1 ? root.rowStripeColor : root.rowBaseColor
+
     // Always at least as dark as a selected card, and always darker than the
     // page beneath it. On a light desktop that is the full accent — the very
     // colour a selected card is filled with; on a dark one the page is already a
@@ -318,9 +320,10 @@ Kirigami.ApplicationWindow {
         ? (root.isDarkDesktop() ? Qt.darker(root.katalogBlueDarkest, 1.6) : root.katalogBlueDark)
         : appManager1.themeId === 2
           // Grey: on a dark desktop the page was lightened, so the band stays at
-          // the plain background; on a light one it steps further down.
+          // the plain background; on a light one it is the selection grey, which
+          // carries the white collection name.
           ? (root.isDarkDesktop() ? Kirigami.Theme.backgroundColor
-                                  : Qt.darker(Kirigami.Theme.backgroundColor, 1.18))
+                                  : root.selectionHighlightColor)
           : (root.isDarkDesktop() ? Qt.darker(Kirigami.Theme.highlightColor, 3.8)
                               : Kirigami.Theme.highlightColor)
 
