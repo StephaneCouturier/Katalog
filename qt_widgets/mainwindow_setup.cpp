@@ -553,10 +553,6 @@
     //--- Database management -----------------------------------------------
     void MainWindow::runDatabaseMigrations()
     {
-        const QString currentSchemaVersion = collection->loadDatabaseSchemaVersion();
-        const bool needs2_6DataStep = QVersionNumber::fromString(currentSchemaVersion)
-                                      < QVersionNumber::fromString("2.6");
-
         QApplication::setOverrideCursor(Qt::BusyCursor);
         QSqlError migrationError = DatabaseManager::runMigrations(m_connectionName, collection);
         QApplication::restoreOverrideCursor();
@@ -570,89 +566,8 @@
             return;
         }
 
-        if (needs2_6DataStep)
-            migrateExistingSearchDeviceData_2_6();
-
         // Refresh display
         loadSearchHistoryTableToModel();
-    }
-   //----------------------------------------------------------------------
-    void MainWindow::migrateExistingSearchDeviceData_2_6()
-    {
-
-        QSqlQuery updateQuery(QSqlDatabase::database(m_connectionName));
-        QSqlQuery selectQuery(QSqlDatabase::database(m_connectionName));
-
-        // Get all search records that need migration
-        selectQuery.exec(R"(
-        SELECT date_time, search_catalog, search_storage, search_catalog_checked
-        FROM search
-        WHERE selected_device_ID_list IS NULL OR selected_device_ID_list = ''
-    )");
-
-        while (selectQuery.next()) {
-            QString dateTime = selectQuery.value(0).toString();
-            QString catalogName = selectQuery.value(1).toString();
-            QString storageName = selectQuery.value(2).toString();
-            bool searchInCatalogs = selectQuery.value(3).toBool();
-
-            QString deviceIdList = "";
-
-            if (searchInCatalogs) {
-                // Find device ID by catalog or storage name
-                QSqlQuery deviceQuery(QSqlDatabase::database(m_connectionName));
-
-                if (catalogName != tr("All") && !catalogName.isEmpty()) {
-                    // Look for specific catalog (only Catalog type)
-                    deviceQuery.prepare(R"(
-                    SELECT device_id FROM device
-                    WHERE device_name = :name AND device_type = 'Catalog'
-                )");
-                    deviceQuery.bindValue(":name", catalogName);
-                }
-                else if (storageName != tr("All") && !storageName.isEmpty()) {
-                    // Look for storage device (only Storage type)
-                    deviceQuery.prepare(R"(
-                    SELECT device_id FROM device
-                    WHERE device_name = :name AND device_type = 'Storage'
-                )");
-                    deviceQuery.bindValue(":name", storageName);
-                }
-                else {
-                    // "All" devices - use device ID 0 as convention
-                    deviceIdList = "0";
-                }
-
-                if (deviceIdList.isEmpty()) {
-                    if (deviceQuery.exec() && deviceQuery.next()) {
-                        deviceIdList = QString::number(deviceQuery.value(0).toInt());
-                    }
-                    else {
-                        // Device not found, use 0 as fallback for "All"
-                        deviceIdList = "0";
-                        qWarning() << "WARNING: Could not find device for catalog:" << catalogName << "storage:" << storageName;
-                    }
-                }
-            }
-            else {
-                // Directory search - no specific device, use 0
-                deviceIdList = "0";
-            }
-
-            // Update the record with the device ID
-            updateQuery.prepare(R"(
-            UPDATE search
-            SET selected_device_ID_list = :device_list
-            WHERE date_time = :date_time
-        )");
-            updateQuery.bindValue(":device_list", deviceIdList);
-            updateQuery.bindValue(":date_time", dateTime);
-
-            if (!updateQuery.exec()) {
-                qWarning() << "WARNING: Failed to update search record:" << updateQuery.lastError().text();
-            }
-        }
-
     }
     //----------------------------------------------------------------------
     bool MainWindow::backupMemoryDatabaseToFile(

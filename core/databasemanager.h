@@ -60,9 +60,6 @@ public:
      * @brief Run all pending schema migrations in ascending version order.
      *        Returns the first QSqlError encountered; NoError if all succeeded.
      *        Callers are responsible for any UI feedback (busy cursor, dialogs).
-     *        Note: the K2-specific search-device data step for 2.6
-     *        (migrateExistingSearchDeviceData_2_6) must be called separately
-     *        by K2 when schemaVersion was below 2.6 before this call.
      */
     static QSqlError runMigrations(const QString &connectionName, Collection *collection);
 };

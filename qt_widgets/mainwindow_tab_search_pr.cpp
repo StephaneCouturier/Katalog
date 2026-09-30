@@ -267,8 +267,6 @@ void MainWindow::sendSearchParametersFromUI(Search *search)
     search->searchOnTags = ui->Search_checkBox_Tags->isChecked();
     search->selectedTagName = ui->Search_comboBox_Tags->currentText();
 
-    search->selectedStorage = ui->Filters_label_DisplayStorage->text();
-    search->selectedCatalog = ui->Filters_label_DisplayCatalog->text();
     search->searchInCatalogsChecked = ui->Filters_checkBox_SearchInCatalogs->isChecked();
     search->searchInConnectedChecked = ui->Filters_checkBox_SearchInConnectedDrives->isChecked();
     search->connectedDirectory = ui->Filters_lineEdit_SeletedDirectory->text();

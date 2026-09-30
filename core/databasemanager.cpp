@@ -77,8 +77,6 @@ QSqlError DatabaseManager::runMigrations(const QString &connectionName, Collecti
         QSqlError err = Database::runMigration_2_6(connectionName);
         if (err.type() != QSqlError::NoError) return err;
         collection->setDatabaseSchemaVersion();
-        // NOTE: K2 must call migrateExistingSearchDeviceData_2_6() separately
-        //       when schemaVersion was below 2.6 before this call.
     }
 
     if (schemaVersion < QVersionNumber::fromString("2.8")) {

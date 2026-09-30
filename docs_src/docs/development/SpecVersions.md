@@ -354,7 +354,7 @@ opened by 3.0. It cannot protect against 2.12.
 | 2b | Storages created by 2.12 get `storage_user_id` = 0 (column default) | File / Hosted | 2.12 creates a storage | Medium |
 | 3 | `device_comment`: 2.12's `device.csv` writer has 14 columns and no comment, so all device comments are lost | Memory | Any 2.12 save of the device table (nearly every device action) | High |
 | 4 | `mapping_include_empty_dirs`: 2.12's backup mapping writer lacks it, so the setting reverts to its default 1 (replicate empty folders) | Memory | 2.12 saves backup mappings | Medium |
-| 5 | `storage_name` / `catalog_storage` (`STI-C16`), `catalog_name` (`STI-C17`), `storage_path` / `catalog_source_path` / `catalog_source_path_is_active` (`STI-C19`), and `catalog_file_count` / `catalog_total_file_size` / `storage_total_space` / `storage_free_space` / `storage_location` (`STI-C20`), and `search.search_location` (never given a value; user decision 2026-09-29) are removed by the 2.12 → 3.0 migration. K2 ≤ 2.12 and the K2 2.13 binary published with beta2 name these columns in their SQL, so storage details fail to load, catalogs fail to load, and creating a storage, creating a catalog or saving a catalog fails | File / Hosted | Opening the collection after the 3.0 migration | High — accepted by the user: no return from K3 3.0 to older K2, expected for a major version |
+| 5 | `storage_name` / `catalog_storage` (`STI-C16`), `catalog_name` (`STI-C17`), `storage_path` / `catalog_source_path` / `catalog_source_path_is_active` (`STI-C19`), and `catalog_file_count` / `catalog_total_file_size` / `storage_total_space` / `storage_free_space` / `storage_location` (`STI-C20`), and `search.search_location`, `search.search_storage`, `search.search_catalog` (user decisions 2026-09-29) are removed by the 2.12 → 3.0 migration. K2 ≤ 2.12 and the K2 2.13 binary published with beta2 name these columns in their SQL, so storage details fail to load, catalogs fail to load, and creating a storage, creating a catalog or saving a catalog fails | File / Hosted | Opening the collection after the 3.0 migration | High — accepted by the user: no return from K3 3.0 to older K2, expected for a major version |
 | 5b | Memory-mode file formats are unchanged, so these applications still open the collection; but the storage "Name" column of `storage.csv` and the `<catalogStorage>` line of each `.idx` are written empty by 3.0. 2.12's Collection Import resolves a catalog's storage by `catalog_storage` → `storage_name` (`v2.12.1` `core/collectionimporter.cpp` ~1260-1290), so importing from such a collection finds no storage row | Memory | An older application imports from a collection saved by 3.0 | Low-medium |
 
 ### What this means for users
@@ -384,6 +384,18 @@ above.
   beta, and you import from a collection saved in memory mode by Katalog 3.0,
   then the storage device details of the imported catalogs can be
   missing. *(risk 5b)*
+
+- If a collection was last opened with a Katalog version older than 2.6, then
+  it needs to be opened once with Katalog 2.12 before Katalog 2.13 or 3.0: only
+  2.12 converts the device selection saved in its search history. *(pre-2.6
+  collections)*
+
+**Why (pre-2.6 collections).** Before 2.6 a search history entry recorded its
+scope as storage and catalog names (`search.search_storage`,
+`search.search_catalog`); 2.6 introduced `selected_device_ID_list`, and K2's
+upgrade step `migrateExistingSearchDeviceData_2_6` converted old entries. That
+step and both columns are removed in 3.0 (user decision 2026-09-29), so only
+2.12 can still convert such a collection.
 
 **Recommendation:** a collection opened with Katalog 3.0 is best used only with
 Katalog 3.0, or the Katalog 2 released together with it, from then on, and a

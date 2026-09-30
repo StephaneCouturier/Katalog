@@ -250,7 +250,6 @@ class MainWindow : public KXmlGuiWindow
             void selectDatabaseFilePath();
             void selectNewDatabaseFolderPath();
             void applyDatabaseModeToUI();
-            void migrateExistingSearchDeviceData_2_6();
 
             //Objects
             Device *activeDevice   = new Device(); //active device from any screen, used for operations from that screen

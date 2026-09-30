@@ -233,8 +233,14 @@ Nothing below is authorised work; each needs its own user decision.
   `Database::runMigration_3_0`. It was never given a value; reads keep its index
   as `'' AS search_location`, and Memory-mode `search_history.csv` keeps slot 21,
   written empty.
-- **`search.search_storage` / `search.search_catalog`** — pre-2.6 search scope;
-  still used by K2's search-history restore and K2's 2.6 upgrade step. Undecided.
+- **`search.search_storage` / `search.search_catalog`** — *Done (user decision
+  2026-09-29):* removed by `Database::runMigration_3_0`; the scope is
+  `selected_device_ID_list`. Reads keep their indexes as `''` placeholders, and
+  Memory-mode `search_history.csv` keeps slots 22–23, written empty. K2's history
+  restore derives its Storage/Catalog labels from the first id in
+  `selected_device_ID_list`, by the same rule as `displaySelectedDeviceName()`.
+  K2's `migrateExistingSearchDeviceData_2_6` is removed: a collection older than
+  2.6 must be opened with 2.12 first (`SpecVersions.md`).
 - **`file.file_full_path`** — equals `file_folder_path + "/" + file_name`.
 - **`catalog.catalog_file_path`** — derivable in Memory mode.
 

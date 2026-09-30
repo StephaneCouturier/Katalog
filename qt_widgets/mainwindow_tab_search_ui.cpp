@@ -1252,8 +1252,13 @@
             ui->Filters_checkBox_SearchInCatalogs->setChecked(search->searchInCatalogsChecked);
             ui->Filters_checkBox_SearchInConnectedDrives->setChecked(search->searchInConnectedChecked);
             ui->Filters_lineEdit_SeletedDirectory->setText(search->connectedDirectory);
-            ui->Filters_label_DisplayStorage->setText(search->selectedStorage);
-            ui->Filters_label_DisplayCatalog->setText(search->selectedCatalog);
+            // Storage / Catalog labels from the searched device, as displaySelectedDeviceName() does
+            Device searchedDevice;
+            searchedDevice.ID = search->selectedDeviceIDList.value(0, 0);
+            if (searchedDevice.ID > 0)
+                searchedDevice.loadDevice(m_connectionName);
+            ui->Filters_label_DisplayStorage->setText(searchedDevice.type == "Storage" ? searchedDevice.name : tr("All"));
+            ui->Filters_label_DisplayCatalog->setText(searchedDevice.type == "Catalog" ? searchedDevice.name : tr("All"));
 
             //File name
             ui->Search_checkBox_FileCriteria->setChecked(search->searchOnFileCriteria);
@@ -1500,8 +1505,6 @@
                 currentSearch->searchOnTags             = ui->Search_checkBox_Tags->isChecked();
                 currentSearch->selectedTagName          = ui->Search_comboBox_Tags->currentText();
 
-                currentSearch->selectedStorage          = ui->Filters_label_DisplayStorage->text();
-                currentSearch->selectedCatalog          = ui->Filters_label_DisplayCatalog->text();
                 currentSearch->searchInCatalogsChecked  = ui->Filters_checkBox_SearchInCatalogs->isChecked();
                 currentSearch->searchInConnectedChecked = ui->Filters_checkBox_SearchInConnectedDrives->isChecked();
                 currentSearch->connectedDirectory       = ui->Filters_lineEdit_SeletedDirectory->text();
@@ -1983,8 +1986,8 @@
                                                     tag_checked,
                                                     tag,
                                                     '' AS search_location,
-                                                    search_storage,
-                                                    search_catalog,
+                                                    '' AS search_storage,
+                                                    '' AS search_catalog,
                                                     search_catalog_checked,
                                                     search_directory_checked,
                                                     selected_directory,

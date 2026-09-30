@@ -162,8 +162,6 @@ public:
     bool showFoldersOnly;
     bool searchOnTags;
     QString selectedTagName;
-    QString selectedStorage;
-    QString selectedCatalog;
     bool searchInCatalogsChecked;
     bool searchInConnectedChecked;
     QString connectedDirectory;

@@ -980,8 +980,6 @@ void Collection::loadSearchHistoryFileToTable()
                                                     show_folders,
                                                     tag_checked,
                                                     tag,
-                                                    search_storage,
-                                                    search_catalog,
                                                     search_catalog_checked,
                                                     search_directory_checked,
                                                     selected_directory,
@@ -1037,8 +1035,6 @@ void Collection::loadSearchHistoryFileToTable()
                                                     :show_folders,
                                                     :tag_checked,
                                                     :tag,
-                                                    :search_storage,
-                                                    :search_catalog,
                                                     :search_catalog_checked,
                                                     :search_directory_checked,
                                                     :selected_directory,
@@ -1092,8 +1088,7 @@ void Collection::loadSearchHistoryFileToTable()
                         insertQuery.bindValue(":tag_checked",               fieldList[19]);
                         insertQuery.bindValue(":tag",                       fieldList[20]);
                         // fieldList[21] (search_location) kept in the file format, never read
-                        insertQuery.bindValue(":search_storage",            fieldList[22]);
-                        insertQuery.bindValue(":search_catalog",            fieldList[23]);
+                        // fieldList[22], [23] (search_storage, search_catalog) kept in the file format, never read
                         insertQuery.bindValue(":search_catalog_checked",    fieldList[24]);
                         insertQuery.bindValue(":search_directory_checked",  fieldList[25]);
                         insertQuery.bindValue(":selected_directory",        fieldList[26]);
@@ -1696,8 +1691,8 @@ void Collection::saveSearchHistoryTableToFile()
                                             tag_checked,
                                             tag,
                                             '' AS search_location,   -- column kept in the file format
-                                            search_storage,
-                                            search_catalog,
+                                            '' AS search_storage,   -- column kept in the file format
+                                            '' AS search_catalog,   -- column kept in the file format
                                             search_catalog_checked,
                                             search_directory_checked,
                                             selected_directory,

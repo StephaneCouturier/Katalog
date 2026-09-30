@@ -69,7 +69,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 > - Removes `catalog.catalog_name` (SQLite: table rebuild, because of its UNIQUE constraint).
 > - Drops `storage.storage_path`, `catalog.catalog_source_path`, `catalog.catalog_source_path_is_active` when present (`device.device_path` is the only path).
 > - Drops `catalog.catalog_file_count`, `catalog.catalog_total_file_size`, `storage.storage_total_space`, `storage.storage_free_space`, `storage.storage_location` when present (the device holds totals and space).
-> - Drops `search.search_location` when present (never given a value).
+> - Drops `search.search_location` (never given a value), `search.search_storage` and `search.search_catalog` (pre-2.6 scope text, replaced by `selected_device_ID_list`) when present. Collections older than 2.6 are expected to be opened with 2.12 first (release-note advice).
 > - Drops `storage.storage_name` and `catalog.catalog_storage` when present (dead v1.xx name copies; `device_name` is the only name — `SpecStorageIdentity.md` STI-C13/C16). Memory-mode files keep their slots, written empty.
 
 ## Project Overview

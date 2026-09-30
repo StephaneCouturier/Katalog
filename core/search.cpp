@@ -674,8 +674,6 @@ void Search::saveSearchHistoryToTable(const QString &connectionName)
             show_folders,
             tag_checked,
             tag,
-            search_storage,
-            search_catalog,
             search_catalog_checked,
             search_directory_checked,
             selected_directory,
@@ -730,8 +728,6 @@ void Search::saveSearchHistoryToTable(const QString &connectionName)
             :show_folders,
             :tag_checked,
             :tag,
-            :search_storage,
-            :search_catalog,
             :search_catalog_checked,
             :search_directory_checked,
             :selected_directory,
@@ -785,8 +781,6 @@ void Search::saveSearchHistoryToTable(const QString &connectionName)
     query.bindValue(":show_folders", showFoldersOnly);
     query.bindValue(":tag_checked", searchOnTags);
     query.bindValue(":tag", selectedTagName);
-    query.bindValue(":search_storage", selectedStorage);
-    query.bindValue(":search_catalog", selectedCatalog);
     query.bindValue(":search_catalog_checked", searchInCatalogsChecked);
     query.bindValue(":search_directory_checked", searchInConnectedChecked);
     query.bindValue(":selected_directory", connectedDirectory);
@@ -858,8 +852,8 @@ void Search::loadSearchHistoryCriteria(const QString &connectionName)
             tag_checked,
             tag,
             '' AS search_location,   -- column removed; index kept
-            search_storage,
-            search_catalog,
+            '' AS search_storage,   -- column removed; index kept
+            '' AS search_catalog,   -- column removed; index kept
             search_catalog_checked,
             search_directory_checked,
             selected_directory,
@@ -924,8 +918,6 @@ void Search::loadSearchHistoryCriteria(const QString &connectionName)
         showFoldersOnly = query.value(35).toBool();
         searchOnTags = query.value(36).toBool();
         selectedTagName = query.value(37).toString();
-        selectedStorage = query.value(39).toString();
-        selectedCatalog = query.value(40).toString();
         searchInCatalogsChecked = query.value(41).toBool();
         searchInConnectedChecked = query.value(42).toBool();
         connectedDirectory = query.value(43).toString();
@@ -1021,8 +1013,6 @@ void Search::copyFrom(const Search* other)
     searchOnTags = other->searchOnTags;
     selectedTagName = other->selectedTagName;
 
-    selectedStorage = other->selectedStorage;
-    selectedCatalog = other->selectedCatalog;
     searchInCatalogsChecked = other->searchInCatalogsChecked;
     searchInConnectedChecked = other->searchInConnectedChecked;
     connectedDirectory = other->connectedDirectory;
