@@ -14,6 +14,9 @@ ColumnLayout {
 
     // Width of the left label column inside sub-sections
     readonly property int labelW: Kirigami.Units.gridUnit * 4
+    // Left margin of every section, title row and body alike, so a checkbox that
+    // opens a body row sits under the section title checkbox (PGL-F10, PGL-C7)
+    readonly property int sectionMargin: Kirigami.Units.smallSpacing
 
     property var tagNames: []
 
@@ -622,7 +625,7 @@ ColumnLayout {
     // ── Section 1: File name ──────────────────────────────────────────────────
     RowLayout {
         Layout.fillWidth: true
-        Layout.leftMargin: Kirigami.Units.smallSpacing
+        Layout.leftMargin: pageSearchForm.sectionMargin
         Layout.topMargin: Kirigami.Units.smallSpacing
         spacing: Kirigami.Units.largeSpacing
         Controls.CheckBox {
@@ -639,7 +642,7 @@ ColumnLayout {
     ColumnLayout {
         id: search_FormLayout_FileNameCriteria
         Layout.topMargin: Kirigami.Units.smallSpacing   // gap under the section title
-        Layout.leftMargin: Kirigami.Units.smallSpacing
+        Layout.leftMargin: pageSearchForm.sectionMargin
         Layout.fillWidth: true
         spacing: Kirigami.Units.smallSpacing
 
@@ -755,7 +758,7 @@ ColumnLayout {
     // ── Section 2: File attributes ────────────────────────────────────────────
     RowLayout {
         Layout.fillWidth: true
-        Layout.leftMargin: Kirigami.Units.smallSpacing
+        Layout.leftMargin: pageSearchForm.sectionMargin
         Layout.topMargin: Kirigami.Units.smallSpacing
         spacing: Kirigami.Units.largeSpacing
         Controls.CheckBox {
@@ -778,7 +781,7 @@ ColumnLayout {
         id: fileAtrributeCriteria
         Layout.topMargin: Kirigami.Units.smallSpacing   // gap under the section title
         visible: false
-        Layout.leftMargin: Kirigami.Units.largeSpacing
+        Layout.leftMargin: pageSearchForm.sectionMargin
         Layout.fillWidth: true
         spacing: Kirigami.Units.smallSpacing
 
@@ -951,7 +954,7 @@ ColumnLayout {
     // ── Section 3: File metadata ──────────────────────────────────────────────
     RowLayout {
         Layout.fillWidth: true
-        Layout.leftMargin: Kirigami.Units.smallSpacing
+        Layout.leftMargin: pageSearchForm.sectionMargin
         Layout.topMargin: Kirigami.Units.smallSpacing
         spacing: Kirigami.Units.largeSpacing
         Controls.CheckBox {
@@ -967,7 +970,7 @@ ColumnLayout {
         id: search_FormLayout_FileMetadata
         Layout.topMargin: Kirigami.Units.smallSpacing   // gap under the section title
         visible: false
-        Layout.leftMargin: Kirigami.Units.largeSpacing
+        Layout.leftMargin: pageSearchForm.sectionMargin
         Layout.fillWidth: true
         spacing: Kirigami.Units.smallSpacing
 
@@ -1138,7 +1141,7 @@ ColumnLayout {
     // ── Section 4: Folder criteria ────────────────────────────────────────────
     RowLayout {
         Layout.fillWidth: true
-        Layout.leftMargin: Kirigami.Units.smallSpacing
+        Layout.leftMargin: pageSearchForm.sectionMargin
         Layout.topMargin: Kirigami.Units.smallSpacing
         spacing: Kirigami.Units.largeSpacing
         Controls.CheckBox {
@@ -1155,7 +1158,7 @@ ColumnLayout {
         id: search_FormLayout_folderCriteria
         Layout.topMargin: Kirigami.Units.smallSpacing   // gap under the section title
         visible: false
-        Layout.leftMargin: Kirigami.Units.largeSpacing
+        Layout.leftMargin: pageSearchForm.sectionMargin
         spacing: Kirigami.Units.smallSpacing
 
         Controls.CheckBox {
@@ -1189,7 +1192,7 @@ ColumnLayout {
     // ── Section 5: Duplicates ─────────────────────────────────────────────────
     RowLayout {
         Layout.fillWidth: true
-        Layout.leftMargin: Kirigami.Units.smallSpacing
+        Layout.leftMargin: pageSearchForm.sectionMargin
         Layout.topMargin: Kirigami.Units.smallSpacing
         spacing: Kirigami.Units.largeSpacing
         Controls.CheckBox {
@@ -1211,7 +1214,7 @@ ColumnLayout {
         id: search_FormLayout_Duplicates
         Layout.topMargin: Kirigami.Units.smallSpacing   // gap under the section title
         visible: false
-        Layout.leftMargin: Kirigami.Units.largeSpacing
+        Layout.leftMargin: pageSearchForm.sectionMargin
         Layout.fillWidth: true
         spacing: Kirigami.Units.smallSpacing
 
@@ -1320,7 +1323,7 @@ ColumnLayout {
     // ── Section 6: Differences ────────────────────────────────────────────────
     RowLayout {
         Layout.fillWidth: true
-        Layout.leftMargin: Kirigami.Units.smallSpacing
+        Layout.leftMargin: pageSearchForm.sectionMargin
         Layout.topMargin: Kirigami.Units.smallSpacing
         spacing: Kirigami.Units.largeSpacing
         Controls.CheckBox {
@@ -1343,7 +1346,7 @@ ColumnLayout {
         id: search_FormLayout_Differences
         Layout.topMargin: Kirigami.Units.smallSpacing   // gap under the section title
         visible: false
-        Layout.leftMargin: Kirigami.Units.largeSpacing
+        Layout.leftMargin: pageSearchForm.sectionMargin
         Layout.fillWidth: true
         spacing: Kirigami.Units.smallSpacing
 
