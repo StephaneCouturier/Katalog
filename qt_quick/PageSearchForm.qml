@@ -13,10 +13,38 @@ ColumnLayout {
     signal searchRequested()
 
     // Width of the left label column inside sub-sections
-    readonly property int labelW: Kirigami.Units.gridUnit * 4
+    readonly property int labelW: Kirigami.Units.gridUnit * 5
     // Left margin of every section, title row and body alike, so a checkbox that
     // opens a body row sits under the section title checkbox (PGL-F10, PGL-C7)
     readonly property int sectionMargin: Kirigami.Units.smallSpacing
+    // One vertical gap between rows of a section and between the wrapped lines of a
+    // row; a Flow has a single spacing, so it is also the gap between its groups (PGL-F13)
+    readonly property int rowSpacing: Kirigami.Units.smallSpacing
+
+    // Height of the first line of a row's fields, to centre the left-column label or
+    // checkbox on it (PGL-F12): the tallest visible item on a Flow's first line, or
+    // the first line of the first visible child of a column.
+    function firstLineHeight(item) {
+        if (!item) return 0
+        if (item instanceof Flow) {
+            var h = 0
+            for (var i = 0; i < item.children.length; ++i) {
+                var c = item.children[i]
+                if (c.visible && c.y < 1) h = Math.max(h, c.height)
+            }
+            return h
+        }
+        if (item instanceof ColumnLayout) {
+            for (var j = 0; j < item.children.length; ++j)
+                if (item.children[j].visible) return firstLineHeight(item.children[j])
+            return 0
+        }
+        return item.height
+    }
+    // Plain left-column labels start where a checkbox's text starts, so their text
+    // lines up with the checkbox text above them (PGL-F10, PGL-C9)
+    readonly property real labelInset: search_checkBox_FileNameCriteria.contentItem
+                                       ? search_checkBox_FileNameCriteria.contentItem.x + search_checkBox_FileNameCriteria.contentItem.leftPadding : 0
 
     property var tagNames: []
 
@@ -644,7 +672,7 @@ ColumnLayout {
         Layout.topMargin: Kirigami.Units.smallSpacing   // gap under the section title
         Layout.leftMargin: pageSearchForm.sectionMargin
         Layout.fillWidth: true
-        spacing: Kirigami.Units.smallSpacing
+        spacing: pageSearchForm.rowSpacing
 
         RowLayout {
             Layout.fillWidth: true
@@ -653,7 +681,7 @@ ColumnLayout {
             // which pushed the Paste and Clean buttons past the edge.
             Layout.maximumWidth: pageSearchForm.width - search_FormLayout_FileNameCriteria.Layout.leftMargin
             // Centred on the first term row, not on the whole list.
-            Controls.Label { text: qsTr("text"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop
+            Controls.Label { text: qsTr("text"); Layout.preferredWidth: pageSearchForm.labelW; leftPadding: pageSearchForm.labelInset; wrapMode: Text.Wrap; Layout.alignment: Qt.AlignTop
                              Layout.topMargin: Math.max(0, (search_TextField_FileNameText.firstRowHeight - implicitHeight) / 2) }
             SearchTermList {
                 id: search_TextField_FileNameText
@@ -684,7 +712,7 @@ ColumnLayout {
         }
         RowLayout {
             Layout.fillWidth: true
-            Controls.Label { text: qsTr("with"); Layout.preferredWidth: pageSearchForm.labelW }
+            Controls.Label { text: qsTr("with"); Layout.preferredWidth: pageSearchForm.labelW; leftPadding: pageSearchForm.labelInset; wrapMode: Text.Wrap }
             ComboBoxFitted {
                 id: search_ComboBox_TextCriteriaWith
                 textRole: "text"
@@ -700,7 +728,7 @@ ColumnLayout {
         }
         RowLayout {
             Layout.fillWidth: true
-            Controls.Label { text: qsTr("in"); Layout.preferredWidth: pageSearchForm.labelW }
+            Controls.Label { text: qsTr("in"); Layout.preferredWidth: pageSearchForm.labelW; leftPadding: pageSearchForm.labelInset; wrapMode: Text.Wrap }
             ComboBoxFitted {
                 id: search_ComboBox_TextCriteriaIn
                 textRole: "text"
@@ -727,7 +755,7 @@ ColumnLayout {
         RowLayout {
             Layout.fillWidth: true
             Layout.maximumWidth: pageSearchForm.width - search_FormLayout_FileNameCriteria.Layout.leftMargin
-            Controls.Label { text: qsTr("exclude"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop
+            Controls.Label { text: qsTr("exclude"); Layout.preferredWidth: pageSearchForm.labelW; leftPadding: pageSearchForm.labelInset; wrapMode: Text.Wrap; Layout.alignment: Qt.AlignTop
                              Layout.topMargin: Math.max(0, (search_TextField_FileNameExclude.firstRowHeight - implicitHeight) / 2) }
             SearchTermList {
                 id: search_TextField_FileNameExclude
@@ -783,7 +811,7 @@ ColumnLayout {
         visible: false
         Layout.leftMargin: pageSearchForm.sectionMargin
         Layout.fillWidth: true
-        spacing: Kirigami.Units.smallSpacing
+        spacing: pageSearchForm.rowSpacing
 
         RowLayout {
             Layout.fillWidth: true
@@ -846,6 +874,7 @@ ColumnLayout {
                 text: qsTr("Size")
                 Layout.preferredWidth: pageSearchForm.labelW
                 Layout.alignment: Qt.AlignTop
+                Layout.topMargin: Math.max(0, (pageSearchForm.firstLineHeight(search_flow_Size) - implicitHeight) / 2)
                 onCheckedChanged: {
                     search_spinBox_MinimumSize.enabled = checked
                     search_comboBox_MinSizeUnit.enabled = checked
@@ -854,8 +883,9 @@ ColumnLayout {
                 }
             }
             Flow {
+                id: search_flow_Size
                 Layout.fillWidth: true
-                spacing: Kirigami.Units.largeSpacing
+                spacing: pageSearchForm.rowSpacing
                 RowLayout {
                     width: Math.min(implicitWidth, parent.width)  // lets its combo box shrink (CBX-F2)
                     Controls.Label { text: ">" }
@@ -900,6 +930,7 @@ ColumnLayout {
                 text: qsTr("Date")
                 Layout.preferredWidth: pageSearchForm.labelW
                 Layout.alignment: Qt.AlignTop
+                Layout.topMargin: Math.max(0, (pageSearchForm.firstLineHeight(search_flow_Date) - implicitHeight) / 2)
                 onCheckedChanged: {
                     search_dateTimeEdit_Min.enabled = checked
                     search_button_ShowMinDateCalendar.enabled = checked
@@ -908,8 +939,9 @@ ColumnLayout {
                 }
             }
             Flow {
+                id: search_flow_Date
                 Layout.fillWidth: true
-                spacing: Kirigami.Units.largeSpacing
+                spacing: pageSearchForm.rowSpacing
                 RowLayout {
                     Controls.Label { text: ">" }
                     Controls.TextField {
@@ -972,7 +1004,7 @@ ColumnLayout {
         visible: false
         Layout.leftMargin: pageSearchForm.sectionMargin
         Layout.fillWidth: true
-        spacing: Kirigami.Units.smallSpacing
+        spacing: pageSearchForm.rowSpacing
 
         RowLayout {
             Layout.fillWidth: true
@@ -1034,6 +1066,7 @@ ColumnLayout {
                 text: qsTr("Size")
                 Layout.preferredWidth: pageSearchForm.labelW
                 Layout.alignment: Qt.AlignTop
+                Layout.topMargin: Math.max(0, (pageSearchForm.firstLineHeight(search_column_MetadataSize) - implicitHeight) / 2)
                 onCheckedChanged: {
                     search_spinBox_MetadataMinimumHeight.enabled = checked
                     search_spinBox_MetadataMaximumHeight.enabled = checked
@@ -1042,11 +1075,12 @@ ColumnLayout {
                 }
             }
             ColumnLayout {
+                id: search_column_MetadataSize
                 Layout.fillWidth: true
-                spacing: Kirigami.Units.smallSpacing
+                spacing: pageSearchForm.rowSpacing
                 Flow {
                     Layout.fillWidth: true
-                    spacing: Kirigami.Units.largeSpacing
+                    spacing: pageSearchForm.rowSpacing
                     RowLayout {
                         Controls.Label { text: qsTr("Width"); Layout.preferredWidth: 50 }
                         Controls.Label { text: ">" }
@@ -1071,7 +1105,7 @@ ColumnLayout {
                 }
                 Flow {
                     Layout.fillWidth: true
-                    spacing: Kirigami.Units.largeSpacing
+                    spacing: pageSearchForm.rowSpacing
                     RowLayout {
                         Controls.Label { text: qsTr("Height"); Layout.preferredWidth: 50 }
                         Controls.Label { text: ">" }
@@ -1105,14 +1139,16 @@ ColumnLayout {
                 text: qsTr("Duration")
                 Layout.preferredWidth: pageSearchForm.labelW
                 Layout.alignment: Qt.AlignTop
+                Layout.topMargin: Math.max(0, (pageSearchForm.firstLineHeight(search_flow_MetadataDuration) - implicitHeight) / 2)
                 onCheckedChanged: {
                     search_dateTimeEdit_MetadataDurationMin.enabled = checked
                     search_dateTimeEdit_MetadataDurationMax.enabled = checked
                 }
             }
             Flow {
+                id: search_flow_MetadataDuration
                 Layout.fillWidth: true
-                spacing: Kirigami.Units.largeSpacing
+                spacing: pageSearchForm.rowSpacing
                 RowLayout {
                     Controls.Label { text: ">" }
                     Controls.TextField {
@@ -1159,7 +1195,7 @@ ColumnLayout {
         Layout.topMargin: Kirigami.Units.smallSpacing   // gap under the section title
         visible: false
         Layout.leftMargin: pageSearchForm.sectionMargin
-        spacing: Kirigami.Units.smallSpacing
+        spacing: pageSearchForm.rowSpacing
 
         Controls.CheckBox {
             id: search_checkBox_ShowFoldersOnly
@@ -1216,15 +1252,16 @@ ColumnLayout {
         visible: false
         Layout.leftMargin: pageSearchForm.sectionMargin
         Layout.fillWidth: true
-        spacing: Kirigami.Units.smallSpacing
+        spacing: pageSearchForm.rowSpacing
 
         RowLayout {
             Layout.fillWidth: true
-            Controls.Label { text: qsTr("On"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop
-                             Layout.topMargin: Math.max(0, (search_checkBox_DuplicatesOnName.height - implicitHeight) / 2) }
+            Controls.Label { text: qsTr("On"); Layout.preferredWidth: pageSearchForm.labelW; leftPadding: pageSearchForm.labelInset; wrapMode: Text.Wrap; Layout.alignment: Qt.AlignTop
+                             Layout.topMargin: Math.max(0, (pageSearchForm.firstLineHeight(search_flow_DuplicatesOn) - implicitHeight) / 2) }
             Flow {
+                id: search_flow_DuplicatesOn
                 Layout.fillWidth: true
-                spacing: Kirigami.Units.largeSpacing
+                spacing: pageSearchForm.rowSpacing
                 RowLayout {
                     Controls.CheckBox {
                         id: search_checkBox_DuplicatesOnName
@@ -1281,11 +1318,12 @@ ColumnLayout {
 
         RowLayout {
             Layout.fillWidth: true
-            Controls.Label { text: qsTr("Scope"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop
-                             Layout.topMargin: Math.max(0, (search_radioButton_DuplicatesWithinSelectedDevice.height - implicitHeight) / 2) }
+            Controls.Label { text: qsTr("Scope"); Layout.preferredWidth: pageSearchForm.labelW; leftPadding: pageSearchForm.labelInset; wrapMode: Text.Wrap; Layout.alignment: Qt.AlignTop
+                             Layout.topMargin: Math.max(0, (pageSearchForm.firstLineHeight(search_flow_DuplicatesScope) - implicitHeight) / 2) }
             Flow {
+                id: search_flow_DuplicatesScope
                 Layout.fillWidth: true
-                spacing: Kirigami.Units.largeSpacing
+                spacing: pageSearchForm.rowSpacing
                 Controls.RadioButton {
                     id: search_radioButton_DuplicatesWithinSelectedDevice
                     checked: true
@@ -1304,7 +1342,7 @@ ColumnLayout {
             visible: false
             Layout.leftMargin: pageSearchForm.labelW + Kirigami.Units.largeSpacing
             Layout.fillWidth: true
-            spacing: Kirigami.Units.largeSpacing
+            spacing: pageSearchForm.rowSpacing
 
             RowLayout {
                 width: Math.min(implicitWidth, parent.width)  // lets its combo box shrink (CBX-F2)
@@ -1348,15 +1386,16 @@ ColumnLayout {
         visible: false
         Layout.leftMargin: pageSearchForm.sectionMargin
         Layout.fillWidth: true
-        spacing: Kirigami.Units.smallSpacing
+        spacing: pageSearchForm.rowSpacing
 
         RowLayout {
             Layout.fillWidth: true
-            Controls.Label { text: qsTr("On"); Layout.preferredWidth: pageSearchForm.labelW; Layout.alignment: Qt.AlignTop
-                             Layout.topMargin: Math.max(0, (search_checkBox_DifferencesOnName.height - implicitHeight) / 2) }
+            Controls.Label { text: qsTr("On"); Layout.preferredWidth: pageSearchForm.labelW; leftPadding: pageSearchForm.labelInset; wrapMode: Text.Wrap; Layout.alignment: Qt.AlignTop
+                             Layout.topMargin: Math.max(0, (pageSearchForm.firstLineHeight(search_flow_DifferencesOn) - implicitHeight) / 2) }
             Flow {
+                id: search_flow_DifferencesOn
                 Layout.fillWidth: true
-                spacing: Kirigami.Units.largeSpacing
+                spacing: pageSearchForm.rowSpacing
                 RowLayout {
                     Controls.CheckBox {
                         id: search_checkBox_DifferencesOnName
@@ -1414,7 +1453,7 @@ ColumnLayout {
         Flow {
             Layout.leftMargin: pageSearchForm.labelW + Kirigami.Units.largeSpacing
             Layout.fillWidth: true
-            spacing: Kirigami.Units.largeSpacing
+            spacing: pageSearchForm.rowSpacing
             RowLayout {
                 width: Math.min(implicitWidth, parent.width)  // lets its combo box shrink (CBX-F2)
                 Controls.Label { text: qsTr("Between") }
