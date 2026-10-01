@@ -1066,7 +1066,7 @@ ColumnLayout {
                 text: qsTr("Size")
                 Layout.preferredWidth: pageSearchForm.labelW
                 Layout.alignment: Qt.AlignTop
-                Layout.topMargin: Math.max(0, (pageSearchForm.firstLineHeight(search_column_MetadataSize) - implicitHeight) / 2)
+                Layout.topMargin: Math.max(0, (pageSearchForm.firstLineHeight(search_flow_MetadataWidth) - implicitHeight) / 2)
                 onCheckedChanged: {
                     search_spinBox_MetadataMinimumHeight.enabled = checked
                     search_spinBox_MetadataMaximumHeight.enabled = checked
@@ -1075,56 +1075,69 @@ ColumnLayout {
                 }
             }
             ColumnLayout {
-                id: search_column_MetadataSize
                 Layout.fillWidth: true
                 spacing: pageSearchForm.rowSpacing
-                Flow {
+                // The label sits in front of the Flow, so a wrapped "<" group starts
+                // under the ">" group above it (PGL-F14)
+                RowLayout {
                     Layout.fillWidth: true
-                    spacing: pageSearchForm.rowSpacing
-                    RowLayout {
-                        Controls.Label { text: qsTr("Width"); Layout.preferredWidth: 50 }
-                        Controls.Label { text: ">" }
-                        Controls.SpinBox {
-                            id: search_spinBox_MetadataMinimumWidth
-                            enabled: false
-                            editable: true
-                            from: 0; value: 0; to: 30000
-                            implicitWidth: 110
+                    Controls.Label { text: qsTr("Width"); Layout.preferredWidth: 50; Layout.alignment: Qt.AlignTop
+                                     Layout.topMargin: Math.max(0, (pageSearchForm.firstLineHeight(search_flow_MetadataWidth) - implicitHeight) / 2) }
+                    Flow {
+                        id: search_flow_MetadataWidth
+                        Layout.fillWidth: true
+                        spacing: pageSearchForm.rowSpacing
+                        RowLayout {
+                            Controls.Label { text: ">" }
+                            Controls.SpinBox {
+                                id: search_spinBox_MetadataMinimumWidth
+                                enabled: false
+                                editable: true
+                                from: 0; value: 0; to: 30000
+                                implicitWidth: 110
+                            }
                         }
-                    }
-                    RowLayout {
-                        Controls.Label { text: "<" }
-                        Controls.SpinBox {
-                            id: search_spinBox_MetadataMaximumWidth
-                            enabled: false
-                            editable: true
-                            from: 0; value: 30000; to: 30000
-                            implicitWidth: 110
+                        RowLayout {
+                            Controls.Label { text: "<" }
+                            Controls.SpinBox {
+                                id: search_spinBox_MetadataMaximumWidth
+                                enabled: false
+                                editable: true
+                                from: 0; value: 30000; to: 30000
+                                implicitWidth: 110
+                            }
                         }
                     }
                 }
-                Flow {
+                // The label sits in front of the Flow, so a wrapped "<" group starts
+                // under the ">" group above it (PGL-F14)
+                RowLayout {
                     Layout.fillWidth: true
-                    spacing: pageSearchForm.rowSpacing
-                    RowLayout {
-                        Controls.Label { text: qsTr("Height"); Layout.preferredWidth: 50 }
-                        Controls.Label { text: ">" }
-                        Controls.SpinBox {
-                            id: search_spinBox_MetadataMinimumHeight
-                            enabled: false
-                            editable: true
-                            from: 0; value: 0; to: 30000
-                            implicitWidth: 110
+                    Controls.Label { text: qsTr("Height"); Layout.preferredWidth: 50; Layout.alignment: Qt.AlignTop
+                                     Layout.topMargin: Math.max(0, (pageSearchForm.firstLineHeight(search_flow_MetadataHeight) - implicitHeight) / 2) }
+                    Flow {
+                        id: search_flow_MetadataHeight
+                        Layout.fillWidth: true
+                        spacing: pageSearchForm.rowSpacing
+                        RowLayout {
+                            Controls.Label { text: ">" }
+                            Controls.SpinBox {
+                                id: search_spinBox_MetadataMinimumHeight
+                                enabled: false
+                                editable: true
+                                from: 0; value: 0; to: 30000
+                                implicitWidth: 110
+                            }
                         }
-                    }
-                    RowLayout {
-                        Controls.Label { text: "<" }
-                        Controls.SpinBox {
-                            id: search_spinBox_MetadataMaximumHeight
-                            enabled: false
-                            editable: true
-                            from: 0; value: 30000; to: 30000
-                            implicitWidth: 110
+                        RowLayout {
+                            Controls.Label { text: "<" }
+                            Controls.SpinBox {
+                                id: search_spinBox_MetadataMaximumHeight
+                                enabled: false
+                                editable: true
+                                from: 0; value: 30000; to: 30000
+                                implicitWidth: 110
+                            }
                         }
                     }
                 }
