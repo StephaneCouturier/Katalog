@@ -19,7 +19,7 @@ ColumnLayout {
     readonly property int sectionMargin: Kirigami.Units.smallSpacing
     // One vertical gap between rows of a section and between the wrapped lines of a
     // row; a Flow has a single spacing, so it is also the gap between its groups (PGL-F13)
-    readonly property int rowSpacing: Kirigami.Units.smallSpacing
+    readonly property int rowSpacing: Kirigami.Units.mediumSpacing
 
     // Height of the first line of a row's fields, to centre the left-column label or
     // checkbox on it (PGL-F12): the tallest visible item on a Flow's first line, or
