@@ -205,6 +205,9 @@ Item {
                     required property string display
                     color: Kirigami.Theme.backgroundColor
                     implicitHeight: exploreHeaderView.implicitHeight
+                    // Full, unelided width (6 + label + 2 + room for the sort
+                    // mark + 4), read by the double-click fit (CDT-F4).
+                    implicitWidth: 12 + headerLabel.implicitWidth + Kirigami.Units.gridUnit
 
                     RowLayout {
                         anchors {
@@ -213,6 +216,7 @@ Item {
                             leftMargin: 6; rightMargin: 2
                         }
                         Controls.Label {
+                            id: headerLabel
                             Layout.fillWidth: true
                             text: display
                             elide: Text.ElideRight
@@ -234,7 +238,11 @@ Item {
                     }
 
                     TapHandler {
-                        onTapped: {
+                        onTapped: function(eventPoint) {
+                            // A divider tap fits a column and never sorts (CDT-C6).
+                            if (applicationWindow().headerTapped(exploreTableView, exploreHeaderView, column,
+                                                                 parent.width, eventPoint.position.x))
+                                return
                             exploreTableView.selectedRow = -1
                             if (root.sortColumn === column) {
                                 root.sortAscending = !root.sortAscending
@@ -271,6 +279,21 @@ Item {
                 ScrollBar.horizontal: ScrollBar { policy: ScrollBar.AsNeeded }
 
                 rowHeightProvider: function(row) { return root.rowHeight }
+
+                // TableView estimates its contentWidth from the columns loaded so
+                // far, scaled to the full column count - hidden zero-width ones
+                // included - which left a large empty band at the right end of
+                // the scroll range (measured: 2745 for 2170 of real columns).
+                // The real sum is set instead, after every layout pass, so it
+                // follows drags, the double-click fit and shown/hidden columns.
+                function columnsTotalWidth() {
+                    let total = 0
+                    for (let c = 0; c < columns; c++)
+                        total += Math.max(0, exploreTableView.columnWidthProvider(c))
+                    return total
+                }
+                onLayoutChanged:  contentWidth = columnsTotalWidth()
+                onColumnsChanged: contentWidth = columnsTotalWidth()
 
                 columnWidthProvider: function(column) {
                     let w = exploreTableView.explicitColumnWidth(column)
@@ -315,6 +338,8 @@ Item {
                     required property string name
                     required property string checksumSha256
                     implicitHeight: root.rowHeight
+                    // Full, unelided content width, read by the double-click fit (CDT-F4).
+                    implicitWidth: cellLabel.x + cellLabel.implicitWidth + 4
 
                     readonly property string checksum: checksumSha256
 
@@ -362,6 +387,7 @@ Item {
                     }
 
                     Controls.Label {
+                        id: cellLabel
                         anchors {
                             left: column === 0 ? fileTypeIcon.right : parent.left
                             right: parent.right

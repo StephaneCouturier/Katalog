@@ -39,7 +39,8 @@ governs every card K3 draws, including cards not yet built.
 
 **In scope:** what each display mode is for, and the consequence for text that
 does not fit — app-wide, for every K3 card and every K3 table; and the **per-row
-disclosure control of any tree** K3 draws (`CDT-F3`), added 2026-09-13.
+disclosure control of any tree** K3 draws (`CDT-F3`), added 2026-09-13; and the
+**double-click fit of a table column** (`CDT-F4`), added 2026-10-03.
 
 **Out of scope (non-goals):** which pages offer a display choice at all, and how
 that choice is stored — each page's own spec decides that (`DVP-F1`, `DVP-F15`
@@ -69,6 +70,7 @@ Observable behaviour that can be triggered and watched.
 | CDT-F1 | **Text on a card wraps; it is never hidden.** No label on a card truncates its content with an ellipsis or clips it at a fixed line count. A value too long for the card's width continues on the next line and the card grows taller. | [Planned] |
 | CDT-F2 | **Table cells may elide.** A value too long for its column is cut short, because the column has a fixed width the user can adjust and the alignment of the columns is what a table is for. This is the deliberate counterpart of `CDT-F1`, not an oversight, and MUST NOT be "corrected" to match it. | [Planned] |
 | CDT-F3 | **A tree's per-row disclosure control is the same wherever a tree appears in K3.** It uses the *symbolic* chevrons — the variants the icon theme ships as disclosure indicators — not the filled navigation arrows; it is a control with **hover and press feedback and a full-size click target**, not a bare icon with a small hit area, because that feedback is what tells the user the chevron is clickable; a row with **no children keeps the control's space**, so names stay aligned down the column; the indent per level is the same unit everywhere; and it carries **no tooltip** (the exception `ICB-C3` to the icon-button tooltip rule, `SpecIconButtons.md`). The two trees that exist today — the Explore directory tree and the Devices tree table — each adopt the better half of what they had: Explore takes the symbolic chevrons, the Devices table takes the proper control. The user approved this two-way alignment on 2026-09-13; the divergence was historical, not a decision. | [Planned] |
+| CDT-F4 | **Double-clicking a column divider fits the column.** In any K3 table with a column header, double-clicking the divider between two header cells resizes the column to the **left** of that divider to the width of its widest content: its header text or the widest value among the rows currently loaded. This is K2's default `QHeaderView` behaviour. The fitted width is not persisted; it lasts until the user resizes the column again or the view is rebuilt. Cells that still do not fit keep eliding (`CDT-F2`). Approved by the user on 2026-10-03. | [Planned] |
 
 ## Constructional requirements — *how it is built / limits / MUST-NOTs*
 
@@ -81,6 +83,7 @@ Boundaries and implementation constraints, not user-visible behaviour.
 | CDT-C3 | Applying `CDT-F1` to a card that already exists is a change to that page and MUST be authorised by that page's own spec before it is made. `CDT-F1` states the rule; it does not by itself authorise editing any particular file. The Devices page correction is authorised by `DVP-F18` and `DVP-C16` (`SpecDevicesPage.md`). | [Planned] |
 | CDT-C4 | A component **shared** between a card and a non-card context MUST NOT be made to wrap unconditionally. The selected-device reminder of `SEL-F5` is a single line above a list, where wrapping would push the list down as the name grows; such a caller keeps its present behaviour until the user asks otherwise. The wrapping is therefore a property of the caller, defaulting to the existing behaviour. | [Planned] |
 | CDT-C5 | `CDT-F3` aligns the **per-row control only**. It MUST NOT be "completed" by giving every tree the same **bulk** controls: the Explore tree's four header controls (`EXP-F9`, `SpecExplore.md`) exist because a folder tree is arbitrarily deep, while the device tree is at most three levels, so a page having them and another not is a difference in the **data**, not an inconsistency to be ironed out. Adding them anywhere else is a separate request. | [Planned] |
+| CDT-C6 | `CDT-F4` MUST NOT trigger the header's single-click action: a click or double-click on a divider never sorts, and never changes or stores the sort order (`DVP-F2`, `DVP-F14`, `EXP-F18`). Divider dragging (`BKP-F15`) is unchanged. In a tree table the fitted width of the name column includes the row's indent, disclosure control and icon (`CDT-F3`, `DVP-F11`). The change adds no user-visible string, changes nothing under `core/`, persists nothing and creates no new file. It applies to the existing tables of Explore, Search results, the Devices page (Table mode, all three views) and the Backup preview. Approved by the user on 2026-10-03. | [Planned] |
 
 ---
 
@@ -105,9 +108,11 @@ Boundaries and implementation constraints, not user-visible behaviour.
   `maximumLineCount`. Where a width cap exists, confirm the capped text wraps
   within it.
 - **CDT-C4** — Confirm the selected-device reminder above the Selection list
+  still occupies one line, and that the list below it does not move when a
+  device with a very long name is selected.
 - **CDT-F3 (side by side)** — Open the Explore directory tree and the Devices tree table and compare a row that has children: the same chevron shape in the same two states, the same indent per level, and the same hover and press feedback in both. Neither shows a tooltip.
 - **CDT-F3 (childless rows)** — On **both** pages, find a row with no children: its name starts at the same left edge as the name of a sibling that does have children. The column of names is straight; no row is shifted left by a missing control.
 - **CDT-F3 (click target)** — On both pages, click just inside the edge of the chevron rather than its centre: the row expands. The pointer feedback appears before the click, on hover.
 - **CDT-C5** — Confirm the Explore tree still has its four header controls and that the Devices page has **not** acquired them.
-  still occupies one line, and that the list below it does not move when a
-  device with a very long name is selected.
+- **CDT-F4** — In each of Explore, Search results, Devices (Table mode: Storage, Catalogs, All devices) and the Backup preview, narrow a column until a value is cut short, then double-click the divider to its right. The column widens to show its widest loaded value or its header, whichever is wider, and no ellipsis remains in it. Double-click a divider of a column wider than its content: the column shrinks to fit. Reopen the page: widths are back to their defaults.
+- **CDT-C6** — Double-click a divider: the sort indicator and row order do not change. Single-click the middle of a header: it still sorts. In the Devices tree, fit the Name column: the deepest row's name is not cut short. Run `ninja translations_lupdate`: no new string appears. `core/` is unchanged.

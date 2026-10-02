@@ -310,6 +310,59 @@ Kirigami.ApplicationWindow {
     // along a row, not enough to read as a grid. One value for every table.
     readonly property real columnSeparatorOpacity: 0.05
 
+    // Double-clicking the divider between two header cells fits the column to
+    // its left, as K2's QHeaderView does (SpecCardsAndTables CDT-F4). Every
+    // table header routes its taps through headerTapped(): a tap within
+    // headerDividerZone of a cell edge belongs to the divider and never sorts
+    // (CDT-C6). The double-click is timed here rather than with TapHandler's
+    // tapCount, which was measured to stay at 1 on these header cells.
+    readonly property real headerDividerZone: 5
+    property var  _dividerTable:  null
+    property int  _dividerColumn: -1
+    property real _dividerTime:   0
+
+    // Returns true when the tap was on a divider (the caller must not sort).
+    function headerTapped(table, header, column, cellWidth, x) {
+        let left
+        if (x >= cellWidth - headerDividerZone)
+            left = column
+        else if (column > 0 && x <= headerDividerZone)
+            left = column - 1
+        else
+            return false
+        // Hidden (zero-width) columns are not loaded: the divider belongs to
+        // the nearest shown column on its left.
+        while (left >= 0 && table.columnWidth(left) <= 0)
+            left--
+        if (left < 0)
+            return true
+
+        let now = Date.now()
+        if (table === _dividerTable && left === _dividerColumn
+                && now - _dividerTime <= Qt.styleHints.mouseDoubleClickInterval) {
+            _dividerTable  = null
+            _dividerColumn = -1
+            fitTableColumn(table, header, left)
+        } else {
+            _dividerTable  = table
+            _dividerColumn = left
+            _dividerTime   = now
+        }
+        return true
+    }
+
+    // Widest of the header cell and the rows currently loaded; each delegate's
+    // implicitWidth is its content's full, unelided width.
+    // Applied once the double-click has been handled: Qt's own header handling
+    // resets the column to its default width on a divider double-click, after
+    // our tap handler has run (measured 2026-10-03: a width set directly was
+    // back to the default by the next event-loop pass).
+    function fitTableColumn(table, header, column) {
+        let w = Math.max(table.implicitColumnWidth(column), header.implicitColumnWidth(column))
+        if (w > 0)
+            Qt.callLater(function() { table.setColumnWidth(column, Math.ceil(w)) })
+    }
+
     // Background of the empty area of the file/folder lists (below the
     // last row): the alternate row colour under Katalog Colors, the even-row
     // (View) colour under both Desktop Themes.

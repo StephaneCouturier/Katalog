@@ -735,8 +735,12 @@ Item {
                     required property string display
                     color: Kirigami.Theme.backgroundColor
                     implicitHeight: deviceTableHeader.implicitHeight
+                    // Full, unelided width (6 + label + 2 + room for the sort
+                    // mark + 4), read by the double-click fit (CDT-F4).
+                    implicitWidth: 12 + headerLabel.implicitWidth + Kirigami.Units.gridUnit
 
                     Controls.Label {
+                        id: headerLabel
                         anchors {
                             left: parent.left; right: sortMark.left
                             verticalCenter: parent.verticalCenter
@@ -761,7 +765,11 @@ Item {
                     }
 
                     TapHandler {
-                        onTapped: {
+                        onTapped: function(eventPoint) {
+                            // A divider tap fits a column and never sorts (CDT-C6).
+                            if (applicationWindow().headerTapped(deviceTable, deviceTableHeader, column,
+                                                                 parent.width, eventPoint.position.x))
+                                return
                             deviceTable.selectedRow = -1
                             if (root.tableSortColumn === column) {
                                 root.tableSortAscending = !root.tableSortAscending
@@ -832,6 +840,11 @@ Item {
                     readonly property real treeIndent: level * Kirigami.Units.gridUnit
 
                     implicitHeight: root.rowHeight
+                    // Full, unelided content width, read by the double-click fit
+                    // (CDT-F4). The label's x already includes the tree indent,
+                    // the disclosure control and the icon (CDT-C6, DVP-F11).
+                    implicitWidth: isBoolean ? 12 + Kirigami.Units.iconSizes.small
+                                             : cellLabel.x + cellLabel.implicitWidth + 6
 
                     color: deviceTable.selectedRow === row
                            ? applicationWindow().selectionHighlightColor
@@ -913,6 +926,7 @@ Item {
                     }
 
                     Controls.Label {
+                        id: cellLabel
                         visible: !isBoolean
                         anchors {
                             left: deviceRowIcon.visible ? deviceRowIcon.right : parent.left

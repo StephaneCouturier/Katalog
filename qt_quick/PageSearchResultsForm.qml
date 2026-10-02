@@ -292,6 +292,9 @@ ColumnLayout {
                     required property string display
                     color: Kirigami.Theme.backgroundColor
                     implicitHeight: headerView.implicitHeight
+                    // Full, unelided width (6 + label + 2 + room for the sort
+                    // mark + 4), read by the double-click fit (CDT-F4).
+                    implicitWidth: 12 + headerLabel.implicitWidth + Kirigami.Units.gridUnit
 
                     RowLayout {
                         anchors {
@@ -300,6 +303,7 @@ ColumnLayout {
                             leftMargin: 6; rightMargin: 2
                         }
                         Controls.Label {
+                            id: headerLabel
                             Layout.fillWidth: true
                             text: display
                             elide: Text.ElideRight
@@ -322,7 +326,11 @@ ColumnLayout {
                     }
 
                     TapHandler {
-                        onTapped: {
+                        onTapped: function(eventPoint) {
+                            // A divider tap fits a column and never sorts (CDT-C6).
+                            if (applicationWindow().headerTapped(tableView, headerView, column,
+                                                                 parent.width, eventPoint.position.x))
+                                return
                             tableView.selectedRow = -1
                             if (pageSearchResults_column.sortColumn === column) {
                                 pageSearchResults_column.sortAscending = !pageSearchResults_column.sortAscending
@@ -370,6 +378,21 @@ ColumnLayout {
 
                 rowHeightProvider: function(row) { return pageSearchResults_column.rowHeight }
 
+                // TableView estimates its contentWidth from the columns loaded so
+                // far, scaled to the full column count - hidden zero-width ones
+                // included - which left a large empty band at the right end of
+                // the scroll range (measured: 2745 for 2170 of real columns).
+                // The real sum is set instead, after every layout pass, so it
+                // follows drags, the double-click fit and shown/hidden columns.
+                function columnsTotalWidth() {
+                    let total = 0
+                    for (let c = 0; c < columns; c++)
+                        total += Math.max(0, tableView.columnWidthProvider(c))
+                    return total
+                }
+                onLayoutChanged:  contentWidth = columnsTotalWidth()
+                onColumnsChanged: contentWidth = columnsTotalWidth()
+
                 columnWidthProvider: function(column) {
                     let w = tableView.explicitColumnWidth(column)
                     if (w >= 0) return w
@@ -405,6 +428,8 @@ ColumnLayout {
                     required property var     display
                     required property string  fileType
                     implicitHeight: pageSearchResults_column.rowHeight
+                    // Full, unelided content width, read by the double-click fit (CDT-F4).
+                    implicitWidth: cellLabel.x + cellLabel.implicitWidth + 4
 
                     function iconForType(ft) {
                         switch (ft) {
@@ -452,6 +477,7 @@ ColumnLayout {
                     }
 
                     Controls.Label {
+                        id: cellLabel
                         anchors {
                             left: column === 0 ? fileTypeIcon.right : parent.left
                             right: parent.right

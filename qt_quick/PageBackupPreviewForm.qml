@@ -153,8 +153,11 @@ Kirigami.Page {
                     required property int column
                     color: Kirigami.Theme.backgroundColor
                     implicitHeight: previewHeaderView.implicitHeight
+                    // Full, unelided width, read by the double-click fit (CDT-F4).
+                    implicitWidth: 12 + headerLabel.implicitWidth
 
                     Controls.Label {
+                        id: headerLabel
                         anchors {
                             left: parent.left; right: parent.right
                             verticalCenter: parent.verticalCenter
@@ -171,6 +174,15 @@ Kirigami.Page {
                         anchors { top: parent.top; bottom: parent.bottom; right: parent.right }
                         width: 1
                         color: Kirigami.Theme.separatorColor ?? "transparent"
+                    }
+
+                    // This header does not sort; its only tap action is the
+                    // divider double-click fit (CDT-F4).
+                    TapHandler {
+                        onTapped: function(eventPoint) {
+                            applicationWindow().headerTapped(previewTableView, previewHeaderView, column,
+                                                             parent.width, eventPoint.position.x)
+                        }
                     }
                 }
             }
@@ -213,6 +225,8 @@ Kirigami.Page {
                     required property string fileSizeStr
                     required property bool   isConflict
                     implicitHeight: 30
+                    // Full, unelided content width, read by the double-click fit (CDT-F4).
+                    implicitWidth: 12 + cellLabel.implicitWidth
 
                     readonly property bool darkTheme: Kirigami.Theme.backgroundColor.hslLightness < 0.5
                     color: row % 2 === 0
@@ -229,6 +243,7 @@ Kirigami.Page {
                     }
 
                     Controls.Label {
+                        id: cellLabel
                         anchors {
                             left: parent.left; right: parent.right
                             verticalCenter: parent.verticalCenter
