@@ -2054,9 +2054,12 @@ QList<Catalog::ExploreFileEntry> Catalog::getExploreEntries(
                    '1' || folder_path AS order_val,
                    folder_path AS file_full_path,
                    NULL AS file_type, NULL AS mime_type,
+                   NULL AS image_width, NULL AS image_height,
                    0.0 AS video_duration_seconds,
+                   NULL AS video_width, NULL AS video_height,
+                   0.0 AS audio_duration_seconds,
                    NULL AS audio_artist, NULL AS audio_album, NULL AS audio_title,
-                   NULL AS checksum_sha256
+                   NULL AS checksum_sha256, NULL AS checksum_extraction_date
             FROM folder
             WHERE folder_catalog_id = :catalogId
             AND folder_path LIKE :folderPath || '/%'
@@ -2079,9 +2082,12 @@ QList<Catalog::ExploreFileEntry> Catalog::getExploreEntries(
                '2' || file_name AS order_val,
                file_full_path,
                file_type, mime_type,
+               image_width, image_height,
                video_duration_seconds,
+               video_width, video_height,
+               audio_duration_seconds,
                audio_artist, audio_album, audio_title,
-               checksum_sha256
+               checksum_sha256, checksum_extraction_date
         FROM file
         WHERE file_catalog_id = :catalogId
         AND file_folder_path = :folderPath
@@ -2109,11 +2115,17 @@ QList<Catalog::ExploreFileEntry> Catalog::getExploreEntries(
         e.fullPath             = q.value(6).toString();
         e.fileType             = q.value(7).toString();
         e.mimeType             = q.value(8).toString();
-        e.videoDurationSeconds = q.value(9).toDouble();
-        e.audioArtist          = q.value(10).toString();
-        e.audioAlbum           = q.value(11).toString();
-        e.audioTitle           = q.value(12).toString();
-        e.checksumSha256       = q.value(13).toString();
+        e.imageWidth           = q.value(9).toInt();
+        e.imageHeight          = q.value(10).toInt();
+        e.videoDurationSeconds = q.value(11).toDouble();
+        e.videoWidth           = q.value(12).toInt();
+        e.videoHeight          = q.value(13).toInt();
+        e.audioDurationSeconds = q.value(14).toDouble();
+        e.audioArtist          = q.value(15).toString();
+        e.audioAlbum           = q.value(16).toString();
+        e.audioTitle           = q.value(17).toString();
+        e.checksumSha256       = q.value(18).toString();
+        e.checksumExtractionDate = q.value(19).toString();
         result.append(e);
     }
 

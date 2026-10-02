@@ -66,7 +66,7 @@ int ExploreFilesModel::rowCount(const QModelIndex &parent) const
 int ExploreFilesModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
-    return 5; // Name, Size, Date, Directory, [4] hidden folder-sort order
+    return 21; // Same index layout as core Search (SpecExplore EXP-C13)
 }
 
 QVariant ExploreFilesModel::data(const QModelIndex &index, int role) const
@@ -79,11 +79,32 @@ QVariant ExploreFilesModel::data(const QModelIndex &index, int role) const
     switch (role) {
     case Qt::DisplayRole:
         switch (index.column()) {
-        case 0: return e.name;
-        case 1: return e.size;        // raw qint64 — QML formats it; sort uses the numeric value
-        case 2: return e.dateUpdated;
-        case 3: return e.folderPath;
-        case 4: return (e.entryType == QLatin1String("folder")) ? 0 : 1; // hidden folders-first sort key
+        // Column indices follow core Search::data, so the shared FilesView sort
+        // (merged columns 10-12) and the K2-shared sort setting mean the same
+        // column in both pages and both versions (SpecExplore EXP-C13, EXP-F18).
+        case 0:  return e.name;
+        case 1:  return e.size;        // raw qint64 — QML formats it; sort uses the numeric value
+        case 2:  return e.dateUpdated;
+        case 3:  return e.folderPath;
+        case 4:  return QString();     // Catalog Name — not used in Explore
+        case 5:  return QString();     // Catalog ID   — not used in Explore
+        case 6:  // folders-first sort key, same form as K2's order_value
+            return QString((e.entryType == QLatin1String("folder") ? QLatin1Char('1') : QLatin1Char('2'))
+                           + (e.entryType == QLatin1String("folder") ? e.folderPath : e.name));
+        case 7:  return e.fullPath;
+        case 8:  return e.fileType;
+        case 9:  return e.mimeType;
+        case 10: return e.imageWidth  > 0 ? QVariant(e.imageWidth)  : QVariant();
+        case 11: return e.imageHeight > 0 ? QVariant(e.imageHeight) : QVariant();
+        case 12: return e.videoDurationSeconds > 0 ? QVariant(e.videoDurationSeconds) : QVariant();
+        case 13: return e.videoWidth  > 0 ? QVariant(e.videoWidth)  : QVariant();
+        case 14: return e.videoHeight > 0 ? QVariant(e.videoHeight) : QVariant();
+        case 15: return e.audioDurationSeconds > 0 ? QVariant(e.audioDurationSeconds) : QVariant();
+        case 16: return e.audioArtist;
+        case 17: return e.audioAlbum;
+        case 18: return e.audioTitle;
+        case 19: return e.checksumSha256;
+        case 20: return e.checksumExtractionDate;
         }
         return {};
 
@@ -104,13 +125,23 @@ QVariant ExploreFilesModel::headerData(int section, Qt::Orientation orientation,
     if (orientation != Qt::Horizontal || role != Qt::DisplayRole)
         return {};
     switch (section) {
-    case 0: return QCoreApplication::translate("MainWindow", "Name");
-    case 1: return QCoreApplication::translate("MainWindow", "Size");
-    case 2: return QCoreApplication::translate("MainWindow", "Date");
-    case 3: return QCoreApplication::translate("MainWindow", "Directory");
-    case 4: return QString(); // hidden sort column — no visible header
+    // Header texts are core Search's, byte for byte (SpecExplore EXP-C13).
+    case 0:  return QCoreApplication::translate("MainWindow", "Name");
+    case 1:  return QCoreApplication::translate("MainWindow", "Size");
+    case 2:  return QCoreApplication::translate("MainWindow", "Date");
+    case 3:  return QCoreApplication::translate("MainWindow", "Directory");
+    case 8:  return QCoreApplication::translate("MainWindow", "File Type");
+    case 9:  return QCoreApplication::translate("MainWindow", "MIME Type");
+    case 10: return QCoreApplication::translate("MainWindow", "Width");
+    case 11: return QCoreApplication::translate("MainWindow", "Height");
+    case 12: return QCoreApplication::translate("MainWindow", "Duration");
+    case 16: return QCoreApplication::translate("MainWindow", "Artist");
+    case 17: return QCoreApplication::translate("MainWindow", "Album");
+    case 18: return QCoreApplication::translate("MainWindow", "Title");
+    case 19: return QString(QCoreApplication::translate("MainWindow", "Checksum") + " (SHA256)");
+    case 20: return QCoreApplication::translate("MainWindow", "Checksum Date");
     }
-    return {};
+    return QString(); // hidden columns — no visible header
 }
 
 QHash<int, QByteArray> ExploreFilesModel::roleNames() const

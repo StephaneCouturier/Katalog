@@ -844,7 +844,7 @@ Item {
                         anchors { top: parent.top; bottom: parent.bottom; left: parent.left }
                         width: 1
                         color: Kirigami.Theme.separatorColor ?? Kirigami.Theme.textColor
-                        opacity: 0.4
+                        opacity: applicationWindow().columnSeparatorOpacity
                     }
 
                     // Expand/collapse, on tree rows that have children. Icon

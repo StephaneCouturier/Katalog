@@ -24,9 +24,9 @@
 // Application: Katalog
 // File Name:   explorefilesmodel.h
 // Purpose:     QAbstractTableModel for the Explore page file/folder list
-// Description: Columns 0-3 are visible (Name, Size, Date, Directory).
-//              Hidden data (entryType, fileType, fullPath, checksum) is
-//              accessible via named roles for use in QML delegates.
+// Description: 21 columns in the index layout of core Search (SpecExplore
+//              EXP-C13); the QML view decides which are shown (EXP-F16/F17).
+//              entryType, fullPath etc. are also exposed as named roles.
 // Author:      Stephane Couturier
 /////////////////////////////////////////////////////////////////////////////
 */

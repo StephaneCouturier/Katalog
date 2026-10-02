@@ -27,6 +27,19 @@ Item {
     property int    folderFileCount:   0
     property var    folderTotalSize:   0
 
+    // Metadata columns follow the open catalog's metadata setting (EXP-F17).
+    readonly property bool showMetadataColumns: catalogId > 0 && appManager1.catalogIncludesMetadata(catalogId)
+    onShowMetadataColumnsChanged: exploreTableView.forceLayout()
+
+    function formatDuration(secs) {
+        let s = Number(secs)
+        if (!s || s <= 0) return ""
+        let h   = Math.floor(s / 3600)
+        let m   = Math.floor((s % 3600) / 60)
+        let sec = Math.floor(s % 60)
+        return String(h).padStart(2, '0') + ":" + String(m).padStart(2, '0') + ":" + String(sec).padStart(2, '0')
+    }
+
     // Sort state
     property int  sortColumn:    -1
     property bool sortAscending: true
@@ -142,7 +155,7 @@ Item {
                 onClicked: {
                     root.sortColumn    = -1
                     root.sortAscending = true
-                    appManager1.sortExplore(4, 0)
+                    appManager1.sortExplore(6, 0)   // folders-first key, K2's index (EXP-F18)
                 }
             }
         }
@@ -262,14 +275,33 @@ Item {
                 columnWidthProvider: function(column) {
                     let w = exploreTableView.explicitColumnWidth(column)
                     if (w >= 0) return w
+                    // Same index layout as Search results (EXP-C13); the shown
+                    // set mirrors K2's Explore file list (EXP-F16/F17).
+                    let meta = root.showMetadataColumns
                     switch (column) {
-                        case 0: return 260  // Name
-                        case 1: return 90   // Size
-                        case 2: return 150  // Date
-                        case 3: return 320  // Directory
-                        case 4: return 0    // hidden folders-first sort key
+                        case  0: return 260  // Name
+                        case  1: return 90   // Size
+                        case  2: return 150  // Date
+                        case  3: return 0    // Directory (hidden — every row is in the open folder, as K2)
+                        case  4: return 0    // Catalog Name (not used in Explore)
+                        case  5: return 0    // Catalog ID (not used in Explore)
+                        case  6: return 0    // folders-first sort key (hidden)
+                        case  7: return 0    // Path (hidden)
+                        case  8: return 80   // File Type
+                        case  9: return 140  // MIME Type
+                        case 10: return meta ? 60  : 0  // Width (merged image + video)
+                        case 11: return meta ? 60  : 0  // Height (merged image + video)
+                        case 12: return meta ? 80  : 0  // Duration (merged video + audio)
+                        case 13: return 0    // Video Width  (merged into Width)
+                        case 14: return 0    // Video Height (merged into Height)
+                        case 15: return 0    // Audio Duration (merged into Duration)
+                        case 16: return meta ? 140 : 0  // Artist
+                        case 17: return meta ? 140 : 0  // Album
+                        case 18: return meta ? 140 : 0  // Title
+                        case 19: return 260  // Checksum (SHA256)
+                        case 20: return 130  // Checksum Date
                     }
-                    return 100
+                    return 0
                 }
 
                 delegate: Rectangle {
@@ -302,7 +334,7 @@ Item {
                         anchors { top: parent.top; bottom: parent.bottom; left: parent.left }
                         width: 1
                         color: Kirigami.Theme.separatorColor ?? Kirigami.Theme.textColor
-                        opacity: 0.4
+                        opacity: applicationWindow().columnSeparatorOpacity
                     }
 
                     // File type icon (column 0 only)
@@ -338,6 +370,22 @@ Item {
                             rightMargin: 4
                         }
                         text: {
+                            // Merged metadata columns, as in Search results: the
+                            // primary value is `display`, the secondary is read
+                            // from its sibling column.
+                            let m = appManager1.exploreSortModel
+                            if (column === 10) {   // Width  — image (10) ∥ video (13)
+                                let w = Number(display) || Number(m.data(m.index(row, 13), Qt.DisplayRole))
+                                return w > 0 ? String(w) : ""
+                            }
+                            if (column === 11) {   // Height — image (11) ∥ video (14)
+                                let h = Number(display) || Number(m.data(m.index(row, 14), Qt.DisplayRole))
+                                return h > 0 ? String(h) : ""
+                            }
+                            if (column === 12) {   // Duration — video (12) ∥ audio (15)
+                                let d = Number(display) || Number(m.data(m.index(row, 15), Qt.DisplayRole))
+                                return root.formatDuration(d)
+                            }
                             if (display === undefined || display === null) return ""
                             // Folder rows carry their recursive total, so the
                             // cell is no longer suppressed by entry type
@@ -346,10 +394,9 @@ Item {
                             // that looks like missing data (EXP-F10). The same
                             // now applies to an empty file.
                             if (column === 1) return appManager1.formatDataSizeDelta(Number(display))
-                            if (column === 3) return entryType === "file" ? String(display) : ""
                             return String(display)
                         }
-                        horizontalAlignment: column === 1 ? Text.AlignRight : Text.AlignLeft
+                        horizontalAlignment: (column === 1 || column === 12) ? Text.AlignRight : Text.AlignLeft
                         color: exploreTableView.selectedRow === row
                                ? Kirigami.Theme.highlightedTextColor
                                : (column === 0 ? Kirigami.Theme.textColor : Kirigami.Theme.disabledTextColor)

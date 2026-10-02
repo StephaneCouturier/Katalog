@@ -434,7 +434,7 @@ ColumnLayout {
                         anchors { top: parent.top; bottom: parent.bottom; left: parent.left }
                         width: 1
                         color: Kirigami.Theme.separatorColor ?? Kirigami.Theme.textColor
-                        opacity: 0.4
+                        opacity: applicationWindow().columnSeparatorOpacity
                     }
 
                     // File type icon (column 0 only)

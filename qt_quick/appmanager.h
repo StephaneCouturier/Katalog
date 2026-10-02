@@ -510,6 +510,7 @@ public slots:
     Q_INVOKABLE bool    moveFileToTrash(const QString &fullPath);
     Q_INVOKABLE bool    deleteSingleFile(const QString &fullPath);
     Q_INVOKABLE bool         catalogIncludesExtendedMetadata(int catalogId);
+    Q_INVOKABLE bool         catalogIncludesMetadata(int catalogId);
     Q_INVOKABLE QString      getFileMetadataJson(int catalogId, const QString &fileName, const QString &folderPath);
     Q_INVOKABLE QVariantList getFileMetadataParsedFields(int catalogId, const QString &fileName, const QString &folderPath);
     Q_INVOKABLE QString calculateAndSaveChecksum(const QString &filePath, const QString &fileName, const QString &folderPath, int catalogId);

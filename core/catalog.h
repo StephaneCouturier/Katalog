@@ -183,11 +183,17 @@ public:
         QString entryType;   // "file" or "folder"
         QString fileType;
         QString mimeType;
+        int     imageWidth  = 0;
+        int     imageHeight = 0;
         double  videoDurationSeconds = 0.0;
+        int     videoWidth  = 0;
+        int     videoHeight = 0;
+        double  audioDurationSeconds = 0.0;
         QString audioArtist;
         QString audioAlbum;
         QString audioTitle;
         QString checksumSha256;
+        QString checksumExtractionDate;
     };
 
     static QList<ExploreFileEntry> getExploreEntries(

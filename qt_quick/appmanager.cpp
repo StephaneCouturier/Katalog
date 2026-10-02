@@ -166,7 +166,10 @@ void AppManager::setSearchObject(SearchSync *search)
         m_searchSortModel->sort(searchCol, searchOrder);
     int exploreCol   = settings.value("Explore/lastExploreSortSection", -1).toInt();
     int exploreOrder = settings.value("Explore/lastExploreSortOrder",    0).toInt();
-    if (exploreCol >= 0)
+    // An index naming a column Explore never shows (e.g. 4, the folders-first
+    // key of beta1/beta2) falls back to the default order (SpecExplore EXP-C15).
+    static const QList<int> exploreNeverShown = {3, 4, 5, 7, 13, 14, 15};
+    if (exploreCol >= 0 && exploreCol <= 20 && !exploreNeverShown.contains(exploreCol))
         m_exploreSortModel->sort(exploreCol, exploreOrder);
 }
 //----------------------------------------------------------------------
@@ -1707,6 +1710,17 @@ bool AppManager::catalogIncludesExtendedMetadata(int catalogId)
     catalog.setConnectionName(m_connectionName);
     catalog.loadCatalog();
     return catalog.includeMetadata.contains("Extended");
+}
+//----------------------------------------------------------------------
+// Any metadata setting other than none shows the Explore metadata columns,
+// as K2's Explore file list does (SpecExplore EXP-F17).
+bool AppManager::catalogIncludesMetadata(int catalogId)
+{
+    Catalog catalog;
+    catalog.ID = catalogId;
+    catalog.setConnectionName(m_connectionName);
+    catalog.loadCatalog();
+    return catalog.includeMetadata != Catalog::METADATA_NONE;
 }
 //----------------------------------------------------------------------
 QString AppManager::getFileMetadataJson(int catalogId, const QString &fileName, const QString &folderPath)

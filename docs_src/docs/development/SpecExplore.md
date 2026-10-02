@@ -40,11 +40,13 @@ folder's direct total was shown.
 disclosure control; the initial expansion depth; the four header controls
 (collapse one level, expand one level, collapse all, expand all) and when they
 are available; revealing a row that external navigation has selected; and the
-aggregate size figures presented in the Explore file list and its header.
+aggregate size figures presented in the Explore file list and its header; and
+the column set of the Explore file list and the persistence of its sort
+(`EXP-F16`–`EXP-F18`, added 2026-10-02).
 
 **Out of scope (non-goals):** everything else on the Explore screen — loading the
-catalog, the file list beyond the size figures named above, the display options,
-the context menus, sorting, and the Selection page's device tree. None of those
+catalog, the file list beyond the size figures and column set named above, the
+display options, the context menus, sorting other than its persistence, and the Selection page's device tree. None of those
 are governed by this spec; this spec does not authorise changing any of them.
 Persisting expansion state is explicitly excluded — see `EXP-C2`. The directory
 tree rows carry no aggregate figures at all: the always-zero item count that the
@@ -67,6 +69,7 @@ Goals in real use, independent of how they are built.
 | EXP-O1 | A user browsing a catalog opens only the branches of interest and keeps the rest of the hierarchy folded away, so a deep or wide directory tree stays readable. | [Implemented] |
 | EXP-O2 | A user changes how much of the hierarchy is shown in one action — one rank at a time, or the whole tree at once — instead of clicking through every branch. | [Implemented] |
 | EXP-O3 | A user browsing a catalog while the device is disconnected sees how much space each sub-folder holds, and how large the catalog is in total, so the largest space consumers can be identified offline. | [Planned] |
+| EXP-O4 | A user exploring a catalog sees the same file attributes as in K2's Explore file list — type, MIME type, checksum and, for catalogs that include metadata, media dimensions, duration and audio tags — so moving from K2 to K3 loses no information. Approved by the user on 2026-10-02. | [Planned] |
 
 ## Functional requirements — *what the system does*
 
@@ -89,6 +92,9 @@ Observable behaviour that can be triggered and watched.
 | EXP-F13 | The header row that carries the current folder path also shows the total size of the whole catalog, placed before the display options. | [Planned] |
 | EXP-F14 | Every figure of `EXP-F10`, `EXP-F11` and `EXP-F13` is computed from the catalog's file records at the moment the listing is produced. None is read from a stored or cached total, so none can disagree with the file records or with each other, and none can be stale. | [Planned] |
 | EXP-F15 | The Explore tree's per-row disclosure control follows the shared rule `CDT-F3` (`SpecCardsAndTables.md`). Concretely it adopts the **symbolic** chevrons in place of the filled navigation arrows it used, and keeps everything else it already did: the control kept in place on childless rows so names stay aligned, the shared indent unit, and no tooltip. The four header controls of `EXP-F9` are **unaffected** and stay Explore's alone (`CDT-C5`). Approved by the user on 2026-09-13. | [Planned] |
+| EXP-F16 | The K3 Explore file list shows the columns Name, Size, Date, File Type, MIME Type, Checksum (SHA256) and Checksum Date, as K2's Explore file list does. Directory, Catalog Name, Catalog ID, the folders-first key and Path are not shown. Approved 2026-10-02. | [Planned] |
+| EXP-F17 | When the open catalog's metadata setting is anything other than none, the list also shows Width (image width, else video width), Height (image height, else video height), Duration (video duration, else audio duration), Artist, Album and Title. When it is none, these columns are not shown. The separate Video Width, Video Height and Audio Duration columns are never shown. Mirrors K2. Approved 2026-10-02. | [Planned] |
+| EXP-F18 | The sort column and order of the Explore file list are restored when the Explore page is reopened, from the same collection-settings keys K2 uses (`Explore/lastExploreSortSection`, `Explore/lastExploreSortOrder`). A given index means the same column in K2 and K3, so a sort chosen in one version is restored as the same sort in the other. "Order folders first" is index 6. Approved 2026-10-02 (resolves the earlier drift of K3 persisting index 4). | [Planned] |
 
 > **Verification note (2026-08-27).** `EXP-F2` is marked `[Implemented]` on the
 > built code: the two-rank initial depth is in place and builds clean. The user
@@ -115,6 +121,10 @@ Boundaries and implementation constraints, not user-visible behaviour.
 | EXP-C10 | **Accepted divergence.** `EXP-F10`–`EXP-F14` apply to K3 only. They MUST NOT modify `FolderTreeLoader`, the Explore directory tree, or K2's Explore SQL and UI — K2 builds its own file list from separate statements and does not share the K3 query. K2 continuing to show blank folder sizes and a zero tree item count MUST NOT be reported as drift against these rows. | [Planned] |
 | EXP-C11 | The Size cell of the file list MUST render the value for folder rows as well as for file rows. The view MUST NOT re-suppress it by entry type; suppressing it there would leave `EXP-F10` unobservable even once the value is supplied. | [Planned] |
 | EXP-C12 | An **empty folder path** passed to the core folder-statistics call means "the whole catalog", mirroring the conditional K2 already uses for the same display. `EXP-F13` obtains the catalog total that way. This dual meaning of one argument is a requirement recorded here so that it is documented rather than folklore; the `core/` signature change it implies was approved on 2026-08-29. | [Planned] |
+| EXP-C13 | The K3 Explore file model uses the 21-column index layout of the core Search model (`core/search.cpp` headerData, indices 0–20), with header texts reused byte for byte from those `MainWindow`-context strings. No new header string is created without per-string approval. Approved 2026-10-02. | [Planned] |
+| EXP-C14 | The extra values come from a widened `Catalog::ExploreFileEntry` / `getExploreEntries` that also selects `image_width`, `image_height`, `video_width`, `video_height`, `audio_duration_seconds` and `checksum_extraction_date`. The widening MUST NOT alter the `EXP-C6`/`EXP-C7` aggregate, the schema (`EXP-C8`) or the Memory-mode ordering (`EXP-C9`). The `core/` change was approved by the user on 2026-10-02. | [Planned] |
+| EXP-C15 | A stored sort index that names a column not shown in K3 Explore falls back to the default sort, with no error. This covers a beta1/beta2 prerelease settings file holding the old K3 value 4. Nothing else in existing settings files is affected. Approved 2026-10-02. | [Planned] |
+| EXP-C16 | K2 MUST NOT be modified by `EXP-F16`–`EXP-F18`. Approved 2026-10-02. | [Planned] |
 
 > **Cost note (2026-08-29) — not a requirement.** The per-listing aggregate of
 > `EXP-C6` is bounded by the open folder's subtree, but that bound is **not** a
@@ -152,4 +162,7 @@ For each row: set up the stated condition, run the operation, confirm the result
 - **EXP-C9** — Run the whole `EXP-F10`–`EXP-F14` charter again with the collection in Memory database mode. The figures are identical to File mode; no folder shows zero where File mode showed a value.
 - **EXP-C10** — Open the same catalog in K2. Folder rows in its file list still show a blank size and its directory tree still shows a zero item count. Both are expected and are not defects of these rows.
 - **EXP-C11** — Confirm the size is visible on folder rows, not only on file rows, in the same column and right-aligned like the file sizes.
+- **EXP-F16 / EXP-F17** — Open one catalog that includes metadata and one that does not. Compare the visible columns with K2's Explore on the same catalogs: same set, Directory absent, metadata columns only for the first.
+- **EXP-F18** — In a release build sharing one settings file, sort by Date descending in K2, then open K3: Explore opens sorted by Date descending. Press "Order folders first" in K3, then open K2: folders come first.
+- **EXP-C15** — Start K3 with a beta settings file holding `Explore/lastExploreSortSection=4`. Explore opens on the default sort, with no error.
 - **Sorting (supporting check, no requirement)** — Sort the list by Size with folders displayed. Folder rows sort by their value among the files instead of collapsing at one end of the list.

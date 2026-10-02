@@ -305,6 +305,11 @@ Kirigami.ApplicationWindow {
                       Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g,
                               Kirigami.Theme.highlightColor.b, 0.11))
 
+    // Strength of the 1px line between table cells. K2's tree views draw no
+    // column lines at all, so K3 keeps them faint: enough to guide the eye
+    // along a row, not enough to read as a grid. One value for every table.
+    readonly property real columnSeparatorOpacity: 0.05
+
     // Background of the empty area of the file/folder lists (below the
     // last row): the alternate row colour under Katalog Colors, the even-row
     // (View) colour under both Desktop Themes.
