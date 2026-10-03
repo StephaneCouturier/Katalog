@@ -457,9 +457,18 @@ ColumnLayout {
                 }
                 onColumnsChanged: contentWidth = columnsTotalWidth()
 
+                // A hidden column (default width 0) stays hidden whatever width
+                // Qt's drag-resize gives it: grabbing just right of a divider that
+                // hidden columns share resizes a hidden one (measured), which made
+                // it appear. Other columns: the user's width, else the default.
                 columnWidthProvider: function(column) {
-                    let w = tableView.explicitColumnWidth(column)
-                    if (w >= 0) return w
+                    const d = defaultColumnWidth(column)
+                    if (d === 0) return 0
+                    const w = tableView.explicitColumnWidth(column)
+                    return w >= 0 ? w : d
+                }
+
+                function defaultColumnWidth(column) {
                     switch (column) {
                         case  0: return pageSearchResults_column.savedColumnWidths[0] ?? 250  // Name (CDT-F12)
                         case  1: return 90   // Size

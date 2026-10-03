@@ -341,9 +341,18 @@ Item {
                 }
                 onColumnsChanged: contentWidth = columnsTotalWidth()
 
+                // A hidden column (default width 0) stays hidden whatever width
+                // Qt's drag-resize gives it: grabbing just right of a divider that
+                // hidden columns share resizes a hidden one (measured), which made
+                // it appear. Other columns: the user's width, else the default.
                 columnWidthProvider: function(column) {
-                    let w = exploreTableView.explicitColumnWidth(column)
-                    if (w >= 0) return w
+                    const d = defaultColumnWidth(column)
+                    if (d === 0) return 0
+                    const w = exploreTableView.explicitColumnWidth(column)
+                    return w >= 0 ? w : d
+                }
+
+                function defaultColumnWidth(column) {
                     // Same index layout as Search results (EXP-C13); the shown
                     // set mirrors K2's Explore file list (EXP-F16/F17).
                     let meta = root.showMetadataColumns
