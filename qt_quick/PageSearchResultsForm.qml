@@ -22,9 +22,38 @@ ColumnLayout {
     signal closeRequested()
 
     // Persisted column widths (CDT-F12/C9): Name, Directory, Catalog Name.
-    readonly property var persistedColumnKeys: ({ 0: "Search/ColumnWidthName",
-                                                  3: "Search/ColumnWidthDirectory",
-                                                  4: "Search/ColumnWidthCatalog" })
+    // In folders-only results Directory has its own saved width, separate
+    // from the file-mode one (SRS-F3, CDT-C9).
+    readonly property var persistedColumnKeys: ({
+        0: "Search/ColumnWidthName",
+        3: foldersOnly ? "Search/ColumnWidthFolderDirectory" : "Search/ColumnWidthDirectory",
+        4: "Search/ColumnWidthCatalog" })
+
+    // Folders-only results, defined as K2 does: both boxes ticked (SRS-F4).
+    // Name, Size and Date are then empty and hidden (SRS-F1), the folder icon
+    // moves to Directory (SRS-F2), and Directory uses its own saved width,
+    // fitted to its content on completion while none is saved yet (SRS-F3).
+    readonly property bool foldersOnly: !!(newSearch1.properties.searchOnFolderCriteria
+                                           && newSearch1.properties.showFoldersOnly)
+    readonly property int  iconColumn: foldersOnly ? 3 : 0
+    // Switch to the other mode's saved Directory width. Deferred so that
+    // persistedColumnKeys, bound to the same property, has been re-evaluated.
+    onFoldersOnlyChanged: Qt.callLater(reloadColumnWidths)
+    // Fitted only while no folders-only width is saved yet (SRS-F3); the fit
+    // is then saved like any other width change.
+    function fitDirectoryForFolders() {
+        if (!foldersOnly || tableView.rows === 0 || savedColumnWidths[3] !== undefined)
+            return
+        // After the rows are laid out, so their widths are known.
+        Qt.callLater(function() { applicationWindow().fitTableColumn(tableView, headerView, 3) })
+    }
+    Connections {
+        target: appManager1
+        function onSearchStateChanged() {
+            if (!appManager1.searchIsRunning)
+                pageSearchResults_column.fitDirectoryForFolders()
+        }
+    }
     property var savedColumnWidths: ({})
     function reloadColumnWidths() {
         savedColumnWidths = applicationWindow().loadPersistedColumnWidths(tableView, persistedColumnKeys)
@@ -180,7 +209,7 @@ ColumnLayout {
                         return qsTr("%1 duplicate(s) found").arg(n)
                     if (newSearch1.properties.searchOnDifferences)
                         return qsTr("%1 difference(s) found").arg(n)
-                    if (newSearch1.properties.showFoldersOnly)
+                    if (pageSearchResults_column.foldersOnly)   // SRS-F4
                         return qsTr("%1 folder(s) found").arg(n)
                     return qsTr("%1 file(s) found").arg(n)
                 }
@@ -424,7 +453,8 @@ ColumnLayout {
                         },
                         nameAt: function(r) {
                             let m = appManager1.searchSortModel
-                            return m.data(m.index(r, 0), Qt.DisplayRole)
+                            // Name is hidden in folders-only results: match Directory (CDT-F9).
+                            return m.data(m.index(r, pageSearchResults_column.foldersOnly ? 3 : 0), Qt.DisplayRole)
                         }
                     })
                 }
@@ -470,10 +500,12 @@ ColumnLayout {
 
                 function defaultColumnWidth(column) {
                     switch (column) {
-                        case  0: return pageSearchResults_column.savedColumnWidths[0] ?? 250  // Name (CDT-F12)
-                        case  1: return 90   // Size
-                        case  2: return 140  // Date
-                        case  3: return pageSearchResults_column.savedColumnWidths[3] ?? 320  // Directory (CDT-F12)
+                        // Name, Size and Date are hidden in folders-only results (SRS-F1).
+                        case  0: return pageSearchResults_column.foldersOnly ? 0
+                                        : pageSearchResults_column.savedColumnWidths[0] ?? 250  // Name (CDT-F12)
+                        case  1: return pageSearchResults_column.foldersOnly ? 0 : 90   // Size
+                        case  2: return pageSearchResults_column.foldersOnly ? 0 : 140  // Date
+                        case  3: return pageSearchResults_column.savedColumnWidths[3] ?? 320  // Directory, per mode (CDT-F12, SRS-F3)
                         case  4: return pageSearchResults_column.savedColumnWidths[4] ?? 140  // Catalog Name (CDT-F12)
                         case  5: return 0    // Catalog ID (hidden — used by the code, not shown)
                         case  6: return 0    // orderValue (hidden)
@@ -538,7 +570,8 @@ ColumnLayout {
                     // File type icon (column 0 only)
                     Kirigami.Icon {
                         id: fileTypeIcon
-                        visible: column === 0
+                        // Name, or Directory in folders-only results (SRS-F2).
+                        visible: column === pageSearchResults_column.iconColumn
                         anchors {
                             left: parent.left
                             verticalCenter: parent.verticalCenter
@@ -552,10 +585,10 @@ ColumnLayout {
                     Controls.Label {
                         id: cellLabel
                         anchors {
-                            left: column === 0 ? fileTypeIcon.right : parent.left
+                            left: column === pageSearchResults_column.iconColumn ? fileTypeIcon.right : parent.left
                             right: parent.right
                             verticalCenter: parent.verticalCenter
-                            leftMargin:  column === 0 ? 4 : 6
+                            leftMargin:  column === pageSearchResults_column.iconColumn ? 4 : 6
                             rightMargin: 4
                         }
                         text: {

@@ -188,7 +188,7 @@ void AppManager::onSearchProgress(int filesProcessed)
         if (searchObject->totalFilesProcessed > 0)
             builder.setProcess(tr("Evaluated"), searchObject->totalFilesProcessed);
         if (searchObject->fileNames.size() > 0)
-            builder.setResult(searchObject->showFoldersOnly ? tr("Folders found") : tr("Files found"), searchObject->fileNames.size());
+            builder.setResult((searchObject->searchOnFolderCriteria && searchObject->showFoldersOnly) ? tr("Folders found") : tr("Files found"), searchObject->fileNames.size());
     } else if (filesProcessed == -4) {
         // Loading progress tick (Memory mode CSV loading)
         builder.setStatus(tr("In Progress"));
@@ -204,7 +204,7 @@ void AppManager::onSearchProgress(int filesProcessed)
         if (searchObject->totalCatalogs > 0)
             builder.setDeviceContext(searchObject->currentCatalogIndex, searchObject->totalCatalogs, searchObject->currentCatalogName);
         if (searchObject->fileNames.size() > 0)
-            builder.setResult(searchObject->showFoldersOnly ? tr("Folders found") : tr("Files found"), searchObject->fileNames.size());
+            builder.setResult((searchObject->searchOnFolderCriteria && searchObject->showFoldersOnly) ? tr("Folders found") : tr("Files found"), searchObject->fileNames.size());
     } else {
         // Regular progress (filesProcessed >= 0)
         builder.setStatus(tr("In Progress"));
@@ -212,7 +212,7 @@ void AppManager::onSearchProgress(int filesProcessed)
             builder.setDeviceContext(searchObject->currentCatalogIndex, searchObject->totalCatalogs, searchObject->currentCatalogName);
         builder.setProcess(tr("Evaluated"), filesProcessed, searchObject->estimatedTotalFiles);
         if (searchObject->fileNames.size() > 0)
-            builder.setResult(searchObject->showFoldersOnly ? tr("Folders found") : tr("Files found"), searchObject->fileNames.size());
+            builder.setResult((searchObject->searchOnFolderCriteria && searchObject->showFoldersOnly) ? tr("Folders found") : tr("Files found"), searchObject->fileNames.size());
     }
 
     m_searchStatusText = builder.build();
@@ -307,7 +307,7 @@ void AppManager::executeSearch()
             builder.setDeviceContext(searchObject->currentCatalogIndex, searchObject->totalCatalogs, searchObject->currentCatalogName);
         if (searchObject->totalFilesProcessed > 0)
             builder.setProcess(tr("Evaluated"), searchObject->totalFilesProcessed);
-        QString resultTitle = searchObject->showFoldersOnly ? tr("Folders found") : tr("Files found");
+        QString resultTitle = (searchObject->searchOnFolderCriteria && searchObject->showFoldersOnly) ? tr("Folders found") : tr("Files found");
         builder.setResult(resultTitle, searchObject->fileNames.size());
         m_searchStatusText = builder.build();
         // Deliberately not cleared on a timer here. The activity panel owns how
