@@ -20,6 +20,8 @@ ColumnLayout {
     spacing: 0
 
     signal closeRequested()
+    // "Explore folder" (SRS-F8): Main.qml opens Explore after Results.
+    signal exploreFolderRequested(int deviceId, string folderPath)
 
     // Persisted column widths (CDT-F12/C9): Name, Directory, Catalog Name.
     // In folders-only results Directory has its own saved width, separate
@@ -710,7 +712,11 @@ ColumnLayout {
         Controls.MenuItem {
             text: qsTr("Explore folder")
             icon.name: "view-list-tree"
-            enabled: false
+            // Only a row that belongs to a catalog device can be explored
+            // (SRS-F7); a search run directly on a disk folder has none.
+            readonly property int deviceId: appManager1.searchRowDeviceId(resultContextMenu.row)
+            enabled: deviceId > 0
+            onTriggered: pageSearchResults_column.exploreFolderRequested(deviceId, resultContextMenu.folder)
         }
         Controls.MenuSeparator {}
         Controls.MenuItem {
@@ -748,6 +754,27 @@ ColumnLayout {
             visible: hasMetadata
             height:  hasMetadata ? implicitHeight : 0
         }
+        // Copy entries, shortest copied text first, as in Explore (SRS-F5).
+        Controls.MenuItem {
+            text: qsTr("Copy file name without extension")
+            icon.name: "edit-copy"
+            enabled: !pageSearchResults_column.foldersOnly   // folder rows have no file (SRS-F6)
+            onTriggered: {
+                let n = resultContextMenu.fileName
+                let dot = n.lastIndexOf(".")
+                appManager1.copyToClipboard(dot > 0 ? n.substring(0, dot) : n)
+                showPassiveNotification(qsTr("File name copied to clipboard"))
+            }
+        }
+        Controls.MenuItem {
+            text: qsTr("Copy file name with extension")
+            icon.name: "edit-copy"
+            enabled: !pageSearchResults_column.foldersOnly   // folder rows have no file (SRS-F6)
+            onTriggered: {
+                appManager1.copyToClipboard(resultContextMenu.fileName)
+                showPassiveNotification(qsTr("File name copied to clipboard"))
+            }
+        }
         Controls.MenuItem {
             text: qsTr("Copy folder path")
             icon.name: "edit-copy"
@@ -759,27 +786,10 @@ ColumnLayout {
         Controls.MenuItem {
             text: qsTr("Copy file absolute path")
             icon.name: "edit-copy"
+            enabled: !pageSearchResults_column.foldersOnly   // folder rows have no file (SRS-F6)
             onTriggered: {
                 appManager1.copyToClipboard(resultContextMenu.fullPath)
                 showPassiveNotification(qsTr("Full path copied to clipboard"))
-            }
-        }
-        Controls.MenuItem {
-            text: qsTr("Copy file name with extension")
-            icon.name: "edit-copy"
-            onTriggered: {
-                appManager1.copyToClipboard(resultContextMenu.fileName)
-                showPassiveNotification(qsTr("File name copied to clipboard"))
-            }
-        }
-        Controls.MenuItem {
-            text: qsTr("Copy file name without extension")
-            icon.name: "edit-copy"
-            onTriggered: {
-                let n = resultContextMenu.fileName
-                let dot = n.lastIndexOf(".")
-                appManager1.copyToClipboard(dot > 0 ? n.substring(0, dot) : n)
-                showPassiveNotification(qsTr("File name copied to clipboard"))
             }
         }
         Controls.MenuSeparator {}

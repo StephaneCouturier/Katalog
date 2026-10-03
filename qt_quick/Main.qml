@@ -543,6 +543,58 @@ Kirigami.ApplicationWindow {
         return -1
     }
 
+    // Removes (and hides) every page after `page` in the main stack.
+    function removePagesAfter(page) {
+        let idx = indexOfPage(page)
+        if (idx < 0)
+            return
+        while (pageStack.depth - 1 > idx) {
+            let p = pageStack.get(pageStack.depth - 1)
+            pageStack.removePage(p)
+            p.visible = false
+        }
+    }
+
+    // "Explore folder" from Search results (SpecSearchResults SRS-F8): Explore
+    // goes AFTER Results instead of replacing the feature pages, so its Close
+    // (and Esc, KBS-F1) can return to the same Results, as K2 keeps its Search
+    // tab. The catalog is opened by the caller through the usual path (SRS-C3).
+    function showExploreAfterResults() {
+        if (pageStack.layers.depth > 1)
+            pageStack.layers.pop()
+        let resultsIdx = indexOfPage(pageSearchResults)
+        if (resultsIdx < 0) {           // no Results to come back to
+            showPage(pageExplore)
+            return
+        }
+        let existing = indexOfPage(pageExplore)
+        if (existing < 0) {
+            removePagesAfter(pageSearchResults)
+            // push() truncates the pages forward of currentIndex: stand on Results.
+            pageStack.currentIndex = resultsIdx
+            pageExplore.visible = true
+            refreshTextIfStale(pageExplore)
+            pageStack.push(pageExplore)
+            featureOpen = true
+        }
+        pageStack.currentIndex = indexOfPage(pageExplore)
+        openFeaturePage = pageExplore
+    }
+
+    // True when Explore was opened after Results (SRS-F8).
+    function exploreIsAfterResults() {
+        let resultsIdx = indexOfPage(pageSearchResults)
+        return resultsIdx >= 0 && indexOfPage(pageExplore) > resultsIdx
+    }
+
+    // Explore's Close in that case: remove only Explore, back to Results.
+    function closeExploreBackToResults() {
+        pageStack.removePage(pageExplore)
+        pageExplore.visible = false
+        pageStack.currentIndex = indexOfPage(pageSearchResults)
+        openFeaturePage = pageSearchResults
+    }
+
     function selectionInStack() {
         return pageStack.depth > 0 && pageStack.get(0) === pageSelection
     }
@@ -1900,10 +1952,14 @@ Kirigami.ApplicationWindow {
             // re-push it: removing and immediately re-pushing the same static page object
             // in one event loop tick corrupts the QML component context and crashes.
             // The onSearchTriggered Connections in PageSearchResultsForm resets the model.
-            let resultsAtTop = pageStack.depth > 0
-                               && pageStack.get(pageStack.depth - 1) === pageSearchResults
-            if (resultsAtTop) {
-                pageStack.currentIndex = pageStack.depth - 1
+            // Results already after Search (possibly with Explore after it, from
+            // "Explore folder"): drop only what follows Results and reuse it in
+            // place - never remove and re-push it in one pass (SRS-C3).
+            let resultsIdx = indexOfPage(pageSearchResults)
+            if (resultsIdx >= 0 && resultsIdx > indexOfPage(pageSearch)) {
+                root.removePagesAfter(pageSearchResults)
+                root.recomputeFeatureOpen()
+                pageStack.currentIndex = resultsIdx
             } else {
                 // Remove any stale pages beyond Search, then push Results fresh.
                 let searchIdx = indexOfPage(pageSearch)
@@ -2004,6 +2060,7 @@ Kirigami.ApplicationWindow {
                 text: qsTr("Close")
                 icon.name: "view-close"
                 onTriggered: {
+                    root.removePagesAfter(pageSearchResults)   // e.g. Explore (SRS-F8)
                     pageStack.removePage(pageSearchResults)
                     pageSearchResults.visible = false
                     // Go to Search if still in stack, otherwise Selection
@@ -2019,7 +2076,17 @@ Kirigami.ApplicationWindow {
             id: pageSearchResultsForm
             width:  pageSearchResults.availableWidth
             height: pageSearchResults.availableHeight
+            onExploreFolderRequested: function(deviceId, folderPath) {
+                // Same opening path as the Devices page Explore action (SRS-C3),
+                // then the row's folder is selected and revealed (EXP-F8).
+                appManager1.setLastPage("Explore")
+                exploreFolders.openByDeviceId(deviceId)
+                exploreFolders.selectedFolderPath = folderPath
+                exploreFiles.currentFolderPath    = folderPath
+                root.showExploreAfterResults()
+            }
             onCloseRequested: {
+                root.removePagesAfter(pageSearchResults)   // e.g. Explore (SRS-F8)
                 pageStack.removePage(pageSearchResults)
                 pageSearchResults.visible = false
                 root.recomputeFeatureOpen()
@@ -2140,7 +2207,10 @@ Kirigami.ApplicationWindow {
                 id: pageExploreEscapeAction
                 text: qsTr("Close")
                 icon.name: "view-close"
-                onTriggered: root.closeFeaturePage(pageExplore)
+                // Opened from Results by "Explore folder": back to the same
+                // Results (SRS-F8, KBS-F1); otherwise back to Selection.
+                onTriggered: root.exploreIsAfterResults() ? root.closeExploreBackToResults()
+                                                          : root.closeFeaturePage(pageExplore)
             }
         ]
 

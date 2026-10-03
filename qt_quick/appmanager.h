@@ -493,6 +493,7 @@ public slots:
     // is resolved through it, never by indexing the result arrays, and the device
     // is read by role name so no role number is hardcoded in QML.
     Q_INVOKABLE bool    searchRowDeviceIsActive(int row);
+    Q_INVOKABLE int     searchRowDeviceId(int row) const;
     // Same probe for the device the Explore page is currently showing.
     Q_INVOKABLE bool    probeExploreDeviceActive();
     // Row of a device in the filtered Selection list, or -1 when it is not shown.

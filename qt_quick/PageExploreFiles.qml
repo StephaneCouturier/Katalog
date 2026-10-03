@@ -576,10 +576,28 @@ Item {
             height: visible ? implicitHeight : 0
         }
 
+        // Copy entries, shortest copied text first (EXP-F19/F20), with K2's
+        // wording (EXP-C17). Each shows only on the row type it applies to, so
+        // file rows read: name without extension, name with extension, folder
+        // path, absolute path; folder rows: folder name, folder path.
         Controls.MenuItem {
-            text: qsTr("Copy folder path")
+            text: qsTr("Copy file name without extension")
             icon.name: "edit-copy"
-            onTriggered: appManager1.copyToClipboard(root._activeFolderPath)
+            visible: root._activeEntryType === "file"
+            height: visible ? implicitHeight : 0
+            onTriggered: {
+                var n = root._activeFileName
+                var dot = n.lastIndexOf(".")
+                appManager1.copyToClipboard(dot > 0 ? n.substring(0, dot) : n)
+            }
+        }
+
+        Controls.MenuItem {
+            text: qsTr("Copy file name with extension")
+            icon.name: "edit-copy"
+            visible: root._activeEntryType === "file"
+            height: visible ? implicitHeight : 0
+            onTriggered: appManager1.copyToClipboard(root._activeFileName)
         }
 
         Controls.MenuItem {
@@ -591,31 +609,17 @@ Item {
         }
 
         Controls.MenuItem {
-            text: qsTr("Copy absolute path")
+            text: qsTr("Copy folder path")
+            icon.name: "edit-copy"
+            onTriggered: appManager1.copyToClipboard(root._activeFolderPath)
+        }
+
+        Controls.MenuItem {
+            text: qsTr("Copy file absolute path")
             icon.name: "edit-copy"
             visible: root._activeEntryType === "file"
             height: visible ? implicitHeight : 0
             onTriggered: appManager1.copyToClipboard(root._activeFilePath)
-        }
-
-        Controls.MenuItem {
-            text: qsTr("Copy file name")
-            icon.name: "edit-copy"
-            visible: root._activeEntryType === "file"
-            height: visible ? implicitHeight : 0
-            onTriggered: appManager1.copyToClipboard(root._activeFileName)
-        }
-
-        Controls.MenuItem {
-            text: qsTr("Copy file name without extension")
-            icon.name: "edit-copy"
-            visible: root._activeEntryType === "file"
-            height: visible ? implicitHeight : 0
-            onTriggered: {
-                var n = root._activeFileName
-                var dot = n.lastIndexOf(".")
-                appManager1.copyToClipboard(dot > 0 ? n.substring(0, dot) : n)
-            }
         }
 
         Controls.MenuItem {

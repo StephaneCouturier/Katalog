@@ -1387,6 +1387,20 @@ bool AppManager::searchRowDeviceIsActive(int row)
 {
     if (!m_searchSortModel || row < 0)
         return true;
+    const int deviceId = searchRowDeviceId(row);
+    if (deviceId < 0)
+        return true;
+    return probeDeviceActive(deviceId);
+}
+//----------------------------------------------------------------------
+// The device a Search results row belongs to: 0 when it has none (a search run
+// directly on a disk folder, or a catalog whose device no longer exists), -1
+// when the row or the role cannot be resolved. Used by the active-status guard
+// and by "Explore folder" (SpecSearchResults SRS-F7).
+int AppManager::searchRowDeviceId(int row) const
+{
+    if (!m_searchSortModel || row < 0)
+        return -1;
 
     // Resolve the role by name rather than by number, as selectionRowForDevice
     // does: Search::Roles is an implementation detail and inserting an
@@ -1400,14 +1414,14 @@ bool AppManager::searchRowDeviceIsActive(int row)
         }
     }
     if (deviceIdRole < 0)
-        return true;
+        return -1;
 
     // Read through the proxy so the sorted row maps to the right result.
     const QModelIndex idx = m_searchSortModel->index(row, 0);
     if (!idx.isValid())
-        return true;
+        return -1;
 
-    return probeDeviceActive(m_searchSortModel->data(idx, deviceIdRole).toInt());
+    return m_searchSortModel->data(idx, deviceIdRole).toInt();
 }
 //----------------------------------------------------------------------
 bool AppManager::probeExploreDeviceActive()

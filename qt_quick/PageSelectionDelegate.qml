@@ -54,15 +54,12 @@ Kirigami.AbstractCard {
         }
         Controls.MenuSeparator {}
 
-        // Quick jump to the Search page without opening the drawer. Hidden when
-        // Search or Results is already the open feature page (the Selection panel
-        // stays visible as a side column beside those pages).
+        // Quick jump to the Search page without opening the drawer. Always
+        // shown (SEL-F3): when Search is already open, showPage() just moves to
+        // it and keeps Results.
         Controls.MenuItem {
             text:      qsTr("Search")
             icon.name: "edit-find"
-            visible:   root.openFeaturePage !== pageSearch
-                       && root.openFeaturePage !== pageSearchResults
-            height:    visible ? implicitHeight : 0
             // Select first, so the highlighted card and the action agree
             // (SpecSelection.md SEL-F3). Update, Open folder and Edit below
             // deliberately do NOT select (SEL-F4).

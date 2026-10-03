@@ -48,7 +48,7 @@ question, recorded in `SpecBacklogNotes.md` and not a requirement.
 
 | ID | Requirement | Status |
 |----|-------------|--------|
-| KBS-F1 | `Esc` triggers exactly the action of the visible Close button of the last open page, or of Cancel on Device Edit. The target is chosen in this order: (1) if an overlay layer is open (Settings, About, Backup mapping form, Backup preview form), that layer's Close; (2) otherwise the rightmost page in the page stack: Results goes back to Search; Search to Selection; Devices, Explore, Create, Statistics, Tags and Backup to Selection; Device Edit runs its Cancel; (3) with Selection as the only page, `Esc` does nothing. | [Implemented] |
+| KBS-F1 | `Esc` triggers exactly the action of the visible Close button of the last open page, or of Cancel on Device Edit. The target is chosen in this order: (1) if an overlay layer is open (Settings, About, Backup mapping form, Backup preview form), that layer's Close; (2) otherwise the rightmost page in the page stack: Results goes back to Search; Search to Selection; Devices, Explore, Create, Statistics, Tags and Backup to Selection, except Explore opened from Results by "Explore folder" (`SRS-F8`, `SpecSearchResults.md`), whose Close goes back to Results *(amended 2026-10-03)*; Device Edit runs its Cancel; (3) with Selection as the only page, `Esc` does nothing. | [Implemented] |
 | KBS-F2 | On Device Edit and Create, `Esc` discards unsaved input exactly as their Cancel and Close buttons do today. No confirmation is added. This is a deliberate maintainer decision. | [Implemented] |
 | KBS-F3 | `Esc` pressed while a text field has focus still closes the page, per KBS-F1. The exception is input-method composition: while text is being composed, the input method keeps `Esc` and the page stays open. *(The input-method composition exception is not yet verified.)* | [Implemented] |
 | KBS-F4 | Any open popup keeps its own `Esc`: a dialog (modal or not), a menu, a combo dropdown, or another popup such as the Search Results catalogs filter. That `Esc` closes only the popup; the page underneath stays open. | [Implemented] |
@@ -83,7 +83,7 @@ showed the following:
 ## Manual test charter
 
 - **KBS-F1 (layers)**: open Settings, then press `Esc`: Settings closes. Repeat for About, the Backup mapping form and the Backup preview form.
-- **KBS-F1 (pages)**: open Search, run a search to open Results, then press `Esc` three times. You land on Search, then Selection, then nothing more happens. Open each of Devices, Explore, Create, Statistics, Tags and Backup: `Esc` returns to Selection. With Selection alone, `Esc` does nothing.
+- **KBS-F1 (pages)**: open Search, run a search to open Results, then press `Esc` three times. You land on Search, then Selection, then nothing more happens. Open each of Devices, Explore, Create, Statistics, Tags and Backup: `Esc` returns to Selection. From Results, use "Explore folder", then press `Esc`: you are back on Results, unchanged. With Selection alone, `Esc` does nothing.
 - **KBS-F2**: type into Device Edit, then press `Esc`: the edit is discarded as with Cancel. Repeat on Create.
 - **KBS-F3**: focus a text field on Search, then press `Esc`: the page closes. With an input method (for example a CJK IME), start composing and press `Esc`: the composition is cancelled and the page stays open.
 - **KBS-F4**: with a dialog, a context menu, a combo dropdown and the Search Results catalogs filter each open in turn, press `Esc`. Only the popup closes.
