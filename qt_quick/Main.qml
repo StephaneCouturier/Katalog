@@ -351,6 +351,39 @@ Kirigami.ApplicationWindow {
         return true
     }
 
+    // Persisted widths of selected columns (SpecCardsAndTables CDT-F12/C9).
+    // `keys` maps a column to its settings key. The saved width becomes the
+    // column's default in the page's columnWidthProvider; loading also drops
+    // any width set in this session, so a collection switch shows the new
+    // collection's widths. Returns { column: width } for the saved ones.
+    function loadPersistedColumnWidths(table, keys) {
+        let saved = {}
+        for (const c in keys) {
+            const w = appManager1.getColumnWidthSetting(keys[c])
+            if (w > 0)
+                saved[c] = w
+            table.setColumnWidth(Number(c), -1)
+        }
+        table.forceLayout()
+        return saved
+    }
+
+    // Saves each persisted column whose width the user set (by drag or by the
+    // CDT-F4 fit) and that differs from the stored one. Only positive explicit
+    // widths count: Qt's transient reset on a divider double-click (-1) and a
+    // hidden column (0) are never saved. Returns the updated map.
+    function savePersistedColumnWidths(table, keys, saved) {
+        let updated = Object.assign({}, saved)
+        for (const c in keys) {
+            const w = Math.round(table.explicitColumnWidth(Number(c)))
+            if (w > 0 && w !== updated[c]) {
+                appManager1.setColumnWidthSetting(keys[c], w)
+                updated[c] = w
+            }
+        }
+        return updated
+    }
+
     // Keyboard navigation shared by every table (SpecCardsAndTables
     // CDT-F5–F11). A table forwards its Keys.onPressed here with its page's
     // actions; whatever is not handled - Esc above all - is left unaccepted so

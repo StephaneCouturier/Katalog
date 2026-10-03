@@ -292,6 +292,8 @@ public slots:
     // Statistics
     Q_INVOKABLE QVariantMap getStatisticsData(const QString &source, const QString &dataType, const QString &startDate) const;
     Q_INVOKABLE QString     getStatisticsSetting(const QString &key) const;
+    Q_INVOKABLE int         getColumnWidthSetting(const QString &key) const;
+    Q_INVOKABLE void        setColumnWidthSetting(const QString &key, int width);
     Q_INVOKABLE void        setStatisticsSetting(const QString &key, const QVariant &value);
 
     // Backup

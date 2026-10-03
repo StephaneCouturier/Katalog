@@ -40,11 +40,24 @@ Item {
         return String(h).padStart(2, '0') + ":" + String(m).padStart(2, '0') + ":" + String(sec).padStart(2, '0')
     }
 
+    // Persisted column width (CDT-F12/C9): Name.
+    readonly property var persistedColumnKeys: ({ 0: "Explore/ColumnWidthName" })
+    property var savedColumnWidths: ({})
+    function reloadColumnWidths() {
+        savedColumnWidths = applicationWindow().loadPersistedColumnWidths(exploreTableView, persistedColumnKeys)
+        exploreTableView.forceLayout()
+    }
+    Connections {   // another collection: its own widths (CDT-F12)
+        target: appManager1
+        function onDatabaseModeChanged() { root.reloadColumnWidths() }
+    }
+
     // Sort state
     property int  sortColumn:    -1
     property bool sortAscending: true
 
     Component.onCompleted: {
+        reloadColumnWidths()
         var col   = appManager1.getExploreSortColumn()
         var order = appManager1.getExploreSortOrder()
         if (col >= 0) {
@@ -312,7 +325,20 @@ Item {
                         total += Math.max(0, exploreTableView.columnWidthProvider(c))
                     return total
                 }
-                onLayoutChanged:  contentWidth = columnsTotalWidth()
+                onLayoutChanged: {
+                    contentWidth = columnsTotalWidth()
+                    columnWidthSaveTimer.restart()
+                }
+
+                // Persisted column widths (CDT-F12): saved once a resize settles,
+                // not on every step of a drag.
+                Timer {
+                    id: columnWidthSaveTimer
+                    interval: 500
+                    onTriggered: root.savedColumnWidths =
+                        applicationWindow().savePersistedColumnWidths(exploreTableView, root.persistedColumnKeys,
+                                                                      root.savedColumnWidths)
+                }
                 onColumnsChanged: contentWidth = columnsTotalWidth()
 
                 columnWidthProvider: function(column) {
@@ -322,7 +348,7 @@ Item {
                     // set mirrors K2's Explore file list (EXP-F16/F17).
                     let meta = root.showMetadataColumns
                     switch (column) {
-                        case  0: return 260  // Name
+                        case  0: return root.savedColumnWidths[0] ?? 260  // Name (CDT-F12)
                         case  1: return 90   // Size
                         case  2: return 150  // Date
                         case  3: return 0    // Directory (hidden — every row is in the open folder, as K2)

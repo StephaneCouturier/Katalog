@@ -1997,6 +1997,26 @@ void AppManager::setStatisticsSetting(const QString &key, const QVariant &value)
     settings.sync();
 }
 //----------------------------------------------------------------------
+// Persisted table column widths, in the collection settings file
+// (SpecCardsAndTables CDT-F12 / CDT-C9). A missing, non-numeric or
+// non-positive value reads as 0, meaning "use the built-in default"; 0 is never
+// written, because a zero width is how K3 hides a column.
+int AppManager::getColumnWidthSetting(const QString &key) const
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    bool ok = false;
+    const int width = settings.value(key).toInt(&ok);
+    return (ok && width > 0) ? width : 0;
+}
+//----------------------------------------------------------------------
+void AppManager::setColumnWidthSetting(const QString &key, int width)
+{
+    if (width <= 0)
+        return;
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue(key, width);
+}
+//----------------------------------------------------------------------
 bool AppManager::shouldShowAlphaWarning() const
 {
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);

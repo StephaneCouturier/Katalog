@@ -21,11 +21,26 @@ ColumnLayout {
 
     signal closeRequested()
 
+    // Persisted column widths (CDT-F12/C9): Name, Directory, Catalog Name.
+    readonly property var persistedColumnKeys: ({ 0: "Search/ColumnWidthName",
+                                                  3: "Search/ColumnWidthDirectory",
+                                                  4: "Search/ColumnWidthCatalog" })
+    property var savedColumnWidths: ({})
+    function reloadColumnWidths() {
+        savedColumnWidths = applicationWindow().loadPersistedColumnWidths(tableView, persistedColumnKeys)
+        tableView.forceLayout()
+    }
+    Connections {   // another collection: its own widths (CDT-F12)
+        target: appManager1
+        function onDatabaseModeChanged() { pageSearchResults_column.reloadColumnWidths() }
+    }
+
     // Sort state
     property int  sortColumn:    -1
     property bool sortAscending: true
 
     Component.onCompleted: {
+        reloadColumnWidths()
         var col   = appManager1.getSearchSortColumn()
         var order = appManager1.getSearchSortOrder()
         if (col >= 0) {
@@ -426,18 +441,31 @@ ColumnLayout {
                         total += Math.max(0, tableView.columnWidthProvider(c))
                     return total
                 }
-                onLayoutChanged:  contentWidth = columnsTotalWidth()
+                onLayoutChanged: {
+                    contentWidth = columnsTotalWidth()
+                    columnWidthSaveTimer.restart()
+                }
+
+                // Persisted column widths (CDT-F12): saved once a resize settles,
+                // not on every step of a drag.
+                Timer {
+                    id: columnWidthSaveTimer
+                    interval: 500
+                    onTriggered: pageSearchResults_column.savedColumnWidths =
+                        applicationWindow().savePersistedColumnWidths(tableView, pageSearchResults_column.persistedColumnKeys,
+                                                                      pageSearchResults_column.savedColumnWidths)
+                }
                 onColumnsChanged: contentWidth = columnsTotalWidth()
 
                 columnWidthProvider: function(column) {
                     let w = tableView.explicitColumnWidth(column)
                     if (w >= 0) return w
                     switch (column) {
-                        case  0: return 250  // Name
+                        case  0: return pageSearchResults_column.savedColumnWidths[0] ?? 250  // Name (CDT-F12)
                         case  1: return 90   // Size
                         case  2: return 140  // Date
-                        case  3: return 320  // Directory
-                        case  4: return 140  // Catalog Name
+                        case  3: return pageSearchResults_column.savedColumnWidths[3] ?? 320  // Directory (CDT-F12)
+                        case  4: return pageSearchResults_column.savedColumnWidths[4] ?? 140  // Catalog Name (CDT-F12)
                         case  5: return 0    // Catalog ID (hidden — used by the code, not shown)
                         case  6: return 0    // orderValue (hidden)
                         case  7: return 0    // Path (hidden)
