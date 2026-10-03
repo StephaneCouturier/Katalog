@@ -71,7 +71,14 @@ Kirigami.AbstractCard {
 
     // Lets the Devices page open this same menu for a table row, so the table
     // and the cards can never offer different actions (SpecDevicesPage DVP-F6).
-    function openContextMenu() { contextMenu.popup() }
+    // anchorItem null: opens at the pointer; otherwise under that item (the
+    // table row, when opened with the Menu key - CDT-F8).
+    function openContextMenu(anchorItem) {
+        if (anchorItem)
+            contextMenu.popup(anchorItem, 0, anchorItem.height)
+        else
+            contextMenu.popup()
+    }
 
     TapHandler {
         acceptedButtons: Qt.RightButton

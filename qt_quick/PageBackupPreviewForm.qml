@@ -205,6 +205,21 @@ Kirigami.Page {
 
                 rowHeightProvider: function(row) { return 30 }
 
+                // Keyboard navigation (CDT-F5–F11), shared in Main.qml. There is
+                // no row action and no row menu here (CDT-F7/F8): the keys move
+                // the selection, type-ahead matches File Name (CDT-F9) and
+                // Left/Right scroll (CDT-F11).
+                property int selectedRow: -1
+                activeFocusOnTab: true
+                Keys.onPressed: function(event) {
+                    applicationWindow().tableKeyPressed(previewTableView, event, {
+                        nameAt: function(r) {
+                            let m = appManager1.backupPreviewModel
+                            return m.data(m.index(r, 1), Qt.DisplayRole)   // File Name
+                        }
+                    })
+                }
+
                 columnWidthProvider: function(column) {
                     let w = previewTableView.explicitColumnWidth(column)
                     if (w >= 0) return w
@@ -229,9 +244,11 @@ Kirigami.Page {
                     implicitWidth: 12 + cellLabel.implicitWidth
 
                     readonly property bool darkTheme: Kirigami.Theme.backgroundColor.hslLightness < 0.5
-                    color: row % 2 === 0
-                           ? (darkTheme ? Kirigami.Theme.backgroundColor : "#ffffff")
-                           : (darkTheme ? "#161b1d" : "#e9f7fc")
+                    color: previewTableView.selectedRow === row
+                           ? applicationWindow().selectionHighlightColor
+                           : row % 2 === 0
+                             ? (darkTheme ? Kirigami.Theme.backgroundColor : "#ffffff")
+                             : (darkTheme ? "#161b1d" : "#e9f7fc")
 
                     // Column separator
                     Rectangle {
@@ -252,9 +269,11 @@ Kirigami.Page {
                         elide: Text.ElideRight
                         horizontalAlignment: column === 3 ? Text.AlignRight : Text.AlignLeft
                         opacity: column === 2 ? 0.7 : 1.0
-                        color: column === 0
-                               ? (isConflict ? Kirigami.Theme.neutralTextColor : Kirigami.Theme.positiveTextColor)
-                               : Kirigami.Theme.textColor
+                        color: previewTableView.selectedRow === row
+                               ? Kirigami.Theme.highlightedTextColor
+                               : column === 0
+                                 ? (isConflict ? Kirigami.Theme.neutralTextColor : Kirigami.Theme.positiveTextColor)
+                                 : Kirigami.Theme.textColor
                         text: {
                             switch (column) {
                                 case 0: return isConflict ? qsTr("Conflict")
@@ -264,6 +283,14 @@ Kirigami.Page {
                                 case 3: return fileSizeStr
                             }
                             return ""
+                        }
+                    }
+
+                    // Selects the row and gives the table keyboard focus (CDT-F5).
+                    TapHandler {
+                        onTapped: {
+                            previewTableView.selectedRow = row
+                            previewTableView.forceActiveFocus()
                         }
                     }
                 }

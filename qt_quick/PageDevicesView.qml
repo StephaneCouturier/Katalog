@@ -812,6 +812,29 @@ Item {
                 Controls.ScrollBar.horizontal: Controls.ScrollBar { policy: Controls.ScrollBar.AsNeeded }
 
                 rowHeightProvider: function(row) { return root.rowHeight }
+
+                // Keyboard navigation (CDT-F5–F11), shared in Main.qml. No row
+                // has a left-click action here, so Enter does nothing (CDT-F7).
+                // Left/Right walk the tree in the "All" view (CDT-F10) and
+                // scroll horizontally in the two flat views (CDT-F11).
+                activeFocusOnTab: true
+                Keys.onPressed: function(event) {
+                    let actions = {
+                        openMenu: function(r) {
+                            let cell = deviceTable.itemAtCell(deviceTable.leftColumn, r)
+                            if (cell) cell.openRowMenu(cell)
+                        },
+                        nameAt: function(r) {
+                            let m = appManager1.deviceTableModel
+                            return m.data(m.index(r, 0), Qt.DisplayRole)
+                        }
+                    }
+                    if (root.viewFilter === "All") {
+                        actions.treeInfo = function(r) { return appManager1.deviceTableRowInfo(r) }
+                        actions.toggle   = function(r) { appManager1.toggleDeviceTableRow(r) }
+                    }
+                    applicationWindow().tableKeyPressed(deviceTable, event, actions)
+                }
                 columnWidthProvider: function(column) {
                     let w = deviceTable.explicitColumnWidth(column)
                     if (w >= 0) return w
@@ -947,25 +970,29 @@ Item {
                                          : Kirigami.Theme.textColor)
                     }
 
+                    // The row menu is the card's menu, unchanged (DVP-F6):
+                    // the same delegate component is reused, driven by this
+                    // row's data rather than by a card's. On the cell so the
+                    // mouse and the Menu key share it (CDT-F8, CDT-C8);
+                    // anchorItem null opens it at the pointer.
+                    function openRowMenu(anchorItem) {
+                        tableRowMenu.modelData = rowData
+                        tableRowMenu.popup(anchorItem)
+                    }
+
                     MouseArea {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton | Qt.RightButton
                         onClicked: function(mouse) {
                             deviceTable.selectedRow = row
+                            deviceTable.forceActiveFocus()   // keyboard follows the click (CDT-F5)
                             if (mouse.button === Qt.RightButton)
-                                openRowMenu()
+                                parent.openRowMenu(null)
                         }
                         onPressAndHold: {
                             deviceTable.selectedRow = row
-                            openRowMenu()
-                        }
-
-                        // The row menu is the card's menu, unchanged (DVP-F6):
-                        // the same delegate component is reused, driven by this
-                        // row's data rather than by a card's.
-                        function openRowMenu() {
-                            tableRowMenu.modelData = rowData
-                            tableRowMenu.popup()
+                            deviceTable.forceActiveFocus()
+                            parent.openRowMenu(null)
                         }
                     }
                 }
@@ -988,7 +1015,7 @@ Item {
                       path: "", parentType: "", level: 0,
                       active: false, groupId: 0 })
 
-        function popup() { openContextMenu() }
+        function popup(anchorItem) { openContextMenu(anchorItem) }
 
         onEditRequested:    (id) => root.editDeviceRequested(id)
         onExploreRequested: (id) => root.exploreDeviceRequested(id)

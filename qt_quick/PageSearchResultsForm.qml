@@ -60,6 +60,26 @@ ColumnLayout {
     // Refuse-and-inform when the row's device is not reachable, instead of
     // handing the path to the desktop environment and letting it report a
     // generic "does not exist" (SpecDeviceActiveStatus.md DAS-O7 / DAS-F11).
+    // A row's left-click action, shared by the mouse and Enter (CDT-F7, CDT-C8).
+    function activateResultRow(row) {
+        var lm = appManager1.searchSortModel
+        let lFileName = String(lm.data(lm.index(row, 0), Qt.DisplayRole) ?? "")
+        let lFolder   = String(lm.data(lm.index(row, 3), Qt.DisplayRole) ?? "")
+        pageSearchResults_column.openRowFile(row, lFolder + "/" + lFileName)
+    }
+
+    // A row's context menu, shared by the mouse and the Menu key (CDT-F8).
+    // anchorItem null: opens at the pointer; otherwise under that row cell.
+    function openResultContextMenu(row, anchorItem) {
+        var m = appManager1.searchSortModel
+        let fileName    = String(m.data(m.index(row, 0),  Qt.DisplayRole) ?? "")
+        let folder      = String(m.data(m.index(row, 3),  Qt.DisplayRole) ?? "")
+        let catalogName = String(m.data(m.index(row, 4),  Qt.DisplayRole) ?? "")
+        let catalogId   = Number(m.data(m.index(row, 5),  Qt.DisplayRole) ?? -1)
+        let checksum    = String(m.data(m.index(row, 19), Qt.DisplayRole) ?? "")
+        resultContextMenu.openForRow(row, fileName, folder, checksum, catalogId, catalogName, anchorItem)
+    }
+
     function openRowFile(row, path) {
         deviceInactiveMessage.visible = !appManager1.searchRowDeviceIsActive(row)
         if (deviceInactiveMessage.visible)
@@ -378,6 +398,22 @@ ColumnLayout {
 
                 rowHeightProvider: function(row) { return pageSearchResults_column.rowHeight }
 
+                // Keyboard navigation (CDT-F5–F11), shared in Main.qml.
+                activeFocusOnTab: true
+                Keys.onPressed: function(event) {
+                    applicationWindow().tableKeyPressed(tableView, event, {
+                        activate: function(r) { pageSearchResults_column.activateResultRow(r) },
+                        openMenu: function(r) {
+                            pageSearchResults_column.openResultContextMenu(
+                                r, tableView.itemAtCell(tableView.leftColumn, r))
+                        },
+                        nameAt: function(r) {
+                            let m = appManager1.searchSortModel
+                            return m.data(m.index(r, 0), Qt.DisplayRole)
+                        }
+                    })
+                }
+
                 // TableView estimates its contentWidth from the columns loaded so
                 // far, scaled to the full column count - hidden zero-width ones
                 // included - which left a large empty band at the right end of
@@ -522,28 +558,16 @@ ColumnLayout {
                         acceptedButtons: Qt.LeftButton | Qt.RightButton
                         onClicked: function(mouse) {
                             tableView.selectedRow = row
-                            if (mouse.button === Qt.LeftButton) {
-                                var lm = appManager1.searchSortModel
-                                let lFileName = String(lm.data(lm.index(row, 0), Qt.DisplayRole) ?? "")
-                                let lFolder   = String(lm.data(lm.index(row, 3), Qt.DisplayRole) ?? "")
-                                pageSearchResults_column.openRowFile(row, lFolder + "/" + lFileName)
-                            }
+                            tableView.forceActiveFocus()   // keyboard follows the click (CDT-F5)
+                            if (mouse.button === Qt.LeftButton)
+                                pageSearchResults_column.activateResultRow(row)
                             if (mouse.button === Qt.RightButton)
-                                openResultContextMenu()
+                                pageSearchResults_column.openResultContextMenu(row, null)
                         }
                         onPressAndHold: {
                             tableView.selectedRow = row
-                            openResultContextMenu()
-                        }
-
-                        function openResultContextMenu() {
-                            var m = appManager1.searchSortModel
-                            let fileName    = String(m.data(m.index(row, 0),  Qt.DisplayRole) ?? "")
-                            let folder      = String(m.data(m.index(row, 3),  Qt.DisplayRole) ?? "")
-                            let catalogName = String(m.data(m.index(row, 4),  Qt.DisplayRole) ?? "")
-                            let catalogId   = Number(m.data(m.index(row, 5),  Qt.DisplayRole) ?? -1)
-                            let checksum    = String(m.data(m.index(row, 19), Qt.DisplayRole) ?? "")
-                            resultContextMenu.openForRow(row, fileName, folder, checksum, catalogId, catalogName)
+                            tableView.forceActiveFocus()
+                            pageSearchResults_column.openResultContextMenu(row, null)
                         }
                     }
                 }
@@ -581,7 +605,7 @@ ColumnLayout {
         property string catalogName: ""
         property int    row:         -1
 
-        function openForRow(r, name, dir, cksum, catId, catName) {
+        function openForRow(r, name, dir, cksum, catId, catName, anchorItem) {
             row         = r
             fileName    = name
             folder      = dir
@@ -589,7 +613,10 @@ ColumnLayout {
             checksum    = cksum
             catalogId   = catId
             catalogName = catName
-            popup()
+            if (anchorItem)
+                popup(anchorItem, 0, anchorItem.height)
+            else
+                popup()
         }
 
         Controls.MenuItem {

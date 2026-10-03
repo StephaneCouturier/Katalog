@@ -427,6 +427,7 @@ public slots:
     Q_INVOKABLE void sortDeviceTable(int column, int order);
     /** Device tree table: opens or closes one row's children (DVP-F13). */
     Q_INVOKABLE void toggleDeviceTableRow(int row);
+    Q_INVOKABLE QVariantMap deviceTableRowInfo(int row) const;
 
     QString getSearchNameFilter() const;
     void    setSearchNameFilter(const QString &text);

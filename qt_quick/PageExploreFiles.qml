@@ -280,6 +280,26 @@ Item {
 
                 rowHeightProvider: function(row) { return root.rowHeight }
 
+                // Keyboard navigation (CDT-F5–F11), shared in Main.qml. Enter and
+                // the Menu key go through the selected row's own cell.
+                activeFocusOnTab: true
+                Keys.onPressed: function(event) {
+                    applicationWindow().tableKeyPressed(exploreTableView, event, {
+                        activate: function(r) {
+                            let cell = exploreTableView.itemAtCell(exploreTableView.leftColumn, r)
+                            if (cell) cell.activate()
+                        },
+                        openMenu: function(r) {
+                            let cell = exploreTableView.itemAtCell(exploreTableView.leftColumn, r)
+                            if (cell) cell.openExploreContextMenu(cell)
+                        },
+                        nameAt: function(r) {
+                            let m = appManager1.exploreSortModel
+                            return m.data(m.index(r, 0), Qt.DisplayRole)
+                        }
+                    })
+                }
+
                 // TableView estimates its contentWidth from the columns loaded so
                 // far, scaled to the full column count - hidden zero-width ones
                 // included - which left a large empty band at the right end of
@@ -430,32 +450,43 @@ Item {
                         clip: true
                     }
 
+                    // The row's left-click action and context menu, on the cell
+                    // so the mouse and the keyboard share them (CDT-F7/F8, CDT-C8).
+                    function activate() {
+                        if (entryType === "folder")
+                            root.folderNavigated(fullPath)
+                        if (entryType === "file")
+                            root.openEntryFile(fullPath)
+                    }
+
+                    // anchorItem null: opens at the pointer; otherwise under that cell.
+                    function openExploreContextMenu(anchorItem) {
+                        root._activeFilePath   = fullPath
+                        root._activeFileName   = name
+                        root._activeFolderPath = folderPath
+                        root._activeChecksum   = checksum
+                        root._activeEntryType  = entryType
+                        if (anchorItem)
+                            exploreContextMenu.popup(anchorItem, 0, anchorItem.height)
+                        else
+                            exploreContextMenu.popup()
+                    }
+
                     MouseArea {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton | Qt.RightButton
                         onClicked: function(mouse) {
                             exploreTableView.selectedRow = row
-                            if (mouse.button === Qt.LeftButton && entryType === "folder") {
-                                root.folderNavigated(fullPath)
-                            }
-                            if (mouse.button === Qt.LeftButton && entryType === "file") {
-                                root.openEntryFile(fullPath)
-                            }
+                            exploreTableView.forceActiveFocus()   // keyboard follows the click (CDT-F5)
+                            if (mouse.button === Qt.LeftButton)
+                                parent.activate()
                             if (mouse.button === Qt.RightButton)
-                                openExploreContextMenu()
+                                parent.openExploreContextMenu(null)
                         }
                         onPressAndHold: {
                             exploreTableView.selectedRow = row
-                            openExploreContextMenu()
-                        }
-
-                        function openExploreContextMenu() {
-                            root._activeFilePath   = fullPath
-                            root._activeFileName   = name
-                            root._activeFolderPath = folderPath
-                            root._activeChecksum   = checksum
-                            root._activeEntryType  = entryType
-                            exploreContextMenu.popup()
+                            exploreTableView.forceActiveFocus()
+                            parent.openExploreContextMenu(null)
                         }
                     }
                 }

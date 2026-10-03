@@ -93,6 +93,9 @@ public:
 
     /** The device tree's rows, as K2's QTreeView handles them (DVP-F13/F14). */
     Q_INVOKABLE void toggleExpanded(int row);
+    /** A visible tree row's state for keyboard Left/Right (CDT-F10):
+     *  { hasChildren, expanded, parentRow } - parentRow is -1 at the top level. */
+    Q_INVOKABLE QVariantMap treeRowInfo(int row) const;
     /** Sorts children within their own parent, never across the hierarchy. */
     void sortTree(int column, Qt::SortOrder order);
     bool isTreeView() const;

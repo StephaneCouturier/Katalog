@@ -164,6 +164,35 @@ void DeviceTableModel::toggleExpanded(int row)
     endResetModel();
 }
 
+QVariantMap DeviceTableModel::treeRowInfo(int row) const
+{
+    QVariantMap info{ { QStringLiteral("hasChildren"), false },
+                      { QStringLiteral("expanded"),    false },
+                      { QStringLiteral("parentRow"),   -1 } };
+    if (!isTreeView() || row < 0 || row >= m_rows.size())
+        return info;
+
+    const QVariantMap r   = m_rows.at(row).toMap();
+    const int deviceId    = r.value(QStringLiteral("deviceId")).toInt();
+    const int level       = r.value(QStringLiteral("level")).toInt();
+
+    for (int i = 0; i < m_allRows.size(); ++i)
+        if (m_allRows.at(i).toMap().value(QStringLiteral("deviceId")).toInt() == deviceId) {
+            info[QStringLiteral("hasChildren")] = hasChildrenAt(i);
+            break;
+        }
+    info[QStringLiteral("expanded")] = !m_collapsed.contains(deviceId);
+
+    // The visible rows are depth-first, and a visible row's parent is always
+    // visible: it is the nearest row above with a smaller level.
+    for (int i = row - 1; i >= 0; --i)
+        if (m_rows.at(i).toMap().value(QStringLiteral("level")).toInt() < level) {
+            info[QStringLiteral("parentRow")] = i;
+            break;
+        }
+    return info;
+}
+
 void DeviceTableModel::sortTree(int column, Qt::SortOrder order)
 {
     if (!isTreeView())

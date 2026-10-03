@@ -778,6 +778,13 @@ void AppManager::toggleDeviceTableRow(int row)
         m_deviceTableModel->toggleExpanded(row);
 }
 //----------------------------------------------------------------------
+// Tree state of a row for keyboard Left/Right (CDT-F10). Row indices are the
+// model's own: in the tree view the proxy is left unsorted (see sortDeviceTable).
+QVariantMap AppManager::deviceTableRowInfo(int row) const
+{
+    return m_deviceTableModel ? m_deviceTableModel->treeRowInfo(row) : QVariantMap();
+}
+//----------------------------------------------------------------------
 bool AppManager::getSearchKeepsSelection() const
 {
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);

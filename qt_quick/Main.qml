@@ -351,6 +351,105 @@ Kirigami.ApplicationWindow {
         return true
     }
 
+    // Keyboard navigation shared by every table (SpecCardsAndTables
+    // CDT-F5–F11). A table forwards its Keys.onPressed here with its page's
+    // actions; whatever is not handled - Esc above all - is left unaccepted so
+    // it reaches the page (CDT-C7). `actions` may carry:
+    //   activate(row)          - the row's left-click action (CDT-F7)
+    //   openMenu(row)          - the row's context menu (CDT-F8)
+    //   nameAt(row)            - the text type-ahead matches (CDT-F9)
+    //   treeInfo(row), toggle(row) - the Devices tree (CDT-F10); when absent,
+    //                            Left/Right scroll horizontally (CDT-F11)
+    property var    _typeAheadTable: null
+    property string _typeAheadText:  ""
+    property real   _typeAheadTime:  0
+
+    function selectTableRow(table, row) {
+        if (table.rows <= 0)
+            return
+        row = Math.max(0, Math.min(table.rows - 1, row))
+        table.selectedRow = row
+        table.positionViewAtRow(row, TableView.Contain)
+    }
+
+    function tableKeyPressed(table, event, actions) {
+        const rows    = table.rows
+        const current = table.selectedRow
+        const page    = Math.max(1, Math.floor(table.height / Math.max(1, table.rowHeightProvider(0))))
+        const step    = Kirigami.Units.gridUnit * 2
+
+        event.accepted = true
+        switch (event.key) {
+        case Qt.Key_Up:       selectTableRow(table, current < 0 ? 0 : current - 1);    return
+        case Qt.Key_Down:     selectTableRow(table, current < 0 ? 0 : current + 1);    return
+        case Qt.Key_PageUp:   selectTableRow(table, current < 0 ? 0 : current - page); return
+        case Qt.Key_PageDown: selectTableRow(table, current < 0 ? 0 : current + page); return
+        case Qt.Key_Home:     selectTableRow(table, 0);                                return
+        case Qt.Key_End:      selectTableRow(table, rows - 1);                         return
+        case Qt.Key_Return:
+        case Qt.Key_Enter:
+            if (actions.activate && current >= 0 && current < rows)
+                actions.activate(current)
+            return
+        case Qt.Key_Menu:
+            if (actions.openMenu && current >= 0 && current < rows)
+                actions.openMenu(current)
+            return
+        case Qt.Key_F10:
+            if (event.modifiers & Qt.ShiftModifier) {
+                if (actions.openMenu && current >= 0 && current < rows)
+                    actions.openMenu(current)
+                return
+            }
+            break
+        case Qt.Key_Left:
+        case Qt.Key_Right:
+            if (actions.treeInfo) {
+                if (current < 0) { selectTableRow(table, 0); return }
+                const info = actions.treeInfo(current)
+                if (event.key === Qt.Key_Left) {
+                    if (info.hasChildren && info.expanded)   actions.toggle(current)
+                    else if (info.parentRow >= 0)            selectTableRow(table, info.parentRow)
+                } else {
+                    if (info.hasChildren && !info.expanded)  actions.toggle(current)
+                    else if (info.hasChildren)               selectTableRow(table, current + 1)
+                }
+            } else {
+                const maxX = Math.max(0, table.contentWidth - table.width)
+                table.contentX = Math.max(0, Math.min(maxX,
+                    table.contentX + (event.key === Qt.Key_Left ? -step : step)))
+            }
+            return
+        }
+
+        // Type-ahead (CDT-F9): printable text without Ctrl/Alt/Meta.
+        const text = event.text
+        if (actions.nameAt && rows > 0 && text.length > 0 && text >= " "
+                && !(event.modifiers & (Qt.ControlModifier | Qt.AltModifier | Qt.MetaModifier))) {
+            const now = Date.now()
+            if (_typeAheadTable !== table || now - _typeAheadTime > Qt.styleHints.keyboardInputInterval)
+                _typeAheadText = ""
+            if (_typeAheadText === "" && text === " ") {   // a lone space is not a search
+                event.accepted = false
+                return
+            }
+            _typeAheadTable = table
+            _typeAheadTime  = now
+            _typeAheadText += text.toLowerCase()
+            // A new search starts after the current row; a growing one may stay on it.
+            const start = _typeAheadText.length === 1 ? current + 1 : Math.max(0, current)
+            for (let i = 0; i < rows; i++) {
+                const r = (start + i) % rows
+                if (String(actions.nameAt(r) ?? "").toLowerCase().startsWith(_typeAheadText)) {
+                    selectTableRow(table, r)
+                    break
+                }
+            }
+            return
+        }
+        event.accepted = false
+    }
+
     // Widest of the header cell and the rows currently loaded; each delegate's
     // implicitWidth is its content's full, unelided width.
     // Applied once the double-click has been handled: Qt's own header handling
