@@ -31,6 +31,7 @@ export default {
   tutorialSidebar: [
     'Overview',
     'tutorial',
+    'Interface',
     {
       type: 'category',
       label: 'Features', //'Main Features (tabs)',

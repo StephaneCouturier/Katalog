@@ -737,6 +737,15 @@ ScrollablePageFitted {
                                    Math.min(textSizeSlider.to, textSizeSlider.value + textSizeSlider.stepSize))
                 }
             }
+            // Back to the default window size (WIN-F4, SpecWindowGeometry.md).
+            // Icon of the Search Reset action; tooltip = the size, untranslated (WIN-C5).
+            Controls.Button {
+                text: qsTr("Reset window size")
+                icon.name: "edit-clear-history"
+                Controls.ToolTip.text: appManager1.getDefaultWindowSizeText()
+                Controls.ToolTip.visible: hovered
+                onClicked: applicationWindow().resetWindowSize()
+            }
         }
 
         Controls.Label { text: qsTr("Language"); opacity: 0.7; Layout.alignment: Qt.AlignTop

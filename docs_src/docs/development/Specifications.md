@@ -52,6 +52,7 @@ specification and the code disagree, the specification is what was agreed.
 | [SpecTypography](SpecTypography.md) | TYPOGRAPHY — TEXT SIZE DERIVED FROM THE SYSTEM FONT | Approved | partial | — |
 | [SpecValidationRules](SpecValidationRules.md) | Form Validation Rules | Approved | partial | — |
 | [SpecVersions](SpecVersions.md) | Version Numbers | — | — | — |
+| [SpecWindowGeometry](SpecWindowGeometry.md) | WINDOW GEOMETRY — SIZE AND POSITION OF THE K3 WINDOW | Approved | partial | — |
 
 ---
 

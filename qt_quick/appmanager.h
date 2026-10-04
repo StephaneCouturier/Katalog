@@ -277,6 +277,10 @@ public slots:
     Q_INVOKABLE QString getLastPage() const;
     Q_INVOKABLE QVariantMap getWindowGeometry() const;
     Q_INVOKABLE void        saveWindowGeometry(int x, int y, int width, int height, bool maximized);
+    Q_INVOKABLE QVariantMap getDefaultWindowSize(const QString &screenName) const;
+    // "1280×800": tooltip of the Reset window size button, not translated (WIN-C5).
+    Q_INVOKABLE QString     getDefaultWindowSizeText() const
+    { return QString::number(kDefaultWindowWidth) + QChar(0x00D7) + QString::number(kDefaultWindowHeight); }
     Q_INVOKABLE void        setTextScale(qreal scale);
     qreal                   getSystemTextPointSize() const { return QFontInfo(m_systemFont).pointSizeF(); }
     qreal                   getTextPointSize() const { return QFontInfo(QGuiApplication::font()).pointSizeF(); }
@@ -626,6 +630,10 @@ signals:
     void splitCompleted(bool success, const QString &error);
 
 private:
+    // Default window size (WIN-C1, SpecWindowGeometry.md): first start and reset.
+    static constexpr int kDefaultWindowWidth  = 1280;
+    static constexpr int kDefaultWindowHeight = 800;
+
     // The single naming rule for a collection, shared by the drawer header and the
     // Open menu's recent entries so the two cannot drift apart
     // (SpecCollectionIdentity.md CID-C5). Callers supply the values they hold;

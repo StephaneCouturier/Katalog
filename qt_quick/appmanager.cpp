@@ -875,8 +875,8 @@ QString AppManager::getLastPage() const
 //----------------------------------------------------------------------
 QVariantMap AppManager::getWindowGeometry() const
 {
-    const int defaultWidth  = 900;
-    const int defaultHeight = 600;
+    const int defaultWidth  = kDefaultWindowWidth;
+    const int defaultHeight = kDefaultWindowHeight;
 
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
     int width  = settings.value("Settings/WindowWidth",  defaultWidth).toInt();
@@ -946,6 +946,36 @@ void AppManager::setTextScale(qreal scale)
         font.setPixelSize(qRound(m_systemFont.pixelSize() * scale));
     QGuiApplication::setFont(font);
     emit textPointSizeChanged();
+}
+//----------------------------------------------------------------------
+// Default size for the Reset window size button (WIN-F4), clamped to the
+// available area of the screen the window is on. The screen is found by name:
+// a Wayland window does not know its own position.
+QVariantMap AppManager::getDefaultWindowSize(const QString &screenName) const
+{
+    int width  = kDefaultWindowWidth;
+    int height = kDefaultWindowHeight;
+
+    const QScreen *targetScreen = nullptr;
+    const QList<QScreen *> screens = QGuiApplication::screens();
+    for (const QScreen *screen : screens) {
+        if (screen->name() == screenName) {
+            targetScreen = screen;
+            break;
+        }
+    }
+    if (targetScreen == nullptr)
+        targetScreen = QGuiApplication::primaryScreen();
+    if (targetScreen != nullptr) {
+        const QRect available = targetScreen->availableGeometry();
+        width  = qMin(width,  available.width());
+        height = qMin(height, available.height());
+    }
+
+    QVariantMap size;
+    size["width"]  = width;
+    size["height"] = height;
+    return size;
 }
 //----------------------------------------------------------------------
 void AppManager::saveWindowGeometry(int x, int y, int width, int height, bool maximized)

@@ -60,8 +60,9 @@ Kirigami.ApplicationWindow {
     property bool _geometryRestored: false
     property int  _windowedX:      0
     property int  _windowedY:      0
-    property int  _windowedWidth:  900
-    property int  _windowedHeight: 600
+    property int  _windowedWidth:  0   // set from getWindowGeometry() at start (WIN-C1: one default)
+    property int  _windowedHeight: 0
+    property bool _resetSizePending: false
 
     function trackWindowedGeometry() {
         //Only once the saved geometry has been applied: the sizes the platform
@@ -74,6 +75,24 @@ Kirigami.ApplicationWindow {
         root._windowedY      = root.y
         root._windowedWidth  = root.width
         root._windowedHeight = root.height
+    }
+
+    // Reset window size (WIN-F4): back to the default size, windowed. A maximized
+    // window is restored first and resized once it is actually windowed: leaving
+    // the maximized state is asynchronous on X11 and Wayland, and a size set
+    // before that would be replaced by the previous windowed size.
+    function resetWindowSize() {
+        if (root.visibility === Window.Maximized || root.visibility === Window.FullScreen) {
+            root._resetSizePending = true
+            root.showNormal()
+        } else {
+            root.applyDefaultWindowSize()
+        }
+    }
+    function applyDefaultWindowSize() {
+        var size = appManager1.getDefaultWindowSize(root.screen ? root.screen.name : "")
+        root.width  = size.width
+        root.height = size.height
     }
 
     function saveWindowGeometry() {
@@ -1150,6 +1169,12 @@ Kirigami.ApplicationWindow {
     onYChanged:      root.trackWindowedGeometry()
     onWidthChanged:  root.trackWindowedGeometry()
     onHeightChanged: root.trackWindowedGeometry()
+    onVisibilityChanged: {
+        if (root._resetSizePending && root.visibility === Window.Windowed) {
+            root._resetSizePending = false
+            root.applyDefaultWindowSize()
+        }
+    }
 
     //Saved when the window goes away rather than on every resize step.
     onClosing: root.saveWindowGeometry()
