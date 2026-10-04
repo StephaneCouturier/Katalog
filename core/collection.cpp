@@ -2561,13 +2561,15 @@ bool Collection::insertPhysicalStorageGroup() {
     queryStorage.next();
 
     if (queryStorage.value(0).toInt() == 0){
-        //Create Device and related Storage under Physical group (ID=0)
+        //Create Device and related Storage under "Virtual device" (ID=2), or under
+        //the Physical group (ID=1) when device 2 is absent: parenting to a missing
+        //device 2 made the new device its own parent and hung every open (OPN-F8, OPN-C7)
         Device *newStorageDevice = new Device();
         newStorageDevice->setConnectionName(m_connectionName);
         newStorageDevice->storage->setConnectionName(m_connectionName);
         newStorageDevice->generateDeviceID();
         newStorageDevice->parentID = 2;
-        if(newStorageDevice->verifyParentDeviceExistsInPhysicalGroup()==true)
+        if(!newStorageDevice->verifyParentDeviceExistsInPhysicalGroup())
             newStorageDevice->parentID = 1;
 
         newStorageDevice->name = "Local disk";

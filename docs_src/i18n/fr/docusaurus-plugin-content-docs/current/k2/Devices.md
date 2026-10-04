@@ -1,0 +1,85 @@
+---
+version: "2.13"
+displayed_sidebar: tutorialSidebar
+---
+# Périphériques
+![2.13](https://img.shields.io/badge/Version-2.13-blue)
+
+:::info Katalog 2
+Cette page est une copie de la documentation de **Katalog 2** (2.13), conservée pour référence. Pour Katalog 3, voir la [documentation actuelle](../Overview).
+:::
+
+
+## Résumé
+Cette page décrit le concept de **Périphérique** dans Katalog et la partie supérieure de l'écran **Périphériques**.
+
+![Exemple montrant des catalogues organisés sous des disques physiques et un groupe Photos virtuel](/img/devices_example1_cut.png)
+
+Dans cet exemple, plusieurs catalogues ont été créés à partir de 2 disques physiques.<br/>
+Les catalogues de photos/images ont été attribués à un périphérique *Photos* virtuel.<br/>
+Cela permet de rechercher uniquement dans ces éléments et fournit le total du nombre et de la taille des fichiers photos.
+
+## Modèle
+
+### Définitions
+
+* Un périphérique **[Catalogue](DevicesCatalogs)** est un index de fichiers issus d'un répertoire particulier.
+
+* Un périphérique **[Stockage](DevicesStorage)** est un lecteur physique sur lequel les fichiers sont stockés. En général, il est monté ou connecté à l'ordinateur et dispose d'un espace de stockage physique.
+
+* Un périphérique **Virtuel** est tout élément non physique utilisé pour regrouper d'autres périphériques. Il n'a pas de propriétés propres et peut agréger les totaux des sous-périphériques associés.
+
+* Un **Groupe** est un périphérique virtuel au sommet de la hiérarchie.
+
+    * Le **Groupe Physique** est un groupe unique et réservé à la hiérarchie des périphériques physiques (ordinateur, téléphone, disque, etc.).
+
+    * Tout autre groupe est un **Groupe Virtuel** auquel des catalogues existants peuvent être attribués pour faciliter la recherche et les statistiques.
+
+* Tout périphérique peut avoir un **Commentaire** : une note en texte libre, saisie dans le formulaire d'édition du périphérique et affichée à côté de son nom dans la liste des périphériques.
+
+### Hiérarchie
+
+![Diagramme montrant la hiérarchie des périphériques avec groupes, stockages et catalogues](/img/devices_model.png)
+
+## Fonctionnalités
+
+Toujours disponibles en haut de l'écran :
+
+### Choisir entre 3 vues
+
+Les périphériques peuvent être listés et gérés de 3 façons :
+
+**[Arborescence des périphériques](DevicesTree)** : affiche la liste complète et non filtrée de tous les périphériques dans une structure hiérarchique.
+
+**[Liste de stockage](DevicesStorage)** : affiche uniquement les périphériques de stockage, filtrés selon le panneau [Sélection](Selection).
+
+**[Liste des catalogues](DevicesCatalogs)** : affiche uniquement les périphériques de type catalogue, filtrés selon le panneau [Sélection](Selection).
+
+### Choisir entre cartes et tableau
+
+Dans la **Liste des stockages** et la **Liste des catalogues**, les périphériques peuvent être affichés de deux manières :
+
+**Cartes** : chaque périphérique est une carte, avec son nom, ses principaux chiffres et un menu d'actions. Confortable pour lire quelques périphériques.
+
+**Tableau** : les périphériques sont affichés en lignes et colonnes, comme dans la version précédente de Katalog. Les valeurs sont alignées dans chaque colonne, ce qui permet de comparer les périphériques d'un coup d'œil, et un clic sur un en-tête de colonne trie la liste selon cette colonne — un second clic inverse l'ordre. Les nombres, les tailles et les dates sont triés selon leur valeur réelle, et non par ordre alphabétique.
+
+Ce choix s'applique aux deux listes et est mémorisé pour chaque collection. La vue **Arborescence des périphériques** est toujours affichée sous forme de cartes.
+
+Un clic droit sur une ligne du tableau ouvre le même menu d'actions que celui d'une carte.
+
+### Afficher le tableau complet
+Lorsqu'elle est activée, toutes les colonnes disponibles sont affichées dans la vue courante.
+
+Lorsqu'elle est décochée, les colonnes non nécessaires au quotidien (comme les identifiants internes) sont masquées, ce qui rend la vue plus simple et plus lisible.
+
+### Mettre à jour le périphérique actif
+Met à jour le périphérique actuellement sélectionné — re-scanne ses fichiers depuis le chemin source.
+
+Ce bouton est actif lorsqu'un périphérique dont le chemin source est accessible (affiché avec une icône colorée) est sélectionné dans l'une des trois vues.
+
+### Enregistrer un instantané
+Enregistre les valeurs actuelles de tous les périphériques (nombre de fichiers, taille des fichiers, espace libre, espace total) indépendamment de la sélection ou des filtres en cours.
+
+Après l'enregistrement, un résumé est affiché avec les nouveaux totaux et l'écart depuis le précédent instantané (delta).
+
+Ces enregistrements alimentent les [Statistiques](Statistics) et permettent de suivre la collection globalement au fil du temps.

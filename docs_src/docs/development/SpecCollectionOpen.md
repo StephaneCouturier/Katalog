@@ -61,13 +61,15 @@ cover importing or updating across collections — that is `SpecCollection.md`.
 **In scope:** the first-run collection dialog in File and Memory mode, cancelling
 it, creating a new database file from Settings, creating a new SQLite collection
 in K3, creating the containing folder, the `.db` extension, reporting creation
-failures, recording the database mode alongside the path, and the
-recent-collections list in the K3 drawer's **Open** menu.
+failures, recording the database mode alongside the path, the
+recent-collections list in the K3 drawer's **Open** menu, and the creation of the
+default devices when a collection is opened.
 
 **Out of scope (non-goals):** any redesign of the first-run sequence — K2 is in
 maintenance mode and this is repair of the existing flow only (`OPN-C4`).
 Hosted-mode configuration, collection import/update (`SpecCollection.md`), and
-the contents of a collection once opened.
+the contents of a collection once opened (other than the default devices of
+`OPN-F8`).
 
 ---
 
@@ -80,6 +82,7 @@ Goals in real use, independent of how they are built.
 | OPN-O1 | On first run a user either reaches a working collection or leaves the dialog without being trapped, in every database mode. | [Implemented] |
 | OPN-O2 | Creating a new collection database from Settings gives the same result as creating one on first run. | [Implemented] |
 | OPN-O3 | The user can reopen any of their recently used collections directly from the drawer's **Open** menu, without browsing for it again. | [Implemented] |
+| OPN-O4 | Opening an existing collection always reaches a usable state: it never hangs because of the default devices Katalog adds itself. | [Implemented] |
 
 ## Functional requirements — *what the system does*
 
@@ -94,6 +97,7 @@ Observable behaviour that can be triggered and watched.
 | OPN-F5 | The first-run flow records the chosen database **mode** together with the chosen path, and flushes both to the settings file before reconnecting, so the connection attempted immediately afterwards and the one made on the next launch both use that mode. `"File"` in the file branch, `"Memory"` in the folder branch. **This is the fix for the reported defect** — see Context. | [Implemented] |
 | OPN-F6 | A database file created from Settings receives the same `.db` extension handling as the first-run path: the extension is appended when the user did not type it. | [Implemented] |
 | OPN-F7 | The K3 drawer's **Open** menu lists up to 10 recently opened collections, most recent first; reopening a collection already in the list moves it to the top rather than adding a duplicate. | [Implemented] |
+| OPN-F8 | When a collection has no Storage device, opening it creates a default "Local disk" Storage device. Its parent is device 2 ("Virtual device") when device 2 exists in the physical group, otherwise device 1 (Physical Group). A new collection is unchanged: devices 1 and 2 are created first, so "Local disk" stays under "Virtual device". (`Collection::insertPhysicalStorageGroup`, `Device::verifyParentDeviceExistsInPhysicalGroup`; found 2026-10-04: the check queried a non-existent `group_id` column, so with device 2 absent "Local disk" became its own parent and opening hung — see `OPN-C7`.) | [Implemented] |
 
 ## Constructional requirements — *how it is built / limits / MUST-NOTs*
 
@@ -107,6 +111,7 @@ Boundaries and implementation constraints, not user-visible behaviour.
 | OPN-C4 | K2 is in maintenance mode. This is repair of the existing flow only: no redesign of the first-run sequence, no new dialog, no new source file. | [Implemented] |
 | OPN-C5 | The `.db` extension of `OPN-F6` is **required for correctness, not cosmetic**. A File-mode collection is located by scanning a folder for `*.db`: `Collection::validateCollectionFolder` (`core/collection.cpp`) and the command-line collection resolver (`core/commandline.cpp`) both do this. An extensionless database file is therefore classified as user data rather than a collection, and `--collection <dir>` reports that no `.db` file was found. The extension MUST NOT be treated as a naming preference that a creation path may skip. | [Implemented] |
 | OPN-C6 | The recent-collections list of `OPN-F7` is persisted in the settings file under the existing `Recent/count` and `Recent/N/*` keys. A beta1/beta2 settings file holding up to 5 entries MUST still be read without loss or error. No new user-visible string is added. | [Implemented] |
+| OPN-C7 | A device that Katalog creates MUST NOT be its own parent or its own ancestor. The recursive sub-device query (`Device::loadSubDeviceList`) does not terminate on a cycle, so a cycle hangs every open of the collection. | [Implemented] |
 
 ---
 
@@ -115,6 +120,7 @@ Boundaries and implementation constraints, not user-visible behaviour.
 | Item | Detail |
 |------|--------|
 | Dead `ACTION_CANCEL` case | In the Memory-mode invalid-folder dialog, the `ACTION_CANCEL` branch breaks out of its `switch` and falls back into the surrounding loop, so it does not cancel anything. The first-run trap itself is gone — the outer cancel of `OPN-F3` now ends the dialog — so this case is misleading rather than harmful. It is **not** fixed and must not be recorded as such. Closing it means routing that case to the same exit as `OPN-F3`. |
+| Collections already self-parented | A collection opened before the `OPN-F8` fix with device 1 present, device 2 absent and no Storage device holds a "Local disk" that is its own parent, and still hangs on open. The fix prevents new cases only; nothing repairs existing ones (Katalog does not repair a collection on its own initiative — `SpecQualityCheck.md` QCK-O2). Options are listed in `SpecBacklogNotes.md` "Device tree — self-parented default storage". |
 
 ---
 
@@ -153,6 +159,10 @@ version, (K3) to the Qt Quick version.
   shows the 10 most recent, newest first, and the oldest has dropped off. Then
   reopen one from the middle of the list: it moves to the top and appears once.
   Then start with an existing 5-entry beta settings file: all 5 entries still appear.
+- **OPN-O4 / OPN-F8 / OPN-C7** (K2, K3) — Open a File-mode collection whose
+  device table holds only device 1 (Physical Group). It opens, and "Local disk" is
+  listed under the Physical Group (parent 1). Then create a new collection:
+  "Local disk" is under "Virtual device", as before.
 - **Dead `ACTION_CANCEL`** (K2) — Known open item, expected to fail: in Memory
   mode select a folder that fails validation, then press Cancel in the
   invalid-folder dialog. It returns to the folder dialog instead of ending. That

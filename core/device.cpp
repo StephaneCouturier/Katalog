@@ -335,7 +335,7 @@ bool Device::verifyParentDeviceExistsInPhysicalGroup()
                                     SELECT COUNT(*)
                                     FROM   device
                                     WHERE  device_id = :device_id
-                                    AND group_id = 0
+                                    AND device_group_id = 0
                                 )");
 
     query.prepare(querySQL);

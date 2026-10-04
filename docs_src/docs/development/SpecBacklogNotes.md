@@ -223,6 +223,29 @@ later.
 
 ---
 
+## Device tree — self-parented default storage
+
+**Identified:** 2026-10-04
+**Affects:** K2 and K3 (core: `Collection::insertPhysicalStorageGroup`, `Device::loadSubDeviceList`)
+**Related requirements:** `SpecCollectionOpen.md` OPN-O4, OPN-F8, OPN-C7
+
+This is a **note, not a requirement.** Nothing below is authorised work.
+
+Before the OPN-F8 fix, opening a collection with device 1 present, device 2 absent
+and no Storage device created a default "Local disk" that was its own parent
+(device 2, parent 2). The recursive query in `Device::loadSubDeviceList` (`UNION ALL`
+over `device_parent_id`) never ends on that cycle, so every open of such a collection
+hangs at start-up. The fix prevents new cases; a collection already damaged keeps the
+row and still hangs. The Quality check cannot help: the collection hangs before it can
+run, and check 8 (missing parent) does not see a parent that exists.
+
+**Options, each needing its own approved requirement:**
+- A Quality check for self-parented or cyclic `device_parent_id`.
+- Make `loadSubDeviceList` robust to cycles (`UNION` instead of `UNION ALL`, or a depth guard), so a damaged collection at least opens.
+- A manual repair procedure (set the row's `device_parent_id` to 1).
+
+---
+
 ## Duplicated data — further candidates, not decided
 
 **Status:** candidates only, recorded 2026-09-28 from the redundancy diagnosis

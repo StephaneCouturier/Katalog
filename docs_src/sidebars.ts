@@ -84,7 +84,10 @@ export default {
        'development/Dev-Repository',
        'development/Dev-Build-from-source',
        'development/Dev-Release',
-       'development/Dev-Documentation'
+       'development/Dev-Documentation',
+       // Single entry for the frozen Katalog 2 copies in docs/k2/: they are not
+       // listed here, the Katalog2 page links to them.
+       'Katalog2'
               ],
     },
   ],
