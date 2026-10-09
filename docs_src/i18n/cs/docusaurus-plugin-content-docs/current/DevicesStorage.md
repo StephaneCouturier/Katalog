@@ -16,7 +16,7 @@ Data přidružená k úložnému zařízení kombinují tři typy informací:
 
 Úložná zařízení mohou být umístěna pouze ve *Fyzické skupině* a jejích podpoložkách.
 
-![Seznam úložiště zobrazující zařízení s využitím místa a počtem přidružených katalogů](/img/devices_storage_01.png)
+![Seznam úložiště zobrazující zařízení s využitím místa a počtem přidružených katalogů](/img/k2/devices_storage_01.png)
 
 ## Seznam a výběr
 Seznam úložných zařízení lze zúžit pomocí panelu **[Výběr](Selection)** vlevo.
@@ -37,7 +37,7 @@ Tlačítko *Všechny aktivní* není dostupné v zobrazení Seznam úložiště 
 
 Kliknutím pravým tlačítkem na úložné zařízení se otevře kontextová nabídka:
 
-![Kontextová nabídka úložného zařízení zobrazující dostupné akce](/img/devices_storage_02_context.png)
+![Kontextová nabídka úložného zařízení zobrazující dostupné akce](/img/k2/devices_storage_02_context.png)
 
 | Akce | Podmínka | Popis |
 |------|----------|-------|
@@ -52,7 +52,7 @@ Kliknutím pravým tlačítkem na úložné zařízení se otevře kontextová n
 
 Panel úprav umožňuje změnit všechna pole úložného zařízení:
 
-![Panel úprav úložného zařízení zobrazující všechna konfigurovatelná pole](/img/devices_storage_03_edit.png)
+![Panel úprav úložného zařízení zobrazující všechna konfigurovatelná pole](/img/k2/devices_storage_03_edit.png)
 
 | Pole | Popis |
 |------|-------|
@@ -92,7 +92,7 @@ Postup:
 
 Pokud není obrázek explicitně přiřazen, Katalog jako záložní možnost hledá soubor pojmenovaný `<IDúložiště>.jpg` ve složce obrázků.
 
-![Úložné zařízení s přidruženým obrázkem zobrazeným v panelu úprav](/img/devices_storage_04_picture.png)
+![Úložné zařízení s přidruženým obrázkem zobrazeným v panelu úprav](/img/k2/devices_storage_04_picture.png)
 
 ## Vývoj
 Několik nápadů na rozvoj této obrazovky:

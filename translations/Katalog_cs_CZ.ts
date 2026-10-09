@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+178"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+181"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4618"/>
+        <location line="+4438"/>
         <source>Search</source>
         <translation>Vyhledávání</translation>
     </message>
     <message>
-        <location line="-4738"/>
+        <location line="-4558"/>
         <source>Stopped</source>
         <translation>Zastaveno</translation>
     </message>
@@ -44,11 +44,11 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2240"/>
+        <location line="+2173"/>
         <location line="+625"/>
         <location line="+26"/>
         <location line="+20"/>
-        <location line="+1277"/>
+        <location line="+1164"/>
         <location line="+11"/>
         <location line="+60"/>
         <location line="+374"/>
@@ -56,14 +56,14 @@
         <translation>Probíhá</translation>
     </message>
     <message>
-        <location line="-4619"/>
-        <location line="+4226"/>
+        <location line="-4439"/>
+        <location line="+4046"/>
         <location line="+52"/>
         <source>Completed</source>
         <translation>Dokončeno</translation>
     </message>
     <message>
-        <location line="-3561"/>
+        <location line="-3371"/>
         <source>Empty database path provided</source>
         <translation>Byla zadána prázdná cesta k databázi</translation>
     </message>
@@ -98,12 +98,12 @@
         <translation>Virtuální zařízení</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+9"/>
         <source>Local disk</source>
         <translation>Locální disk</translation>
     </message>
     <message>
-        <location line="+456"/>
+        <location line="+470"/>
         <source>search_results</source>
         <translation>Výsledky_vyhledávání</translation>
     </message>
@@ -113,7 +113,7 @@
         <translation>Výsledky vyhledávání</translation>
     </message>
     <message>
-        <location line="+373"/>
+        <location line="+258"/>
         <source>Case sensitive</source>
         <translation>Rozlišovat velikost písmen</translation>
     </message>
@@ -149,12 +149,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2641"/>
+        <location line="+2548"/>
         <source>Size</source>
         <translation>Velikost</translation>
     </message>
     <message>
-        <location line="-2640"/>
+        <location line="-2547"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
@@ -189,7 +189,7 @@
         <translation>Štítek: %1</translation>
     </message>
     <message>
-        <location line="+222"/>
+        <location line="+242"/>
         <source>Memory collection opened: %1</source>
         <translation>Sbírka v paměti otevřena: %1</translation>
     </message>
@@ -310,7 +310,7 @@ Zvolte jiný název a zkuste to znovu.</translation>
         <translation>Přiřazení katalogu k zařízení se nezdařilo.</translation>
     </message>
     <message>
-        <location line="+82"/>
+        <location line="+58"/>
         <location line="+16"/>
         <source>Split failed: no catalogs were created.</source>
         <translation>Rozdělení se nezdařilo: nebyly vytvořeny žádné katalogy.</translation>
@@ -336,7 +336,7 @@ Zvolte jiný název a zkuste to znovu.</translation>
         <translation>Zrušení přiřazení zařízení se nezdařilo.</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+13"/>
         <source>Could not open file.</source>
         <translation>Soubor nelze otevřít.</translation>
     </message>
@@ -351,12 +351,12 @@ Zvolte jiný název a zkuste to znovu.</translation>
         <translation>V souboru nebyla nalezena žádná data katalogu.</translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+50"/>
         <source>Could not open file: %1</source>
         <translation>Soubor se nepodařilo otevřít: %1</translation>
     </message>
     <message>
-        <location line="+156"/>
+        <location line="+113"/>
         <source>There is already a catalog with this name: %1
 Choose a different name.</source>
         <translation>Katalog s tímto názvem již existuje: %1
@@ -430,7 +430,7 @@ Zvolte jiný název.</translation>
         <translation type="vanished">Úložiště s tímto ID již existuje. Zvolte jiné ID.</translation>
     </message>
     <message>
-        <location line="+211"/>
+        <location line="+174"/>
         <source>Selected device is not a catalog</source>
         <translation>Vybrané zařízení není katalog</translation>
     </message>
@@ -601,7 +601,7 @@ Zvolte jiný název.</translation>
 <context>
     <name>Catalog</name>
     <message>
-        <location filename="../core/catalog.cpp" line="+128"/>
+        <location filename="../core/catalog.cpp" line="+129"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
@@ -626,7 +626,7 @@ Zvolte jiný název.</translation>
         <translation>Katalog</translation>
     </message>
     <message>
-        <location line="+1543"/>
+        <location line="+1522"/>
         <source>root</source>
         <translation>kořen</translation>
     </message>
@@ -659,7 +659,7 @@ Zvolte jiný název.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2691"/>
+        <location filename="../core/collection.cpp" line="+2759"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Tato složka obsahuje soubory kolekce v režimu Paměť, ale aktuálně jste v režimu Soubor.&lt;br/&gt;Přepněte do režimu Paměť nebo vyberte jinou složku.</translation>
     </message>
@@ -677,7 +677,7 @@ Zvolte jiný název.</translation>
 <context>
     <name>CollectionImporter</name>
     <message>
-        <location filename="../core/collectionimporter.cpp" line="+1637"/>
+        <location filename="../core/collectionimporter.cpp" line="+1623"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
@@ -708,7 +708,7 @@ Zvolte jiný název.</translation>
 <context>
     <name>DeviceTableModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicetablemodel.cpp" line="+356"/>
+        <location filename="../qt_quick/adapters/devicetablemodel.cpp" line="+385"/>
         <source>None</source>
         <translation>Žádné</translation>
     </message>
@@ -952,7 +952,7 @@ Zvolte jiný název.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+1025"/>
+        <location filename="../qt_quick/Main.qml" line="+1332"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Chcete &lt;b&gt;odstranit&lt;/b&gt; toto zařízení %1?&lt;br/&gt;&lt;br/&gt;Název: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -969,13 +969,13 @@ Zvolte jiný název.</translation>
         <location line="-375"/>
         <location line="+60"/>
         <location line="+176"/>
-        <location line="+803"/>
+        <location line="+827"/>
         <location line="+122"/>
         <source>Cancel</source>
         <translation>Zrušení</translation>
     </message>
     <message>
-        <location line="-1261"/>
+        <location line="-1285"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+172"/>
@@ -994,75 +994,80 @@ Zvolte jiný název.</translation>
         <translation>Systém</translation>
     </message>
     <message>
-        <location line="-253"/>
-        <location line="+254"/>
+        <location line="-250"/>
+        <location line="+251"/>
         <source>Settings</source>
         <translation>Nastavení</translation>
     </message>
     <message>
-        <location line="-408"/>
+        <location line="-410"/>
         <source>Open...</source>
         <translation>Otevřít...</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+18"/>
         <source>Collection Folder...</source>
         <translation>Složka sbírky...</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <location line="+87"/>
+        <location line="-14"/>
+        <location line="+102"/>
         <source>SQLite Database...</source>
         <translation>Databáze SQLite...</translation>
     </message>
     <message>
-        <location line="-73"/>
+        <location line="-78"/>
         <source>Hosted Database...</source>
         <translation>Hostovaná databáze...</translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+8"/>
+        <source>Recent collections</source>
+        <translation>Nedávné sbírky</translation>
+    </message>
+    <message>
+        <location line="+66"/>
         <source>New...</source>
         <translation>Nový...</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+797"/>
+        <location line="+794"/>
         <source>Selection</source>
         <translation>Výběr</translation>
     </message>
     <message>
-        <location line="-787"/>
-        <location line="+1131"/>
+        <location line="-784"/>
+        <location line="+1149"/>
         <source>Devices</source>
         <translation>Zařízení</translation>
     </message>
     <message>
-        <location line="-1126"/>
-        <location line="+1223"/>
+        <location line="-1144"/>
+        <location line="+1241"/>
         <source>Explore</source>
         <translation>Prozkoumat</translation>
     </message>
     <message>
-        <location line="-1213"/>
-        <location line="+1446"/>
+        <location line="-1231"/>
+        <location line="+1467"/>
         <source>Backup</source>
         <translation>Záloha</translation>
     </message>
     <message>
-        <location line="-1441"/>
-        <location line="+1401"/>
+        <location line="-1462"/>
+        <location line="+1422"/>
         <source>Statistics</source>
         <translation>Statistika</translation>
     </message>
     <message>
-        <location line="-1396"/>
-        <location line="+1418"/>
+        <location line="-1417"/>
+        <location line="+1439"/>
         <source>Tags</source>
         <translation>Značky</translation>
     </message>
     <message>
-        <location line="-1405"/>
+        <location line="-1426"/>
         <source>Documentation</source>
         <translation>Dokumentace</translation>
     </message>
@@ -1109,7 +1114,7 @@ Zvolte jiný název.</translation>
 </translation>
     </message>
     <message>
-        <location line="+159"/>
+        <location line="+156"/>
         <source>Do not show again</source>
         <translation>Příště nezobrazovat</translation>
     </message>
@@ -1344,19 +1349,19 @@ To může znamenat, že je zdroj prázdný nebo že zařízení není připojeno
 Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     </message>
     <message>
-        <location line="-735"/>
-        <location line="+981"/>
-        <location line="+44"/>
+        <location line="-732"/>
+        <location line="+984"/>
+        <location line="+48"/>
         <source>Search</source>
         <translation>Vyhledávání</translation>
     </message>
     <message>
-        <location line="-138"/>
+        <location line="-142"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
     <message>
-        <location line="+147"/>
+        <location line="+151"/>
         <source>Resume</source>
         <translation>Obnovit</translation>
     </message>
@@ -1367,13 +1372,13 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+106"/>
-        <location line="+173"/>
+        <location line="+117"/>
+        <location line="+176"/>
         <source>Stop</source>
         <translation>Zastavit</translation>
     </message>
     <message>
-        <location line="-272"/>
+        <location line="-286"/>
         <source>Reset</source>
         <translation>Resetovat</translation>
     </message>
@@ -1383,12 +1388,12 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Historie</translation>
     </message>
     <message>
-        <location line="-282"/>
-        <location line="+290"/>
+        <location line="-292"/>
+        <location line="+300"/>
         <location line="+39"/>
-        <location line="+98"/>
+        <location line="+109"/>
         <location line="+39"/>
-        <location line="+88"/>
+        <location line="+91"/>
         <location line="+105"/>
         <location line="+20"/>
         <location line="+39"/>
@@ -1396,7 +1401,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Zavřít</translation>
     </message>
     <message>
-        <location line="-1261"/>
+        <location line="-1285"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1415,7 +1420,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Informace o verzi a systému zkopírovány do schránky</translation>
     </message>
     <message>
-        <location line="+92"/>
+        <location line="+98"/>
         <source>All</source>
         <translation>Všechno</translation>
     </message>
@@ -1440,7 +1445,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Rozbalit o jednu úroveň</translation>
     </message>
     <message>
-        <location line="+139"/>
+        <location line="+143"/>
         <source>Duplicates (%1)</source>
         <translation>Duplikáty (%1)</translation>
     </message>
@@ -1455,7 +1460,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Výsledky</translation>
     </message>
     <message>
-        <location line="+44"/>
+        <location line="+55"/>
         <source>All active</source>
         <translation>Všechny aktivní</translation>
     </message>
@@ -1479,7 +1484,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation type="vanished">Import</translation>
     </message>
     <message>
-        <location line="+116"/>
+        <location line="+119"/>
         <source>Catalog created successfully.</source>
         <translation>Katalog byl úspěšně vytvořen.</translation>
     </message>
@@ -1489,8 +1494,8 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Vytvoření katalogu se nezdařilo: </translation>
     </message>
     <message>
-        <location line="-1280"/>
-        <location line="+1270"/>
+        <location line="-1301"/>
+        <location line="+1291"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Vytvořit</translation>
@@ -1571,16 +1576,16 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+2424"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+2346"/>
         <source>Include Checksum</source>
         <translation>Zahrnout kontrolní součet</translation>
     </message>
     <message>
-        <location line="+584"/>
+        <location line="+525"/>
         <location line="+46"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+360"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1121"/>
-        <location line="+541"/>
+        <location line="+544"/>
         <location line="+15"/>
         <location line="+22"/>
         <source>Verify Checksums</source>
@@ -1652,7 +1657,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+251"/>
         <location line="+18"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-861"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-864"/>
         <source>Copy Checksum</source>
         <translation>Kopírovat kontrolní součet</translation>
     </message>
@@ -1669,7 +1674,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Ověřit kontrolní součet</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1439"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1256"/>
         <source>Verifying checksum...</source>
         <translation>Ověřování kontrolního součtu...</translation>
     </message>
@@ -1756,7 +1761,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Vaše data budou odeslána do této síťové databáze.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-2180"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1997"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+1"/>
         <source>Continue?</source>
         <translation>Pokračovat?</translation>
@@ -1780,8 +1785,8 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-5542"/>
         <location line="+737"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1383"/>
-        <location filename="../core/search.cpp" line="+248"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1324"/>
+        <location filename="../core/search.cpp" line="+251"/>
         <source>Checksum</source>
         <translation>Kontrolní součet</translation>
     </message>
@@ -1896,13 +1901,13 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Pozastaveno</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+924"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+922"/>
         <location line="+4"/>
         <location line="+30"/>
         <location line="+54"/>
         <location line="+25"/>
         <location line="+4"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1431"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1434"/>
         <location line="+23"/>
         <location line="+27"/>
         <location line="+21"/>
@@ -2064,7 +2069,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-658"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-954"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-957"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Zobrazit rozšířená metadata (JSON)</translation>
     </message>
@@ -2208,7 +2213,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Chcete &lt;span style=&apos;color: red&apos;;&gt;smazat&lt;/span&gt; toto %1 zařízení?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+848"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+789"/>
         <location line="+38"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
         <translation>Katalogy aktualizovány:&lt;b&gt; %1 &lt;/b&gt;(%2 přeskočeno)</translation>
@@ -2236,7 +2241,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+81"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-3054"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2917"/>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="-490"/>
         <location line="+117"/>
         <location line="+72"/>
@@ -2248,7 +2253,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Operace zařízení již běží.</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1874"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1796"/>
         <location filename="../core/deviceupdatemanager.cpp" line="+898"/>
         <source>Operation cancelled</source>
         <translation>Operace zrušena</translation>
@@ -2265,7 +2270,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-5498"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+926"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+867"/>
         <location line="+6"/>
         <source>Katalog</source>
         <translation>Katalog</translation>
@@ -2603,7 +2608,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <location line="+4277"/>
         <location line="+3820"/>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-95"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1589"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1530"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+4"/>
         <source>Type</source>
         <translation>Typ</translation>
@@ -2616,8 +2621,6 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     <message>
         <location line="+7197"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+447"/>
-        <location line="+158"/>
-        <location line="+8"/>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-33"/>
         <location line="+19"/>
         <location line="+11"/>
@@ -2639,6 +2642,8 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <location line="+4"/>
         <location line="+1"/>
         <location line="+4"/>
+        <location line="+1"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1110"/>
         <location line="+1"/>
         <source>All</source>
         <translation>Všechno</translation>
@@ -2690,7 +2695,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1408"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+300"/>
         <source>Export Results</source>
         <translation>Exportovat výsledky</translation>
     </message>
@@ -2982,7 +2987,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-431"/>
         <location line="+694"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+273"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+570"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+384"/>
         <location filename="../core/search.cpp" line="+8"/>
         <source>File Type</source>
         <translation>Typ souboru</translation>
@@ -2994,8 +2999,8 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     <message>
         <location line="-5896"/>
         <location line="+6893"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1894"/>
-        <location line="+2795"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1816"/>
+        <location line="+2658"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+46"/>
         <location line="+2"/>
         <source>Storage</source>
@@ -3009,10 +3014,10 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     <message>
         <location line="-4195"/>
         <location line="+709"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2114"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2055"/>
         <location line="+240"/>
         <location line="+255"/>
-        <location line="+1805"/>
+        <location line="+1746"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-22"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-654"/>
         <location filename="../core/device.cpp" line="+2"/>
@@ -3040,7 +3045,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     <message>
         <location line="-5666"/>
         <location line="+1610"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1056"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-997"/>
         <source>Source Path</source>
         <translation>Cesta zdroje</translation>
     </message>
@@ -3106,7 +3111,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     </message>
     <message>
         <location line="+359"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1970"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1787"/>
         <location line="+13"/>
         <source>Search history</source>
         <translation>Historie vyhledávání</translation>
@@ -3129,8 +3134,8 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     <message>
         <location line="+292"/>
         <location line="+3286"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2235"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+2023"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2157"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1840"/>
         <location line="+117"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-176"/>
         <location line="+107"/>
@@ -3180,7 +3185,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <location line="+143"/>
         <location line="+301"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1003"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+925"/>
         <location line="+240"/>
         <location line="+255"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+3"/>
@@ -3232,7 +3237,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     </message>
     <message>
         <location line="-11704"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1218"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1140"/>
         <source>Virtual</source>
         <translation>Virtuální</translation>
     </message>
@@ -3261,7 +3266,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     </message>
     <message>
         <location line="+465"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-848"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-662"/>
         <source>Select...</source>
         <translation>Vybrat...</translation>
     </message>
@@ -3287,9 +3292,9 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Změna se projeví pouze při ukládání</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1936"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-459"/>
-        <location line="+591"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1858"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-462"/>
+        <location line="+594"/>
         <location line="+14"/>
         <location line="+20"/>
         <source>Include Metadata</source>
@@ -3788,7 +3793,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     <message>
         <location line="+9708"/>
         <location line="+486"/>
-        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-514"/>
+        <location filename="../qt_widgets/mainwindow_setup.cpp" line="-348"/>
         <source>Settings</source>
         <translation>Nastavení</translation>
     </message>
@@ -3809,7 +3814,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <location line="+53"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-5"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+0"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+440"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+254"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+20"/>
         <location filename="../core/search.cpp" line="-5"/>
         <source>Date</source>
@@ -3875,7 +3880,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     </message>
     <message>
         <location line="+4071"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1927"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1744"/>
         <source>Keep last 10</source>
         <translation>Ponechat posledních 10</translation>
     </message>
@@ -4045,8 +4050,8 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <location line="+11"/>
         <location filename="../qt_widgets/devicemappingview.cpp" line="+10"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-700"/>
-        <location line="+1736"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-622"/>
+        <location line="+1658"/>
         <source>Skip</source>
         <translation>Přeskočit</translation>
     </message>
@@ -4222,14 +4227,14 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-969"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+395"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+398"/>
         <source>Results exported to the collection folder:</source>
         <translation>Výsledky exportované do složky kolekce:</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-1259"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-672"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-828"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-831"/>
         <source>Open file</source>
         <translation>Otevřít soubor</translation>
     </message>
@@ -4278,13 +4283,13 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-5589"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+35"/>
-        <location line="+732"/>
+        <location line="+735"/>
         <source>Move to Trash</source>
         <translation>Přesunout do koše</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+44"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-728"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-731"/>
         <source>Delete file</source>
         <translation>Smazat soubor</translation>
     </message>
@@ -4294,7 +4299,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-601"/>
         <location line="+739"/>
         <location line="+64"/>
-        <location line="+533"/>
+        <location line="+536"/>
         <location line="+39"/>
         <source>Confirmation</source>
         <translation>potvrzení</translation>
@@ -4306,8 +4311,8 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Název katalogu</translation>
     </message>
     <message>
-        <location line="-234"/>
-        <location line="+324"/>
+        <location line="-232"/>
+        <location line="+322"/>
         <source>Search Error</source>
         <translation>Chyba vyhledávání</translation>
     </message>
@@ -4392,7 +4397,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <location line="+3"/>
         <location line="+35"/>
         <location line="+3"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-646"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-649"/>
         <location line="+64"/>
         <source>Warning</source>
         <translation>Varování</translation>
@@ -4450,13 +4455,13 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-75"/>
-        <location line="+597"/>
+        <location line="+600"/>
         <source>MOVE</source>
         <translation>PŘESUNOUT</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-41"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-589"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-592"/>
         <source>Moved to trash:&lt;br/&gt;</source>
         <translation>Přesunuto do koše:&lt;br/&gt;</translation>
     </message>
@@ -4481,13 +4486,13 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <location line="-770"/>
         <location line="+13"/>
         <location line="+803"/>
-        <location line="+572"/>
+        <location line="+575"/>
         <source>DELETE</source>
         <translation>VYMAZAT</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+35"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-564"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-567"/>
         <source>Deleted.</source>
         <translation>Smazáno.</translation>
     </message>
@@ -4510,7 +4515,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>KiB</translation>
     </message>
     <message>
-        <location line="+432"/>
+        <location line="+435"/>
         <source>Results exported a new Catalog:</source>
         <translation>Výsledky exportovaly nový katalog:</translation>
     </message>
@@ -4570,7 +4575,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Výsledky vyhledávání</translation>
     </message>
     <message>
-        <location line="+401"/>
+        <location line="+215"/>
         <source>Text Phrase selected</source>
         <translation>Textová fráze vybrána</translation>
     </message>
@@ -4759,7 +4764,7 @@ do koše?</translation>
         <translation>&lt;span style=&apos;color:red;&apos;&gt;SMAZAT&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1096"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-913"/>
         <location line="+11"/>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="-4"/>
         <source>MiB</source>
@@ -4854,7 +4859,7 @@ do koše?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+2"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1809"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1731"/>
         <source>Choose a different name and try again.</source>
         <translation>Vyberte jiné jméno a zkuste to znovu.</translation>
     </message>
@@ -4865,7 +4870,7 @@ do koše?</translation>
         <translation>Vyberte adresář pro tuto kolekci</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1015"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+937"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-467"/>
         <location filename="../core/search.cpp" line="+1"/>
         <source>Catalog ID</source>
@@ -4911,7 +4916,7 @@ do koše?</translation>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-500"/>
         <location line="+240"/>
         <location line="+255"/>
-        <location line="+1805"/>
+        <location line="+1746"/>
         <source>Active</source>
         <translation>Aktivní</translation>
     </message>
@@ -5011,7 +5016,7 @@ do koše?</translation>
     <message>
         <location line="+1"/>
         <location line="+666"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+642"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+645"/>
         <location line="+47"/>
         <source>Errors</source>
         <translation>Chyby</translation>
@@ -5234,7 +5239,7 @@ do koše?</translation>
         <translation>Vyberte jiný zdroj nebo cíl (zařízení nesmí být mapováno samo na sebe).</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1776"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1717"/>
         <source>App Version</source>
         <translation>Verze aplikace</translation>
     </message>
@@ -5288,7 +5293,7 @@ do koše?</translation>
 </translation>
     </message>
     <message>
-        <location line="-2161"/>
+        <location line="-2083"/>
         <source>&lt;br/&gt;A snapshot of this collection was recorded:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Catalogs&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Number of files: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Total file size: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Storage&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage free space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Storage total space: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;  (added: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>&lt;br/&gt;Byl zaznamenán snímek této sbírky:&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Katalogy&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td &gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Počet souborů: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (přidáno : &lt;b&gt; %2 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Celková velikost souboru: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (přidáno: &lt;b&gt; %4 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;br/&gt;&lt;b&gt;Úložiště&lt;/b &gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Volné místo v úložišti: &lt;/td&gt;&lt;td style=&apos;text-align: right;&apos;&gt; &lt;b&gt; %5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (přidáno: &lt;b&gt; %6 &lt;/b&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Celkový úložný prostor: &lt;/td &gt;&lt;td style=&apos;text-align: right;&apos;&gt;&lt;b&gt; %7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt; (přidáno: &lt;b&gt; %8 &lt;/b&gt;)&lt;/td&gt;&lt;/tr &gt;&lt;/table&gt;</translation>
     </message>
@@ -5386,40 +5391,40 @@ Rozdělení nebylo provedeno.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+1736"/>
+        <location line="+1658"/>
         <source>Old path:</source>
         <translation>Stará cesta:</translation>
     </message>
     <message>
-        <location line="-1735"/>
-        <location line="+1736"/>
+        <location line="-1657"/>
+        <location line="+1658"/>
         <source>New path:</source>
         <translation>Nová cesta:</translation>
     </message>
     <message>
-        <location line="-1734"/>
-        <location line="+1736"/>
+        <location line="-1656"/>
+        <location line="+1658"/>
         <source>How should the catalog indexes be updated?</source>
         <translation>Jak by měly být aktualizovány indexy katalogu?</translation>
     </message>
     <message>
-        <location line="-1734"/>
-        <location line="+1736"/>
+        <location line="-1656"/>
+        <location line="+1658"/>
         <source>Replace path root</source>
         <translation>Nahradit kořen cesty</translation>
     </message>
     <message>
-        <location line="-1735"/>
+        <location line="-1657"/>
         <source>Full re-scan</source>
         <translation>Úplné přeskenování</translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+66"/>
         <source>Another storage already uses this ID.</source>
         <translation>Toto ID již používá jiné úložiště.</translation>
     </message>
     <message>
-        <location line="+332"/>
+        <location line="+310"/>
         <location line="+240"/>
         <location line="+255"/>
         <source>Date updated</source>
@@ -5469,7 +5474,7 @@ Rozdělení nebylo provedeno.</translation>
         <translation>Úplné přeindexování</translation>
     </message>
     <message>
-        <location line="+648"/>
+        <location line="+589"/>
         <source>Catalog updated: </source>
         <translation>Katalog aktualizován: </translation>
     </message>
@@ -5570,8 +5575,8 @@ Rozdělení nebylo provedeno.</translation>
         <translation type="vanished">Vybrané zařízení musí být Katalog. Zkuste to s jiným ID zařízení</translation>
     </message>
     <message>
-        <location line="-638"/>
-        <location line="+143"/>
+        <location line="-579"/>
+        <location line="+90"/>
         <source>No catalog found.</source>
         <translation>Nebyl nalezen žádný katalog.</translation>
     </message>
@@ -5581,7 +5586,7 @@ Rozdělení nebylo provedeno.</translation>
         <translation>Chcete souhrn aktualizací pro každý katalog?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-160"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-107"/>
         <source>Select the csv file to be imported</source>
         <translation>Vyberte soubor CSV, který chcete importovat</translation>
     </message>
@@ -5600,14 +5605,14 @@ Rozdělení nebylo provedeno.</translation>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1206"/>
         <location line="+240"/>
         <location line="+255"/>
-        <location line="+1805"/>
+        <location line="+1746"/>
         <location filename="../core/device.cpp" line="-1"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="+299"/>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2048"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1989"/>
         <source>Label</source>
         <translation>Označení</translation>
     </message>
@@ -5715,7 +5720,7 @@ Rozdělení nebylo provedeno.</translation>
         <translation>Celkový prostor</translation>
     </message>
     <message>
-        <location line="-1022"/>
+        <location line="-944"/>
         <source>There is already a Catalog with this name:&lt;br/&gt;&lt;b&gt;</source>
         <translation>Katalog s tímto názvem již existuje:&lt;br/&gt;&lt;b&gt;</translation>
     </message>
@@ -5725,7 +5730,7 @@ Rozdělení nebylo provedeno.</translation>
         <translation>Katalog ve skupině Fyzické lze nastavit pouze pod Úložištěm nebo touto skupinou. Vyberte úložiště v této skupině.&lt;br/&gt;&lt;br/&gt;Chcete-li použít tento katalog pod zařízením ve virtuální skupině, použijte příkaz Přiřadit.&lt;b&gt;</translation>
     </message>
     <message>
-        <location line="+495"/>
+        <location line="+417"/>
         <location line="+240"/>
         <location line="+255"/>
         <source>Free space</source>
@@ -5793,15 +5798,15 @@ Rozdělení nebylo provedeno.</translation>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-502"/>
         <location line="+240"/>
         <location line="+255"/>
-        <location line="+1805"/>
+        <location line="+1746"/>
         <source>Device Type</source>
         <translation>Typ zařízení</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2297"/>
+        <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-2238"/>
         <location line="+240"/>
         <location line="+255"/>
-        <location line="+1805"/>
+        <location line="+1746"/>
         <source>Parent ID</source>
         <translation>ID rodiče</translation>
     </message>
@@ -5946,7 +5951,7 @@ Rozdělení nebylo provedeno.</translation>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+6"/>
         <location line="+399"/>
         <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+510"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+324"/>
         <source>Catalog with results</source>
         <translation>Katalog s výsledky</translation>
     </message>
@@ -6002,12 +6007,12 @@ Rozdělení nebylo provedeno.</translation>
         <translation>Katalog %1 z %2</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+27"/>
         <source>%1 of %2 (%3%)</source>
         <translation>%1 z %2 (%3 %)</translation>
     </message>
     <message>
-        <location filename="../core/storage.cpp" line="+212"/>
+        <location filename="../core/storage.cpp" line="+255"/>
         <source>No Path was provided for the Storage: %1. Edit the device to provide one and try again.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6410,27 +6415,26 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Zrušení</translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+72"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>e.g. Docs → NAS_Docs</source>
-        <translation>např. Docs → NAS_Docs</translation>
+        <translation type="vanished">např. Docs → NAS_Docs</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+12"/>
         <source>Auto-generate name</source>
         <translation>Automaticky vygenerovat název</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+7"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Backup</source>
         <translation>Záloha</translation>
     </message>
@@ -6440,47 +6444,52 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Archiv</translation>
     </message>
     <message>
-        <location line="-56"/>
+        <location line="-67"/>
         <source>Source</source>
         <translation>Zdroj</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+4"/>
         <source>Source catalog</source>
         <translation>Zdrojový katalog</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+14"/>
         <source>Target</source>
         <translation>Cíl</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+4"/>
         <source>Target catalog</source>
         <translation>Cílový katalog</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+14"/>
         <source>Options</source>
         <translation>Možnosti</translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+12"/>
+        <source>e.g. Docs -&gt; NAS_Docs</source>
+        <translation>např. Docs -&gt; NAS_Docs</translation>
+    </message>
+    <message>
+        <location line="+35"/>
         <source>Strict copy</source>
         <translation>Přesné kopírování</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>Mirror folder structure exactly (default)</source>
         <translation>Přesně zrcadlit strukturu složek (výchozí)</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+4"/>
         <source>On conflict</source>
         <translation>Při konfliktu</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Rename oldest - rename target, copy source</source>
         <translation>Přejmenovat nejstarší – přejmenovat cíl, kopírovat zdroj</translation>
     </message>
@@ -6490,22 +6499,22 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Přeskočit – ponechat cíl beze změny</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+4"/>
         <source>Source mode</source>
         <translation>Zdrojový režim</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>Scan source drive directly (requires connected source)</source>
         <translation>Skenovat zdrojový disk přímo (vyžaduje připojený zdroj)</translation>
     </message>
     <message>
-        <location line="-26"/>
+        <location line="-28"/>
         <source>Directories</source>
         <translation>Složku</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>Include empty</source>
         <translation>Zahrnout prázdné</translation>
     </message>
@@ -6543,18 +6552,18 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+34"/>
-        <location line="+146"/>
+        <location line="+180"/>
         <source>Move</source>
         <translation>Přesunout</translation>
     </message>
     <message>
-        <location line="-146"/>
-        <location line="+146"/>
+        <location line="-180"/>
+        <location line="+180"/>
         <source>Copy</source>
         <translation>Kopírovat</translation>
     </message>
     <message>
-        <location line="-143"/>
+        <location line="-177"/>
         <source>file(s)</source>
         <translation>soubor(y)</translation>
     </message>
@@ -6609,12 +6618,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Velikost</translation>
     </message>
     <message>
-        <location line="+227"/>
+        <location line="+261"/>
         <source>Conflict</source>
         <translation>Konflikt</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+28"/>
         <source>Nothing to move</source>
         <translation>Není co přesouvat</translation>
     </message>
@@ -6669,12 +6678,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 (Panel výběru vlevo a rozevírací seznam)</translation>
     </message>
     <message>
-        <location line="+104"/>
+        <location line="+107"/>
         <source>Catalog definition</source>
         <translation>Definice katalogu</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+4"/>
         <source>Source path</source>
         <translation>Zdrojová cesta</translation>
     </message>
@@ -6685,13 +6694,13 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+6"/>
-        <location line="+159"/>
-        <location line="+85"/>
+        <location line="+157"/>
+        <location line="+82"/>
         <source>Select the path</source>
         <translation>Vyberte cestu</translation>
     </message>
     <message>
-        <location line="-235"/>
+        <location line="-230"/>
         <source>Storage</source>
         <translation>Úložiště</translation>
     </message>
@@ -6711,12 +6720,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Vytvořit název z cesty</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+16"/>
         <source>Content options</source>
         <translation>Možnosti obsahu</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+4"/>
         <source>File type</source>
         <translation>Typ souboru</translation>
     </message>
@@ -6784,7 +6793,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Vyloučit složky nebo soubory</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <location line="+6"/>
         <source>Path or name to exclude</source>
         <translation>Cesta nebo název k vyloučení</translation>
@@ -6803,13 +6812,13 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+14"/>
-        <location line="+85"/>
+        <location line="+82"/>
         <source>Add</source>
         <translation>Přidat</translation>
     </message>
     <message>
-        <location line="-57"/>
-        <location line="+88"/>
+        <location line="-54"/>
+        <location line="+85"/>
         <source>Remove</source>
         <translation>Odebrat</translation>
     </message>
@@ -6862,18 +6871,18 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Toto ID již používá jiné úložiště.</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+22"/>
         <source>Device</source>
         <translation>Zařízení</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <location line="+277"/>
+        <location line="+4"/>
+        <location line="+264"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
     <message>
-        <location line="-274"/>
+        <location line="-261"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
@@ -6888,28 +6897,28 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Komentář</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+13"/>
         <source>Location</source>
         <translation>Umístění</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+4"/>
         <source>Source path</source>
         <translation>Zdrojová cesta</translation>
     </message>
     <message>
         <location line="+11"/>
-        <location line="+141"/>
+        <location line="+136"/>
         <source>Select the path</source>
         <translation>Vyberte cestu</translation>
     </message>
     <message>
-        <location line="-124"/>
+        <location line="-120"/>
         <source>Content options</source>
         <translation>Možnosti obsahu</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+4"/>
         <source>File type</source>
         <translation>Typ souboru</translation>
     </message>
@@ -6993,7 +7002,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Vyloučit složky nebo soubory</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <location line="+7"/>
         <source>Path or name to exclude</source>
         <translation>Cesta nebo název k vyloučení</translation>
@@ -7025,12 +7034,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Odebrat</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+22"/>
         <source>Storage details</source>
         <translation>Podrobnosti úložiště</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+4"/>
         <source>Storage ID</source>
         <translation>ID úložiště</translation>
     </message>
@@ -7108,7 +7117,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDevicesView</name>
     <message>
-        <location filename="../qt_quick/PageDevicesView.qml" line="+152"/>
+        <location filename="../qt_quick/PageDevicesView.qml" line="+163"/>
         <location line="+37"/>
         <source>Split Catalog</source>
         <translation>Rozdělit katalog</translation>
@@ -7308,7 +7317,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+29"/>
-        <location line="+144"/>
+        <location line="+152"/>
         <source>No devices</source>
         <translation>Žádná zařízení</translation>
     </message>
@@ -7316,7 +7325,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDevicesViewDelegate</name>
     <message>
-        <location filename="../qt_quick/PageDevicesViewDelegate.qml" line="+96"/>
+        <location filename="../qt_quick/PageDevicesViewDelegate.qml" line="+103"/>
         <source>Update</source>
         <translation>Aktualizujte</translation>
     </message>
@@ -7435,7 +7444,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageExploreFiles</name>
     <message>
-        <location filename="../qt_quick/PageExploreFiles.qml" line="+78"/>
+        <location filename="../qt_quick/PageExploreFiles.qml" line="+114"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Zařízení není aktivní. Může být odpojeno nebo se změnila jeho cesta.</translation>
     </message>
@@ -7470,7 +7479,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Celková velikost</translation>
     </message>
     <message>
-        <location line="+227"/>
+        <location line="+345"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>Otevřená složka</translation>
@@ -7486,32 +7495,40 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Zobrazit rozšířená metadata (JSON)</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+54"/>
         <source>Copy folder path</source>
         <translation>Zkopírujte cestu ke složce</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-8"/>
         <source>Copy folder name</source>
         <translation>Kopírovat název složky</translation>
     </message>
     <message>
-        <location line="+8"/>
         <source>Copy absolute path</source>
-        <translation>Kopírovat absolutní cestu</translation>
+        <translation type="vanished">Kopírovat absolutní cestu</translation>
     </message>
     <message>
-        <location line="+8"/>
         <source>Copy file name</source>
-        <translation>Kopírovat název souboru</translation>
+        <translation type="vanished">Kopírovat název souboru</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="-20"/>
         <source>Copy file name without extension</source>
         <translation>Zkopírujte název souboru bez přípony</translation>
     </message>
     <message>
         <location line="+12"/>
+        <source>Copy file name with extension</source>
+        <translation>Zkopírujte název souboru s příponou</translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Copy file absolute path</source>
+        <translation>Kopírovat absolutní cestu k souboru</translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Copy Checksum</source>
         <translation>Kopírovat kontrolní součet</translation>
     </message>
@@ -7644,7 +7661,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+289"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+295"/>
         <source>Directories</source>
         <translation>Složku</translation>
     </message>
@@ -7669,7 +7686,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Rozbalit vše</translation>
     </message>
     <message>
-        <location line="+88"/>
+        <location line="+91"/>
         <source>Expand</source>
         <translation>Rozbalit</translation>
     </message>
@@ -7682,14 +7699,14 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageSearchForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchForm.qml" line="+336"/>
-        <location line="+579"/>
+        <location filename="../qt_quick/PageSearchForm.qml" line="+367"/>
+        <location line="+590"/>
         <location line="+18"/>
         <source>Select a date</source>
         <translation>Vyberte datum</translation>
     </message>
     <message>
-        <location line="-592"/>
+        <location line="-603"/>
         <source>Now</source>
         <translation>Nyní</translation>
     </message>
@@ -7750,12 +7767,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+6"/>
-        <location line="+525"/>
+        <location line="+540"/>
         <source>Clear</source>
         <translation>Vymazat</translation>
     </message>
     <message>
-        <location line="-519"/>
+        <location line="-534"/>
         <source>Cancel</source>
         <translation>Zrušení</translation>
     </message>
@@ -7765,7 +7782,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>(žádný textový filtr)</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+26"/>
         <source>Catalogs</source>
         <translation>Katalogy</translation>
     </message>
@@ -7785,7 +7802,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Vyberte cestu</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+17"/>
         <source>File name</source>
         <translation>Název souboru</translation>
     </message>
@@ -7797,12 +7814,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     <message>
         <location line="+17"/>
         <location line="+70"/>
-        <location line="+268"/>
+        <location line="+280"/>
         <source>Paste the text from the clipboard</source>
         <translation>Vložte text ze schránky</translation>
     </message>
     <message>
-        <location line="-332"/>
+        <location line="-344"/>
         <location line="+70"/>
         <source>Clean the search Text from characters such as _ - . ,</source>
         <translation>Vyčistěte hledaný text od znaků jako _ - . ,</translation>
@@ -7869,7 +7886,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>vyloučit</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+37"/>
         <source>File attributes</source>
         <translation>Atributy souboru</translation>
     </message>
@@ -7879,8 +7896,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Typ</translation>
     </message>
     <message>
-        <location line="-232"/>
-        <location line="+244"/>
+        <location line="-239"/>
+        <location line="+251"/>
         <source>All</source>
         <translation>Všechno</translation>
     </message>
@@ -7896,12 +7913,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+170"/>
+        <location line="+178"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location line="-169"/>
+        <location line="-177"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
@@ -7917,41 +7934,41 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+35"/>
-        <location line="+184"/>
-        <location line="+200"/>
-        <location line="+128"/>
+        <location line="+192"/>
+        <location line="+226"/>
+        <location line="+134"/>
         <source>Size</source>
         <translation>Velikost</translation>
     </message>
     <message>
-        <location line="-458"/>
-        <location line="+340"/>
-        <location line="+128"/>
+        <location line="-496"/>
+        <location line="+372"/>
+        <location line="+134"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
     <message>
-        <location line="-409"/>
+        <location line="-441"/>
         <source>File metadata</source>
         <translation>Metadata souboru</translation>
     </message>
     <message>
-        <location line="+88"/>
+        <location line="+89"/>
         <source>Width</source>
         <translation>Šířka</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+32"/>
         <source>Height</source>
         <translation>Výška</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+36"/>
         <source>Duration</source>
         <translation>Délka</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+47"/>
         <source>Folder criteria</source>
         <translation>Kritéria složky</translation>
     </message>
@@ -7966,41 +7983,41 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Štítek</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+22"/>
         <source>Duplicates</source>
         <translation>Duplikáty</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <location line="+128"/>
+        <location line="+5"/>
+        <location line="+134"/>
         <source>Duplicates and Differences cannot be used at the same time</source>
         <translation>Duplikáty a rozdíly nelze používat současně</translation>
     </message>
     <message>
-        <location line="-113"/>
-        <location line="+128"/>
+        <location line="-117"/>
+        <location line="+134"/>
         <source>On</source>
         <translation>Na</translation>
     </message>
     <message>
-        <location line="-119"/>
-        <location line="+128"/>
+        <location line="-124"/>
+        <location line="+134"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
     <message>
-        <location line="-90"/>
-        <location line="+128"/>
+        <location line="-96"/>
+        <location line="+134"/>
         <source>Checksum</source>
         <translation>Kontrolní součet</translation>
     </message>
     <message>
-        <location line="-114"/>
+        <location line="-120"/>
         <source>Scope</source>
         <translation>Rozsah</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Within selected device</source>
         <translation>V rámci vybraného zařízení</translation>
     </message>
@@ -8020,12 +8037,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Zařízení 2</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+17"/>
         <source>Differences</source>
         <translation>Rozdíly</translation>
     </message>
     <message>
-        <location line="+87"/>
+        <location line="+88"/>
         <source>Between</source>
         <translation>Mezi</translation>
     </message>
@@ -8038,7 +8055,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageSearchResultsForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+134"/>
+        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+211"/>
         <source>%1 duplicate(s) found</source>
         <translation>Nalezeno %1 duplikátů</translation>
     </message>
@@ -8079,7 +8096,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+831"/>
+        <location line="+903"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Ověřit kontrolní součty</translation>
@@ -8091,14 +8108,14 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Zahrnout metadata</translation>
     </message>
     <message>
-        <location line="-882"/>
-        <location line="+520"/>
+        <location line="-954"/>
+        <location line="+592"/>
         <location line="+307"/>
         <source>Move to Trash</source>
         <translation>Přesunout do koše</translation>
     </message>
     <message>
-        <location line="-937"/>
+        <location line="-1009"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Zařízení není aktivní. Může být odpojeno nebo se změnila jeho cesta.</translation>
     </message>
@@ -8109,12 +8126,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+2"/>
-        <location line="+651"/>
+        <location line="+723"/>
         <source>Delete</source>
         <translation>Vymazat</translation>
     </message>
     <message>
-        <location line="-601"/>
+        <location line="-673"/>
         <source>Run process on all results</source>
         <translation>Spusťte proces u všech výsledků</translation>
     </message>
@@ -8139,7 +8156,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Export selhal — žádné výsledky nebo chyba databáze</translation>
     </message>
     <message>
-        <location line="+305"/>
+        <location line="+369"/>
         <source>(no selection)</source>
         <translation>(žádný výběr)</translation>
     </message>
@@ -8159,7 +8176,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Prozkoumat složku</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+10"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Zobrazit rozšířená metadata (JSON)</translation>
     </message>
@@ -8169,7 +8186,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Nejsou k dispozici žádná rozšířená metadata</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+34"/>
         <source>Copy folder path</source>
         <translation>Zkopírujte cestu ke složce</translation>
     </message>
@@ -8184,28 +8201,28 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Kopírovat absolutní cestu k souboru</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Full path copied to clipboard</source>
         <translation>Úplná cesta zkopírována do schránky</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="-22"/>
         <source>Copy file name with extension</source>
         <translation>Zkopírujte název souboru s příponou</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location line="+10"/>
+        <location line="-4"/>
+        <location line="+9"/>
         <source>File name copied to clipboard</source>
         <translation>Název souboru zkopírován do schránky</translation>
     </message>
     <message>
-        <location line="-6"/>
+        <location line="-16"/>
         <source>Copy file name without extension</source>
         <translation>Zkopírujte název souboru bez přípony</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+38"/>
         <source>Calculate Checksum (SHA-256)</source>
         <translation>Vypočítat kontrolní součet (SHA-256)</translation>
     </message>
@@ -8425,12 +8442,12 @@ Chyby: %3</translation>
 <context>
     <name>PageSelectionDelegate</name>
     <message>
-        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+60"/>
+        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+61"/>
         <source>Search</source>
         <translation>Vyhledávání</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+13"/>
         <source>Update</source>
         <translation>Aktualizujte</translation>
     </message>
@@ -8471,47 +8488,47 @@ Chyby: %3</translation>
         <translation>Zavřít</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+41"/>
         <source>Collection &amp; Database</source>
         <translation>Sbírka a databáze</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+4"/>
         <source>Database Mode</source>
         <translation>Režim databáze</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location line="+187"/>
+        <location line="+191"/>
         <source>Memory</source>
         <translation>Paměť</translation>
     </message>
     <message>
-        <location line="-186"/>
-        <location line="+186"/>
+        <location line="-190"/>
+        <location line="+190"/>
         <source>File</source>
         <translation>Soubor</translation>
     </message>
     <message>
-        <location line="-185"/>
+        <location line="-189"/>
         <source>Hosted</source>
         <translation>Hostováno</translation>
     </message>
     <message>
-        <location line="-197"/>
-        <location line="+203"/>
+        <location line="-199"/>
+        <location line="+205"/>
         <source>Collection</source>
         <translation>Sbírka</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+529"/>
+        <location line="+546"/>
         <source>(none)</source>
         <translation>(žádný)</translation>
     </message>
     <message>
-        <location line="-521"/>
+        <location line="-538"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8529,7 +8546,7 @@ Chyby: %3</translation>
     </message>
     <message>
         <location line="+11"/>
-        <location line="+133"/>
+        <location line="+137"/>
         <source>Select</source>
         <translation>Vybrat</translation>
     </message>
@@ -8554,7 +8571,7 @@ Chyby: %3</translation>
         <translation type="vanished">Heslo:</translation>
     </message>
     <message>
-        <location line="-122"/>
+        <location line="-126"/>
         <source>Host Name</source>
         <translation>Název hostitele</translation>
     </message>
@@ -8599,12 +8616,12 @@ Chyby: %3</translation>
         <translation>Připojit</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+18"/>
         <source>Collection Import &amp; Synchronization</source>
         <translation>Import a synchronizace sbírky</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+4"/>
         <source>Data mode</source>
         <translation>Datový režim</translation>
     </message>
@@ -8641,16 +8658,16 @@ Chyby: %3</translation>
         <translation>Cesta</translation>
     </message>
     <message>
-        <location line="-415"/>
+        <location line="-421"/>
         <location line="+3"/>
         <location line="+2"/>
         <location line="+0"/>
-        <location line="+432"/>
+        <location line="+438"/>
         <source>Device</source>
         <translation>Zařízení</translation>
     </message>
     <message>
-        <location line="-460"/>
+        <location line="-466"/>
         <source>Storage devices linked to a missing storage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8701,12 +8718,12 @@ Chyby: %3</translation>
     <message>
         <location line="+16"/>
         <location line="+25"/>
-        <location line="+224"/>
+        <location line="+226"/>
         <source>Quality check</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-244"/>
+        <location line="-246"/>
         <location line="+92"/>
         <source>Error: </source>
         <translation>Chyba: </translation>
@@ -8734,7 +8751,7 @@ Chyby: %3</translation>
         <translation>Zkopírováno</translation>
     </message>
     <message>
-        <location line="+396"/>
+        <location line="+402"/>
         <source>Import</source>
         <translation>Import</translation>
     </message>
@@ -8745,12 +8762,12 @@ Chyby: %3</translation>
         <translation>Aktualizujte</translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="+34"/>
         <source>Application</source>
         <translation>Aplikace</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Version</source>
         <translation>Verze</translation>
     </message>
@@ -8830,7 +8847,12 @@ Chyby: %3</translation>
         <translation>Zvětšit velikost textu</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
+        <source>Reset window size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Language</source>
         <translation>Jazyk</translation>
     </message>
@@ -8997,18 +9019,18 @@ Chyby: %3</translation>
 <context>
     <name>PageTagsForm</name>
     <message>
-        <location filename="../qt_quick/PageTagsForm.qml" line="+53"/>
+        <location filename="../qt_quick/PageTagsForm.qml" line="+56"/>
         <source>Add a tag</source>
         <translation>Přidat štítek</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <location line="+88"/>
+        <location line="+4"/>
+        <location line="+85"/>
         <source>Folder</source>
         <translation>Složka</translation>
     </message>
     <message>
-        <location line="-82"/>
+        <location line="-79"/>
         <source>Folder path</source>
         <translation>Cesta ke složce</translation>
     </message>
@@ -9019,12 +9041,12 @@ Chyby: %3</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location line="+73"/>
+        <location line="+69"/>
         <source>Tag</source>
         <translation>Štítek</translation>
     </message>
     <message>
-        <location line="-60"/>
+        <location line="-56"/>
         <source>Tag the folder</source>
         <translation>Označte složku</translation>
     </message>
@@ -9043,7 +9065,7 @@ Chyby: %3</translation>
         <translation type="vanished">Zadejte prosím název štítku.</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+25"/>
         <source>Current folders and tags</source>
         <translation>Aktuální složky a značky</translation>
     </message>
@@ -9053,7 +9075,7 @@ Chyby: %3</translation>
         <translation>Všechno</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+41"/>
         <source>Remove this tag</source>
         <translation>Odeberte tuto značku</translation>
     </message>

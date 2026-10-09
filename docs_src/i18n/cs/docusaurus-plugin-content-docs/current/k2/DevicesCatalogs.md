@@ -16,7 +16,7 @@ Tato stránka popisuje všechny funkce zobrazení **Seznam katalogů** na obrazo
 *Katalog* je index souborů z daného adresáře označovaného jako **cesta** katalogu.<br/>
 **Seznam katalogů** zobrazuje všechny katalogy [Kolekce](Settings#collection), filtrované podle panelu [Výběr](Selection).
 
-![Seznam katalogů zobrazující názvy, cesty, počty souborů a přidružená úložná zařízení](/img/devices_catalogs_01.png)
+![Seznam katalogů zobrazující názvy, cesty, počty souborů a přidružená úložná zařízení](/img/k2/devices_catalogs_01.png)
 
 ## Seznam a výběr
 Seznam katalogů lze zúžit pomocí panelu **[Výběr](Selection)** vlevo.
@@ -41,7 +41,7 @@ Tlačítko *Všechny aktivní* je dostupné pouze v zobrazení **Seznam katalog�
 
 Kliknutím pravým tlačítkem na katalog se otevře kontextová nabídka:
 
-![Kontextová nabídka katalogu zobrazující dostupné akce](/img/devices_catalogs_02_context2.png)
+![Kontextová nabídka katalogu zobrazující dostupné akce](/img/k2/devices_catalogs_02_context2.png)
 
 | Akce | Podmínka | Popis |
 |------|----------|-------|
@@ -84,7 +84,7 @@ Před rozdělením nabídne dialog tyto možnosti:
 
 Panel úprav umožňuje změnit následující pole:
 
-![Panel úprav katalogu zobrazující všechna konfigurovatelná pole](/img/devices_catalogs_03_edit.png)
+![Panel úprav katalogu zobrazující všechna konfigurovatelná pole](/img/k2/devices_catalogs_03_edit.png)
 
 | Pole | Popis |
 |------|-------|

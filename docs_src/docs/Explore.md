@@ -1,98 +1,115 @@
 ---
-version: "2.13"
+version: "3.0"
 ---
 # Explore
-![2.13](https://img.shields.io/badge/Version-2.13-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
 ## Summary
-This page describes all the features of the **Explore** screen and how to use them.
+This page describes the **Explore** page, which shows the content of **one catalog** as a directory tree and a file list, **even when its device is not connected**:
+* the [directory tree](#directory-tree) of the catalog, on the left,
+* the [file list](#file-list) of the selected folder, on the right, with the size of each sub-folder,
+* the [context menu](#file-context-menu) of a file or a folder.
 
-The objective of this screen is to **explore the contents of a catalog of files** even when the physical device is not connected.
+![Explore page: directory tree on the left, file list of the selected folder on the right](/img/explore_01_overview.png)
 
-This view loads data after a right-click on a catalog from the **[Selection](Selection)** panel or the **[Catalogs](DevicesCatalogs)** list view, and choosing the context menu entry *Explore*.
+## Opening a catalog {#opening}
+A catalog is opened in Explore with *Explore*, in the context menu of a catalog:
+* on the [Selection](Selection#context-menu) page: the catalog is also selected,
+* on the [Devices](Devices) page,
+* from a search result, with *Explore folder* (see [Search results](SearchResults#file-context-menu)): Explore opens directly on the folder of the file.
 
-![Explore screen showing the directory tree on the left and the file list on the right](/img/explore_01.png)
+*Explore* in the drawer shows the page again with the last catalog explored since Katalog was started.<br/>
+*Close* (or `Esc`) closes the page. When it was opened from a search result, it goes back to the same results.
 
-## Features
+## Directory tree {#directory-tree}
+The left panel shows the number of directories of the catalog and its **total size**, then the tree of its directories.
 
-The screen is split into two panels:
+When a catalog is opened, the tree shows the catalog folder and the first two levels of directories below it; deeper levels start folded.<br/>
+A directory that contains sub-directories has an arrow: click it to fold or unfold that branch.<br/>
+Click a directory to list its content in the file list.
 
-- **Left panel** — directory tree of the catalog. Click on a directory to display its files in the right panel.
-- **Right panel** — file list for the selected directory.
-
-Clicking on a file in the right panel will try to open it with the system's default application, if the device is currently connected. Clicking on a folder entry will navigate into that folder.
-
-When folders are listed, each one shows its total size — the files it holds plus everything in the folders below it — so the biggest folders can be spotted without connecting the device. The total size of the whole catalog is shown at the top, next to the folder path.
-
-### Directory tree
-
-The left panel opens on the catalog root and its first two levels of directories; deeper levels start folded.
-
-A directory that contains sub-directories carries a small arrow: click it to fold or unfold that branch. Directories with no sub-directory have no arrow, and all rows stay aligned.
-
-Four buttons above the tree change how much of the hierarchy is shown at once:
+Four buttons above the tree change how much of the tree is shown at once:
 
 | Button | Effect |
 |--------|--------|
-| *Collapse one level* | Folds away the deepest level currently shown |
-| *Expand one level* | Unfolds one more level of the tree |
-| *Collapse all* | Folds everything back to the catalog root |
-| *Expand all* | Unfolds every directory of the catalog |
+| *Collapse one level* | Folds the deepest level currently shown. |
+| *Expand one level* | Unfolds one more level. |
+| *Collapse all* | Folds everything back to the catalog folder. |
+| *Expand all* | Unfolds every directory of the catalog. |
 
-A button is greyed out when it would have nothing left to fold or unfold.
+A button is greyed out when there is nothing left to fold or unfold.<br/>
+Opening a sub-folder from the file list unfolds its branch, so the selected directory is always visible in the tree.<br/>
+The folded and unfolded branches are not kept: the tree starts again from the first two levels each time a catalog is opened.
 
-Navigating into a folder from the right panel unfolds the branch it belongs to, so the selected directory is always visible in the tree.
+## File list {#file-list}
+The top of the file list shows the path of the selected folder, and the display options:
 
-The tree always reopens on the catalog root and its first two levels: the folded or unfolded state is not kept between visits.
+| Option | Effect |
+|--------|--------|
+| *Display folders* | Lists the sub-folders together with the files. |
+| *and all sub-folders* | Lists the content of all the sub-folders, at any depth. Available with *Display folders*. |
+| *Order folders first* | Sorts the list with the folders first, then the files. Available with *Display folders*. |
 
-### Display options
+Below, *Number of Files* and *Total Size* give the files **directly** in the selected folder, without its sub-folders.
 
-Three options control what appears in the file list:
+### Folder sizes
+Each folder listed shows, in the *Size* column, the total size of **everything it contains**, at any depth. A folder with no file shows a size of 0.<br/>
+The biggest folders can then be found without connecting the device.
 
-- **Display Folders** — when enabled, folder entries are shown alongside files. Enabling this also activates the two options below.
-- **Display Sub-Folders** — when enabled, files from all sub-folders are listed together in the file list.
-- **Order Folders First** — button that re-sorts the list to show folders first (alphabetically), then files (alphabetically).
+The same folder can show two different figures: its size in the list of its parent folder (everything it contains), and its *Total Size* once it is selected (only the files directly in it).<br/>
+With *and all sub-folders*, a folder is also counted in the size of each folder above it: the sizes of the list do not add up to the total.
 
-## Directory context menu (right-click) {#directory-context-menu}
+### Columns
+| Column | Content |
+|--------|---------|
+| *Name* | File or folder name, with an icon for its type. |
+| *Size* | File size, or total size of a folder. |
+| *Date* | Last modification date. |
+| *File Type*, *MIME Type* | Type of the file. |
+| *Width*, *Height*, *Duration* | Dimensions of images and videos, duration of audio and video files. |
+| *Artist*, *Album*, *Title* | For audio files. |
+| *Checksum (SHA256)*, *Checksum Date* | Checksum of the file, and when it was calculated. |
 
-Right-clicking on a directory in the left panel shows:
+The columns *Width* to *Title* are shown only for catalogs that include metadata, and the checksum columns are filled only for catalogs created with checksums (see [Create](Create)).
 
-![Directory context menu with the option to tag the folder](/img/explore_02_context.png)
+### Using the list
+* **Click** a file to open it with its default application. **Click** a folder to open it in Explore.
+* **Right-click** a row (or press and hold) to open its [context menu](#file-context-menu).
+* **Click a column title** to sort by that column; click again to reverse the order. The sort is kept for the next visits.
+* **Drag** the line between two column titles to change a column width; **double-click** it to fit the column to its content. The width of *Name* is kept.
+* The keyboard works as in the [search results](SearchResults#keyboard): arrows, `Page Up` `Page Down`, `Home` `End`, `Enter` to open, `Menu` or `Shift+F10` for the context menu, typing letters to go to a name.
 
-- *Tag this folder* — opens the [Tags](Tags) screen with this folder pre-filled, to assign a tag to it.
+When the device of the catalog is not available (disconnected, or its path changed), the catalog can still be browsed, but opening a file, or a folder in the file manager, is refused and the page shows: *The device is not active. It may be disconnected, or its path may have changed.*
 
-## File and folder context menu (right-click) {#file-context-menu}
+## Context menu {#file-context-menu}
 
-Right-clicking on an entry in the right panel shows a context menu that adapts to the type of entry selected.
+![Context menu of a file in Explore](/img/explore_02_context_menu.png)
 
-![File context menu showing file operations including open, copy, checksum and delete actions](/img/explore_03_context.png)
+Right-clicking a row opens a menu adapted to the type of the row.
 
-### For files
+### For a file
+| Item | Action |
+|------|--------|
+| *Open file* | Opens the file with its default application. |
+| *Open folder* | Opens the folder of the file in the file manager. |
+| *Show extended metadata (JSON)* | Shows all the metadata stored for the file, as a table, with *Copy JSON*. Shown when the catalog includes extended metadata. |
+| *Copy file name without extension* | Copies `report_2025` from `/home/username/Documents/report_2025.pdf`. |
+| *Copy file name with extension* | Copies `report_2025.pdf`. |
+| *Copy folder path* | Copies `/home/username/Documents`. |
+| *Copy file absolute path* | Copies `/home/username/Documents/report_2025.pdf`. |
+| *Copy Checksum* | Copies the saved checksum. Shown when the file has one. |
+| *Calculate Checksum (SHA-256)* | Calculates the checksum of the file and saves it. Shown when the file has no checksum yet. |
+| *Verify Checksum (SHA-256)* | Calculates the checksum again and compares it with the saved one. If they differ, the two values are shown, with *Update Checksum* to save the new one. |
+| *Move file to Trash* | Moves the file to the trash of the system. |
+| *Delete file* | Deletes the file **permanently**, after confirmation. Available only when *Authorize actions that delete files (no recovery)* is enabled in the [Settings](Settings#behavior). |
 
-| Action | Description |
-|--------|-------------|
-| *Open file* | Opens the file with the system's default application. If the explored device is not connected, a warning is shown instead and the file is not opened. |
-| *Open folder* | Opens the file's parent folder in the system's file manager |
-| *Show extended metadata (JSON)* | Displays detailed metadata (available only if the catalog was indexed with extended metadata) |
-| *Copy folder path* | Copies the file's parent folder path to the clipboard |
-| *Copy file absolute path* | Copies the full file path to the clipboard |
-| *Copy file name with extension* | Copies the file name (with extension) to the clipboard |
-| *Copy file name without extension* | Copies the file name (without extension) to the clipboard |
-| *Copy Checksum* | Copies the stored checksum to the clipboard (shown only if a checksum is stored) |
-| *Calculate Checksum (SHA-256)* | Calculates and saves the file's SHA-256 checksum (shown only if no checksum is stored yet) |
-| *Verify Checksum (SHA-256)* | Recalculates the checksum and compares it with the stored value (shown only if a checksum is stored) |
-| *Move file to Trash* | Moves the file to the system trash |
-| *Delete file* | Permanently deletes the file |
-
-### For folders
-
-| Action | Description |
-|--------|-------------|
-| *Open folder* | Opens the folder in the system's file manager |
-| *Copy folder path* | Copies the folder path to the clipboard |
-| *Copy folder name* | Copies the folder name to the clipboard |
-| *Move folder to Trash* | Moves the folder to the system trash |
+### For a folder
+| Item | Action |
+|------|--------|
+| *Open folder* | Opens the folder in the file manager. |
+| *Copy folder name* | Copies `Documents` from `/home/username/Documents`. |
+| *Copy folder path* | Copies `/home/username/Documents`. |
+| *Move folder to Trash* | Moves the folder and its content to the trash of the system. |
 
 ## Development
-Some ideas of developments for this screen:
 * See the backlog of [Explore development](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=explore).

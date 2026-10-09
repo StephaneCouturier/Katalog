@@ -14,7 +14,7 @@ Tato stránka je kopií dokumentace **Katalog 2** (2.13), uchovanou pro informac
 Tato stránka popisuje všechny funkce obrazovky **BackUp** a jejich použití.<br/>
 Z této obrazovky může uživatel **spravovat zálohy katalogů (kopírování) nebo archivaci (přesun)**.<br/>
 
-![Hlavní obrazovka BackUp](/img/screen_backup_01.png)
+![Hlavní obrazovka BackUp](/img/k2/screen_backup_01.png)
 
 ## Hlavní koncepty
 
@@ -133,14 +133,14 @@ Panel *Vytvořit propojení* lze sbalit nebo rozbalit pomocí přepínacího tla
 
 #### Příklad a katalogy
 Cíl: vytvořit propojení mezi zdrojem na místním disku a cílem na externím disku.
-![Příklad zdrojového a cílového zařízení](/img/screen_backup_1_devices.png)
+![Příklad zdrojového a cílového zařízení](/img/k2/screen_backup_1_devices.png)
 
 #### Výběr zdroje a cíle
 - S panelem Výběr a 2 tlačítky „Načíst katalogy" pro zdroj a cíl získejte seznam katalogů k výběru.
 - Tlačítko „bez propojení" pomáhá omezit počet zobrazených katalogů — zobrazí pouze katalogy, které ještě nemají propojení jako zdroj (nebo cíl).
 - Vyberte zdroj a cíl.
 
-![Výběr zdroje a cíle](/img/screen_backup_2_select_source_target.png)
+![Výběr zdroje a cíle](/img/k2/screen_backup_2_select_source_target.png)
 
 
 #### Nastavení názvu, možností a vytvoření
@@ -150,11 +150,11 @@ Cíl: vytvořit propojení mezi zdrojem na místním disku a cílem na externím
 - Nastavit chování při detekci konfliktu
 - Vytvořit propojení
 
-![Vytvoření propojení](/img/screen_backup_4_create_mapping.png)
+![Vytvoření propojení](/img/k2/screen_backup_4_create_mapping.png)
 
 #### Porovnání zdroje a zálohovacího cíle
 - Propojení se zobrazí v seznamu a pokrytí je vypočteno.
-![Porovnání zdroje a cíle](/img/screen_backup_5_comparison.png)
+![Porovnání zdroje a cíle](/img/k2/screen_backup_5_comparison.png)
 
 ### Filtry seznamu propojení
 

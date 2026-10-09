@@ -16,7 +16,7 @@ Tato stránka popisuje všechny funkce panelu **Výběr**, levé části uživat
 * V režimu *Hledat v katalozích souborů* bude výběr filtrovat informace pro obrazovky [Vyhledávání](Search), [Zařízení](Devices), [Vytvořit](Create) a [Statistika](Statistics).
 * V režimu *Hledat v připojených jednotkách* lze vybrat adresář přímo z připojených zařízení. Toto se používá pouze pro obrazovku [Vyhledávání](Search).
 
-![Panel Výběr zobrazující stromové zobrazení zařízení a ovládací prvky výběru](/img/selection_01.png)
+![Panel Výběr zobrazující stromové zobrazení zařízení a ovládací prvky výběru](/img/k2/selection_01.png)
 
 ## Rozhraní
 Horní tlačítka:
@@ -49,4 +49,4 @@ Pomocí této možnosti lze vyhledávat přímo v libovolném adresáři připoj
 
 Pro výběr složky pro vyhledávání použijte tlačítko *Vybrat cestu* nebo stromové zobrazení adresářů.
 
-![Panel Výběr v režimu připojených disků zobrazující stromové zobrazení adresářů a výběr cesty](/img/selection_02.png)
+![Panel Výběr v režimu připojených disků zobrazující stromové zobrazení adresářů a výběr cesty](/img/k2/selection_02.png)

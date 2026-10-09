@@ -1,194 +1,156 @@
 ---
-version: "2.13"
+version: "3.0"
 ---
 # Settings
-![2.13](https://img.shields.io/badge/Version-2.13-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
 ## Summary
-This page describes all the features of the **Settings** screen and how to use them.
-* Data & Collection management
-  * Collection folder and data mode (Memory / File / Hosted)
-  * [Collection Import & Update](Settings#import-update): import devices from another collection or refresh previously imported ones
-  * [Images folder](Settings#images-folder): configure where device pictures are stored
-* Language & Theme
-* About
+This page describes all the features of the **Settings** screen and how to use them:
+* [Collection & Database](#collection-database): the open collection, its data mode, the database version and quality check, and the images folder,
+* [Collection Import & Synchronization](#import-update): import devices from another collection, or update previously imported ones,
+* [Application](#application): version, behavior options, theme, text size, window size and language.
 
-![Settings screen overview](/img/screen_settings_01.png)
+*Settings* opens from the drawer, over the other pages. *Close* (or `Esc`) goes back to them (see [Interface](Interface)).
 
-## Data & Collection management
+![Settings page, Collection & Database section, demo collection in File mode](/img/settings_01_overview.png)
 
-### Collection
+## Collection & Database {#collection-database}
 
-A Collection is a single group of devices and all related information such as statistics.<br/>
-The *Collection folder* is the folder on your computer where all data of a collection are stored.<br/>
-It is possible to have several Collections.
+### Collection {#collection}
+A **collection** is a single group of devices and all related information: catalogs, statistics, tags, search history and backup links.<br/>
+It is possible to have several collections and to switch between them.
 
-### Data modes
-Katalog provides 3 "*Data modes*" or different ways of storing and handling data.
+Collections are opened and created from the drawer, with *Open...* and *New...* (see [Interface](Interface#drawer)). Switching to another collection does not restart Katalog.
 
-Note: changing the mode requires clicking *Apply and restart*.
+The section shows:
+* *Database Mode*: the data mode of the open collection (see below),
+* *Collection*: where the collection is stored (folder, database file, or server and database name), with an *Edit* button:
+  * in *File* mode, it opens the database file in the application associated with it (for example [DB Browser for SQLite](https://sqlitebrowser.org)),
+  * in *Memory* mode, it opens the collection folder in the file manager,
+  * in *Hosted* mode, it opens the database in phpMyAdmin, at the *phpMyAdmin URL* set for the connection.
 
-| Mode   | Database type      | Data storage |Files | Search Speed | Cataloging speed |
-| -------| -------------------|---|---|---|---|
-| **Memory** | computer memory |  in .csv tab separated files (for devices, statistics, etc.) and in .idx files (for catalogs file lists)|Better for regular synch of the files to a cloud|Fastest search speed once catalogs are in memory (longer time for the first time a catalog is used) | Slightly Faster|
-| **File** (default)   | SQLite file, low memory use | all in the SQLite file|all data clubbed in 1 file that can grow to several hundred Mb in size  |Faster for 1st search, slower for repetitive search in a big collection|Slightly slower|
-| **Hosted** | MySQL/MariaDB server | all data stored in the hosted database server|Data centralized on a server, accessible from multiple machines on the network|Server-side query performance, suitable for large collections|Slightly slower (network overhead)|
+### Data modes {#database-memory-mode}
+Katalog provides 3 *data modes*, or ways of storing and handling the data of a collection.
 
-![Data modes diagram](/img/settings_database-model.png)
+| Mode | Database type | Data storage | Files | Search speed | Cataloging speed |
+|------|---------------|--------------|-------|--------------|------------------|
+| **Memory** | computer memory | in `.csv` tab-separated files (for devices, statistics, etc.) and in `.idx` files (for the file lists of catalogs) | better for regular synchronization of the files to a cloud | fastest search once catalogs are in memory (longer the first time a catalog is used) | slightly faster |
+| **File** (default) | SQLite file, low memory use | all in the SQLite file | all data in 1 file, which can grow to several hundred MB | faster for the first search, slower for repeated searches in a big collection | slightly slower |
+| **Hosted** | MySQL/MariaDB server | all in the database server | data centralized on a server, accessible from several computers on the network | server-side query performance, suitable for large collections | slightly slower (network) |
 
-### Database Memory mode {#database-memory-mode}
-![Memory mode settings showing the collection folder path and related options](/img/screen_settings_02_memory.png)
+### Hosted mode {#hosted-mode}
 
-Collection folder actions:
-* Type the path of the Collection folder and press Enter to load the collection
-* Select the path of the Collection folder and load the collection
-* Open the collection folder in the system's default file manager
-* *Export to SQLite file*: export the collection to a single SQLite database file, to switch to *File* mode
+![Settings page with the Hosted connection form](/img/settings_02_hosted.png)
 
-Settings for Memory mode:
-* *Back up*: Enable or disable (default) keeping a copy of a catalog before updating it (the copy will have a `.bak` extension)
-* *Start up*: Enable or disable (default) preloading the last used catalogs (last selection) to get faster search after
-* *Start up*: Enable or disable (default) loading the last opened Catalog in the [Explore](Explore) screen
+In *Hosted* mode, the collection is stored in a MySQL/MariaDB database on a local or network server.<br/>
+The connection form is shown when the open collection is in *Hosted* mode, or when choosing *Open...* > *Hosted Database...* in the drawer.
 
-### Database File mode
-![File mode settings showing the database file path and related options](/img/screen_settings_03_file.png)
+| Field | Description |
+|-------|-------------|
+| *Host Name* | Name or IP address of the database server. |
+| *Database Name* | Name of the database on the server. |
+| *Port* | Port of the server (`3306` for MySQL/MariaDB). |
+| *User Name* | Database user name. |
+| *Password* | Database password. |
+| *Startup:* | *Connect automatically on startup*: reconnects to this database when Katalog starts. |
+| *phpMyAdmin URL* | Address of phpMyAdmin, used by the *Edit* button. |
 
-Collection file actions:
-* Type the path of the file and press Enter to load the collection
-* *Select and open database file*: select and load an existing collection file
-* *Edit*: Open the SQLite database in a database editor (e.g. [SQLite Browser](http://sqlitebrowser.org))
-* *New*: Create a new collection file and load it
-* *Export to Memory mode (csv)*: export the collection to CSV and index files, to switch to *Memory* mode
+*Connect* opens the collection on the server.
 
-### Database Hosted mode
-![Hosted mode settings showing the server connection fields](/img/screen_settings_05_hosted.png)
+Prerequisites:
+* A MySQL/MariaDB server must be running and reachable.
+* The database must already exist on the server; Katalog creates the tables it needs.
 
-The collection data is saved to a database hosted on a local or network server (MySQL/MariaDB).
+### Database version and quality check {#quality-check}
 
-Connection settings:
-* **Host Name** — The hostname or IP address of the database server (default: `localhost`)
-* **Database Name** — The name of the database on the server
-* **Port** — The port number (default: `3306` for MySQL/MariaDB)
-* **User Name** — The database user name
-* **Password** — The database password
+![Quality check report of the demo collection](/img/settings_03_quality_check.png)
 
-Fill in all fields and click *Apply and restart* to connect.
+*Database Version* shows the version of the database structure of the open collection.
 
-#### Export
-A hosted collection can be exported to a local format for offline use or to share with others:
-* *Export to SQLite file*: export the entire hosted collection to a single SQLite `.db` file (*File* mode)
-* *Export to Memory mode (csv)*: export the collection to CSV and index files (*Memory* mode)
+*Quality check* runs a series of read-only checks on the open collection and shows a report. It looks for inconsistencies between devices, storage and catalogs:
+* storage devices linked to a missing storage,
+* storage not linked to any device,
+* Storage IDs used by more than one storage,
+* catalog devices linked to a missing catalog,
+* catalogs not linked to any device,
+* devices with a missing parent device.
 
-#### Security
-* Only **local** (localhost, 127.x.x.x) and **private network** (192.168.x.x, 10.x.x.x, 172.16-31.x.x) hostnames are accepted. Public IPs and domain names are rejected.
-* When connecting to a private network address, a confirmation dialog is displayed before proceeding.
-
-#### Prerequisites
-* A MySQL/MariaDB server must be running and accessible.
-* The database must already exist on the server (Katalog will create the required tables automatically).
-* The corresponding Qt SQL driver plugin must be installed (`QMYSQL` for MySQL/MariaDB).
-
-### Collection export summary
-
-Each mode can be exported to another format. Exported collections can then be opened directly in the target mode, or used as a source for importing devices into another collection (see [Import and Update](#import-update)).
-
-| Current mode | Export to SQLite file | Export to Memory mode |
-|---|---|---|
-| **Memory** | ✅ | — |
-| **File** | — | ✅ |
-| **Hosted** | ✅ | ✅ |
-
-> Importing and updating from a Hosted collection requires an intermediate export step: export first to File or Memory mode, then use the exported collection as the import source.
-
-### Import and Update {#import-update}
-
-<!-- screenshot: screen_import_01.png -->
-
-Katalog can import devices from another collection, or refresh the catalog contents of previously imported devices when the source changes.
-
-**Source and target**
-
-* The **source** collection is an existing Katalog collection opened read-only — it is never modified.
-* The **target** is the current active collection where devices and catalogs are added.
-
-![Settings page showing the an example of imported collection](/img/screen_settings_06_import_collection.png)
-
-**What is imported**
-
-Devices, their catalogs, catalog file indexes, statistics, backup links, and exclude folder settings are transferred. The source folder structure is preserved in the target by inserting the necessary parent levels as container devices. If a device or catalog name already exists in the target, it is automatically renamed (for example, `My Drive (2)`) to avoid conflicts.
-
-**Operations**
-
-| Operation | Description |
-|---|---|
-| *Import Selected Device* | Imports one device and all its contents from the source into the target. Select the source collection, pick a device in the source tree, then click *Import Selected Device*. Selecting the collection root imports all devices and also includes tags. |
-| *Update Selected Device* | Refreshes the catalog contents of a previously imported device with the latest data from its source. The source is reopened automatically — no need to browse again. Container devices in the target hierarchy are not affected. |
-
-:::note
-*Update Selected Device* is only active when the selected device (or one of its children) was previously imported and still has a valid link to a source collection.
-:::
-
-**Update report**
-
-When an update finishes, Katalog shows a summary of what changed:
-
-* the number of catalogs updated,
-* the total file count before and after, with the net change,
-* the total file size before and after, with the net change.
-
-The operation status (in progress, completed, or error) is also shown in the status bar, consistent with other Katalog operations.
-
-**Source collection format**
-
-| Source format | How to open |
-|---|---|
-| **Memory** (CSV folder) | Select the collection folder |
-| **File** (SQLite `.db` file) | Select the `.db` file |
-| **Hosted** (MySQL/MariaDB) | Export to *File* or *Memory* mode first (see [Hosted mode export](#export)), then use the exported collection as the source |
+For each check, the report lists what was found, or *Nothing found*. *Copy to Clipboard* copies the report, for example to attach it to a bug report.<br/>
+The quality check **repairs nothing**: it only reports.
 
 ### Images folder {#images-folder}
+The *Images folder* is the folder where the pictures of storage devices are kept. It is a per-collection setting.
+* Type a path in the field, or click *Select* to choose a folder.
+* When it is not set, the folder `images` inside the collection folder is used.
 
-The *Images folder* is the folder where device pictures are stored. It is a per-collection setting.
+Pictures placed in this folder can then be chosen for a storage device when editing it in the [Devices](Devices) screen.
 
-* Type a path directly in the field and press Enter, or click *Select* to browse for a folder.
-* Defaults to `<collection_folder>/images` if not configured.
+## Collection Import & Synchronization {#import-update}
 
-Pictures placed in this folder can then be assigned to storage devices in the [Devices](DevicesStorage#device-picture) screen.
+![Import section with a source collection selected, a device chosen in the source tree, and the import report](/img/settings_04_import.png)
 
-## Language & Theme
-* Choose the Language for the application.
-* Choose the theme for the application and restart to apply it.
-* Option to use bigger icon size.
-* Option to enable case-sensitive file sorting.
-* Button to *Open Settings file* (local file where Katalog options and last selections are stored).
+Katalog can import devices from another collection into the open one, and later update them when the source changes.
+* The **source** is the other collection. It is only read, never modified.
+* The **target** is the open collection, where the devices and catalogs are added.
 
-### Themes
-| Katalog theme | Context for use |
-|---|---|
-| Default Theme | auto adapts to any OS and light/dark themes |
-| Katalog Color (light) | only for Light desktop themes (not suitable for dark desktop themes) |
-| Katalog Color (dark) | only for Dark desktop themes (not suitable for light desktop themes) |
+| Field | Use |
+|-------|-----|
+| *Data mode* | Type of the source: *Katalog / File* (a `.db` file), *Katalog / Memory* (a collection folder), or *VVV / Tab Separated Values* (an export file from VVV). |
+| *Source* | The source collection or file, chosen with *Select*. |
+| *Device* | The device to import, chosen in the device tree of the source. *Import* imports it with all its contents. |
+| *Update* | The source collections that devices were imported from. *Update* refreshes, from the chosen source, the catalogs of all devices imported from it. |
 
-Examples:
+**What is imported**<br/>
+Devices, their catalogs and file lists, statistics, backup links and excluded folders. The source's hierarchy is kept in the target by adding the necessary parent devices. When a device or catalog name already exists in the target, the imported one is renamed (for example `My Drive (2)`).
 
-- Light desktop / Katalog Colors (light)
-![Light desktop with Katalog Colors light theme](/img/settings-themes-light-desktop-katalog-colors-light.png)
+**Report**<br/>
+When an update ends, a message summarizes what changed: the number of catalogs updated, and the number and total size of files before and after.
 
-- Dark desktop / Katalog Colors (dark)
-![Dark desktop with Katalog Colors dark theme](/img/settings-themes-dark-desktop-katalog-colors-dark.png)
+:::note
+The source collection must have the same database version as the open one. If it was made with an older version of Katalog, open it once with this version first: its database is then updated.
+:::
 
-- Dark desktop / Default Theme
-![Dark desktop with default theme](/img/settings-themes-dark-desktop-default-theme.png)
+**Import from VVV**<br/>
+[VVV (Virtual Volumes View)](https://www.fsoft.it/VVV/) is another cataloging application. With *VVV / Tab Separated Values*, select a file exported from VVV, then click *Import*: its catalogs are added under a new virtual group.
 
-## About
-* Version and Date of the application.
-* Option to check for a new version at start up.
-* Button to open this Documentation site.
-* Button to open the Release Notes.
-* Button **Copy version and system information**: copies, in one step, the Katalog version and your environment details to the clipboard, ready to paste into a bug report. A confirmation message *Version and system information copied to clipboard* is shown.
+## Application {#application}
 
-The copied text contains: the Katalog version and release date, the Qt and KDE Frameworks versions, the operating system, the kernel and the CPU architecture, the interface language, and the database mode with its schema version.
+![Application section: version, behavior options, theme, text size, Reset window size and language](/img/settings_05_application.png)
 
-It deliberately contains nothing that identifies you or your data, so it can be pasted publicly with confidence: no file or folder path, no collection name, no computer name or user name, and nothing about a hosted database connection — no address, no database name, no user, no password.
+### Version
+* The version and release date of Katalog, and *Release Notes* to read what changed.
+* *Check for a new version on startup*: when enabled, Katalog checks at start if a newer version is available.
 
-The copied text itself is always in English, whatever the language of the interface: English field names keep every bug report readable for the developers. Only the button and its confirmation message are translated.
+### Behavior {#behavior}
+| Option | Description |
+|--------|-------------|
+| *File sorting is Case Sensitive* | When enabled, sorting respects letter case, giving this order: AA, AB, AC, Aa, Ab, Ac. |
+| *Refresh device status when returning to the application* | When enabled, the status of devices (available or not) is checked again each time the Katalog window becomes active, so a drive connected or removed meanwhile is shown correctly. Disabled by default. |
+| *Authorize actions that delete files (no recovery)* | When enabled, files can be **permanently deleted** from the [Search](Search) results and the [Explore](Explore) screen. Disabled by default: these actions are then greyed out. *Move to Trash*, which can be undone, is always available. |
+
+### Theme {#theme}
+| Theme | Description |
+|-------|-------------|
+| *Desktop Theme* | Follows the colours of the desktop. |
+| *Desktop Theme (gray)* | Follows the colours of the desktop, with grey surfaces and highlights. |
+| *Katalog Colors* | Katalog's own blue colours. |
+
+With every theme, Katalog follows the **light or dark mode** of the system, on Linux (KDE Plasma and other desktops), Windows and macOS, and changes with it without a restart. Outside KDE Plasma, Katalog uses the Breeze light and dark colours rather than the desktop's own colour scheme.
+
+:::note
+On some Linux desktops (for example Linux Mint with Cinnamon), the dark mode is not detected when Katalog starts: the window opens light, then follows the next change of light or dark mode.
+:::
+
+The same row holds:
+* *Use bigger icon size*: shows larger icons in the lists.
+* *Text size*: makes all the text of Katalog smaller or larger, from 80% to 120%, with the slider or its two buttons. The size starts from the font size set in the system, so it also follows a change of the system font. The collection name at the top of the drawer and the page titles keep the system size.
+* *Reset window size*: puts the window back to its default size, **1280×800** (or the size of the screen, if smaller). A maximized window is restored first. The position of the window is not changed. This is also the size of the window the first time Katalog starts.
+
+### Language {#language}
+The language of the interface. On the first start, Katalog uses the language of the system when it is available, and English (US) otherwise.
+
+### Settings file
+The path of the file where Katalog keeps its settings and last choices. *Open* opens it in the associated application.
+
+## Development
+* See the backlog of [Settings development](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=settings).

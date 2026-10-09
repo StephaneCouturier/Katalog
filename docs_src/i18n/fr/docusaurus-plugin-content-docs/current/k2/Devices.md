@@ -13,7 +13,7 @@ Cette page est une copie de la documentation de **Katalog 2** (2.13), conservée
 ## Résumé
 Cette page décrit le concept de **Périphérique** dans Katalog et la partie supérieure de l'écran **Périphériques**.
 
-![Exemple montrant des catalogues organisés sous des disques physiques et un groupe Photos virtuel](/img/devices_example1_cut.png)
+![Exemple montrant des catalogues organisés sous des disques physiques et un groupe Photos virtuel](/img/k2/devices_example1_cut.png)
 
 Dans cet exemple, plusieurs catalogues ont été créés à partir de 2 disques physiques.<br/>
 Les catalogues de photos/images ont été attribués à un périphérique *Photos* virtuel.<br/>

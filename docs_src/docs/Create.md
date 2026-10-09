@@ -1,174 +1,114 @@
 ---
-version: "2.12"
+version: "3.0"
 ---
 # Create
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
 ## Summary
-This page describes all the features of the **Create** screen and how to use them.<br/>
-From this screen, the user can **create a catalog of files**.<br/>
-It is done in 3 main steps:
-1. Select the Source path: the device or directory with the files to be included in the new catalog.
-1. Select options to include or exclude some particular files.
-1. Select the [Storage](DevicesStorage) and define the catalog name, and create the catalog.
+This page describes the **Create** page, where a new **catalog** is created: an index of the files of one folder, kept in the collection so that it can be searched and explored even when the device is disconnected.
 
-![Create screen overview](/img/screen_create_01.png)
+It takes three steps:
+1. [Define the catalog](#definition): the folder to index, its storage device and its name.
+1. Choose the [content options](#content-options): file types, sub-folders, hidden files, metadata, checksums and exclusions.
+1. Click *Create*.
 
-## Select the Source path
-There are 3 ways to  select the source path of the directory with the files to be included in the new [Catalog](DevicesCatalogs):
-1. by typing the path in the text edit zone
-1. by using the treeview of the file system, just expand and click on the right device or directory
-1. or by clicking the button *Select* which will open a dialog window to help selecting the folder.
+![Create page: catalog definition, content options and global parameters](/img/create_01_overview.png)
 
-The selected path will always appear in the text edit zone, and the application will use this path to browse and catalog its contents.
+## Catalog definition {#definition}
 
-## Select options to include/exclude files
-Choose which types of files to include in your catalog. 
+| Field | Description |
+|-------|-------------|
+| *Source path* | The folder to index. It is filled with the path of the device selected on the [Selection](Selection) page, and can be typed or chosen with *Select the path*. |
+| *Storage* | The storage device where the folder is: the drive, disk or computer (see [Devices](Devices#model)). Only storage devices are listed. A new collection already has one, *Local disk*. To add another one, use *Add Storage* on the [Devices](Devices#page-actions) page. |
+| *Catalog name* | The name of the new catalog. Each catalog needs its own name. *Generate name from path* (the button beside the field) makes one from the source path, with `_` in place of `/` and `:`. |
 
-### Enhanced File Type Filtering
-Katalog now uses intelligent file type detection based on the extension that supports hundreds of file formats automatically.
+When a field is missing or wrong, a message at the top of the page says what is needed, for example *Provide a name for this new catalog.* It disappears when the field is corrected. The same happens when the source folder does not exist, or when another catalog already has the name.
 
-**How file type detection works:**
-- **Initial detection**: File types are determined by analyzing file extensions using an intelligent extension-to-type cache built from your system's MIME database
-- **Comprehensive support**: Supports hundreds of file formats (compared to previously limited hardcoded lists)
-- **Future-proof**: New file formats are automatically recognized as your system is updated
+When the source folder holds no file, a question is asked first: the folder may be empty, or the device may not be mounted there. *Yes* creates the catalog anyway, empty.
 
-**Accuracy note**: 
-- File types are initially determined from the extension analysis during catalog creation. This is to maximize indexing performance.
-- But there can be extension mistake or missing extensions
-- To maximize accuracy, it is possible to run MIME verification on completed catalogs via the Devices page, and correct any files with misleading extensions.
+## Content options {#content-options}
+The options decide what is indexed. They can be changed later by editing the catalog (see [Edit device](DevicesEdit#content-options)); the catalog then needs an update to follow them.
 
+### File type
+The catalog can be limited to one type of files.
 
-### File Type categories
-The contents of the catalog can be limited to a particular type of files.
-This option will be applicable for the catalog moving forward. It can be changed later by editing the [Catalog](DevicesCatalogs).
-       
-        | Type  | Description |  Definition   | Extensions examples                               |
-        | ------| -------------|-------------|-----------------------------------------------------|
-        | All   | All file types without filtering | |     |
-        | Audio | Music, podcasts, audio recordings, and sound files  |(as defined by MIME types) | MP3, FLAC, AAC, M4A, OGG, WAV, AIFF, Opus, WMA, MIDI, AMR (50+ formats)                               |
-        | Image | Photos, graphics, diagrams, icons, and visual content  |(as defined by MIME types)| JPG, PNG, HEIC, WebP, TIFF, RAW, SVG, XCF, GIF, BMP (100+ formats)                  |
-        | Text  | Documents, code files, markup, data files, and readable content. | (specific Katalog definition)<br/>Includes all files with MIME type starting with "text/" plus specific application files like PDF, Word documents, etc.| PDF, DOCX, ODT, Markdown, HTML, JSON, source code files, ebooks (100+ formats).     |
-        | Video | Movies, clips, animations, and video content |  (as defined by MIME types) | MP4, MKV, AVI, WebM, MOV, FLV, 3GP, OGV, M2TS (40+ formats) |
-        | Other | <br/>All other file types not covered by the above categories | (specific Katalog definition) | ZIP, RAR, EXE, DLL, ISO, application files that are not classified as Text. This includes executables, archives, and system files |
-        | None  | Files for which the type could not be determined based on the extension | Files without extensions or with unknown extensions |  |
+| Type | Description | Definition | Extensions examples |
+|------|-------------|------------|---------------------|
+| All | All file types, without filtering. | | |
+| Audio | Music, podcasts, audio recordings and sound files. | As defined by MIME types. | MP3, FLAC, AAC, M4A, OGG, WAV, AIFF, Opus, WMA, MIDI, AMR (50+ formats) |
+| Image | Photos, graphics, diagrams, icons and visual content. | As defined by MIME types. | JPG, PNG, HEIC, WebP, TIFF, RAW, SVG, XCF, GIF, BMP (100+ formats) |
+| Text | Documents, code files, markup, data files and readable content. | Specific Katalog definition: all files with a MIME type starting with `text/`, plus application files like PDF and Word documents. | PDF, DOCX, ODT, Markdown, HTML, JSON, source code files, ebooks (100+ formats) |
+| Video | Movies, clips, animations and video content. | As defined by MIME types. | MP4, MKV, AVI, WebM, MOV, FLV, 3GP, OGV, M2TS (40+ formats) |
+| Other | All other file types. | Specific Katalog definition. | ZIP, RAR, EXE, DLL, ISO: executables, archives, system files and application files not classified as Text. |
+| None | Files whose type cannot be found from the extension. | Files without extension or with an unknown extension. | |
 
-                            
-### Metadata Extraction
-Choose how much metadata to extract from your files during catalog creation.
-<br/>This affects cataloging speed or collection size, but provides richer file information for searches & statistics.
+The type of a file is found from its **extension**, using the MIME database of the system: hundreds of formats are recognised, and new ones as the system is updated. This keeps indexing fast. A file with a wrong or missing extension can therefore get the wrong type.
 
-**Available options:**
-- **None**: No metadata extraction (fastest cataloging)
-- **Media Basic**: Extract essential metadata from images, videos, and audio files
-- **Media Extended**: Extract comprehensive metadata including technical details  
-- **Full Extended**: Maximum metadata extraction for all supported file types
+### Include subdirectories
+Ticked (the default), the files of all the sub-folders are indexed. Unticked, only the files directly in the source path.
 
-**What Media Basic is extracted:**
-- **Audio**: Artist, album, track details, duration, bitrate
-- **Images**: Dimensions, orientation
-- **Videos**: Dimensions, Duration, codec & framerate
+### Include hidden files
+*None* (the default) skips hidden files and folders; *All* includes them.<br/>
+On a home folder or a system drive, hidden folders (`.cache`, `.local`…) can hold many files: excluding the unneeded ones keeps the catalog small.
 
-**What Extended metadata is extracted:**
-This mechanism is built on the KFileMetaData library, which determines the file types supported and metadata.
-The extracted metadata is stored as a JSON in the database.
+### Include metadata
+How much information is read from the content of the files. It makes indexing longer, but gives richer results in [Search](Search) (dimensions, duration, artist…) and in [Statistics](Statistics).
 
-**Performance impact:**
-- **None**: Fastest option, suitable for large directories or when metadata isn't needed
-- **Media Basic/Extended**: Moderate impact, processes only media files (images, videos, audio)
-- **Full Extended**: Slower but most comprehensive, extracts from all supported file formats
+| Level | What is read |
+|-------|--------------|
+| *None* | No metadata: fastest. |
+| *Media Basic* | The essentials of images, videos and audio files: dimensions and orientation of images; dimensions, duration, codec and frame rate of videos; artist, album, track, duration and bit rate of audio files. |
+| *Media Extended* | All the metadata of images, videos and audio files, including technical details. |
+| *Full Extended* | All the metadata of every supported file type. |
 
-**Supported file types for metadata:**
-- **Images**: jpg, png, gif, bmp, tiff, webp, svg, heic, raw, xcf
-- **Videos**: mp4, mkv, avi, mov, wmv, flv, webm, m4v, mpg, 3gp, ogv, vob
-- **Audio**: mp3, wav, flac, ogg, m4a, aac, wma, opus, aiff, mid, amr
+The extended levels use the KFileMetaData library, which decides the supported types and fields; their metadata can be seen with *Show extended metadata (JSON)* in the search results and in Explore.<br/>
+Media levels read only media files: other files are skipped. Files that are damaged or cannot be read are skipped without stopping the catalog.
 
-This setting applies only to this catalog and can be changed later by editing the [Catalog](DevicesCatalogs).
+Supported media files:
+* **Images**: jpg, png, gif, bmp, tiff, webp, svg, heic, raw, xcf
+* **Videos**: mp4, mkv, avi, mov, wmv, flv, webm, m4v, mpg, 3gp, ogv, vob
+* **Audio**: mp3, wav, flac, ogg, m4a, aac, wma, opus, aiff, mid, amr
 
-**Note:** Metadata extraction requires readable files. Files that are corrupted or have access restrictions will be skipped without affecting the cataloging process.
+### Include checksum
+*SHA-256* calculates a checksum of each file: a fingerprint of its content. Checksums make the [duplicate and difference searches](Search) exact, and allow verifying later that files did not change.<br/>
+⚠️ It is much longer than the other options, because **all** the data of every file is read (see the [Performance guide](#performance)).
 
-### File checksum
-Checksum SH256 can be calculated during indexing for Duplicate/Difference Search.
-⚠️ It is a much longer process than other indexing option as it reads ALL of the data to compute the checksums.
-Like file metadata, the option can be selected at catalog creation or changed later, and when interrupting the process, the calculated checksum are saved and the next update will resume for remaining files.
-The files checkum can be used as a duplicate search option or as a difference search option.
+### Exclude folders or files
+Paths or names that are not indexed **in this catalog**.<br/>
+Type a path or a name in *Path or name to exclude*, or choose a folder with *Select the path*, then click *Add*. The *Remove* button beside an entry takes it out of the list.<br/>
+The list is saved with the catalog.
 
-### Include Hidden files {#other-options}
-Hidden files are not included by default, but this options enables to include them.<br/>
-This option will be applicable for the catalog moving forward.<br/>
-It can be changed later by editing the [Catalog](DevicesCatalogs).
+## Global Parameters {#global-parameters}
+The *Global Parameters* section holds settings shared by **all the catalogs** of the collection. The button on its title line folds or unfolds it.
 
-### Global Parameters panel
+### Global exclude directory {#exclude-directories}
+Paths excluded from **every catalog**, when it is created and each time it is updated.<br/>
+Type a path in *Path to exclude globally* (or use *Select the path*), then click *Add*. *Remove* beside an entry takes it out.
 
-The *Global Parameters* panel groups settings that apply across all catalogs. It can be collapsed or expanded using the toggle button at the top of the panel.
+### How exclusions work
+Global and per-catalog exclusions add up: a file or folder skipped by either list is not indexed.<br/>
+An exclusion is **text matching**: every file or folder whose full path **contains** the text is skipped. The matching is case-sensitive.
+* **Full path**: `/home/username/Downloads/temp` skips that folder and all its content.
+* **Folder name**: `node_modules` skips **every** `node_modules` folder, wherever it is.
+* **Part of a name**: `.cache` skips `/home/username/.cache/`, but also `/home/username/.cachedata/`, since both paths contain the text.
 
-### Exclude directories (global) {#exclude-directories}
+## Creating the catalog {#creating}
+*Create* saves the catalog and starts indexing. Progress is shown in the activity panel at the bottom of the window (see [Interface](Interface)). If another operation is running, the creation waits in the queue.
 
-:::note
-These exclusions are **global**: they apply to **all** catalogs, both when creating new catalogs and when updating existing ones.
-:::
+Indexing runs in two phases:
+1. the **list of files** is read and saved: the catalog can be used as soon as this phase ends,
+2. then, when chosen, the **metadata** and **checksums** are read.
 
-It is possible to exclude directories from being cataloged, both during catalog creation and updates.<br/>
-Enter a path or text pattern, then click *Add*.<br/>
-The entry is then visible in the list below.<br/>
-Any entry can be removed by right-clicking on it and selecting *Remove*.<br/>
+*Stop* ends the creation:
+* during the first phase, the catalog is not created,
+* during the second phase, the catalog is **kept** with its full list of files; the metadata or checksums not read yet are completed by the next update of the catalog.
 
-**How exclusion works:**
+When the creation ends, a message confirms it (or explains what was not finished), and the new catalog appears on the [Selection](Selection) and [Devices](Devices) pages.<br/>
+*Close* (or `Esc`) closes the page.
 
-The exclusion uses **text matching**: any file or folder whose full path **contains** the exclusion text will be skipped. This means:
+## Performance guide {#performance}
 
-- **Full path**: entering `/home/user/Downloads/temp` will exclude that specific directory and all its contents.
-- **Folder name**: entering `node_modules` will exclude **every** `node_modules` directory across all catalogs (e.g. `/project1/node_modules/...`, `/project2/node_modules/...`).
-- **Partial path**: entering `.cache` will exclude directories like `/home/user/.cache/` but also `/home/user/.cachedata/` since the match is based on text containment.
-
-The matching is **case-sensitive**.
-
-![Global exclude directories list showing example entries](/img/screen_create_04_exclude.png)
-
-### Exclude folders (per catalog)
-
-In addition to global exclusions, it is possible to define excluded folders that apply only to the catalog being created.
-
-- Enter a folder path manually, or browse to it using the *Pick* button.
-- Click *Add* to add it to the pending list.
-- Remove any entry by right-clicking on it and selecting *Remove*.
-
-The per-catalog exclusions are saved with the catalog once creation completes. They are applied in addition to global exclusions — a folder skipped by either rule will not be indexed.
-
-This option can be changed later by editing the [Catalog](DevicesCatalogs).
-
-## Define & Create the catalog
-#### Select the Storage device
-A Catalog shall be associated with a [Storage](DevicesStorage) physical device, to facilitate later search or enable statistics.<br/>
-By default, Katalog pre-creates a default Storage device, the local disk.<br/>
-This can be updated later in the [Devices](DevicesTree) virtual tree screen.<br/>
-If you need a different and new Storage for this catalog, click *Add Storage*, and add one using the [Devices](DevicesTree) or the [Storage](DevicesStorage) screens.
-
-This choice will be applicable for the catalog moving forward.<br/>
-It can be changed later by editing the [Catalog](DevicesCatalogs).
-
-#### Enter a Name
-Enter a name for your catalog.<br/>
-Duplicate names are currently not allowed.
-
-The button *Generate* can create a name based on the folder path, replacing slashes <code>/</code> by underscore <code>_</code>.
-
-#### Create the catalog
-When ready, click the button *Create Catalog* to save the catalog itself and start the process of cataloging the contents of the path recursively (all sub-directories will be included).
-
-Once the process is completed,
-- A message confirms the creation and provides the number of files and total file size of the selected folder for this catalog.
-- your local drive, (a Storage device which was added automatically) was also updated, and the message provides a view of free, used, and total space:
-
-![Catalog creation confirmation with file count and storage space summary](/img/screen_create_02.png)
-
-the [Devices](DevicesTree) screen will be display to show the Catalog in the device tree.
-
-The new catalog is automatically selected in the [Selection](Selection) panel, ready to be used to [Search](Search) for the contents.
-
-## Performance Guide
-
-### What Affects Scanning Speed?
+### What affects scanning speed?
 
 
 | # | Factor | Impact Level | What drives it | Notes |
@@ -184,14 +124,15 @@ The new catalog is automatically selected in the [Selection](Selection) panel, r
 | 10 | **Excluded directories** | ⚫ Low | Reduces effective file count | `node_modules`, `.cache`, temp dirs can represent 20–30% of home drive file count. |
 | 11 | **System load / CPU** | ⚫ Low | Parallel metadata extraction uses 4–8 cores | Checksum is I/O-bound so CPU matters less there. Metadata is CPU-bound. |
 
-Other long processes, NOT USED in CREATE/UPDATE 
+Other long processes, not used by Create or Update:
+
 | # | Factor | Impact Level | What drives it | Notes |
 |---|--------|:---:|---|---|
 | 5 | **MIME type verification** | ⚫⚫⚫⚫ Very High | File count (reads partial content of each file) | Update-only operation. "Guessing" from extension is free; verification reads file bytes. Impact scales with file count, not size. |
 | 12 | **Collection Export** | ⚫⚫⚫⚫ Very High | Export of tables to SQLite or csv|| 20 to over 1 hour for 1M files
 
 
-Test Sample / data set:  60Gb, 40 000 files, with a file of 20Gb, and mix of text, images, video.
+Test sample / data set:  60Gb, 40 000 files, with a file of 20Gb, and mix of text, images, video.
 
 | Test | Sample  | SSD 2 TB (extrapolated) | HDD 2 TB (estimated) | Scaling basis |
 |---------|:-:|:-:|:-:|---|
@@ -205,6 +146,6 @@ Test Sample / data set:  60Gb, 40 000 files, with a file of 20Gb, and mix of tex
 
 ## Development
 Some ideas of developments for this screen:
-* catalog a cloud instance (ex: Nextcloud)
-* Customize file types
+* Catalog a cloud instance (for example Nextcloud).
+* Customize file types.
 * For more, see the backlog of [Create development](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=create).

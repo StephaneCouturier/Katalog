@@ -14,9 +14,9 @@ Katalog vytváří komplexní <b>indexy, abyste mohli prohledávat celou svou ko
 - **Organizujte svou kolekci**: Spravujte více úložných zařízení a jejich katalogy v jednotné hierarchii
 
 
-![Výsledky vyhledávání napříč více katalogy](/img/screen_search_01.png)
+![Výsledky vyhledávání napříč více katalogy](/img/k2/screen_search_01.png)
 <b>8 hlavních záložek pro 8 hlavních funkcí</b>
-![8 hlavních záložek Katalog](/img/global_tabwidget.png)
+![8 hlavních záložek Katalog](/img/k2/global_tabwidget.png)
 1. [Hledat](Search) soubory napříč více úložnými zařízeními **bez nutnosti jejich připojení**
 1. Organizovat úložná [Zařízení](Devices) a jejich katalogy v jednotné hierarchii s **Virtuálními** zařízeními
 1. [Procházet](Explore) hierarchii katalogů a soubory
@@ -35,7 +35,7 @@ Katalog vytváří komplexní <b>indexy, abyste mohli prohledávat celou svou ko
   * Nastavte zařízení v <b>hierarchii, která se má použít</b> pro *Hledat*, *Vytvořit* (nadřazené zařízení), *Statistiky* nebo správu *Zálohy*<br/>
   </div>
   <div className="col col--6" style={{maxWidth: '200px'}}>
-    ![Panel výběru](/img/global_selection_panel.png)
+    ![Panel výběru](/img/k2/global_selection_panel.png)
   </div>
 </div>
 
@@ -108,37 +108,18 @@ K dispozici je také starší sestavení (v2.5, čisté Qt6, bez závislostí na
 ### Jazyky aplikace
 Katalog je k dispozici v těchto jazycích:
 
-| Místní nastavení | Jazyk          |
-|----------|----------------|
-| bg_BG    | Bulharština    |
-| cz_CZ    | Čeština        |
-| da_DK    | Dánština       |
-| de_DE    | Němčina        |
-| en_US    | Angličtina     |
-| es_ES    | Španělština    |
-| et_EE    | Estonština     |
-| fi_FI    | Finština       |
-| fr_FR    | Francouzština  |
-| el_GR    | Řečtina        |
-| hi_IN    | Hindština      |
-| hr_HR    | Chorvatština   |
-| hu_HU    | Maďarština     |
-| id_ID    | Indonéština    |
-| it_IT    | Italština      |
-| ja_JP    | Japonština     |
-| lt_LT    | Litevština     |
-| lv_LV    | Lotyština      |
-| nb_NO    | Norština       |
-| nl_NL    | Nizozemština   |
-| pl_PL    | Polština       |
-| pt_PT    | Portugalština  |
-| ro_RO    | Rumunština     |
-| si_SI    | Slovinština    |
-| sk_SK    | Slovenština    |
-| sr_RS    | Srbština       |
-| sv_SE    | Švédština      |
-| uk_UA    | Ukrajinština   |
-| zh_CN    | Čínština       |
+| Místní nastavení | Jazyk | Místní nastavení | Jazyk | Místní nastavení | Jazyk |
+|---|---|---|---|---|---|
+| bg_BG | Bulharština | hi_IN | Hindština | pl_PL | Polština |
+| cz_CZ | Čeština | hr_HR | Chorvatština | pt_PT | Portugalština |
+| da_DK | Dánština | hu_HU | Maďarština | ro_RO | Rumunština |
+| de_DE | Němčina | id_ID | Indonéština | si_SI | Slovinština |
+| en_US | Angličtina | it_IT | Italština | sk_SK | Slovenština |
+| es_ES | Španělština | ja_JP | Japonština | sr_RS | Srbština |
+| et_EE | Estonština | lt_LT | Litevština | sv_SE | Švédština |
+| fi_FI | Finština | lv_LV | Lotyština | uk_UA | Ukrajinština |
+| fr_FR | Francouzština | nb_NO | Norština | zh_CN | Čínština |
+| el_GR | Řečtina | nl_NL | Nizozemština |  |  |
 
 ### Jazyky dokumentace
 Dokumentace je k dispozici v těchto jazycích:

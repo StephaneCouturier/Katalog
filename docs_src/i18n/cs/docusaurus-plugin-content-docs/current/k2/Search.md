@@ -26,7 +26,7 @@ Hlavní funkce této obrazovky jsou:
 * Znovu použít předchozí kritéria z historie vyhledávání.
 * Všechna kritéria vyhledávání jsou uložena a dostupná při příštím otevření Katalogu, kromě samotných výsledků.
 
-![Obrazovka Vyhledávání zobrazující panel kritérií vlevo a výsledky vpravo](/img/screen_search_01.png)
+![Obrazovka Vyhledávání zobrazující panel kritérií vlevo a výsledky vpravo](/img/k2/screen_search_01.png)
 
 ## Zdroj vyhledávání
 
@@ -46,7 +46,7 @@ Tento panel seskupuje všechna kritéria, která upřesňují a snižují počet
 Vztahují se na cesty a názvy souborů, atributy souborů, metadata, štítky a mohou identifikovat duplikáty nebo rozdíly mezi 2 katalogy.
 Výsledky mohou být seznam souborů nebo seznam složek obsahujících odpovídající soubory.
 
-![Panel kritérií vyhledávání zobrazující sekce textu, souboru, metadat, duplikátů a rozdílů](/img/screen_search_02.png)
+![Panel kritérií vyhledávání zobrazující sekce textu, souboru, metadat, duplikátů a rozdílů](/img/k2/screen_search_02.png)
 
 ### Kritéria textu {#search-text-criteria}
 
@@ -60,7 +60,7 @@ Textové pole přijímá více řádků. Každý řádek je zpracován jako nez�
 - Stisknutím **Enter** spustíte vyhledávání.
 - Stisknutím **Shift+Enter** vložíte nový řádek.
 
-![Vyhledávací textové pole zobrazující více řádků použitých jako nezávislé vyhledávací výrazy v logice NEBO](/img/screen_search_05_list_for_file_name.png)
+![Vyhledávací textové pole zobrazující více řádků použitých jako nezávislé vyhledávací výrazy v logice NEBO](/img/k2/screen_search_05_list_for_file_name.png)
 
 Tlačítka vedle textového pole:
 - *Vložit ze schránky* — vloží obsah schránky do vyhledávacího pole.
@@ -129,7 +129,7 @@ Nastavte minimální a/nebo maximální datum změny souboru.
 
 Sekce metadat umožňuje vyhledávání v obsahu vloženém do souborů (vyžaduje, aby byl katalog indexován s rozšířenými metadaty).
 
-![Sekce kritérií metadat zobrazující pole pro text, rozměry obrázku a délku](/img/screen_search_metadata_criteria.png)
+![Sekce kritérií metadat zobrazující pole pro text, rozměry obrázku a délku](/img/k2/screen_search_metadata_criteria.png)
 
 Celou sekci metadat lze zapnout nebo vypnout pomocí zaškrtávacího políčka.
 
@@ -182,7 +182,7 @@ Pro spuštění vyhledávání duplikátů musí být vybráno alespoň jedno po
 
 Najde soubory přítomné v jednom zařízení, ale ne v druhém, nebo se soubory s odlišnými hodnotami atributů — užitečné pro porovnání zdroje se zálohou.
 
-![Sekce kritérií rozdílů zobrazující výběrové prvky zařízení a zaškrtávací políčka atributů](/img/screen_search_03_diff.png)
+![Sekce kritérií rozdílů zobrazující výběrové prvky zařízení a zaškrtávací políčka atributů](/img/k2/screen_search_03_diff.png)
 
 Vyberte dvě zařízení (Virtuální, Úložiště nebo Katalog) k porovnání a zvolte, které atributy definují rozdíl:
 
@@ -212,7 +212,7 @@ Vyhledávání nelze spustit během vytváření katalogu nebo aktualizace zař�
 | Probíhá | *Pauza* | Povoleno |
 | Pozastaveno | *Pokračovat* | Povoleno |
 
-![Stavový řádek zobrazující stav pauzy během operace vyhledávání](/img/screen_search_statusbar_paused.png)
+![Stavový řádek zobrazující stav pauzy během operace vyhledávání](/img/k2/screen_search_statusbar_paused.png)
 
 - **Pauza / Pokračovat** — pozastavit a pokračovat ve vyhledávání bez ztráty průběhu. Není dostupné v paměťovém databázovém režimu.
 - **Zastavit** — zrušit aktuální vyhledávání. Zobrazí se částečné výsledky, které již byly nalezeny.
@@ -304,7 +304,7 @@ Dvě tlačítka umožňují spravovat seznam historie:
 
 Tento panel lze skrýt, aby se ušetřilo místo.
 
-![Panel historie vyhledávání zobrazující předchozí vyhledávání s časovými razítky a kritérii](/img/screen_search_04_search_history.png)
+![Panel historie vyhledávání zobrazující předchozí vyhledávání s časovými razítky a kritérii](/img/k2/screen_search_04_search_history.png)
 
 ## Vývoj
 Některé nápady na vývoj této obrazovky:

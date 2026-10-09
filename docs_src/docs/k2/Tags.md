@@ -20,7 +20,7 @@ Tagging a folder is done in 3 main steps:
 1. Select or create a new Tag,
 1. Click to Tag the Folder.
 
-![Tags screen showing tag assignment interface](/img/screen_tags_01.png)
+![Tags screen showing tag assignment interface](/img/k2/screen_tags_01.png)
 
 ## Assign Tags to directories
 Note: Tag are assigned to an absolute folder path, therefore it is independent of devices hierarchy and Catalogs.

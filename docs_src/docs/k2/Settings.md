@@ -19,7 +19,7 @@ This page describes all the features of the **Settings** screen and how to use t
 * Language & Theme
 * About
 
-![Settings screen overview](/img/screen_settings_01.png)
+![Settings screen overview](/img/k2/screen_settings_01.png)
 
 ## Data & Collection management
 
@@ -43,7 +43,7 @@ Note: changing the mode requires clicking *Apply and restart*.
 ![Data modes diagram](/img/settings_database-model.png)
 
 ### Database Memory mode {#database-memory-mode}
-![Memory mode settings showing the collection folder path and related options](/img/screen_settings_02_memory.png)
+![Memory mode settings showing the collection folder path and related options](/img/k2/screen_settings_02_memory.png)
 
 Collection folder actions:
 * Type the path of the Collection folder and press Enter to load the collection
@@ -57,7 +57,7 @@ Settings for Memory mode:
 * *Start up*: Enable or disable (default) loading the last opened Catalog in the [Explore](Explore) screen
 
 ### Database File mode
-![File mode settings showing the database file path and related options](/img/screen_settings_03_file.png)
+![File mode settings showing the database file path and related options](/img/k2/screen_settings_03_file.png)
 
 Collection file actions:
 * Type the path of the file and press Enter to load the collection
@@ -67,7 +67,7 @@ Collection file actions:
 * *Export to Memory mode (csv)*: export the collection to CSV and index files, to switch to *Memory* mode
 
 ### Database Hosted mode
-![Hosted mode settings showing the server connection fields](/img/screen_settings_05_hosted.png)
+![Hosted mode settings showing the server connection fields](/img/k2/screen_settings_05_hosted.png)
 
 The collection data is saved to a database hosted on a local or network server (MySQL/MariaDB).
 
@@ -117,7 +117,7 @@ Katalog can import devices from another collection, or refresh the catalog conte
 * The **source** collection is an existing Katalog collection opened read-only — it is never modified.
 * The **target** is the current active collection where devices and catalogs are added.
 
-![Settings page showing the an example of imported collection](/img/screen_settings_06_import_collection.png)
+![Settings page showing the an example of imported collection](/img/k2/screen_settings_06_import_collection.png)
 
 **What is imported**
 
@@ -178,13 +178,13 @@ Pictures placed in this folder can then be assigned to storage devices in the [D
 Examples:
 
 - Light desktop / Katalog Colors (light)
-![Light desktop with Katalog Colors light theme](/img/settings-themes-light-desktop-katalog-colors-light.png)
+![Light desktop with Katalog Colors light theme](/img/k2/settings-themes-light-desktop-katalog-colors-light.png)
 
 - Dark desktop / Katalog Colors (dark)
-![Dark desktop with Katalog Colors dark theme](/img/settings-themes-dark-desktop-katalog-colors-dark.png)
+![Dark desktop with Katalog Colors dark theme](/img/k2/settings-themes-dark-desktop-katalog-colors-dark.png)
 
 - Dark desktop / Default Theme
-![Dark desktop with default theme](/img/settings-themes-dark-desktop-default-theme.png)
+![Dark desktop with default theme](/img/k2/settings-themes-dark-desktop-default-theme.png)
 
 ## About
 * Version and Date of the application.

@@ -20,9 +20,9 @@ Katalog crée des <b>index complets pour que vous puissiez rechercher dans toute
 - **Organisez votre collection** : Gérez plusieurs périphériques de stockage et leurs catalogues dans une hiérarchie unifiée
 
 
-![Résultats de recherche dans plusieurs catalogues](/img/screen_search_01.png)
+![Résultats de recherche dans plusieurs catalogues](/img/k2/screen_search_01.png)
 <b>8 onglets principaux pour 8 fonctionnalités principales</b>
-![Les 8 onglets principaux de Katalog](/img/global_tabwidget.png)
+![Les 8 onglets principaux de Katalog](/img/k2/global_tabwidget.png)
 1. [Rechercher](Search) des fichiers sur plusieurs périphériques de stockage **sans avoir besoin de les connecter**
 1. Organiser les [Périphériques](Devices) de stockage et leurs catalogues dans une hiérarchie unifiée avec des périphériques **Virtuels**
 1. [Explorer](Explore) la hiérarchie des catalogues et les fichiers
@@ -41,7 +41,7 @@ Katalog crée des <b>index complets pour que vous puissiez rechercher dans toute
   * Définir le périphérique dans la <b>hiérarchie à utiliser</b> pour *Rechercher*, *Créer* (périphérique parent), *Statistiques* ou la gestion de *Sauvegarde*<br/>
   </div>
   <div className="col col--6" style={{maxWidth: '200px'}}>
-    ![Panneau de sélection](/img/global_selection_panel.png)
+    ![Panneau de sélection](/img/k2/global_selection_panel.png)
   </div>
 </div>
 

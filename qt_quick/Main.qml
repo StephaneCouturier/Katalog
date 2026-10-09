@@ -857,16 +857,6 @@ Kirigami.ApplicationWindow {
                 text: qsTr("Open...")
                 icon.name: "document-open"
                 Kirigami.Action {
-                    icon.name: "folder"
-                    text: qsTr("Collection Folder...")
-                    onTriggered: {
-                        var p = appManager1.getCollectionFolder()
-                        if (p.length > 0)
-                            memoryFolderDialog.currentFolder = appManager1.pathToFileUrl(p)
-                        memoryFolderDialog.open()
-                    }
-                }
-                Kirigami.Action {
                     icon.name: "network-server-database"
                     text: qsTr("SQLite Database...")
                     onTriggered: {
@@ -881,12 +871,27 @@ Kirigami.ApplicationWindow {
                     }
                 }
                 Kirigami.Action {
+                    icon.name: "folder"
+                    text: qsTr("Collection Folder...")
+                    onTriggered: {
+                        var p = appManager1.getCollectionFolder()
+                        if (p.length > 0)
+                            memoryFolderDialog.currentFolder = appManager1.pathToFileUrl(p)
+                        memoryFolderDialog.open()
+                    }
+                }
+                Kirigami.Action {
                     icon.name: "network-workgroup"
                     text: qsTr("Hosted Database...")
                     onTriggered: root.showLayer(settingsPageComponent, { showHostedForm: true })
                 }
                 Kirigami.Action {
                     separator: true
+                    visible: appManager1.recentCollections.length > 0
+                }
+                Kirigami.Action {
+                    text: qsTr("Recent collections")
+                    enabled: false   // title only, not clickable
                     visible: appManager1.recentCollections.length > 0
                 }
                 Kirigami.Action {

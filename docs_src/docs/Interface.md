@@ -1,14 +1,14 @@
 ---
-version: "2.13"
+version: "3.0"
 ---
 
 # Interface
-![2.13](https://img.shields.io/badge/Version-2.13-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
 ## Summary
 This page describes the parts of the Katalog window that are shared by all screens: the drawer, the way pages open side by side, the keyboard shortcuts, the activity panel, the appearance options and the *About* page.
 
-<!-- screenshot: k3/interface_01_overview.png — main window: drawer pinned on the left, Selection page, Search page and Results page side by side -->
+![Main window: drawer pinned on the left, Search page and Results page side by side](/img/interface_01_overview.png)
 
 The window has three areas:
 * the **drawer** on the left, to open a collection and go to any screen,
@@ -32,7 +32,11 @@ The size and position of the window, and whether it is maximized, are restored a
 
 ## Drawer {#drawer}
 
-<!-- screenshot: k3/interface_02_drawer.png — drawer pinned, with the Open... menu unfolded showing the recent collections -->
+<div className="screenshot-side">
+
+![Drawer pinned: the open collection at the top, then the menus and screens](/img/interface_02_drawer.png)
+
+</div>
 
 The top of the drawer shows the **open collection**: an icon for its mode (Memory, File or Hosted) and its name:
 * in *Memory* mode, the name of the collection folder,
@@ -43,7 +47,7 @@ Below it:
 
 | Item | Use |
 |------|-----|
-| *Open...* | Opens a collection: *Collection Folder...* (Memory mode), *SQLite Database...* (File mode) or *Hosted Database...* (Hosted mode). The menu then lists the **10 most recently opened collections**, most recent first: click one to reopen it directly. |
+| *Open...* | Opens a collection, or reopens a recent one: see [Open a collection](#open). |
 | *New...* | Creates a new collection: *SQLite Database...* creates a new database file and opens it. |
 | *Selection* … *Tags* | Open the screen: [Selection](Selection), [Search](Search), [Devices](Devices), [Explore](Explore), [Create](Create), [Backup](BackUp), [Statistics](Statistics), [Tags](Tags). |
 | *Settings* | Opens the [Settings](Settings). |
@@ -51,7 +55,28 @@ Below it:
 | *About* | Opens the [About](#about) page. |
 | *Quit* | Closes Katalog. |
 
+<div className="screenshot-side-end" />
+
+### Open a collection {#open}
+
+<div className="screenshot-side">
+
+![Drawer with the Open... menu unfolded: the three ways to open a collection, then the recent collections, and the two buttons at the bottom](/img/interface_02_drawer_open.png)
+
+</div>
+
+*Open...* unfolds a menu with:
+* *SQLite Database...*: opens a database file (`.db`), in *File* mode,
+* *Collection Folder...*: opens a collection folder, in *Memory* mode,
+* *Hosted Database...*: opens a database on a server, in *Hosted* mode.
+
+<div className="screenshot-side-gap" style={{height: '6rem'}} />
+
+Under *Recent collections*, the menu then lists the **10 most recently opened collections**, most recent first: click one to reopen it directly.
+
 Switching to another collection does not restart Katalog: the collection is opened directly and all screens are refreshed.
+
+<div className="screenshot-side-gap" style={{height: '9rem'}} />
 
 ### Pinned or floating drawer
 The first button at the bottom of the drawer reads *Drawer pinned* or *Drawer floating*:
@@ -59,6 +84,10 @@ The first button at the bottom of the drawer reads *Drawer pinned* or *Drawer fl
 * **floating**: the drawer opens over the pages and closes after a choice.
 
 The choice is kept for the next start.
+
+The second button reads *Selection shown* or *Selection hidden*: see [Show or hide the Selection](#show-hide-selection).
+
+<div className="screenshot-side-end" />
 
 ## Keyboard shortcuts {#keyboard-shortcuts}
 
@@ -73,11 +102,11 @@ How `Esc` works:
 * `Esc` closes the page even when the cursor is in a text field.
 * On the device edit page and on the [Create](Create) page, `Esc` discards what was typed, like *Cancel* and *Close*. There is no confirmation.
 
-Keyboard navigation in the search results is described on the [Search](Search) page.
+Keyboard navigation in the search results is described on the [Search results](SearchResults#keyboard) page.
 
 ## Activity panel {#activity-panel}
 
-<!-- screenshot: k3/interface_03_activity_panel.png — activity panel at the bottom: a device update running, with the queue showing one waiting update -->
+![Activity panel at the bottom: a device update running, with the queue showing one waiting update](/img/interface_03_activity_panel.png)
 
 The activity panel appears at the bottom of the pages while a **catalog creation**, a **device update** or a **search** is running. It is the one place to follow these operations, whichever page is open:
 * the status message shows what is being processed and how far it has got,
@@ -106,7 +135,7 @@ Buttons that show only an icon display their name when the mouse pointer stays o
 
 ## About {#about}
 
-<!-- screenshot: k3/interface_04_about.png — About page with the "Copy version and system information" action -->
+![About page with the "Copy version and system information" action](/img/interface_04_about.png)
 
 The *About* page shows the version of Katalog, its licence and its author.
 

@@ -16,7 +16,7 @@ Sans avoir besoin de l'interface graphique, certaines tâches peuvent donc être
 
 Ces commandes fonctionnent actuellement uniquement sous **Linux**.
 
-![Sortie de l'aide en ligne de commande affichant les actions et options disponibles](/img/commandlines_01_help.png)
+![Sortie de l'aide en ligne de commande affichant les actions et options disponibles](/img/k2/commandlines_01_help.png)
 
 ## Synopsis
 
@@ -41,7 +41,7 @@ Liste tous les catalogues avec leur ID, état actif et nom.
 ./Katalog.sh list_catalogs --verbose
 ```
 
-![Sortie en ligne de commande listant tous les catalogues avec leur ID, état et nom](/img/commandlines_02_list.png)
+![Sortie en ligne de commande listant tous les catalogues avec leur ID, état et nom](/img/k2/commandlines_02_list.png)
 
 ### `update_catalog`
 Met à jour un catalogue spécifique par ID de périphérique.
@@ -58,7 +58,7 @@ Met à jour un catalogue spécifique par ID de périphérique.
 ```bash
 ./Katalog.sh update_catalog 5
 ```
-![Sortie en ligne de commande après la mise à jour d'un catalogue spécifique](/img/commandlines_03_catalog.png)
+![Sortie en ligne de commande après la mise à jour d'un catalogue spécifique](/img/k2/commandlines_03_catalog.png)
 
 ### `update_all_active`
 Met à jour tous les catalogues actifs dans la collection.
@@ -72,7 +72,7 @@ Met à jour tous les catalogues actifs dans la collection.
 ```bash
 ./Katalog.sh update_all_active --verbose
 ```
-![Sortie en ligne de commande après la mise à jour de tous les catalogues actifs](/img/commandlines_04_all.png)
+![Sortie en ligne de commande après la mise à jour de tous les catalogues actifs](/img/k2/commandlines_04_all.png)
 
 ### `search`
 Exécute une recherche en utilisant les derniers critères de recherche de l'historique, avec des remplacements optionnels.

@@ -14,9 +14,9 @@ Katalog crée des <b>index complets pour que vous puissiez rechercher dans toute
 - **Organisez votre collection** : Gérez plusieurs périphériques de stockage et leurs catalogues dans une hiérarchie unifiée
 
 
-![Résultats de recherche dans plusieurs catalogues](/img/screen_search_01.png)
+![Résultats de recherche dans plusieurs catalogues](/img/k2/screen_search_01.png)
 <b>8 onglets principaux pour 8 fonctionnalités principales</b>
-![Les 8 onglets principaux de Katalog](/img/global_tabwidget.png)
+![Les 8 onglets principaux de Katalog](/img/k2/global_tabwidget.png)
 1. [Rechercher](Search) des fichiers sur plusieurs périphériques de stockage **sans avoir besoin de les connecter**
 1. Organiser les [Périphériques](Devices) de stockage et leurs catalogues dans une hiérarchie unifiée avec des périphériques **Virtuels**
 1. [Explorer](Explore) la hiérarchie des catalogues et les fichiers
@@ -35,7 +35,7 @@ Katalog crée des <b>index complets pour que vous puissiez rechercher dans toute
   * Définir le périphérique dans la <b>hiérarchie à utiliser</b> pour *Rechercher*, *Créer* (périphérique parent), *Statistiques* ou la gestion de *Sauvegarde*<br/>
   </div>
   <div className="col col--6" style={{maxWidth: '200px'}}>
-    ![Panneau de sélection](/img/global_selection_panel.png)
+    ![Panneau de sélection](/img/k2/global_selection_panel.png)
   </div>
 </div>
 
@@ -108,37 +108,18 @@ Une version héritée (v2.5, Qt6 pur, sans dépendances KF6) est également disp
 ### Langues de l'application
 Katalog est disponible en :
 
-| Locale   | Langue       |
-|----------|--------------|
-| bg_BG    | Bulgare      |
-| cz_CZ    | Tchèque      |
-| da_DK    | Danois       |
-| de_DE    | Allemand     |
-| en_US    | Anglais      |
-| es_ES    | Espagnol     |
-| et_EE    | Estonien     |
-| fi_FI    | Finnois      |
-| fr_FR    | Français     |
-| el_GR    | Grec         |
-| hi_IN    | Hindi        |
-| hr_HR    | Croate       |
-| hu_HU    | Hongrois     |
-| id_ID    | Indonésien   |
-| it_IT    | Italien      |
-| ja_JP    | Japonais     |
-| lt_LT    | Lituanien    |
-| lv_LV    | Letton       |
-| nb_NO    | Norvégien    |
-| nl_NL    | Néerlandais  |
-| pl_PL    | Polonais     |
-| pt_PT    | Portugais    |
-| ro_RO    | Roumain      |
-| si_SI    | Slovène      |
-| sk_SK    | Slovaque     |
-| sr_RS    | Serbe        |
-| sv_SE    | Suédois      |
-| uk_UA    | Ukrainien    |
-| zh_CN    | Chinois      |
+| Locale | Langue | Locale | Langue | Locale | Langue |
+|---|---|---|---|---|---|
+| bg_BG | Bulgare | hi_IN | Hindi | pl_PL | Polonais |
+| cz_CZ | Tchèque | hr_HR | Croate | pt_PT | Portugais |
+| da_DK | Danois | hu_HU | Hongrois | ro_RO | Roumain |
+| de_DE | Allemand | id_ID | Indonésien | si_SI | Slovène |
+| en_US | Anglais | it_IT | Italien | sk_SK | Slovaque |
+| es_ES | Espagnol | ja_JP | Japonais | sr_RS | Serbe |
+| et_EE | Estonien | lt_LT | Lituanien | sv_SE | Suédois |
+| fi_FI | Finnois | lv_LV | Letton | uk_UA | Ukrainien |
+| fr_FR | Français | nb_NO | Norvégien | zh_CN | Chinois |
+| el_GR | Grec | nl_NL | Néerlandais |  |  |
 
 ### Langues de la documentation
 La documentation est disponible en :

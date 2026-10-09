@@ -17,7 +17,7 @@ Cílem této obrazovky je **prozkoumat obsah katalogu souborů**, i když fyzick
 
 Toto zobrazení načte data po kliknutí pravým tlačítkem na katalog z panelu **[Výběr](Selection)** nebo zobrazení seznamu **[Katalogy](DevicesCatalogs)** a výběru položky *Prozkoumat* z kontextové nabídky.
 
-![Obrazovka Prozkoumat zobrazující stromové zobrazení adresářů vlevo a seznam souborů vpravo](/img/explore_01.png)
+![Obrazovka Prozkoumat zobrazující stromové zobrazení adresářů vlevo a seznam souborů vpravo](/img/k2/explore_01.png)
 
 ## Funkce
 
@@ -63,7 +63,7 @@ Tři možnosti ovládají, co se zobrazuje v seznamu souborů:
 
 Kliknutí pravým tlačítkem na adresář v levém panelu zobrazí:
 
-![Kontextová nabídka adresáře s možností označit složku](/img/explore_02_context.png)
+![Kontextová nabídka adresáře s možností označit složku](/img/k2/explore_02_context.png)
 
 - *Označit tuto složku* — otevře obrazovku [Štítky](Tags) s předvyplněnou touto složkou pro přiřazení štítku.
 
@@ -71,7 +71,7 @@ Kliknutí pravým tlačítkem na adresář v levém panelu zobrazí:
 
 Kliknutí pravým tlačítkem na položku v pravém panelu zobrazí kontextovou nabídku přizpůsobenou typu vybrané položky.
 
-![Kontextová nabídka souborů zobrazující operace: otevřít, kopírovat, kontrolní součet a smazat](/img/explore_03_context.png)
+![Kontextová nabídka souborů zobrazující operace: otevřít, kopírovat, kontrolní součet a smazat](/img/k2/explore_03_context.png)
 
 ### Pro soubory
 

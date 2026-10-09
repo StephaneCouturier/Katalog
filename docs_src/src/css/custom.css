@@ -28,3 +28,32 @@
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
+
+/* Vertical gap beside a side screenshot, to line text up with a lower part of the
+   picture: <div className="screenshot-side-gap" style={{height: '10rem'}} />.
+   Hidden when the picture stacks above the text (narrow screens). */
+.screenshot-side-gap {
+  overflow: hidden;
+}
+
+/* Narrow screenshot (e.g. the drawer) shown on the left, text flowing beside it.
+   Usage in a page: <div className="screenshot-side"> + image, then
+   <div className="screenshot-side-end" /> where the text should continue below it. */
+.screenshot-side {
+  float: left;
+  max-width: 40%;
+  margin: 0.25rem 1.5rem 1rem 0;
+}
+.screenshot-side-end {
+  clear: both;
+}
+@media (max-width: 600px) {
+  .screenshot-side-gap {
+    display: none;
+  }
+  .screenshot-side {
+    float: none;
+    max-width: 100%;
+    margin-right: 0;
+  }
+}

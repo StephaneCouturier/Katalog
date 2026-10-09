@@ -15,7 +15,7 @@ This page describes all the features of the **Device Tree** view of the [Devices
 
 The Device Tree shows the complete hierarchy of all devices — Physical Group with its storage devices and catalogs, and all Virtual Groups with their assigned catalogs.
 
-![Device Tree showing the full hierarchy of physical and virtual devices](/img/devices_tree_01.png)
+![Device Tree showing the full hierarchy of physical and virtual devices](/img/k2/devices_tree_01.png)
 
 ## Display options
 
@@ -45,7 +45,7 @@ Right-clicking on any device in the tree opens a context menu whose entries depe
 
 ### Catalog devices
 
-![Context menu for a catalog in the Physical Group](/img/devices_tree_02_context_phy_virt.png)
+![Context menu for a catalog in the Physical Group](/img/k2/devices_tree_02_context_phy_virt.png)
 
 | Action | Condition | Description |
 |--------|-----------|-------------|
@@ -60,7 +60,7 @@ Right-clicking on any device in the tree opens a context menu whose entries depe
 
 ### Storage devices
 
-![Context menu for a storage device in the tree](/img/devices_tree_03_context_phy_storage.png)
+![Context menu for a storage device in the tree](/img/k2/devices_tree_03_context_phy_storage.png)
 
 | Action | Condition | Description |
 |--------|-----------|-------------|
@@ -75,8 +75,8 @@ Right-clicking on any device in the tree opens a context menu whose entries depe
 
 Virtual Groups and Virtual devices share the same context menu, with slight variations:
 
-![Context menu for a virtual device in the Physical Group](/img/devices_tree_03_context_vir_virtual.png)
-![Context menu for a virtual device in a Virtual Group showing catalog assignment](/img/devices_tree_03_context_vir_catalog.png)
+![Context menu for a virtual device in the Physical Group](/img/k2/devices_tree_03_context_vir_virtual.png)
+![Context menu for a virtual device in a Virtual Group showing catalog assignment](/img/k2/devices_tree_03_context_vir_catalog.png)
 
 | Action | Condition | Description |
 |--------|-----------|-------------|
@@ -90,8 +90,8 @@ Virtual Groups and Virtual devices share the same context menu, with slight vari
 
 Assigning and unassigning catalogs to virtual groups:
 
-![Assigning a catalog to a virtual device](/img/devices_tree_03_context_vir_assign.png)
-![Unassigning a catalog from a virtual device](/img/devices_tree_03_context_vir_unassign.png)
+![Assigning a catalog to a virtual device](/img/k2/devices_tree_03_context_vir_assign.png)
+![Unassigning a catalog from a virtual device](/img/k2/devices_tree_03_context_vir_unassign.png)
 
 - *Assign selected catalog*: assigns the catalog currently selected in the [Selection](Selection) panel to the chosen virtual device.
 - *Unassign this catalog*: available in the catalog's own context menu when the catalog is in a Virtual Group — removes the assignment without deleting the catalog.

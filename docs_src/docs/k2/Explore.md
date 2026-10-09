@@ -17,7 +17,7 @@ The objective of this screen is to **explore the contents of a catalog of files*
 
 This view loads data after a right-click on a catalog from the **[Selection](Selection)** panel or the **[Catalogs](DevicesCatalogs)** list view, and choosing the context menu entry *Explore*.
 
-![Explore screen showing the directory tree on the left and the file list on the right](/img/explore_01.png)
+![Explore screen showing the directory tree on the left and the file list on the right](/img/k2/explore_01.png)
 
 ## Features
 
@@ -63,7 +63,7 @@ Three options control what appears in the file list:
 
 Right-clicking on a directory in the left panel shows:
 
-![Directory context menu with the option to tag the folder](/img/explore_02_context.png)
+![Directory context menu with the option to tag the folder](/img/k2/explore_02_context.png)
 
 - *Tag this folder* — opens the [Tags](Tags) screen with this folder pre-filled, to assign a tag to it.
 
@@ -71,7 +71,7 @@ Right-clicking on a directory in the left panel shows:
 
 Right-clicking on an entry in the right panel shows a context menu that adapts to the type of entry selected.
 
-![File context menu showing file operations including open, copy, checksum and delete actions](/img/explore_03_context.png)
+![File context menu showing file operations including open, copy, checksum and delete actions](/img/k2/explore_03_context.png)
 
 ### For files
 

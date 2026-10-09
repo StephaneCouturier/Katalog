@@ -8,7 +8,7 @@ version: "2.13"
 Cette page décrit toutes les fonctionnalités de l'écran **BackUp** et comment les utiliser.<br/>
 Depuis cet écran, l'utilisateur peut **gérer les sauvegardes de catalogue (copie) ou l'archivage (déplacement)**.<br/>
 
-![Écran principal BackUp](/img/screen_backup_01.png)
+![Écran principal BackUp](/img/k2/screen_backup_01.png)
 
 ## Concepts principaux
 
@@ -127,14 +127,14 @@ Le panneau *Créer un lien* peut être replié ou déplié à l'aide du bouton b
 
 #### Exemple et catalogues
 Objectif : créer un lien entre la source sur le disque local et la cible sur un disque externe.
-![Exemple de périphériques source et cible](/img/screen_backup_1_devices.png)
+![Exemple de périphériques source et cible](/img/k2/screen_backup_1_devices.png)
 
 #### Sélectionner la source et la cible
 - Avec le panneau Sélection et les 2 boutons "Charger les catalogues" pour la source et la cible, obtenez la liste des catalogues disponibles.
 - Le bouton "sans liens" permet de limiter le nombre de catalogues affichés, en n'affichant que les catalogues qui n'ont pas encore de lien en tant que source (ou cible).
 - Sélectionnez une source et une cible.
 
-![Sélection de la source et de la cible](/img/screen_backup_2_select_source_target.png)
+![Sélection de la source et de la cible](/img/k2/screen_backup_2_select_source_target.png)
 
 
 #### Définir le nom, les options et créer
@@ -144,11 +144,11 @@ Objectif : créer un lien entre la source sur le disque local et la cible sur un
 - Définir le comportement en cas de détection de conflit
 - Créer le lien
 
-![Création du lien](/img/screen_backup_4_create_mapping.png)
+![Création du lien](/img/k2/screen_backup_4_create_mapping.png)
 
 #### Comparer la source et la cible de sauvegarde
 - Le lien apparaît dans la liste et la couverture est calculée.
-![Comparaison source et cible](/img/screen_backup_5_comparison.png)
+![Comparaison source et cible](/img/k2/screen_backup_5_comparison.png)
 
 ### Filtres de la liste des liens
 

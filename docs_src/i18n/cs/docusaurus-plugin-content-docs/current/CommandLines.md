@@ -10,7 +10,7 @@ Bez potřeby grafického rozhraní lze tedy automatizovat některé úkoly.
 
 Tyto příkazy aktuálně fungují pouze pod **Linuxem**.
 
-![Výstup nápovědy příkazové řádky zobrazující dostupné akce a možnosti](/img/commandlines_01_help.png)
+![Výstup nápovědy příkazové řádky zobrazující dostupné akce a možnosti](/img/k2/commandlines_01_help.png)
 
 ## Syntaxe
 
@@ -35,7 +35,7 @@ Vypíše všechny katalogy s jejich ID, aktivním stavem a názvem.
 ./Katalog.sh list_catalogs --verbose
 ```
 
-![Výstup příkazové řádky se seznamem všech katalogů s ID, stavem a názvem](/img/commandlines_02_list.png)
+![Výstup příkazové řádky se seznamem všech katalogů s ID, stavem a názvem](/img/k2/commandlines_02_list.png)
 
 ### `update_catalog`
 Aktualizuje konkrétní katalog podle ID zařízení.
@@ -52,7 +52,7 @@ Aktualizuje konkrétní katalog podle ID zařízení.
 ```bash
 ./Katalog.sh update_catalog 5
 ```
-![Výstup příkazové řádky po aktualizaci konkrétního katalogu](/img/commandlines_03_catalog.png)
+![Výstup příkazové řádky po aktualizaci konkrétního katalogu](/img/k2/commandlines_03_catalog.png)
 
 ### `update_all_active`
 Aktualizuje všechny aktivní katalogy v kolekci.
@@ -66,7 +66,7 @@ Aktualizuje všechny aktivní katalogy v kolekci.
 ```bash
 ./Katalog.sh update_all_active --verbose
 ```
-![Výstup příkazové řádky po aktualizaci všech aktivních katalogů](/img/commandlines_04_all.png)
+![Výstup příkazové řádky po aktualizaci všech aktivních katalogů](/img/k2/commandlines_04_all.png)
 
 ### `search`
 Provede vyhledávání pomocí posledních kritérií vyhledávání z historie, s volitelnými přepsáními.

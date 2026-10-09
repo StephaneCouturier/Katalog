@@ -18,7 +18,7 @@ It is done in 3 main steps:
 1. Select options to include or exclude some particular files.
 1. Select the [Storage](DevicesStorage) and define the catalog name, and create the catalog.
 
-![Create screen overview](/img/screen_create_01.png)
+![Create screen overview](/img/k2/screen_create_01.png)
 
 ## Select the Source path
 There are 3 ways to  select the source path of the directory with the files to be included in the new [Catalog](DevicesCatalogs):
@@ -129,7 +129,7 @@ The exclusion uses **text matching**: any file or folder whose full path **conta
 
 The matching is **case-sensitive**.
 
-![Global exclude directories list showing example entries](/img/screen_create_04_exclude.png)
+![Global exclude directories list showing example entries](/img/k2/screen_create_04_exclude.png)
 
 ### Exclude folders (per catalog)
 
@@ -166,7 +166,7 @@ Once the process is completed,
 - A message confirms the creation and provides the number of files and total file size of the selected folder for this catalog.
 - your local drive, (a Storage device which was added automatically) was also updated, and the message provides a view of free, used, and total space:
 
-![Catalog creation confirmation with file count and storage space summary](/img/screen_create_02.png)
+![Catalog creation confirmation with file count and storage space summary](/img/k2/screen_create_02.png)
 
 the [Devices](DevicesTree) screen will be display to show the Catalog in the device tree.
 

@@ -40,6 +40,10 @@ const config: Config = {
     mermaid: true,
     hooks: {
       onBrokenMarkdownLinks: 'warn',
+      // K3 doc pass (#803): a screenshot not taken yet is written as a normal
+      // image whose alt text describes it. The page shows that text in place of
+      // the picture, and each build lists the screenshots still missing.
+      onBrokenMarkdownImages: 'warn',
     },
   },
   themes: ['@docusaurus/theme-mermaid'],

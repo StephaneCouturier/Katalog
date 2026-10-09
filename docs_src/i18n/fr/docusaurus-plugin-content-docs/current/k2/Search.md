@@ -26,7 +26,7 @@ Les principales fonctionnalités de cet écran sont :
 * Réutiliser les critères précédents depuis l'historique de recherche.
 * Tous les critères de recherche sont enregistrés et disponibles lors de la prochaine ouverture de Katalog, à l'exception des résultats eux-mêmes.
 
-![Écran Rechercher affichant le panneau de critères à gauche et les résultats à droite](/img/screen_search_01.png)
+![Écran Rechercher affichant le panneau de critères à gauche et les résultats à droite](/img/k2/screen_search_01.png)
 
 ## Source de recherche
 
@@ -46,7 +46,7 @@ Ce panneau regroupe tous les critères qui affinent et réduisent le nombre de r
 Ils s'appliquent aux chemins et noms de fichiers, aux attributs de fichiers, aux métadonnées, aux étiquettes, et peuvent identifier des doublons ou des différences entre 2 catalogues.
 Les résultats peuvent être une liste de fichiers, ou une liste de dossiers contenant les fichiers correspondants.
 
-![Panneau des critères de recherche affichant les sections texte, fichier, métadonnées, doublons et différences](/img/screen_search_02.png)
+![Panneau des critères de recherche affichant les sections texte, fichier, métadonnées, doublons et différences](/img/k2/screen_search_02.png)
 
 ### Critères de texte {#search-text-criteria}
 
@@ -60,7 +60,7 @@ Le champ de texte accepte plusieurs lignes. Chaque ligne est traitée comme un t
 - Appuyer sur **Entrée** pour lancer la recherche.
 - Appuyer sur **Maj+Entrée** pour insérer un nouveau ligne.
 
-![Champ de texte de recherche affichant plusieurs lignes utilisées comme termes de recherche indépendants en logique OU](/img/screen_search_05_list_for_file_name.png)
+![Champ de texte de recherche affichant plusieurs lignes utilisées comme termes de recherche indépendants en logique OU](/img/k2/screen_search_05_list_for_file_name.png)
 
 Boutons à côté du champ de texte :
 - *Coller depuis le presse-papiers* — colle le contenu du presse-papiers dans le champ de recherche.
@@ -129,7 +129,7 @@ Définir une date de modification minimale et/ou maximale.
 
 La section de métadonnées permet de rechercher dans le contenu embarqué dans les fichiers (nécessite que le catalogue ait été indexé avec les métadonnées étendues).
 
-![Section des critères de métadonnées affichant les champs de texte, les dimensions d'image et la durée](/img/screen_search_metadata_criteria.png)
+![Section des critères de métadonnées affichant les champs de texte, les dimensions d'image et la durée](/img/k2/screen_search_metadata_criteria.png)
 
 Toute la section de métadonnées peut être activée ou désactivée avec sa case à cocher.
 
@@ -182,7 +182,7 @@ Au moins un champ doit être sélectionné pour lancer une recherche de doublons
 
 Trouver les fichiers présents dans un périphérique mais pas dans l'autre, ou avec des valeurs d'attributs différentes — utile pour comparer une source avec une sauvegarde.
 
-![Section des critères de différences affichant les sélecteurs de périphériques et les cases à cocher des attributs](/img/screen_search_03_diff.png)
+![Section des critères de différences affichant les sélecteurs de périphériques et les cases à cocher des attributs](/img/k2/screen_search_03_diff.png)
 
 Sélectionner deux périphériques (Virtuel, Stockage ou Catalogue) à comparer, et choisir les attributs qui définissent une différence :
 
@@ -212,7 +212,7 @@ Une recherche ne peut pas être lancée pendant la création d'un catalogue ou l
 | En cours | *Pause* | Activé |
 | En pause | *Reprendre* | Activé |
 
-![Barre de statut affichant l'état de pause pendant une opération de recherche](/img/screen_search_statusbar_paused.png)
+![Barre de statut affichant l'état de pause pendant une opération de recherche](/img/k2/screen_search_statusbar_paused.png)
 
 - **Pause / Reprendre** — suspendre et continuer la recherche sans perdre la progression. Non disponible en mode base de données Mémoire.
 - **Arrêter** — annuler la recherche en cours. Les résultats partiels déjà trouvés sont affichés.
@@ -304,7 +304,7 @@ Deux boutons permettent de gérer la liste de l'historique :
 
 Ce panneau peut être masqué pour économiser de l'espace.
 
-![Panneau d'historique des recherches affichant les recherches précédentes avec horodatages et critères](/img/screen_search_04_search_history.png)
+![Panneau d'historique des recherches affichant les recherches précédentes avec horodatages et critères](/img/k2/screen_search_04_search_history.png)
 
 ## Développement
 Quelques idées d'évolutions pour cet écran :

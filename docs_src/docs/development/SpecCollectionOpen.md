@@ -98,6 +98,8 @@ Observable behaviour that can be triggered and watched.
 | OPN-F6 | A database file created from Settings receives the same `.db` extension handling as the first-run path: the extension is appended when the user did not type it. | [Implemented] |
 | OPN-F7 | The K3 drawer's **Open** menu lists up to 10 recently opened collections, most recent first; reopening a collection already in the list moves it to the top rather than adding a duplicate. | [Implemented] |
 | OPN-F8 | When a collection has no Storage device, opening it creates a default "Local disk" Storage device. Its parent is device 2 ("Virtual device") when device 2 exists in the physical group, otherwise device 1 (Physical Group). A new collection is unchanged: devices 1 and 2 are created first, so "Local disk" stays under "Virtual device". (`Collection::insertPhysicalStorageGroup`, `Device::verifyParentDeviceExistsInPhysicalGroup`; found 2026-10-04: the check queried a non-existent `group_id` column, so with device 2 absent "Local disk" became its own parent and opening hung — see `OPN-C7`.) | [Implemented] |
+| OPN-F9 | The K3 drawer's **Open** menu offers its open actions in this order: *SQLite Database...*, *Collection Folder...*, *Hosted Database...*. | [Planned] |
+| OPN-F10 | When the recent-collections list of `OPN-F7` is non-empty, it is headed by a non-clickable title *Recent collections*. Title and separator are hidden together when the list is empty. The open actions carry no title. | [Planned] |
 
 ## Constructional requirements — *how it is built / limits / MUST-NOTs*
 
@@ -110,7 +112,7 @@ Boundaries and implementation constraints, not user-visible behaviour.
 | OPN-C3 | An empty `databaseFilePath` MUST remain a legal *"not configured yet"* state that `Database::initialize` returns cleanly from, with no error. `OPN-F3` depends on it: cancelling leaves the path empty and the application must still start. It MUST NOT be turned into an error condition. | [Implemented] |
 | OPN-C4 | K2 is in maintenance mode. This is repair of the existing flow only: no redesign of the first-run sequence, no new dialog, no new source file. | [Implemented] |
 | OPN-C5 | The `.db` extension of `OPN-F6` is **required for correctness, not cosmetic**. A File-mode collection is located by scanning a folder for `*.db`: `Collection::validateCollectionFolder` (`core/collection.cpp`) and the command-line collection resolver (`core/commandline.cpp`) both do this. An extensionless database file is therefore classified as user data rather than a collection, and `--collection <dir>` reports that no `.db` file was found. The extension MUST NOT be treated as a naming preference that a creation path may skip. | [Implemented] |
-| OPN-C6 | The recent-collections list of `OPN-F7` is persisted in the settings file under the existing `Recent/count` and `Recent/N/*` keys. A beta1/beta2 settings file holding up to 5 entries MUST still be read without loss or error. No new user-visible string is added. | [Implemented] |
+| OPN-C6 | The recent-collections list of `OPN-F7` is persisted in the settings file under the existing `Recent/count` and `Recent/N/*` keys. A beta1/beta2 settings file holding up to 5 entries MUST still be read without loss or error. The persistence of the list adds no user-visible string; the heading of `OPN-F10` is its one approved string. | [Implemented] |
 | OPN-C7 | A device that Katalog creates MUST NOT be its own parent or its own ancestor. The recursive sub-device query (`Device::loadSubDeviceList`) does not terminate on a cycle, so a cycle hangs every open of the collection. | [Implemented] |
 
 ---
@@ -159,6 +161,11 @@ version, (K3) to the Qt Quick version.
   shows the 10 most recent, newest first, and the oldest has dropped off. Then
   reopen one from the middle of the list: it moves to the top and appears once.
   Then start with an existing 5-entry beta settings file: all 5 entries still appear.
+- **OPN-F9** (K3) — Open the drawer's **Open** menu. The open actions appear in
+  this order: *SQLite Database...*, *Collection Folder...*, *Hosted Database...*.
+- **OPN-F10** (K3) — With an empty recent list, the **Open** menu shows no title
+  and no separator. With 1 or more entries, the title *Recent collections* shows
+  above them, and clicking it does nothing.
 - **OPN-O4 / OPN-F8 / OPN-C7** (K2, K3) — Open a File-mode collection whose
   device table holds only device 1 (Physical Group). It opens, and "Local disk" is
   listed under the Physical Group (parent 1). Then create a new collection:

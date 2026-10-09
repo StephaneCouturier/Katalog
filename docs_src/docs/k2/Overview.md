@@ -20,9 +20,9 @@ Katalog creates comprehensive <b>indexes so you can search your entire file coll
 - **Organize the collection**: Manage multiple storage devices and their catalogs in a unified hierarchy
 
 
-![Search results across multiple catalogs](/img/screen_search_01.png)
+![Search results across multiple catalogs](/img/k2/screen_search_01.png)
 <b>8 main tabs for 8 main features</b>
-![Katalog's 8 main tabs](/img/global_tabwidget.png)
+![Katalog's 8 main tabs](/img/k2/global_tabwidget.png)
 1. [Search](Search) files across multiple storage devices **without needing them connected**
 1. Organize storage [Devices](Devices) and their catalogs in a unified hierarchy with **Virtual** devices
 1. [Explore](Explore) the catalogs' hierarchy and files
@@ -41,7 +41,7 @@ Katalog creates comprehensive <b>indexes so you can search your entire file coll
   * Set the device in the <b>hierarchy to be used</b> for Search, Create (parent device), Statistics, or BackUp management<br/>
   </div>
   <div className="col col--6" style={{maxWidth: '200px'}}>
-    ![Selection panel](/img/global_selection_panel.png)
+    ![Selection panel](/img/k2/global_selection_panel.png)
   </div>
 </div>
 

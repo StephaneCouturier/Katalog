@@ -16,7 +16,7 @@ This page describes all the features of the **Catalogs list** view of the [Devic
 A *Catalog* is an index of files from a given directory referred to as the catalog **path**.<br/>
 The **Catalogs list** displays all catalogs of the [Collection](Settings#collection), filtered according to the [Selection](Selection).
 
-![Catalog list showing catalog names, paths, file counts and storage devices](/img/devices_catalogs_01.png)
+![Catalog list showing catalog names, paths, file counts and storage devices](/img/k2/devices_catalogs_01.png)
 
 ## List and selection
 The list of catalogs can be narrowed down using the **[Selection](Selection)** left panel.
@@ -41,7 +41,7 @@ The *All active* button is only available in the **Catalog list** view. It is di
 
 Right-clicking on a catalog in the list opens a context menu:
 
-![Catalog context menu showing available actions](/img/devices_catalogs_02_context2.png)
+![Catalog context menu showing available actions](/img/k2/devices_catalogs_02_context2.png)
 
 | Action | Condition | Description |
 |--------|-----------|-------------|
@@ -84,7 +84,7 @@ Before splitting, a dialog offers:
 
 The edit panel gives access to modify the following fields:
 
-![Edit panel for a catalog showing all configurable fields](/img/devices_catalogs_03_edit.png)
+![Edit panel for a catalog showing all configurable fields](/img/k2/devices_catalogs_03_edit.png)
 
 | Field | Description |
 |-------|-------------|

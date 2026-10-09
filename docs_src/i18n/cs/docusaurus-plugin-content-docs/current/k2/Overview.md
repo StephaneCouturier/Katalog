@@ -20,9 +20,9 @@ Katalog vytváří komplexní <b>indexy, abyste mohli prohledávat celou svou ko
 - **Organizujte svou kolekci**: Spravujte více úložných zařízení a jejich katalogy v jednotné hierarchii
 
 
-![Výsledky vyhledávání napříč více katalogy](/img/screen_search_01.png)
+![Výsledky vyhledávání napříč více katalogy](/img/k2/screen_search_01.png)
 <b>8 hlavních záložek pro 8 hlavních funkcí</b>
-![8 hlavních záložek Katalog](/img/global_tabwidget.png)
+![8 hlavních záložek Katalog](/img/k2/global_tabwidget.png)
 1. [Hledat](Search) soubory napříč více úložnými zařízeními **bez nutnosti jejich připojení**
 1. Organizovat úložná [Zařízení](Devices) a jejich katalogy v jednotné hierarchii s **Virtuálními** zařízeními
 1. [Procházet](Explore) hierarchii katalogů a soubory
@@ -41,7 +41,7 @@ Katalog vytváří komplexní <b>indexy, abyste mohli prohledávat celou svou ko
   * Nastavte zařízení v <b>hierarchii, která se má použít</b> pro *Hledat*, *Vytvořit* (nadřazené zařízení), *Statistiky* nebo správu *Zálohy*<br/>
   </div>
   <div className="col col--6" style={{maxWidth: '200px'}}>
-    ![Panel výběru](/img/global_selection_panel.png)
+    ![Panel výběru](/img/k2/global_selection_panel.png)
   </div>
 </div>
 

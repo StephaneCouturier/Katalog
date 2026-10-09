@@ -223,6 +223,29 @@ later.
 
 ---
 
+## Collection import — no report after *Import* (K3)
+
+**Identified:** 2026-10-04 (K3 Settings user page)
+**Affects:** K3 (`qt_quick/PageSettings.qml`, `AppManager::importDevice`, `AppManager::updateAllImportsFromSource`)
+**Related requirements:** `SpecCollection.md` (#780 update report)
+
+This is a **note, not a requirement.** Nothing below is authorised work. The maintainer
+asked on 2026-10-04 to log it as a gap to close.
+
+In K3, *Collection Import & Synchronization* shows a summary message (catalogs updated,
+files and size before/after) only after **Update** (`importReportText` is set in
+`updateAllImportsFromSource` only). After **Import**, the user gets the progress-panel
+status but no summary of what was added.
+
+This is not a K2 parity gap: K2 shows neither summary, only a status-bar message for
+both actions. The K3 update report is itself a K3 addition (#780).
+
+**To close it:** show, after an Import, a summary of what was added (for example
+devices, catalogs, files and total size imported), in the same message area as the
+update report. Needs an approved requirement and its new strings.
+
+---
+
 ## Device tree — self-parented default storage
 
 **Identified:** 2026-10-04

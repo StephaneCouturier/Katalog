@@ -16,7 +16,7 @@ This page describes all the features of the **Selection** panel, the left part o
 * With the mode *Search in file catalogs*, the selection will filter information for the [Search](Search), [Devices](Devices), [Create](Create), and [Statistics](Statistics) screens.
 * With the mode *Search in connected drives*, a directory directly from connected devices can be selected. This is only used for the [Search](Search) screen.
 
-![Selection panel showing device tree and selection controls](/img/selection_01.png)
+![Selection panel showing device tree and selection controls](/img/k2/selection_01.png)
 
 ## Interface
 Top buttons:
@@ -49,4 +49,4 @@ With this option, a search can be done directly in any directory of a connected/
 
 Use the *Pick path* button or the directory tree to select the folder to search in.
 
-![Selection panel in connected drives mode showing the directory tree and path selection](/img/selection_02.png)
+![Selection panel in connected drives mode showing the directory tree and path selection](/img/k2/selection_02.png)

@@ -1,47 +1,52 @@
 ---
 sidebar_position: 1
-version: "2.13"
+version: "3.0"
 ---
 
 # Tutorial
-![2.13](https://img.shields.io/badge/Version-2.13-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
-Let's discover **Katalog in less than 5 minutes**.
+Let's discover **Katalog in less than 5 minutes**: create a collection, catalog a folder, and search in it.
 
-## Download
-For Linux, the best option is [Flatpak from Flathub](https://flathub.org/en/apps/io.github.stephanecouturier.Katalog).
-<br/>otherwise [Download latest version](https://sourceforge.net/projects/katalogg/files/latest/download) from SourceForge. Your Operating System (Linux, Windows, or macOS) should be detected.
+## Download and run
+Download Katalog for Linux, Windows or macOS: see [Multi-Platform Support](Overview#multi-platform-support) for the available packages and the system requirements.
 
-A portable version for Windows is also available in the [Katalog files](https://sourceforge.net/projects/katalogg/files).
+## First start {#first-start}
+On the first start, a welcome message gives the language and theme that were applied (they can be changed later in the [Settings](Settings#application)), and offers:
+* *Create new...*: creates a new **collection**, the place where Katalog keeps all its data. A dialog proposes where to save it, as a database file (`.db`). A folder in your user directory is a good place.
+* *Open existing...*: opens a collection database (`.db`) created before, for example with Katalog 2.
 
-## Install and run
-- **Linux / portable**: extract the file *Katalog_linux_portable_x.xx.tar.gz*, and run the file **Katalog.sh**
-- **Windows / installation**: run the win64 **installer.exe** which will create a menu entry
-- **Windows / portable**: if you downloaded the win64 zip file version, extract the zip and run *Katalog.exe*
+Closing the dialogs without choosing is possible: Katalog starts without a collection, and one is opened or created later from the drawer (see [Interface](Interface)).
 
-## First use / tips
-### First start, pick a collection folder
-- For the first start, the application will ask to select the **[Collection folder](/Katalog/docs/Settings#collection)** , which is where all data of a collection are stored.
-- Therefore a folder in your user directory is usually the best place.
-- Note: after the first start, it is possible switch to a different data management mode.
-- The dialog can also be dismissed: the application starts without a collection, and one can be chosen later from the **[Settings](/Katalog/docs/Settings)** screen.
-### Create a catalog
-- The application then start on the **[Create](/Katalog/docs/Create)** screen.
-- Just select a folder to be scanned to catalog the files (here, the directory */home* is selected),
-- and click the button **Create Catalog**.
-![Create screen with folder selected](/img/screen_create_01.png)
-- A message confirms the creation and provides the number of files and total file size of the selected folder for this catalog.
-- your local drive, (a Storage device which was added automatically) was also updated, and the message provides a view of free, used, and total space:
-![Catalog creation confirmation message](/img/screen_create_02.png)
-- The application will now go to the **[Devices](/Katalog/docs/Devices)** tab to show you the catalog created for your local drive:
-![Devices screen showing the newly created catalog](/img/screen_create_03.png)
+![First start: welcome message](/img/tutorial_01_welcome.png)
 
-### Search files in this catalog
-- Go the **[Search](/Katalog/docs/Search)** screen by clicking on the first tab *Search* at the top of the application.
-- The catlog you created is already selected, so you can search for files right away.
-- Try and enter a text for the file name, and click on the button **Search**
-![Search screen with results](/img/screen_search_01.png)
+After *Create new...*, a message lists the three steps to create a first catalog. *OK* opens the [Create](Create) page.
 
-You can continue to experiment the Search screen to use more criteria and limit the number of results.
+## Create a catalog {#create}
+A **catalog** is the index of the files of one folder.
+1. *Source path*: type the folder to catalog, or choose it with *Select the path*. For example, your *Documents* folder.
+1. *Storage*: keep *Local disk*, the storage device that Katalog created for your computer.
+1. *Catalog name*: type a name, or use *Generate name from path*.
+1. Click *Create* at the top of the page.
 
-All features are described on the page **[Search](/Katalog/docs/Search)**.
+![Create page with a folder selected](/img/tutorial_02_create.png)
+
+The progress is shown at the bottom of the window. When it ends, a message confirms that the catalog was created, and it appears in the device tree of the [Selection](Selection) page, under *Local disk*.
+
+## Search files {#search}
+1. On the [Selection](Selection) page, right-click the new catalog and choose *Search*: the catalog is selected and the [Search](Search) page opens next to it.
+1. Type a text in the file name field, for example `report`.
+1. Click *Search* (or press `Enter`).
+
+The [Results](SearchResults) page opens to the right, with the files found. Click a file to open it, or right-click it for more actions.
+
+![Search and results](/img/interface_01_overview.png)
+
+The catalog stays searchable when the folder or the drive is not connected: this is what Katalog is for. Catalog your external drives the same way, each under its own storage device (see [Devices](Devices)), and search all of them at once by selecting the *Physical Group* on the Selection page.
+
+## Next steps
+* Use more [search criteria](Search): size, dates, file types, duplicates, differences.
+* Browse a catalog in [Explore](Explore).
+* Organize your drives in [Devices](Devices).
+* Back up a folder with [Backup](BackUp).
+* All the parts of the window are described in [Interface](Interface).

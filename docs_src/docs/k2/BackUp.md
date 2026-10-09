@@ -14,7 +14,7 @@ This page is a copy of the **Katalog 2** documentation (2.13), kept for referenc
 This page describes all the features of the **BackUp** screen and how to use them.<br/>
 From this screen, the user can **manage catalog BackUp (copy) or Archive (move)**.<br/>
 
-![](/img/screen_backup_01.png)
+![](/img/k2/screen_backup_01.png)
 
 ## Main concepts & current features
 
@@ -140,14 +140,14 @@ The *Create Link* panel can be collapsed or expanded using the toggle button at 
 
 #### Example & Catalogs
 Goal: create a link between the source on local disk and the target on external drive.
-![](/img/screen_backup_1_devices.png)
+![](/img/k2/screen_backup_1_devices.png)
 
 #### Select source & target
 - With the Selection panel and the 2 "Load Catalogs" buttons for the source and target, get the list of catalogs for selection.
 - The button "without links" can help limit the nmber of catalogs in the list, by displaying only catalogs that do not have a Link as source (or as target) already.
 - Select a source and a target
 
-![](/img/screen_backup_2_select_source_target.png)
+![](/img/k2/screen_backup_2_select_source_target.png)
 
 
 #### Set the Name, options, and create
@@ -157,11 +157,11 @@ Goal: create a link between the source on local disk and the target on external 
 - Define behavior on Conflict detection
 - Create link
 
-![](/img/screen_backup_4_create_mapping.png)
+![](/img/k2/screen_backup_4_create_mapping.png)
 
 #### Compare source and backup target
 - The Link appears in the list and coverage is calculated
-![](/img/screen_backup_5_comparison.png)
+![](/img/k2/screen_backup_5_comparison.png)
 
 ### Links list filters
 

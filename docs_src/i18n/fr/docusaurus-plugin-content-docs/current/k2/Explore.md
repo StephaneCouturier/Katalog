@@ -17,7 +17,7 @@ L'objectif de cet écran est d'**explorer le contenu d'un catalogue de fichiers*
 
 Cette vue charge les données après un clic droit sur un catalogue depuis le panneau **[Sélection](Selection)** ou la vue de liste **[Catalogues](DevicesCatalogs)**, en choisissant l'entrée de menu *Explorer*.
 
-![Écran Explorer affichant l'arborescence des répertoires à gauche et la liste des fichiers à droite](/img/explore_01.png)
+![Écran Explorer affichant l'arborescence des répertoires à gauche et la liste des fichiers à droite](/img/k2/explore_01.png)
 
 ## Fonctionnalités
 
@@ -63,7 +63,7 @@ Trois options contrôlent ce qui apparaît dans la liste des fichiers :
 
 Un clic droit sur un répertoire dans le panneau gauche affiche :
 
-![Menu contextuel du répertoire avec l'option d'étiqueter le dossier](/img/explore_02_context.png)
+![Menu contextuel du répertoire avec l'option d'étiqueter le dossier](/img/k2/explore_02_context.png)
 
 - *Étiqueter ce dossier* — ouvre l'écran [Étiquettes](Tags) avec ce dossier pré-rempli, pour lui attribuer une étiquette.
 
@@ -71,7 +71,7 @@ Un clic droit sur un répertoire dans le panneau gauche affiche :
 
 Un clic droit sur une entrée dans le panneau droit affiche un menu contextuel qui s'adapte au type d'entrée sélectionnée.
 
-![Menu contextuel des fichiers affichant les opérations disponibles : ouvrir, copier, somme de contrôle et supprimer](/img/explore_03_context.png)
+![Menu contextuel des fichiers affichant les opérations disponibles : ouvrir, copier, somme de contrôle et supprimer](/img/k2/explore_03_context.png)
 
 ### Pour les fichiers
 

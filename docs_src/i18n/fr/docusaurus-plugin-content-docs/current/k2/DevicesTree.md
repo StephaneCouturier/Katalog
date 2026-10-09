@@ -15,7 +15,7 @@ Cette page décrit toutes les fonctionnalités de la vue **Arborescence des pér
 
 L'arborescence des périphériques affiche la hiérarchie complète de tous les périphériques — le Groupe Physique avec ses périphériques de stockage et ses catalogues, et tous les Groupes Virtuels avec leurs catalogues attribués.
 
-![Arborescence des périphériques montrant la hiérarchie complète des périphériques physiques et virtuels](/img/devices_tree_01.png)
+![Arborescence des périphériques montrant la hiérarchie complète des périphériques physiques et virtuels](/img/k2/devices_tree_01.png)
 
 ## Options d'affichage
 
@@ -45,7 +45,7 @@ Un clic droit sur un périphérique de l'arborescence ouvre un menu contextuel d
 
 ### Périphériques de type Catalogue
 
-![Menu contextuel d'un catalogue dans le Groupe Physique](/img/devices_tree_02_context_phy_virt.png)
+![Menu contextuel d'un catalogue dans le Groupe Physique](/img/k2/devices_tree_02_context_phy_virt.png)
 
 | Action | Condition | Description |
 |--------|-----------|-------------|
@@ -60,7 +60,7 @@ Un clic droit sur un périphérique de l'arborescence ouvre un menu contextuel d
 
 ### Périphériques de stockage
 
-![Menu contextuel d'un périphérique de stockage dans l'arborescence](/img/devices_tree_03_context_phy_storage.png)
+![Menu contextuel d'un périphérique de stockage dans l'arborescence](/img/k2/devices_tree_03_context_phy_storage.png)
 
 | Action | Condition | Description |
 |--------|-----------|-------------|
@@ -75,8 +75,8 @@ Un clic droit sur un périphérique de l'arborescence ouvre un menu contextuel d
 
 Les Groupes Virtuels et les périphériques virtuels partagent le même menu contextuel, avec quelques variations :
 
-![Menu contextuel d'un périphérique virtuel dans le Groupe Physique](/img/devices_tree_03_context_vir_virtual.png)
-![Menu contextuel d'un périphérique virtuel dans un Groupe Virtuel avec attribution de catalogue](/img/devices_tree_03_context_vir_catalog.png)
+![Menu contextuel d'un périphérique virtuel dans le Groupe Physique](/img/k2/devices_tree_03_context_vir_virtual.png)
+![Menu contextuel d'un périphérique virtuel dans un Groupe Virtuel avec attribution de catalogue](/img/k2/devices_tree_03_context_vir_catalog.png)
 
 | Action | Condition | Description |
 |--------|-----------|-------------|
@@ -90,8 +90,8 @@ Les Groupes Virtuels et les périphériques virtuels partagent le même menu con
 
 Attribution et désaffectation de catalogues dans les groupes virtuels :
 
-![Attribution d'un catalogue à un périphérique virtuel](/img/devices_tree_03_context_vir_assign.png)
-![Désaffectation d'un catalogue d'un périphérique virtuel](/img/devices_tree_03_context_vir_unassign.png)
+![Attribution d'un catalogue à un périphérique virtuel](/img/k2/devices_tree_03_context_vir_assign.png)
+![Désaffectation d'un catalogue d'un périphérique virtuel](/img/k2/devices_tree_03_context_vir_unassign.png)
 
 - *Attribuer le catalogue sélectionné* : attribue le catalogue actuellement sélectionné dans le panneau [Sélection](Selection) au périphérique virtuel choisi.
 - *Désaffecter ce catalogue* : disponible dans le menu contextuel du catalogue lorsque celui-ci est dans un Groupe Virtuel — retire l'attribution sans supprimer le catalogue.

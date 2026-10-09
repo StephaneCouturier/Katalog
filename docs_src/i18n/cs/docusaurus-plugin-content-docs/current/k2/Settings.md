@@ -19,7 +19,7 @@ Tato stránka popisuje všechny funkce obrazovky **Nastavení** a jak je použí
 * Jazyk a téma
 * O aplikaci
 
-![Přehled obrazovky Nastavení](/img/screen_settings_01.png)
+![Přehled obrazovky Nastavení](/img/k2/screen_settings_01.png)
 
 ## Správa dat a kolekcí
 
@@ -43,7 +43,7 @@ Poznámka: Změna režimu vyžaduje kliknutí na *Použít a restartovat*.
 ![Diagram datových režimů](/img/settings_database-model.png)
 
 ### Paměťový režim databáze {#database-memory-mode}
-![Nastavení paměťového režimu zobrazující cestu ke složce kolekce a související možnosti](/img/screen_settings_02_memory.png)
+![Nastavení paměťového režimu zobrazující cestu ke složce kolekce a související možnosti](/img/k2/screen_settings_02_memory.png)
 
 Akce složky kolekce:
 * Zadat cestu ke složce Kolekce a stisknutím klávesy Enter načíst kolekci
@@ -57,7 +57,7 @@ Nastavení pro paměťový režim:
 * *Spuštění*: povolit nebo zakázat (výchozí) načítání naposledy otevřeného katalogu na obrazovce [Prozkoumat](Explore)
 
 ### Režim databázového souboru
-![Nastavení souborového režimu zobrazující cestu k databázovému souboru a související možnosti](/img/screen_settings_03_file.png)
+![Nastavení souborového režimu zobrazující cestu k databázovému souboru a související možnosti](/img/k2/screen_settings_03_file.png)
 
 Akce souboru kolekce:
 * Zadat cestu k souboru a stisknutím klávesy Enter načíst kolekci
@@ -67,7 +67,7 @@ Akce souboru kolekce:
 * *Exportovat do paměťového režimu (csv)*: exportovat kolekci do souborů CSV a indexů, pro přechod na režim *Paměť*
 
 ### Hostovaný režim databáze
-![Nastavení hostovaného režimu zobrazující pole pro připojení k serveru](/img/screen_settings_05_hosted.png)
+![Nastavení hostovaného režimu zobrazující pole pro připojení k serveru](/img/k2/screen_settings_05_hosted.png)
 
 Data kolekce jsou uložena v databázi hostované na lokálním nebo síťovém serveru (MySQL/MariaDB).
 
@@ -117,7 +117,7 @@ Katalog umožňuje importovat zařízení z jiné kolekce nebo obnovit obsah kat
 * **Zdrojová** kolekce je existující kolekce Katalog otevřená pouze pro čtení — nikdy není změněna.
 * **Cílová** kolekce je aktuálně aktivní kolekce, do které jsou přidána zařízení a katalogy.
 
-![Stránka Nastavení zobrazující příklad importované kolekce](/img/screen_settings_06_import_collection.png)
+![Stránka Nastavení zobrazující příklad importované kolekce](/img/k2/screen_settings_06_import_collection.png)
 
 **Co se importuje**
 
@@ -178,13 +178,13 @@ Obrázky umístěné v této složce lze přiřadit úložným zařízením na o
 Příklady:
 
 - Světlá pracovní plocha / Katalog Color (světlý)
-![Světlá pracovní plocha s motivem Katalog Color světlý](/img/settings-themes-light-desktop-katalog-colors-light.png)
+![Světlá pracovní plocha s motivem Katalog Color světlý](/img/k2/settings-themes-light-desktop-katalog-colors-light.png)
 
 - Tmavá pracovní plocha / Katalog Color (tmavý)
-![Tmavá pracovní plocha s motivem Katalog Color tmavý](/img/settings-themes-dark-desktop-katalog-colors-dark.png)
+![Tmavá pracovní plocha s motivem Katalog Color tmavý](/img/k2/settings-themes-dark-desktop-katalog-colors-dark.png)
 
 - Tmavá pracovní plocha / Výchozí motiv
-![Tmavá pracovní plocha s výchozím motivem](/img/settings-themes-dark-desktop-default-theme.png)
+![Tmavá pracovní plocha s výchozím motivem](/img/k2/settings-themes-dark-desktop-default-theme.png)
 
 ## O aplikaci
 * Verze a datum aplikace.

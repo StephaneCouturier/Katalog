@@ -19,7 +19,7 @@ Cette page décrit toutes les fonctionnalités de l'écran **Paramètres** et co
 * Langue et thème
 * À propos
 
-![Aperçu général de l'écran Paramètres](/img/screen_settings_01.png)
+![Aperçu général de l'écran Paramètres](/img/k2/screen_settings_01.png)
 
 ## Gestion des données et des collections
 
@@ -43,7 +43,7 @@ Remarque : changer de mode nécessite de cliquer sur *Appliquer et redémarrer*.
 ![Diagramme des modes de données](/img/settings_database-model.png)
 
 ### Mode mémoire de base de données {#database-memory-mode}
-![Paramètres du mode mémoire affichant le chemin du dossier de collection et les options associées](/img/screen_settings_02_memory.png)
+![Paramètres du mode mémoire affichant le chemin du dossier de collection et les options associées](/img/k2/screen_settings_02_memory.png)
 
 Actions du dossier de collection :
 * Saisir le chemin du dossier Collection et appuyer sur Entrée pour charger la collection
@@ -57,7 +57,7 @@ Paramètres du mode mémoire :
 * *Démarrage* : activer ou désactiver (par défaut) le chargement du dernier catalogue ouvert dans l'écran [Explorer](Explore)
 
 ### Mode fichier de base de données
-![Paramètres du mode fichier affichant le chemin du fichier de base de données et les options associées](/img/screen_settings_03_file.png)
+![Paramètres du mode fichier affichant le chemin du fichier de base de données et les options associées](/img/k2/screen_settings_03_file.png)
 
 Actions du fichier de collection :
 * Saisir le chemin du fichier et appuyer sur Entrée pour charger la collection
@@ -67,7 +67,7 @@ Actions du fichier de collection :
 * *Exporter vers le mode mémoire (csv)* : exporter la collection vers des fichiers CSV et d'index, pour basculer vers le mode *Mémoire*
 
 ### Mode hébergé de base de données
-![Paramètres du mode hébergé affichant les champs de connexion au serveur](/img/screen_settings_05_hosted.png)
+![Paramètres du mode hébergé affichant les champs de connexion au serveur](/img/k2/screen_settings_05_hosted.png)
 
 Les données de la collection sont enregistrées dans une base de données hébergée sur un serveur local ou réseau (MySQL/MariaDB).
 
@@ -117,7 +117,7 @@ Katalog peut importer des appareils depuis une autre collection, ou rafraîchir 
 * La collection **source** est une collection Katalog existante ouverte en lecture seule — elle n'est jamais modifiée.
 * La **cible** est la collection active actuelle dans laquelle les appareils et catalogues sont ajoutés.
 
-![Page Paramètres montrant un exemple de collection importée](/img/screen_settings_06_import_collection.png)
+![Page Paramètres montrant un exemple de collection importée](/img/k2/screen_settings_06_import_collection.png)
 
 **Ce qui est importé**
 
@@ -178,13 +178,13 @@ Les images placées dans ce dossier peuvent ensuite être associées aux périph
 Exemples :
 
 - Bureau clair / Katalog Color (clair)
-![Bureau clair avec le thème Katalog Color clair](/img/settings-themes-light-desktop-katalog-colors-light.png)
+![Bureau clair avec le thème Katalog Color clair](/img/k2/settings-themes-light-desktop-katalog-colors-light.png)
 
 - Bureau sombre / Katalog Color (sombre)
-![Bureau sombre avec le thème Katalog Color sombre](/img/settings-themes-dark-desktop-katalog-colors-dark.png)
+![Bureau sombre avec le thème Katalog Color sombre](/img/k2/settings-themes-dark-desktop-katalog-colors-dark.png)
 
 - Bureau sombre / Thème par défaut
-![Bureau sombre avec le thème par défaut](/img/settings-themes-dark-desktop-default-theme.png)
+![Bureau sombre avec le thème par défaut](/img/k2/settings-themes-dark-desktop-default-theme.png)
 
 ## À propos
 * Version et date de l'application.

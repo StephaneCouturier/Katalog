@@ -22,7 +22,7 @@ Les données associées à un périphérique de stockage combinent trois types d
 
 Les périphériques de stockage ne peuvent être placés qu'à l'intérieur du *Groupe Physique* et de ses sous-éléments.
 
-![Liste de stockage affichant les périphériques avec l'utilisation d'espace et le nombre de catalogues associés](/img/devices_storage_01.png)
+![Liste de stockage affichant les périphériques avec l'utilisation d'espace et le nombre de catalogues associés](/img/k2/devices_storage_01.png)
 
 ## Liste et sélection
 La liste des périphériques de stockage peut être restreinte à l'aide du panneau **[Sélection](Selection)** à gauche.
@@ -43,7 +43,7 @@ Le bouton *Tous les actifs* n'est pas disponible dans la vue Liste de stockage �
 
 Un clic droit sur un périphérique de stockage ouvre un menu contextuel :
 
-![Menu contextuel d'un périphérique de stockage affichant les actions disponibles](/img/devices_storage_02_context.png)
+![Menu contextuel d'un périphérique de stockage affichant les actions disponibles](/img/k2/devices_storage_02_context.png)
 
 | Action | Condition | Description |
 |--------|-----------|-------------|
@@ -58,7 +58,7 @@ Un clic droit sur un périphérique de stockage ouvre un menu contextuel :
 
 Le panneau de modification permet de changer tous les champs du périphérique de stockage :
 
-![Panneau de modification d'un périphérique de stockage affichant tous les champs configurables](/img/devices_storage_03_edit.png)
+![Panneau de modification d'un périphérique de stockage affichant tous les champs configurables](/img/k2/devices_storage_03_edit.png)
 
 | Champ | Description |
 |-------|-------------|
@@ -98,7 +98,7 @@ Pour l'utiliser :
 
 Si aucune image n'est explicitement assignée, Katalog recherche un fichier nommé `<IDstockage>.jpg` dans le dossier d'images comme solution de repli.
 
-![Périphérique de stockage avec une image associée affichée dans le panneau de modification](/img/devices_storage_04_picture.png)
+![Périphérique de stockage avec une image associée affichée dans le panneau de modification](/img/k2/devices_storage_04_picture.png)
 
 ## Développement
 Quelques idées d'évolutions pour cet écran :

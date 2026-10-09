@@ -20,7 +20,7 @@ This screen provides views of the contents and the evolution of a collection:
 1. For Storage devices: used and total space, and the related catalogs' total file size, or the number of files.
 1. For Virtual devices: related devices number of files, or total space and the related catalogs' total file size.
 
-![Statistics screen showing chart of collection evolution](/img/screen_statistics_01.png)
+![Statistics screen showing chart of collection evolution](/img/k2/screen_statistics_01.png)
 
 ## Features
 ### Data option

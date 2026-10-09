@@ -13,7 +13,7 @@ This page is a copy of the **Katalog 2** documentation (2.13), kept for referenc
 ## Summary
 This page describes the concept of **Device** in Katalog and the top part of the **Devices** screen.
 
-![Example showing catalogs organized under physical drives and a virtual Photos group](/img/devices_example1_cut.png)
+![Example showing catalogs organized under physical drives and a virtual Photos group](/img/k2/devices_example1_cut.png)
 
 In this example, several catalogs have been created from 2 physical drives.<br/>
 The catalogs with photos/images/pictures have been assigned to a virtual *Photos* device.<br/>

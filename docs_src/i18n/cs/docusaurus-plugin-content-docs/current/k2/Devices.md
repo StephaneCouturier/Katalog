@@ -13,7 +13,7 @@ Tato stránka je kopií dokumentace **Katalog 2** (2.13), uchovanou pro informac
 ## Souhrn
 Tato stránka popisuje koncept **Zařízení** v Katalogu a horní část obrazovky **Zařízení**.
 
-![Příklad zobrazující katalogy uspořádané pod fyzickými disky a virtuální skupinou Photos](/img/devices_example1_cut.png)
+![Příklad zobrazující katalogy uspořádané pod fyzickými disky a virtuální skupinou Photos](/img/k2/devices_example1_cut.png)
 
 V tomto příkladu bylo vytvořeno několik katalogů ze 2 fyzických disků.<br/>
 Katalogy s fotkami/obrázky byly přiřazeny k virtuálnímu zařízení *Photos*.<br/>

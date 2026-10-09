@@ -10,7 +10,7 @@ Without the need of the graphical interface, some tasks can therefore be automat
 
 These commands currently run only under **Linux**.
 
-![Command line help output showing available actions and options](/img/commandlines_01_help.png)
+![Command line help output showing available actions and options](/img/k2/commandlines_01_help.png)
 
 ## Synopsis
 
@@ -34,7 +34,7 @@ Lists all catalogs with their ID, active state, and name.
 ./Katalog.sh list_catalogs --verbose
 ```
 
-![Command line output listing all catalogs with ID, state, and name](/img/commandlines_02_list.png)
+![Command line output listing all catalogs with ID, state, and name](/img/k2/commandlines_02_list.png)
 
 ### `update_catalog`
 Updates a specific catalog by device ID.
@@ -51,7 +51,7 @@ Updates a specific catalog by device ID.
 ```bash
 ./Katalog.sh update_catalog 5
 ```
-![Command line output after updating a specific catalog](/img/commandlines_03_catalog.png)
+![Command line output after updating a specific catalog](/img/k2/commandlines_03_catalog.png)
 
 ### `update_all_active`
 Updates all active catalogs in the collection.
@@ -65,7 +65,7 @@ Updates all active catalogs in the collection.
 ```bash
 ./Katalog.sh update_all_active --verbose
 ```
-![Command line output after updating all active catalogs](/img/commandlines_04_all.png)
+![Command line output after updating all active catalogs](/img/k2/commandlines_04_all.png)
 
 ### `search`
 Executes a search using the last search criteria from history, with optional overrides.

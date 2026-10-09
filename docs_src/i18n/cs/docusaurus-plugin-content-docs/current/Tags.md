@@ -14,7 +14,7 @@ Označení složky se provádí ve 3 hlavních krocích:
 1. Vyberte nebo vytvořte nový štítek,
 1. Klepnutím označte složku.
 
-![Obrazovka Štítky zobrazující rozhraní pro přiřazování štítků](/img/screen_tags_01.png)
+![Obrazovka Štítky zobrazující rozhraní pro přiřazování štítků](/img/k2/screen_tags_01.png)
 
 ## Přiřaďte štítky adresářům
 Poznámka: Štítky jsou přiřazeny k absolutní cestě ke složce, proto jsou nezávislé na hierarchii zařízení a katalozích.

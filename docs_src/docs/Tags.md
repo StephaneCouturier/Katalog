@@ -1,51 +1,33 @@
 ---
-version: "2.12"
+version: "3.0"
 ---
 # Tags
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
 ## Summary
-This page describes all the features of the **Tags** screen and how to use them.<br/>
-From this screen, the user can **assign several tags to any folder**.<br/>
-This can then be used in the [Search](Search) screen to refine the results;<br/>
+This page describes the **Tags** page, where **tags are assigned to folders**: for example *Holidays* on the folders of holiday photos, wherever they are.<br/>
+A tag can then be used in [Search](Search#tags-criteria) to find only the files of the folders with that tag.
 
-Tagging a folder is done in 3 main steps:
-1. Select the Source path of the folder,
-1. Select or create a new Tag,
-1. Click to Tag the Folder.
+![Tags page: add a tag, and the list of current folders and tags](/img/tags_01_overview.png)
 
-![Tags screen showing tag assignment interface](/img/screen_tags_01.png)
+A tag is assigned to a **folder path**, not to a catalog or a device: it applies to every catalog that contains this path.<br/>
+A folder can have several tags, and a tag can be on several folders.
 
-## Assign Tags to directories
-Note: Tag are assigned to an absolute folder path, therefore it is independent of devices hierarchy and Catalogs.
+## Add a tag {#add}
+1. *Folder*: type the path of the folder, or choose it with *Select a folder*.
+1. *Tag*: choose an existing tag in the list, or type a new name.
+1. Click *Tag the folder*.
 
-### Select the Source path
-There are 3 ways to  select the source path of the folder with the files to be included in the new catalog:
-1. by typing the path in the text edit zone
-1. by using the treeview of the file system, just expand and click on the right device or folder
-1. or by clicking the button *Select* which will open a dialog window to help selecting the folder.
+When the folder or the tag name is missing, a message at the top of the page says what is needed.<br/>
+The new association appears in the list below.
 
-The selected path will always appear in the text edit zone, and the application will use this path for the tag.
-
-### Select an existing tag or create one
-* type a new Tag name in the edit zome under "Select a tag"
-* or click on any item of the Existing tags list to re-use an existing one
-
-### Assign the tag to the selected folder
-Click on the button "Tag the Folder".<br/>
-This will record the association between the folder and the tag name.<br/>
-The list "Current folders and tags" is refresh with the new entry.
-
-## Modifying Tags
-### Delete existing associations
-From the list "Current folders and tags", right click on the association to be deleted and selected *Remove this tag*.
-### Edit the Tags file
-In *Memory* mode, the button *Open file* can be used to edit the source file directly (the format should not be changed).
-
+## Current folders and tags {#list}
+The list shows each folder with its tag.
+* The list above the *Tag* column filters on one tag; *All* shows them all.
+* The button at the end of a line (*Remove this tag*) removes that association. The folder and its files are not touched.
 
 ## Development
 Some ideas of developments for this screen:
-* Tag devices
-* Tag folders in specific catalogs
+* Tag devices.
+* Tag folders in specific catalogs.
 * For more, see the backlog of [Tags developments](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=tag).
-

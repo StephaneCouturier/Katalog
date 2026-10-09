@@ -156,14 +156,17 @@ Short description of the screen + main screenshot.
 | Cross-page link | `[Label](PageID)` | `[Storage](../DevicesStorage)` |
 | Deep link (anchor) | `[Label](PageID#anchor-id)` | `[duplicates](../Search#duplicates-on)` |
 | Custom anchor on heading | `{#anchor-name}` after heading | `## Duplicates {#duplicates-on}` |
-| Screenshot | `![Alt text describing the screenshot](/img/filename.png)` | `![BackUp links list](/img/screen_backup_01.png)` |
-| Screenshot placeholder | `<!-- screenshot: filename.png -->` | marks where a screenshot is needed but not yet available |
+| Screenshot | `![Alt text describing the screenshot](/img/filename.png)` | `![BackUp links list](/img/k2/screen_backup_01.png)` |
+| Narrow screenshot, text beside it | `<div className="screenshot-side">`, blank line, the screenshot, blank line, `</div>`; then `<div className="screenshot-side-end" />` where the text continues below the picture | drawer in `Interface.md`. Below 600 px wide the picture stacks above the text. To line a paragraph up with a lower part of the picture, put `<div className="screenshot-side-gap" style={{height: '10rem'}} />` before it (height measured on a render; hidden on narrow screens) |
+| Screenshot not taken yet | `![Alt text describing the screenshot](/img/filename.png)` | written exactly like a screenshot, with a grey placeholder PNG saved under the final name in `static/img/` (`Screenshot to take: <name>`). Saving the real screenshot over it updates the page at once. Never leave the file missing: a page compiled while its image is missing keeps a broken link until `npm run clear`. List the placeholders left (they carry a PNG text tag): `grep -la screenshot-placeholder static/img/*.png` |
 | UI button / label | `*Name*` | click *Create Catalog* |
 | Inline code / path | `` `text` `` | path `/home/user/…` |
 | Line break | `<br/>` | end of short sentence |
 | Important callout | `:::note` … `:::` | for warnings or caveats |
 | Option table | Markdown table | see Create.md for reference |
 | Translation note | `<!-- translation note: … -->` | only where a term needs translator guidance (not systematic) |
+
+**Screenshot files:** current (K3) screenshots are at the root of `static/img/`; the Katalog 2 screenshots are in `static/img/k2/` and are used only by the Katalog 2 copies.
 
 **Screenshots:** always include descriptive alt text — it helps translators understand what the screenshot shows without seeing it, and makes missing images self-describing.
 

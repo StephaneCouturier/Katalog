@@ -12,7 +12,7 @@ Cela se fait en 3 étapes principales :
 1. Sélectionner les options pour inclure ou exclure certains fichiers.
 1. Sélectionner le [Stockage](DevicesStorage), définir le nom du catalogue et créer le catalogue.
 
-![Aperçu de l'écran Créer](/img/screen_create_01.png)
+![Aperçu de l'écran Créer](/img/k2/screen_create_01.png)
 
 ## Sélectionner le chemin source
 Il existe 3 façons de sélectionner le chemin source du répertoire contenant les fichiers à inclure dans le nouveau [Catalogue](DevicesCatalogs) :
@@ -120,7 +120,7 @@ L'exclusion utilise une **correspondance textuelle** : tout fichier ou dossier d
 
 La correspondance est **sensible à la casse**.
 
-![Liste des répertoires exclus globalement avec des exemples d'entrées](/img/screen_create_04_exclude.png)
+![Liste des répertoires exclus globalement avec des exemples d'entrées](/img/k2/screen_create_04_exclude.png)
 
 ### Exclure des dossiers (par catalogue)
 
@@ -157,7 +157,7 @@ Une fois le processus terminé,
 - Un message confirme la création et indique le nombre de fichiers et la taille totale des fichiers du dossier sélectionné.
 - votre disque local (un périphérique de stockage ajouté automatiquement) a également été mis à jour, et le message indique l'espace libre, utilisé et total :
 
-![Message de confirmation de création avec le nombre de fichiers et le résumé de l'espace de stockage](/img/screen_create_02.png)
+![Message de confirmation de création avec le nombre de fichiers et le résumé de l'espace de stockage](/img/k2/screen_create_02.png)
 
 l'écran [Périphériques](DevicesTree) s'affichera pour montrer le catalogue dans l'arborescence des périphériques.
 

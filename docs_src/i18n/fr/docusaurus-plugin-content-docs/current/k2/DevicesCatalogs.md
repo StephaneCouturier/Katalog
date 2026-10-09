@@ -16,7 +16,7 @@ Cette page décrit toutes les fonctionnalités de la vue **Liste des catalogues*
 Un *Catalogue* est un index de fichiers issus d'un répertoire donné, appelé **chemin** du catalogue.<br/>
 La **Liste des catalogues** affiche tous les catalogues de la [Collection](Settings#collection), filtrés selon le panneau [Sélection](Selection).
 
-![Liste des catalogues affichant les noms, chemins, nombre de fichiers et périphériques de stockage associés](/img/devices_catalogs_01.png)
+![Liste des catalogues affichant les noms, chemins, nombre de fichiers et périphériques de stockage associés](/img/k2/devices_catalogs_01.png)
 
 ## Liste et sélection
 La liste des catalogues peut être restreinte à l'aide du panneau **[Sélection](Selection)** à gauche.
@@ -41,7 +41,7 @@ Le bouton *Tous les actifs* n'est disponible que dans la vue **Liste des catalog
 
 Un clic droit sur un catalogue ouvre un menu contextuel :
 
-![Menu contextuel d'un catalogue affichant les actions disponibles](/img/devices_catalogs_02_context2.png)
+![Menu contextuel d'un catalogue affichant les actions disponibles](/img/k2/devices_catalogs_02_context2.png)
 
 | Action | Condition | Description |
 |--------|-----------|-------------|
@@ -84,7 +84,7 @@ Avant de diviser, une boîte de dialogue propose :
 
 Le panneau de modification permet de changer les champs suivants :
 
-![Panneau de modification d'un catalogue affichant tous les champs configurables](/img/devices_catalogs_03_edit.png)
+![Panneau de modification d'un catalogue affichant tous les champs configurables](/img/k2/devices_catalogs_03_edit.png)
 
 | Champ | Description |
 |-------|-------------|

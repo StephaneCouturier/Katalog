@@ -7,14 +7,14 @@ This document specifices the use and Implementation of catalog and related files
 
 #### 1. File Type fields
 - Feature: enhanced file type management using KFileMetadata extension list.
-- `file_type` has a specific definition in Katalog: see [Create#enhanced-file-type-filtering](Create#enhanced-file-type-filtering)
+- `file_type` has a specific definition in Katalog: see [Create#file-type](Create#file-type)
 - New database columns: `file_extension`, `file_type`, `mime_type`, `mime_verified`, `type_mismatch`
 - `file_extension` and `file_type` are required for Search functionality to work
 
 
 #### 2. Metadata Fields
 - To be populated based on `includeMetadata` field of the table `catalog`.
-- see settings: **None, Media_Basic, Media_Extended, Full_Extended** [Create#metadata-extraction](Create#metadata-extraction)
+- see settings: **None, Media_Basic, Media_Extended, Full_Extended** [Create#include-metadata](Create#include-metadata)
 - New database columns in `file` and `filetemp` tables for Media_Basic: 
 <br/>- Image: `image_width`, `image_height`, `image_orientation`
 <br/>- Video: `video_duration_seconds`, `video_width`, `video_height`, `video_codec`, `video_framerate`, `video_bitrate`

@@ -158,6 +158,14 @@ defect never appeared on the development machine.
 
 ---
 
+## Known limitations
+
+| Item | Detail |
+|------|--------|
+| K3: framework strings follow the system language, not Katalog's | Strings that Kirigami and the KDE Frameworks draw themselves — the section titles of the *About* page (Copyright, License, Authors, Libraries in use…) and the drawer's *Back* entry — come from the frameworks' own translation catalogs, chosen from the operating system language. Katalog's language setting only loads Katalog's own `.qm`. Example: system in French, Katalog in English → *About* titles and *Retour* in French. Noted by the maintainer on 2026-10-09 as a **known limitation**, not planned work. A probable fix (handing the chosen language to the KDE localisation layer and to the default `QLocale` at startup) was identified but **not investigated** and is **not authorised**. For documentation screenshots, start K3 with `LANGUAGE=en`. |
+
+---
+
 ## Manual test charter
 
 Each line is a case that must hold after any change to language resolution or to

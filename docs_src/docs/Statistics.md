@@ -1,37 +1,42 @@
 ---
-version: "2.12"
+version: "3.0"
 ---
 # Statistics
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
 ## Summary
-This page describes all the features of the **Statistics** screen and how to use them.
+This page describes the **Statistics** page: a chart of how a device has grown over time, for the device selected on the [Selection](Selection) page.
 
-All data come from records of various updates or *snapshots*.
+![Statistics page: chart of a storage device, with total file size, used space and total space](/img/statistics_01_overview.png)
 
-This screen provides views of the contents and the evolution of a collection: 
-1. For catalog devices: the number of files, or the total file size.
-1. For Storage devices: used and total space, and the related catalogs' total file size, or the number of files.
-1. For Virtual devices: related devices number of files, or total space and the related catalogs' total file size.
+## Where the data comes from {#data}
+Each time a device is updated, and each time a **snapshot** is recorded (*Snapshot* on the [Devices](Devices#page-actions) page), Katalog keeps a record of its figures: number of files, total file size, and for storage devices, free and total space.<br/>
+The chart draws these records. A device that was never updated, and never part of a snapshot, has no data: the chart shows *No data*.
 
-![Statistics screen showing chart of collection evolution](/img/screen_statistics_01.png)
+## What is shown {#chart}
+The chart title gives the device name, the data shown and its unit.
 
-## Features
-### Data option
-* The data is based on the selected device from the [Selection](Selection) panel.
-* *Source*: choose if all data should be used, or updates and snapshots idenpendantly.
-* *Type of data*: choose to display total file size (which may include device used and total space), or number of files only.
-* *Display each value*: choose to display a small diamond for each data point
+| Selected device | *Total File Size* | *Number of Files* |
+|-----------------|-------------------|-------------------|
+| Catalog | Total size of its files. | Number of its files. |
+| Storage, Virtual | Total size of the files of its catalogs, plus the **used** and **total space** of the storage. | Number of files of its catalogs. |
 
-### Edit File
-* available in [Memory mode](Settings#database-memory-mode) only.
-* *Edit Statistics* button: It can be usefull to edit the Statistics file to correct some numbers, the button  will open the file in the application associated with csv files. Be careful to keep it a **tab separated file**
-* *Reload* button: the data is reloaded and the graph refreshed.
+Sizes are shown in the unit that fits the values (KiB, MiB, GiB or TiB).
 
-### Graph
-* left click and hold to zoom on a part of the graph.
-* right click to zoom out.
-* click the button *Reload* to come back to the original zoom.
+## Options {#options}
+
+| Option | Effect |
+|--------|--------|
+| *Source* | *all records*, *updates only* or *snapshots only*. Snapshots give regular points for the whole collection; updates add a point each time the device was updated. |
+| *Data* | *Total File Size* or *Number of Files*. |
+| *From date* | Shows only the records from this date. *Select a date* opens a dialog with quick choices (*1 day ago*, *1 week ago*, *1 month ago*, *1 year ago*); *Clear* shows all the records again. |
+| *Display each value* | Marks each record with a point on the lines. |
+
+The options are kept for the collection.
+
+## Zoom {#zoom}
+* **Click and drag** over the chart to zoom on that area.
+* **Right-click** or **double-click** to come back to the full chart.
 
 ## Development
 * See the backlog of [Statistics development](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=statistics).

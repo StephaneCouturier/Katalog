@@ -18,7 +18,7 @@ Provádí se ve 3 hlavních krocích:
 1. Vybrat možnosti pro zahrnutí nebo vyloučení některých souborů.
 1. Vybrat [Úložiště](DevicesStorage), definovat název katalogu a vytvořit katalog.
 
-![Přehled obrazovky Vytvořit](/img/screen_create_01.png)
+![Přehled obrazovky Vytvořit](/img/k2/screen_create_01.png)
 
 ## Vybrat cestu ke zdroji
 Existují 3 způsoby, jak vybrat zdrojovou cestu k adresáři se soubory, které mají být zahrnuty do nového [Katalogu](DevicesCatalogs):
@@ -126,7 +126,7 @@ Vyloučení používá **textovou shodu**: jakýkoli soubor nebo složka, jejich
 
 Shoda rozlišuje **velká a malá písmena**.
 
-![Seznam globálně vyloučených adresářů s ukázkovými záznamy](/img/screen_create_04_exclude.png)
+![Seznam globálně vyloučených adresářů s ukázkovými záznamy](/img/k2/screen_create_04_exclude.png)
 
 ### Vyloučit složky (pro každý katalog)
 
@@ -163,7 +163,7 @@ Jakmile je proces dokončen,
 - Zpráva potvrdí vytvoření a poskytne počet souborů a celkovou velikost souboru vybrané složky pro tento katalog.
 - váš místní disk (úložné zařízení přidané automaticky) byl také aktualizován a zpráva uvádí volné, použité a celkové místo:
 
-![Potvrzení vytvoření katalogu s počtem souborů a přehledem úložného prostoru](/img/screen_create_02.png)
+![Potvrzení vytvoření katalogu s počtem souborů a přehledem úložného prostoru](/img/k2/screen_create_02.png)
 
 zobrazí se obrazovka [Zařízení](DevicesTree) pro zobrazení katalogu ve stromu zařízení.
 

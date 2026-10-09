@@ -26,7 +26,7 @@ The main features of this screen are:
 * Re-use previous criteria from the Search History.
 * All search criteria are saved and available the next time Katalog is opened, except for the results themselves.
 
-![Search screen showing criteria panel on the left and results on the right](/img/screen_search_01.png)
+![Search screen showing criteria panel on the left and results on the right](/img/k2/screen_search_01.png)
 
 ## Search source
 
@@ -46,7 +46,7 @@ This panel groups all criteria that refine and reduce the number of results. The
 They apply to file paths and names, file attributes, metadata, tags, and can identify duplicates or differences between 2 catalogs.
 Results can be a list of files, or a list of folders containing matching files.
 
-![Search criteria panel showing text, file, metadata, duplicates and differences sections](/img/screen_search_02.png)
+![Search criteria panel showing text, file, metadata, duplicates and differences sections](/img/k2/screen_search_02.png)
 
 ### Search Text criteria {#search-text-criteria}
 
@@ -60,7 +60,7 @@ The text field accepts multiple lines. Each line is treated as an independent se
 - Press **Enter** to trigger the search.
 - Press **Shift+Enter** to insert a new line.
 
-![Search text field showing multiple lines used as independent OR search terms](/img/screen_search_05_list_for_file_name.png)
+![Search text field showing multiple lines used as independent OR search terms](/img/k2/screen_search_05_list_for_file_name.png)
 
 Buttons next to the text field:
 - *Paste from Clipboard* — pastes clipboard content into the search field.
@@ -129,7 +129,7 @@ Set a minimum and/or maximum file modification date.
 
 The metadata section allows searching on content embedded inside files (requires the catalog to have been indexed with extended metadata).
 
-![File metadata criteria section showing text, image dimensions and duration fields](/img/screen_search_metadata_criteria.png)
+![File metadata criteria section showing text, image dimensions and duration fields](/img/k2/screen_search_metadata_criteria.png)
 
 The entire metadata section can be enabled or disabled with its checkbox.
 
@@ -182,7 +182,7 @@ At least one field must be selected to run a duplicates search.
 
 Find files present in one device but not the other, or with different attribute values — useful to compare a source with a backup.
 
-![Differences criteria section showing device selectors and attribute checkboxes](/img/screen_search_03_diff.png)
+![Differences criteria section showing device selectors and attribute checkboxes](/img/k2/screen_search_03_diff.png)
 
 Select two devices (Virtual, Storage, or Catalog) to compare, and choose which attributes define a difference:
 
@@ -212,7 +212,7 @@ A search cannot be started while a catalog is being created or a device updated,
 | Running | *Pause* | Enabled |
 | Paused | *Resume* | Enabled |
 
-![Status bar showing the paused state during a search operation](/img/screen_search_statusbar_paused.png)
+![Status bar showing the paused state during a search operation](/img/k2/screen_search_statusbar_paused.png)
 
 - **Pause / Resume** — suspend and continue the search without losing progress. Not available in Memory database mode.
 - **Stop** — cancel the current search entirely. Partial results already found are shown.
@@ -304,7 +304,7 @@ Two buttons let you manage the history list:
 
 This panel can be hidden to save space.
 
-![Search history panel showing previous searches with timestamps and criteria](/img/screen_search_04_search_history.png)
+![Search history panel showing previous searches with timestamps and criteria](/img/k2/screen_search_04_search_history.png)
 
 ## Development
 Some ideas of developments for this screen:

@@ -16,7 +16,7 @@ The data associated with a storage device combines three types of information:
 
 Storage devices can only be placed inside the *Physical Group* and its sub-items.
 
-![Storage list showing storage devices with space usage and associated catalog counts](/img/devices_storage_01.png)
+![Storage list showing storage devices with space usage and associated catalog counts](/img/k2/devices_storage_01.png)
 
 ## List and selection
 The list of storage devices can be narrowed down using the **[Selection](Selection)** left panel.
@@ -37,7 +37,7 @@ The *All active* button is not available in the Storage list view — it is only
 
 Right-clicking on a storage device opens a context menu:
 
-![Storage context menu showing available actions](/img/devices_storage_02_context.png)
+![Storage context menu showing available actions](/img/k2/devices_storage_02_context.png)
 
 | Action | Condition | Description |
 |--------|-----------|-------------|
@@ -52,7 +52,7 @@ Right-clicking on a storage device opens a context menu:
 
 The edit panel gives access to modify all storage device fields:
 
-![Edit panel for a storage device showing all configurable fields](/img/devices_storage_03_edit.png)
+![Edit panel for a storage device showing all configurable fields](/img/k2/devices_storage_03_edit.png)
 
 | Field | Description |
 |-------|-------------|
@@ -92,7 +92,7 @@ To use it:
 
 If no picture is explicitly assigned, Katalog looks for a file named `<storageID>.jpg` in the images folder as a fallback.
 
-![Storage device with an associated picture displayed in the edit panel](/img/devices_storage_04_picture.png)
+![Storage device with an associated picture displayed in the edit panel](/img/k2/devices_storage_04_picture.png)
 
 ## Development
 Some ideas of developments for this screen:

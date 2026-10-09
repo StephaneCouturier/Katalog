@@ -1,77 +1,63 @@
 ---
-version: "2.13"
+version: "3.0"
 ---
 # Overview
-![2.13](https://img.shields.io/badge/Version-2.13-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
 ## Files indexing & Storage devices manager
-Katalog is a powerful <b>file catalog manager</b> that helps you organize and find files.<br/>
+Katalog is a <b>file catalog manager</b> that helps you organize and find files.<br/>
 It gives a full view of the files across <b>multiple storage devices without needing them connected</b>.<br/>
-Katalog creates comprehensive <b>indexes so you can search your entire file collection from one place</b>, whether you're managing Internal and External Drives, USB sticks, Network storage, or storage Discs (blueray, DVDs, CDs).
+Katalog creates <b>indexes so you can search your entire file collection from one place</b>, whether you manage internal and external drives, USB sticks, network storage, or discs (Blu-ray, DVD, CD).
 
-- **Catalog everything**: Create detailed indexes of files from any storage device
-- **Search offline**: Find files instantly without connecting or mounting the original device
-- **Organize the collection**: Manage multiple storage devices and their catalogs in a unified hierarchy
+- **Catalog everything**: create detailed indexes of the files of any storage device.
+- **Search offline**: find files without connecting or mounting the original device.
+- **Organize the collection**: manage storage devices and their catalogs in one hierarchy.
+- **Back up**: copy or move the files missing from a backup, using the catalogs.
 
+![Katalog window: Selection, Search and Results pages side by side](/img/interface_01_overview.png)
 
-![Search results across multiple catalogs](/img/screen_search_01.png)
-<b>8 main tabs for 8 main features</b>
-![Katalog's 8 main tabs](/img/global_tabwidget.png)
-1. [Search](Search) files across multiple storage devices **without needing them connected**
-1. Organize storage [Devices](Devices) and their catalogs in a unified hierarchy with **Virtual** devices
-1. [Explore](Explore) the catalogs' hierarchy and files
-1. [Create](Create) catalogs of **files**
-1. Get [Statistics](Statistics) about your file collections & storage usage
-1. Personalize [Tags](Tags) and assigned them to directories for extra searching capabilities
-1. Compare [BackUp](BackUp) catalogs to confirm the coverage of backed up files and folders between source and target devices
-1. Personalize your experience with your [Settings](Settings) such as language and theme
-<br/>
+## Pages
+The window shows the **[Selection](Selection)** page on the left: the tree of all the devices of the collection. Selecting a device sets the scope of the other pages. Each feature opens as a page next to it, from the drawer (see [Interface](Interface)):
 
-<div className="row">
-  <div className="col col--6">
-  <br/><br/>and a <b>[Selection](Selection) panel</b> to
-  <br/>
-  * Choose searching in <b>Catalogs</b> or directly in <b>Connected drives</b><br/>
-  * Set the device in the <b>hierarchy to be used</b> for Search, Create (parent device), Statistics, or BackUp management<br/>
-  </div>
-  <div className="col col--6" style={{maxWidth: '200px'}}>
-    ![Selection panel](/img/global_selection_panel.png)
-  </div>
-</div>
+1. [Search](Search) files across all the storage devices, **without needing them connected**, and act on the [results](SearchResults).
+1. Organize the [Devices](Devices) and their catalogs in one hierarchy, with **virtual** devices to group them, and [edit](DevicesEdit) them.
+1. [Explore](Explore) the folders and files of a catalog.
+1. [Create](Create) catalogs of files.
+1. Copy or move files with [Backup](BackUp) links, and check the coverage of the backups.
+1. Follow the growth of the collection in [Statistics](Statistics).
+1. Assign [Tags](Tags) to folders, for extra search possibilities.
+1. Set up the collection and the application in the [Settings](Settings): data mode, import, theme, language.
 
 ---
 ## Key features
 
-### Rich File Information
-- **[File Type intelligence](Create#enhanced-file-type-filtering)**: Standard detection from extensions, and MIME type verification
-- **[Catalog options](Create#select-options-to-includeexclude-files)**: Only include a [type of files](Create#enhanced-file-type-filtering) , and [include/exclude directories or hidden files](Create#other-options)
-- **[Metadata extraction](Create#metadata-extraction)**: Automatically extract metadata from images (dimensions, camera info), videos (duration, resolution), and audio files (artist, album, duration) or any other file type.
-- **[File checksum](Create#file-checksum)**: SHA256 checksum calculation for duplicate and difference detection
-- **[Folder Tag system](Tags)**: Organize and categorize folders with custom tags
+### Rich file information
+- **[File type detection](Create#file-type)**: the type of each file is found from its extension, for hundreds of formats.
+- **[Catalog options](Create#content-options)**: include only a [type of files](Create#file-type), sub-folders or not, [hidden files](Create#include-hidden-files), and [exclude folders or files](Create#global-parameters).
+- **[Metadata extraction](Create#include-metadata)**: dimensions of images and videos, duration of videos and audio files, artist and album of music, or any metadata of other file types.
+- **[File checksum](Create#include-checksum)**: SHA-256 checksums for exact duplicate and difference searches, and to verify files.
+- **[Folder tags](Tags)**: organize and categorize folders with your own tags.
 
-### Powerful Search & Discovery
-- **[Advanced Search parameters](Search#search-text-criteria)**: Find files by name, path, size, date, file type, and metadata
-- **[Smart Filtering](Search#file-criteria)**: Use multiple criteria simultaneously to narrow down results quickly
-- **[Find Duplicates](Search#duplicates-on)**: Identify duplicate files across different storage devices
-- **[Find Differences](Search#differences-on)**: See differences between two storage locations or backup versions
+### Search & discovery
+- **[Search criteria](Search)**: find files by name (several texts, exclusions, regular expressions), folder, size, date, file type and metadata.
+- **[Find duplicates](Search#duplicates-on)**: identify duplicate files across devices.
+- **[Find differences](Search#differences-on)**: see the differences between two devices, for example a folder and its backup.
+- **[Actions on results](SearchResults#batch-process)**: filter the results, export them, verify checksums, extract metadata, move to trash.
 
+### Devices & catalogs
+- **[Device hierarchy](Devices#model)**: physical group, storage devices and catalogs, and virtual groups.
+- **[Update](Devices#context-menu)**: keep the catalogs current, one by one or all the available ones at once.
+- **[Path changes](DevicesEdit#path-change)**: when a drive is mounted somewhere else, fix all its catalogs in seconds, without reading the drive.
+- **[Collection import & update](Settings#import-update)**: import devices from another Katalog collection or from VVV, and refresh them later.
 
-### Device & Catalog Management
-- **[Device Organization](Devices)**: Organize storage devices in a hierarchical structure (Virtual > Storage > Catalogs)
-- **[Update](DevicesCatalogs)**: Keep catalogs current with manual updates or automatic updates
-- **[Import Support](DevicesCatalogs#import)**: Import catalogs from other tools like VVV
-- **[Collection Import & Update](Settings#import-update)**: Import devices from another Katalog collection, or refresh previously imported devices when the source changes
+### Analysis & management
+- **[File explorer](Explore)**: browse the content of a catalog as if the device were connected, with the size of each folder.
+- **[Statistics](Statistics)**: track the growth of the collection and of the storage space.
+- **[Backup & archive](BackUp)**: copy or move files between catalogs, preview, run several links at once, and check the coverage.
+- **[Data modes](Settings#database-memory-mode)**: keep the collection in a folder of files, in a SQLite database, or in a hosted database.
 
-
-### Analysis & Management
-- **[File Explorer](Explore)**: Browse catalog contents as if the device were connected
-- **[Statistics](Statistics)**: Track your file collections & storage usage
-- **[Backup & Archive Management](BackUp)**: Copy or move files between catalogs, compare backup coverage, and manage backup links
-- **[Batch Operations](Search#batch-process)**: Export results and perform batch actions on files
-
-### Advanced Capabilities
-- **[Command Line Interface](CommandLines)**: Automate catalog updates and searches via command line (Linux)
-- **[Database Flexibility](Settings#collection)**: Choose between CSV files or SQLite database storage
+### Katalog 2
+Katalog 2 remains available, with its [documentation](Katalog2), including the [command line](k2/CommandLines) (Linux).
 
 ---
 ## Multi-Platform Support
@@ -110,44 +96,25 @@ A legacy build (v2.5, pure Qt6, no KF6 dependencies) is also available with the 
 ### App languages
 Katalog is available in:
 
-| Locale   | Language    |
-|----------|-------------|
-| bg_BG    | Bulgarian   |
-| cz_CZ    | Czech       |
-| da_DK    | Danish      |
-| de_DE    | German      |
-| en_US    | English     |
-| es_ES    | Spanish     |
-| et_EE    | Estonian    |
-| fi_FI    | Finnish     |
-| fr_FR    | French      |
-| el_GR    | Greek       |
-| hi_IN    | Hindi       |
-| hr_HR    | Croatian    |
-| hu_HU    | Hungarian   |
-| id_ID    | Indonesian  |
-| it_IT    | Italian     |
-| ja_JP    | Japanese    |
-| lt_LT    | Lithuanian  |
-| lv_LV    | Latvian     |
-| nb_NO    | Norwegian   |
-| nl_NL    | Dutch       |
-| pl_PL    | Polish      |
-| pt_PT    | Portuguese  |
-| ro_RO    | Romanian    |
-| si_SI    | Slovenian   |
-| sk_SK    | Slovak      |
-| sr_RS    | Serbian     |
-| sv_SE    | Swedish     |
-| uk_UA    | Ukrainian   |
-| zh_CN    | Chinese     |
+| Locale | Language | Locale | Language | Locale | Language |
+|--------|----------|--------|----------|--------|----------|
+| bg_BG  | Bulgarian  | hi_IN  | Hindi      | pl_PL  | Polish     |
+| cs_CZ  | Czech      | hr_HR  | Croatian   | pt_PT  | Portuguese |
+| da_DK  | Danish     | hu_HU  | Hungarian  | ro_RO  | Romanian   |
+| de_DE  | German     | id_ID  | Indonesian | si_SI  | Slovenian  |
+| en_US  | English    | it_IT  | Italian    | sk_SK  | Slovak     |
+| es_ES  | Spanish    | ja_JP  | Japanese   | sr_RS  | Serbian    |
+| et_EE  | Estonian   | lt_LT  | Lithuanian | sv_SE  | Swedish    |
+| fi_FI  | Finnish    | lv_LV  | Latvian    | uk_UA  | Ukrainian  |
+| fr_FR  | French     | nb_NO  | Norwegian  | zh_CN  | Chinese    |
+| el_GR  | Greek      | nl_NL  | Dutch      |        |            |
 
 ### Documentation languages
 Documentation is available in:
 | Locale   | Language    |
 |----------|-------------|
 | en_US    | English     |
-| cz_CZ    | Czech       |
+| cs_CZ    | Czech       |
 | fr_FR    | French      |
 
 ---

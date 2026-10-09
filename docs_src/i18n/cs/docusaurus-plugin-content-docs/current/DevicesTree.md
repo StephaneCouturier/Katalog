@@ -9,7 +9,7 @@ Tato stránka popisuje všechny funkce zobrazení **Strom zařízení** na obraz
 
 Strom zařízení zobrazuje úplnou hierarchii všech zařízení — Fyzickou skupinu s jejími úložnými zařízeními a katalogy a všechny Virtuální skupiny s přiřazenými katalogy.
 
-![Strom zařízení zobrazující úplnou hierarchii fyzických a virtuálních zařízení](/img/devices_tree_01.png)
+![Strom zařízení zobrazující úplnou hierarchii fyzických a virtuálních zařízení](/img/k2/devices_tree_01.png)
 
 ## Možnosti zobrazení
 
@@ -39,7 +39,7 @@ Kliknutím pravým tlačítkem na libovolné zařízení ve stromu se otevře ko
 
 ### Katalogová zařízení
 
-![Kontextová nabídka katalogu ve Fyzické skupině](/img/devices_tree_02_context_phy_virt.png)
+![Kontextová nabídka katalogu ve Fyzické skupině](/img/k2/devices_tree_02_context_phy_virt.png)
 
 | Akce | Podmínka | Popis |
 |------|----------|-------|
@@ -54,7 +54,7 @@ Kliknutím pravým tlačítkem na libovolné zařízení ve stromu se otevře ko
 
 ### Úložná zařízení
 
-![Kontextová nabídka úložného zařízení ve stromu](/img/devices_tree_03_context_phy_storage.png)
+![Kontextová nabídka úložného zařízení ve stromu](/img/k2/devices_tree_03_context_phy_storage.png)
 
 | Akce | Podmínka | Popis |
 |------|----------|-------|
@@ -69,8 +69,8 @@ Kliknutím pravým tlačítkem na libovolné zařízení ve stromu se otevře ko
 
 Virtuální skupiny a virtuální zařízení sdílejí stejnou kontextovou nabídku s drobnými odchylkami:
 
-![Kontextová nabídka virtuálního zařízení ve Fyzické skupině](/img/devices_tree_03_context_vir_virtual.png)
-![Kontextová nabídka virtuálního zařízení ve Virtuální skupině s přiřazením katalogu](/img/devices_tree_03_context_vir_catalog.png)
+![Kontextová nabídka virtuálního zařízení ve Fyzické skupině](/img/k2/devices_tree_03_context_vir_virtual.png)
+![Kontextová nabídka virtuálního zařízení ve Virtuální skupině s přiřazením katalogu](/img/k2/devices_tree_03_context_vir_catalog.png)
 
 | Akce | Podmínka | Popis |
 |------|----------|-------|
@@ -84,8 +84,8 @@ Virtuální skupiny a virtuální zařízení sdílejí stejnou kontextovou nab�
 
 Přiřazení a zrušení přiřazení katalogů ve virtuálních skupinách:
 
-![Přiřazení katalogu k virtuálnímu zařízení](/img/devices_tree_03_context_vir_assign.png)
-![Zrušení přiřazení katalogu z virtuálního zařízení](/img/devices_tree_03_context_vir_unassign.png)
+![Přiřazení katalogu k virtuálnímu zařízení](/img/k2/devices_tree_03_context_vir_assign.png)
+![Zrušení přiřazení katalogu z virtuálního zařízení](/img/k2/devices_tree_03_context_vir_unassign.png)
 
 - *Přiřadit vybraný katalog*: přiřadí katalog aktuálně vybraný v panelu [Výběr](Selection) k vybranému virtuálnímu zařízení.
 - *Zrušit přiřazení tohoto katalogu*: dostupné v kontextové nabídce katalogu, pokud je katalog ve Virtuální skupině — odebere přiřazení bez smazání katalogu.

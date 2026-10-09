@@ -10,7 +10,7 @@ Cette page décrit toutes les fonctionnalités du panneau **Sélection**, la par
 * Avec le mode *Recherche dans les catalogues de fichiers*, la sélection filtrera les informations pour les écrans [Rechercher](Search), [Périphériques](Devices), [Créer](Create) et [Statistiques](Statistics).
 * Avec le mode *Recherche dans les lecteurs connectés*, un répertoire directement depuis les appareils connectés peut être sélectionné. Ceci est uniquement utilisé pour l'écran [Rechercher](Search).
 
-![Panneau Sélection affichant l'arborescence des appareils et les contrôles de sélection](/img/selection_01.png)
+![Panneau Sélection affichant l'arborescence des appareils et les contrôles de sélection](/img/k2/selection_01.png)
 
 ## Interface
 Boutons du haut :
@@ -43,4 +43,4 @@ Avec cette option, une recherche peut être effectuée directement dans n'import
 
 Utiliser le bouton *Choisir un chemin* ou l'arborescence des répertoires pour sélectionner le dossier dans lequel effectuer la recherche.
 
-![Panneau Sélection en mode lecteurs connectés affichant l'arborescence des répertoires et la sélection du chemin](/img/selection_02.png)
+![Panneau Sélection en mode lecteurs connectés affichant l'arborescence des répertoires et la sélection du chemin](/img/k2/selection_02.png)

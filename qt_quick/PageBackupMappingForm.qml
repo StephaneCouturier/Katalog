@@ -34,7 +34,7 @@ ScrollablePageFitted {
         var srcName = sourceCombo.selectedDeviceName
         var tgtName = targetCombo.selectedDeviceName
         if (srcName && tgtName)
-            nameField.text = srcName + " → " + tgtName
+            nameField.text = srcName + " -> " + tgtName
     }
 
     function save() {
@@ -154,10 +154,13 @@ ScrollablePageFitted {
             // Name + auto-generate
             Controls.Label { text: qsTr("Name"); opacity: 0.7 }
             RowLayout {
+                // Field + button end level with the combo boxes above (gridUnit*24)
+                Layout.preferredWidth: Kirigami.Units.gridUnit * 24
+                Layout.maximumWidth: Kirigami.Units.gridUnit * 24
                 Controls.TextField {
                     id: nameField
-                    placeholderText: qsTr("e.g. Docs → NAS_Docs")
-                    Layout.preferredWidth: Kirigami.Units.gridUnit * 20
+                    placeholderText: qsTr("e.g. Docs -> NAS_Docs")
+                    Layout.fillWidth: true
                 }
                 IconButton {
                     icon.name: "system-run"

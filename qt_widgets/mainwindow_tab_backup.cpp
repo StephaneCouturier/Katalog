@@ -81,7 +81,7 @@ void MainWindow::on_BackUp_pushButton_GenerateMappingName_clicked()
     const QString sourceName = nameForId(ui->BackUp_treeView_ListSources->model(), sourceId);
     const QString targetName = nameForId(ui->BackUp_treeView_ListTargets->model(), targetId);
     if (!sourceName.isEmpty() && !targetName.isEmpty())
-        ui->BackUp_lineEdit_Name->setText(sourceName + " \u2192 " + targetName);
+        ui->BackUp_lineEdit_Name->setText(sourceName + " -> " + targetName);
 }
 
 void MainWindow::on_BackUp_pushButton_SaveMapping_clicked()
