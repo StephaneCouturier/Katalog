@@ -614,6 +614,34 @@ Kirigami.ApplicationWindow {
         openFeaturePage = pageSearchResults
     }
 
+    // "Tag this folder" (EXP-F23): Tags opens as a layer covering Explore, as
+    // Settings covers the pages, so its Close (and Esc) returns to the same Explore.
+    function showTagsAfterExplore() {
+        if (pageStack.layers.depth > 1)
+            pageStack.layers.pop()
+        if (indexOfPage(pageExplore) < 0) {   // no Explore to come back to
+            showPage(pageTags)
+            return
+        }
+        if (indexOfPage(pageTags) >= 0)
+            pageStack.removePage(pageTags)
+        pageTags.visible = true
+        refreshTextIfStale(pageTags)
+        pageStack.layers.push(pageTags)
+    }
+
+    // True when Tags is the layer opened over Explore (EXP-F23).
+    function tagsIsAfterExplore() {
+        return pageStack.layers.depth > 1 && pageStack.layers.currentItem === pageTags
+    }
+
+    // Tags' Close in that case: close the layer, back to Explore.
+    function closeTagsBackToExplore() {
+        pageStack.layers.pop()
+        pageStack.currentIndex = indexOfPage(pageExplore)
+        openFeaturePage = pageExplore
+    }
+
     function selectionInStack() {
         return pageStack.depth > 0 && pageStack.get(0) === pageSelection
     }
@@ -2325,6 +2353,10 @@ Kirigami.ApplicationWindow {
                     exploreFiles.catalogPath  = info.path  ?? ""
                     exploreFiles.catalogId    = info.externalId ?? 0
                 }
+                onTagFolderRequested: function(folderPath) {
+                    pageTagsForm.setFolderPath(folderPath)
+                    root.showTagsAfterExplore()
+                }
             }
 
             Kirigami.Separator { Layout.fillHeight: true }
@@ -2516,11 +2548,14 @@ Kirigami.ApplicationWindow {
                 id: pageTagsEscapeAction
                 text: qsTr("Close")
                 icon.name: "view-close"
-                onTriggered: root.closeFeaturePage(pageTags)
+                // Opened from Explore by "Tag this folder": back to the same
+                // Explore (EXP-F23, KBS-F1); otherwise back to Selection.
+                onTriggered: root.tagsIsAfterExplore() ? root.closeTagsBackToExplore()
+                                                       : root.closeFeaturePage(pageTags)
             }
         ]
 
-        PageTagsForm {}
+        PageTagsForm { id: pageTagsForm }
     }
 
     //Pages - Backup

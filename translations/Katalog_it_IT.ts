@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+181"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4613"/>
+        <location line="+4600"/>
         <source>Search</source>
         <translation>Cerca</translation>
     </message>
     <message>
-        <location line="-4733"/>
+        <location line="-4720"/>
         <source>Stopped</source>
         <translation>Interrotto</translation>
     </message>
@@ -44,7 +44,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2188"/>
+        <location line="+2175"/>
         <location line="+625"/>
         <location line="+26"/>
         <location line="+20"/>
@@ -62,8 +62,8 @@
         <translation>In corso</translation>
     </message>
     <message>
-        <location line="-4614"/>
-        <location line="+4061"/>
+        <location line="-4601"/>
+        <location line="+4048"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
@@ -71,7 +71,7 @@
         <translation>Completato</translation>
     </message>
     <message>
-        <location line="-3546"/>
+        <location line="-3533"/>
         <source>Empty database path provided</source>
         <translation>Percorso del database vuoto fornito</translation>
     </message>
@@ -111,7 +111,7 @@
         <translation>Disco locale</translation>
     </message>
     <message>
-        <location line="+470"/>
+        <location line="+457"/>
         <source>search_results</source>
         <translation>risultati_ricerca</translation>
     </message>
@@ -1000,7 +1000,7 @@ Scegliere un nome diverso.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+1332"/>
+        <location filename="../qt_quick/Main.qml" line="+1360"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Vuoi &lt;b&gt;eliminare&lt;/b&gt; questo dispositivo %1?&lt;br/&gt;&lt;br/&gt;Nome: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -1018,13 +1018,13 @@ Scegliere un nome diverso.</translation>
         <location line="-438"/>
         <location line="+60"/>
         <location line="+239"/>
-        <location line="+827"/>
-        <location line="+122"/>
+        <location line="+831"/>
+        <location line="+125"/>
         <source>Cancel</source>
         <translation>Annulla</translation>
     </message>
     <message>
-        <location line="-1348"/>
+        <location line="-1355"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+172"/>
@@ -1099,24 +1099,24 @@ Scegliere un nome diverso.</translation>
     </message>
     <message>
         <location line="-1294"/>
-        <location line="+1530"/>
+        <location line="+1537"/>
         <source>Backup</source>
         <translation>Backup</translation>
     </message>
     <message>
-        <location line="-1525"/>
-        <location line="+1485"/>
+        <location line="-1532"/>
+        <location line="+1489"/>
         <source>Statistics</source>
         <translation>Statistiche</translation>
     </message>
     <message>
-        <location line="-1480"/>
-        <location line="+1502"/>
+        <location line="-1484"/>
+        <location line="+1506"/>
         <source>Tags</source>
         <translation>Tag</translation>
     </message>
     <message>
-        <location line="-1489"/>
+        <location line="-1493"/>
         <source>Documentation</source>
         <translation>Documentazione</translation>
     </message>
@@ -1438,12 +1438,12 @@ Vuoi salvarlo comunque (il catalogo sarebbe vuoto)?</translation>
     <message>
         <location line="+7"/>
         <location line="+117"/>
-        <location line="+176"/>
+        <location line="+180"/>
         <source>Stop</source>
         <translation>Ferma</translation>
     </message>
     <message>
-        <location line="-286"/>
+        <location line="-290"/>
         <source>Reset</source>
         <translation>Reimposta</translation>
     </message>
@@ -1458,15 +1458,15 @@ Vuoi salvarlo comunque (il catalogo sarebbe vuoto)?</translation>
         <location line="+39"/>
         <location line="+109"/>
         <location line="+39"/>
-        <location line="+91"/>
+        <location line="+95"/>
         <location line="+105"/>
         <location line="+20"/>
-        <location line="+39"/>
+        <location line="+42"/>
         <source>Close</source>
         <translation>Chiudi</translation>
     </message>
     <message>
-        <location line="-1348"/>
+        <location line="-1355"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1549,7 +1549,7 @@ Vuoi salvarlo comunque (il catalogo sarebbe vuoto)?</translation>
         <translation type="vanished">Importa</translation>
     </message>
     <message>
-        <location line="+119"/>
+        <location line="+123"/>
         <source>Catalog created successfully.</source>
         <translation>Catalogo creato correttamente.</translation>
     </message>
@@ -1559,8 +1559,8 @@ Vuoi salvarlo comunque (il catalogo sarebbe vuoto)?</translation>
         <translation>Creazione del catalogo non riuscita: </translation>
     </message>
     <message>
-        <location line="-1364"/>
-        <location line="+1354"/>
+        <location line="-1368"/>
+        <location line="+1358"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Crea</translation>
@@ -1598,7 +1598,7 @@ Vuoi salvarlo comunque (il catalogo sarebbe vuoto)?</translation>
         <translation type="vanished">Backup</translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="+93"/>
         <source>Add</source>
         <translation>Aggiungi</translation>
     </message>
@@ -1720,7 +1720,7 @@ Vuoi salvarlo comunque (il catalogo sarebbe vuoto)?</translation>
         <translation>Includi tipo di file</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+251"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+254"/>
         <location line="+18"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-864"/>
         <source>Copy Checksum</source>
@@ -5294,12 +5294,12 @@ La divisione non è stata eseguita.</translation>
         <translation>Verifica MIME non riuscita:&lt;br/&gt;%1</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-143"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-141"/>
         <source>Tag this folder</source>
         <translation>Etichetta questa cartella</translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+79"/>
         <location line="+68"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-947"/>
         <source>Copy folder path</source>
@@ -7726,7 +7726,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+295"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+25"/>
+        <source>Tag this folder</source>
+        <translation>Etichetta questa cartella</translation>
+    </message>
+    <message>
+        <location line="+287"/>
         <source>Directories</source>
         <translation>Directory</translation>
     </message>
@@ -8548,7 +8553,7 @@ Errori: %3</translation>
         <translation>Impostazioni</translation>
     </message>
     <message>
-        <location line="+280"/>
+        <location line="+279"/>
         <source>Close</source>
         <translation>Chiudi</translation>
     </message>
@@ -8564,18 +8569,18 @@ Errori: %3</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location line="+231"/>
+        <location line="+220"/>
         <source>Memory</source>
         <translation>Memoria</translation>
     </message>
     <message>
-        <location line="-230"/>
-        <location line="+230"/>
+        <location line="-219"/>
+        <location line="+219"/>
         <source>File</source>
         <translation>File</translation>
     </message>
     <message>
-        <location line="-229"/>
+        <location line="-218"/>
         <source>Hosted</source>
         <translation>Ospitato</translation>
     </message>
@@ -8589,12 +8594,12 @@ Errori: %3</translation>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+592"/>
+        <location line="+581"/>
         <source>(none)</source>
         <translation>(nessuno)</translation>
     </message>
     <message>
-        <location line="-584"/>
+        <location line="-573"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8613,7 +8618,7 @@ Errori: %3</translation>
     <message>
         <location line="-230"/>
         <location line="+241"/>
-        <location line="+143"/>
+        <location line="+132"/>
         <source>Select</source>
         <translation>Seleziona</translation>
     </message>
@@ -8638,7 +8643,7 @@ Errori: %3</translation>
         <translation type="vanished">Password:</translation>
     </message>
     <message>
-        <location line="-119"/>
+        <location line="-108"/>
         <source>Host Name</source>
         <translation>Nome host</translation>
     </message>
@@ -8663,17 +8668,15 @@ Errori: %3</translation>
         <translation>Password</translation>
     </message>
     <message>
-        <location line="+11"/>
         <source>Startup:</source>
-        <translation>Avvio:</translation>
+        <translation type="vanished">Avvio:</translation>
     </message>
     <message>
-        <location line="+5"/>
         <source>Connect automatically on startup</source>
-        <translation>Connetti automaticamente all&apos;avvio</translation>
+        <translation type="vanished">Connetti automaticamente all&apos;avvio</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+11"/>
         <source>phpMyAdmin URL</source>
         <translation>URL di phpMyAdmin</translation>
     </message>
@@ -8725,16 +8728,16 @@ Errori: %3</translation>
         <translation>Percorso</translation>
     </message>
     <message>
-        <location line="-527"/>
+        <location line="-516"/>
         <location line="+3"/>
         <location line="+2"/>
         <location line="+0"/>
-        <location line="+544"/>
+        <location line="+533"/>
         <source>Device</source>
         <translation>Dispositivo</translation>
     </message>
     <message>
-        <location line="-572"/>
+        <location line="-561"/>
         <source>Storage devices linked to a missing storage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8858,7 +8861,7 @@ Errori: %3</translation>
         <translation>Valido:</translation>
     </message>
     <message>
-        <location line="+155"/>
+        <location line="+144"/>
         <source>Import</source>
         <translation>Importa</translation>
     </message>
@@ -8869,12 +8872,12 @@ Errori: %3</translation>
         <translation>Aggiorna</translation>
     </message>
     <message>
-        <location line="-346"/>
+        <location line="-335"/>
         <source>Application</source>
         <translation>Applicazione</translation>
     </message>
     <message>
-        <location line="+386"/>
+        <location line="+375"/>
         <source>Version</source>
         <translation>Versione</translation>
     </message>
@@ -9126,18 +9129,18 @@ Errori: %3</translation>
 <context>
     <name>PageTagsForm</name>
     <message>
-        <location filename="../qt_quick/PageTagsForm.qml" line="+56"/>
+        <location filename="../qt_quick/PageTagsForm.qml" line="+61"/>
         <source>Add a tag</source>
         <translation>Aggiungi un tag</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location line="+85"/>
+        <location line="+94"/>
         <source>Folder</source>
         <translation>Cartella</translation>
     </message>
     <message>
-        <location line="-79"/>
+        <location line="-88"/>
         <source>Folder path</source>
         <translation>Percorso della cartella</translation>
     </message>
@@ -9148,12 +9151,12 @@ Errori: %3</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location line="+69"/>
+        <location line="+78"/>
         <source>Tag</source>
         <translation>Tag</translation>
     </message>
     <message>
-        <location line="-56"/>
+        <location line="-65"/>
         <source>Tag the folder</source>
         <translation>Etichetta la cartella</translation>
     </message>
@@ -9168,11 +9171,16 @@ Errori: %3</translation>
         <translation>Seleziona o inserisci un nome di etichetta.</translation>
     </message>
     <message>
+        <location line="+8"/>
+        <source>Folder already tagged with %1.</source>
+        <translation>Cartella già contrassegnata con il tag %1.</translation>
+    </message>
+    <message>
         <source>Please enter a tag name.</source>
         <translation type="vanished">Inserisci un nome per il tag.</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+26"/>
         <source>Current folders and tags</source>
         <translation>Cartelle e tag correnti</translation>
     </message>

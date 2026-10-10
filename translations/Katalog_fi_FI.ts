@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+181"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4613"/>
+        <location line="+4600"/>
         <source>Search</source>
         <translation>Haku</translation>
     </message>
     <message>
-        <location line="-4733"/>
+        <location line="-4720"/>
         <source>Stopped</source>
         <translation>Pysäytetty</translation>
     </message>
@@ -44,7 +44,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2188"/>
+        <location line="+2175"/>
         <location line="+625"/>
         <location line="+26"/>
         <location line="+20"/>
@@ -62,8 +62,8 @@
         <translation>Käynnissä</translation>
     </message>
     <message>
-        <location line="-4614"/>
-        <location line="+4061"/>
+        <location line="-4601"/>
+        <location line="+4048"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
@@ -71,7 +71,7 @@
         <translation>Valmis</translation>
     </message>
     <message>
-        <location line="-3546"/>
+        <location line="-3533"/>
         <source>Empty database path provided</source>
         <translation>Tyhjä tietokantapolku annettu</translation>
     </message>
@@ -111,7 +111,7 @@
         <translation>Paikallinen levy</translation>
     </message>
     <message>
-        <location line="+470"/>
+        <location line="+457"/>
         <source>search_results</source>
         <translation>hakutulokset</translation>
     </message>
@@ -1000,7 +1000,7 @@ Valitse toinen nimi.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+1332"/>
+        <location filename="../qt_quick/Main.qml" line="+1360"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Haluatko &lt;b&gt;poistaa&lt;/b&gt; tämän %1-laitteen?&lt;br/&gt;&lt;br/&gt;Nimi: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -1018,13 +1018,13 @@ Valitse toinen nimi.</translation>
         <location line="-438"/>
         <location line="+60"/>
         <location line="+239"/>
-        <location line="+827"/>
-        <location line="+122"/>
+        <location line="+831"/>
+        <location line="+125"/>
         <source>Cancel</source>
         <translation>Peruuta</translation>
     </message>
     <message>
-        <location line="-1348"/>
+        <location line="-1355"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+172"/>
@@ -1099,24 +1099,24 @@ Valitse toinen nimi.</translation>
     </message>
     <message>
         <location line="-1294"/>
-        <location line="+1530"/>
+        <location line="+1537"/>
         <source>Backup</source>
         <translation>Varmuuskopio</translation>
     </message>
     <message>
-        <location line="-1525"/>
-        <location line="+1485"/>
+        <location line="-1532"/>
+        <location line="+1489"/>
         <source>Statistics</source>
         <translation>Tilastot</translation>
     </message>
     <message>
-        <location line="-1480"/>
-        <location line="+1502"/>
+        <location line="-1484"/>
+        <location line="+1506"/>
         <source>Tags</source>
         <translation>Tunnisteet</translation>
     </message>
     <message>
-        <location line="-1489"/>
+        <location line="-1493"/>
         <source>Documentation</source>
         <translation>Dokumentaatio</translation>
     </message>
@@ -1438,12 +1438,12 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
     <message>
         <location line="+7"/>
         <location line="+117"/>
-        <location line="+176"/>
+        <location line="+180"/>
         <source>Stop</source>
         <translation>Pysäytä</translation>
     </message>
     <message>
-        <location line="-286"/>
+        <location line="-290"/>
         <source>Reset</source>
         <translation>Nollaa</translation>
     </message>
@@ -1458,15 +1458,15 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <location line="+39"/>
         <location line="+109"/>
         <location line="+39"/>
-        <location line="+91"/>
+        <location line="+95"/>
         <location line="+105"/>
         <location line="+20"/>
-        <location line="+39"/>
+        <location line="+42"/>
         <source>Close</source>
         <translation>Sulje</translation>
     </message>
     <message>
-        <location line="-1348"/>
+        <location line="-1355"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1549,7 +1549,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <translation type="vanished">Tuo</translation>
     </message>
     <message>
-        <location line="+119"/>
+        <location line="+123"/>
         <source>Catalog created successfully.</source>
         <translation>Luettelo luotiin onnistuneesti.</translation>
     </message>
@@ -1559,8 +1559,8 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <translation>Luettelon luonti epäonnistui: </translation>
     </message>
     <message>
-        <location line="-1364"/>
-        <location line="+1354"/>
+        <location line="-1368"/>
+        <location line="+1358"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Luo</translation>
@@ -1598,7 +1598,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <translation type="vanished">Varmuuskopio</translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="+93"/>
         <source>Add</source>
         <translation>Lisää</translation>
     </message>
@@ -1720,7 +1720,7 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
         <translation>Sisällytä tiedostotyyppi</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+251"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+254"/>
         <location line="+18"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-864"/>
         <source>Copy Checksum</source>
@@ -5100,7 +5100,7 @@ roskakoriin?</translation>
         <translation>&lt;span style=&apos;color:red;&apos;&gt;POISTA&lt;/span&gt;&lt;br/&gt; %1 &lt;br/&gt;?</translation>
     </message>
     <message>
-        <location line="-308"/>
+        <location line="-306"/>
         <source>Tag this folder</source>
         <translation>Merkitse tämä kansio</translation>
     </message>
@@ -5209,7 +5209,7 @@ roskakoriin?</translation>
         <translation>Järjestä kansiot ensin</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+153"/>
+        <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+151"/>
         <source>Copy folder name</source>
         <translation>Kopioi kansion nimi</translation>
     </message>
@@ -7726,7 +7726,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageExploreFolders</name>
     <message>
-        <location filename="../qt_quick/PageExploreFolders.qml" line="+295"/>
+        <location filename="../qt_quick/PageExploreFolders.qml" line="+25"/>
+        <source>Tag this folder</source>
+        <translation>Merkitse tämä kansio</translation>
+    </message>
+    <message>
+        <location line="+287"/>
         <source>Directories</source>
         <translation>Hakemistot</translation>
     </message>
@@ -8548,7 +8553,7 @@ Virheitä: %3</translation>
         <translation>Asetukset</translation>
     </message>
     <message>
-        <location line="+280"/>
+        <location line="+279"/>
         <source>Close</source>
         <translation>Sulje</translation>
     </message>
@@ -8564,18 +8569,18 @@ Virheitä: %3</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location line="+231"/>
+        <location line="+220"/>
         <source>Memory</source>
         <translation>Muisti</translation>
     </message>
     <message>
-        <location line="-230"/>
-        <location line="+230"/>
+        <location line="-219"/>
+        <location line="+219"/>
         <source>File</source>
         <translation>Tiedosto</translation>
     </message>
     <message>
-        <location line="-229"/>
+        <location line="-218"/>
         <source>Hosted</source>
         <translation>Isännöity</translation>
     </message>
@@ -8589,12 +8594,12 @@ Virheitä: %3</translation>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+592"/>
+        <location line="+581"/>
         <source>(none)</source>
         <translation>(ei mitään)</translation>
     </message>
     <message>
-        <location line="-584"/>
+        <location line="-573"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8613,7 +8618,7 @@ Virheitä: %3</translation>
     <message>
         <location line="-230"/>
         <location line="+241"/>
-        <location line="+143"/>
+        <location line="+132"/>
         <source>Select</source>
         <translation>Valitse</translation>
     </message>
@@ -8638,7 +8643,7 @@ Virheitä: %3</translation>
         <translation type="vanished">Salasana:</translation>
     </message>
     <message>
-        <location line="-119"/>
+        <location line="-108"/>
         <source>Host Name</source>
         <translation>Isäntänimi</translation>
     </message>
@@ -8663,17 +8668,15 @@ Virheitä: %3</translation>
         <translation>Salasana</translation>
     </message>
     <message>
-        <location line="+11"/>
         <source>Startup:</source>
-        <translation>Käynnistys:</translation>
+        <translation type="vanished">Käynnistys:</translation>
     </message>
     <message>
-        <location line="+5"/>
         <source>Connect automatically on startup</source>
-        <translation>Yhdistä automaattisesti käynnistyksen yhteydessä</translation>
+        <translation type="vanished">Yhdistä automaattisesti käynnistyksen yhteydessä</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+11"/>
         <source>phpMyAdmin URL</source>
         <translation>phpMyAdmin-URL</translation>
     </message>
@@ -8725,16 +8728,16 @@ Virheitä: %3</translation>
         <translation>Polku</translation>
     </message>
     <message>
-        <location line="-527"/>
+        <location line="-516"/>
         <location line="+3"/>
         <location line="+2"/>
         <location line="+0"/>
-        <location line="+544"/>
+        <location line="+533"/>
         <source>Device</source>
         <translation>Laite</translation>
     </message>
     <message>
-        <location line="-572"/>
+        <location line="-561"/>
         <source>Storage devices linked to a missing storage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8858,7 +8861,7 @@ Virheitä: %3</translation>
         <translation>Kelvollinen:</translation>
     </message>
     <message>
-        <location line="+155"/>
+        <location line="+144"/>
         <source>Import</source>
         <translation>Tuo</translation>
     </message>
@@ -8869,12 +8872,12 @@ Virheitä: %3</translation>
         <translation>Päivitä</translation>
     </message>
     <message>
-        <location line="-346"/>
+        <location line="-335"/>
         <source>Application</source>
         <translation>Sovellus</translation>
     </message>
     <message>
-        <location line="+386"/>
+        <location line="+375"/>
         <source>Version</source>
         <translation>Versio</translation>
     </message>
@@ -9126,18 +9129,18 @@ Virheitä: %3</translation>
 <context>
     <name>PageTagsForm</name>
     <message>
-        <location filename="../qt_quick/PageTagsForm.qml" line="+56"/>
+        <location filename="../qt_quick/PageTagsForm.qml" line="+61"/>
         <source>Add a tag</source>
         <translation>Lisää tunniste</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location line="+85"/>
+        <location line="+94"/>
         <source>Folder</source>
         <translation>Kansio</translation>
     </message>
     <message>
-        <location line="-79"/>
+        <location line="-88"/>
         <source>Folder path</source>
         <translation>Kansion polku</translation>
     </message>
@@ -9148,12 +9151,12 @@ Virheitä: %3</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location line="+69"/>
+        <location line="+78"/>
         <source>Tag</source>
         <translation>Tunniste</translation>
     </message>
     <message>
-        <location line="-56"/>
+        <location line="-65"/>
         <source>Tag the folder</source>
         <translation>Merkitse kansio</translation>
     </message>
@@ -9168,11 +9171,16 @@ Virheitä: %3</translation>
         <translation>Valitse tai anna tunnisteen nimi.</translation>
     </message>
     <message>
+        <location line="+8"/>
+        <source>Folder already tagged with %1.</source>
+        <translation>Kansiolla on jo tunniste %1.</translation>
+    </message>
+    <message>
         <source>Please enter a tag name.</source>
         <translation type="vanished">Anna tunnisteen nimi.</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+26"/>
         <source>Current folders and tags</source>
         <translation>Nykyiset kansiot ja tunnisteet</translation>
     </message>

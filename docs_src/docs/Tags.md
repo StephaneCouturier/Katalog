@@ -14,11 +14,11 @@ A tag is assigned to a **folder path**, not to a catalog or a device: it applies
 A folder can have several tags, and a tag can be on several folders.
 
 ## Add a tag {#add}
-1. *Folder*: type the path of the folder, or choose it with *Select a folder*.
+1. *Folder*: type the path of the folder, or choose it with *Select a folder*. It is filled in already when Tags was opened with *Tag this folder* in [Explore](Explore#tag-folder).
 1. *Tag*: choose an existing tag in the list, or type a new name.
 1. Click *Tag the folder*.
 
-When the folder or the tag name is missing, a message at the top of the page says what is needed.<br/>
+When the folder or the tag name is missing, or when the folder already has this tag, a message at the top of the page says so.<br/>
 The new association appears in the list below.
 
 ## Current folders and tags {#list}

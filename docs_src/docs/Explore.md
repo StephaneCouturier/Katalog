@@ -8,7 +8,8 @@ version: "3.0"
 This page describes the **Explore** page, which shows the content of **one catalog** as a directory tree and a file list, **even when its device is not connected**:
 * the [directory tree](#directory-tree) of the catalog, on the left,
 * the [file list](#file-list) of the selected folder, on the right, with the size of each sub-folder,
-* the [context menu](#file-context-menu) of a file or a folder.
+* the [context menu](#file-context-menu) of a file or a folder,
+* [tagging a directory](#tag-folder) of the tree.
 
 ![Explore page: directory tree on the left, file list of the selected folder on the right](/img/explore_01_overview.png)
 
@@ -40,6 +41,11 @@ Four buttons above the tree change how much of the tree is shown at once:
 A button is greyed out when there is nothing left to fold or unfold.<br/>
 Opening a sub-folder from the file list unfolds its branch, so the selected directory is always visible in the tree.<br/>
 The folded and unfolded branches are not kept: the tree starts again from the first two levels each time a catalog is opened.
+
+### Tag this folder {#tag-folder}
+**Right-click** a directory of the tree (or press and hold) to open its menu, with one entry: *Tag this folder*.<br/>
+It opens the [Tags](Tags) page over the whole Explore page, with the path of that directory already filled in; choose the tag and confirm there. The directory selected in the tree and the file list do not change.<br/>
+*Close* (or `Esc`) on Tags then comes back to the same Explore page and directory.
 
 ## File list {#file-list}
 The top of the file list shows the path of the selected folder, and the display options:

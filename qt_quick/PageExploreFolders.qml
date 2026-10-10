@@ -10,6 +10,23 @@ Item {
 
     signal folderClicked(string folderPath)
     signal catalogOpenRequested(var catalogInfo)
+    signal tagFolderRequested(string folderPath)   // EXP-F21 / EXP-F22
+
+    // Folder the context menu was opened on; the selection is left as it is (EXP-F21)
+    property string contextFolderPath: ""
+    function openFolderContextMenu(folderPath) {
+        root.contextFolderPath = folderPath
+        folderContextMenu.popup()
+    }
+
+    Controls.Menu {
+        id: folderContextMenu
+        Controls.MenuItem {
+            text: qsTr("Tag this folder")
+            icon.name: "tag"
+            onTriggered: root.tagFolderRequested(root.contextFolderPath)
+        }
+    }
 
     property string catalogName: ""
     property string catalogPath: ""
@@ -466,6 +483,11 @@ Item {
                         root.selectedFolderPath = model.fullPath
                         folderListView.currentIndex = index
                         root.folderClicked(model.fullPath)
+                    }
+                    onPressAndHold: root.openFolderContextMenu(model.fullPath)
+                    TapHandler {
+                        acceptedButtons: Qt.RightButton
+                        onTapped: root.openFolderContextMenu(model.fullPath)
                     }
                 }
             }

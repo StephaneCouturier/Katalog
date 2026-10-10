@@ -759,7 +759,7 @@ class MainWindow : public KXmlGuiWindow
 
             //context menu directories
             void on_Explore_treeview_Directories_customContextMenuRequested(const QPoint &pos);
-            void exploreContextTagFolder();
+            void exploreContextTagFolder(const QModelIndex &index);
 
             //context menu files
             void on_Explore_treeView_FileList_customContextMenuRequested(const QPoint &pos);

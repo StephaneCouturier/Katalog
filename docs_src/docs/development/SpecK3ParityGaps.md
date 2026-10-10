@@ -62,35 +62,6 @@ refuses public hosts (HST-C4), and startup is not re-validated, as in K2 (HST-F6
 
 ---
 
-## Explore — "Tag this folder" on the directory tree
-
-**Found:** 2026-10-07, while writing the K3 Explore user page.
-**K2 user doc:** `Explore.md`, section *Directory context menu (right-click)*.
-
-In K2, right-clicking a directory in the Explore directory tree opens a menu with one
-entry, *Tag this folder* (icon `tag`). It fills the folder path of the Tags tab with
-that directory and switches to the Tags tab, where the user picks the tag and confirms.
-
-**K2 code:** `qt_widgets/mainwindow_tab_explore.cpp` —
-`on_Explore_treeview_Directories_customContextMenuRequested()` (menu) and
-`exploreContextTagFolder()` (fills `Tags_lineEdit_FolderPath`, switches tab). The string
-*Tag this folder* is an existing K2 `tr()` string, to be reused verbatim.
-
-**Core already available:** nothing needed — the action only pre-fills a UI field.
-
-**K3:** the Explore directory tree (`qt_quick/PageExploreFolders.qml`) has no context
-menu. The Tags page has a folder path field (`folderPathField` in
-`qt_quick/PageTagsForm.qml`) that the portage would pre-fill before showing the page.
-
-**Porting note:** K2 switches tab; K3 opens the Tags page in the page stack. Decide
-whether `Esc` / *Close* on Tags then returns to Explore, as Explore returns to Search
-results after *Explore folder*.
-
-**K3 user doc:** `Explore.md` (K3) does not describe a directory context menu until it is
-ported.
-
----
-
 ## Devices — "Verify MIME Types" on a catalog
 
 **Found:** 2026-10-07, while writing the K3 Create user page.

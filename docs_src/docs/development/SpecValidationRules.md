@@ -161,8 +161,9 @@ list. Approved by the user the same day. Rules use the `L` prefix.
 |---|------|---------|---------|
 | T1 | A tag cannot be created without a folder. | "Tag the folder" with an empty Folder field | `Select or enter a folder to tag.` |
 | T2 | A tag cannot be created without a tag name. | "Tag the folder" with an empty Tag field (folder present) | `Select or enter a tag name.` |
+| T3 | A folder cannot get the same tag twice. *(K3 only; approved by the maintainer 2026-10-10, with its new string. K2 unchanged.)* | "Tag the folder" when this folder path (trimmed, exact match) already has this tag name | `Folder already tagged with %1.` (%1 = the tag name) |
 
-Folder is validated before tag name (top-to-bottom field order). On success the
+Folder is validated before tag name (top-to-bottom field order), then the duplicate check (T3). On success the
 Folder field is cleared and the Tag combo is reset.
 
 ### Create page (`PageCreateForm.qml`)

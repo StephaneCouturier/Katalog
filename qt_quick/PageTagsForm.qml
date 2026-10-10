@@ -24,6 +24,11 @@ ColumnLayout {
 
     Component.onCompleted: reload()
 
+    // Pre-filled by "Tag this folder" in Explore (EXP-F22)
+    function setFolderPath(folderPath) {
+        folderPathField.text = folderPath
+    }
+
     FolderDialog {
         id: tagFolderDialog
         onAccepted: folderPathField.text = appManager1.pathFromFileUrl(selectedFolder.toString())
@@ -104,6 +109,15 @@ ColumnLayout {
                         tagValidationMessage.text = qsTr("Select or enter a tag name.")
                         tagValidationMessage.visible = true
                         return
+                    }
+                    // Same folder, same tag: refused (SpecValidationRules T3)
+                    var existing = appManager1.getTagEntries(name)
+                    for (var i = 0; i < existing.length; i++) {
+                        if (existing[i].folder === folder) {
+                            tagValidationMessage.text = qsTr("Folder already tagged with %1.").arg(name)
+                            tagValidationMessage.visible = true
+                            return
+                        }
                     }
                     appManager1.createTag(name, folder)
                     folderPathField.text = ""

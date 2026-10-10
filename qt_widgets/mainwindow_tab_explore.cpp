@@ -144,21 +144,24 @@
 //Context Menu - directories
     void MainWindow::on_Explore_treeview_Directories_customContextMenuRequested(const QPoint &pos)
     {
+        // The right-clicked row, read under its own parent (SpecExplore EXP-C19)
+        QModelIndex index = ui->Explore_treeview_Directories->indexAt(pos);
+        if (!index.isValid())
+            return;
+
         QPoint globalPos = ui->Explore_treeview_Directories->mapToGlobal(pos);
         QMenu directoryContextMenu;
 
         QAction *menuDirectoryAction1 = new QAction(QIcon::fromTheme("tag"),(tr("Tag this folder")), this);
-        connect(menuDirectoryAction1, &QAction::triggered, this, &MainWindow::exploreContextTagFolder);
+        connect(menuDirectoryAction1, &QAction::triggered, this, [this, index]() { exploreContextTagFolder(index); });
         directoryContextMenu.addAction(menuDirectoryAction1);
 
         directoryContextMenu.exec(globalPos);
     }
     //--------------------------------------------------------------------------
-    void MainWindow::exploreContextTagFolder()
+    void MainWindow::exploreContextTagFolder(const QModelIndex &index)
     {
-        QModelIndex index = ui->Explore_treeview_Directories->currentIndex();
-
-        QString selectedFolder = ui->Explore_treeview_Directories->model()->index(index.row(), 2, QModelIndex()).data().toString();
+        QString selectedFolder = ui->Explore_treeview_Directories->model()->index(index.row(), 2, index.parent()).data().toString();
 
         ui->Tags_lineEdit_FolderPath->setText(selectedFolder);
         ui->tabWidget->setCurrentIndex(6);
