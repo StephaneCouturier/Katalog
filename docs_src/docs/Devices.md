@@ -107,6 +107,7 @@ The menu starts with the device name. Its items depend on the type of device:
 | *Open folder* | Devices with a path | Opens the path in the file manager. |
 | *Filelight* | Available Storage and Catalog | Opens [Filelight](https://apps.kde.org/filelight/) on the path, to see what takes the space. Needs Filelight to be installed. |
 | *Verify Checksums* | Catalog | Calculates the checksums of all the files again and compares them with the saved ones, after confirmation. A report gives the total, verified, mismatched and missing files. |
+| *Verify MIME types* | Available Catalog | Reads the content of each file not verified yet, to find its real type, and corrects the type guessed from the extension at indexing. When a type differs from the extension, a message gives the number of mismatches and the path of a report saved in the collection folder (the home folder in *Hosted* mode), with *Open Report*. Not available while another device operation or a search runs. |
 | *Split catalog by sub-directory* | Catalog | See [Split a catalog](#split). |
 | *Split catalog by file type* | Catalog | See [Split a catalog](#split). |
 | *Add Virtual device* | Virtual | Creates a virtual device below this one and opens it in [Edit device](DevicesEdit). |
@@ -120,7 +121,7 @@ A catalog can be replaced by several smaller catalogs. The original catalog is r
 
 * *Split catalog by sub-directory*: creates one catalog for each sub-directory directly below the source path, named `<catalog name>_<sub-directory>`, and one named `<catalog name>_(root)` for the files directly in the source path. A confirmation is asked first.
 * *Split catalog by file type*: creates one catalog per file type found (Audio, Image, Text, Video, Other), on the same source path. The dialog offers:
-    * *Verify then Split*: reads the type of every file again from the drive first, for an exact result. Available when the device is available.
+    * *Verify then Split*: runs *Verify MIME types* first, for an exact result, then splits. Available when the device is available.
     * *Split without verifying*: uses the file types already saved in the catalog.
 
 ## Development

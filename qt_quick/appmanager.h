@@ -423,6 +423,8 @@ public slots:
     Q_INVOKABLE QString      splitCatalogBySubDirectory(int deviceId);
     Q_INVOKABLE void         splitCatalogByFileType(int deviceId, bool verifyFirst);
     Q_INVOKABLE QVariantMap  verifyDeviceChecksums(int deviceId);
+    // MIME verification of one catalog (SpecMimeVerification.md MIV-F1..F5)
+    Q_INVOKABLE void         verifyMimeTypes(int deviceId);
     Q_INVOKABLE QString      unassignDevice(int deviceId, int parentId);
     Q_INVOKABLE QString      assignCatalogToDevice(int catalogDeviceId, int virtualDeviceId);
     Q_INVOKABLE void         launchFilelight(int deviceId);
@@ -640,6 +642,8 @@ signals:
     void storageUserIdDuplicate();
     void checksumVerificationCompleted(QVariantMap result);
     void splitCompleted(bool success, const QString &error);
+    // mismatchCount < 0 means the verification failed with errorMessage
+    void mimeVerificationFinished(int mismatchCount, const QString &reportPath, const QString &errorMessage);
 
 private:
     // Default window size (WIN-C1, SpecWindowGeometry.md): first start and reset.
@@ -679,6 +683,10 @@ private:
     bool    m_exportCancelRequested = false;
     QString m_exportStatusText;
     bool    exportIsBlocked() const;
+    // Runs the MIME job on dev (Memory mode: loads the file list first, saves
+    // the .idx after), then calls onDone(mismatchCount, reportPath, error)
+    void    runMimeVerification(Device *dev,
+                                std::function<void(int, const QString &, const QString &)> onDone);
     void    setExportStatus(const QString &text);
     void    finishExport(const QString &status, const QString &reason = QString());
     DeviceListModel        *m_importSourceDeviceModel = nullptr;

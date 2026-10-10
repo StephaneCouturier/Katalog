@@ -120,7 +120,7 @@ The open collection can be copied to another data mode, for example to move a co
 | *File* | — | yes |
 | *Hosted* | yes | yes |
 
-* *Export to SQLite file* asks for the file to create, `export.db` in the collection folder by default. If the file already exists, it is moved to the trash first. In *Memory* mode, the files and folders of all catalogs are loaded first, which can take a while for a big collection.
+* *Export to SQLite file* asks for the file to create, `export.db` in the collection folder by default (in the home folder in *Hosted* mode). If the file already exists, it is moved to the trash first. In *Memory* mode, the files and folders of all catalogs are loaded first, which can take a while for a big collection.
 * *Export to Memory mode (csv)* asks for a folder, which **must be empty**. Katalog writes there the `.csv` files of the collection and the `.idx` files of each catalog.
 
 The progress is shown at the bottom of the page, with *Cancel*. Cancelling removes what the export had written. A message shows the path of the export when it is done. The export buttons are not available while a catalog is created or updated, or while a search runs.

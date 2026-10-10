@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+181"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+182"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4600"/>
+        <location line="+4661"/>
         <source>Search</source>
         <translation>Chercher</translation>
     </message>
     <message>
-        <location line="-4720"/>
+        <location line="-4781"/>
         <source>Stopped</source>
         <translation>Arrêté</translation>
     </message>
@@ -20,11 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
+        <location line="+3242"/>
         <source>Evaluated</source>
         <translation>Évalué</translation>
     </message>
     <message>
-        <location line="-118"/>
+        <location line="-3360"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -48,7 +49,9 @@
         <location line="+625"/>
         <location line="+26"/>
         <location line="+20"/>
-        <location line="+1164"/>
+        <location line="+380"/>
+        <location line="+32"/>
+        <location line="+813"/>
         <location line="+11"/>
         <location line="+87"/>
         <location line="+29"/>
@@ -62,8 +65,8 @@
         <translation>En cours</translation>
     </message>
     <message>
-        <location line="-4601"/>
-        <location line="+4048"/>
+        <location line="-4662"/>
+        <location line="+4109"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
@@ -71,7 +74,7 @@
         <translation>Terminé</translation>
     </message>
     <message>
-        <location line="-3533"/>
+        <location line="-3594"/>
         <source>Empty database path provided</source>
         <translation>Chemin de base de données vide fourni</translation>
     </message>
@@ -157,12 +160,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2723"/>
+        <location line="+2784"/>
         <source>Size</source>
         <translation>Taille</translation>
     </message>
     <message>
-        <location line="-2722"/>
+        <location line="-2783"/>
         <source>Date</source>
         <translation>Date</translation>
     </message>
@@ -256,11 +259,12 @@ Choisissez un autre nom et réessayez.</translation>
     </message>
     <message>
         <location line="-20"/>
+        <location line="+1128"/>
         <source>A device operation is already running.</source>
         <translation>Une opération de périphérique est déjà en cours.</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="-1044"/>
         <location line="+650"/>
         <source>Create</source>
         <translation>Créer</translation>
@@ -329,12 +333,11 @@ Choisissez un autre nom et réessayez.</translation>
         <translation>La division a échoué : aucun catalogue n&apos;a été créé.</translation>
     </message>
     <message>
-        <location line="+18"/>
         <source>Verifying MIME types for %1…</source>
-        <translation>Vérification des types MIME pour %1…</translation>
+        <translation type="vanished">Vérification des types MIME pour %1…</translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="+111"/>
         <source>Device has no catalog.</source>
         <translation>Le périphérique n’a pas de catalogue.</translation>
     </message>
@@ -431,7 +434,18 @@ Choisissez un autre nom.</translation>
         <translation>oui</translation>
     </message>
     <message>
-        <location line="-23"/>
+        <location line="-450"/>
+        <source>MIME verification failed:&lt;br/&gt;%1</source>
+        <translation>Échec de la vérification MIME :&lt;br/&gt;%1</translation>
+    </message>
+    <message>
+        <location line="+34"/>
+        <location line="+32"/>
+        <source>Verify MIME types</source>
+        <translation>Vérifier les types MIME</translation>
+    </message>
+    <message>
+        <location line="+361"/>
         <location line="+1"/>
         <location line="+21"/>
         <location line="+1"/>
@@ -7183,7 +7197,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDevicesView</name>
     <message>
-        <location filename="../qt_quick/PageDevicesView.qml" line="+163"/>
+        <location filename="../qt_quick/PageDevicesView.qml" line="+182"/>
         <location line="+37"/>
         <source>Split Catalog</source>
         <translation>Diviser le catalogue</translation>
@@ -7269,12 +7283,13 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+10"/>
-        <location line="+89"/>
+        <location line="+100"/>
+        <location line="+19"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location line="-78"/>
+        <location line="-108"/>
         <source>Unassign Device</source>
         <translation>Dissocier le périphérique</translation>
     </message>
@@ -7316,7 +7331,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="vanished">Liste des catalogues</translation>
     </message>
     <message>
-        <location line="+169"/>
+        <location line="+199"/>
         <source>Filter from Selection</source>
         <translation>Filtrer depuis la sélection</translation>
     </message>
@@ -7342,7 +7357,32 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Catalogues</translation>
     </message>
     <message>
-        <location line="-127"/>
+        <location line="-464"/>
+        <source>MIME verification failed:&lt;br/&gt;%1</source>
+        <translation>Échec de la vérification MIME :&lt;br/&gt;%1</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
+        <translation>Vérification MIME terminée avec succès.&lt;br/&gt;Aucune incohérence trouvée entre les extensions de fichiers et le contenu réel.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
+        <translation>Vérification MIME terminée.&lt;br/&gt;%1 incohérence(s) trouvée(s) entre les extensions de fichiers et le contenu réel.&lt;br/&gt;&lt;br/&gt;Rapport enregistré dans :&lt;br/&gt;%2</translation>
+    </message>
+    <message>
+        <location line="+242"/>
+        <source>MIME Verification Complete</source>
+        <translation>Vérification MIME terminée</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Open Report</source>
+        <translation>Ouvrir le rapport</translation>
+    </message>
+    <message>
+        <location line="+75"/>
         <source>All devices</source>
         <translation>Tous les périphériques</translation>
     </message>
@@ -7383,7 +7423,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+29"/>
-        <location line="+152"/>
+        <location line="+154"/>
         <source>No devices</source>
         <translation>Aucun périphérique</translation>
     </message>
@@ -7391,7 +7431,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDevicesViewDelegate</name>
     <message>
-        <location filename="../qt_quick/PageDevicesViewDelegate.qml" line="+103"/>
+        <location filename="../qt_quick/PageDevicesViewDelegate.qml" line="+104"/>
         <source>Update</source>
         <translation>Actualiser</translation>
     </message>
@@ -7412,17 +7452,22 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+8"/>
-        <location line="+16"/>
+        <location line="+25"/>
         <source>Filelight</source>
         <translation>Filelight</translation>
     </message>
     <message>
-        <location line="-7"/>
+        <location line="-16"/>
         <source>Verify Checksums</source>
         <translation>Vérifier les sommes de contrôle</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+7"/>
+        <source>Verify MIME types</source>
+        <translation>Vérifier les types MIME</translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Split catalog by sub-directory</source>
         <translation>Diviser le catalogue par sous-répertoire</translation>
     </message>

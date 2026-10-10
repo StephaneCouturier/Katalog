@@ -5,6 +5,7 @@
 #include <QDir>
 #include "core/databasemanager.h"
 #include "core/device.h"
+#include "core/catalogjobstoppable.h"
 #include "core/filechecksum.h"
 #include "core/filemetadata.h"
 #include "core/searchjobstoppable.h"
@@ -3475,32 +3476,94 @@ void AppManager::splitCatalogByFileType(int deviceId, bool verifyFirst)
         return;
     }
 
-    // Verify MIME types first, then split
-    setupDeviceUpdateManagerForDevices();
-    m_deviceUpdateIsRunning = true;
-    m_deviceUpdateStatusText = tr("Verifying MIME types for %1…").arg(dev->name);
+    // Verify MIME types first, then split (MIV-F6)
+    runMimeVerification(dev, [this, dev, performSplit](int mismatchCount, const QString &, const QString &error) {
+        if (mismatchCount < 0) {
+            // The split result dialog is plain text
+            emit splitCompleted(false, tr("MIME verification failed:<br/>%1").arg(error).replace(QStringLiteral("<br/>"), QStringLiteral("\n")));
+            delete dev;
+            return;
+        }
+        performSplit();
+    });
+}
+//----------------------------------------------------------------------
+void AppManager::verifyMimeTypes(int deviceId)
+{
+    Device *dev = new Device();
+    dev->ID = deviceId;
+    dev->loadDevice(m_connectionName);
+    if (dev->type != QLatin1String("Catalog") || !dev->active || !dev->catalog) {
+        delete dev;
+        return;
+    }
+    runMimeVerification(dev, [this, dev](int mismatchCount, const QString &reportPath, const QString &error) {
+        delete dev;
+        emit mimeVerificationFinished(mismatchCount, reportPath, error);
+    });
+}
+//----------------------------------------------------------------------
+void AppManager::runMimeVerification(Device *dev,
+                                     std::function<void(int, const QString &, const QString &)> onDone)
+{
+    // Refused while another device operation or a search runs (MIV-F2)
+    if (m_deviceUpdateIsRunning || m_catalogIsCreating || m_searchIsRunning) {
+        onDone(-1, QString(), tr("A device operation is already running."));
+        return;
+    }
+
+    m_deviceUpdateIsRunning  = true;
+    m_deviceUpdateStatusText = StatusBarMessageBuilder()
+                                   .setOperation(tr("Verify MIME types"))
+                                   .setStatus(tr("In Progress"))
+                                   .setCatalogName(dev->name)
+                                   .build();
     emit deviceUpdateStateChanged();
     emit deviceUpdateStatusChanged();
 
-    // Disconnect generic handler, wire split-specific completion
-    disconnect(m_deviceUpdateManager, &DeviceUpdateManager::operationCompleted,
-               this, &AppManager::onDevicePageUpdateCompleted);
-    connect(m_deviceUpdateManager, &DeviceUpdateManager::operationCompleted,
-            this, [this, performSplit](const QList<qint64> &) {
-                m_deviceUpdateIsRunning = false;
-                m_deviceUpdateStatusText.clear();
-                emit deviceUpdateStateChanged();
-                emit deviceUpdateStatusChanged();
-                setupDeviceUpdateManager();
-                performSplit();
-            });
-
-    // Run MIME verification via DeviceUpdateManager (uses same CatalogJobStoppable internally)
-    // DeviceUpdateManager handles VerifyMimeTypes through its catalog job.
     // Deferred one event-loop turn so the activity panel paints before the scan
     // blocks the GUI thread — same reason as in createCatalog().
-    QTimer::singleShot(kStartDeferralMs, this, [this, dev]() {
-        m_deviceUpdateManager->updateDeviceHierarchy(dev, collection->databaseMode, collection->folder, "update");
+    QTimer::singleShot(kStartDeferralMs, this, [this, dev, onDone]() {
+        // Memory mode: the job reads and updates the file table (MIV-F5)
+        if (collection->databaseMode == "Memory") {
+            QMutex mutex;
+            bool stop = false;
+            dev->catalog->loadCatalogFileListToTable(mutex, stop);
+        }
+
+        CatalogJobStoppable *job = new CatalogJobStoppable(this);
+        // The report goes to the browse folder: Hosted mode has no collection folder
+        job->configureOperation(dev, CatalogJobStoppable::VerifyMimeTypes,
+                                collection->databaseMode, getCollectionBrowsePath(), m_connectionName);
+
+        auto finish = [this, job, onDone](int mismatchCount, const QString &reportPath, const QString &error) {
+            job->deleteLater();
+            m_deviceUpdateIsRunning = false;
+            m_deviceUpdateStatusText.clear();
+            emit deviceUpdateStateChanged();
+            emit deviceUpdateStatusChanged();
+            onDone(mismatchCount, reportPath, error);
+        };
+        connect(job, &CatalogJobStoppable::catalogProgress, this,
+                [this, dev](qint64 processed, qint64 total, const QString &) {
+                    m_deviceUpdateStatusText = StatusBarMessageBuilder()
+                                                   .setOperation(tr("Verify MIME types"))
+                                                   .setStatus(tr("In Progress"))
+                                                   .setCatalogName(dev->name)
+                                                   .setProcess(tr("Evaluated"), processed, total)
+                                                   .build();
+                    emit deviceUpdateStatusChanged();
+                });
+        connect(job, &CatalogJobStoppable::mimeVerificationCompleted, this,
+                [this, dev, finish](int mismatchCount, const QString &reportPath) {
+                    // Memory mode: keep the verified types in the .idx (MIV-F5)
+                    dev->catalog->saveCatalogToFile(collection->databaseMode, collection->folder);
+                    finish(mismatchCount, reportPath, QString());
+                });
+        connect(job, &CatalogJobStoppable::catalogOperationError, this,
+                [finish](const QString &error) { finish(-1, QString(), error); });
+
+        job->processCatalog();
     });
 }
 //----------------------------------------------------------------------

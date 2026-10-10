@@ -456,7 +456,8 @@ ScrollablePageFitted {
                     visible: appManager1.databaseMode === "Memory" || appManager1.databaseMode === "Hosted"
                     enabled: exportRow.exportAllowed
                     onClicked: {
-                        var folder = appManager1.getCollectionFolder()
+                        // Browse folder: Hosted mode has no collection folder
+                        var folder = appManager1.getCollectionBrowsePath()
                         exportFileDialog.currentFolder = appManager1.pathToFileUrl(folder)
                         exportFileDialog.selectedFile  = appManager1.pathToFileUrl(folder + "/export.db")
                         exportFileDialog.open()
@@ -468,7 +469,7 @@ ScrollablePageFitted {
                     visible: appManager1.databaseMode === "File" || appManager1.databaseMode === "Hosted"
                     enabled: exportRow.exportAllowed
                     onClicked: {
-                        exportFolderDialog.currentFolder = appManager1.pathToFileUrl(appManager1.getCollectionFolder())
+                        exportFolderDialog.currentFolder = appManager1.pathToFileUrl(appManager1.getCollectionBrowsePath())
                         exportFolderDialog.open()
                     }
                 }

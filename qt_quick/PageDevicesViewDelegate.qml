@@ -24,6 +24,7 @@ Kirigami.AbstractCard {
     signal splitSubDirRequested(int deviceId, string deviceName)
     signal splitFileTypeRequested(int deviceId, string deviceName, bool deviceActive)
     signal verifyRequested(int deviceId, string deviceName)
+    signal verifyMimeRequested(int deviceId)
     signal unassignRequested(int deviceId, int parentId, string deviceName)
     signal deleteRequested(int deviceId, string deviceName, string deviceType)
     signal addVirtualChildRequested(int parentId)
@@ -142,6 +143,15 @@ Kirigami.AbstractCard {
             icon.name: "document-properties"
             visible: card.devType === "Catalog"
             onTriggered: card.verifyRequested(card.devId, card.devName)
+        }
+        // SpecMimeVerification MIV-F1 / MIV-F2
+        Controls.MenuItem {
+            text: qsTr("Verify MIME types")
+            icon.name: "document-edit-verify"
+            visible: card.devType === "Catalog"
+            enabled: card.devActive && !appManager1.deviceUpdateIsRunning
+                     && !appManager1.catalogIsCreating && !appManager1.searchIsRunning
+            onTriggered: card.verifyMimeRequested(card.devId)
         }
         Controls.MenuSeparator { visible: card.devType === "Catalog" && card.devActive }
         Controls.MenuItem {

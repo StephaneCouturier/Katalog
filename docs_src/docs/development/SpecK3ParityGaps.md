@@ -23,45 +23,6 @@ When a gap is ported, remove its entry here and add it to the K3 user page.
 
 ---
 
-## Settings — Hosted mode: only local or private-network servers (security)
-
-**Found:** 2026-10-04, while writing the K3 Settings user page.
-**K2 user doc:** `Settings.md`, section *Hosted mode › Security*.
-
-K2 restricts which database server a Hosted collection may use. Before saving the
-connection it validates the host name with `Database::validateHostname()` (core):
-
-- **Localhost** (`localhost`, `127.x.x.x`): accepted without a message.
-- **Private network** (`192.168.x.x`, `10.x.x.x`, `172.16-31.x.x`): a confirmation is
-  asked — *"Private network connection: &lt;host&gt;"*, *"Your data will be sent to this
-  network database."* / *"Continue?"*, default *No*.
-- **Anything else** (public IP, domain name): refused — *"Invalid hostname."*, *"Only
-  local or private network allowed."*, *"Valid:"* followed by the accepted ranges.
-- An empty host name becomes `localhost`.
-
-**K2 code:** `qt_widgets/mainwindow_tab_settings.cpp:107-145` (Hosted branch of the
-apply-and-restart handler). The strings above are existing K2 `tr()` strings, to be
-reused verbatim.
-
-**Core already available:** `Database::validateHostname()` (`core/database.cpp:448`) —
-no core change needed.
-
-**K3:** `Database::validateHostname()` is never called. `AppManager::openCollectionHosted()`
-(`qt_quick/appmanager.cpp:2138`) connects to any host, from the Settings *Connect*
-button and from the drawer's recent-collections list (`:2251`). A K3 user can therefore
-send collection data to a public server, which K2 deliberately prevents. *(Corrected
-2026-10-10: an earlier version said it was also called at start-up through *Connect
-automatically on startup*. It is not: startup does not call `openCollectionHosted()`, and
-`HostedAutoConnect` is never read at startup. The option has since been removed from K3, 2026-10-10.)*
-
-**Specification:** `SpecHostedSecurity.md` (HST-*), approved 2026-10-10. It settles the
-open questions: a recent entry is checked the same way (HST-F5), `openCollectionHosted()`
-refuses public hosts (HST-C4), and startup is not re-validated, as in K2 (HST-F6).
-
-**K3 user doc:** `Settings.md` (K3) does not claim the restriction until it is ported.
-
----
-
 ## Devices — "Verify MIME Types" on a catalog
 
 **Found:** 2026-10-07, while writing the K3 Create user page.
@@ -78,13 +39,15 @@ report file.
 strings *MIME Verification Complete* and the two result messages are existing K2 `tr()`
 strings.
 
-**Core already available:** `CatalogJobStoppable::VerifyMimeTypes` (already used by K3's
-*Verify then Split*, `qt_quick/appmanager.cpp:3476`).
+**Core already available:** `CatalogJobStoppable::VerifyMimeTypes`. K3's *Verify then Split*
+(`qt_quick/appmanager.cpp:3476`) does **not** use it today — it runs a device update (MIV-F6).
 
 **K3:** MIME verification only runs inside *Split catalog by file type* → *Verify then
 Split*. No standalone action.
 
 **K3 user doc:** `Create.md` (K3) does not mention a standalone verification until it is ported.
+
+**Port authorised (2026-10-10):** `SpecMimeVerification.md` (MIV-O1, MIV-F1–F6, MIV-C1–C3), including Memory mode and the *Verify then Split* fix. Pending implementation.
 
 ---
 

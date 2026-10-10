@@ -4,15 +4,15 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+181"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+182"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4600"/>
+        <location line="+4661"/>
         <source>Search</source>
         <translation>検索</translation>
     </message>
     <message>
-        <location line="-4720"/>
+        <location line="-4781"/>
         <source>Stopped</source>
         <translation>停止</translation>
     </message>
@@ -20,11 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
+        <location line="+3242"/>
         <source>Evaluated</source>
         <translation>評価済み</translation>
     </message>
     <message>
-        <location line="-118"/>
+        <location line="-3360"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -48,7 +49,9 @@
         <location line="+625"/>
         <location line="+26"/>
         <location line="+20"/>
-        <location line="+1164"/>
+        <location line="+380"/>
+        <location line="+32"/>
+        <location line="+813"/>
         <location line="+11"/>
         <location line="+87"/>
         <location line="+29"/>
@@ -62,8 +65,8 @@
         <translation>進行中</translation>
     </message>
     <message>
-        <location line="-4601"/>
-        <location line="+4048"/>
+        <location line="-4662"/>
+        <location line="+4109"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
@@ -71,7 +74,7 @@
         <translation>完了</translation>
     </message>
     <message>
-        <location line="-3533"/>
+        <location line="-3594"/>
         <source>Empty database path provided</source>
         <translation>空のデータベースパスが指定されました</translation>
     </message>
@@ -157,12 +160,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2723"/>
+        <location line="+2784"/>
         <source>Size</source>
         <translation>サイズ</translation>
     </message>
     <message>
-        <location line="-2722"/>
+        <location line="-2783"/>
         <source>Date</source>
         <translation>日付</translation>
     </message>
@@ -256,11 +259,12 @@ Choose a different name and try again.</source>
     </message>
     <message>
         <location line="-20"/>
+        <location line="+1128"/>
         <source>A device operation is already running.</source>
         <translation>デバイス操作が既に実行中です。</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="-1044"/>
         <location line="+650"/>
         <source>Create</source>
         <translation>作成</translation>
@@ -329,12 +333,11 @@ Choose a different name and try again.</source>
         <translation>分割に失敗しました：カタログが作成されませんでした。</translation>
     </message>
     <message>
-        <location line="+18"/>
         <source>Verifying MIME types for %1…</source>
-        <translation>%1 のMIMEタイプを検証しています…</translation>
+        <translation type="vanished">%1 のMIMEタイプを検証しています…</translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="+111"/>
         <source>Device has no catalog.</source>
         <translation>デバイスにカタログがありません。</translation>
     </message>
@@ -431,7 +434,18 @@ Choose a different name.</source>
         <translation>はい</translation>
     </message>
     <message>
-        <location line="-23"/>
+        <location line="-450"/>
+        <source>MIME verification failed:&lt;br/&gt;%1</source>
+        <translation>MIME検証に失敗しました：&lt;br/&gt;%1</translation>
+    </message>
+    <message>
+        <location line="+34"/>
+        <location line="+32"/>
+        <source>Verify MIME types</source>
+        <translation>MIMEタイプを検証</translation>
+    </message>
+    <message>
+        <location line="+361"/>
         <location line="+1"/>
         <location line="+21"/>
         <location line="+1"/>
@@ -7181,7 +7195,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDevicesView</name>
     <message>
-        <location filename="../qt_quick/PageDevicesView.qml" line="+163"/>
+        <location filename="../qt_quick/PageDevicesView.qml" line="+182"/>
         <location line="+37"/>
         <source>Split Catalog</source>
         <translation>カタログを分割</translation>
@@ -7267,12 +7281,13 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+10"/>
-        <location line="+89"/>
+        <location line="+100"/>
+        <location line="+19"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location line="-78"/>
+        <location line="-108"/>
         <source>Unassign Device</source>
         <translation>デバイスの割り当てを解除</translation>
     </message>
@@ -7314,7 +7329,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="vanished">カタログリスト</translation>
     </message>
     <message>
-        <location line="+169"/>
+        <location line="+199"/>
         <source>Filter from Selection</source>
         <translation>選択範囲でフィルター</translation>
     </message>
@@ -7340,7 +7355,32 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>カタログ</translation>
     </message>
     <message>
-        <location line="-127"/>
+        <location line="-464"/>
+        <source>MIME verification failed:&lt;br/&gt;%1</source>
+        <translation>MIME検証に失敗しました：&lt;br/&gt;%1</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
+        <translation>MIME検証が正常に完了しました。&lt;br/&gt;ファイル拡張子と実際のコンテンツの間に不一致は見つかりませんでした。</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
+        <translation>MIME検証が完了しました。&lt;br/&gt;ファイル拡張子と実際のコンテンツの間に%1件の不一致が見つかりました。&lt;br/&gt;&lt;br/&gt;レポートの保存先：&lt;br/&gt;%2</translation>
+    </message>
+    <message>
+        <location line="+242"/>
+        <source>MIME Verification Complete</source>
+        <translation>MIME検証完了</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Open Report</source>
+        <translation>レポートを開く</translation>
+    </message>
+    <message>
+        <location line="+75"/>
         <source>All devices</source>
         <translation>すべてのデバイス</translation>
     </message>
@@ -7381,7 +7421,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+29"/>
-        <location line="+152"/>
+        <location line="+154"/>
         <source>No devices</source>
         <translation>デバイスなし</translation>
     </message>
@@ -7389,7 +7429,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDevicesViewDelegate</name>
     <message>
-        <location filename="../qt_quick/PageDevicesViewDelegate.qml" line="+103"/>
+        <location filename="../qt_quick/PageDevicesViewDelegate.qml" line="+104"/>
         <source>Update</source>
         <translation>更新</translation>
     </message>
@@ -7410,17 +7450,22 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+8"/>
-        <location line="+16"/>
+        <location line="+25"/>
         <source>Filelight</source>
         <translation>Filelight</translation>
     </message>
     <message>
-        <location line="-7"/>
+        <location line="-16"/>
         <source>Verify Checksums</source>
         <translation>チェックサムを検証</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+7"/>
+        <source>Verify MIME types</source>
+        <translation>MIMEタイプを検証</translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Split catalog by sub-directory</source>
         <translation>サブディレクトリでカタログを分割</translation>
     </message>

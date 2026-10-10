@@ -111,6 +111,8 @@ Before executing the split, the UI must offer the user the choice to run this ve
 
 If the device is not connected (source path not accessible), **Verify then Split** is disabled and a note explains why.
 
+> **Known defect (2026-10-10):** K3's *Verify then Split* runs a normal device update instead of `VerifyMimeTypes`, so this section is not yet met. The fix is authorised by `SpecMimeVerification.md` **MIV-F6** (pending implementation).
+
 ### Catalog Naming
 
 `[CatalogName]_(Audio)`, `[CatalogName]_(Images)`, etc. (suffixes as in the table above). Parentheses make it unambiguous that the suffix denotes a split criterion, not an actual subdirectory name.

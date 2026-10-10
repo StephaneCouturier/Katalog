@@ -144,6 +144,25 @@ Item {
         function onSelectedDeviceChanged() {
             if (root.filterFromSelection) root.refreshDevices()
         }
+        // SpecMimeVerification MIV-F4
+        function onMimeVerificationFinished(mismatchCount, reportPath, errorMessage) {
+            if (mismatchCount < 0) {
+                operationResultLabel.text = qsTr("MIME verification failed:<br/>%1").arg(errorMessage)
+                                                .replace("<br/>", "\n")
+                operationResultDialog.open()
+            } else if (mismatchCount === 0) {
+                applicationWindow().showPassiveNotification(
+                    qsTr("MIME verification completed successfully.<br/>"
+                         + "No mismatches found between file extensions and actual content.").replace("<br/>", " "))
+            } else {
+                mimeResultDialog.reportPath = reportPath
+                mimeResultLabel.text = qsTr("MIME verification completed.<br/>"
+                                            + "%1 mismatch(es) found between file extensions and actual content.<br/><br/>"
+                                            + "Report saved to:<br/>"
+                                            + "%2").arg(mismatchCount).arg(reportPath)
+                mimeResultDialog.open()
+            }
+        }
         function onSplitCompleted(success, error) {
             root.refreshDevices()
             if (!success && error.length > 0) {
@@ -372,6 +391,37 @@ Item {
                 }
             }
             onRejected: deleteConfirmDialog.close()
+        }
+    }
+
+    // MIME verification with mismatches: report path, and a choice to open it (MIV-F4)
+    Controls.Dialog {
+        id: mimeResultDialog
+        property string reportPath: ""
+        title: qsTr("MIME Verification Complete")
+        modal: true
+        anchors.centerIn: parent
+        width: Math.min(480, root.width - Kirigami.Units.largeSpacing * 4)
+        contentItem: Controls.Label {
+            id: mimeResultLabel
+            textFormat: Text.RichText
+            wrapMode: Text.WrapAnywhere
+        }
+        footer: Controls.DialogButtonBox {
+            Controls.Button {
+                text: qsTr("Open Report")
+                visible: mimeResultDialog.reportPath.length > 0
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.ActionRole
+                onClicked: {
+                    mimeResultDialog.close()
+                    appManager1.openFile(mimeResultDialog.reportPath)
+                }
+            }
+            Controls.Button {
+                text: qsTr("OK")
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.AcceptRole
+            }
+            onAccepted: mimeResultDialog.close()
         }
     }
 
@@ -672,6 +722,8 @@ Item {
                     verifyConfirmDialog.deviceId = id
                     verifyConfirmDialog.open()
                 }
+
+                onVerifyMimeRequested: (id) => appManager1.verifyMimeTypes(id)
 
                 onUnassignRequested: (id, pid, name) => {
                     root.operationDeviceName = name
@@ -1037,6 +1089,7 @@ Item {
             verifyConfirmDialog.deviceId = id
             verifyConfirmDialog.open()
         }
+        onVerifyMimeRequested: (id) => appManager1.verifyMimeTypes(id)
         onUnassignRequested: (id, pid, name) => {
             root.operationDeviceName = name
             unassignDialog.deviceId = id

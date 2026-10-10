@@ -11,7 +11,7 @@ A tag can then be used in [Search](Search#tags-criteria) to find only the files 
 ![Tags page: add a tag, and the list of current folders and tags](/img/tags_01_overview.png)
 
 A tag is assigned to a **folder path**, not to a catalog or a device: it applies to every catalog that contains this path.<br/>
-A folder can have several tags, and a tag can be on several folders.
+A folder can have several tags, and a tag can be on several folders, but a folder has each tag only once.
 
 ## Add a tag {#add}
 1. *Folder*: type the path of the folder, or choose it with *Select a folder*. It is filled in already when Tags was opened with *Tag this folder* in [Explore](Explore#tag-folder).

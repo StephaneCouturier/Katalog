@@ -42,6 +42,7 @@ specification and the code disagree, the specification is what was agreed.
 | [SpecK3ParityGaps](SpecK3ParityGaps.md) | K3 PARITY GAPS — K2 FEATURES NOT YET IN K3 | Reference | — | — |
 | [SpecLanguages](SpecLanguages.md) | LANGUAGES — INTERFACE LANGUAGE SELECTION | Approved | complete | — |
 | [SpecPageLayout](SpecPageLayout.md) | PAGE LAYOUT — SCROLLBAR MARGIN AND SECTION TITLES | Approved | planned | — |
+| [SpecMimeVerification](SpecMimeVerification.md) | MIME VERIFICATION — VERIFY MIME TYPES ON A CATALOG | Approved | planned | — |
 | [SpecOperationQueue](SpecOperationQueue.md) | OPERATION Queue | Specified | — | — |
 | [SpecProgressReport](SpecProgressReport.md) | Progress Reporting | — | — | — |
 | [SpecQualityCheck](SpecQualityCheck.md) | QUALITY Check | Draft | planned (phase 1) | — |
