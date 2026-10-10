@@ -5,6 +5,7 @@ version: "3.0"
 ![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
 ## Summary
+
 This page describes the **Selection** page: the list of all devices of the collection, shown as a tree of cards. It is the first page of the window, and the other screens open next to it (see [Interface](Interface#pages)).
 
 Selecting a device sets the **scope** of the other screens:
@@ -14,14 +15,16 @@ Selecting a device sets the **scope** of the other screens:
 * [Backup](BackUp): the backup links are filtered on the selected device,
 * [Statistics](Statistics): the charts show the selected device.
 
-![Selection page: selected device at the top, filter field, card tree with Photo Drive selected and device info shown](/img/selection_01_overview.png)
-
 ## Selected device {#selected-device}
 The top of the page always shows the **selected device**, with its icon and name. When no device is selected, it shows *All*: the whole collection.
 
 Clicking it scrolls the list to the selected card, which is useful in a long list. It does not change the selection.
 
 ## Device cards {#device-cards}
+<div className="screenshot-side">
+![Selection page: selected device at the top, filter field, card tree with Physical Group selected and device info shown](/img/selection_01_overview.png)
+</div>
+
 Each device of the collection is shown as a card, indented under its parent device.
 * **Click** a card to select the device. The selected card is highlighted.
 * **Right-click** a card (or press and hold on a touch screen) to open its [context menu](#context-menu).
@@ -41,9 +44,15 @@ When the device info is shown, a second line under the name gives:
 * for a **Catalog**: its number of files and their total size,
 * for a **Storage** or **Virtual** device: the number of files and total size of its catalogs, then the used space.
 
+<div className="screenshot-side-end" />
+
 ## Filter and tree buttons {#filter}
 
-![Device filter with "photo" typed: only the matching devices are listed](/img/selection_02_filter.png)
+<div className="screenshot-side">
+
+![Device filter with "back" typed: only the matching devices are listed](/img/selection_02_filter.png)
+
+</div>
 
 Above the cards:
 
@@ -54,9 +63,15 @@ Above the cards:
 | *Collapse one level* | Hides the deepest level of devices currently shown. |
 | *Expand one level* | Shows one more level of devices. |
 
+<div className="screenshot-side-end" />
+
 ## Context menu {#context-menu}
 
+<div className="screenshot-side">
+
 ![Context menu of a Catalog card](/img/selection_03_context_menu.png)
+
+</div>
 
 The context menu starts with the name of the device, followed by:
 
@@ -69,6 +84,8 @@ The context menu starts with the name of the device, followed by:
 | *Edit* | all devices | Opens the device edit page (see [Devices](Devices)). |
 
 *Search* and *Explore* select the device first, so the highlighted card always matches what is searched or explored. *Update*, *Open folder* and *Edit* act on the right-clicked device **without changing the selection**.
+
+<div className="screenshot-side-end" />
 
 ## Search in a connected drive
 Searching directly in a folder of a connected drive, without a catalog, is chosen on the [Search](Search) page itself (*Connected drive*), not in the Selection.
