@@ -79,13 +79,19 @@ Controls.ToolBar {
                 // indicator that keeps turning would say work is happening when
                 // none is (OPQ-C12).
                 running: root.busy && !appManager1.searchIsPaused
-                visible: root.busy
+                // Hidden but keeping its slot, so the text does not jump left
+                // when the work ends and the completion line lingers
+                opacity: root.busy ? 1 : 0
+                // The space goes before the indicator, the text right after it
+                Layout.leftMargin: Kirigami.Units.largeSpacing
                 implicitWidth:  Kirigami.Units.gridUnit * 1.2
                 implicitHeight: Kirigami.Units.gridUnit * 1.2
             }
             Controls.Label {
                 Layout.fillWidth: true
-                text: root.statusText
+                // The builder pads the operation with leading &nbsp; for K2's
+                // status bar; here the indicator already separates it
+                text: root.statusText.replace(/^(&nbsp;)+/, "")
                 textFormat: Text.StyledText
                 elide: Text.ElideRight
             }
