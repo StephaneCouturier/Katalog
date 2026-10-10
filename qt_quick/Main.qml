@@ -1690,14 +1690,20 @@ Kirigami.ApplicationWindow {
                 var msg = ""
 
                 if (r.deviceType === "Catalog") {
+                    // A creation report (OPQ-F16) has no "(added:" columns for the catalog, as K2
                     msg += "<table>"
-                    msg += "<tr><td>" + qsTr("Catalog updated: ") + "</td><td align='center'><b>" + r.deviceName + "</b></td></tr>"
+                    msg += "<tr><td>" + (r.created ? qsTr("Catalog created: ") : qsTr("Catalog updated: "))
+                         + "</td><td align='center'><b>" + r.deviceName + "</b></td></tr>"
                     msg += "<tr><td>" + qsTr("Path: ")            + "</td><td><b>" + r.devicePath + "</b></td></tr>"
                     msg += "</table><br/><table>"
                     msg += "<tr><td>" + qsTr("Number of files: ") + "</td><td align='right'><b>" + Number(r.fileCount || 0).toLocaleString(Qt.locale(), "f", 0) + "</b></td>"
-                    msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + Number(r.filesAdded || 0).toLocaleString(Qt.locale(), "f", 0) + "</b>)</td></tr>"
+                    if (!r.created)
+                        msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + Number(r.filesAdded || 0).toLocaleString(Qt.locale(), "f", 0) + "</b>)</td>"
+                    msg += "</tr>"
                     msg += "<tr><td>" + qsTr("Total file size: ") + "</td><td align='right'><b>" + appManager1.formatDataSize(r.totalSize || 0) + "</b></td>"
-                    msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.sizeAdded || 0) + "</b>)</td></tr>"
+                    if (!r.created)
+                        msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.sizeAdded || 0) + "</b>)</td>"
+                    msg += "</tr>"
                     msg += "</table>"
                     if (r.storageUpdated) {
                         msg += "<br/><table>"
@@ -2383,15 +2389,19 @@ Kirigami.ApplicationWindow {
         Connections {
             target: appManager1
             function onCatalogCreationCompleted(success, report) {
+                // A full success is reported by the creation report dialog, on
+                // the Devices page, whichever page is open (OPQ-F16, OPQ-F18)
+                if (success && report.length === 0) {
+                    appManager1.refreshDeviceList()
+                    root.showPage(pageDevices)
+                    return
+                }
                 if (pageCreate.visible) {
                     // On success `report` is non-empty only when the catalog was
                     // kept with an unfinished metadata/checksum scan; it already
-                    // explains what happened, so it replaces the generic text.
+                    // explains what happened.
                     showPassiveNotification(
-                        success ? (report.length > 0 ? report : qsTr("Catalog created successfully."))
-                                : qsTr("Catalog creation failed: ") + report,
-                        (success && report.length === 0) ? "short" : "long"
-                    )
+                        success ? report : qsTr("Catalog creation failed: ") + report, "long")
                     if (success)
                         appManager1.refreshDeviceList()
                 }

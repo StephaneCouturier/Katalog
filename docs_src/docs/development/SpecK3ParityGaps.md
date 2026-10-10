@@ -23,34 +23,6 @@ When a gap is ported, remove its entry here and add it to the K3 user page.
 
 ---
 
-## Devices — "Verify MIME Types" on a catalog
-
-**Found:** 2026-10-07, while writing the K3 Create user page.
-**K2 user doc:** `DevicesCatalogs.md`, *Action buttons* (*Verify MIME Types*), and `Create.md`
-*Accuracy note* (types are guessed from the extension at indexing; MIME verification on a
-completed catalog corrects them).
-
-K2 offers *Verify MIME Types* for an available catalog: it reads each file's content with
-the system MIME database, reports the number of mismatches with the extension, and saves a
-report file.
-
-**K2 code:** `qt_widgets/mainwindow_tab_device_ui.cpp:751`
-(`on_Catalogs_pushButton_VerifyMIMETypes_clicked`), `CatalogJobStoppable::VerifyMimeTypes`;
-strings *MIME Verification Complete* and the two result messages are existing K2 `tr()`
-strings.
-
-**Core already available:** `CatalogJobStoppable::VerifyMimeTypes`. K3's *Verify then Split*
-(`qt_quick/appmanager.cpp:3476`) does **not** use it today — it runs a device update (MIV-F6).
-
-**K3:** MIME verification only runs inside *Split catalog by file type* → *Verify then
-Split*. No standalone action.
-
-**K3 user doc:** `Create.md` (K3) does not mention a standalone verification until it is ported.
-
-**Port authorised (2026-10-10):** `SpecMimeVerification.md` (MIV-O1, MIV-F1–F6, MIV-C1–C3), including Memory mode and the *Verify then Split* fix. Pending implementation.
-
----
-
 ## Create — end of creation: report, selection of the new catalog, Devices shown
 
 **Found:** 2026-10-07, while writing the K3 Create user page.
@@ -70,8 +42,10 @@ When a creation completes, K2:
 lists (`qt_quick/Main.qml`, `pageCreate` `onCatalogCreationCompleted`). No report, no
 selection change, the page stays on Create.
 
-**Porting note:** the report content may belong in the activity panel (SpecProgressReport /
-OPQ) rather than a dialog; decide with the specifications agent.
+**Requirements:** approved 2026-10-10 as `SpecOperationQueue.md` OPQ-F16 (report in the
+existing device update report dialog), OPQ-F17 (new catalog selected), OPQ-F18 (Devices page
+shown) and OPQ-C17 (no core change, no settings key, one new string `Catalog created: `), all
+`[Planned]`. Remove this entry once they are implemented.
 
 ---
 

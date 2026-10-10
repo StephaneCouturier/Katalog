@@ -33,7 +33,7 @@ remains sluggish while one runs. That is a separate piece of work.
 
 | | |
 |---|---|
-| **In scope** | Accepting new create/update requests while one runs; a visible queue; removing entries; the activity panel's visibility timing (when it appears, how long it stays); refusing a search while a create or update runs and refusing a create or update while a search runs; reporting search progress in the activity panel; K3, plus the cancellation *timing* in `core/DeviceUpdateManager` where it makes OPQ-C4 unattainable |
+| **In scope** | Accepting new create/update requests while one runs; a visible queue; removing entries; the activity panel's visibility timing (when it appears, how long it stays); refusing a search while a create or update runs and refusing a create or update while a search runs; reporting search progress in the activity panel; the outcome of a successful K3 catalog creation (report dialog, selection of the new catalog, Devices page shown — OPQ-F16 to OPQ-F18); K3, plus the cancellation *timing* in `core/DeviceUpdateManager` where it makes OPQ-C4 unattainable |
 | **Out of scope** | Running operations off the main thread; parallel execution; scheduling; persisting the queue across restarts; K2 |
 | **Applies to** | K3 3.0 |
 | **Depends on** | The existing `m_pendingDeviceUpdates` / `startNextDeviceUpdate()` runner |
@@ -79,6 +79,9 @@ parallelism is deferred until measurement shows scanning dominates.
 | OPQ-F13 | A search cannot start while a catalog creation or a device update is running. Every route into a search — the Search action and the Enter key in the search field — refuses, so a search never begins nested inside a running operation's call stack. The refusal is visible: the Search action is shown disabled rather than accepting a dead click. | [Implemented] |
 | OPQ-F14 | A catalog creation or a device update cannot start while a search is running, for the same reason and by the same means. A device update **refuses** here rather than queuing, unlike OPQ-F1 — see the note below; that difference is deliberate and MUST NOT be "corrected" back to queuing. | [Implemented] |
 | OPQ-F15 | The activity panel reports search progress: it is shown while a search runs, it displays the search's standard status message, and its Stop control stops the running search. The Search page and the Search Results page carry no progress row of their own — the two page footers that carry one today are removed. The search's own five-second message-clearing timer is removed with them: the panel's linger (OPQ-F12) under its single constant (OPQ-C14) is the only one, and two independent timers MUST NOT race on the same message. | [Implemented] |
+| OPQ-F16 | When a K3 catalog creation completes successfully, its result is shown in the existing device update report dialog, in a Catalog-creation variant: `Catalog created: ` with the catalog name, `Path: `, `Number of files: ` and `Total file size: `, **without** `(added: ` deltas for the catalog (as K2, `qt_widgets/mainwindow_tab_device_pr.cpp:3034-3046`). When the parent storage was updated, the existing `Storage updated: ` block follows: name, `Path: `, `Used Space: `, `Free Space: `, `Total Space: `, each with its `(added: ` delta (K2 `:3048-3060`). This dialog replaces the passive notification `Catalog created successfully.`; that notification is no longer shown for a successful creation. A creation kept with an unfinished metadata/checksum scan, and a failed creation, keep their existing passive notification and show no dialog. Approved 2026-10-10. | [Planned] |
+| OPQ-F17 | When a K3 catalog creation completes successfully, the new catalog becomes the selected device (Selection page), as K2 does (`qt_widgets/mainwindow_tab_device_pr.cpp:1888-1905`). Approved 2026-10-10. | [Planned] |
+| OPQ-F18 | When a K3 catalog creation completes successfully, the Devices page is shown, as K2 switches to its Devices tab (`qt_widgets/mainwindow_tab_device_pr.cpp:1902`). Approved 2026-10-10. | [Planned] |
 
 ## Constructional requirements — *how it is built / limits / MUST-NOTs*
 
@@ -98,6 +101,7 @@ parallelism is deferred until measurement shows scanning dominates.
 | OPQ-C14 | The linger duration of OPQ-F12 is a **single named constant**, defined in one place and applied to every operation type. It MUST NOT be duplicated at each call site or varied per operation. | [Planned] |
 | OPQ-C15 | The one-operation-at-a-time rule of OPQ-C4 covers searches as well as creations and updates. The guard MUST be evaluated at the moment an operation is *requested*, at the single entry point for each operation type, and MUST NOT rely on the UI being unresponsive: operations pump the event loop on the main thread (OPQ-C3), so every control stays clickable while one runs. A guard in the UI layer alone is not sufficient — it MUST also exist where the work would be done. | [Implemented] |
 | OPQ-C16 | Catalog creation, device update and search MUST report progress through the activity panel and nowhere else: none of these three may own a progress indicator or a status row on a page. Checkable as: outside `OperationQueueView.qml`, nothing is bound to the running flag or the status text of a creation, an update or a search. This rule reaches those three operations only — see the note below. Transient outcome notices and blocking validation messages are not progress and are unaffected. | [Implemented] |
+| OPQ-C17 | OPQ-F16 to OPQ-F18 MUST NOT change `core/` and MUST NOT add a settings key. The report reuses the existing `devUpdateReportDialog` in `qt_quick/Main.qml` — no second report dialog; the selection reuses the existing `AppManager::selectDeviceById()`. The only new user-visible string is `Catalog created: `, copied verbatim from K2; every other label is the dialog's existing string. A path-root replacement does not emit `catalogCreationCompleted` (`SpecDeviceStorageRoot.md` DSR-C7) and therefore triggers none of the three. The dialog is an outcome, not progress, so OPQ-C16 is unaffected. Approved 2026-10-10. | [Planned] |
 
 ### Note on placement (OPQ-C6)
 
@@ -225,6 +229,12 @@ tooltip falls under `ICB-F1` (`SpecIconButtons.md`): `Remove`, approved,
 reused verbatim from K2 (`ICB-C1`).
 *(Amended 2026-09-26: was "no tooltip"; string approved.)* Device names are data, not translatable strings.
 
+Approved new string for OPQ-F16 (2026-10-10), copied verbatim from K2:
+
+| String | Use |
+|--------|-----|
+| `Catalog created: ` | first line of the Catalog-creation variant of the report dialog |
+
 Any further string requires its own approval before it is written.
 
 ---
@@ -265,3 +275,7 @@ For each row: set up the stated condition, perform the action, confirm the resul
 - **OPQ-C4** — Throughout all of the above, confirm two operations never run at once.
 - **OPQ-C5** — Queue several entries and close the application. On restart the queue is empty and nothing resumes.
 - **OPQ-C8** — Repeat OPQ-F2 in Memory mode and in File mode; queue behaviour is identical.
+- **OPQ-F16** — Create a catalog under a storage. On completion a dialog shows `Catalog created:` with name, path, number of files and total file size (no `(added:` on these two lines), then `Storage updated:` with Used/Free/Total Space and their `(added:` deltas. No passive notification `Catalog created successfully.` appears. Make a creation fail: the failure notification appears, no dialog.
+- **OPQ-F17** — After that creation, the Selection page shows the new catalog as the selected device.
+- **OPQ-F18** — After that creation, the Devices page is displayed.
+- **OPQ-C17** — `git diff` shows no change under `core/` and no new settings key; the translation source gains `Catalog created: ` only. Run a path-root replacement: no creation dialog, no selection change, no page switch.

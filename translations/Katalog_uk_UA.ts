@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+182"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4661"/>
+        <location line="+4674"/>
         <source>Search</source>
         <translation>Пошук</translation>
     </message>
     <message>
-        <location line="-4781"/>
+        <location line="-4794"/>
         <source>Stopped</source>
         <translation>Зупинено</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3242"/>
+        <location line="+3255"/>
         <source>Evaluated</source>
         <translation>Оцінено</translation>
     </message>
     <message>
-        <location line="-3360"/>
+        <location line="-3373"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -46,11 +46,11 @@
         <location line="+7"/>
         <location line="+81"/>
         <location line="+2175"/>
-        <location line="+625"/>
+        <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
         <location line="+380"/>
-        <location line="+32"/>
+        <location line="+33"/>
         <location line="+813"/>
         <location line="+11"/>
         <location line="+87"/>
@@ -65,8 +65,8 @@
         <translation>Виконується</translation>
     </message>
     <message>
-        <location line="-4662"/>
-        <location line="+4109"/>
+        <location line="-4675"/>
+        <location line="+4122"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
@@ -74,7 +74,7 @@
         <translation>Завершено</translation>
     </message>
     <message>
-        <location line="-3594"/>
+        <location line="-3607"/>
         <source>Empty database path provided</source>
         <translation>Вказано порожній шлях до бази даних</translation>
     </message>
@@ -160,12 +160,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2784"/>
+        <location line="+2797"/>
         <source>Size</source>
         <translation>Розмір</translation>
     </message>
     <message>
-        <location line="-2783"/>
+        <location line="-2796"/>
         <source>Date</source>
         <translation>Дата</translation>
     </message>
@@ -259,13 +259,13 @@ Choose a different name and try again.</source>
     </message>
     <message>
         <location line="-20"/>
-        <location line="+1128"/>
+        <location line="+1140"/>
         <source>A device operation is already running.</source>
         <translation>Операція пристрою вже виконується.</translation>
     </message>
     <message>
-        <location line="-1044"/>
-        <location line="+650"/>
+        <location line="-1056"/>
+        <location line="+662"/>
         <source>Create</source>
         <translation>Створити</translation>
     </message>
@@ -337,7 +337,7 @@ Choose a different name and try again.</source>
         <translation type="vanished">Перевірка типів MIME для %1…</translation>
     </message>
     <message>
-        <location line="+111"/>
+        <location line="+112"/>
         <source>Device has no catalog.</source>
         <translation>Пристрій не має каталогу.</translation>
     </message>
@@ -434,13 +434,13 @@ Choose a different name.</source>
         <translation>так</translation>
     </message>
     <message>
-        <location line="-450"/>
+        <location line="-451"/>
         <source>MIME verification failed:&lt;br/&gt;%1</source>
         <translation>MIME перевірка не вдалася:&lt;br/&gt;%1</translation>
     </message>
     <message>
         <location line="+34"/>
-        <location line="+32"/>
+        <location line="+33"/>
         <source>Verify MIME types</source>
         <translation>Перевірити типи MIME</translation>
     </message>
@@ -1024,30 +1024,30 @@ Choose a different name.</source>
         <location line="+39"/>
         <location line="+138"/>
         <location line="+56"/>
-        <location line="+149"/>
+        <location line="+155"/>
         <source>Yes</source>
         <translation>Так</translation>
     </message>
     <message>
-        <location line="-438"/>
+        <location line="-444"/>
         <location line="+60"/>
         <location line="+239"/>
-        <location line="+831"/>
+        <location line="+841"/>
         <location line="+125"/>
         <source>Cancel</source>
         <translation>Скасувати</translation>
     </message>
     <message>
-        <location line="-1355"/>
+        <location line="-1365"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+172"/>
-        <location line="+200"/>
+        <location line="+206"/>
         <source>OK</source>
         <translation>Гаразд</translation>
     </message>
     <message>
-        <location line="-484"/>
+        <location line="-490"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
         <translation>&lt;br/&gt;&lt;b&gt;Ласкаво просимо до Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Схоже, це перший запуск.&lt;br/&gt;&lt;br/&gt;Застосовано наступні налаштування:&lt;br/&gt; - Мова: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Тема: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Ви можете змінити їх на вкладці %3.</translation>
     </message>
@@ -1095,42 +1095,42 @@ Choose a different name.</source>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+857"/>
+        <location line="+863"/>
         <source>Selection</source>
         <translation>Вибір</translation>
     </message>
     <message>
-        <location line="-847"/>
-        <location line="+1212"/>
+        <location line="-853"/>
+        <location line="+1218"/>
         <source>Devices</source>
         <translation>Пристрої</translation>
     </message>
     <message>
-        <location line="-1207"/>
-        <location line="+1304"/>
+        <location line="-1213"/>
+        <location line="+1310"/>
         <source>Explore</source>
         <translation>Переглянути</translation>
     </message>
     <message>
-        <location line="-1294"/>
-        <location line="+1537"/>
+        <location line="-1300"/>
+        <location line="+1547"/>
         <source>Backup</source>
         <translation>Резервна копія</translation>
     </message>
     <message>
-        <location line="-1532"/>
-        <location line="+1489"/>
+        <location line="-1542"/>
+        <location line="+1499"/>
         <source>Statistics</source>
         <translation>Статистика</translation>
     </message>
     <message>
-        <location line="-1484"/>
-        <location line="+1506"/>
+        <location line="-1494"/>
+        <location line="+1516"/>
         <source>Tags</source>
         <translation>Теги</translation>
     </message>
     <message>
-        <location line="-1493"/>
+        <location line="-1503"/>
         <source>Documentation</source>
         <translation>Документація</translation>
     </message>
@@ -1210,12 +1210,12 @@ Choose a different name.</source>
         <location line="+8"/>
         <location line="+144"/>
         <location line="+51"/>
-        <location line="+148"/>
+        <location line="+154"/>
         <source>No</source>
         <translation>Ні</translation>
     </message>
     <message>
-        <location line="-313"/>
+        <location line="-319"/>
         <source>The catalog source path changed.</source>
         <translation>Вихідний шлях каталогу змінився.</translation>
     </message>
@@ -1284,12 +1284,12 @@ Choose a different name.</source>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+173"/>
+        <location line="+179"/>
         <source>Storage</source>
         <translation>Сховище</translation>
     </message>
     <message>
-        <location line="-172"/>
+        <location line="-178"/>
         <source>Storage free space:</source>
         <translation>Вільне місце сховища:</translation>
     </message>
@@ -1319,28 +1319,33 @@ Choose a different name.</source>
         <translation>Чи бажаєте ви отримати звіт про оновлення для кожного каталогу?</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+40"/>
         <source>Catalog updated: </source>
         <translation>Каталог оновлено: </translation>
     </message>
     <message>
-        <location line="+1"/>
-        <location line="+10"/>
+        <location line="+0"/>
+        <source>Catalog created: </source>
+        <translation>Каталог створено: </translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location line="+14"/>
         <location line="+14"/>
         <source>Path: </source>
         <translation>Шлях: </translation>
     </message>
     <message>
-        <location line="-22"/>
-        <location line="+36"/>
+        <location line="-26"/>
+        <location line="+40"/>
         <location line="+21"/>
         <source>Number of files: </source>
         <translation>Кількість файлів: </translation>
     </message>
     <message>
-        <location line="-56"/>
-        <location line="+2"/>
-        <location line="+8"/>
+        <location line="-59"/>
+        <location line="+4"/>
+        <location line="+9"/>
         <location line="+2"/>
         <location line="+2"/>
         <location line="+10"/>
@@ -1360,8 +1365,8 @@ Choose a different name.</source>
         <translation>(додано: </translation>
     </message>
     <message>
-        <location line="-68"/>
-        <location line="+36"/>
+        <location line="-70"/>
+        <location line="+38"/>
         <location line="+21"/>
         <source>Total file size: </source>
         <translation>Загальний розмір файлів: </translation>
@@ -1428,8 +1433,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
 Бажаєте все одно зберегти (каталог буде порожнім)?</translation>
     </message>
     <message>
-        <location line="-795"/>
-        <location line="+1047"/>
+        <location line="-801"/>
+        <location line="+1053"/>
         <location line="+48"/>
         <source>Search</source>
         <translation>Пошук</translation>
@@ -1452,12 +1457,12 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location line="+7"/>
         <location line="+117"/>
-        <location line="+180"/>
+        <location line="+184"/>
         <source>Stop</source>
         <translation>Зупинити</translation>
     </message>
     <message>
-        <location line="-290"/>
+        <location line="-294"/>
         <source>Reset</source>
         <translation>Скинути</translation>
     </message>
@@ -1472,7 +1477,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <location line="+39"/>
         <location line="+109"/>
         <location line="+39"/>
-        <location line="+95"/>
+        <location line="+99"/>
         <location line="+105"/>
         <location line="+20"/>
         <location line="+42"/>
@@ -1480,7 +1485,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Закрити</translation>
     </message>
     <message>
-        <location line="-1355"/>
+        <location line="-1365"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1489,7 +1494,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
 </translation>
     </message>
     <message>
-        <location line="+596"/>
+        <location line="+602"/>
         <source>Copy version and system information</source>
         <translation>Копіювати інформацію про версію та систему</translation>
     </message>
@@ -1563,19 +1568,18 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation type="vanished">Імпорт</translation>
     </message>
     <message>
-        <location line="+123"/>
         <source>Catalog created successfully.</source>
-        <translation>Каталог успішно створено.</translation>
+        <translation type="vanished">Каталог успішно створено.</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+130"/>
         <source>Catalog creation failed: </source>
         <translation>Не вдалося створити каталог: </translation>
     </message>
     <message>
-        <location line="-1368"/>
-        <location line="+1358"/>
-        <location line="+28"/>
+        <location line="-1380"/>
+        <location line="+1364"/>
+        <location line="+32"/>
         <source>Create</source>
         <translation>Створити</translation>
     </message>
@@ -7282,13 +7286,13 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+10"/>
-        <location line="+100"/>
+        <location line="+101"/>
         <location line="+19"/>
         <source>OK</source>
         <translation>Гаразд</translation>
     </message>
     <message>
-        <location line="-108"/>
+        <location line="-109"/>
         <source>Unassign Device</source>
         <translation>Скасувати призначення пристрою</translation>
     </message>
@@ -7330,7 +7334,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="vanished">Список каталогів</translation>
     </message>
     <message>
-        <location line="+199"/>
+        <location line="+200"/>
         <source>Filter from Selection</source>
         <translation>Фільтрувати з вибору</translation>
     </message>
@@ -7356,7 +7360,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Каталоги</translation>
     </message>
     <message>
-        <location line="-464"/>
+        <location line="-465"/>
         <source>MIME verification failed:&lt;br/&gt;%1</source>
         <translation>MIME перевірка не вдалася:&lt;br/&gt;%1</translation>
     </message>
@@ -7381,7 +7385,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Відкрити Звіт</translation>
     </message>
     <message>
-        <location line="+75"/>
+        <location line="+76"/>
         <source>All devices</source>
         <translation>Усі пристрої</translation>
     </message>
@@ -8614,18 +8618,18 @@ Errors: %3</source>
     </message>
     <message>
         <location line="+4"/>
-        <location line="+220"/>
+        <location line="+221"/>
         <source>Memory</source>
         <translation>Пам&apos;ять</translation>
     </message>
     <message>
-        <location line="-219"/>
-        <location line="+219"/>
+        <location line="-220"/>
+        <location line="+220"/>
         <source>File</source>
         <translation>Файл</translation>
     </message>
     <message>
-        <location line="-218"/>
+        <location line="-219"/>
         <source>Hosted</source>
         <translation>Розміщена</translation>
     </message>
@@ -8639,12 +8643,12 @@ Errors: %3</source>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+581"/>
+        <location line="+582"/>
         <source>(none)</source>
         <translation>(немає)</translation>
     </message>
     <message>
-        <location line="-573"/>
+        <location line="-574"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8656,13 +8660,13 @@ Errors: %3</source>
         <translation>Версія бази даних</translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+52"/>
         <source>Images folder</source>
         <translation>Папка зображень</translation>
     </message>
     <message>
-        <location line="-230"/>
-        <location line="+241"/>
+        <location line="-231"/>
+        <location line="+242"/>
         <location line="+132"/>
         <source>Select</source>
         <translation>Вибрати</translation>
@@ -8773,16 +8777,16 @@ Errors: %3</source>
         <translation>Шлях</translation>
     </message>
     <message>
-        <location line="-516"/>
+        <location line="-517"/>
         <location line="+3"/>
         <location line="+2"/>
         <location line="+0"/>
-        <location line="+533"/>
+        <location line="+534"/>
         <source>Device</source>
         <translation>Пристрій</translation>
     </message>
     <message>
-        <location line="-561"/>
+        <location line="-562"/>
         <source>Storage devices linked to a missing storage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8886,7 +8890,7 @@ Errors: %3</source>
         <translation>Експортувати в файл SQLite</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <source>Export to Memory mode (csv)</source>
         <translation>Експортувати в режим пам&apos;яті (csv)</translation>
     </message>
@@ -8917,12 +8921,12 @@ Errors: %3</source>
         <translation>Оновити</translation>
     </message>
     <message>
-        <location line="-335"/>
+        <location line="-336"/>
         <source>Application</source>
         <translation>Програма</translation>
     </message>
     <message>
-        <location line="+375"/>
+        <location line="+376"/>
         <source>Version</source>
         <translation>Версія</translation>
     </message>

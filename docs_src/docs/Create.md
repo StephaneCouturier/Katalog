@@ -103,7 +103,7 @@ Indexing runs in two phases:
 * during the first phase, the catalog is not created,
 * during the second phase, the catalog is **kept** with its full list of files; the metadata or checksums not read yet are completed by the next update of the catalog.
 
-When the creation ends, a message confirms it (or explains what was not finished), and the new catalog appears on the [Selection](Selection) and [Devices](Devices) pages.<br/>
+When the creation ends, the new catalog is selected on the [Selection](Selection) page and the [Devices](Devices) page opens with a report: the catalog name and path, its number of files and total size, and, when its storage was updated, the storage's used, free and total space with what was added. If a metadata or checksum scan was not finished, a message explains it instead.<br/>
 *Close* (or `Esc`) closes the page.
 
 ## Performance guide {#performance}

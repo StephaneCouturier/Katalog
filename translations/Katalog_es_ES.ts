@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+182"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4661"/>
+        <location line="+4674"/>
         <source>Search</source>
         <translation>Buscar</translation>
     </message>
     <message>
-        <location line="-4781"/>
+        <location line="-4794"/>
         <source>Stopped</source>
         <translation>Detenido</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3242"/>
+        <location line="+3255"/>
         <source>Evaluated</source>
         <translation>Evaluado</translation>
     </message>
     <message>
-        <location line="-3360"/>
+        <location line="-3373"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -46,11 +46,11 @@
         <location line="+7"/>
         <location line="+81"/>
         <location line="+2175"/>
-        <location line="+625"/>
+        <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
         <location line="+380"/>
-        <location line="+32"/>
+        <location line="+33"/>
         <location line="+813"/>
         <location line="+11"/>
         <location line="+87"/>
@@ -65,8 +65,8 @@
         <translation>En progreso</translation>
     </message>
     <message>
-        <location line="-4662"/>
-        <location line="+4109"/>
+        <location line="-4675"/>
+        <location line="+4122"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
@@ -74,7 +74,7 @@
         <translation>Completado</translation>
     </message>
     <message>
-        <location line="-3594"/>
+        <location line="-3607"/>
         <source>Empty database path provided</source>
         <translation>Se proporcionó una ruta de base de datos vacía</translation>
     </message>
@@ -160,12 +160,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2784"/>
+        <location line="+2797"/>
         <source>Size</source>
         <translation>Tamaño</translation>
     </message>
     <message>
-        <location line="-2783"/>
+        <location line="-2796"/>
         <source>Date</source>
         <translation>Fecha</translation>
     </message>
@@ -259,13 +259,13 @@ Elija un nombre diferente e inténtelo de nuevo.</translation>
     </message>
     <message>
         <location line="-20"/>
-        <location line="+1128"/>
+        <location line="+1140"/>
         <source>A device operation is already running.</source>
         <translation>Ya se está ejecutando una operación del dispositivo.</translation>
     </message>
     <message>
-        <location line="-1044"/>
-        <location line="+650"/>
+        <location line="-1056"/>
+        <location line="+662"/>
         <source>Create</source>
         <translation>Crear</translation>
     </message>
@@ -337,7 +337,7 @@ Elija un nombre diferente e inténtelo de nuevo.</translation>
         <translation type="vanished">Verificando tipos MIME para %1…</translation>
     </message>
     <message>
-        <location line="+111"/>
+        <location line="+112"/>
         <source>Device has no catalog.</source>
         <translation>El dispositivo no tiene catálogo.</translation>
     </message>
@@ -434,13 +434,13 @@ Elija un nombre diferente.</translation>
         <translation>sí</translation>
     </message>
     <message>
-        <location line="-450"/>
+        <location line="-451"/>
         <source>MIME verification failed:&lt;br/&gt;%1</source>
         <translation>Verificación MIME fallida:&lt;br/&gt;%1</translation>
     </message>
     <message>
         <location line="+34"/>
-        <location line="+32"/>
+        <location line="+33"/>
         <source>Verify MIME types</source>
         <translation>Verificar tipos MIME</translation>
     </message>
@@ -1024,30 +1024,30 @@ Elija un nombre diferente.</translation>
         <location line="+39"/>
         <location line="+138"/>
         <location line="+56"/>
-        <location line="+149"/>
+        <location line="+155"/>
         <source>Yes</source>
         <translation>Sí</translation>
     </message>
     <message>
-        <location line="-438"/>
+        <location line="-444"/>
         <location line="+60"/>
         <location line="+239"/>
-        <location line="+831"/>
+        <location line="+841"/>
         <location line="+125"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location line="-1355"/>
+        <location line="-1365"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+172"/>
-        <location line="+200"/>
+        <location line="+206"/>
         <source>OK</source>
         <translation>Aceptar</translation>
     </message>
     <message>
-        <location line="-484"/>
+        <location line="-490"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
         <translation>&lt;br/&gt;&lt;b&gt;¡Bienvenido a Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Parece que esta es la primera ejecución.&lt;br/&gt;&lt;br/&gt;Se han aplicado las siguientes configuraciones:&lt;br/&gt; - Idioma: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Tema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Puede cambiar estos en la pestaña %3.</translation>
     </message>
@@ -1095,42 +1095,42 @@ Elija un nombre diferente.</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+857"/>
+        <location line="+863"/>
         <source>Selection</source>
         <translation>Selección</translation>
     </message>
     <message>
-        <location line="-847"/>
-        <location line="+1212"/>
+        <location line="-853"/>
+        <location line="+1218"/>
         <source>Devices</source>
         <translation>Dispositivos</translation>
     </message>
     <message>
-        <location line="-1207"/>
-        <location line="+1304"/>
+        <location line="-1213"/>
+        <location line="+1310"/>
         <source>Explore</source>
         <translation>Explorar</translation>
     </message>
     <message>
-        <location line="-1294"/>
-        <location line="+1537"/>
+        <location line="-1300"/>
+        <location line="+1547"/>
         <source>Backup</source>
         <translation>Copia de seguridad</translation>
     </message>
     <message>
-        <location line="-1532"/>
-        <location line="+1489"/>
+        <location line="-1542"/>
+        <location line="+1499"/>
         <source>Statistics</source>
         <translation>Estadísticas</translation>
     </message>
     <message>
-        <location line="-1484"/>
-        <location line="+1506"/>
+        <location line="-1494"/>
+        <location line="+1516"/>
         <source>Tags</source>
         <translation>Etiquetas</translation>
     </message>
     <message>
-        <location line="-1493"/>
+        <location line="-1503"/>
         <source>Documentation</source>
         <translation>Documentación</translation>
     </message>
@@ -1210,12 +1210,12 @@ Elija un nombre diferente.</translation>
         <location line="+8"/>
         <location line="+144"/>
         <location line="+51"/>
-        <location line="+148"/>
+        <location line="+154"/>
         <source>No</source>
         <translation>No</translation>
     </message>
     <message>
-        <location line="-313"/>
+        <location line="-319"/>
         <source>The catalog source path changed.</source>
         <translation>La ruta de origen del catálogo ha cambiado.</translation>
     </message>
@@ -1284,12 +1284,12 @@ Elija un nombre diferente.</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+173"/>
+        <location line="+179"/>
         <source>Storage</source>
         <translation>Almacenamiento</translation>
     </message>
     <message>
-        <location line="-172"/>
+        <location line="-178"/>
         <source>Storage free space:</source>
         <translation>Espacio libre de almacenamiento:</translation>
     </message>
@@ -1319,28 +1319,33 @@ Elija un nombre diferente.</translation>
         <translation>¿Desea un resumen de las actualizaciones para cada catálogo?</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+40"/>
         <source>Catalog updated: </source>
         <translation>Catálogo actualizado: </translation>
     </message>
     <message>
-        <location line="+1"/>
-        <location line="+10"/>
+        <location line="+0"/>
+        <source>Catalog created: </source>
+        <translation>Catálogo creado: </translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location line="+14"/>
         <location line="+14"/>
         <source>Path: </source>
         <translation>Ruta: </translation>
     </message>
     <message>
-        <location line="-22"/>
-        <location line="+36"/>
+        <location line="-26"/>
+        <location line="+40"/>
         <location line="+21"/>
         <source>Number of files: </source>
         <translation>Número de archivos: </translation>
     </message>
     <message>
-        <location line="-56"/>
-        <location line="+2"/>
-        <location line="+8"/>
+        <location line="-59"/>
+        <location line="+4"/>
+        <location line="+9"/>
         <location line="+2"/>
         <location line="+2"/>
         <location line="+10"/>
@@ -1360,8 +1365,8 @@ Elija un nombre diferente.</translation>
         <translation>(agregado: </translation>
     </message>
     <message>
-        <location line="-68"/>
-        <location line="+36"/>
+        <location line="-70"/>
+        <location line="+38"/>
         <location line="+21"/>
         <source>Total file size: </source>
         <translation>Tamaño total del archivo: </translation>
@@ -1428,8 +1433,8 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
 ¿Desea guardarlo de todos modos (el catálogo estaría vacío)?</translation>
     </message>
     <message>
-        <location line="-795"/>
-        <location line="+1047"/>
+        <location line="-801"/>
+        <location line="+1053"/>
         <location line="+48"/>
         <source>Search</source>
         <translation>Buscar</translation>
@@ -1452,12 +1457,12 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
     <message>
         <location line="+7"/>
         <location line="+117"/>
-        <location line="+180"/>
+        <location line="+184"/>
         <source>Stop</source>
         <translation>Detener</translation>
     </message>
     <message>
-        <location line="-290"/>
+        <location line="-294"/>
         <source>Reset</source>
         <translation>Restablecer</translation>
     </message>
@@ -1472,7 +1477,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <location line="+39"/>
         <location line="+109"/>
         <location line="+39"/>
-        <location line="+95"/>
+        <location line="+99"/>
         <location line="+105"/>
         <location line="+20"/>
         <location line="+42"/>
@@ -1480,7 +1485,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation>Cerrar</translation>
     </message>
     <message>
-        <location line="-1355"/>
+        <location line="-1365"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1489,7 +1494,7 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
 </translation>
     </message>
     <message>
-        <location line="+596"/>
+        <location line="+602"/>
         <source>Copy version and system information</source>
         <translation>Copiar información de versión y sistema</translation>
     </message>
@@ -1563,19 +1568,18 @@ Esto puede significar que el origen está vacío o que el dispositivo no está m
         <translation type="vanished">Importar</translation>
     </message>
     <message>
-        <location line="+123"/>
         <source>Catalog created successfully.</source>
-        <translation>Catálogo creado correctamente.</translation>
+        <translation type="vanished">Catálogo creado correctamente.</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+130"/>
         <source>Catalog creation failed: </source>
         <translation>Error al crear el catálogo: </translation>
     </message>
     <message>
-        <location line="-1368"/>
-        <location line="+1358"/>
-        <location line="+28"/>
+        <location line="-1380"/>
+        <location line="+1364"/>
+        <location line="+32"/>
         <source>Create</source>
         <translation>Crear</translation>
     </message>
@@ -7282,13 +7286,13 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+10"/>
-        <location line="+100"/>
+        <location line="+101"/>
         <location line="+19"/>
         <source>OK</source>
         <translation>Aceptar</translation>
     </message>
     <message>
-        <location line="-108"/>
+        <location line="-109"/>
         <source>Unassign Device</source>
         <translation>Desasignar dispositivo</translation>
     </message>
@@ -7330,7 +7334,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="vanished">Lista de catálogos</translation>
     </message>
     <message>
-        <location line="+199"/>
+        <location line="+200"/>
         <source>Filter from Selection</source>
         <translation>Filtrar desde la selección</translation>
     </message>
@@ -7356,7 +7360,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Catálogos</translation>
     </message>
     <message>
-        <location line="-464"/>
+        <location line="-465"/>
         <source>MIME verification failed:&lt;br/&gt;%1</source>
         <translation>Verificación MIME fallida:&lt;br/&gt;%1</translation>
     </message>
@@ -7381,7 +7385,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Abrir informe</translation>
     </message>
     <message>
-        <location line="+75"/>
+        <location line="+76"/>
         <source>All devices</source>
         <translation>Todos los dispositivos</translation>
     </message>
@@ -8614,18 +8618,18 @@ Errores: %3</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location line="+220"/>
+        <location line="+221"/>
         <source>Memory</source>
         <translation>Memoria</translation>
     </message>
     <message>
-        <location line="-219"/>
-        <location line="+219"/>
+        <location line="-220"/>
+        <location line="+220"/>
         <source>File</source>
         <translation>Archivo</translation>
     </message>
     <message>
-        <location line="-218"/>
+        <location line="-219"/>
         <source>Hosted</source>
         <translation>Hospedado</translation>
     </message>
@@ -8639,12 +8643,12 @@ Errores: %3</translation>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+581"/>
+        <location line="+582"/>
         <source>(none)</source>
         <translation>(ninguno)</translation>
     </message>
     <message>
-        <location line="-573"/>
+        <location line="-574"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8656,13 +8660,13 @@ Errores: %3</translation>
         <translation>Versión de la base de datos</translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+52"/>
         <source>Images folder</source>
         <translation>Carpeta de imágenes</translation>
     </message>
     <message>
-        <location line="-230"/>
-        <location line="+241"/>
+        <location line="-231"/>
+        <location line="+242"/>
         <location line="+132"/>
         <source>Select</source>
         <translation>Seleccionar</translation>
@@ -8773,16 +8777,16 @@ Errores: %3</translation>
         <translation>Ruta</translation>
     </message>
     <message>
-        <location line="-516"/>
+        <location line="-517"/>
         <location line="+3"/>
         <location line="+2"/>
         <location line="+0"/>
-        <location line="+533"/>
+        <location line="+534"/>
         <source>Device</source>
         <translation>Dispositivo</translation>
     </message>
     <message>
-        <location line="-561"/>
+        <location line="-562"/>
         <source>Storage devices linked to a missing storage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8886,7 +8890,7 @@ Errores: %3</translation>
         <translation>Exportar a archivo SQLite</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <source>Export to Memory mode (csv)</source>
         <translation>Exportar a modo de memoria (csv)</translation>
     </message>
@@ -8917,12 +8921,12 @@ Errores: %3</translation>
         <translation>Actualizar</translation>
     </message>
     <message>
-        <location line="-335"/>
+        <location line="-336"/>
         <source>Application</source>
         <translation>Aplicación</translation>
     </message>
     <message>
-        <location line="+375"/>
+        <location line="+376"/>
         <source>Version</source>
         <translation>Versión</translation>
     </message>

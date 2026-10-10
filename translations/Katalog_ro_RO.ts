@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+182"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4661"/>
+        <location line="+4674"/>
         <source>Search</source>
         <translation>Căutare</translation>
     </message>
     <message>
-        <location line="-4781"/>
+        <location line="-4794"/>
         <source>Stopped</source>
         <translation>Oprit</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3242"/>
+        <location line="+3255"/>
         <source>Evaluated</source>
         <translation>Evaluat</translation>
     </message>
     <message>
-        <location line="-3360"/>
+        <location line="-3373"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -46,11 +46,11 @@
         <location line="+7"/>
         <location line="+81"/>
         <location line="+2175"/>
-        <location line="+625"/>
+        <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
         <location line="+380"/>
-        <location line="+32"/>
+        <location line="+33"/>
         <location line="+813"/>
         <location line="+11"/>
         <location line="+87"/>
@@ -65,8 +65,8 @@
         <translation>În curs</translation>
     </message>
     <message>
-        <location line="-4662"/>
-        <location line="+4109"/>
+        <location line="-4675"/>
+        <location line="+4122"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
@@ -74,7 +74,7 @@
         <translation>Finalizat</translation>
     </message>
     <message>
-        <location line="-3594"/>
+        <location line="-3607"/>
         <source>Empty database path provided</source>
         <translation>Cale de bază de date goală furnizată</translation>
     </message>
@@ -160,12 +160,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2784"/>
+        <location line="+2797"/>
         <source>Size</source>
         <translation>Dimensiune</translation>
     </message>
     <message>
-        <location line="-2783"/>
+        <location line="-2796"/>
         <source>Date</source>
         <translation>Dată</translation>
     </message>
@@ -259,13 +259,13 @@ Alegeți alt nume și încercați din nou.</translation>
     </message>
     <message>
         <location line="-20"/>
-        <location line="+1128"/>
+        <location line="+1140"/>
         <source>A device operation is already running.</source>
         <translation>O operație pe dispozitiv rulează deja.</translation>
     </message>
     <message>
-        <location line="-1044"/>
-        <location line="+650"/>
+        <location line="-1056"/>
+        <location line="+662"/>
         <source>Create</source>
         <translation>Creează</translation>
     </message>
@@ -337,7 +337,7 @@ Alegeți alt nume și încercați din nou.</translation>
         <translation type="vanished">Se verifică tipurile MIME pentru %1…</translation>
     </message>
     <message>
-        <location line="+111"/>
+        <location line="+112"/>
         <source>Device has no catalog.</source>
         <translation>Dispozitivul nu are catalog.</translation>
     </message>
@@ -434,13 +434,13 @@ Alegeți alt nume.</translation>
         <translation>da</translation>
     </message>
     <message>
-        <location line="-450"/>
+        <location line="-451"/>
         <source>MIME verification failed:&lt;br/&gt;%1</source>
         <translation>Verificarea MIME a eșuat:&lt;br/&gt;%1</translation>
     </message>
     <message>
         <location line="+34"/>
-        <location line="+32"/>
+        <location line="+33"/>
         <source>Verify MIME types</source>
         <translation>Verifică tipurile MIME</translation>
     </message>
@@ -1024,30 +1024,30 @@ Alegeți alt nume.</translation>
         <location line="+39"/>
         <location line="+138"/>
         <location line="+56"/>
-        <location line="+149"/>
+        <location line="+155"/>
         <source>Yes</source>
         <translation>Da</translation>
     </message>
     <message>
-        <location line="-438"/>
+        <location line="-444"/>
         <location line="+60"/>
         <location line="+239"/>
-        <location line="+831"/>
+        <location line="+841"/>
         <location line="+125"/>
         <source>Cancel</source>
         <translation>Anulare</translation>
     </message>
     <message>
-        <location line="-1355"/>
+        <location line="-1365"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+172"/>
-        <location line="+200"/>
+        <location line="+206"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location line="-484"/>
+        <location line="-490"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
         <translation>&lt;br/&gt;&lt;b&gt;Bun venit la Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Se pare că aceasta este prima rulare.&lt;br/&gt;&lt;br/&gt;Următoarele setări au fost aplicate:&lt;br/&gt; - Limba: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Tema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Puteți modifica acestea în fila %3.</translation>
     </message>
@@ -1095,42 +1095,42 @@ Alegeți alt nume.</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+857"/>
+        <location line="+863"/>
         <source>Selection</source>
         <translation>Selecție</translation>
     </message>
     <message>
-        <location line="-847"/>
-        <location line="+1212"/>
+        <location line="-853"/>
+        <location line="+1218"/>
         <source>Devices</source>
         <translation>Dispozitive</translation>
     </message>
     <message>
-        <location line="-1207"/>
-        <location line="+1304"/>
+        <location line="-1213"/>
+        <location line="+1310"/>
         <source>Explore</source>
         <translation>Explorează</translation>
     </message>
     <message>
-        <location line="-1294"/>
-        <location line="+1537"/>
+        <location line="-1300"/>
+        <location line="+1547"/>
         <source>Backup</source>
         <translation>Copie de rezervă</translation>
     </message>
     <message>
-        <location line="-1532"/>
-        <location line="+1489"/>
+        <location line="-1542"/>
+        <location line="+1499"/>
         <source>Statistics</source>
         <translation>Statistici</translation>
     </message>
     <message>
-        <location line="-1484"/>
-        <location line="+1506"/>
+        <location line="-1494"/>
+        <location line="+1516"/>
         <source>Tags</source>
         <translation>Etichete</translation>
     </message>
     <message>
-        <location line="-1493"/>
+        <location line="-1503"/>
         <source>Documentation</source>
         <translation>Documentație</translation>
     </message>
@@ -1210,12 +1210,12 @@ Alegeți alt nume.</translation>
         <location line="+8"/>
         <location line="+144"/>
         <location line="+51"/>
-        <location line="+148"/>
+        <location line="+154"/>
         <source>No</source>
         <translation>Nu</translation>
     </message>
     <message>
-        <location line="-313"/>
+        <location line="-319"/>
         <source>The catalog source path changed.</source>
         <translation>Calea sursă a catalogului s-a modificat.</translation>
     </message>
@@ -1284,12 +1284,12 @@ Alegeți alt nume.</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+173"/>
+        <location line="+179"/>
         <source>Storage</source>
         <translation>Stocare</translation>
     </message>
     <message>
-        <location line="-172"/>
+        <location line="-178"/>
         <source>Storage free space:</source>
         <translation>Spațiu liber de stocare:</translation>
     </message>
@@ -1319,28 +1319,33 @@ Alegeți alt nume.</translation>
         <translation>Doriți rezumatul actualizărilor pentru fiecare catalog?</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+40"/>
         <source>Catalog updated: </source>
         <translation>Catalog actualizat: </translation>
     </message>
     <message>
-        <location line="+1"/>
-        <location line="+10"/>
+        <location line="+0"/>
+        <source>Catalog created: </source>
+        <translation>Catalog creat: </translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location line="+14"/>
         <location line="+14"/>
         <source>Path: </source>
         <translation>Cale: </translation>
     </message>
     <message>
-        <location line="-22"/>
-        <location line="+36"/>
+        <location line="-26"/>
+        <location line="+40"/>
         <location line="+21"/>
         <source>Number of files: </source>
         <translation>Numărul de fișiere: </translation>
     </message>
     <message>
-        <location line="-56"/>
-        <location line="+2"/>
-        <location line="+8"/>
+        <location line="-59"/>
+        <location line="+4"/>
+        <location line="+9"/>
         <location line="+2"/>
         <location line="+2"/>
         <location line="+10"/>
@@ -1360,8 +1365,8 @@ Alegeți alt nume.</translation>
         <translation>(adăugat: </translation>
     </message>
     <message>
-        <location line="-68"/>
-        <location line="+36"/>
+        <location line="-70"/>
+        <location line="+38"/>
         <location line="+21"/>
         <source>Total file size: </source>
         <translation>Dimensiunea totală a fișierului: </translation>
@@ -1428,8 +1433,8 @@ Aceasta ar putea însemna că sursa este goală sau că dispozitivul nu este mon
 Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     </message>
     <message>
-        <location line="-795"/>
-        <location line="+1047"/>
+        <location line="-801"/>
+        <location line="+1053"/>
         <location line="+48"/>
         <source>Search</source>
         <translation>Căutare</translation>
@@ -1452,12 +1457,12 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
     <message>
         <location line="+7"/>
         <location line="+117"/>
-        <location line="+180"/>
+        <location line="+184"/>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location line="-290"/>
+        <location line="-294"/>
         <source>Reset</source>
         <translation>Resetare</translation>
     </message>
@@ -1472,7 +1477,7 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <location line="+39"/>
         <location line="+109"/>
         <location line="+39"/>
-        <location line="+95"/>
+        <location line="+99"/>
         <location line="+105"/>
         <location line="+20"/>
         <location line="+42"/>
@@ -1480,7 +1485,7 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <translation>Închide</translation>
     </message>
     <message>
-        <location line="-1355"/>
+        <location line="-1365"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1489,7 +1494,7 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
 </translation>
     </message>
     <message>
-        <location line="+596"/>
+        <location line="+602"/>
         <source>Copy version and system information</source>
         <translation>Copiază informațiile despre versiune și sistem</translation>
     </message>
@@ -1563,19 +1568,18 @@ Doriți să îl salvați oricum (catalogul ar fi gol)?</translation>
         <translation type="vanished">Importă</translation>
     </message>
     <message>
-        <location line="+123"/>
         <source>Catalog created successfully.</source>
-        <translation>Catalog creat cu succes.</translation>
+        <translation type="vanished">Catalog creat cu succes.</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+130"/>
         <source>Catalog creation failed: </source>
         <translation>Crearea catalogului a eșuat: </translation>
     </message>
     <message>
-        <location line="-1368"/>
-        <location line="+1358"/>
-        <location line="+28"/>
+        <location line="-1380"/>
+        <location line="+1364"/>
+        <location line="+32"/>
         <source>Create</source>
         <translation>Creează</translation>
     </message>
@@ -7282,13 +7286,13 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+10"/>
-        <location line="+100"/>
+        <location line="+101"/>
         <location line="+19"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location line="-108"/>
+        <location line="-109"/>
         <source>Unassign Device</source>
         <translation>Anulează atribuirea dispozitivului</translation>
     </message>
@@ -7330,7 +7334,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="vanished">Lista cataloagelor</translation>
     </message>
     <message>
-        <location line="+199"/>
+        <location line="+200"/>
         <source>Filter from Selection</source>
         <translation>Filtrează din selecție</translation>
     </message>
@@ -7356,7 +7360,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Cataloage</translation>
     </message>
     <message>
-        <location line="-464"/>
+        <location line="-465"/>
         <source>MIME verification failed:&lt;br/&gt;%1</source>
         <translation>Verificarea MIME a eșuat:&lt;br/&gt;%1</translation>
     </message>
@@ -7381,7 +7385,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Deschide Raportul</translation>
     </message>
     <message>
-        <location line="+75"/>
+        <location line="+76"/>
         <source>All devices</source>
         <translation>Toate dispozitivele</translation>
     </message>
@@ -8614,18 +8618,18 @@ Erori: %3</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location line="+220"/>
+        <location line="+221"/>
         <source>Memory</source>
         <translation>Memorie</translation>
     </message>
     <message>
-        <location line="-219"/>
-        <location line="+219"/>
+        <location line="-220"/>
+        <location line="+220"/>
         <source>File</source>
         <translation>Fișier</translation>
     </message>
     <message>
-        <location line="-218"/>
+        <location line="-219"/>
         <source>Hosted</source>
         <translation>Găzduit</translation>
     </message>
@@ -8639,12 +8643,12 @@ Erori: %3</translation>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+581"/>
+        <location line="+582"/>
         <source>(none)</source>
         <translation>(niciuna)</translation>
     </message>
     <message>
-        <location line="-573"/>
+        <location line="-574"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8656,13 +8660,13 @@ Erori: %3</translation>
         <translation>Versiunea bazei de date</translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+52"/>
         <source>Images folder</source>
         <translation>Dosar imagini</translation>
     </message>
     <message>
-        <location line="-230"/>
-        <location line="+241"/>
+        <location line="-231"/>
+        <location line="+242"/>
         <location line="+132"/>
         <source>Select</source>
         <translation>Selectați</translation>
@@ -8773,16 +8777,16 @@ Erori: %3</translation>
         <translation>Cale</translation>
     </message>
     <message>
-        <location line="-516"/>
+        <location line="-517"/>
         <location line="+3"/>
         <location line="+2"/>
         <location line="+0"/>
-        <location line="+533"/>
+        <location line="+534"/>
         <source>Device</source>
         <translation>Dispozitiv</translation>
     </message>
     <message>
-        <location line="-561"/>
+        <location line="-562"/>
         <source>Storage devices linked to a missing storage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8886,7 +8890,7 @@ Erori: %3</translation>
         <translation>Exportați în fișierul SQLite</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <source>Export to Memory mode (csv)</source>
         <translation>Exportați în modul Memorie (csv)</translation>
     </message>
@@ -8917,12 +8921,12 @@ Erori: %3</translation>
         <translation>Actualizare</translation>
     </message>
     <message>
-        <location line="-335"/>
+        <location line="-336"/>
         <source>Application</source>
         <translation>Aplicație</translation>
     </message>
     <message>
-        <location line="+375"/>
+        <location line="+376"/>
         <source>Version</source>
         <translation>Versiune</translation>
     </message>

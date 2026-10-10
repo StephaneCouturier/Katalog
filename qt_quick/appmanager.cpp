@@ -2502,7 +2502,7 @@ bool AppManager::isDirectoryEmpty(const QString &path) const
     return dir.exists() && dir.entryInfoList(QDir::NoDotAndDotDot | QDir::AllEntries).isEmpty();
 }
 //----------------------------------------------------------------------
-void AppManager::onCatalogCreationCompleted(const QList<qint64> &/*results*/)
+void AppManager::onCatalogCreationCompleted(const QList<qint64> &results)
 {
     collection->saveDeviceTableToFile();
     collection->saveStatiticsTableToFile();
@@ -2514,7 +2514,19 @@ void AppManager::onCatalogCreationCompleted(const QList<qint64> &/*results*/)
     // CREATE | Completed | Catalog 1 of 1 | <name> | Indexed: N of N (100%)
 
     refreshDeviceList();
+
+    // End of creation as in K2 (OPQ-F16..F18): the new catalog becomes the
+    // selection, then the creation report is shown on the Devices page
+    QVariantMap report;
+    if (m_creatingDevice) {
+        selectDeviceById(m_creatingDevice->ID);
+        report = buildUpdateReport(m_creatingDevice->ID, results);
+        if (!report.isEmpty())
+            report[QStringLiteral("created")] = true;
+    }
     emit catalogCreationCompleted(true, QString());
+    if (!report.isEmpty())
+        emit deviceUpdateReportReady(report);
     m_creatingDevice = nullptr;
 
     finishRunningOperation();
