@@ -294,3 +294,16 @@ these in the tab %3."*, where %3 is *Settings*. K3 has pages, not tabs. The sent
 It also names the theme *System*, which is not one of the K3 theme names (*Desktop Theme*,
 *Desktop Theme (gray)*, *Katalog Colors*).
 **User doc:** `tutorial.md` describes the message without quoting it.
+
+## Settings — Hosted: devices missing in Selection after *Connect*
+
+**Found:** 2026-10-10 (Settings page, maintainer test).
+After connecting to a hosted database with *Connect* on the Settings page, the Selection page
+showed no devices. After restarting K3 on the same hosted collection, the devices were listed.
+Not reproduced or analysed yet. *Connect* calls `AppManager::openCollectionHosted()`, which goes
+through the same `reconnectToDatabase()` → `refreshAllUI()` → `refreshDeviceList()` path as
+opening a File or Memory collection, so the difference is not visible in the code alone.
+**To collect:** the mode of the collection open before *Connect*, whether the hosted database was
+new or empty, and the console output after *Connect*. A private MariaDB instance in the
+scratchpad is an option to reproduce it without the maintainer's server.
+**User doc:** none; `Settings.md` (K3) says the collection opens directly.

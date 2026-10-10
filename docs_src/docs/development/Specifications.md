@@ -47,6 +47,7 @@ specification and the code disagree, the specification is what was agreed.
 | [SpecSearchResults](SpecSearchResults.md) | SEARCH RESULTS — COLUMN SET | Approved | planned | — |
 | [SpecSearchResultsFilters](SpecSearchResultsFilters.md) | SEARCH RESULTS — QUICK FILTER AND CATALOGS FILTER | Approved | planned | — |
 | [SpecSelection](SpecSelection.md) | SELECTION — SELECTED DEVICE | Approved | planned | — |
+| [SpecSettingsPage](SpecSettingsPage.md) | SETTINGS PAGE — APPLICATION AND COLLECTION TABS | Approved | planned | — |
 | [SpecStorageIdentity](SpecStorageIdentity.md) | STORAGE Identity | Approved | planned | [TestStorageIdentity](TestStorageIdentity.md) |
 | [SpecTheme](SpecTheme.md) | Theme, colour derivation and icon size | Draft | partial | — |
 | [SpecTypography](SpecTypography.md) | TYPOGRAPHY — TEXT SIZE DERIVED FROM THE SYSTEM FONT | Approved | partial | — |

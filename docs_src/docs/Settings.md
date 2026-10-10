@@ -5,16 +5,56 @@ version: "3.0"
 ![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
 ## Summary
-This page describes all the features of the **Settings** screen and how to use them:
-* [Collection & Database](#collection-database): the open collection, its data mode, the database version and quality check, and the images folder,
-* [Collection Import & Synchronization](#import-update): import devices from another collection, or update previously imported ones,
-* [Application](#application): version, behavior options, theme, text size, window size and language.
+This page describes all the features of the **Settings** screen and how to use them. The screen has two tabs:
+* *Application*: [version, language, theme, text size, window size and behavior options](#application),
+* *Collection*:
+  * [Collection & Database](#collection-database): the open collection, its data mode, the database version and quality check, and the images folder,
+  * [Collection Import & Synchronization](#import-update): import devices from another collection, or update previously imported ones.
 
-*Settings* opens from the drawer, over the other pages. *Close* (or `Esc`) goes back to them (see [Interface](Interface)).
+*Settings* opens from the drawer, over the other pages, on the *Application* tab. *Open... > Hosted Database...* in the drawer opens it on the *Collection* tab, with the hosted connection form. *Close* (or `Esc`) goes back to the other pages (see [Interface](Interface)).
 
-![Settings page, Collection & Database section, demo collection in File mode](/img/settings_01_overview.png)
+## Application {#application}
+
+![Application tab: version, language, theme, text size, Reset window size and behavior options](/img/settings_05_application.png)
+
+### Version
+* The version and release date of Katalog, and *Release Notes* to read what changed.
+* *Check for a new version on startup*: when enabled, Katalog checks at start if a newer version is available.
+
+### Language {#language}
+The language of the interface. On the first start, Katalog uses the language of the system when it is available, and English (US) otherwise.
+
+### Theme {#theme}
+| Theme | Description |
+|-------|-------------|
+| *Desktop Theme* | Follows the colours of the desktop. |
+| *Desktop Theme (gray)* | Follows the colours of the desktop, with grey surfaces and highlights. |
+| *Katalog Colors* | Katalog's own blue colours. |
+
+With every theme, Katalog follows the **light or dark mode** of the system, on Linux (KDE Plasma and other desktops), Windows and macOS, and changes with it without a restart. Outside KDE Plasma, Katalog uses the Breeze light and dark colours rather than the desktop's own colour scheme.
+
+:::note
+On some Linux desktops (for example Linux Mint with Cinnamon), the dark mode is not detected when Katalog starts: the window opens light, then follows the next change of light or dark mode.
+:::
+
+The same row holds:
+* *Use bigger icon size*: shows larger icons in the lists.
+* *Text size*: makes all the text of Katalog smaller or larger, from 80% to 120%, with the slider or its two buttons. The size starts from the font size set in the system, so it also follows a change of the system font. The collection name at the top of the drawer and the page titles keep the system size.
+* *Reset window size*: puts the window back to its default size, **1280×800** (or the size of the screen, if smaller). A maximized window is restored first. The position of the window is not changed. This is also the size of the window the first time Katalog starts.
+
+### Behavior {#behavior}
+| Option | Description |
+|--------|-------------|
+| *File sorting is Case Sensitive* | When enabled, sorting respects letter case, giving this order: AA, AB, AC, Aa, Ab, Ac. |
+| *Refresh device status when returning to the application* | When enabled, the status of devices (available or not) is checked again each time the Katalog window becomes active, so a drive connected or removed meanwhile is shown correctly. Disabled by default. |
+| *Authorize actions that delete files (no recovery)* | When enabled, files can be **permanently deleted** from the [Search](Search) results and the [Explore](Explore) screen. Disabled by default: these actions are then greyed out. *Move to Trash*, which can be undone, is always available. |
+
+### Settings file
+The path of the file where Katalog keeps its settings and last choices. *Open* opens it in the associated application.
 
 ## Collection & Database {#collection-database}
+
+![Settings page, Collection tab: Collection & Database section, demo collection in File mode](/img/settings_01_overview.png)
 
 ### Collection {#collection}
 A **collection** is a single group of devices and all related information: catalogs, statistics, tags, search history and backup links.<br/>
@@ -112,45 +152,6 @@ The source collection must have the same database version as the open one. If it
 
 **Import from VVV**<br/>
 [VVV (Virtual Volumes View)](https://www.fsoft.it/VVV/) is another cataloging application. With *VVV / Tab Separated Values*, select a file exported from VVV, then click *Import*: its catalogs are added under a new virtual group.
-
-## Application {#application}
-
-![Application section: version, behavior options, theme, text size, Reset window size and language](/img/settings_05_application.png)
-
-### Version
-* The version and release date of Katalog, and *Release Notes* to read what changed.
-* *Check for a new version on startup*: when enabled, Katalog checks at start if a newer version is available.
-
-### Behavior {#behavior}
-| Option | Description |
-|--------|-------------|
-| *File sorting is Case Sensitive* | When enabled, sorting respects letter case, giving this order: AA, AB, AC, Aa, Ab, Ac. |
-| *Refresh device status when returning to the application* | When enabled, the status of devices (available or not) is checked again each time the Katalog window becomes active, so a drive connected or removed meanwhile is shown correctly. Disabled by default. |
-| *Authorize actions that delete files (no recovery)* | When enabled, files can be **permanently deleted** from the [Search](Search) results and the [Explore](Explore) screen. Disabled by default: these actions are then greyed out. *Move to Trash*, which can be undone, is always available. |
-
-### Theme {#theme}
-| Theme | Description |
-|-------|-------------|
-| *Desktop Theme* | Follows the colours of the desktop. |
-| *Desktop Theme (gray)* | Follows the colours of the desktop, with grey surfaces and highlights. |
-| *Katalog Colors* | Katalog's own blue colours. |
-
-With every theme, Katalog follows the **light or dark mode** of the system, on Linux (KDE Plasma and other desktops), Windows and macOS, and changes with it without a restart. Outside KDE Plasma, Katalog uses the Breeze light and dark colours rather than the desktop's own colour scheme.
-
-:::note
-On some Linux desktops (for example Linux Mint with Cinnamon), the dark mode is not detected when Katalog starts: the window opens light, then follows the next change of light or dark mode.
-:::
-
-The same row holds:
-* *Use bigger icon size*: shows larger icons in the lists.
-* *Text size*: makes all the text of Katalog smaller or larger, from 80% to 120%, with the slider or its two buttons. The size starts from the font size set in the system, so it also follows a change of the system font. The collection name at the top of the drawer and the page titles keep the system size.
-* *Reset window size*: puts the window back to its default size, **1280×800** (or the size of the screen, if smaller). A maximized window is restored first. The position of the window is not changed. This is also the size of the window the first time Katalog starts.
-
-### Language {#language}
-The language of the interface. On the first start, Katalog uses the language of the system when it is available, and English (US) otherwise.
-
-### Settings file
-The path of the file where Katalog keeps its settings and last choices. *Open* opens it in the associated application.
 
 ## Development
 * See the backlog of [Settings development](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=settings).
