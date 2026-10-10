@@ -898,61 +898,61 @@ Kirigami.ApplicationWindow {
                     visible: appManager1.recentCollections.length > 0
                     icon.name: appManager1.recentCollections.length > 0 ? appManager1.recentCollections[0].iconName : ""
                     text:      appManager1.recentCollections.length > 0 ? appManager1.recentCollections[0].displayName : ""
-                    onTriggered: appManager1.openRecentCollection(appManager1.recentCollections[0])
+                    onTriggered: root.openRecentCollection(appManager1.recentCollections[0])
                 }
                 Kirigami.Action {
                     visible: appManager1.recentCollections.length > 1
                     icon.name: appManager1.recentCollections.length > 1 ? appManager1.recentCollections[1].iconName : ""
                     text:      appManager1.recentCollections.length > 1 ? appManager1.recentCollections[1].displayName : ""
-                    onTriggered: appManager1.openRecentCollection(appManager1.recentCollections[1])
+                    onTriggered: root.openRecentCollection(appManager1.recentCollections[1])
                 }
                 Kirigami.Action {
                     visible: appManager1.recentCollections.length > 2
                     icon.name: appManager1.recentCollections.length > 2 ? appManager1.recentCollections[2].iconName : ""
                     text:      appManager1.recentCollections.length > 2 ? appManager1.recentCollections[2].displayName : ""
-                    onTriggered: appManager1.openRecentCollection(appManager1.recentCollections[2])
+                    onTriggered: root.openRecentCollection(appManager1.recentCollections[2])
                 }
                 Kirigami.Action {
                     visible: appManager1.recentCollections.length > 3
                     icon.name: appManager1.recentCollections.length > 3 ? appManager1.recentCollections[3].iconName : ""
                     text:      appManager1.recentCollections.length > 3 ? appManager1.recentCollections[3].displayName : ""
-                    onTriggered: appManager1.openRecentCollection(appManager1.recentCollections[3])
+                    onTriggered: root.openRecentCollection(appManager1.recentCollections[3])
                 }
                 Kirigami.Action {
                     visible: appManager1.recentCollections.length > 4
                     icon.name: appManager1.recentCollections.length > 4 ? appManager1.recentCollections[4].iconName : ""
                     text:      appManager1.recentCollections.length > 4 ? appManager1.recentCollections[4].displayName : ""
-                    onTriggered: appManager1.openRecentCollection(appManager1.recentCollections[4])
+                    onTriggered: root.openRecentCollection(appManager1.recentCollections[4])
                 }
                 Kirigami.Action {
                     visible: appManager1.recentCollections.length > 5
                     icon.name: appManager1.recentCollections.length > 5 ? appManager1.recentCollections[5].iconName : ""
                     text:      appManager1.recentCollections.length > 5 ? appManager1.recentCollections[5].displayName : ""
-                    onTriggered: appManager1.openRecentCollection(appManager1.recentCollections[5])
+                    onTriggered: root.openRecentCollection(appManager1.recentCollections[5])
                 }
                 Kirigami.Action {
                     visible: appManager1.recentCollections.length > 6
                     icon.name: appManager1.recentCollections.length > 6 ? appManager1.recentCollections[6].iconName : ""
                     text:      appManager1.recentCollections.length > 6 ? appManager1.recentCollections[6].displayName : ""
-                    onTriggered: appManager1.openRecentCollection(appManager1.recentCollections[6])
+                    onTriggered: root.openRecentCollection(appManager1.recentCollections[6])
                 }
                 Kirigami.Action {
                     visible: appManager1.recentCollections.length > 7
                     icon.name: appManager1.recentCollections.length > 7 ? appManager1.recentCollections[7].iconName : ""
                     text:      appManager1.recentCollections.length > 7 ? appManager1.recentCollections[7].displayName : ""
-                    onTriggered: appManager1.openRecentCollection(appManager1.recentCollections[7])
+                    onTriggered: root.openRecentCollection(appManager1.recentCollections[7])
                 }
                 Kirigami.Action {
                     visible: appManager1.recentCollections.length > 8
                     icon.name: appManager1.recentCollections.length > 8 ? appManager1.recentCollections[8].iconName : ""
                     text:      appManager1.recentCollections.length > 8 ? appManager1.recentCollections[8].displayName : ""
-                    onTriggered: appManager1.openRecentCollection(appManager1.recentCollections[8])
+                    onTriggered: root.openRecentCollection(appManager1.recentCollections[8])
                 }
                 Kirigami.Action {
                     visible: appManager1.recentCollections.length > 9
                     icon.name: appManager1.recentCollections.length > 9 ? appManager1.recentCollections[9].iconName : ""
                     text:      appManager1.recentCollections.length > 9 ? appManager1.recentCollections[9].displayName : ""
-                    onTriggered: appManager1.openRecentCollection(appManager1.recentCollections[9])
+                    onTriggered: root.openRecentCollection(appManager1.recentCollections[9])
                 }
             },
             Kirigami.Action {
@@ -1550,6 +1550,69 @@ Kirigami.ApplicationWindow {
             }
             onAccepted: devSnapshotDialog.close()
         }
+    }
+
+    // Hosted connection to a private-network host — confirmation, No by default
+    // (SpecHostedSecurity.md HST-F3). Used by Settings Connect and recent entries.
+    Controls.Dialog {
+        id: privateHostDialog
+        property var entry: null
+        title: "Katalog"
+        modal: true
+        anchors.centerIn: parent
+        width: Math.min(440, root.width - Kirigami.Units.largeSpacing * 4)
+        onOpened: privateHostNoButton.forceActiveFocus()
+        contentItem: Controls.Label {
+            wrapMode: Text.WordWrap
+            text: privateHostDialog.entry
+                  ? qsTr("Private network connection") + ": " + privateHostDialog.entry.hostName + "\n\n"
+                    + qsTr("Your data will be sent to this network database.") + "\n\n"
+                    + qsTr("Continue?")
+                  : ""
+        }
+        footer: Controls.DialogButtonBox {
+            Controls.Button {
+                text: qsTr("Yes")
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.YesRole
+                onClicked: {
+                    var e = privateHostDialog.entry
+                    privateHostDialog.close()
+                    appManager1.openCollectionHosted(e.hostName, e.dbName, e.port, e.userName, e.password)
+                }
+            }
+            Controls.Button {
+                id: privateHostNoButton
+                text: qsTr("No")
+                Controls.DialogButtonBox.buttonRole: Controls.DialogButtonBox.NoRole
+                onClicked: privateHostDialog.close()
+            }
+        }
+    }
+
+    // Hosted connection checks (SpecHostedSecurity.md HST-F2..F4). Connects a
+    // localhost entry, asks for a private one; returns the check so the caller
+    // can show the refusal of an invalid host on its form.
+    function requestHostedConnect(entry) {
+        var check = appManager1.hostedHostCheck(entry.hostName)
+        if (check === "localhost") {
+            appManager1.openCollectionHosted(entry.hostName, entry.dbName, entry.port,
+                                             entry.userName, entry.password)
+        } else if (check === "private") {
+            privateHostDialog.entry = entry
+            privateHostDialog.open()
+        }
+        return check
+    }
+
+    // Recent collections: a refused Hosted entry opens the hosted form, pre-filled,
+    // with the refusal shown (HST-F5)
+    function openRecentCollection(entry) {
+        if (entry.mode === "Hosted") {
+            if (requestHostedConnect(entry) === "invalid")
+                root.showLayer(settingsPageComponent, { showHostedForm: true, refusedHostedEntry: entry })
+            return
+        }
+        appManager1.openRecentCollection(entry)
     }
 
     // Update All Active — pre-confirmation dialog

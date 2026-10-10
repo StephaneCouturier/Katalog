@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+181"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4438"/>
+        <location line="+4613"/>
         <source>Search</source>
         <translation>Suche</translation>
     </message>
     <message>
-        <location line="-4558"/>
+        <location line="-4733"/>
         <source>Stopped</source>
         <translation>Gestoppt</translation>
     </message>
@@ -44,26 +44,34 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2173"/>
+        <location line="+2188"/>
         <location line="+625"/>
         <location line="+26"/>
         <location line="+20"/>
         <location line="+1164"/>
         <location line="+11"/>
-        <location line="+60"/>
+        <location line="+87"/>
+        <location line="+29"/>
+        <location line="+10"/>
+        <location line="+17"/>
+        <location line="+37"/>
+        <location line="+9"/>
+        <location line="+31"/>
         <location line="+374"/>
         <source>In Progress</source>
         <translation>In Bearbeitung</translation>
     </message>
     <message>
-        <location line="-4439"/>
-        <location line="+4046"/>
-        <location line="+52"/>
+        <location line="-4614"/>
+        <location line="+4061"/>
+        <location line="+112"/>
+        <location line="+53"/>
+        <location line="+47"/>
         <source>Completed</source>
         <translation>Abgeschlossen</translation>
     </message>
     <message>
-        <location line="-3371"/>
+        <location line="-3546"/>
         <source>Empty database path provided</source>
         <translation>Leerer Datenbankpfad angegeben</translation>
     </message>
@@ -149,12 +157,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2548"/>
+        <location line="+2723"/>
         <source>Size</source>
         <translation>Größe</translation>
     </message>
     <message>
-        <location line="-2547"/>
+        <location line="-2722"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
@@ -199,7 +207,12 @@
         <translation>Speichersammlung konnte nicht geöffnet werden: %1</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+9"/>
+        <source>Invalid hostname.</source>
+        <translation>Ungültiger Hostname.</translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Connected: %1/%2</source>
         <translation>Verbunden: %1/%2</translation>
     </message>
@@ -209,7 +222,7 @@
         <translation>Gehostete Verbindung fehlgeschlagen: %1</translation>
     </message>
     <message>
-        <location line="+229"/>
+        <location line="+238"/>
         <source>Provide a name for this new catalog.</source>
         <translation>Geben Sie einen Namen für diesen neuen Katalog an.</translation>
     </message>
@@ -459,18 +472,53 @@ Wählen Sie einen anderen Namen.</translation>
     </message>
     <message>
         <location line="-38"/>
-        <location line="+109"/>
+        <location line="+269"/>
         <source>Files</source>
         <translation>Dateien</translation>
     </message>
     <message>
-        <location line="-89"/>
-        <location line="+52"/>
+        <location line="-249"/>
+        <location line="+71"/>
+        <location line="+57"/>
+        <location line="+18"/>
+        <location line="+4"/>
+        <location line="+30"/>
+        <location line="+32"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location line="-15"/>
+        <location line="-165"/>
+        <location line="+17"/>
+        <location line="+29"/>
+        <location line="+10"/>
+        <location line="+17"/>
+        <location line="+37"/>
+        <location line="+9"/>
+        <source>Export</source>
+        <translation>Exportieren</translation>
+    </message>
+    <message>
+        <location line="-81"/>
+        <location line="+26"/>
+        <location line="+17"/>
+        <location line="+50"/>
+        <source>Cancelled</source>
+        <translation>Abgebrochen</translation>
+    </message>
+    <message>
+        <location line="-83"/>
+        <location line="+10"/>
+        <source>Loaded</source>
+        <translation>Geladen</translation>
+    </message>
+    <message>
+        <location line="+45"/>
+        <source>The export folder must be empty.</source>
+        <translation>Der Exportordner muss leer sein.</translation>
+    </message>
+    <message>
+        <location line="+47"/>
         <location line="+14"/>
         <location line="+19"/>
         <source>Collection Update</source>
@@ -659,7 +707,7 @@ Wählen Sie einen anderen Namen.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2759"/>
+        <location filename="../core/collection.cpp" line="+2760"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Dieser Ordner enthält Sammlungsdateien im Speichermodus, aber Sie befinden sich derzeit im Dateimodus.&lt;br/&gt;Wechseln Sie in den Speichermodus oder wählen Sie einen anderen Ordner.</translation>
     </message>
@@ -960,31 +1008,32 @@ Wählen Sie einen anderen Namen.</translation>
         <location line="+6"/>
         <location line="+60"/>
         <location line="+39"/>
-        <location line="+131"/>
+        <location line="+138"/>
+        <location line="+56"/>
         <location line="+149"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
     <message>
-        <location line="-375"/>
+        <location line="-438"/>
         <location line="+60"/>
-        <location line="+176"/>
+        <location line="+239"/>
         <location line="+827"/>
         <location line="+122"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location line="-1285"/>
+        <location line="-1348"/>
         <location line="+65"/>
         <location line="+69"/>
         <location line="+172"/>
-        <location line="+137"/>
+        <location line="+200"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location line="-421"/>
+        <location line="-484"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
         <translation>&lt;br/&gt;&lt;b&gt;Willkommen im Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Dies scheint der erste Lauf zu sein.&lt;br/&gt;&lt;br/&gt;Die folgenden Einstellungen wurden angewendet:&lt;br/&gt; - Sprache: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Thema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Diese können Sie im Reiter %3 ändern.</translation>
     </message>
@@ -1032,42 +1081,42 @@ Wählen Sie einen anderen Namen.</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+794"/>
+        <location line="+857"/>
         <source>Selection</source>
         <translation>Auswahl</translation>
     </message>
     <message>
-        <location line="-784"/>
-        <location line="+1149"/>
+        <location line="-847"/>
+        <location line="+1212"/>
         <source>Devices</source>
         <translation>Geräte</translation>
     </message>
     <message>
-        <location line="-1144"/>
-        <location line="+1241"/>
+        <location line="-1207"/>
+        <location line="+1304"/>
         <source>Explore</source>
         <translation>Entdecken</translation>
     </message>
     <message>
-        <location line="-1231"/>
-        <location line="+1467"/>
+        <location line="-1294"/>
+        <location line="+1530"/>
         <source>Backup</source>
         <translation>Datensicherung</translation>
     </message>
     <message>
-        <location line="-1462"/>
-        <location line="+1422"/>
+        <location line="-1525"/>
+        <location line="+1485"/>
         <source>Statistics</source>
         <translation>Statistiken</translation>
     </message>
     <message>
-        <location line="-1417"/>
-        <location line="+1439"/>
+        <location line="-1480"/>
+        <location line="+1502"/>
         <source>Tags</source>
         <translation>Stichworte</translation>
     </message>
     <message>
-        <location line="-1426"/>
+        <location line="-1489"/>
         <source>Documentation</source>
         <translation>Dokumentation</translation>
     </message>
@@ -1145,13 +1194,14 @@ Wählen Sie einen anderen Namen.</translation>
     </message>
     <message>
         <location line="+8"/>
-        <location line="+132"/>
+        <location line="+144"/>
+        <location line="+51"/>
         <location line="+148"/>
         <source>No</source>
         <translation>Nein</translation>
     </message>
     <message>
-        <location line="-250"/>
+        <location line="-313"/>
         <source>The catalog source path changed.</source>
         <translation>Der Quellpfad des Katalogs hat sich geändert.</translation>
     </message>
@@ -1220,12 +1270,12 @@ Wählen Sie einen anderen Namen.</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+110"/>
+        <location line="+173"/>
         <source>Storage</source>
         <translation>Speichergeräte</translation>
     </message>
     <message>
-        <location line="-109"/>
+        <location line="-172"/>
         <source>Storage free space:</source>
         <translation>Freier Speicherplatz:</translation>
     </message>
@@ -1235,7 +1285,22 @@ Wählen Sie einen anderen Namen.</translation>
         <translation>Gesamter Speicherplatz:</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+26"/>
+        <source>Private network connection</source>
+        <translation>Private Netzwerkverbindung</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Your data will be sent to this network database.</source>
+        <translation>Ihre Daten werden an diese Netzwerkdatenbank gesendet.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Continue?</source>
+        <translation>Fortfahren?</translation>
+    </message>
+    <message>
+        <location line="+57"/>
         <source>Do you want a the summary of updates for each catalog?</source>
         <translation>Möchten Sie eine Zusammenfassung der Aktualisierungen für jeden Katalog?</translation>
     </message>
@@ -1349,8 +1414,8 @@ Dies kann bedeuten, dass die Quelle leer ist oder das Gerät nicht in diesem Ord
 Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
     </message>
     <message>
-        <location line="-732"/>
-        <location line="+984"/>
+        <location line="-795"/>
+        <location line="+1047"/>
         <location line="+48"/>
         <source>Search</source>
         <translation>Suche</translation>
@@ -1401,7 +1466,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="-1285"/>
+        <location line="-1348"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1410,7 +1475,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
 </translation>
     </message>
     <message>
-        <location line="+533"/>
+        <location line="+596"/>
         <source>Copy version and system information</source>
         <translation>Versions- und Systeminformationen kopieren</translation>
     </message>
@@ -1494,8 +1559,8 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>Katalogerstellung fehlgeschlagen: </translation>
     </message>
     <message>
-        <location line="-1301"/>
-        <location line="+1291"/>
+        <location line="-1364"/>
+        <location line="+1354"/>
         <location line="+28"/>
         <source>Create</source>
         <translation>Erstellen</translation>
@@ -8483,12 +8548,12 @@ Fehler: %3</translation>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location line="+235"/>
+        <location line="+280"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+86"/>
         <source>Collection &amp; Database</source>
         <translation>Sammlung und Datenbank</translation>
     </message>
@@ -8499,36 +8564,37 @@ Fehler: %3</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location line="+191"/>
+        <location line="+231"/>
         <source>Memory</source>
         <translation>Speicher</translation>
     </message>
     <message>
-        <location line="-190"/>
-        <location line="+190"/>
+        <location line="-230"/>
+        <location line="+230"/>
         <source>File</source>
         <translation>Datei</translation>
     </message>
     <message>
-        <location line="-189"/>
+        <location line="-229"/>
         <source>Hosted</source>
         <translation>Bereitgestellt</translation>
     </message>
     <message>
-        <location line="-199"/>
-        <location line="+205"/>
+        <location line="-265"/>
+        <location line="+231"/>
+        <location line="+40"/>
         <source>Collection</source>
         <translation>Sammlung</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+1"/>
-        <location line="+546"/>
+        <location line="+592"/>
         <source>(none)</source>
         <translation>(keine)</translation>
     </message>
     <message>
-        <location line="-538"/>
+        <location line="-584"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8540,13 +8606,14 @@ Fehler: %3</translation>
         <translation>Datenbankversion</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+51"/>
         <source>Images folder</source>
         <translation>Bilderordner</translation>
     </message>
     <message>
-        <location line="+11"/>
-        <location line="+137"/>
+        <location line="-230"/>
+        <location line="+241"/>
+        <location line="+143"/>
         <source>Select</source>
         <translation>Auswählen</translation>
     </message>
@@ -8571,7 +8638,7 @@ Fehler: %3</translation>
         <translation type="vanished">Passwort:</translation>
     </message>
     <message>
-        <location line="-126"/>
+        <location line="-119"/>
         <source>Host Name</source>
         <translation>Hostname</translation>
     </message>
@@ -8581,7 +8648,7 @@ Fehler: %3</translation>
         <translation>Name der Datenbank</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+10"/>
         <source>Port</source>
         <translation>Pforte</translation>
     </message>
@@ -8591,7 +8658,7 @@ Fehler: %3</translation>
         <translation>Nutzername</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+10"/>
         <source>Password</source>
         <translation>Passwort</translation>
     </message>
@@ -8616,7 +8683,7 @@ Fehler: %3</translation>
         <translation>Verbinden</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+13"/>
         <source>Collection Import &amp; Synchronization</source>
         <translation>Sammlungsimport und -synchronisierung</translation>
     </message>
@@ -8658,16 +8725,16 @@ Fehler: %3</translation>
         <translation>Weg</translation>
     </message>
     <message>
-        <location line="-421"/>
+        <location line="-527"/>
         <location line="+3"/>
         <location line="+2"/>
         <location line="+0"/>
-        <location line="+438"/>
+        <location line="+544"/>
         <source>Device</source>
         <translation>Gerät</translation>
     </message>
     <message>
-        <location line="-466"/>
+        <location line="-572"/>
         <source>Storage devices linked to a missing storage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8718,12 +8785,12 @@ Fehler: %3</translation>
     <message>
         <location line="+16"/>
         <location line="+25"/>
-        <location line="+226"/>
+        <location line="+292"/>
         <source>Quality check</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-246"/>
+        <location line="-312"/>
         <location line="+92"/>
         <source>Error: </source>
         <translation>Fehler: </translation>
@@ -8751,7 +8818,47 @@ Fehler: %3</translation>
         <translation>Kopiert</translation>
     </message>
     <message>
-        <location line="+402"/>
+        <location line="+98"/>
+        <source>Select a folder</source>
+        <translation>Wählen Sie einen Ordner</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Export</source>
+        <translation>Exportieren</translation>
+    </message>
+    <message>
+        <location line="+74"/>
+        <source>Cancel</source>
+        <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <location line="+118"/>
+        <source>Export to SQLite file</source>
+        <translation>In SQLite-Datei exportieren</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Export to Memory mode (csv)</source>
+        <translation>Export in den Speichermodus (csv)</translation>
+    </message>
+    <message>
+        <location line="+42"/>
+        <source>Invalid hostname.</source>
+        <translation>Ungültiger Hostname.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Only local or private network allowed.</source>
+        <translation>Nur lokales oder privates Netzwerk erlaubt.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Valid:</source>
+        <translation>Gültig:</translation>
+    </message>
+    <message>
+        <location line="+155"/>
         <source>Import</source>
         <translation>Importieren</translation>
     </message>
@@ -8762,12 +8869,12 @@ Fehler: %3</translation>
         <translation>Aktualisieren</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="-346"/>
         <source>Application</source>
         <translation>Anwendung</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+386"/>
         <source>Version</source>
         <translation>Ausführung</translation>
     </message>
@@ -8782,7 +8889,7 @@ Fehler: %3</translation>
         <translation>Beim Start nach einer neuen Version suchen</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+202"/>
         <source>Behavior</source>
         <translation>Verhalten</translation>
     </message>
@@ -8807,7 +8914,7 @@ Fehler: %3</translation>
         <translation>Aktionen erlauben, die Dateien löschen (keine Wiederherstellung)</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-110"/>
         <source>Theme</source>
         <translation>Thema</translation>
     </message>
@@ -8852,12 +8959,12 @@ Fehler: %3</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="-188"/>
         <source>Language</source>
         <translation>Sprache</translation>
     </message>
     <message>
-        <location line="+99"/>
+        <location line="+221"/>
         <source>Settings file</source>
         <translation>Einstellungsdatei</translation>
     </message>

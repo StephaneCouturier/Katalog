@@ -11,6 +11,8 @@ ScrollablePageFitted {
 
     // Set to true when opened from Open Collection > Hosted Db menu
     property bool showHostedForm: false
+    // Recent Hosted entry refused by the host check: pre-fills the form (HST-F5)
+    property var refusedHostedEntry: null
 
     // Text-size setting (TYP-F2 / TYP-F9): owned and persisted by Main.qml.
     property real textScale: 1.0
@@ -38,8 +40,28 @@ ScrollablePageFitted {
         portField.value        = appManager1.getDatabasePort()
         userField.text         = appManager1.getDatabaseUserName()
         passwordField.text     = appManager1.getDatabasePassword()
-        autoConnectBox.checked = appManager1.getHostedAutoConnect()
         importUpdateSourceCombo.model = appManager1.getImportSourcePaths()
+        if (refusedHostedEntry) {
+            hostField.text     = refusedHostedEntry.hostName
+            dbNameField.text   = refusedHostedEntry.dbName
+            portField.value    = refusedHostedEntry.port
+            userField.text     = refusedHostedEntry.userName
+            passwordField.text = refusedHostedEntry.password
+            invalidHostMessage.visible = true
+        }
+    }
+
+    // Settings Connect: empty host becomes localhost (HST-F1), then the host
+    // checks (HST-F2..F4) before anything is saved or connected
+    function requestHostedConnect() {
+        var host = hostField.text.trim()
+        if (host === "")
+            host = "localhost"
+        hostField.text = host
+        var check = applicationWindow().requestHostedConnect({
+            hostName: host, dbName: dbNameField.text, port: portField.value,
+            userName: userField.text, password: passwordField.text })
+        invalidHostMessage.visible = (check === "invalid")
     }
 
     // ── Dialogs ────────────────────────────────────────────────────────
@@ -220,6 +242,27 @@ ScrollablePageFitted {
         onAccepted: appManager1.imageFolderPath = appManager1.pathFromFileUrl(selectedFolder.toString())
     }
 
+    // Collection export (SpecCollectionExport.md CEX-F3 / CEX-F4)
+    FileDialog {
+        id: exportFileDialog
+        title: qsTr("Select")
+        fileMode: FileDialog.SaveFile
+        onAccepted: appManager1.exportToSQLiteFile(appManager1.pathFromFileUrl(selectedFile.toString()))
+    }
+
+    FolderDialog {
+        id: exportFolderDialog
+        title: qsTr("Select a folder")
+        onAccepted: appManager1.exportToMemoryMode(appManager1.pathFromFileUrl(selectedFolder.toString()))
+    }
+
+    Connections {
+        target: appManager1
+        function onExportCompleted(targetPath) {
+            applicationWindow().showPassiveNotification(qsTr("Export") + ": " + targetPath)
+        }
+    }
+
     FileDialog {
         id: importFileDialog
         fileMode: FileDialog.OpenFile
@@ -250,21 +293,52 @@ ScrollablePageFitted {
         }
     ]
 
-    footer: RowLayout {
-        visible: appManager1.importIsRunning || appManager1.importStatusText.length > 0
-        spacing: Kirigami.Units.smallSpacing
-        Controls.BusyIndicator {
-            running: appManager1.importIsRunning
-            visible: appManager1.importIsRunning
-            implicitWidth:  Kirigami.Units.gridUnit * 1.5
-            implicitHeight: Kirigami.Units.gridUnit * 1.5
-            Layout.leftMargin: Kirigami.Units.smallSpacing
+    footer: ColumnLayout {
+        visible: importStatusRow.visible || exportStatusRow.visible
+        spacing: 0
+        RowLayout {
+            id: importStatusRow
+            visible: appManager1.importIsRunning || appManager1.importStatusText.length > 0
+            spacing: Kirigami.Units.smallSpacing
+            Controls.BusyIndicator {
+                running: appManager1.importIsRunning
+                visible: appManager1.importIsRunning
+                implicitWidth:  Kirigami.Units.gridUnit * 1.5
+                implicitHeight: Kirigami.Units.gridUnit * 1.5
+                Layout.leftMargin: Kirigami.Units.smallSpacing
+            }
+            Controls.Label {
+                Layout.fillWidth: true
+                Layout.margins: Kirigami.Units.smallSpacing
+                text: appManager1.importStatusText
+                elide: Text.ElideRight
+            }
         }
-        Controls.Label {
-            Layout.fillWidth: true
-            Layout.margins: Kirigami.Units.smallSpacing
-            text: appManager1.importStatusText
-            elide: Text.ElideRight
+        // Collection export progress and result (CEX-F9 to CEX-F11)
+        RowLayout {
+            id: exportStatusRow
+            visible: appManager1.exportIsRunning || appManager1.exportStatusText.length > 0
+            spacing: Kirigami.Units.smallSpacing
+            Controls.BusyIndicator {
+                running: appManager1.exportIsRunning
+                visible: appManager1.exportIsRunning
+                implicitWidth:  Kirigami.Units.gridUnit * 1.5
+                implicitHeight: Kirigami.Units.gridUnit * 1.5
+                Layout.leftMargin: Kirigami.Units.smallSpacing
+            }
+            Controls.Label {
+                Layout.fillWidth: true
+                Layout.margins: Kirigami.Units.smallSpacing
+                text: appManager1.exportStatusText
+                elide: Text.ElideRight
+            }
+            Controls.Button {
+                text: qsTr("Cancel")
+                icon.name: "dialog-cancel"
+                visible: appManager1.exportIsRunning
+                Layout.rightMargin: Kirigami.Units.smallSpacing
+                onClicked: appManager1.cancelExport()
+            }
         }
     }
 
@@ -366,6 +440,40 @@ ScrollablePageFitted {
                 }
             }
 
+            // ── Export to another mode (SpecCollectionExport.md CEX-F1, CEX-F12) ──
+            Controls.Label { text: " " }
+            RowLayout {
+                id: exportRow
+                readonly property bool exportAllowed: !appManager1.exportIsRunning
+                                                      && !appManager1.searchIsRunning
+                                                      && !appManager1.catalogIsCreating
+                                                      && !appManager1.deviceUpdateIsRunning
+                Layout.fillWidth: true
+                spacing: Kirigami.Units.smallSpacing
+                Controls.Button {
+                    text: qsTr("Export to SQLite file")
+                    icon.name: "document-export"
+                    visible: appManager1.databaseMode === "Memory" || appManager1.databaseMode === "Hosted"
+                    enabled: exportRow.exportAllowed
+                    onClicked: {
+                        var folder = appManager1.getCollectionFolder()
+                        exportFileDialog.currentFolder = appManager1.pathToFileUrl(folder)
+                        exportFileDialog.selectedFile  = appManager1.pathToFileUrl(folder + "/export.db")
+                        exportFileDialog.open()
+                    }
+                }
+                Controls.Button {
+                    text: qsTr("Export to Memory mode (csv)")
+                    icon.name: "document-export"
+                    visible: appManager1.databaseMode === "File" || appManager1.databaseMode === "Hosted"
+                    enabled: exportRow.exportAllowed
+                    onClicked: {
+                        exportFolderDialog.currentFolder = appManager1.pathToFileUrl(appManager1.getCollectionFolder())
+                        exportFolderDialog.open()
+                    }
+                }
+            }
+
             // ── Images folder ──────────────────────────────────────────────
             Controls.Label { text: qsTr("Images folder"); opacity: 0.7; Layout.alignment: Qt.AlignVCenter }
             RowLayout {
@@ -388,6 +496,19 @@ ScrollablePageFitted {
             }
 
             // ── Hosted database fields (only when Hosted mode) ─────────────
+            // Refused host (HST-F4): blocking validation error at the top of the form
+            Kirigami.InlineMessage {
+                id: invalidHostMessage
+                Layout.columnSpan: 2
+                Layout.fillWidth: true
+                Layout.topMargin: Kirigami.Units.largeSpacing * 2
+                type: Kirigami.MessageType.Warning
+                showCloseButton: true
+                visible: false
+                text: qsTr("Invalid hostname.") + "\n"
+                      + qsTr("Only local or private network allowed.") + "\n"
+                      + qsTr("Valid:") + " localhost, 127.x.x.x, 192.168.x.x, 10.x.x.x, 172.16-31.x.x"
+            }
             Controls.Label {
                 text: qsTr("Host Name"); opacity: 0.7
                 visible: appManager1.databaseMode === "Hosted" || showHostedForm
@@ -396,6 +517,7 @@ ScrollablePageFitted {
             Controls.TextField {
                 id: hostField
                 Layout.fillWidth: true
+                onTextEdited: invalidHostMessage.visible = false
                 visible: appManager1.databaseMode === "Hosted" || showHostedForm
                 Layout.topMargin: Kirigami.Units.largeSpacing * 2
             }
@@ -442,17 +564,6 @@ ScrollablePageFitted {
             }
 
             Controls.Label {
-                text: qsTr("Startup:"); opacity: 0.7
-                visible: appManager1.databaseMode === "Hosted" || showHostedForm
-            }
-            Controls.CheckBox {
-                id: autoConnectBox
-                text: qsTr("Connect automatically on startup")
-                onCheckedChanged: appManager1.setHostedAutoConnect(checked)
-                visible: appManager1.databaseMode === "Hosted" || showHostedForm
-            }
-
-            Controls.Label {
                 text: qsTr("phpMyAdmin URL"); opacity: 0.7
                 visible: appManager1.databaseMode === "Hosted" || showHostedForm
             }
@@ -471,14 +582,9 @@ ScrollablePageFitted {
             Controls.Button {
                 text: qsTr("Connect")
                 icon.name: "network-connect"
-                enabled: hostField.text.length > 0 && dbNameField.text.length > 0
+                enabled: dbNameField.text.length > 0
                 visible: appManager1.databaseMode === "Hosted" || showHostedForm
-                onClicked: {
-                    appManager1.openCollectionHosted(
-                        hostField.text, dbNameField.text, portField.value,
-                        userField.text, passwordField.text
-                    )
-                }
+                onClicked: pageSettingsRoot.requestHostedConnect()
             }
 
             // ── Import ─────────────────────────────────────────────────────

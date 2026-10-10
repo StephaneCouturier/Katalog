@@ -2199,6 +2199,7 @@ bool Collection::exportAllToMemoryMode(const QString &exportFolder)
     saveStorageTableToFile();
     saveTagTableToFile();
     saveMappingTableToFile();
+    saveCatalogFilterTableToFile();
     saveSearchHistoryTableToFile();
     saveStatiticsTableToFile();
 

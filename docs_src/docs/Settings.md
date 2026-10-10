@@ -8,7 +8,7 @@ version: "3.0"
 This page describes all the features of the **Settings** screen and how to use them. The screen has two tabs:
 * *Application*: [version, language, theme, text size, window size and behavior options](#application),
 * *Collection*:
-  * [Collection & Database](#collection-database): the open collection, its data mode, the database version and quality check, and the images folder,
+  * [Collection & Database](#collection-database): the open collection, its data mode, the [export to another data mode](#export), the database version and quality check, and the images folder,
   * [Collection Import & Synchronization](#import-update): import devices from another collection, or update previously imported ones.
 
 *Settings* opens from the drawer, over the other pages, on the *Application* tab. *Open... > Hosted Database...* in the drawer opens it on the *Collection* tab, with the hosted connection form. *Close* (or `Esc`) goes back to the other pages (see [Interface](Interface)).
@@ -87,12 +87,11 @@ The connection form is shown when the open collection is in *Hosted* mode, or wh
 
 | Field | Description |
 |-------|-------------|
-| *Host Name* | Name or IP address of the database server. |
+| *Host Name* | `localhost` or the IP address of the database server, on this computer or the local network (see [Security](#hosted-security)). Left empty, it becomes `localhost`. |
 | *Database Name* | Name of the database on the server. |
 | *Port* | Port of the server (`3306` for MySQL/MariaDB). |
 | *User Name* | Database user name. |
 | *Password* | Database password. |
-| *Startup:* | *Connect automatically on startup*: reconnects to this database when Katalog starts. |
 | *phpMyAdmin URL* | Address of phpMyAdmin, used by the *Edit* button. |
 
 *Connect* opens the collection on the server.
@@ -100,6 +99,37 @@ The connection form is shown when the open collection is in *Hosted* mode, or wh
 Prerequisites:
 * A MySQL/MariaDB server must be running and reachable.
 * The database must already exist on the server; Katalog creates the tables it needs.
+
+#### Security {#hosted-security}
+To keep the data of a collection on computers the user controls, Katalog only connects to a database server on this computer or on the local network. The host is checked on *Connect*, and when a *Hosted* collection is opened from *Recent collections* in the drawer:
+
+| Host | What happens |
+|------|--------------|
+| This computer: `localhost`, `127.x.x.x` | Katalog connects. |
+| Local network: `192.168.x.x`, `10.x.x.x`, `172.16.x.x` to `172.31.x.x` | Katalog asks for a confirmation first (*Private network connection*, *Your data will be sent to this network database.*). *No* is the default; nothing is changed if it is chosen. |
+| Anything else: a public address, or a server name (for example `mydb.example.com` or `nas`) | Refused: *Invalid hostname.* is shown at the top of the form with the accepted addresses. Nothing is connected or saved. A refused collection opened from *Recent collections* shows the form, filled in, with the same message. |
+
+A server on the local network is given by its IP address, not by its name.
+
+### Export to another data mode {#export}
+The open collection can be copied to another data mode, for example to move a collection from a server to a single file. The open collection is not changed and stays open.
+
+| Data mode of the open collection | *Export to SQLite file* | *Export to Memory mode (csv)* |
+|---|:---:|:---:|
+| *Memory* | yes | — |
+| *File* | — | yes |
+| *Hosted* | yes | yes |
+
+* *Export to SQLite file* asks for the file to create, `export.db` in the collection folder by default. If the file already exists, it is moved to the trash first. In *Memory* mode, the files and folders of all catalogs are loaded first, which can take a while for a big collection.
+* *Export to Memory mode (csv)* asks for a folder, which **must be empty**. Katalog writes there the `.csv` files of the collection and the `.idx` files of each catalog.
+
+The progress is shown at the bottom of the page, with *Cancel*. Cancelling removes what the export had written. A message shows the path of the export when it is done. The export buttons are not available while a catalog is created or updated, or while a search runs.
+
+The exported collection can then be opened from the drawer with *Open...*.
+
+:::note
+In *Memory* mode, if a search was run before the export, folders that contain no files may be missing from the SQLite file for the catalogs that were searched. To get them all, export just after opening the collection.
+:::
 
 ### Database version and quality check {#quality-check}
 

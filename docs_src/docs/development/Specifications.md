@@ -4,7 +4,7 @@ version: "2.13"
 
 # Specifications
 
-![Status](https://img.shields.io/badge/Status-Index-lightgrey) ![Pages](https://img.shields.io/badge/Pages-35-blue)
+![Status](https://img.shields.io/badge/Status-Index-lightgrey) ![Pages](https://img.shields.io/badge/Pages-36-blue)
 
 Every specification page lives in `docs_src/docs/development/`. This page is the
 index: **new specifications are added here, not to the sidebar.**
@@ -23,6 +23,7 @@ specification and the code disagree, the specification is what was agreed.
 | [SpecCardsAndTables](SpecCardsAndTables.md) | CARDS, TABLES AND TREES — SHARED DISPLAY CONVENTIONS | Approved | planned | — |
 | [SpecCatalogIncludeExclude](SpecCatalogIncludeExclude.md) | Spec: Catalog Include / Exclude Rules | — | — | — |
 | [SpecCollection](SpecCollection.md) | SpecCollection — Import / Update across Collections (#750) | — | — | — |
+| [SpecCollectionExport](SpecCollectionExport.md) | COLLECTION EXPORT — CONVERT A COLLECTION TO ANOTHER MODE | Approved | planned | — |
 | [SpecCollectionIdentity](SpecCollectionIdentity.md) | COLLECTION IDENTITY — NAMING COLLECTIONS IN THE K3 DRAWER | Approved | planned | — |
 | [SpecCollectionOpen](SpecCollectionOpen.md) | COLLECTION OPEN — FIRST RUN AND NEW DATABASE | Approved | complete | — |
 | [SpecComboBoxes](SpecComboBoxes.md) | COMBO BOXES — WIDTH AND DROP-DOWN LIST | Approved | planned | — |
@@ -32,6 +33,7 @@ specification and the code disagree, the specification is what was agreed.
 | [SpecDevicesPage](SpecDevicesPage.md) | DEVICES PAGE — CARDS AND TABLE DISPLAY | Approved | planned | — |
 | [SpecDevicesSplit](SpecDevicesSplit.md) | DEVICES: Split a Catalog | — | — | — |
 | [SpecExplore](SpecExplore.md) | EXPLORE — DIRECTORY TREE | Approved | complete | — |
+| [SpecHostedSecurity](SpecHostedSecurity.md) | HOSTED SECURITY — ONLY LOCAL OR PRIVATE-NETWORK SERVERS | Approved | K2 complete, K3 planned | — |
 | [SpecIconButtons](SpecIconButtons.md) | ICON BUTTONS — TOOLTIPS ON ICON-ONLY BUTTONS | Approved | planned | — |
 | [SpecImportVVV2K](SpecImportVVV2K.md) | Feature Specification: VVV2K — Full Import of a VVV Database into Katalog | — | — | — |
 | [SpecKeyboardShortcuts](SpecKeyboardShortcuts.md) | KEYBOARD SHORTCUTS — ESC GOES BACK ONE STEP | Approved | complete | — |

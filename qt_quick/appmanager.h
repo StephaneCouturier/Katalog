@@ -148,6 +148,9 @@ class AppManager : public QObject
     Q_PROPERTY(bool    importIsRunning   READ getImportIsRunning   NOTIFY importIsRunningChanged)
     Q_PROPERTY(QString importStatusText  READ getImportStatusText  NOTIFY importStatusTextChanged)
     Q_PROPERTY(QString importReportText  READ getImportReportText  NOTIFY importReportTextChanged)
+    // Collection export (SpecCollectionExport.md)
+    Q_PROPERTY(bool    exportIsRunning   READ getExportIsRunning   NOTIFY exportStateChanged)
+    Q_PROPERTY(QString exportStatusText  READ getExportStatusText  NOTIFY exportStateChanged)
     Q_PROPERTY(DeviceListModel* importSourceDeviceModel READ getImportSourceDeviceModel NOTIFY importSourceChanged)
     Q_PROPERTY(bool updateBeforeBackup READ updateBeforeBackup WRITE setUpdateBeforeBackup NOTIFY updateBeforeBackupChanged)
     Q_PROPERTY(bool catalogUpdateForBackupRunning READ catalogUpdateForBackupRunning NOTIFY catalogUpdateForBackupRunningChanged)
@@ -214,6 +217,8 @@ public slots:
     Q_INVOKABLE void openCollectionMemory(const QString &folder);
     Q_INVOKABLE void openCollectionHosted(const QString &hostName, const QString &dbName,
                                           int port, const QString &userName, const QString &password);
+    // "localhost", "private" or "invalid" (SpecHostedSecurity.md HST-F2..F4)
+    Q_INVOKABLE QString hostedHostCheck(const QString &hostName) const;
     Q_INVOKABLE void    createNewSQLiteCollection(const QString &path);
     Q_INVOKABLE QString getNewCollectionDefaultPath() const;
     // Default folder for folder pickers: .db folder (File), collection folder
@@ -355,6 +360,13 @@ public slots:
     bool    getImportIsRunning()  const { return m_importIsRunning; }
     QString getImportStatusText() const { return m_importStatusText; }
     QString getImportReportText() const { return m_importReportText; }
+
+    // Collection export (SpecCollectionExport.md)
+    bool    getExportIsRunning()  const { return m_exportIsRunning; }
+    QString getExportStatusText() const { return m_exportStatusText; }
+    Q_INVOKABLE void exportToSQLiteFile(const QString &filePath);
+    Q_INVOKABLE void exportToMemoryMode(const QString &folderPath);
+    Q_INVOKABLE void cancelExport() { m_exportCancelRequested = true; }
 
     // Catalog creation
     Q_INVOKABLE QString      createCatalog(const QString &name, const QString &path,
@@ -543,8 +555,6 @@ public slots:
     Q_INVOKABLE int     getDatabasePort() const;
     Q_INVOKABLE QString getDatabaseUserName() const;
     Q_INVOKABLE QString getDatabasePassword() const;
-    Q_INVOKABLE bool    getHostedAutoConnect() const;
-    Q_INVOKABLE void    setHostedAutoConnect(bool value);
 
     // Image folder
     Q_INVOKABLE QString getImageFolderPath() const;
@@ -605,6 +615,8 @@ signals:
     void importIsRunningChanged();
     void importStatusTextChanged();
     void importReportTextChanged();
+    void exportStateChanged();
+    void exportCompleted(const QString &targetPath);
     void tagsChanged();
     void backupMappingsChanged();
     void backupProgress(int filesDone, int totalFiles, qint64 bytesCopied, qint64 totalBytes, const QString &currentFile);
@@ -663,6 +675,12 @@ private:
     bool    m_importIsRunning  = false;
     QString m_importStatusText;
     QString m_importReportText;
+    bool    m_exportIsRunning       = false;
+    bool    m_exportCancelRequested = false;
+    QString m_exportStatusText;
+    bool    exportIsBlocked() const;
+    void    setExportStatus(const QString &text);
+    void    finishExport(const QString &status, const QString &reason = QString());
     DeviceListModel        *m_importSourceDeviceModel = nullptr;
     QFont                   m_systemFont;   // OS font captured at startup: base of the text-size setting (TYP-F1)
 

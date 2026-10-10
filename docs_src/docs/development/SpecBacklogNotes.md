@@ -296,25 +296,14 @@ Nothing below is authorised work; each needs its own user decision.
 
 **Related requirements:** see each entry
 
-This is a **to-do list for the 3.0 documentation pass, not a requirement.** The user
-pages in `docs_src/docs/` still describe K2 only. The K3 user-facing behaviours below
-are specified and implemented but not yet documented for end users. Document each
-one (EN/FR/CS) during the 3.0 pass, then remove its entry here.
+The English user pages in `docs_src/docs/` describe K3 and are kept accurate with every
+user-facing K3 change, in the same piece of work (maintainer rule, 2026-10-10). No K3
+feature waits here for its English documentation. The three entries listed earlier (Esc
+goes back one step, Selection device filter, Quality check) are documented in
+`Interface.md`, `Selection.md` and `Settings.md`.
 
-- **Esc goes back one step** (`SpecKeyboardShortcuts.md`, KBS-F1–F4): Esc works like
-  the Close button of the open panel or page (Cancel on Device Edit), one step at a
-  time. An open dialog, menu or dropdown closes first. On Device Edit and Create,
-  unsaved input is discarded, as with Cancel. Candidate location: a "Keyboard
-  shortcuts" section in `Overview.md`.
-- **Selection device filter** (Selection page, beta-tester feedback 2026-09-24):
-  the field above the device list shows a filter icon and the placeholder "Name...".
-  It filters devices by name, not files; Ctrl+F puts the cursor in it. Candidate
-  location: `Selection.md`.
-- **Quality check** (`SpecQualityCheck.md`, phase 1, QCK-F1, F2, F4, F7, F8, F10–F16):
-  a "Quality check" button on Settings, on the Database Version row, runs six
-  read-only checks on the open collection (storage and catalog links, duplicate
-  storage IDs, missing parent devices). The report lists what each check found and can be copied
-  to the clipboard. Nothing is repaired. Candidate location: `Settings.md`.
+The French and Czech pages (`i18n/fr`, `i18n/cs`) are translated later, in the #803
+translation phase; until then some of them still hold the K2 text.
 
 ---
 
@@ -341,5 +330,37 @@ the K2/K3-agnostic core constraint, display the catalog name in
 **Technical note:** `Text.StyledText` needs `<font color="…">` rather than
 `<span style="color:…">` (span colour is ignored). Switching to `Text.RichText`
 would render the span but loses eliding.
+
+---
+
+## Collection export — no failure reason for the CSV export
+
+**Identified:** 2026-10-10 (`SpecCollectionExport.md`)
+**Affects:** K3 (and K2) — core: `Collection::exportAllToMemoryMode`, `Collection::exportAllCatalogFiles`
+
+When a Memory-mode (CSV) export fails, K3 reports only status "Error" (CEX-F11), with no reason.
+`exportAllToMemoryMode` always returns `true`, and `exportAllCatalogFiles` silently skips (`continue`) a catalog
+whose `.idx` file cannot be opened or whose query fails. A user can end up with an incomplete export and no message.
+
+**When to take it up:** when a reason is wanted. It needs a `core/` change (approval) to return or expose the
+failure, plus new user-visible strings (per-string approval).
+
+---
+
+## Collection export — folders without files missing after an earlier load
+
+**Identified:** 2026-10-10 (`SpecCollectionExport.md`, CEX-F5 known limitation)
+**Affects:** K3, Memory mode, Memory → SQLite export. Core: `Catalog::loadFoldersToTable()`, `Collection::loadAllCatalogFiles()`
+
+The K3 export calls `loadFoldersToTable()` for every catalog, then `loadAllCatalogFiles()`. If a catalog's file
+list was loaded earlier in the session (for example by a search), that load created only folders that hold
+files. `loadFoldersToTable()` then skips the catalog (folder rows present, load date current), so its folders
+without files are missing from the exported SQLite file. An export in a fresh session is complete.
+
+**Same mechanism:** `loadCatalogForRootReplace` in `core/device.cpp` (near line 1250), which clears the
+catalog's folder rows before calling `loadFoldersToTable()`.
+
+**Fix:** a `core/` method that clears and reloads a catalog's folders, used by the export (and possibly by
+`loadCatalogForRootReplace`). It needs core approval, which was not given on 2026-10-10.
 
 ---

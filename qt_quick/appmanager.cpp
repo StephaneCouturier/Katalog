@@ -1344,19 +1344,6 @@ QString AppManager::getDatabasePassword() const
     return settings.value("Settings/databasePassword").toString();
 }
 //----------------------------------------------------------------------
-bool AppManager::getHostedAutoConnect() const
-{
-    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
-    return settings.value("Settings/HostedAutoConnect", false).toBool();
-}
-//----------------------------------------------------------------------
-void AppManager::setHostedAutoConnect(bool value)
-{
-    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
-    settings.setValue("Settings/HostedAutoConnect", value);
-    settings.sync();
-}
-//----------------------------------------------------------------------
 QVariantList AppManager::getLanguageList() const
 {
     QVariantList result;
@@ -2138,6 +2125,12 @@ void AppManager::openCollectionMemory(const QString &folder)
 void AppManager::openCollectionHosted(const QString &hostName, const QString &dbName,
                                       int port, const QString &userName, const QString &password)
 {
+    // Backstop: never connect to, nor save, a public host (HST-C4, HST-C2)
+    if (Database::validateHostname(hostName) == Database::PublicOrInvalid) {
+        emit databaseConnectionChanged(false, tr("Invalid hostname."));
+        return;
+    }
+
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
     settings.setValue("Settings/databaseMode",    "Hosted");
     settings.setValue("Settings/databaseHostName", hostName);
@@ -2153,6 +2146,15 @@ void AppManager::openCollectionHosted(const QString &hostName, const QString &db
         emit databaseConnectionChanged(true, tr("Connected: %1/%2").arg(hostName).arg(dbName));
     } else {
         emit databaseConnectionChanged(false, tr("Hosted connection failed: %1").arg(lastDatabaseError));
+    }
+}
+//----------------------------------------------------------------------
+QString AppManager::hostedHostCheck(const QString &hostName) const
+{
+    switch (Database::validateHostname(hostName)) {
+    case Database::Localhost:      return QStringLiteral("localhost");
+    case Database::PrivateNetwork: return QStringLiteral("private");
+    default:                       return QStringLiteral("invalid");
     }
 }
 //----------------------------------------------------------------------
@@ -4355,6 +4357,166 @@ QString AppManager::importDevice(int srcDeviceId)
     refreshAllUI();
     emit importSourceChanged();
     return QString();
+}
+//----------------------------------------------------------------------
+// Collection export (SpecCollectionExport.md)
+//----------------------------------------------------------------------
+bool AppManager::exportIsBlocked() const
+{
+    return m_exportIsRunning || m_searchIsRunning || m_catalogIsCreating || m_deviceUpdateIsRunning;
+}
+//----------------------------------------------------------------------
+void AppManager::setExportStatus(const QString &text)
+{
+    m_exportStatusText = text;
+    emit exportStateChanged();
+    // All events, user input included, so the Cancel button stays clickable (CEX-F10)
+    QCoreApplication::processEvents();
+}
+//----------------------------------------------------------------------
+void AppManager::finishExport(const QString &status, const QString &reason)
+{
+    m_exportIsRunning = false;
+    StatusBarMessageBuilder builder;
+    builder.setOperation(tr("Export")).setStatus(status);
+    if (!reason.isEmpty())
+        builder.setCurrentItem(reason);
+    m_exportStatusText = builder.build();
+    emit exportStateChanged();
+}
+//----------------------------------------------------------------------
+void AppManager::exportToSQLiteFile(const QString &filePath)
+{
+    const bool isMemory = (collection->databaseMode == "Memory");
+    const bool isHosted = (collection->databaseMode == "Hosted");
+    if ((!isMemory && !isHosted) || filePath.isEmpty() || exportIsBlocked())
+        return;
+
+    m_exportIsRunning       = true;
+    m_exportCancelRequested = false;
+    setExportStatus(StatusBarMessageBuilder()
+                        .setOperation(tr("Export"))
+                        .setStatus(tr("In Progress"))
+                        .build());
+
+    // An existing target goes to the trash; if that fails it is left untouched (CEX-F8)
+    QFile existingFile(filePath);
+    if (existingFile.exists() && !existingFile.moveToTrash()) {
+        finishExport(tr("Error"));
+        return;
+    }
+
+    if (isMemory) {
+        // Folders first: the file-list load only records folders holding files,
+        // after which loadFoldersToTable() skips the catalog (CEX-F5)
+        QList<Device::DeviceTreeNode> catalogNodes;
+        for (const Device::DeviceTreeNode &node : Device::loadDeviceTree(m_connectionName))
+            if (node.type == QLatin1String("Catalog"))
+                catalogNodes.append(node);
+
+        for (int i = 0; i < catalogNodes.size(); ++i) {
+            if (m_exportCancelRequested) {
+                finishExport(tr("Cancelled"));
+                return;
+            }
+            Device catalogDevice;
+            catalogDevice.ID = catalogNodes.at(i).id;
+            catalogDevice.loadDevice(m_connectionName);
+            catalogDevice.catalog->loadFoldersToTable();
+            setExportStatus(StatusBarMessageBuilder()
+                                .setOperation(tr("Export"))
+                                .setStatus(tr("In Progress"))
+                                .setProcess(tr("Loaded"), i + 1, catalogNodes.size())
+                                .setCurrentItem(catalogNodes.at(i).name)
+                                .build());
+        }
+
+        const bool loaded = collection->loadAllCatalogFiles(
+            [this](int filesLoaded, int totalFiles, const QString &deviceName) -> bool {
+                setExportStatus(StatusBarMessageBuilder()
+                                    .setOperation(tr("Export"))
+                                    .setStatus(tr("In Progress"))
+                                    .setProcess(tr("Loaded"), filesLoaded, totalFiles)
+                                    .setCurrentItem(deviceName)
+                                    .build());
+                return !m_exportCancelRequested;
+            });
+        if (!loaded) {
+            finishExport(tr("Cancelled"));
+            return;
+        }
+    }
+
+    // On cancel, the core removes its partial target file itself
+    const bool ok = collection->exportToSQLiteFile(filePath,
+        [this](int, int, const QString &tableName) -> bool {
+            setExportStatus(StatusBarMessageBuilder()
+                                .setOperation(tr("Export"))
+                                .setStatus(tr("In Progress"))
+                                .setCurrentItem(tableName)
+                                .build());
+            return !m_exportCancelRequested;
+        });
+
+    if (!ok) {
+        finishExport(m_exportCancelRequested ? tr("Cancelled") : tr("Error"));
+        return;
+    }
+    finishExport(tr("Completed"));
+    emit exportCompleted(filePath);
+}
+//----------------------------------------------------------------------
+void AppManager::exportToMemoryMode(const QString &folderPath)
+{
+    const bool isFile   = (collection->databaseMode == "File");
+    const bool isHosted = (collection->databaseMode == "Hosted");
+    if ((!isFile && !isHosted) || folderPath.isEmpty() || exportIsBlocked())
+        return;
+
+    // The folder must be empty, so a cancel only ever removes this run's files (CEX-F13, CEX-C5)
+    const QDir exportDir(folderPath);
+    const QDir::Filters allEntries = QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System;
+    if (!exportDir.exists()) {
+        finishExport(tr("Error"));
+        return;
+    }
+    if (!exportDir.isEmpty(allEntries)) {
+        finishExport(tr("Error"), tr("The export folder must be empty."));
+        return;
+    }
+
+    m_exportIsRunning       = true;
+    m_exportCancelRequested = false;
+    setExportStatus(StatusBarMessageBuilder()
+                        .setOperation(tr("Export"))
+                        .setStatus(tr("In Progress"))
+                        .build());
+
+    collection->exportAllToMemoryMode(folderPath);
+
+    const bool completed = collection->exportAllCatalogFiles(folderPath,
+        [this](int, int, const QString &catalogName) -> bool {
+            setExportStatus(StatusBarMessageBuilder()
+                                .setOperation(tr("Export"))
+                                .setStatus(tr("In Progress"))
+                                .setCurrentItem(catalogName)
+                                .build());
+            return !m_exportCancelRequested;
+        });
+
+    if (!completed) {
+        if (m_exportCancelRequested) {
+            // The folder was empty at start: every file in it was written by this run
+            for (const QString &fileName : exportDir.entryList(QDir::Files | QDir::Hidden | QDir::System))
+                QFile::remove(exportDir.filePath(fileName));
+            finishExport(tr("Cancelled"));
+        } else {
+            finishExport(tr("Error"));
+        }
+        return;
+    }
+    finishExport(tr("Completed"));
+    emit exportCompleted(folderPath);
 }
 //----------------------------------------------------------------------
 QString AppManager::updateAllImportsFromSource(const QString &path)

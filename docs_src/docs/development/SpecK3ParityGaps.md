@@ -23,44 +23,6 @@ When a gap is ported, remove its entry here and add it to the K3 user page.
 
 ---
 
-## Settings — Export a collection to another mode
-
-**K2 user doc:** `Settings.md`, sections *Database File mode*, *Hosted mode › Export*,
-*Collection export summary*.
-
-K2 can export the open collection to another storage mode:
-
-| Current mode | Export to SQLite file | Export to Memory mode |
-|---|---|---|
-| Memory | yes | — |
-| File | — | yes |
-| Hosted | yes | yes |
-
-- **Export to SQLite file** (Memory, Hosted): the user picks the target file
-  (default `<collection folder>/export.db`); an existing file at that path is moved
-  to the trash first. A progress dialog with Cancel is shown; a message reports the
-  result and the target path.
-- **Export to Memory mode (csv)** (File, Hosted): the user picks a target folder; all
-  CSV table files and the per-catalog `.idx` files are written there, with a
-  progress dialog and Cancel, and a result message.
-
-**K2 code:** `qt_widgets/mainwindow_tab_settings_exp.cpp` — `exportToSQLiteFile()`,
-`exportToMemoryMode()`; buttons in `mainwindow_tab_settings.cpp`
-(`Settings_pushButton_ExportToSQLitFile`, `_ExportToMemoryMode`,
-`_Hosted_ExportToSQLiteFile`, `_Hosted_ExportToMemoryMode`).
-
-**Core already available:** `Collection::exportToSQLiteFile()` (Hosted → SQLite),
-`Collection::loadAllCatalogFiles()`, `Collection::exportAllToMemoryMode()`,
-`Collection::exportAllCatalogFiles()`.
-
-**Porting note:** the Memory → SQLite path calls `MainWindow::backupMemoryDatabaseToFile()`,
-which lives in the K2 UI layer. Porting it to K3 needs that logic in `core/` first —
-a core change that requires approval.
-
-**K3:** no export action on the Settings page.
-
----
-
 ## Settings — Hosted mode: only local or private-network servers (security)
 
 **Found:** 2026-10-04, while writing the K3 Settings user page.
@@ -86,15 +48,15 @@ no core change needed.
 
 **K3:** `Database::validateHostname()` is never called. `AppManager::openCollectionHosted()`
 (`qt_quick/appmanager.cpp:2138`) connects to any host, from the Settings *Connect*
-button, from the drawer's recent-collections list (`:2251`) and at start-up with
-*Connect automatically on startup*. A K3 user can therefore send collection data to a
-public server, which K2 deliberately prevents.
+button and from the drawer's recent-collections list (`:2251`). A K3 user can therefore
+send collection data to a public server, which K2 deliberately prevents. *(Corrected
+2026-10-10: an earlier version said it was also called at start-up through *Connect
+automatically on startup*. It is not: startup does not call `openCollectionHosted()`, and
+`HostedAutoConnect` is never read at startup. The option has since been removed from K3, 2026-10-10.)*
 
-**Porting note:** follow the K3 message rules (CLAUDE.md, `SpecValidationRules.md`): the
-refused host is a blocking form-validation error → `Kirigami.InlineMessage` on the
-Settings form; the private-network question is a decision → modal dialog with *No* as
-default. Decide whether a recent entry or the auto-connect path pointing to a refused
-host is blocked the same way (K2 only validates on save).
+**Specification:** `SpecHostedSecurity.md` (HST-*), approved 2026-10-10. It settles the
+open questions: a recent entry is checked the same way (HST-F5), `openCollectionHosted()`
+refuses public hosts (HST-C4), and startup is not re-validated, as in K2 (HST-F6).
 
 **K3 user doc:** `Settings.md` (K3) does not claim the restriction until it is ported.
 
