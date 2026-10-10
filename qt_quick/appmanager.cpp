@@ -5224,6 +5224,7 @@ void AppManager::executeBackupJob(int mappingId)
 
     CatalogDifferenceEngine cmpEngine(m_connectionName);
     const BackupCompareResult cmp = cmpEngine.compareForBackup(sourceDevice, targetDevice, mapping.strictCopy, mapping.sourceDrive);
+    clearBackupReport();   // a new run replaces the last report (BKP-F29)
     if (cmp.filesToCopy.isEmpty() && cmp.fileConflicts.isEmpty()) {
         setRunningBackupMappingId(-1);
         emit backupFinished(0, 0, 0, 0, 0, 0, false);
@@ -5280,8 +5281,48 @@ void AppManager::onBackupProgressInternal(int filesDone, int totalFiles,
     emit backupProgress(filesDone, totalFiles, bytesCopied, totalBytes, currentFile);
 }
 //----------------------------------------------------------------------
+void AppManager::clearBackupReport()
+{
+    m_lastReportRows.clear();
+    m_lastReportFlaggedCount = 0;
+    m_lastReportSummary.clear();
+    emit backupReportChanged();
+}
+//----------------------------------------------------------------------
+QString AppManager::showLastBackupReport()
+{
+    if (m_backupPreviewModel)
+        m_backupPreviewModel->populate(m_lastReportRows, m_lastReportFlaggedCount);
+    return m_lastReportSummary;
+}
+//----------------------------------------------------------------------
 void AppManager::onBackupFinishedInternal(const BackupReport &report)
 {
+    // Per-file report, in K2's order: copied, moved, archived & copied,
+    // conflicts, errors (BKP-F29, K2 showBackupReport)
+    m_lastReportRows.clear();
+    const QString archivedCopied = tr("Archived") + " & " + tr("Copied");
+    auto addRows = [this](const QList<DifferenceFileEntry> &entries, const QString &status) {
+        for (const DifferenceFileEntry &e : entries)
+            m_lastReportRows.append({ status, e.fileName, e.folderPath, e.fileSize });
+    };
+    addRows(report.copied,    tr("Copied"));
+    addRows(report.moved,     tr("Moved"));
+    addRows(report.renamed,   archivedCopied);
+    addRows(report.conflicts, tr("Conflict"));
+    for (const QString &err : report.errors)
+        m_lastReportRows.append({ tr("Error"), err, QString(), 0 });
+    m_lastReportFlaggedCount = report.conflictCount() + report.errorCount();
+    m_lastReportSummary = StatusBarMessageBuilder()
+        .setOperation(tr("Report"))
+        .setStatus(report.wasCancelled ? tr("Cancelled") : tr("Completed"))
+        .addResult(tr("Copied"),     report.copiedCount(), report.totalBytesCopied)
+        .addResult(archivedCopied,   report.renamedCount())
+        .addResult(tr("Conflicts"),  report.conflictCount())
+        .addResult(tr("Errors"),     report.errorCount())
+        .build();
+    emit backupReportChanged();
+
     const int finishedMappingId = m_runningBackupMappingId;
     m_backupJob              = nullptr;
     m_backupThread           = nullptr;

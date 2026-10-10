@@ -90,6 +90,8 @@ class AppManager : public QObject
     Q_PROPERTY(QAbstractItemModel*    searchSortModel   READ getSearchSortModel    CONSTANT)
     Q_PROPERTY(QAbstractItemModel*    exploreSortModel  READ getExploreSortModel   CONSTANT)
     Q_PROPERTY(QAbstractItemModel*    backupPreviewModel READ getBackupPreviewModel CONSTANT)
+    // Per-file report of the last backup run (SpecBackup.md BKP-F29)
+    Q_PROPERTY(bool backupReportAvailable READ backupReportAvailable NOTIFY backupReportChanged)
     Q_PROPERTY(QAbstractItemModel*    deviceTableModel  READ getDeviceTableModel   CONSTANT)
     Q_PROPERTY(int     selectedDeviceId   READ getSelectedDeviceId   NOTIFY selectedDeviceChanged)
     Q_PROPERTY(QString selectedDeviceName READ getSelectedDeviceName NOTIFY selectedDeviceChanged)
@@ -316,6 +318,9 @@ public slots:
     Q_INVOKABLE void         startBackupPreview(int mappingId);
     Q_INVOKABLE void         stopBackupPreview();
     Q_INVOKABLE QVariantMap  lastBackupPreviewSummary() const { return m_lastPreviewSummary; }
+    bool                     backupReportAvailable() const { return !m_lastReportSummary.isEmpty(); }
+    // Fills the preview table with the last run's rows; returns its totals line (BKP-F29)
+    Q_INVOKABLE QString      showLastBackupReport();
     Q_INVOKABLE void         runBackup(int mappingId);
     // Run several links one after another (SpecBackup.md BKP-F18). The eligible ids are
     // chosen on the page, from the links currently listed under its filters.
@@ -622,6 +627,7 @@ signals:
     void tagsChanged();
     void backupMappingsChanged();
     void backupProgress(int filesDone, int totalFiles, qint64 bytesCopied, qint64 totalBytes, const QString &currentFile);
+    void backupReportChanged();
     void backupFinished(int copiedCount, int movedCount, int renamedCount, int conflictCount, int errorCount, qint64 totalBytesCopied, bool wasCancelled);
     void backupNotification(const QString &message, bool isError);
     void updateBeforeBackupChanged();
@@ -719,6 +725,10 @@ private:
     // Links still waiting in a "Run listed links" sequence (SpecBackup.md BKP-C10).
     QList<int>              m_pendingBackupMappings;
     QList<BackupPreviewRow> m_lastPreviewRows;
+    QList<BackupPreviewRow> m_lastReportRows;          // BKP-F29, session only (BKP-C15)
+    int                     m_lastReportFlaggedCount = 0; // trailing conflict + error rows
+    QString                 m_lastReportSummary;
+    void                    clearBackupReport();
 
     // Async, cancellable preview state (BKP-F16/BKP-C8)
     bool        m_backupPreviewRunning        = false;

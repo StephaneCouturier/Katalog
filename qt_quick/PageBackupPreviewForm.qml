@@ -12,6 +12,10 @@ Kirigami.Page {
 
     property int mappingId: -1
     property var previewData: null
+    // Report of the last run instead of a preview (BKP-F29): same table, its own
+    // totals line, none of the preview-only items
+    property bool   reportMode: false
+    property string reportSummary: ""
 
     // Header labels for the resizable preview table (BKP-F15). Same strings as the
     // former Repeater header row, kept in this file so no translation slot changes.
@@ -31,13 +35,21 @@ Kirigami.Page {
 
     // The Backup page runs any pre-preview catalog update and only pushes this page once
     // the report is ready (BKP-F14), so the preview is computed synchronously here.
-    Component.onCompleted: doPreview()
+    Component.onCompleted: {
+        if (root.reportMode) {
+            root.title = qsTr("Report")
+            root.reportSummary = appManager1.showLastBackupReport()
+        } else {
+            doPreview()
+        }
+    }
 
     actions: [
         Kirigami.Action {
             text:        qsTr("Export to CSV")
             icon.name:   "document-export"
             displayHint: Kirigami.DisplayHint.KeepVisible
+            visible:     !root.reportMode
             enabled:     root.previewData && (root.previewData.filesToCopy.length + root.previewData.fileConflicts.length) > 0
             onTriggered: {
                 var path = appManager1.exportLastBackupPreviewToCsv()
@@ -62,7 +74,7 @@ Kirigami.Page {
         Kirigami.PlaceholderMessage {
             Layout.fillWidth: true
             Layout.margins: Kirigami.Units.largeSpacing
-            visible: root.previewData === null
+            visible: root.previewData === null && !root.reportMode
             text: qsTr("Computing preview…")
             icon.name: "view-refresh"
         }
@@ -93,8 +105,9 @@ Kirigami.Page {
             Layout.margins: Kirigami.Units.smallSpacing
             type: Kirigami.MessageType.Information
             showCloseButton: false
-            visible: root.previewData !== null && root.previewData.hasData
+            visible: root.reportMode || (root.previewData !== null && root.previewData.hasData)
             text: {
+                if (root.reportMode) return root.reportSummary.replace(/^(&nbsp;)+/, "")
                 if (!root.previewData) return ""
                 var pd = root.previewData
                 var copyLabel  = pd.isArchive ? qsTr("Move") : qsTr("Copy")
@@ -138,8 +151,10 @@ Kirigami.Page {
             Layout.fillWidth: true
             Layout.fillHeight: true
             clip: true
-            visible: root.previewData !== null && root.previewData.hasData
-                     && (root.previewData.filesToCopy.length + root.previewData.fileConflicts.length) > 0
+            visible: root.reportMode
+                     ? previewTableView.rows > 0
+                     : root.previewData !== null && root.previewData.hasData
+                       && (root.previewData.filesToCopy.length + root.previewData.fileConflicts.length) > 0
 
             Controls.HorizontalHeaderView {
                 id: previewHeaderView

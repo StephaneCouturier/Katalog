@@ -70,11 +70,12 @@
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
+        <location line="+678"/>
         <source>Completed</source>
         <translation>Abgeschlossen</translation>
     </message>
     <message>
-        <location line="-3607"/>
+        <location line="-4285"/>
         <source>Empty database path provided</source>
         <translation>Leerer Datenbankpfad angegeben</translation>
     </message>
@@ -498,11 +499,12 @@ Wählen Sie einen anderen Namen.</translation>
         <location line="+4"/>
         <location line="+30"/>
         <location line="+32"/>
+        <location line="+693"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location line="-165"/>
+        <location line="-858"/>
         <location line="+17"/>
         <location line="+29"/>
         <location line="+10"/>
@@ -517,11 +519,12 @@ Wählen Sie einen anderen Namen.</translation>
         <location line="+26"/>
         <location line="+17"/>
         <location line="+50"/>
+        <location line="+731"/>
         <source>Cancelled</source>
         <translation>Abgebrochen</translation>
     </message>
     <message>
-        <location line="-83"/>
+        <location line="-814"/>
         <location line="+10"/>
         <source>Loaded</source>
         <translation>Geladen</translation>
@@ -587,20 +590,20 @@ Wählen Sie einen anderen Namen.</translation>
     <message>
         <location line="+86"/>
         <location line="+2"/>
-        <location line="+358"/>
+        <location line="+399"/>
         <source>Link not found.</source>
         <translation>Link nicht gefunden.</translation>
     </message>
     <message>
-        <location line="-345"/>
+        <location line="-386"/>
         <location line="+2"/>
         <location line="+162"/>
-        <location line="+193"/>
+        <location line="+234"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>Quelle und Ziel müssen Kataloggeräte sein.</translation>
     </message>
     <message>
-        <location line="-317"/>
+        <location line="-358"/>
         <location line="+7"/>
         <source>Move</source>
         <translation>Verschieben</translation>
@@ -614,23 +617,56 @@ Wählen Sie einen anderen Namen.</translation>
     <message>
         <location line="+9"/>
         <location line="+7"/>
+        <location line="+229"/>
         <source>Conflict</source>
         <translation>Konflikt</translation>
     </message>
     <message>
-        <location line="+109"/>
-        <location line="+191"/>
+        <location line="-120"/>
+        <location line="+232"/>
         <source>Source not available: %1</source>
         <translation>Quelle nicht verfügbar: %1</translation>
     </message>
     <message>
-        <location line="-186"/>
-        <location line="+190"/>
+        <location line="-227"/>
+        <location line="+231"/>
         <source>Target not available: %1</source>
         <translation>Ziel nicht verfügbar: %1</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="-124"/>
+        <source>Archived</source>
+        <translation>Archiviert</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <location line="+5"/>
+        <location line="+10"/>
+        <source>Copied</source>
+        <translation>Kopiert</translation>
+    </message>
+    <message>
+        <location line="-9"/>
+        <source>Moved</source>
+        <translation>Verschoben</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Report</source>
+        <translation>Bericht</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Conflicts</source>
+        <translation>Konflikte</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Errors</source>
+        <translation>Fehler</translation>
+    </message>
+    <message>
+        <location line="+130"/>
         <source>No preview data to export.</source>
         <translation>Keine Vorschaudaten zum Exportieren.</translation>
     </message>
@@ -1326,7 +1362,7 @@ Wählen Sie einen anderen Namen.</translation>
     <message>
         <location line="+0"/>
         <source>Catalog created: </source>
-        <translation>Catalogue créé : </translation>
+        <translation>Catalogue créé&#xa0;: </translation>
     </message>
     <message>
         <location line="+2"/>
@@ -1631,7 +1667,7 @@ Möchten Sie ihn trotzdem speichern (der Katalog wäre leer)?</translation>
         <translation>LuckyBackup-Profil erstellen</translation>
     </message>
     <message>
-        <location line="+99"/>
+        <location line="+100"/>
         <source>Select Collection Folder</source>
         <translation>Sammlungsordner auswählen</translation>
     </message>
@@ -6152,7 +6188,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>OperationQueueView</name>
     <message>
-        <location filename="../qt_quick/OperationQueueView.qml" line="+93"/>
+        <location filename="../qt_quick/OperationQueueView.qml" line="+99"/>
         <source>Stop</source>
         <translation>Stoppen</translation>
     </message>
@@ -6194,7 +6230,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="vanished">synchronisiert</translation>
     </message>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+144"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+145"/>
         <source>Cancelled</source>
         <translation>Abgebrochen</translation>
     </message>
@@ -6225,12 +6261,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+605"/>
+        <location line="+614"/>
         <source>Errors: %1</source>
         <translation>Fehler: %1</translation>
     </message>
     <message>
-        <location line="-556"/>
+        <location line="-565"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
@@ -6242,35 +6278,35 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="-18"/>
-        <location line="+250"/>
+        <location line="+259"/>
         <source>Backup</source>
         <translation>Datensicherung</translation>
     </message>
     <message>
-        <location line="-249"/>
-        <location line="+249"/>
+        <location line="-258"/>
+        <location line="+258"/>
         <source>Archive</source>
         <translation>Archiv</translation>
     </message>
     <message>
-        <location line="-237"/>
+        <location line="-246"/>
         <source>Filter</source>
         <translation>Filter</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+252"/>
+        <location line="+261"/>
         <source>Source</source>
         <translation>Quelle</translation>
     </message>
     <message>
-        <location line="-251"/>
-        <location line="+302"/>
+        <location line="-260"/>
+        <location line="+311"/>
         <source>Target</source>
         <translation>Ziel</translation>
     </message>
     <message>
-        <location line="-281"/>
+        <location line="-290"/>
         <location line="+19"/>
         <source>Run listed links</source>
         <translation>Aufgelistete Links starten</translation>
@@ -6321,7 +6357,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>abgedeckt</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+19"/>
+        <source>Report</source>
+        <translation>Bericht</translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>No backup links</source>
         <translation>Keine Backup-Verknüpfungen</translation>
     </message>
@@ -6399,8 +6440,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Vertretung</translation>
     </message>
     <message>
-        <location line="-422"/>
-        <location line="+428"/>
+        <location line="-431"/>
+        <location line="+437"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
@@ -6610,17 +6651,17 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Backup-Vorschau</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+19"/>
         <source>Preview</source>
         <translation>Vorschau</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+20"/>
         <source>Export to CSV</source>
         <translation>Als CSV exportieren</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
@@ -6634,19 +6675,19 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Vorschau wird berechnet…</translation>
     </message>
     <message>
-        <location line="+34"/>
-        <location line="+180"/>
+        <location line="+35"/>
+        <location line="+182"/>
         <source>Move</source>
         <translation>Verschieben</translation>
     </message>
     <message>
-        <location line="-180"/>
-        <location line="+180"/>
+        <location line="-182"/>
+        <location line="+182"/>
         <source>Copy</source>
         <translation>Kopieren</translation>
     </message>
     <message>
-        <location line="-177"/>
+        <location line="-179"/>
         <source>file(s)</source>
         <translation>Datei(en)</translation>
     </message>
@@ -6681,7 +6722,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Wenig Zielspeicher – %1 nach dem Vorgang verbleibend</translation>
     </message>
     <message>
-        <location line="-110"/>
+        <location line="-119"/>
         <source>Status</source>
         <translation>Status</translation>
     </message>
@@ -6701,7 +6742,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Größe</translation>
     </message>
     <message>
-        <location line="+261"/>
+        <location line="+18"/>
+        <source>Report</source>
+        <translation>Bericht</translation>
+    </message>
+    <message>
+        <location line="+254"/>
         <source>Conflict</source>
         <translation>Konflikt</translation>
     </message>

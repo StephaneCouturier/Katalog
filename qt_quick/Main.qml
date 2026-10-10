@@ -2648,6 +2648,7 @@ Kirigami.ApplicationWindow {
             // only when the report is ready (BKP-F14/BKP-F16).
             onRequestPreviewMapping: (mappingId) => appManager1.startBackupPreview(mappingId)
             onRequestEditMapping: (mappingData) => root.showLayer(backupMappingFormComponent, { editMappingId: mappingData.mappingId, mappingData: mappingData })
+            onRequestReport: root.showLayer(backupPreviewFormComponent, { reportMode: true })
         }
 
         // Preview compare finished — open the Preview page now that the report is ready.

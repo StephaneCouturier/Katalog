@@ -68,6 +68,7 @@ ColumnLayout {
     signal requestAddMapping()
     signal requestPreviewMapping(int mappingId)
     signal requestEditMapping(var mappingData)
+    signal requestReport()   // BKP-F29
 
     function refresh() {
         var deviceId = appManager1.selectedDeviceId
@@ -328,7 +329,8 @@ ColumnLayout {
         Layout.topMargin:    Kirigami.Units.smallSpacing
         Layout.leftMargin:   Kirigami.Units.largeSpacing
         Layout.rightMargin:  Kirigami.Units.largeSpacing
-        visible:             root.totals.totalMappings !== undefined
+        // Only with something to say: without a device name the text is empty
+        visible:             root.totals.totalMappings !== undefined && !!root.totals.deviceName
         type:                Kirigami.MessageType.Information
         showCloseButton:     false
         text: {
@@ -356,6 +358,15 @@ ColumnLayout {
         showCloseButton:     true
         text:                root.lastReportSummary
         onVisibleChanged:    if (!visible) { root.lastReportSummary = ""; root.lastReportIsError = false }
+        // Per-file report of the last run (BKP-F29)
+        actions: [
+            Kirigami.Action {
+                text:        qsTr("Report")
+                icon.name:   "document-preview"
+                visible:     appManager1.backupReportAvailable
+                onTriggered: root.requestReport()
+            }
+        ]
     }
 
     // ─── No mappings placeholder ──────────────────────────────────────────────

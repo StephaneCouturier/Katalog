@@ -117,6 +117,7 @@ When there is no link yet, the page says so and *Add* creates the first one.
 * With *Update catalogs* ticked (recommended), both catalogs are updated **before** the comparison, so the backup works on current data. After a run that was not cancelled, the target is updated again (and the source too, for an archive), so the catalogs show the result.
 * While it runs, the card shows the progress, the file being copied, the speed and the time left (*ETA*). *Pause* suspends it after the current file, *Resume* continues, *Cancel* stops it: a file being copied is removed from the target, so no partial file is left.
 * At the end, a line at the top of the page gives the result: files copied or moved, archived & copied (*Rename oldest*), conflicts and errors. *Last backup* is updated on the card.
+* *Report*, on that line, opens the list of the files of the run, one row per file with its status (*Copied*, *Moved*, *Archived & Copied*, *Conflict*, *Error*), name, path and size, and the totals. It is the report of the last run (of the last link, after *Run listed links*); it is kept until the next run or until Katalog is closed.
 
 ### Run listed links {#run-listed}
 *Run listed links* runs **the links listed on the page**, one after another, so a set of backups can be started at once and left to finish.

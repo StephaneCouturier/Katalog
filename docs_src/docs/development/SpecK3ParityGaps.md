@@ -23,32 +23,6 @@ When a gap is ported, remove its entry here and add it to the K3 user page.
 
 ---
 
-## Create — end of creation: report, selection of the new catalog, Devices shown
-
-**Found:** 2026-10-07, while writing the K3 Create user page.
-**K2 user doc:** `Create.md`, *Create the catalog*.
-
-When a creation completes, K2:
-- shows a report dialog: *Catalog created:* name, *Path:*, *Number of files:*, *Total file
-  size:*, and when the parent storage was updated, *Storage updated:* name, path, *Used Space:*
-  / *Free Space:* with *(added:* deltas;
-- selects the new catalog (`selectedDevice->ID = reportDevice->ID`, Selection label set);
-- switches to the Devices tab.
-
-**K2 code:** `qt_widgets/mainwindow_tab_device_pr.cpp:1863-1905` (selection and tab) and
-`:3034-3060` (report). All strings are existing K2 `tr()` strings.
-
-**K3:** a passive notification *Catalog created successfully.* and a refresh of the device
-lists (`qt_quick/Main.qml`, `pageCreate` `onCatalogCreationCompleted`). No report, no
-selection change, the page stays on Create.
-
-**Requirements:** approved 2026-10-10 as `SpecOperationQueue.md` OPQ-F16 (report in the
-existing device update report dialog), OPQ-F17 (new catalog selected), OPQ-F18 (Devices page
-shown) and OPQ-C17 (no core change, no settings key, one new string `Catalog created: `), all
-`[Planned]`. Remove this entry once they are implemented.
-
----
-
 ## Create and Tags — file system tree to pick a folder
 
 **Found:** 2026-10-07 (Create page).
@@ -57,7 +31,7 @@ K2's Create tab has a file-system tree (`Create_treeView_Explorer`, `QFileSystem
 K2's Tags tab has the same tree (`Tags_treeview_Explorer`, `qt_widgets/mainwindow_tab_tags.cpp:90`)
 to fill the folder to tag.
 K3 offers typing and a folder dialog only (*Select the path* on Create, *Select a folder* on Tags).
-**To decide:** port, or accept the folder dialog as the K3 equivalent.
+**Decided:** accept the folder dialog as the K3 equivalent.
 
 ---
 
@@ -69,11 +43,13 @@ K2's Create tab has *Add Storage* (`on_Create_pushButton_AddStorage_clicked`,
 a storage can be added. K3's Create page has no such button; *Add Storage* exists on the
 Devices page toolbar.
 **K3 user doc:** `Create.md` points to *Add Storage* on the Devices page.
-**To decide:** port (open Devices, or create the storage and open Edit device), or accept.
+**Decided:** accept as is.
 
 ---
 
 ## Backup — per-file report after a run
+
+**Decided:** port, see SpecBackup.md BKP-F29 / BKP-C15 [Planned] (2026-10-10).
 
 **Found:** 2026-10-07, while writing the K3 Backup user page.
 **K2 user doc:** `BackUp.md`, *Report*.
