@@ -166,6 +166,16 @@ list. Approved by the user the same day. Rules use the `L` prefix.
 Folder is validated before tag name (top-to-bottom field order), then the duplicate check (T3). On success the
 Folder field is cleared and the Tag combo is reset.
 
+### Edit Device page (`PageDeviceEditForm.qml`)
+
+Every refused save is a blocking validation error: a `Kirigami.InlineMessage` (Warning) at the top of the form, with a close button, hidden when the name or path is edited. *(Fixed 2026-10-10: it was the modal `editValidationDialog`.)* The delete error stays a dialog: it reports an action, not a field.
+
+| # | Rule | Trigger | Message |
+|---|------|---------|---------|
+| E1 | A device needs a name. | Save with an empty Name | `Provide a name for this device.` |
+| E2 | Two catalogs cannot share a name. | Save with a catalog name already used | `There is already a catalog with this name: %1\nChoose a different name.` |
+| E3 | A catalog in the Physical group sits under a Storage device. | Save with another parent | `A Catalog in the Physical group can only be set under a Storage device.` |
+
 ### Create page (`PageCreateForm.qml`)
 
 | # | Rule | Trigger | Message |

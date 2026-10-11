@@ -316,6 +316,9 @@ public slots:
     Q_INVOKABLE bool         deleteBackupMapping(int mappingId);
     Q_INVOKABLE bool         invertBackupMapping(int mappingId);
     Q_INVOKABLE void         startBackupPreview(int mappingId);
+    // A link card's "Export to CSV": computes that link's preview, then exports it
+    // instead of opening the Preview page (BKP-F26)
+    Q_INVOKABLE void         exportBackupLinkToCsv(int mappingId);
     Q_INVOKABLE void         stopBackupPreview();
     Q_INVOKABLE QVariantMap  lastBackupPreviewSummary() const { return m_lastPreviewSummary; }
     bool                     backupReportAvailable() const { return !m_lastReportSummary.isEmpty(); }
@@ -725,6 +728,8 @@ private:
     // Links still waiting in a "Run listed links" sequence (SpecBackup.md BKP-C10).
     QList<int>              m_pendingBackupMappings;
     QList<BackupPreviewRow> m_lastPreviewRows;
+    bool                    m_exportAfterPreview = false;
+    void                    beginBackupPreview(int mappingId);
     QList<BackupPreviewRow> m_lastReportRows;          // BKP-F29, session only (BKP-C15)
     int                     m_lastReportFlaggedCount = 0; // trailing conflict + error rows
     QString                 m_lastReportSummary;

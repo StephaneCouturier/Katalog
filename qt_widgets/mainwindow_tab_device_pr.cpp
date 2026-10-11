@@ -748,7 +748,7 @@ void MainWindow::saveDeviceForm()
                        + tr("How should the catalog indexes be updated?"));
         msgBox.setIcon(QMessageBox::Question);
         QPushButton *btnReplace  = msgBox.addButton(tr("Replace path root"), QMessageBox::AcceptRole);
-        QPushButton *btnRescan   = msgBox.addButton(tr("Full re-scan"),        QMessageBox::AcceptRole);
+        QPushButton *btnRescan   = msgBox.addButton(tr("Full re-index"),        QMessageBox::AcceptRole);
         /*QPushButton *btnSkip =*/ msgBox.addButton(tr("Skip"),                QMessageBox::RejectRole);
         msgBox.exec();
 
@@ -2199,7 +2199,7 @@ void MainWindow::displayStoragePicture()
     QString pictureFileName = ui->Storage_comboBox_PicturePath->currentText();
     QString picturePath;
     if (pictureFileName.isEmpty())
-        picturePath = collection->imageFolderPath + "/" + QString::number(activeDevice->storage->ID) + ".jpg";
+        picturePath = collection->imageFolderPath + "/" + QString::number(activeDevice->storage->userID) + ".jpg"; // user Storage ID (STI-C8)
     else
         picturePath = collection->imageFolderPath + "/" + pictureFileName;
 

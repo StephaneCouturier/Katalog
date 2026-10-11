@@ -4954,7 +4954,20 @@ void AppManager::startBackupPreview(int mappingId)
 {
     if (m_backupPreviewRunning || m_catalogUpdateForBackupRunning)
         return;
-
+    m_exportAfterPreview = false;
+    beginBackupPreview(mappingId);
+}
+//----------------------------------------------------------------------
+void AppManager::exportBackupLinkToCsv(int mappingId)
+{
+    if (m_backupPreviewRunning || m_catalogUpdateForBackupRunning)
+        return;
+    m_exportAfterPreview = true;
+    beginBackupPreview(mappingId);
+}
+//----------------------------------------------------------------------
+void AppManager::beginBackupPreview(int mappingId)
+{
     if (updateBeforeBackup()) {
         m_previewAfterUpdateMappingId = mappingId;
         prepareCatalogsForMapping(mappingId);   // threaded update; chains to runPreviewCompare on completion
@@ -4996,6 +5009,13 @@ void AppManager::runPreviewCompare(int mappingId)
         m_backupPreviewStatusText.clear();
         emit backupPreviewRunningChanged();
         emit backupPreviewStatusChanged();
+        if (m_exportAfterPreview && success) {
+            // Export of this link's preview: report the file, no Preview page
+            m_exportAfterPreview = false;
+            const QString exported = exportLastBackupPreviewToCsv();
+            emit backupNotification(exported, !QFileInfo(exported).isAbsolute());
+            return;
+        }
         emit backupPreviewReady(mappingId, success, cancelled);
     };
 
@@ -5235,6 +5255,28 @@ void AppManager::executeBackupJob(int mappingId)
     const bool isArchive = (mapping.mappingType == QLatin1String("Archive"));
     m_backupIsArchive = isArchive;
 
+    // Space check at run time, as K2 (BKP-F8): insufficient blocks the run;
+    // low space already showed in the preview, so the run proceeds
+    const BackupSpaceCheck spaceCheck = evaluateBackupSpace(
+        Storage::availableSpace(targetDevice.path),
+        cmp.filesToCopy, cmp.fileConflicts, mapping.conflictMode);
+    if (spaceCheck.status == BackupSpaceStatus::Insufficient) {
+        setRunningBackupMappingId(-1);
+        emit backupNotification(
+            StatusBarMessageBuilder()
+                .setOperation(isArchive ? tr("Archive") : tr("Backup"))
+                .setStatus(tr("Cancelled"))
+                .build()
+            + QStringLiteral(" | \u26a0 ")
+            + tr("Insufficient disk space - Required: %1, Available: %2, Missing: %3")
+                  .arg(QLocale().formattedDataSize(spaceCheck.required))
+                  .arg(QLocale().formattedDataSize(spaceCheck.available))
+                  .arg(QLocale().formattedDataSize(spaceCheck.required - spaceCheck.available)),
+            true);
+        startNextListedBackup();
+        return;
+    }
+
     m_backupJob = new BackupJobStoppable();
     m_backupJob->setFiles(cmp.filesToCopy);
     m_backupJob->setConflictMode(mapping.conflictMode);
@@ -5450,7 +5492,8 @@ QString AppManager::exportLastBackupPreviewToCsv()
 {
     if (m_lastPreviewRows.isEmpty())
         return tr("No preview data to export.");
-    const QString filePath = BackupMappingManager::exportPreviewToCsv(m_lastPreviewRows, collection->folder);
+    // Browse folder: Hosted mode has no collection folder
+    const QString filePath = BackupMappingManager::exportPreviewToCsv(m_lastPreviewRows, getCollectionBrowsePath());
     if (filePath.isEmpty())
         return tr("Export failed.");
     return filePath;

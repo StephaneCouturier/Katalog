@@ -654,7 +654,7 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
     // Ask user for report choice
     QMessageBox msgBox;
     msgBox.setWindowTitle("Katalog");
-    msgBox.setText(tr("Do you want a the summary of updates for each catalog?"));
+    msgBox.setText(tr("Do you want the summary of updates for each catalog?"));
     msgBox.setIcon(QMessageBox::Question);
     msgBox.setStandardButtons(QMessageBox::Yes|QMessageBox::No | QMessageBox::Cancel);
     int result = msgBox.exec();

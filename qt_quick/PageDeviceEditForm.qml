@@ -34,7 +34,15 @@ ColumnLayout {
         saveCompleted()
     }
 
+    // Blocking validation error of a save, at the top of the form
+    // (SpecValidationRules; CLAUDE.md message presentation)
+    function showSaveError(message) {
+        saveErrorMessage.text = message
+        saveErrorMessage.visible = true
+    }
+
     function loadDevice() {
+        saveErrorMessage.visible = false
         var d = appManager1.getDeviceDetails(deviceId)
         deviceType    = d.type
         _groupId      = d.groupId
@@ -220,6 +228,15 @@ ColumnLayout {
     // refuse anything (STI-F5). Inline rather than a dialog or a passive notice:
     // it is a warning attached to a field the user can still correct.
     Kirigami.InlineMessage {
+        id: saveErrorMessage
+        Layout.fillWidth: true
+        Layout.margins: Kirigami.Units.gridUnit
+        type: Kirigami.MessageType.Warning
+        showCloseButton: true
+        visible: false
+    }
+
+    Kirigami.InlineMessage {
         id: storageUserIdWarning
         Layout.fillWidth: true
         Layout.margins: Kirigami.Units.gridUnit
@@ -259,6 +276,7 @@ ColumnLayout {
         Controls.TextField {
             id: edit_lineEdit_Name
             Layout.fillWidth: true
+            onTextEdited: saveErrorMessage.visible = false
         }
 
         Controls.Label { text: qsTr("Parent device"); opacity: root.deviceId === 1 ? 0.35 : 0.7 }
@@ -305,6 +323,7 @@ ColumnLayout {
             Controls.TextField {
                 id: edit_lineEdit_Path
                 Layout.fillWidth: true
+                onTextEdited: saveErrorMessage.visible = false
                 onEditingFinished: text = appManager1.normalizeSourcePath(text)
             }
             IconButton {
@@ -652,7 +671,10 @@ ColumnLayout {
                           ? root.storagePictureList[edit_comboBox_StoragePicture.currentIndex] : ""
                 if (sel !== "")
                     return appManager1.pathToFileUrl(folder + "/" + sel)
-                return appManager1.pathToFileUrl(folder + "/" + root.deviceId + ".jpg")
+                // No picture chosen: <user Storage ID>.jpg, as K2 (STI-C8)
+                var storageId = edit_lineEdit_StorageExtId.text.trim()
+                if (storageId === "") return ""
+                return appManager1.pathToFileUrl(folder + "/" + storageId + ".jpg")
             }
         }
 

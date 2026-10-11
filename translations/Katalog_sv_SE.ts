@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+182"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4674"/>
+        <location line="+4687"/>
         <source>Search</source>
         <translation>Sök</translation>
     </message>
     <message>
-        <location line="-4794"/>
+        <location line="-4807"/>
         <source>Stopped</source>
         <translation>Stoppad</translation>
     </message>
@@ -60,22 +60,22 @@
         <location line="+37"/>
         <location line="+9"/>
         <location line="+31"/>
-        <location line="+374"/>
+        <location line="+387"/>
         <source>In Progress</source>
         <translation>Pågår</translation>
     </message>
     <message>
-        <location line="-4675"/>
+        <location line="-4688"/>
         <location line="+4122"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
-        <location line="+678"/>
+        <location line="+720"/>
         <source>Completed</source>
         <translation>Slutförd</translation>
     </message>
     <message>
-        <location line="-4285"/>
+        <location line="-4327"/>
         <source>Empty database path provided</source>
         <translation>Tom databassökväg angiven</translation>
     </message>
@@ -499,12 +499,12 @@ Välj ett annat namn.</translation>
         <location line="+4"/>
         <location line="+30"/>
         <location line="+32"/>
-        <location line="+693"/>
+        <location line="+735"/>
         <source>Error</source>
         <translation>Fel</translation>
     </message>
     <message>
-        <location line="-858"/>
+        <location line="-900"/>
         <location line="+17"/>
         <location line="+29"/>
         <location line="+10"/>
@@ -519,12 +519,13 @@ Välj ett annat namn.</translation>
         <location line="+26"/>
         <location line="+17"/>
         <location line="+50"/>
-        <location line="+731"/>
+        <location line="+681"/>
+        <location line="+92"/>
         <source>Cancelled</source>
         <translation>Avbruten</translation>
     </message>
     <message>
-        <location line="-814"/>
+        <location line="-856"/>
         <location line="+10"/>
         <source>Loaded</source>
         <translation>Laddad</translation>
@@ -588,22 +589,22 @@ Välj ett annat namn.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+106"/>
         <location line="+2"/>
-        <location line="+399"/>
+        <location line="+421"/>
         <source>Link not found.</source>
         <translation>Länken hittades inte.</translation>
     </message>
     <message>
-        <location line="-386"/>
+        <location line="-408"/>
         <location line="+2"/>
         <location line="+162"/>
-        <location line="+234"/>
+        <location line="+256"/>
         <source>Both source and target must be Catalog devices.</source>
         <translation>Källa och mål måste vara katalogenheter.</translation>
     </message>
     <message>
-        <location line="-358"/>
+        <location line="-380"/>
         <location line="+7"/>
         <source>Move</source>
         <translation>Flytta</translation>
@@ -617,24 +618,39 @@ Välj ett annat namn.</translation>
     <message>
         <location line="+9"/>
         <location line="+7"/>
-        <location line="+229"/>
+        <location line="+251"/>
         <source>Conflict</source>
         <translation>Konflikt</translation>
     </message>
     <message>
-        <location line="-120"/>
-        <location line="+232"/>
+        <location line="-142"/>
+        <location line="+254"/>
         <source>Source not available: %1</source>
         <translation>Källa inte tillgänglig: %1</translation>
     </message>
     <message>
-        <location line="-227"/>
-        <location line="+231"/>
+        <location line="-249"/>
+        <location line="+253"/>
         <source>Target not available: %1</source>
         <translation>Mål inte tillgängligt: %1</translation>
     </message>
     <message>
-        <location line="-124"/>
+        <location line="-203"/>
+        <source>Archive</source>
+        <translation>Arkiv</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Backup</source>
+        <translation>Säkerhetskopia</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Insufficient disk space - Required: %1, Available: %2, Missing: %3</source>
+        <translation>Otillräckligt diskutrymme - Krävs: %1, Tillgängligt: %2, Saknas: %3</translation>
+    </message>
+    <message>
+        <location line="+75"/>
         <source>Archived</source>
         <translation>Arkiverad</translation>
     </message>
@@ -671,7 +687,7 @@ Välj ett annat namn.</translation>
         <translation>Inga förhandsgranskningsdata att exportera.</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Export failed.</source>
         <translation>Exporten misslyckades.</translation>
     </message>
@@ -1050,7 +1066,7 @@ Välj ett annat namn.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+1360"/>
+        <location filename="../qt_quick/Main.qml" line="+1363"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Vill du &lt;b&gt;ta bort&lt;/b&gt; den här %1-enheten?&lt;br/&gt;&lt;br/&gt;Namn: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -1068,14 +1084,14 @@ Välj ett annat namn.</translation>
         <location line="-444"/>
         <location line="+60"/>
         <location line="+239"/>
-        <location line="+841"/>
+        <location line="+840"/>
         <location line="+125"/>
         <source>Cancel</source>
         <translation>Avbryt</translation>
     </message>
     <message>
-        <location line="-1365"/>
-        <location line="+65"/>
+        <location line="-1367"/>
+        <location line="+68"/>
         <location line="+69"/>
         <location line="+172"/>
         <location line="+206"/>
@@ -1083,23 +1099,22 @@ Välj ett annat namn.</translation>
         <translation>OK</translation>
     </message>
     <message>
-        <location line="-490"/>
-        <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these in the tab %3.</source>
-        <translation>&lt;br/&gt;&lt;b&gt;Välkommen till Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Det verkar som detta är första körningen.&lt;br/&gt;&lt;br/&gt;Följande inställningar har tillämpats:&lt;br/&gt; - Språk: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Tema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Du kan ändra dessa i fliken %3.</translation>
+        <location line="-493"/>
+        <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these on the %3 page.</source>
+        <translation>&lt;br/&gt;&lt;b&gt;Välkommen till Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Det verkar som detta är första körningen.&lt;br/&gt;&lt;br/&gt;Följande inställningar har tillämpats:&lt;br/&gt; - Språk: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Tema: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Du kan ändra dessa på sidan %3.</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>System</source>
-        <translation>System</translation>
+        <translation type="vanished">System</translation>
     </message>
     <message>
-        <location line="-250"/>
-        <location line="+251"/>
+        <location line="-248"/>
+        <location line="+254"/>
         <source>Settings</source>
         <translation>Inställningar</translation>
     </message>
     <message>
-        <location line="-410"/>
+        <location line="-413"/>
         <source>Open...</source>
         <translation>Öppna...</translation>
     </message>
@@ -1131,42 +1146,42 @@ Välj ett annat namn.</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+863"/>
+        <location line="+866"/>
         <source>Selection</source>
         <translation>Urval</translation>
     </message>
     <message>
-        <location line="-853"/>
-        <location line="+1218"/>
+        <location line="-856"/>
+        <location line="+1221"/>
         <source>Devices</source>
         <translation>Enheter</translation>
     </message>
     <message>
-        <location line="-1213"/>
-        <location line="+1310"/>
+        <location line="-1216"/>
+        <location line="+1313"/>
         <source>Explore</source>
         <translation>Utforska</translation>
     </message>
     <message>
-        <location line="-1300"/>
-        <location line="+1547"/>
+        <location line="-1303"/>
+        <location line="+1549"/>
         <source>Backup</source>
         <translation>Säkerhetskopia</translation>
     </message>
     <message>
-        <location line="-1542"/>
-        <location line="+1499"/>
+        <location line="-1544"/>
+        <location line="+1501"/>
         <source>Statistics</source>
         <translation>Statistik</translation>
     </message>
     <message>
-        <location line="-1494"/>
-        <location line="+1516"/>
+        <location line="-1496"/>
+        <location line="+1518"/>
         <source>Tags</source>
         <translation>Taggar</translation>
     </message>
     <message>
-        <location line="-1503"/>
+        <location line="-1505"/>
         <source>Documentation</source>
         <translation>Dokumentation</translation>
     </message>
@@ -1218,7 +1233,22 @@ Välj ett annat namn.</translation>
         <translation>Visa inte igen</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+29"/>
+        <source>Katalog Colors</source>
+        <translation>Katalog-färger</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Desktop Theme (gray)</source>
+        <translation>Skrivbordstema (grå)</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Desktop Theme</source>
+        <translation>Skrivbordstema</translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Open existing...</source>
         <translation>Öppna befintlig...</translation>
     </message>
@@ -1351,7 +1381,7 @@ Välj ett annat namn.</translation>
     </message>
     <message>
         <location line="+57"/>
-        <source>Do you want a the summary of updates for each catalog?</source>
+        <source>Do you want the summary of updates for each catalog?</source>
         <translation>Vill du ha sammanfattningen av uppdateringar för varje katalog?</translation>
     </message>
     <message>
@@ -1469,8 +1499,8 @@ Detta kan betyda att källan är tom eller att enheten inte är monterad till de
 Vill du spara den ändå (katalogen blir tom)?</translation>
     </message>
     <message>
-        <location line="-801"/>
-        <location line="+1053"/>
+        <location line="-804"/>
+        <location line="+1056"/>
         <location line="+48"/>
         <source>Search</source>
         <translation>Sök</translation>
@@ -1514,14 +1544,14 @@ Vill du spara den ändå (katalogen blir tom)?</translation>
         <location line="+109"/>
         <location line="+39"/>
         <location line="+99"/>
-        <location line="+105"/>
+        <location line="+104"/>
         <location line="+20"/>
         <location line="+42"/>
         <source>Close</source>
         <translation>Stäng</translation>
     </message>
     <message>
-        <location line="-1365"/>
+        <location line="-1367"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1530,7 +1560,7 @@ Vill du spara den ändå (katalogen blir tom)?</translation>
 </translation>
     </message>
     <message>
-        <location line="+602"/>
+        <location line="+605"/>
         <source>Copy version and system information</source>
         <translation>Kopiera versions- och systeminformation</translation>
     </message>
@@ -1613,8 +1643,8 @@ Vill du spara den ändå (katalogen blir tom)?</translation>
         <translation>Det gick inte att skapa katalogen: </translation>
     </message>
     <message>
-        <location line="-1380"/>
-        <location line="+1364"/>
+        <location line="-1383"/>
+        <location line="+1367"/>
         <location line="+32"/>
         <source>Create</source>
         <translation>Skapa</translation>
@@ -1625,7 +1655,7 @@ Vill du spara den ändå (katalogen blir tom)?</translation>
         <translation>Redigera enhet</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+8"/>
         <source>Save changes to the catalog definition?
 
 %1
@@ -4114,12 +4144,11 @@ Delning utfördes inte.</translation>
         <translation>Ersätt sökvägrot</translation>
     </message>
     <message>
-        <location line="-1657"/>
         <source>Full re-scan</source>
-        <translation>Fullständig omskanning</translation>
+        <translation type="vanished">Fullständig omskanning</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="-1591"/>
         <source>Another storage already uses this ID.</source>
         <translation>En annan lagring använder redan detta ID.</translation>
     </message>
@@ -4249,7 +4278,8 @@ Delning utfördes inte.</translation>
         <translation>Katalogens källsökväg har ändrats.</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="-1650"/>
+        <location line="+1658"/>
         <source>Full re-index</source>
         <translation>Fullständig omindexering</translation>
     </message>
@@ -4371,7 +4401,7 @@ Delning utfördes inte.</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+57"/>
-        <source>Do you want a the summary of updates for each catalog?</source>
+        <source>Do you want the summary of updates for each catalog?</source>
         <translation>Vill du ha sammanfattningen av uppdateringar för varje katalog?</translation>
     </message>
     <message>
@@ -6261,12 +6291,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+614"/>
+        <location line="+615"/>
         <source>Errors: %1</source>
         <translation>Fel: %1</translation>
     </message>
     <message>
-        <location line="-565"/>
+        <location line="-566"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
@@ -6278,35 +6308,35 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="-18"/>
-        <location line="+259"/>
+        <location line="+260"/>
         <source>Backup</source>
         <translation>Säkerhetskopia</translation>
     </message>
     <message>
-        <location line="-258"/>
-        <location line="+258"/>
+        <location line="-259"/>
+        <location line="+259"/>
         <source>Archive</source>
         <translation>Arkiv</translation>
     </message>
     <message>
-        <location line="-246"/>
+        <location line="-247"/>
         <source>Filter</source>
         <translation>Filter</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+261"/>
+        <location line="+262"/>
         <source>Source</source>
         <translation>Källa</translation>
     </message>
     <message>
-        <location line="-260"/>
-        <location line="+311"/>
+        <location line="-261"/>
+        <location line="+312"/>
         <source>Target</source>
         <translation>Mål</translation>
     </message>
     <message>
-        <location line="-290"/>
+        <location line="-291"/>
         <location line="+19"/>
         <source>Run listed links</source>
         <translation>Kör listade länkar</translation>
@@ -6342,7 +6372,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>%1 listad länk(ar) hoppas över: källa eller mål inte tillgänglig.</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+22"/>
         <source>link(s)</source>
         <translation>länk(ar)</translation>
     </message>
@@ -6440,8 +6470,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Återuppta</translation>
     </message>
     <message>
-        <location line="-431"/>
-        <location line="+437"/>
+        <location line="-432"/>
+        <location line="+438"/>
         <source>Cancel</source>
         <translation>Avbryt</translation>
     </message>
@@ -6501,7 +6531,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Exportera till CSV</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+7"/>
         <source>Delete</source>
         <translation>Ta bort</translation>
     </message>
@@ -6980,7 +7010,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDeviceEditForm</name>
     <message>
-        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+109"/>
+        <location filename="../qt_quick/PageDeviceEditForm.qml" line="+117"/>
         <source>Provide a name for this device.</source>
         <translation>Ange ett namn för den här enheten.</translation>
     </message>
@@ -6995,7 +7025,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Uteslutna mappar eller filer har ändrats</translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="+99"/>
         <source>Another storage already uses this ID.</source>
         <translation>En annan lagring använder redan detta ID.</translation>
     </message>
@@ -7006,17 +7036,17 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+4"/>
-        <location line="+264"/>
+        <location line="+266"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
     <message>
-        <location line="-261"/>
+        <location line="-263"/>
         <source>Name</source>
         <translation>Namn</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Parent device</source>
         <translation>Överordnad enhet</translation>
     </message>
@@ -7036,7 +7066,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Källsökväg</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <location line="+136"/>
         <source>Select the path</source>
         <translation>Välj sökvägen</translation>

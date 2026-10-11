@@ -55,13 +55,13 @@ New path:  /mnt/drive01
 
 How should the catalog indexes be updated?
 
-[ Replace path root ]   [ Full re-scan ]   [ Skip ]
+[ Replace path root ]   [ Full re-index ]   [ Skip ]
 ```
 
 | Choice | Behaviour |
 |--------|-----------|
 | **Replace path root** | The prefix replacement specified below |
-| **Full re-scan** | The existing device update, unchanged |
+| **Full re-index** | The existing device update, unchanged |
 | **Skip** | The save completes; the indexes are knowingly left stale |
 
 ---
@@ -78,9 +78,9 @@ How should the catalog indexes be updated?
 
 | ID | Requirement | Status |
 |----|-------------|--------|
-| DSR-F1 | Saving a **Storage** device whose path changed, when the previous path was not empty, asks how the catalog indexes should be updated and offers exactly three buttons: *Replace path root*, *Full re-scan*, *Skip*. | [Implemented] |
+| DSR-F1 | Saving a **Storage** device whose path changed, when the previous path was not empty, asks how the catalog indexes should be updated and offers exactly three buttons: *Replace path root*, *Full re-index*, *Skip*. *(Amended 2026-10-10 by the maintainer: "Full re-index for all", the Storage dialog uses the Catalog dialog's label, in K2 and K3; "Full re-scan" is retired.)* | [Implemented] |
 | DSR-F2 | *Replace path root* on a Storage device replaces the old root with the new one at the start of `device.device_path` for every Catalog device below it, and of `file.file_full_path`, `file.file_folder_path` and `folder.folder_path` in those catalogs. `device.device_path` is the only path of a catalog (`SpecStorageIdentity.md` `STI-C19`). | [Implemented] |
-| DSR-F3 | Saving a **Catalog** device whose source path changed offers the same three buttons, and *Replace path root* rewrites that one catalog's own `file` and `folder` rows. (The Catalog dialog labels the middle button *Full re-index*, not *Full re-scan* — see User-visible text.) | [Implemented] |
+| DSR-F3 | Saving a **Catalog** device whose source path changed offers the same three buttons, and *Replace path root* rewrites that one catalog's own `file` and `folder` rows. (Both dialogs label the middle button *Full re-index*, `DSR-F1`.) | [Implemented] |
 | DSR-F4 | A catalog whose device path (`device.device_path`) does not start with the old root is skipped: none of its rows are touched and it is not included in the catalog count reported by DSR-F7. | [Implemented] |
 | DSR-F5 | In Memory mode the `file` and `folder` tables are empty until loaded, so the replacement calls `loadCatalogFileListToTable()` and `loadFoldersToTable()` first, and `saveCatalogToFile()` afterwards to write the corrected rows back to `.idx` and `.folders.idx`. Without the write-back the repair is lost on restart. | [Implemented] |
 | DSR-F6 | The replacement runs with the drive unplugged. It reads and writes the collection only — it never opens the device's own files. | [Implemented] |
@@ -151,7 +151,7 @@ Reused verbatim from existing K2 strings — no new translation slots:
 | `Old path:` / `New path:` | the two path lines of the dialog |
 | `How should the catalog indexes be updated?` | closing question of the dialog |
 | `Replace path root` / `Skip` | two of the three choices |
-| `Full re-scan` / `Full re-index` | the third choice. **The two dialogs do not agree**: the Storage dialog says *Full re-scan* and the Catalog dialog says *Full re-index*. Both are existing strings; unifying them would retire one across every language and needs its own decision. Recorded here rather than silently corrected |
+| `Full re-index` | the middle choice, in both dialogs. Unified on 2026-10-10 (maintainer decision, `DSR-F1`): the Storage dialog's former *Full re-scan* is retired in K2 and K3 |
 | `Update` / `Completed` | operation and status fields of the completion message |
 | `Folders found` | result field of the completion message |
 

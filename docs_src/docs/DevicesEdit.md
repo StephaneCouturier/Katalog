@@ -90,7 +90,8 @@ A picture helps to recognise a drive. To add one:
 2. Choose it in the *Picture* list. The refresh button beside the list (*Reload pictures*) reads the folder again after adding a file.
 3. *Save*.
 
-The chosen picture is shown below the list.
+The chosen picture is shown below the list.<br/>
+When no picture is chosen, Katalog shows the file named after the **Storage ID**, if it exists in the images folder: for example `12.jpg` for Storage ID 12. Naming a picture after the number written on the drive is enough for it to be shown, without choosing it in the list. The same name works in Katalog 2.
 
 ## Development
 * See the backlog of [Devices development](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=devices).

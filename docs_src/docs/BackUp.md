@@ -61,7 +61,7 @@ These renamed files stay on the target and take space: they are cleaned up manua
 | **Archive, another file system** | All files to move. | Space freed after each file is deleted. |
 | ***Rename oldest*** **conflicts** | The renamed files are kept: one more copy each. | None. |
 
-The [preview](#preview) checks the space available on the target and warns when it is insufficient or low (less than 512 MB left after the operation). When the space of the target cannot be read (network or virtual drives), there is no check.
+The [preview](#preview) checks the space available on the target and warns when it is insufficient or low (less than 512 MB left after the operation). A run is checked again before it starts: with insufficient space it is refused, and the message gives the space required, available and missing. When the space of the target cannot be read (network or virtual drives), there is no check.
 
 ## List of links {#links}
 The page lists the links as cards.
@@ -107,7 +107,7 @@ When there is no link yet, the page says so and *Add* creates the first one.
 * a summary: files to copy or move, conflicts, files already in the target, and a warning when the source or the target is offline,
 * the [space check](#space) of the target,
 * the list of files, with their *Status* (*Copy*, *Move* or *Conflict*), *File Name*, *Path* and *Size*,
-* *Export to CSV* saves the list in the collection folder, and shows the file path.
+* *Export to CSV* saves the list in the collection folder (the home folder in *Hosted* mode), and shows the file path.
 
 ![Backup preview: summary, space check and list of files](/img/backup_03_preview.png)
 
@@ -135,7 +135,7 @@ When there is no link yet, the page says so and *Add* creates the first one.
 | *Duplicate* | Creates a new link with the same settings, to adapt it. |
 | *Replicate directories* | Creates the folder structure of the source on the target, without the files. The result gives the folders created, already existing, and errors. |
 | *Invert (swap source and target)* | Swaps the source and the target, for example to restore. When the name contains an arrow, its two halves are swapped too. |
-| *Export to CSV* | Saves the list of files of the last preview in a CSV file in the collection folder. |
+| *Export to CSV* | Computes the preview of this link, then saves its list of files in a CSV file in the collection folder (the home folder in *Hosted* mode), and shows the file path. |
 | *Delete* | Deletes the link, after confirmation. No file is touched, on the source or the target. |
 
 ### LuckyBackup profile {#luckybackup}

@@ -778,10 +778,8 @@ ColumnLayout {
                             Controls.MenuItem {
                                 text: qsTr("Export to CSV")
                                 icon.name: "document-export"
-                                onTriggered: {
-                                    var path = appManager1.exportLastBackupPreviewToCsv()
-                                    root.lastReportSummary = path
-                                }
+                                // This link's preview, computed then exported (BKP-F26)
+                                onTriggered: appManager1.exportBackupLinkToCsv(modelData.mappingId)
                             }
                             Controls.MenuSeparator {}
                             Controls.MenuItem {

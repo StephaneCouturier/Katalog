@@ -1289,9 +1289,12 @@ Kirigami.ApplicationWindow {
             width: firstRunWelcomeDialog.availableWidth
             wrapMode: Text.WordWrap
             textFormat: Text.RichText
-            text: qsTr("<br/><b>Welcome to Katalog!</b><br/><br/>It seems this is the first run.<br/><br/>The following Settings have been applied:<br/> - Language: <b>%1</b><br/> - Theme: <b>%2</b><br/><br/>You can change these in the tab %3.")
+            text: qsTr("<br/><b>Welcome to Katalog!</b><br/><br/>It seems this is the first run.<br/><br/>The following Settings have been applied:<br/> - Language: <b>%1</b><br/> - Theme: <b>%2</b><br/><br/>You can change these on the %3 page.")
                       .arg(Qt.locale().name)
-                      .arg(qsTr("System"))
+                      // The theme actually applied, by its Settings name
+                      .arg(appManager1.themeId === 1 ? qsTr("Katalog Colors")
+                           : appManager1.themeId === 2 ? qsTr("Desktop Theme (gray)")
+                           : qsTr("Desktop Theme"))
                       .arg(qsTr("Settings"))
         }
         footer: Controls.DialogButtonBox {
@@ -1652,7 +1655,7 @@ Kirigami.ApplicationWindow {
         width: Math.min(440, root.width - Kirigami.Units.largeSpacing * 4)
         contentItem: Controls.Label {
             wrapMode: Text.WordWrap
-            text: qsTr("Do you want a the summary of updates for each catalog?")
+            text: qsTr("Do you want the summary of updates for each catalog?")
         }
         footer: Controls.DialogButtonBox {
             Controls.Button {
@@ -2455,8 +2458,7 @@ Kirigami.ApplicationWindow {
         Connections {
             target: pageDeviceEdit_form
             function onSaveError(message) {
-                editValidationDialog.message = message
-                editValidationDialog.open()
+                pageDeviceEdit_form.showSaveError(message)
             }
             function onCatalogConfirmNeeded(message, rescanNeeded, pathChanged) {
                 editCatalogConfirmLabel.text = qsTr("Save changes to the catalog definition?\n\n%1\n\n(The catalog must be updated to reflect these changes)").arg(message)

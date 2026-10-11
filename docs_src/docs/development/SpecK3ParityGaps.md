@@ -31,7 +31,7 @@ K2's Create tab has a file-system tree (`Create_treeView_Explorer`, `QFileSystem
 K2's Tags tab has the same tree (`Tags_treeview_Explorer`, `qt_widgets/mainwindow_tab_tags.cpp:90`)
 to fill the folder to tag.
 K3 offers typing and a folder dialog only (*Select the path* on Create, *Select a folder* on Tags).
-**Decided:** accept the folder dialog as the K3 equivalent.
+**Decided:** accepted the folder dialog as the K3 equivalent.
 
 ---
 
@@ -43,24 +43,9 @@ K2's Create tab has *Add Storage* (`on_Create_pushButton_AddStorage_clicked`,
 a storage can be added. K3's Create page has no such button; *Add Storage* exists on the
 Devices page toolbar.
 **K3 user doc:** `Create.md` points to *Add Storage* on the Devices page.
-**Decided:** accept as is.
+**Decided:** accepted as is.
 
 ---
-
-## Backup — per-file report after a run
-
-**Decided:** port, see SpecBackup.md BKP-F29 / BKP-C15 [Planned] (2026-10-10).
-
-**Found:** 2026-10-07, while writing the K3 Backup user page.
-**K2 user doc:** `BackUp.md`, *Report*.
-After a run, K2 replaces the preview table with a backup report: one row per file with
-*Status* (*Copied*, *Moved*, *Archived & Copied*, *Conflict*, *Error*), *File name*, *Path*,
-*Size*, and a totals line.
-**K2 code:** `qt_widgets/mainwindow_tab_backup.cpp` (report after execution).
-**K3:** only a one-line summary at the top of the Backup page (`qt_quick/PageBackupForm.qml`,
-`onBackupFinished`): copied/moved, archived & copied, conflicts, errors. The files in conflict
-or in error cannot be listed.
-**K3 user doc:** `BackUp.md` (K3) describes the summary line only.
 
 ---
 
@@ -71,85 +56,4 @@ gaps: K3 has the feature, but something in it differs from the spec, from K2 or 
 the K3 message rules. Each one goes through the specifications gate before it is fixed.
 When one is fixed, remove its entry here.
 
-## Devices — storage path-change dialog: "Full re-index" instead of "Full re-scan"
-
-**Found:** 2026-10-07 (Edit device page).
-`SpecDeviceStorageRoot.md` `DSR-F1` requires the **Storage** dialog to offer *Replace path
-root*, *Full re-scan*, *Skip*; `DSR-F3` gives *Full re-index* to the **Catalog** dialog
-only. K3 uses one dialog for both (`qt_quick/Main.qml`, `editStoragePathDialog`, button
-`editPathRescanBtn`) and always shows *Full re-index*.
-**User doc:** `DevicesEdit.md` documents *Full re-index* (what K3 shows today); update it if
-the label changes.
-
-## Devices — storage picture fallback keyed on the device ID
-
-**Found:** 2026-10-07 (Edit device page).
-When no picture is chosen, K3 shows `<images folder>/<deviceId>.jpg`
-(`qt_quick/PageDeviceEditForm.qml`, `Image.source`). K2 uses the storage's internal ID
-(`qt_widgets/mainwindow_tab_device_pr.cpp:2202`, `activeDevice->storage->ID`), and
-`SpecStorageIdentity.md` `STI-C8` keys the filename on the internal `storage_id`. The device
-ID and the storage ID are different numbers, so a picture named for K2 is not found by K3.
-**User doc:** `DevicesEdit.md` does not describe the fallback until this is settled.
-
-## Devices — Edit Device: name validation shown in a modal dialog
-
-**Found:** 2026-10-07 (Edit device page).
-Saving with an empty name shows *"Provide a name for this device."* through
-`editValidationDialog`, a modal dialog (`qt_quick/Main.qml`, `pageDeviceEdit`
-`onSaveError`). CLAUDE.md and `SpecValidationRules.md` require a blocking form-validation
-error to be a `Kirigami.InlineMessage` (Warning) at the top of the form, hidden again when
-the field is edited. Check the other `saveError` messages of the form at the same time.
-
-## Devices — typo in the "All active" question
-
-**Found:** 2026-10-07 (Devices page).
-The *All active* dialog (`qt_quick/Main.qml`, `devUpdateAllDialog`) reads
-*"Do you want a the summary of updates for each catalog?"* — "a the". Fixing it changes a
-translated string (all 30 languages; check whether K2 uses the same source text) and needs
-per-string approval.
-**User doc:** `Devices.md` describes the question without quoting it.
-
-## Backup — no target space check when a link is run
-
-**Found:** 2026-10-07 (Backup page).
-`SpecBackup.md` `BKP-F8` ([Implemented]): before transfer, the run is **blocked** when target
-space is insufficient and **warns** when it is low. K2 does it at run time
-(`qt_widgets/mainwindow_tab_backup.cpp:999-1010`). In K3 the space status is computed only for
-the preview (`AppManager::startBackupPreview` → `spaceStatus`); `AppManager::runBackup` and
-*Run listed links* start without any space check.
-**User doc:** `BackUp.md` (K3) says the preview checks the space; it does not claim a check at run.
-
-## Backup — "Export to CSV" in a link's menu exports the last preview, of any link
-
-**Found:** 2026-10-07 (Backup page).
-*More actions* → *Export to CSV* on a card calls `appManager1.exportLastBackupPreviewToCsv()`
-(`qt_quick/PageBackupForm.qml`), which writes `m_lastPreviewRows`: the last preview computed,
-whichever link it was for, or nothing if no preview ran in this session. The entry sits on a
-specific link, so a user expects that link's data. The Preview page has its own *Export to CSV*,
-which is unambiguous.
-**To decide:** remove the menu entry, disable it unless the last preview is this link's, or
-compute this link's preview on demand.
-**User doc:** `BackUp.md` (K3) states that it exports the last preview.
-
-## First run — welcome message says "tab"
-
-**Found:** 2026-10-07 (tutorial page).
-The K3 welcome dialog (`qt_quick/Main.qml`, `firstRunWelcomeDialog`) ends with *"You can change
-these in the tab %3."*, where %3 is *Settings*. K3 has pages, not tabs. The sentence is the K2
-`tr()` string reused verbatim; changing it costs a translation slot and needs per-string approval.
-It also names the theme *System*, which is not one of the K3 theme names (*Desktop Theme*,
-*Desktop Theme (gray)*, *Katalog Colors*).
-**User doc:** `tutorial.md` describes the message without quoting it.
-
-## Settings — Hosted: devices missing in Selection after *Connect*
-
-**Found:** 2026-10-10 (Settings page, maintainer test).
-After connecting to a hosted database with *Connect* on the Settings page, the Selection page
-showed no devices. After restarting K3 on the same hosted collection, the devices were listed.
-Not reproduced or analysed yet. *Connect* calls `AppManager::openCollectionHosted()`, which goes
-through the same `reconnectToDatabase()` → `refreshAllUI()` → `refreshDeviceList()` path as
-opening a File or Memory collection, so the difference is not visible in the code alone.
-**To collect:** the mode of the collection open before *Connect*, whether the hosted database was
-new or empty, and the console output after *Connect*. A private MariaDB instance in the
-scratchpad is an option to reproduce it without the maintainer's server.
-**User doc:** none; `Settings.md` (K3) says the collection opens directly.
+*All review items were fixed on 2026-10-10 (see `SpecDeviceStorageRoot` DSR-F1, `SpecStorageIdentity` STI-C8, `SpecValidationRules` Edit Device, `SpecBackup` BKP-F8/F26). The Hosted "devices missing after Connect" report is logged in the GitHub backlog.*
