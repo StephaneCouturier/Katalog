@@ -1214,7 +1214,7 @@ Kirigami.ApplicationWindow {
 
     Controls.Dialog {
         id: alphaWarningDialog
-        title: "Katalog 3 - Beta2 Version"
+        title: "Katalog 3 - Beta3 Version"
         modal: true
         anchors.centerIn: parent
         width: Math.min(520, parent.width - Kirigami.Units.largeSpacing * 4)
@@ -1873,8 +1873,6 @@ Kirigami.ApplicationWindow {
         Connections {
             target: appManager1
             function onSelectedDeviceChanged(deviceId) {
-                console.log("QML received selectedDeviceChanged signal for device ID:", deviceId)
-
                 // Force refresh of the selection list view to update visual states
                 if (selectionListView1 && selectionListView1.model) {
                     // Trigger a visual update of all delegates

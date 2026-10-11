@@ -2069,8 +2069,6 @@ void AppManager::selectDeviceById(int deviceId)
         settings.setValue("Selection/SelectedDeviceID", deviceId);
 
         emit selectedDeviceChanged(deviceId);
-
-        qDebug() << "Selected device changed to ID:" << deviceId << "Name:" << selectedDevice->name;
     }
 }
 //----------------------------------------------------------------------

@@ -168,7 +168,9 @@ int main(int argc, char *argv[])
         "(c) 2020-2026");
 
     aboutData.setDesktopFileName(QStringLiteral("io.github.stephanecouturier.Katalog")); //Temporary, to hide the KDE GetInvolved Donation links
-    aboutData.setBugAddress(""); //Temporary, to hide the KDE Bug link
+    // Kirigami 6.30 AboutItem lacks a return after opening a custom bugAddress,
+    // so bugs.kde.org also opens until that is fixed upstream.
+    aboutData.setBugAddress("https://github.com/StephaneCouturier/Katalog/issues");
     aboutData.addAuthor(
         "Stéphane Couturier",
         QCoreApplication::translate("Main", "Founder & Main Developer"),

@@ -999,8 +999,7 @@ ScrollablePageFitted {
                         id: releaseNotesButton
                         text: qsTr("Release Notes")
                         icon.name: "view-list-text"
-                        //onClicked: Qt.openUrlExternally("https://github.com/StephaneCouturier/Katalog/releases")
-                        onClicked: Qt.openUrlExternally("https://stephanecouturier.github.io/Katalog/docs/Development-Roadmap#katalog-3")
+                        onClicked: Qt.openUrlExternally("https://github.com/StephaneCouturier/Katalog/releases")
                     }
                 }
                 Controls.CheckBox {
