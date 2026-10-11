@@ -586,7 +586,7 @@ Choose a different name.</source>
     <message>
         <location line="+22"/>
         <source>Failed to update link.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неуспешно обновяване на връзката.</translation>
     </message>
     <message>
         <location line="+106"/>
@@ -2029,17 +2029,17 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location filename="../core/catalogjobstoppable.cpp" line="+270"/>
         <source>The file list is saved. Metadata and checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Списъкът с файлове е запазен. Сканирането на метаданните и контролните суми не е завършено и ще продължи при обновяване на каталога.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Metadata scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Списъкът с файлове е запазен. Сканирането на метаданните не е завършено и ще продължи при обновяване на каталога.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Списъкът с файлове е запазен. Сканирането на контролните суми не е завършено и ще продължи при обновяване на каталога.</translation>
     </message>
     <message>
         <location line="+1156"/>
@@ -5882,27 +5882,27 @@ to the trash?</source>
     <message>
         <location line="+47"/>
         <source>Matched</source>
-        <translation type="unfinished"></translation>
+        <translation>Съвпадащи</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Mismatched</source>
-        <translation type="unfinished"></translation>
+        <translation>Несъвпадащи</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Calculated</source>
-        <translation type="unfinished"></translation>
+        <translation>Изчислени</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Updated</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновени</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Skipped</source>
-        <translation type="unfinished"></translation>
+        <translation>Пропуснати</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -6163,7 +6163,7 @@ to the trash?</source>
     <message>
         <location filename="../core/storage.cpp" line="+255"/>
         <source>No Path was provided for the Storage: %1. Edit the device to provide one and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не е зададен път за съхранението: %1. Редактирайте устройството, за да зададете път, и опитайте отново.</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -6172,14 +6172,20 @@ to the trash?</source>
 The source folder does not contain any file: &apos;%2&apos;
 
 This could mean that the device is not mounted to this folder, or the folder is simply empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>Съхранение: &apos;%1&apos;
+
+Изходната папка не съдържа файлове: &apos;%2&apos;
+
+Това може да означава, че устройството не е монтирано в тази папка или папката просто е празна.</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Katalog could not get values.
 
 Check that the source folder (%1) is correct, or that the device is mounted to the source folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalog не можа да получи стойностите.
+
+Проверете дали изходната папка (%1) е правилна или дали устройството е монтирано в изходната папка.</translation>
     </message>
 </context>
 <context>
@@ -8864,32 +8870,32 @@ Errors: %3</source>
     <message>
         <location line="-562"/>
         <source>Storage devices linked to a missing storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Устройства за съхранение, свързани с липсващо съхранение</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>Съхранения, които не са свързани с устройство</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage IDs used by more than one storage</source>
-        <translation type="unfinished"></translation>
+        <translation>ID на съхранението, използвани от повече от едно съхранение</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalog devices linked to a missing catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Устройства каталог, свързани с липсващ каталог</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalogs not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>Каталози, които не са свързани с устройство</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Devices with a missing parent device</source>
-        <translation type="unfinished"></translation>
+        <translation>Устройства с липсващо родителско устройство</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -8915,7 +8921,7 @@ Errors: %3</source>
         <location line="+25"/>
         <location line="+292"/>
         <source>Quality check</source>
-        <translation type="unfinished"></translation>
+        <translation>Проверка на качеството</translation>
     </message>
     <message>
         <location line="-312"/>
@@ -8927,13 +8933,13 @@ Errors: %3</source>
         <location line="-90"/>
         <location line="+84"/>
         <source>Nothing found</source>
-        <translation type="unfinished"></translation>
+        <translation>Нищо не е намерено</translation>
     </message>
     <message>
         <location line="-78"/>
         <location line="+49"/>
         <source>No issues found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не са открити проблеми.</translation>
     </message>
     <message>
         <location line="-29"/>
@@ -9084,7 +9090,7 @@ Errors: %3</source>
     <message>
         <location line="+10"/>
         <source>Reset window size</source>
-        <translation type="unfinished"></translation>
+        <translation>Нулиране на размера на прозореца</translation>
     </message>
     <message>
         <location line="-188"/>

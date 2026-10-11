@@ -586,7 +586,7 @@ Izberite drugo ime.</translation>
     <message>
         <location line="+22"/>
         <source>Failed to update link.</source>
-        <translation type="unfinished"></translation>
+        <translation>Povezave ni bilo mogoče posodobiti.</translation>
     </message>
     <message>
         <location line="+106"/>
@@ -2034,17 +2034,17 @@ Ali ga vseeno želite shraniti (katalog bi bil prazen)?</translation>
     <message>
         <location filename="../core/catalogjobstoppable.cpp" line="+270"/>
         <source>The file list is saved. Metadata and checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seznam datotek je shranjen. Pregledovanje metapodatkov in nadzornih vsot ni dokončano in se bo nadaljevalo ob posodobitvi kataloga.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Metadata scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seznam datotek je shranjen. Pregledovanje metapodatkov ni dokončano in se bo nadaljevalo ob posodobitvi kataloga.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seznam datotek je shranjen. Pregledovanje nadzornih vsot ni dokončano in se bo nadaljevalo ob posodobitvi kataloga.</translation>
     </message>
     <message>
         <location line="+1156"/>
@@ -5171,27 +5171,27 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location line="+47"/>
         <source>Matched</source>
-        <translation type="unfinished"></translation>
+        <translation>Ujemajoče</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Mismatched</source>
-        <translation type="unfinished"></translation>
+        <translation>Neujemajoče</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Calculated</source>
-        <translation type="unfinished"></translation>
+        <translation>Izračunane</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Updated</source>
-        <translation type="unfinished"></translation>
+        <translation>Posodobljene</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Skipped</source>
-        <translation type="unfinished"></translation>
+        <translation>Preskočene</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -6164,7 +6164,7 @@ Razdelitev ni bila izvedena.</translation>
     <message>
         <location filename="../core/storage.cpp" line="+255"/>
         <source>No Path was provided for the Storage: %1. Edit the device to provide one and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Za shranjevanje ni bila podana pot: %1. Uredite napravo, da jo podate, in poskusite znova.</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -6173,14 +6173,20 @@ Razdelitev ni bila izvedena.</translation>
 The source folder does not contain any file: &apos;%2&apos;
 
 This could mean that the device is not mounted to this folder, or the folder is simply empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>Shranjevanje: &apos;%1&apos;
+
+Izvorna mapa ne vsebuje nobene datoteke: &apos;%2&apos;
+
+To lahko pomeni, da naprava ni priklopljena v to mapo ali da je mapa preprosto prazna.</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Katalog could not get values.
 
 Check that the source folder (%1) is correct, or that the device is mounted to the source folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalog ni mogel pridobiti vrednosti.
+
+Preverite, ali je izvorna mapa (%1) pravilna ali ali je naprava priklopljena v izvorno mapo.</translation>
     </message>
 </context>
 <context>
@@ -8865,32 +8871,32 @@ Napake: %3</translation>
     <message>
         <location line="-562"/>
         <source>Storage devices linked to a missing storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Naprave za shranjevanje, povezane z manjkajočim shranjevanjem</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>Shranjevanja, ki niso povezana z nobeno napravo</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage IDs used by more than one storage</source>
-        <translation type="unfinished"></translation>
+        <translation>ID-ji shranjevanja, ki jih uporablja več kot eno shranjevanje</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalog devices linked to a missing catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Naprave kataloga, povezane z manjkajočim katalogom</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalogs not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalogi, ki niso povezani z nobeno napravo</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Devices with a missing parent device</source>
-        <translation type="unfinished"></translation>
+        <translation>Naprave z manjkajočo nadrejeno napravo</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -8916,7 +8922,7 @@ Napake: %3</translation>
         <location line="+25"/>
         <location line="+292"/>
         <source>Quality check</source>
-        <translation type="unfinished"></translation>
+        <translation>Preverjanje kakovosti</translation>
     </message>
     <message>
         <location line="-312"/>
@@ -8928,13 +8934,13 @@ Napake: %3</translation>
         <location line="-90"/>
         <location line="+84"/>
         <source>Nothing found</source>
-        <translation type="unfinished"></translation>
+        <translation>Nič ni bilo najdeno</translation>
     </message>
     <message>
         <location line="-78"/>
         <location line="+49"/>
         <source>No issues found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ni najdenih težav.</translation>
     </message>
     <message>
         <location line="-29"/>
@@ -9085,7 +9091,7 @@ Napake: %3</translation>
     <message>
         <location line="+10"/>
         <source>Reset window size</source>
-        <translation type="unfinished"></translation>
+        <translation>Ponastavi velikost okna</translation>
     </message>
     <message>
         <location line="-188"/>

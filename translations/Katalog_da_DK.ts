@@ -586,7 +586,7 @@ Vælg et andet navn.</translation>
     <message>
         <location line="+22"/>
         <source>Failed to update link.</source>
-        <translation type="unfinished"></translation>
+        <translation>Linket kunne ikke opdateres.</translation>
     </message>
     <message>
         <location line="+106"/>
@@ -2034,17 +2034,17 @@ Vil du gemme den alligevel (kataloget vil være tomt)?</translation>
     <message>
         <location filename="../core/catalogjobstoppable.cpp" line="+270"/>
         <source>The file list is saved. Metadata and checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fillisten er gemt. Scanning af metadata og kontrolsummer er ufuldstændig og fortsætter, når kataloget opdateres.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Metadata scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fillisten er gemt. Scanning af metadata er ufuldstændig og fortsætter, når kataloget opdateres.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fillisten er gemt. Scanning af kontrolsummer er ufuldstændig og fortsætter, når kataloget opdateres.</translation>
     </message>
     <message>
         <location line="+1156"/>
@@ -4615,27 +4615,27 @@ Opdeling blev ikke udført.</translation>
     <message>
         <location line="+47"/>
         <source>Matched</source>
-        <translation type="unfinished"></translation>
+        <translation>Matchede</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Mismatched</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikke-matchede</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Calculated</source>
-        <translation type="unfinished"></translation>
+        <translation>Beregnede</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Updated</source>
-        <translation type="unfinished"></translation>
+        <translation>Opdaterede</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Skipped</source>
-        <translation type="unfinished"></translation>
+        <translation>Sprunget over</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -6163,7 +6163,7 @@ til papirkurven?</translation>
     <message>
         <location filename="../core/storage.cpp" line="+255"/>
         <source>No Path was provided for the Storage: %1. Edit the device to provide one and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der blev ikke angivet nogen sti for lageret: %1. Rediger enheden for at angive en, og prøv igen.</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -6172,14 +6172,20 @@ til papirkurven?</translation>
 The source folder does not contain any file: &apos;%2&apos;
 
 This could mean that the device is not mounted to this folder, or the folder is simply empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lager: &apos;%1&apos;
+
+Kildemappen indeholder ingen filer: &apos;%2&apos;
+
+Det kan betyde, at enheden ikke er monteret i denne mappe, eller at mappen blot er tom.</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Katalog could not get values.
 
 Check that the source folder (%1) is correct, or that the device is mounted to the source folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalog kunne ikke hente værdier.
+
+Kontroller, at kildemappen (%1) er korrekt, eller at enheden er monteret i kildemappen.</translation>
     </message>
 </context>
 <context>
@@ -8864,32 +8870,32 @@ Fejl: %3</translation>
     <message>
         <location line="-562"/>
         <source>Storage devices linked to a missing storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagerenheder knyttet til et manglende lager</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>Lager, der ikke er knyttet til nogen enhed</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage IDs used by more than one storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Lager-ID&apos;er, der bruges af mere end ét lager</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalog devices linked to a missing catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalogenheder knyttet til et manglende katalog</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalogs not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>Kataloger, der ikke er knyttet til nogen enhed</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Devices with a missing parent device</source>
-        <translation type="unfinished"></translation>
+        <translation>Enheder med en manglende overordnet enhed</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -8915,7 +8921,7 @@ Fejl: %3</translation>
         <location line="+25"/>
         <location line="+292"/>
         <source>Quality check</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvalitetskontrol</translation>
     </message>
     <message>
         <location line="-312"/>
@@ -8927,13 +8933,13 @@ Fejl: %3</translation>
         <location line="-90"/>
         <location line="+84"/>
         <source>Nothing found</source>
-        <translation type="unfinished"></translation>
+        <translation>Intet fundet</translation>
     </message>
     <message>
         <location line="-78"/>
         <location line="+49"/>
         <source>No issues found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen problemer fundet.</translation>
     </message>
     <message>
         <location line="-29"/>
@@ -9084,7 +9090,7 @@ Fejl: %3</translation>
     <message>
         <location line="+10"/>
         <source>Reset window size</source>
-        <translation type="unfinished"></translation>
+        <translation>Nulstil vinduesstørrelse</translation>
     </message>
     <message>
         <location line="-188"/>

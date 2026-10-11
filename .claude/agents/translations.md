@@ -82,6 +82,9 @@ When AI-filling a translation (no exact K2 bridge available), these terms are
 | Term (EN) | French (fr_FR) | Notes |
 |---|---|---|
 | Device / Devices | **Périphérique / Périphériques** | NEVER "Appareil"/"Appareils". Match the K2 translation already used for `Device`. |
+| Settings | **Paramètres** (fr_FR) | Never "Réglages" (decision 2026-10-11). |
+| Tag / Tags | **Étiquette / Étiquettes** (fr_FR), **Štítek / Štítky** (cs_CZ) | Verb: "Étiqueter" (one t); cs "Označit … štítkem". |
+| Delete vs Clear | cs_CZ: Delete = **Smazat**, Clear = **Vymazat** | Keep them distinct. |
 
 Before AI-filling any string containing a glossary term, check the existing K2
 `.ts` translation for that term and reuse it verbatim so K3 stays consistent.

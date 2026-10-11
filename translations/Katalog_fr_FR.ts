@@ -193,12 +193,12 @@
     <message>
         <location line="+3"/>
         <source>Tag</source>
-        <translation>Etiquette</translation>
+        <translation>Étiquette</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Tag: %1</source>
-        <translation>Etiquette : %1</translation>
+        <translation>Étiquette : %1</translation>
     </message>
     <message>
         <location line="+242"/>
@@ -586,7 +586,7 @@ Choisissez un autre nom.</translation>
     <message>
         <location line="+22"/>
         <source>Failed to update link.</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec de la mise à jour du lien.</translation>
     </message>
     <message>
         <location line="+106"/>
@@ -914,12 +914,12 @@ Choisissez un autre nom.</translation>
     <message>
         <location line="+1"/>
         <source>Label</source>
-        <translation>Etiquette</translation>
+        <translation>Étiquette</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>FileSystem</source>
-        <translation>Système de Fichers</translation>
+        <translation>Système de fichiers</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1111,7 +1111,7 @@ Choisissez un autre nom.</translation>
         <location line="-248"/>
         <location line="+254"/>
         <source>Settings</source>
-        <translation>Réglages</translation>
+        <translation>Paramètres</translation>
     </message>
     <message>
         <location line="-413"/>
@@ -1178,7 +1178,7 @@ Choisissez un autre nom.</translation>
         <location line="-1496"/>
         <location line="+1518"/>
         <source>Tags</source>
-        <translation>Etiquettes</translation>
+        <translation>Étiquettes</translation>
     </message>
     <message>
         <location line="-1505"/>
@@ -1188,7 +1188,7 @@ Choisissez un autre nom.</translation>
     <message>
         <location line="+4"/>
         <source>About</source>
-        <translation>A propos</translation>
+        <translation>À propos</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -1670,7 +1670,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     <message>
         <location line="+25"/>
         <source>Save</source>
-        <translation>Sauver</translation>
+        <translation>Enregistrer</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -2039,17 +2039,17 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     <message>
         <location filename="../core/catalogjobstoppable.cpp" line="+270"/>
         <source>The file list is saved. Metadata and checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>La liste des fichiers est enregistrée. L&apos;analyse des métadonnées et des sommes de contrôle est incomplète et se poursuit lors de la mise à jour du catalogue.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Metadata scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>La liste des fichiers est enregistrée. L&apos;analyse des métadonnées est incomplète et se poursuit lors de la mise à jour du catalogue.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>La liste des fichiers est enregistrée. L&apos;analyse des sommes de contrôle est incomplète et se poursuit lors de la mise à jour du catalogue.</translation>
     </message>
     <message>
         <location line="+1156"/>
@@ -2570,7 +2570,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <location line="+103"/>
         <location line="+71"/>
         <source>Edit</source>
-        <translation>Editer</translation>
+        <translation>Modifier</translation>
     </message>
     <message>
         <location line="-5394"/>
@@ -2622,7 +2622,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <location line="+486"/>
         <location filename="../qt_widgets/mainwindow_setup.cpp" line="-354"/>
         <source>Settings</source>
-        <translation>Réglages</translation>
+        <translation>Paramètres</translation>
     </message>
     <message>
         <location line="-129"/>
@@ -3075,7 +3075,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     <message>
         <location line="+5"/>
         <source>Exact Phrase</source>
-        <translation>Phrase Extacte</translation>
+        <translation>Phrase exacte</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -3101,7 +3101,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <location line="-6488"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1013"/>
         <source>File names or Folder paths</source>
-        <translation>Noms de Fichers ou Chemin des Dossiers</translation>
+        <translation>Noms de fichiers ou chemins des dossiers</translation>
     </message>
     <message>
         <location line="-5"/>
@@ -3109,7 +3109,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <location line="+4"/>
         <location line="+1015"/>
         <source>File names only</source>
-        <translation>Noms de Fichers uniquement</translation>
+        <translation>Noms de fichiers uniquement</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -3121,13 +3121,13 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <location line="+5220"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-964"/>
         <source>Label</source>
-        <translation>Etiquette</translation>
+        <translation>Étiquette</translation>
     </message>
     <message>
         <location line="+22"/>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1"/>
         <source>FileSystem</source>
-        <translation>Système de Fichers</translation>
+        <translation>Système de fichiers</translation>
     </message>
     <message>
         <source>BackUp links for device</source>
@@ -3194,7 +3194,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     <message>
         <location line="+66"/>
         <source>Unassign this storage</source>
-        <translation>Annuler l&apos;attribution de ce stockage</translation>
+        <translation>Désattribuer ce stockage</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -3996,12 +3996,12 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     <message>
         <location line="+97"/>
         <source>Tags</source>
-        <translation>Etiquettes</translation>
+        <translation>Étiquettes</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Tag folders for search and statistics</source>
-        <translation>Etiquetter des dossiers pour la recherche et les statistics</translation>
+        <translation>Étiqueter des dossiers pour la recherche et les statistiques</translation>
     </message>
     <message>
         <location line="+154"/>
@@ -4011,7 +4011,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     <message>
         <location line="+3"/>
         <source>Tag the folder</source>
-        <translation>Etiquetter le dossier</translation>
+        <translation>Étiqueter le dossier</translation>
     </message>
     <message>
         <location line="-81"/>
@@ -4033,7 +4033,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     <message>
         <location line="-107"/>
         <source>Existing tags</source>
-        <translation>Etiquettes existantes</translation>
+        <translation>Étiquettes existantes</translation>
     </message>
     <message>
         <location line="-4348"/>
@@ -4287,13 +4287,13 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Copy file name with extension</source>
-        <translation>Copier le nom de ficher avec extension</translation>
+        <translation>Copier le nom de fichier avec extension</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+4"/>
         <source>Copy file name without extension</source>
-        <translation>Copier le nom de ficher sans extension</translation>
+        <translation>Copier le nom de fichier sans extension</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+179"/>
@@ -4719,7 +4719,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     <message>
         <location line="+10629"/>
         <source>About</source>
-        <translation>A propos</translation>
+        <translation>À propos</translation>
     </message>
     <message>
         <location line="-425"/>
@@ -4867,7 +4867,7 @@ Voulez-vous quand même l&apos;enregistrer (le catalogue serait vide) ?</transla
     <message>
         <location line="-4643"/>
         <source>Save</source>
-        <translation>Sauver</translation>
+        <translation>Enregistrer</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1688"/>
@@ -5179,7 +5179,7 @@ La division n&apos;a pas été effectuée.</translation>
         <location filename="../qt_widgets/mainwindow.ui" line="-895"/>
         <location line="+991"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Update the selected catalog&apos;s files, if the device is available&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Actualiser les fichers du catalogue sélectionné, si le périphérique est disponible&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Actualiser les fichiers du catalogue sélectionné, si le périphérique est disponible&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+1133"/>
@@ -5229,7 +5229,7 @@ La division n&apos;a pas été effectuée.</translation>
         <location line="+4008"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-183"/>
         <source>Tag</source>
-        <translation>Etiquette</translation>
+        <translation>Étiquette</translation>
     </message>
     <message>
         <location line="+147"/>
@@ -5567,27 +5567,27 @@ La division n&apos;a pas été effectuée.</translation>
     <message>
         <location line="+56"/>
         <source>Matched</source>
-        <translation type="unfinished"></translation>
+        <translation>Concordants</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Mismatched</source>
-        <translation type="unfinished"></translation>
+        <translation>Non concordants</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Calculated</source>
-        <translation type="unfinished"></translation>
+        <translation>Calculés</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Updated</source>
-        <translation type="unfinished"></translation>
+        <translation>Mis à jour</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Skipped</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignorés</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -5802,7 +5802,7 @@ to the trash?</source>
     <message>
         <location line="-306"/>
         <source>Tag this folder</source>
-        <translation>Etiquetter ce dossier</translation>
+        <translation>Étiqueter ce dossier</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+740"/>
@@ -6164,7 +6164,7 @@ to the trash?</source>
     <message>
         <location filename="../core/storage.cpp" line="+255"/>
         <source>No Path was provided for the Storage: %1. Edit the device to provide one and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun chemin n&apos;a été indiqué pour le stockage : %1. Modifiez le périphérique pour en indiquer un, puis réessayez.</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -6173,14 +6173,20 @@ to the trash?</source>
 The source folder does not contain any file: &apos;%2&apos;
 
 This could mean that the device is not mounted to this folder, or the folder is simply empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>Stockage : &apos;%1&apos;
+
+Le dossier source ne contient aucun fichier : &apos;%2&apos;
+
+Cela peut signifier que le périphérique n&apos;est pas monté sur ce dossier, ou que le dossier est simplement vide.</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Katalog could not get values.
 
 Check that the source folder (%1) is correct, or that the device is mounted to the source folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalog n&apos;a pas pu obtenir les valeurs.
+
+Vérifiez que le dossier source (%1) est correct, ou que le périphérique est monté sur le dossier source.</translation>
     </message>
 </context>
 <context>
@@ -6494,7 +6500,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     <message>
         <location line="+7"/>
         <source>Edit</source>
-        <translation>Editer</translation>
+        <translation>Modifier</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -6562,7 +6568,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     <message>
         <location line="+61"/>
         <source>Save</source>
-        <translation>Sauver</translation>
+        <translation>Enregistrer</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7206,7 +7212,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     <message>
         <location line="+12"/>
         <source>Label</source>
-        <translation>Etiquette</translation>
+        <translation>Étiquette</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -7523,7 +7529,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     <message>
         <location line="+6"/>
         <source>Edit</source>
-        <translation>Editer</translation>
+        <translation>Modifier</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7574,7 +7580,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     <message>
         <location line="+10"/>
         <source>Unassign this storage</source>
-        <translation>Annuler l&apos;attribution de ce stockage</translation>
+        <translation>Désattribuer ce stockage</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -7706,12 +7712,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     <message>
         <location line="-20"/>
         <source>Copy file name without extension</source>
-        <translation>Copier le nom de ficher sans extension</translation>
+        <translation>Copier le nom de fichier sans extension</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Copy file name with extension</source>
-        <translation>Copier le nom de ficher avec extension</translation>
+        <translation>Copier le nom de fichier avec extension</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -7854,7 +7860,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     <message>
         <location filename="../qt_quick/PageExploreFolders.qml" line="+25"/>
         <source>Tag this folder</source>
-        <translation>Etiquetter ce dossier</translation>
+        <translation>Étiqueter ce dossier</translation>
     </message>
     <message>
         <location line="+287"/>
@@ -8033,7 +8039,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     <message>
         <location line="+1"/>
         <source>Exact Phrase</source>
-        <translation>Phrase Extacte</translation>
+        <translation>Phrase exacte</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -8054,12 +8060,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <location line="+16"/>
         <location line="+1"/>
         <source>File names only</source>
-        <translation>Noms de Fichers uniquement</translation>
+        <translation>Noms de fichiers uniquement</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File names or Folder paths</source>
-        <translation>Noms de Fichers ou Chemin des Dossiers</translation>
+        <translation>Noms de fichiers ou chemins des dossiers</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -8176,7 +8182,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     <message>
         <location line="+12"/>
         <source>Tag</source>
-        <translation>Etiquette</translation>
+        <translation>Étiquette</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -8404,7 +8410,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     <message>
         <location line="-22"/>
         <source>Copy file name with extension</source>
-        <translation>Copier le nom de ficher avec extension</translation>
+        <translation>Copier le nom de fichier avec extension</translation>
     </message>
     <message>
         <location line="-4"/>
@@ -8415,7 +8421,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     <message>
         <location line="-16"/>
         <source>Copy file name without extension</source>
-        <translation>Copier le nom de ficher sans extension</translation>
+        <translation>Copier le nom de fichier sans extension</translation>
     </message>
     <message>
         <location line="+38"/>
@@ -8660,7 +8666,7 @@ Erreurs : %3</translation>
     <message>
         <location line="+6"/>
         <source>Edit</source>
-        <translation>Editer</translation>
+        <translation>Modifier</translation>
     </message>
     <message>
         <source>Collapse</source>
@@ -8676,7 +8682,7 @@ Erreurs : %3</translation>
     <message>
         <location filename="../qt_quick/PageSettings.qml" line="+10"/>
         <source>Settings</source>
-        <translation>Réglages</translation>
+        <translation>Paramètres</translation>
     </message>
     <message>
         <location line="+279"/>
@@ -8729,7 +8735,7 @@ Erreurs : %3</translation>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
-        <translation>Editer</translation>
+        <translation>Modifier</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -8865,32 +8871,32 @@ Erreurs : %3</translation>
     <message>
         <location line="-562"/>
         <source>Storage devices linked to a missing storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Périphériques de stockage liés à un stockage manquant</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>Stockages liés à aucun périphérique</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage IDs used by more than one storage</source>
-        <translation type="unfinished"></translation>
+        <translation>ID de stockage utilisés par plus d&apos;un stockage</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalog devices linked to a missing catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Périphériques catalogue liés à un catalogue manquant</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalogs not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>Catalogues liés à aucun périphérique</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Devices with a missing parent device</source>
-        <translation type="unfinished"></translation>
+        <translation>Périphériques dont le périphérique parent est manquant</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -8916,7 +8922,7 @@ Erreurs : %3</translation>
         <location line="+25"/>
         <location line="+292"/>
         <source>Quality check</source>
-        <translation type="unfinished"></translation>
+        <translation>Contrôle qualité</translation>
     </message>
     <message>
         <location line="-312"/>
@@ -8928,13 +8934,13 @@ Erreurs : %3</translation>
         <location line="-90"/>
         <location line="+84"/>
         <source>Nothing found</source>
-        <translation type="unfinished"></translation>
+        <translation>Rien trouvé</translation>
     </message>
     <message>
         <location line="-78"/>
         <location line="+49"/>
         <source>No issues found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun problème trouvé.</translation>
     </message>
     <message>
         <location line="-29"/>
@@ -9085,7 +9091,7 @@ Erreurs : %3</translation>
     <message>
         <location line="+10"/>
         <source>Reset window size</source>
-        <translation type="unfinished"></translation>
+        <translation>Réinitialiser la taille de la fenêtre</translation>
     </message>
     <message>
         <location line="-188"/>
@@ -9279,12 +9285,12 @@ Erreurs : %3</translation>
         <location line="+10"/>
         <location line="+78"/>
         <source>Tag</source>
-        <translation>Etiquette</translation>
+        <translation>Étiquette</translation>
     </message>
     <message>
         <location line="-65"/>
         <source>Tag the folder</source>
-        <translation>Etiquetter le dossier</translation>
+        <translation>Étiqueter le dossier</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -9392,7 +9398,7 @@ Erreurs : %3</translation>
     <message>
         <location line="+1"/>
         <source>Tag</source>
-        <translation>Etiquette</translation>
+        <translation>Étiquette</translation>
     </message>
 </context>
 </TS>

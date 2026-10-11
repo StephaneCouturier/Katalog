@@ -1,85 +1,73 @@
 ---
-version: "2.13"
+version: "3.0"
 ---
 # Přehled
-![2.13](https://img.shields.io/badge/Version-2.13-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
-## Indexování souborů a správce úložných zařízení
-Katalog je výkonný <b>správce katalogů souborů</b>, který vám pomáhá organizovat a vyhledávat soubory.<br/>
-Poskytuje úplný přehled souborů napříč <b>více úložnými zařízeními bez nutnosti jejich připojení</b>.<br/>
-Katalog vytváří komplexní <b>indexy, abyste mohli prohledávat celou svou kolekci souborů z jednoho místa</b>, ať už spravujete interní a externí disky, USB flash disky, síťová úložiště nebo optické disky (Blu-ray, DVD, CD).
+## Indexace souborů a správa úložných zařízení
+Katalog je <b>správce katalogů souborů</b>, který pomáhá organizovat a hledat soubory.<br/>
+Poskytuje úplný přehled o souborech na <b>více úložných zařízeních, aniž by musela být připojena</b>.<br/>
+Katalog vytváří <b>rejstříky, takže můžete prohledávat celou svou sbírku souborů z jednoho místa</b>, ať spravujete interní a externí disky, USB flash disky, síťová úložiště nebo optické disky (Blu-ray, DVD, CD).
 
-- **Katalogizujte vše**: Vytvářejte podrobné indexy souborů z jakéhokoli úložného zařízení
-- **Vyhledávejte offline**: Najděte soubory okamžitě bez připojení nebo připojení původního zařízení
-- **Organizujte svou kolekci**: Spravujte více úložných zařízení a jejich katalogy v jednotné hierarchii
+- **Katalogizujte vše**: vytvářejte podrobné rejstříky souborů libovolného úložného zařízení.
+- **Vyhledávejte offline**: najděte soubory bez připojení původního zařízení.
+- **Organizujte kolekci**: spravujte úložná zařízení a jejich katalogy v jedné hierarchii.
+- **Zálohujte**: kopírujte nebo přesouvejte soubory, které v záloze chybí, pomocí katalogů.
 
+![Okno Katalogu: stránky Výběr, Vyhledávání a Výsledky vedle sebe](/img/interface_01_overview.png)
 
-![Výsledky vyhledávání napříč více katalogy](/img/k2/screen_search_01.png)
-<b>8 hlavních záložek pro 8 hlavních funkcí</b>
-![8 hlavních záložek Katalog](/img/k2/global_tabwidget.png)
-1. [Hledat](Search) soubory napříč více úložnými zařízeními **bez nutnosti jejich připojení**
-1. Organizovat úložná [Zařízení](Devices) a jejich katalogy v jednotné hierarchii s **Virtuálními** zařízeními
-1. [Procházet](Explore) hierarchii katalogů a soubory
-1. [Vytvořit](Create) katalogy **souborů**
-1. Získat [Statistiky](Statistics) o vašich kolekcích souborů a využití úložiště
-1. Přizpůsobit [Štítky](Tags) a přiřadit je adresářům pro další možnosti vyhledávání
-1. Porovnat katalogy [Záloha](BackUp) pro potvrzení pokrytí zálohovaných souborů a složek mezi zdrojovými a cílovými zařízeními
-1. Přizpůsobit si zážitek pomocí [Nastavení](Settings), jako je jazyk a téma
-<br/>
+## Stránky
+Okno zobrazuje vlevo stránku **[Výběr](Selection)**: strom všech zařízení kolekce. Výběr zařízení určuje rozsah ostatních stránek. Každá funkce se otevírá jako stránka vedle ní, z postranního panelu (viz [Rozhraní](Interface)):
 
-<div className="row">
-  <div className="col col--6">
-  <br/><br/>a panel pro [Výběr](Selection)
-  <br/>
-  * Vyberte vyhledávání v <b>Katalozích</b> nebo přímo v <b>Připojených discích</b><br/>
-  * Nastavte zařízení v <b>hierarchii, která se má použít</b> pro *Hledat*, *Vytvořit* (nadřazené zařízení), *Statistiky* nebo správu *Zálohy*<br/>
-  </div>
-  <div className="col col--6" style={{maxWidth: '200px'}}>
-    ![Panel výběru](/img/k2/global_selection_panel.png)
-  </div>
-</div>
+1. [Vyhledávejte](Search) soubory na všech úložných zařízeních, **aniž by musela být připojena**, a pracujte s [výsledky](SearchResults).
+1. Organizujte [Zařízení](Devices) a jejich katalogy v jedné hierarchii, s **virtuálními** zařízeními pro jejich seskupení, a [upravujte](DevicesEdit) je.
+1. [Prozkoumejte](Explore) složky a soubory katalogu.
+1. [Vytvářejte](Create) katalogy souborů.
+1. Kopírujte nebo přesouvejte soubory pomocí odkazů [Zálohy](BackUp) a kontrolujte pokrytí záloh.
+1. Sledujte růst kolekce ve [Statistice](Statistics).
+1. Přiřazujte složkám [Štítky](Tags) pro další možnosti vyhledávání.
+1. Nastavte kolekci a aplikaci v [Nastavení](Settings): datový režim, import, téma, jazyk.
 
 ---
-## Klíčové funkce
+## Hlavní funkce
 
 ### Bohaté informace o souborech
-- **[Inteligence typu souboru](Create#enhanced-file-type-filtering)**: Standardní detekce z přípon a ověření typu MIME
-- **[Možnosti katalogu](Create#select-options-to-includeexclude-files)**: Zahrňte pouze [typ souborů](Create#enhanced-file-type-filtering) a [zahrňte/vyloučte adresáře nebo skryté soubory](Create#other-options)
-- **[Extrakce metadat](Create#metadata-extraction)**: Automaticky extrahujte metadata z obrázků (rozměry, informace o fotoaparátu), videí (trvání, rozlišení) a zvukových souborů (interpret, album, trvání) nebo jakéhokoli jiného typu souboru.
-- **[Kontrolní součet](Create#file-checksum)**: Výpočet SHA256 pro detekci duplicit a rozdílů
-- **[Systém štítků složek](Tags)**: Organizujte a kategorizujte složky pomocí vlastních štítků
+- **[Rozpoznání typu souboru](Create#file-type)**: typ každého souboru se určuje podle přípony, pro stovky formátů.
+- **[Možnosti katalogu](Create#content-options)**: zahrnout pouze jeden [typ souborů](Create#file-type), podsložky nebo ne, [skryté soubory](Create#include-hidden-files) a [vyloučit složky nebo soubory](Create#global-parameters).
+- **[Extrakce metadat](Create#include-metadata)**: rozměry obrázků a videí, délka videí a zvukových souborů, umělec a album hudby nebo jakákoli metadata jiných typů souborů.
+- **[Kontrolní součet souborů](Create#include-checksum)**: kontrolní součty SHA-256 pro přesné hledání duplikátů a rozdílů a pro ověřování souborů.
+- **[Štítky složek](Tags)**: organizujte a třiďte složky vlastními štítky.
 
-### Výkonné vyhledávání a objevování
-- **[Pokročilé parametry vyhledávání](Search#search-text-criteria)**: Najděte soubory podle názvu, cesty, velikosti, data, typu souboru a metadat
-- **[Inteligentní filtrování](Search#file-criteria)**: Použijte více kritérií současně pro rychlé zúžení výsledků
-- **[Najít duplikáty](Search#duplicates-on)**: Identifikujte duplicitní soubory napříč různými úložnými zařízeními
-- **[Najít rozdíly](Search#differences-on)**: Zobrazte rozdíly mezi dvěma umístěními úložiště nebo verzemi záloh
+### Vyhledávání a objevování
+- **[Kritéria vyhledávání](Search)**: hledejte soubory podle názvu (více textů, vyloučení, regulární výrazy), složky, velikosti, data, typu souboru a metadat.
+- **[Hledání duplikátů](Search#duplicates-on)**: najděte duplicitní soubory napříč zařízeními.
+- **[Hledání rozdílů](Search#differences-on)**: zobrazte rozdíly mezi dvěma zařízeními, například mezi složkou a její zálohou.
+- **[Akce s výsledky](SearchResults#batch-process)**: filtrujte výsledky, exportujte je, ověřujte kontrolní součty, extrahujte metadata, přesouvejte do koše.
 
-
-### Správa zařízení a katalogů
-- **[Organizace zařízení](Devices)**: Organizujte úložná zařízení v hierarchické struktuře (Virtuální > Úložiště > Katalogy)
-- **[Aktualizace](DevicesCatalogs)**: Udržujte katalogy aktuální pomocí ručních aktualizací nebo automatických aktualizací
-- **[Podpora importu](DevicesCatalogs#import)**: Importujte katalogy z jiných nástrojů, jako je VVV
-- **[Import a aktualizace kolekce](Settings#import-update)**: Importujte zařízení z jiné kolekce Katalog nebo aktualizujte dříve importovaná zařízení při změně zdroje
-
+### Zařízení a katalogy
+- **[Hierarchie zařízení](Devices#model)**: fyzická skupina, úložná zařízení a katalogy a virtuální skupiny.
+- **[Aktualizace](Devices#context-menu)**: udržujte katalogy aktuální, po jednom nebo všechny dostupné najednou.
+- **[Změny cesty](DevicesEdit#path-change)**: když je disk připojen jinde, opravte všechny jeho katalogy během několika sekund, bez čtení disku.
+- **[Import a aktualizace kolekce](Settings#import-update)**: importujte zařízení z jiné kolekce Katalogu nebo z VVV a později je obnovte.
 
 ### Analýza a správa
-- **[Průzkumník souborů](Explore)**: Procházejte obsah katalogu, jako by bylo zařízení připojeno
-- **[Statistiky](Statistics)**: Sledujte své kolekce souborů a využití úložiště
-- **[Správa záloh a archivů](BackUp)**: Kopírujte nebo přesouvejte soubory mezi katalogy, porovnávejte pokrytí záloh a spravujte zálohovací vazby
-- **[Dávkové operace](Search#batch-process)**: Exportujte výsledky a provádějte hromadné akce na souborech
+- **[Průzkumník souborů](Explore)**: procházejte obsah katalogu, jako by bylo zařízení připojeno, s velikostí každé složky.
+- **[Statistika](Statistics)**: sledujte růst kolekce a úložného místa.
+- **[Záloha a archivace](BackUp)**: kopírujte nebo přesouvejte soubory mezi katalogy, zobrazte náhled, spusťte více odkazů najednou a kontrolujte pokrytí.
+- **[Datové režimy](Settings#database-memory-mode)**: uchovávejte kolekci ve složce souborů, v databázi SQLite nebo v hostované databázi.
 
-### Pokročilé funkce
-- **[Rozhraní příkazového řádku](CommandLines)**: Automatizujte aktualizace katalogů a vyhledávání pomocí příkazového řádku (Linux)
-- **[Flexibilita databáze](Settings#collection)**: Vyberte si mezi úložištěm souborů CSV nebo databází SQLite
+### Katalog 2
+Katalog 2 zůstává k dispozici, s vlastní [dokumentací](Katalog2), včetně [příkazového řádku](k2/CommandLines) (Linux).
 
 ---
-## Podpora více platforem
-| Hlavní operační systém | Distribuce / Verze    | Balíčky    |
+## Podpora více platforem {#multi-platform-support}
+
+| Hlavní operační systém | Distribuce / Minimální verze    | Balíčky    |
 |-------------------|-------------|-------------|
-| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/linux.png').default} width="40" /> GNU/Linux</div>         | Jakýkoli 64bitový, glibc 2.38+ <br/>Jakýkoli 32bitový, glibc 2.35     | [FlatHub/Flatpak](https://flathub.org/en/apps/io.github.stephanecouturier.Katalog)<br/>[AppImage](https://sourceforge.net/projects/katalogg/files/) <br/>[Přenosný](https://sourceforge.net/projects/katalogg/files/) |
+| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/linux.png').default} width="40" /> GNU/Linux</div>         | 64bitový, glibc 2.38+ <br/>32bitový, glibc 2.35     | [FlatHub/Flatpak](https://flathub.org/en/apps/io.github.stephanecouturier.Katalog)<br/>[AppImage](https://sourceforge.net/projects/katalogg/files/) <br/>[Přenosný](https://sourceforge.net/projects/katalogg/files/) |
 | <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/windows.png').default} width="40" /> Microsoft Windows</div> | 64bitový: Windows 10 a Windows 11    | [Instalátor](https://sourceforge.net/projects/katalogg/files/) <br/> [Přenosný](https://sourceforge.net/projects/katalogg/files/)       |
-| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/macos.png').default} width="40" /> Apple macOS</div>       | 14 (Sonoma)      | [Instalátor](https://sourceforge.net/projects/katalogg/files/)<br/> [Přenosný](https://sourceforge.net/projects/katalogg/files/)       |
+| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/macos.png').default} width="40" /> Apple macOS</div>       | 14 (Sonoma)  | [Instalátor](https://sourceforge.net/projects/katalogg/files/)<br/> [Přenosný](https://sourceforge.net/projects/katalogg/files/)       |
+
 
 ### Kompatibilita s macOS
 
@@ -111,7 +99,7 @@ Katalog je k dispozici v těchto jazycích:
 | Místní nastavení | Jazyk | Místní nastavení | Jazyk | Místní nastavení | Jazyk |
 |---|---|---|---|---|---|
 | bg_BG | Bulharština | hi_IN | Hindština | pl_PL | Polština |
-| cz_CZ | Čeština | hr_HR | Chorvatština | pt_PT | Portugalština |
+| cs_CZ | Čeština | hr_HR | Chorvatština | pt_PT | Portugalština |
 | da_DK | Dánština | hu_HU | Maďarština | ro_RO | Rumunština |
 | de_DE | Němčina | id_ID | Indonéština | si_SI | Slovinština |
 | en_US | Angličtina | it_IT | Italština | sk_SK | Slovenština |
@@ -126,7 +114,7 @@ Dokumentace je k dispozici v těchto jazycích:
 | Místní nastavení | Jazyk      |
 |----------|------------|
 | en_US    | Angličtina |
-| cz_CZ    | Čeština    |
+| cs_CZ    | Čeština    |
 | fr_FR    | Francouzština |
 
 ---

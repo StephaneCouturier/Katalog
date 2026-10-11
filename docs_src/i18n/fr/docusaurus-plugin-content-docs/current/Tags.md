@@ -1,50 +1,33 @@
 ---
-version: "2.12"
+version: "3.0"
 ---
 # Étiquettes
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
 ## Résumé
-Cette page décrit toutes les fonctionnalités de l'écran **Etiquettes** et comment les utiliser.<br/>
-À partir de cet écran, l'utilisateur peut **attribuer plusieurs étiquettes à n'importe quel dossier**.<br/>
-Cela peut ensuite être utilisé dans l'écran [Recherche](Search) pour affiner les résultats ;<br/>
+Cette page décrit la page **Étiquettes**, où des **étiquettes sont attribuées à des dossiers** : par exemple *Vacances* sur les dossiers de photos de vacances, où qu'ils soient.<br/>
+Une étiquette peut ensuite être utilisée dans la [Recherche](Search#tags-criteria) pour ne trouver que les fichiers des dossiers portant cette étiquette.
 
-Le balisage d'un dossier se fait en 3 étapes principales :
-1. Sélectionnez le chemin source du dossier,
-1. Sélectionnez ou créez un nouveau Tag,
-1. Cliquez pour étiquetter le dossier.
+![Page Étiquettes : ajouter une étiquette, et la liste des dossiers et étiquettes actuels](/img/tags_01_overview.png)
 
-![Écran Étiquettes montrant l'interface d'attribution des étiquettes](/img/k2/screen_tags_01.png)
+Une étiquette est attribuée à un **chemin de dossier**, pas à un catalogue ni à un périphérique : elle s'applique à chaque catalogue qui contient ce chemin.<br/>
+Un dossier peut avoir plusieurs étiquettes, et une étiquette peut être sur plusieurs dossiers, mais un dossier n'a chaque étiquette qu'une seule fois.
 
-## Attribuer des étiquettes aux répertoires
-Remarque : Les étiquettes sont attribuées à un chemin de dossier absolu, elles sont donc indépendantes de la hiérarchie des périphériques et des catalogues.
+## Ajouter une étiquette {#add}
+1. *Dossier* : saisissez le chemin du dossier, ou choisissez-le avec *Sélectionner un dossier*. Il est déjà rempli lorsque Étiquettes a été ouvert avec *Étiqueter ce dossier* dans [Explorer](Explore#tag-folder).
+1. *Étiquette* : choisissez une étiquette existante dans la liste, ou saisissez un nouveau nom.
+1. Cliquez sur *Étiqueter le dossier*.
 
-### Sélectionnez le chemin source
-Il existe 3 manières de sélectionner le chemin source du dossier contenant les fichiers à inclure dans le nouveau catalogue :
-1. en tapant le chemin dans la zone d'édition de texte
-1. en utilisant l'arborescence du système de fichiers, développez simplement et cliquez sur le bon périphérique ou dossier
-1. ou en cliquant sur le bouton *Sélectionner* qui ouvrira une fenêtre de dialogue d'aide à la sélection du dossier.
+Lorsque le dossier ou le nom de l'étiquette manque, ou lorsque le dossier a déjà cette étiquette, un message en haut de la page l'indique.<br/>
+La nouvelle association apparaît dans la liste en dessous.
 
-Le chemin sélectionné apparaîtra toujours dans la zone d'édition de texte et l'application utilisera ce chemin pour la étiquette.
-
-### Sélectionnez un tag existant ou créez-en un
-* tapez un nouveau nom de tag dans le zome d'édition sous "Sélectionner un tag"
-* ou cliquez sur n'importe quel élément de la liste des étiquettes existantes pour réutiliser une étiquette existante
-
-### Attribue le tag au dossier sélectionné
-Cliquez sur le bouton "Marquer le dossier".<br/>
-Cela enregistrera l'association entre le dossier et le nom de la étiquette.<br/>
-La liste "Dossiers et étiquettes actuels" est actualisée avec la nouvelle entrée.
-
-## Modification des étiquettes
-### Supprimer les associations existantes
-Dans la liste "Dossiers et tags actuels", faites un clic droit sur l'association à supprimer et sélectionnez *Supprimer cette étiquette*.
-### Modifier le fichier Tags
-En mode *Mémoire*, le bouton *Ouvrir fichier* permet d'éditer directement le fichier source (le format ne doit pas être modifié).
-
+## Dossiers et étiquettes actuels {#list}
+La liste montre chaque dossier avec son étiquette.
+* La liste au-dessus de la colonne *Étiquette* filtre sur une étiquette ; *Tous* les affiche toutes.
+* Le bouton en fin de ligne (*Supprimer cette étiquette*) supprime cette association. Le dossier et ses fichiers ne sont pas touchés.
 
 ## Développement
-Quelques idées d'évolutions pour cet écran :
-* étiquetter les périphériques
-* étiquetter les dossiers dans des catalogues spécifiques
-* Pour en savoir plus, consultez la liste de [Développements de étiquettes](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=tag).
+Quelques idées de développement pour cet écran :
+* Étiqueter des périphériques.
+* Étiqueter des dossiers dans des catalogues précis.
+* Pour en savoir plus, voir le backlog du [développement des Étiquettes](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=tag).

@@ -1,194 +1,187 @@
 ---
-version: "2.13"
+version: "3.0"
 ---
 # Nastavení
-![2.13](https://img.shields.io/badge/Version-2.13-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
 ## Shrnutí
-Tato stránka popisuje všechny funkce obrazovky **Nastavení** a jak je používat.
-* Správa dat a kolekcí
-  * Složka kolekce a datový režim (Paměť / Soubor / Hostovaný)
-  * [Import a aktualizace kolekce](Settings#import-update): importovat zařízení z jiné kolekce nebo aktualizovat dříve importovaná zařízení
-  * [Složka obrázků](Settings#images-folder): nastavit umístění obrázků zařízení
-* Jazyk a téma
-* O aplikaci
+Tato stránka popisuje všechny funkce obrazovky **Nastavení** a jak je používat. Obrazovka má dvě karty:
+* *Aplikace*: [verze, jazyk, téma, velikost textu, velikost okna a možnosti chování](#application),
+* *Sbírka*:
+  * [Sbírka a databáze](#collection-database): otevřená kolekce, její datový režim, [export do jiného datového režimu](#export), verze databáze a kontrola kvality a složka obrázků,
+  * [Import a synchronizace sbírky](#import-update): import zařízení z jiné kolekce nebo aktualizace dříve importovaných zařízení.
 
-![Přehled obrazovky Nastavení](/img/k2/screen_settings_01.png)
+*Nastavení* se otevírá z postranního panelu, nad ostatními stránkami, na kartě *Aplikace*. *Otevřít... > Hostovaná databáze...* v postranním panelu je otevře na kartě *Sbírka* s formulářem pro hostované připojení. *Zavřít* (nebo `Esc`) se vrátí k ostatním stránkám (viz [Rozhraní](Interface)).
 
-## Správa dat a kolekcí
+## Aplikace {#application}
 
-### Kolekce {#collection}
+![Karta Aplikace: verze, jazyk, téma, velikost textu, obnovení velikosti okna a možnosti chování](/img/settings_05_application.png)
 
-Kolekce je jediná skupina zařízení a všech souvisejících informací, jako jsou statistiky.<br/>
-Složka *Kolekce* je složka ve vašem počítači, kde jsou uložena všechna data kolekce.<br/>
-Je možné mít více kolekcí.
+### Verze
+* Verze a datum vydání Katalogu a *Poznámky k vydání*, kde si lze přečíst, co se změnilo.
+* *Zkontrolovat novou verzi při spuštění*: je-li zapnuto, Katalog při spuštění zkontroluje, zda je k dispozici novější verze.
 
-### Datové režimy
-Katalog poskytuje 3 "*Datové režimy*" nebo různé způsoby ukládání a práce s daty.
+### Jazyk {#language}
+Jazyk rozhraní. Při prvním spuštění Katalog použije jazyk systému, pokud je k dispozici, jinak angličtinu (US).
 
-Poznámka: Změna režimu vyžaduje kliknutí na *Použít a restartovat*.
+### Téma {#theme}
+| Téma | Popis |
+|------|-------|
+| *Téma plochy* | Řídí se barvami plochy. |
+| *Téma plochy (šedé)* | Řídí se barvami plochy, s šedými plochami a zvýrazněním. |
+| *Barvy Katalogu* | Vlastní modré barvy Katalogu. |
 
-| Režim | Typ databáze | Ukládání dat | Soubory | Rychlost vyhledávání | Rychlost katalogizace |
-| -------| -------------------|---|---|---|---|
-| **Paměť** | paměť počítače | v souborech .csv oddělených tabulátorem (pro zařízení, statistiky atd.) a v souborech .idx (pro seznamy souborů katalogů) | Lepší pro pravidelnou synchronizaci souborů do cloudu | Nejvyšší rychlost vyhledávání, jakmile jsou katalogy v paměti (delší čas při prvním použití katalogu) | Mírně rychlejší |
-| **Soubor** (výchozí) | Soubor SQLite, nízké využití paměti | vše v souboru SQLite | všechna data v jednom souboru, který může narůst na několik set MB | Rychlejší pro první vyhledávání, pomalejší pro opakované vyhledávání ve velké kolekci | Mírně pomalejší |
-| **Hostovaný** | Server MySQL/MariaDB | všechna data uložena na hostovaném databázovém serveru | Data centralizována na serveru, přístupná z více počítačů v síti | Výkon dotazů na straně serveru, vhodné pro velké kolekce | Mírně pomalejší (síťová režie) |
-
-![Diagram datových režimů](/img/settings_database-model.png)
-
-### Paměťový režim databáze {#database-memory-mode}
-![Nastavení paměťového režimu zobrazující cestu ke složce kolekce a související možnosti](/img/k2/screen_settings_02_memory.png)
-
-Akce složky kolekce:
-* Zadat cestu ke složce Kolekce a stisknutím klávesy Enter načíst kolekci
-* Vybrat cestu ke složce Kolekce a načíst kolekci
-* Otevřít složku kolekce ve výchozím správci souborů systému
-* *Exportovat do souboru SQLite*: exportovat kolekci do jediného souboru SQLite, pro přechod na režim *Soubor*
-
-Nastavení pro paměťový režim:
-* *Záloha*: povolit nebo zakázat (výchozí) uchování kopie katalogu před jeho aktualizací (kopie bude mít příponu `.bak`)
-* *Spuštění*: povolit nebo zakázat (výchozí) předběžné načítání naposledy použitých katalogů pro rychlejší vyhledávání
-* *Spuštění*: povolit nebo zakázat (výchozí) načítání naposledy otevřeného katalogu na obrazovce [Prozkoumat](Explore)
-
-### Režim databázového souboru
-![Nastavení souborového režimu zobrazující cestu k databázovému souboru a související možnosti](/img/k2/screen_settings_03_file.png)
-
-Akce souboru kolekce:
-* Zadat cestu k souboru a stisknutím klávesy Enter načíst kolekci
-* *Vybrat a otevřít databázový soubor*: vybrat a načíst existující soubor kolekce
-* *Upravit*: Otevřít databázi SQLite v editoru databáze (např. [SQLite Browser](http://sqlitebrowser.org))
-* *Nový*: Vytvořit nový soubor kolekce a načíst jej
-* *Exportovat do paměťového režimu (csv)*: exportovat kolekci do souborů CSV a indexů, pro přechod na režim *Paměť*
-
-### Hostovaný režim databáze
-![Nastavení hostovaného režimu zobrazující pole pro připojení k serveru](/img/k2/screen_settings_05_hosted.png)
-
-Data kolekce jsou uložena v databázi hostované na lokálním nebo síťovém serveru (MySQL/MariaDB).
-
-Nastavení připojení:
-* **Název hostitele** — název hostitele nebo IP adresa databázového serveru (výchozí: `localhost`)
-* **Název databáze** — název databáze na serveru
-* **Port** — číslo portu (výchozí: `3306` pro MySQL/MariaDB)
-* **Uživatelské jméno** — uživatelské jméno databáze
-* **Heslo** — heslo databáze
-
-Vyplňte všechna pole a klikněte na *Použít a restartovat* pro připojení.
-
-#### Export
-Hostovanou kolekci lze exportovat do lokálního formátu pro offline použití nebo sdílení:
-* *Exportovat do souboru SQLite*: exportovat celou hostovanou kolekci do lokálního souboru SQLite (režim *Soubor*)
-* *Exportovat do paměťového režimu (csv)*: exportovat kolekci do souborů CSV a indexů (režim *Paměť*)
-
-#### Zabezpečení
-* Jsou přijímány pouze **lokální** (localhost, 127.x.x.x) a **privátní síťové** (192.168.x.x, 10.x.x.x, 172.16-31.x.x) názvy hostitelů. Veřejné IP adresy a názvy domén jsou odmítnuty.
-* Při připojení k privátní síťové adrese se zobrazí potvrzovací dialog.
-
-#### Předpoklady
-* Musí být spuštěn a přístupný server MySQL/MariaDB.
-* Databáze musí na serveru již existovat (Katalog automaticky vytvoří potřebné tabulky).
-* Musí být nainstalován odpovídající ovladač Qt SQL (`QMYSQL` pro MySQL/MariaDB).
-
-### Přehled exportů kolekcí
-
-Každý režim lze exportovat do jiného formátu. Exportované kolekce lze poté přímo otevřít v cílovém režimu nebo je použít jako zdroj pro import zařízení do jiné kolekce (viz [Import a aktualizace](#import-update)).
-
-| Aktuální režim | Export do souboru SQLite | Export do paměťového režimu |
-|---|---|---|
-| **Paměť** | ✅ | — |
-| **Soubor** | — | ✅ |
-| **Hostovaný** | ✅ | ✅ |
-
-> Import a aktualizace z hostované kolekce vyžadují mezikrok exportu: nejprve exportujte do režimu Soubor nebo Paměť, poté použijte exportovanou kolekci jako zdroj importu.
-
-### Import a aktualizace {#import-update}
-
-<!-- screenshot: screen_import_01.png -->
-
-Katalog umožňuje importovat zařízení z jiné kolekce nebo obnovit obsah katalogů dříve importovaných zařízení při změně zdroje.
-
-**Zdroj a cíl**
-
-* **Zdrojová** kolekce je existující kolekce Katalog otevřená pouze pro čtení — nikdy není změněna.
-* **Cílová** kolekce je aktuálně aktivní kolekce, do které jsou přidána zařízení a katalogy.
-
-![Stránka Nastavení zobrazující příklad importované kolekce](/img/k2/screen_settings_06_import_collection.png)
-
-**Co se importuje**
-
-Jsou přenesena zařízení, jejich katalogy, indexy souborů katalogů, statistiky, zálohovací vazby a nastavení vyloučených složek. Struktura složek zdroje je v cíli zachována vložením nezbytných nadřazených úrovní jako kontejnerových zařízení. Pokud název zařízení nebo katalogu v cíli již existuje, je automaticky přejmenován (například `Moje Jednotka (2)`), aby nedošlo ke konfliktům.
-
-**Operace**
-
-| Operace | Popis |
-|---|---|
-| *Importovat vybrané zařízení* | Importuje jedno zařízení a veškerý jeho obsah ze zdroje do cíle. Vybrat zdrojovou kolekci, zvolit zařízení ve stromu zdroje a kliknout na *Importovat vybrané zařízení*. Výběr kořene kolekce importuje všechna zařízení a zároveň zahrnuje štítky. |
-| *Aktualizovat vybrané zařízení* | Obnoví obsah katalogů dříve importovaného zařízení nejnovějšími daty ze zdroje. Zdroj je znovu otevřen automaticky — není třeba ho znovu vyhledávat. Kontejnerová zařízení v cílové hierarchii nejsou dotčena. |
+S každým tématem se Katalog řídí **světlým nebo tmavým režimem** systému, v Linuxu (KDE Plasma i jiná prostředí), Windows a macOS, a mění se s ním bez restartu. Mimo KDE Plasma používá Katalog světlé a tmavé barvy Breeze místo vlastního barevného schématu prostředí.
 
 :::note
-*Aktualizovat vybrané zařízení* je aktivní pouze tehdy, když vybrané zařízení (nebo některý z jeho potomků) bylo dříve importováno a stále má platný odkaz na zdrojovou kolekci.
+V některých linuxových prostředích (například Linux Mint s Cinnamonem) se tmavý režim při spuštění Katalogu nerozpozná: okno se otevře světlé a pak se řídí další změnou světlého nebo tmavého režimu.
 :::
 
-**Zpráva o aktualizaci**
+Na stejném řádku jsou:
+* *Použijte větší velikost ikony*: zobrazí v seznamech větší ikony.
+* *Velikost textu*: zmenší nebo zvětší veškerý text Katalogu, od 80 % do 120 %, posuvníkem nebo jeho dvěma tlačítky. Velikost vychází z velikosti písma nastavené v systému, takže se řídí i změnou systémového písma. Název kolekce v horní části postranního panelu a nadpisy stránek si ponechávají systémovou velikost.
+* *Obnovit velikost okna*: vrátí okno na výchozí velikost **1280×800** (nebo na velikost obrazovky, je-li menší). Maximalizované okno se nejprve obnoví. Poloha okna se nemění. Stejnou velikost má okno při úplně prvním spuštění Katalogu.
 
-Po dokončení aktualizace zobrazí Katalog souhrn změn:
+### Chování {#behavior}
+| Možnost | Popis |
+|---------|-------|
+| *Třídění souborů rozlišuje malá a velká písmena* | Je-li zapnuto, třídění rozlišuje velikost písmen a dává toto pořadí: AA, AB, AC, Aa, Ab, Ac. |
+| *Obnovit stav zařízení při návratu do aplikace* | Je-li zapnuto, stav zařízení (dostupné nebo ne) se znovu zkontroluje pokaždé, když se okno Katalogu stane aktivním, takže disk mezitím připojený nebo odpojený se zobrazí správně. Ve výchozím stavu vypnuto. |
+| *Povolit akce, které mažou soubory (bez možnosti obnovení)* | Je-li zapnuto, lze soubory **trvale smazat** z výsledků [vyhledávání](Search) a z obrazovky [Prozkoumat](Explore). Ve výchozím stavu vypnuto: tyto akce jsou pak zašedlé. *Přesunout do koše*, které lze vrátit zpět, je vždy dostupné. |
 
-* počet aktualizovaných katalogů,
-* celkový počet souborů před a po, s čistou změnou,
-* celkovou velikost souborů před a po, s čistou změnou.
+### Soubor s nastavením
+Cesta k souboru, ve kterém Katalog uchovává svá nastavení a poslední volby. *Otevřít* ho otevře v přidružené aplikaci.
 
-Stav operace (probíhá, dokončeno nebo chyba) se rovněž zobrazuje ve stavovém řádku, v souladu s ostatními operacemi Katalogu.
+## Sbírka a databáze {#collection-database}
 
-**Formát zdrojové kolekce**
+![Stránka Nastavení, karta Sbírka: sekce Sbírka a databáze, ukázková kolekce v režimu Soubor](/img/settings_01_overview.png)
 
-| Formát zdroje | Jak otevřít |
-|---|---|
-| **Paměť** (složka CSV) | Vybrat složku kolekce |
-| **Soubor** (soubor SQLite `.db`) | Vybrat soubor `.db` |
-| **Hostovaný** (MySQL/MariaDB) | Nejprve exportovat do režimu *Soubor* nebo *Paměť* (viz [export hostovaného režimu](#export)), poté použít exportovanou kolekci jako zdroj |
+### Kolekce {#collection}
+**Kolekce** je jediná skupina zařízení a všech souvisejících informací: katalogů, statistik, značek, historie vyhledávání a záložních odkazů.<br/>
+Je možné mít více kolekcí a přepínat mezi nimi.
+
+Kolekce se otevírají a vytvářejí z postranního panelu pomocí *Otevřít...* a *Nový...* (viz [Rozhraní](Interface#drawer)). Přepnutí na jinou kolekci Katalog nerestartuje.
+
+Sekce zobrazuje:
+* *Režim databáze*: datový režim otevřené kolekce (viz níže),
+* *Sbírka*: kde je kolekce uložena (složka, databázový soubor nebo server a název databáze), s tlačítkem *Upravit*:
+  * v režimu *Soubor* otevře databázový soubor v přidružené aplikaci (například [DB Browser for SQLite](https://sqlitebrowser.org)),
+  * v režimu *Paměť* otevře složku kolekce ve správci souborů,
+  * v režimu *Hostováno* otevře databázi v phpMyAdmin, na adrese *URL adresa phpMyAdmin* nastavené pro připojení.
+
+### Datové režimy {#database-memory-mode}
+Katalog nabízí 3 *datové režimy*, tedy způsoby ukládání a zpracování dat kolekce.
+
+| Režim | Typ databáze | Ukládání dat | Soubory | Rychlost vyhledávání | Rychlost katalogizace |
+|-------|--------------|--------------|---------|----------------------|-----------------------|
+| **Paměť** | paměť počítače | v souborech `.csv` oddělených tabulátory (pro zařízení, statistiky atd.) a v souborech `.idx` (pro seznamy souborů katalogů) | lepší pro pravidelnou synchronizaci souborů do cloudu | nejrychlejší vyhledávání, jakmile jsou katalogy v paměti (déle při prvním použití katalogu) | mírně rychlejší |
+| **Soubor** (výchozí) | soubor SQLite, nízké využití paměti | vše v souboru SQLite | všechna data v 1 souboru, který může narůst na několik set MB | rychlejší pro první vyhledávání, pomalejší pro opakovaná vyhledávání ve velké kolekci | mírně pomalejší |
+| **Hostováno** | server MySQL/MariaDB | vše na databázovém serveru | data centralizovaná na serveru, dostupná z více počítačů v síti | výkon dotazů na straně serveru, vhodné pro velké kolekce | mírně pomalejší (síť) |
+
+### Hostovaný režim {#hosted-mode}
+
+![Stránka Nastavení s formulářem pro hostované připojení](/img/settings_02_hosted.png)
+
+V režimu *Hostováno* je kolekce uložena v databázi MySQL/MariaDB na místním nebo síťovém serveru.<br/>
+Formulář pro připojení se zobrazí, když je otevřená kolekce v režimu *Hostováno*, nebo po volbě *Otevřít...* > *Hostovaná databáze...* v postranním panelu.
+
+| Pole | Popis |
+|------|-------|
+| *Název hostitele* | `localhost` nebo IP adresa databázového serveru, na tomto počítači nebo v místní síti (viz [Zabezpečení](#hosted-security)). Prázdné pole znamená `localhost`. |
+| *Jméno databáze* | Název databáze na serveru. |
+| *Port* | Port serveru (`3306` pro MySQL/MariaDB). |
+| *Uživatelské jméno* | Uživatelské jméno databáze. |
+| *Heslo* | Heslo databáze. |
+| *URL adresa phpMyAdmin* | Adresa phpMyAdmin, kterou používá tlačítko *Upravit*. |
+
+*Připojit* otevře kolekci na serveru.
+
+Předpoklady:
+* Server MySQL/MariaDB musí běžet a být dosažitelný.
+* Databáze musí na serveru již existovat; potřebné tabulky Katalog vytvoří.
+
+#### Zabezpečení {#hosted-security}
+Aby data kolekce zůstala na počítačích, které má uživatel pod kontrolou, připojuje se Katalog pouze k databázovému serveru na tomto počítači nebo v místní síti. Hostitel se kontroluje při *Připojit* a při otevření kolekce v režimu *Hostováno* ze seznamu *Nedávné sbírky* v postranním panelu:
+
+| Hostitel | Co se stane |
+|----------|-------------|
+| Tento počítač: `localhost`, `127.x.x.x` | Katalog se připojí. |
+| Místní síť: `192.168.x.x`, `10.x.x.x`, `172.16.x.x` až `172.31.x.x` | Katalog si nejprve vyžádá potvrzení (*Připojení k soukromé síti*, *Vaše data budou odeslána do této síťové databáze.*). Výchozí volba je *Ne*; při jejím zvolení se nic nezmění. |
+| Cokoli jiného: veřejná adresa nebo název serveru (například `mydb.example.com` nebo `nas`) | Odmítnuto: v horní části formuláře se zobrazí *Neplatný název hostitele.* spolu s povolenými adresami. Nic se nepřipojí ani neuloží. Odmítnutá kolekce otevřená ze seznamu *Nedávné sbírky* zobrazí vyplněný formulář se stejnou zprávou. |
+
+Server v místní síti se zadává IP adresou, nikoli názvem.
+
+### Export do jiného datového režimu {#export}
+Otevřenou kolekci lze zkopírovat do jiného datového režimu, například pro přesun kolekce ze serveru do jediného souboru. Otevřená kolekce se nemění a zůstává otevřená.
+
+| Datový režim otevřené kolekce | *Export do souboru SQLite* | *Export do režimu paměti (csv)* |
+|---|:---:|:---:|
+| *Paměť* | ano | — |
+| *Soubor* | — | ano |
+| *Hostováno* | ano | ano |
+
+* *Export do souboru SQLite* se zeptá na soubor, který se má vytvořit, ve výchozím stavu `export.db` ve složce kolekce (v režimu *Hostováno* v domovské složce). Pokud soubor již existuje, nejprve se přesune do koše. V režimu *Paměť* se nejprve načtou soubory a složky všech katalogů, což u velké kolekce může chvíli trvat.
+* *Export do režimu paměti (csv)* se zeptá na složku, která **musí být prázdná**. Katalog do ní zapíše soubory `.csv` kolekce a soubory `.idx` jednotlivých katalogů.
+
+Průběh se zobrazuje dole na stránce, s tlačítkem *Zrušit*. Zrušení odstraní, co export již zapsal. Po dokončení zpráva ukáže cestu k exportu. Tlačítka exportu nejsou dostupná během vytváření nebo aktualizace katalogu ani během vyhledávání.
+
+Exportovanou kolekci lze poté otevřít z postranního panelu pomocí *Otevřít...*.
+
+:::note
+Pokud bylo v režimu *Paměť* před exportem spuštěno vyhledávání, mohou v souboru SQLite u prohledaných katalogů chybět složky, které neobsahují žádné soubory. Chcete-li je mít všechny, exportujte hned po otevření kolekce.
+:::
+
+### Verze databáze a kontrola kvality {#quality-check}
+
+![Zpráva kontroly kvality ukázkové kolekce](/img/settings_03_quality_check.png)
+
+*Verze databáze* ukazuje verzi struktury databáze otevřené kolekce.
+
+*Kontrola kvality* provede řadu kontrol pouze pro čtení na otevřené kolekci a zobrazí zprávu. Hledá nesrovnalosti mezi zařízeními, úložišti a katalogy:
+* zařízení úložiště propojená s chybějícím úložištěm,
+* úložiště nepropojená s žádným zařízením,
+* ID úložiště používaná více než jedním úložištěm,
+* zařízení katalogu propojená s chybějícím katalogem,
+* katalogy nepropojené s žádným zařízením,
+* zařízení s chybějícím nadřazeným zařízením.
+
+U každé kontroly zpráva uvádí, co bylo nalezeno, nebo *Nic nenalezeno*. *Kopírovat do schránky* zprávu zkopíruje, například pro přiložení k hlášení chyby.<br/>
+Kontrola kvality **nic neopravuje**: pouze informuje.
 
 ### Složka obrázků {#images-folder}
+*Složka obrázků* je složka, ve které jsou uloženy obrázky úložných zařízení. Jde o nastavení každé kolekce zvlášť.
+* Zadejte cestu do pole nebo klikněte na *Vybrat* a zvolte složku.
+* Pokud není nastavena, použije se složka `images` uvnitř složky kolekce.
 
-*Složka obrázků* je složka, kde jsou uloženy obrázky zařízení. Jde o nastavení na úrovni kolekce.
+Obrázky umístěné v této složce lze poté zvolit pro úložné zařízení při jeho úpravě na obrazovce [Zařízení](Devices).
 
-* Zadejte cestu přímo do pole a stiskněte Enter, nebo klikněte na *Vybrat* pro procházení složek.
-* Výchozí hodnota: `<složka_kolekce>/images`, pokud není nastavena.
+## Import a synchronizace sbírky {#import-update}
 
-Obrázky umístěné v této složce lze přiřadit úložným zařízením na obrazovce [Zařízení](DevicesStorage#device-picture).
+![Sekce importu se zvolenou zdrojovou kolekcí, zařízením vybraným ve zdrojovém stromu a zprávou o importu](/img/settings_04_import.png)
 
-## Jazyk a téma
-* Vybrat jazyk aplikace.
-* Vybrat motiv pro aplikaci a restartovat pro použití.
-* Možnost použití větší velikosti ikon.
-* Možnost povolit řazení souborů s rozlišením velkých a malých písmen.
-* Tlačítko pro *Otevření souboru nastavení* (lokální soubor, kde jsou uloženy možnosti Katalog a poslední výběry).
+Katalog umí importovat zařízení z jiné kolekce do otevřené kolekce a později je aktualizovat, když se zdroj změní.
+* **Zdroj** je ta druhá kolekce. Pouze se čte, nikdy se nemění.
+* **Cíl** je otevřená kolekce, do které se zařízení a katalogy přidávají.
 
-### Motivy
-| Motiv Katalog | Kontext pro použití |
-|---|---|
-| Výchozí motiv | automaticky se přizpůsobí jakémukoli OS a světlým/tmavým motivům |
-| Katalog Color (světlý) | pouze pro světlá témata pracovní plochy (nevhodné pro tmavá témata) |
-| Katalog Color (tmavý) | pouze pro tmavá témata pracovní plochy (nevhodné pro světlá témata) |
+| Pole | Použití |
+|------|---------|
+| *Datový režim* | Typ zdroje: *Katalog / Soubor* (soubor `.db`), *Katalog / Paměť* (složka kolekce) nebo *VVV / Hodnoty oddělené tabulátory* (exportní soubor z VVV). |
+| *Zdroj* | Zdrojová kolekce nebo soubor, zvolené pomocí *Vybrat*. |
+| *Zařízení* | Zařízení k importu, zvolené ve stromu zařízení zdroje. *Import* ho importuje s veškerým obsahem. |
+| *Aktualizovat* | Zdrojové kolekce, ze kterých byla zařízení importována. *Aktualizovat* obnoví ze zvoleného zdroje katalogy všech zařízení z něj importovaných. |
 
-Příklady:
+**Co se importuje**<br/>
+Zařízení, jejich katalogy a seznamy souborů, statistiky, záložní odkazy a vyloučené složky. Hierarchie zdroje se v cíli zachová přidáním potřebných nadřazených zařízení. Pokud název zařízení nebo katalogu v cíli již existuje, importovaný se přejmenuje (například `My Drive (2)`).
 
-- Světlá pracovní plocha / Katalog Color (světlý)
-![Světlá pracovní plocha s motivem Katalog Color světlý](/img/k2/settings-themes-light-desktop-katalog-colors-light.png)
+**Zpráva**<br/>
+Po skončení aktualizace zpráva shrne, co se změnilo: počet aktualizovaných katalogů a počet a celkovou velikost souborů před a po.
 
-- Tmavá pracovní plocha / Katalog Color (tmavý)
-![Tmavá pracovní plocha s motivem Katalog Color tmavý](/img/k2/settings-themes-dark-desktop-katalog-colors-dark.png)
+:::note
+Zdrojová kolekce musí mít stejnou verzi databáze jako otevřená kolekce. Pokud byla vytvořena starší verzí Katalogu, otevřete ji nejprve jednou touto verzí: její databáze se tím aktualizuje.
+:::
 
-- Tmavá pracovní plocha / Výchozí motiv
-![Tmavá pracovní plocha s výchozím motivem](/img/k2/settings-themes-dark-desktop-default-theme.png)
+**Import z VVV**<br/>
+[VVV (Virtual Volumes View)](https://www.fsoft.it/VVV/) je jiná katalogizační aplikace. S volbou *VVV / Hodnoty oddělené tabulátory* vyberte soubor exportovaný z VVV a klikněte na *Import*: jeho katalogy se přidají pod novou virtuální skupinu.
 
-## O aplikaci
-* Verze a datum aplikace.
-* Možnost zkontrolovat novou verzi při spuštění.
-* Tlačítko pro otevření tohoto webu s dokumentací.
-* Tlačítko pro otevření poznámek k vydání.
-* Tlačítko **„Kopírovat informace o verzi a systému“**: jedním krokem zkopíruje verzi Katalogu a údaje o vašem prostředí do schránky, připravené k vložení do hlášení chyby. Zobrazí se potvrzovací zpráva „Informace o verzi a systému zkopírovány do schránky“.
-
-Zkopírovaný text obsahuje: verzi a datum vydání Katalogu, verze Qt a KDE Frameworks, operační systém, jádro a architekturu procesoru, jazyk rozhraní a režim databáze s verzí jejího schématu.
-
-Záměrně neobsahuje nic, co by identifikovalo vás nebo vaše data, takže jej můžete bez obav zveřejnit: žádné cesty k souborům ani složkám, žádný název kolekce, žádný název počítače ani uživatelské jméno a nic o připojení k hostované databázi — žádnou adresu, název databáze, uživatele ani heslo.
-
-Samotný zkopírovaný text je vždy v angličtině bez ohledu na jazyk rozhraní: anglické názvy polí zajišťují, že vývojáři přečtou každé hlášení chyby. Přeložené je pouze tlačítko a jeho potvrzovací zpráva.
+## Vývoj
+* Viz backlog [vývoje Nastavení](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=settings).

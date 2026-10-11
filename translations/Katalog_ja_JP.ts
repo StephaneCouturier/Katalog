@@ -586,7 +586,7 @@ Choose a different name.</source>
     <message>
         <location line="+22"/>
         <source>Failed to update link.</source>
-        <translation type="unfinished"></translation>
+        <translation>リンクを更新できませんでした。</translation>
     </message>
     <message>
         <location line="+106"/>
@@ -2034,17 +2034,17 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location filename="../core/catalogjobstoppable.cpp" line="+270"/>
         <source>The file list is saved. Metadata and checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル一覧は保存されました。メタデータとチェックサムのスキャンは未完了で、カタログの更新時に続行されます。</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Metadata scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル一覧は保存されました。メタデータのスキャンは未完了で、カタログの更新時に続行されます。</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル一覧は保存されました。チェックサムのスキャンは未完了で、カタログの更新時に続行されます。</translation>
     </message>
     <message>
         <location line="+1156"/>
@@ -4615,27 +4615,27 @@ Split was not performed.</source>
     <message>
         <location line="+47"/>
         <source>Matched</source>
-        <translation type="unfinished"></translation>
+        <translation>一致</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Mismatched</source>
-        <translation type="unfinished"></translation>
+        <translation>不一致</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Calculated</source>
-        <translation type="unfinished"></translation>
+        <translation>計算済み</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Updated</source>
-        <translation type="unfinished"></translation>
+        <translation>更新済み</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Skipped</source>
-        <translation type="unfinished"></translation>
+        <translation>スキップ</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -6162,7 +6162,7 @@ to the trash?</source>
     <message>
         <location filename="../core/storage.cpp" line="+255"/>
         <source>No Path was provided for the Storage: %1. Edit the device to provide one and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>ストレージのパスが指定されていません: %1。デバイスを編集してパスを指定し、もう一度お試しください。</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -6171,14 +6171,20 @@ to the trash?</source>
 The source folder does not contain any file: &apos;%2&apos;
 
 This could mean that the device is not mounted to this folder, or the folder is simply empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>ストレージ: &apos;%1&apos;
+
+ソースフォルダーにファイルがありません: &apos;%2&apos;
+
+デバイスがこのフォルダーにマウントされていないか、フォルダーが単に空である可能性があります。</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Katalog could not get values.
 
 Check that the source folder (%1) is correct, or that the device is mounted to the source folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalog は値を取得できませんでした。
+
+ソースフォルダー (%1) が正しいか、デバイスがソースフォルダーにマウントされているかを確認してください。</translation>
     </message>
 </context>
 <context>
@@ -8863,32 +8869,32 @@ Errors: %3</source>
     <message>
         <location line="-562"/>
         <source>Storage devices linked to a missing storage</source>
-        <translation type="unfinished"></translation>
+        <translation>存在しないストレージにリンクされたストレージデバイス</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>どのデバイスにもリンクされていないストレージ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage IDs used by more than one storage</source>
-        <translation type="unfinished"></translation>
+        <translation>複数のストレージで使用されているストレージID</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalog devices linked to a missing catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>存在しないカタログにリンクされたカタログデバイス</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalogs not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>どのデバイスにもリンクされていないカタログ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Devices with a missing parent device</source>
-        <translation type="unfinished"></translation>
+        <translation>親デバイスが存在しないデバイス</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -8914,7 +8920,7 @@ Errors: %3</source>
         <location line="+25"/>
         <location line="+292"/>
         <source>Quality check</source>
-        <translation type="unfinished"></translation>
+        <translation>品質チェック</translation>
     </message>
     <message>
         <location line="-312"/>
@@ -8926,13 +8932,13 @@ Errors: %3</source>
         <location line="-90"/>
         <location line="+84"/>
         <source>Nothing found</source>
-        <translation type="unfinished"></translation>
+        <translation>見つかりませんでした</translation>
     </message>
     <message>
         <location line="-78"/>
         <location line="+49"/>
         <source>No issues found.</source>
-        <translation type="unfinished"></translation>
+        <translation>問題は見つかりませんでした。</translation>
     </message>
     <message>
         <location line="-29"/>
@@ -9083,7 +9089,7 @@ Errors: %3</source>
     <message>
         <location line="+10"/>
         <source>Reset window size</source>
-        <translation type="unfinished"></translation>
+        <translation>ウィンドウサイズをリセット</translation>
     </message>
     <message>
         <location line="-188"/>

@@ -586,7 +586,7 @@ Válasszon másik nevet.</translation>
     <message>
         <location line="+22"/>
         <source>Failed to update link.</source>
-        <translation type="unfinished"></translation>
+        <translation>A hivatkozás frissítése sikertelen.</translation>
     </message>
     <message>
         <location line="+106"/>
@@ -2034,17 +2034,17 @@ Mindenképpen menti (a katalógus üres lesz)?</translation>
     <message>
         <location filename="../core/catalogjobstoppable.cpp" line="+270"/>
         <source>The file list is saved. Metadata and checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>A fájllista mentve. A metaadatok és ellenőrző összegek vizsgálata nem fejeződött be, és a katalógus frissítésekor folytatódik.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Metadata scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>A fájllista mentve. A metaadatok vizsgálata nem fejeződött be, és a katalógus frissítésekor folytatódik.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>A fájllista mentve. Az ellenőrző összegek vizsgálata nem fejeződött be, és a katalógus frissítésekor folytatódik.</translation>
     </message>
     <message>
         <location line="+1156"/>
@@ -4615,27 +4615,27 @@ A felosztás nem történt meg.</translation>
     <message>
         <location line="+47"/>
         <source>Matched</source>
-        <translation type="unfinished"></translation>
+        <translation>Egyező</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Mismatched</source>
-        <translation type="unfinished"></translation>
+        <translation>Eltérő</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Calculated</source>
-        <translation type="unfinished"></translation>
+        <translation>Kiszámítva</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Updated</source>
-        <translation type="unfinished"></translation>
+        <translation>Frissítve</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Skipped</source>
-        <translation type="unfinished"></translation>
+        <translation>Kihagyva</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -6162,7 +6162,7 @@ lomtárba helyezése?</translation>
     <message>
         <location filename="../core/storage.cpp" line="+255"/>
         <source>No Path was provided for the Storage: %1. Edit the device to provide one and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nincs megadva útvonal a tárolóhoz: %1. Szerkessze az eszközt egy útvonal megadásához, majd próbálja újra.</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -6171,14 +6171,20 @@ lomtárba helyezése?</translation>
 The source folder does not contain any file: &apos;%2&apos;
 
 This could mean that the device is not mounted to this folder, or the folder is simply empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tároló: &apos;%1&apos;
+
+A forrásmappa nem tartalmaz fájlt: &apos;%2&apos;
+
+Ez azt jelentheti, hogy az eszköz nincs ehhez a mappához csatolva, vagy a mappa egyszerűen üres.</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Katalog could not get values.
 
 Check that the source folder (%1) is correct, or that the device is mounted to the source folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>A Katalog nem tudta lekérni az értékeket.
+
+Ellenőrizze, hogy a forrásmappa (%1) helyes-e, vagy hogy az eszköz a forrásmappához van-e csatolva.</translation>
     </message>
 </context>
 <context>
@@ -8863,32 +8869,32 @@ Hibák: %3</translation>
     <message>
         <location line="-562"/>
         <source>Storage devices linked to a missing storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiányzó tárolóhoz kapcsolt tárolóeszközök</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>Egyetlen eszközhöz sem kapcsolt tárolók</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage IDs used by more than one storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Egynél több tároló által használt tároló azonosítók</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalog devices linked to a missing catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiányzó katalógushoz kapcsolt katalóguseszközök</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalogs not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>Egyetlen eszközhöz sem kapcsolt katalógusok</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Devices with a missing parent device</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiányzó szülő eszközzel rendelkező eszközök</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -8914,7 +8920,7 @@ Hibák: %3</translation>
         <location line="+25"/>
         <location line="+292"/>
         <source>Quality check</source>
-        <translation type="unfinished"></translation>
+        <translation>Minőségellenőrzés</translation>
     </message>
     <message>
         <location line="-312"/>
@@ -8926,13 +8932,13 @@ Hibák: %3</translation>
         <location line="-90"/>
         <location line="+84"/>
         <source>Nothing found</source>
-        <translation type="unfinished"></translation>
+        <translation>Nincs találat</translation>
     </message>
     <message>
         <location line="-78"/>
         <location line="+49"/>
         <source>No issues found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem található probléma.</translation>
     </message>
     <message>
         <location line="-29"/>
@@ -9083,7 +9089,7 @@ Hibák: %3</translation>
     <message>
         <location line="+10"/>
         <source>Reset window size</source>
-        <translation type="unfinished"></translation>
+        <translation>Ablakméret visszaállítása</translation>
     </message>
     <message>
         <location line="-188"/>

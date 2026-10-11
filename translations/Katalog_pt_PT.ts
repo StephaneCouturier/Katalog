@@ -586,7 +586,7 @@ Escolha um nome diferente.</translation>
     <message>
         <location line="+22"/>
         <source>Failed to update link.</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível atualizar a ligação.</translation>
     </message>
     <message>
         <location line="+106"/>
@@ -2034,17 +2034,17 @@ Deseja guardá-lo mesmo assim (o catálogo ficaria vazio)?</translation>
     <message>
         <location filename="../core/catalogjobstoppable.cpp" line="+270"/>
         <source>The file list is saved. Metadata and checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>A lista de ficheiros foi guardada. A análise de metadados e somas de verificação está incompleta e continuará quando o catálogo for atualizado.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Metadata scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>A lista de ficheiros foi guardada. A análise de metadados está incompleta e continuará quando o catálogo for atualizado.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>A lista de ficheiros foi guardada. A análise de somas de verificação está incompleta e continuará quando o catálogo for atualizado.</translation>
     </message>
     <message>
         <location line="+1156"/>
@@ -4615,27 +4615,27 @@ A divisão não foi realizada.</translation>
     <message>
         <location line="+47"/>
         <source>Matched</source>
-        <translation type="unfinished"></translation>
+        <translation>Correspondentes</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Mismatched</source>
-        <translation type="unfinished"></translation>
+        <translation>Não correspondentes</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Calculated</source>
-        <translation type="unfinished"></translation>
+        <translation>Calculados</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Updated</source>
-        <translation type="unfinished"></translation>
+        <translation>Atualizados</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Skipped</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignorados</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -6163,7 +6163,7 @@ para o lixo?</translation>
     <message>
         <location filename="../core/storage.cpp" line="+255"/>
         <source>No Path was provided for the Storage: %1. Edit the device to provide one and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi indicado nenhum caminho para o armazenamento: %1. Edite o dispositivo para indicar um e tente novamente.</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -6172,14 +6172,20 @@ para o lixo?</translation>
 The source folder does not contain any file: &apos;%2&apos;
 
 This could mean that the device is not mounted to this folder, or the folder is simply empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>Armazenamento: &apos;%1&apos;
+
+A pasta de origem não contém nenhum ficheiro: &apos;%2&apos;
+
+Isto pode significar que o dispositivo não está montado nesta pasta, ou que a pasta está simplesmente vazia.</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Katalog could not get values.
 
 Check that the source folder (%1) is correct, or that the device is mounted to the source folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>O Katalog não conseguiu obter os valores.
+
+Verifique se a pasta de origem (%1) está correta, ou se o dispositivo está montado na pasta de origem.</translation>
     </message>
 </context>
 <context>
@@ -8864,32 +8870,32 @@ Erros: %3</translation>
     <message>
         <location line="-562"/>
         <source>Storage devices linked to a missing storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivos de armazenamento ligados a um armazenamento em falta</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>Armazenamentos não ligados a nenhum dispositivo</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage IDs used by more than one storage</source>
-        <translation type="unfinished"></translation>
+        <translation>IDs de armazenamento usados por mais de um armazenamento</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalog devices linked to a missing catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivos de catálogo ligados a um catálogo em falta</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalogs not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>Catálogos não ligados a nenhum dispositivo</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Devices with a missing parent device</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivos com um dispositivo principal em falta</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -8915,7 +8921,7 @@ Erros: %3</translation>
         <location line="+25"/>
         <location line="+292"/>
         <source>Quality check</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlo de qualidade</translation>
     </message>
     <message>
         <location line="-312"/>
@@ -8927,13 +8933,13 @@ Erros: %3</translation>
         <location line="-90"/>
         <location line="+84"/>
         <source>Nothing found</source>
-        <translation type="unfinished"></translation>
+        <translation>Nada encontrado</translation>
     </message>
     <message>
         <location line="-78"/>
         <location line="+49"/>
         <source>No issues found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nenhum problema encontrado.</translation>
     </message>
     <message>
         <location line="-29"/>
@@ -9084,7 +9090,7 @@ Erros: %3</translation>
     <message>
         <location line="+10"/>
         <source>Reset window size</source>
-        <translation type="unfinished"></translation>
+        <translation>Repor o tamanho da janela</translation>
     </message>
     <message>
         <location line="-188"/>

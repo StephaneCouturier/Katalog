@@ -586,7 +586,7 @@ Choose a different name.</source>
     <message>
         <location line="+22"/>
         <source>Failed to update link.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ažuriranje veze nije uspelo.</translation>
     </message>
     <message>
         <location line="+106"/>
@@ -2034,17 +2034,17 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
     <message>
         <location filename="../core/catalogjobstoppable.cpp" line="+270"/>
         <source>The file list is saved. Metadata and checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista datoteka je sačuvana. Skeniranje metapodataka i kontrolnih suma nije završeno i nastaviće se pri ažuriranju kataloga.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Metadata scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista datoteka je sačuvana. Skeniranje metapodataka nije završeno i nastaviće se pri ažuriranju kataloga.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista datoteka je sačuvana. Skeniranje kontrolnih suma nije završeno i nastaviće se pri ažuriranju kataloga.</translation>
     </message>
     <message>
         <location line="+1156"/>
@@ -4615,27 +4615,27 @@ Deljenje nije izvršeno.</translation>
     <message>
         <location line="+47"/>
         <source>Matched</source>
-        <translation type="unfinished"></translation>
+        <translation>Podudarne</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Mismatched</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodudarne</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Calculated</source>
-        <translation type="unfinished"></translation>
+        <translation>Izračunate</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Updated</source>
-        <translation type="unfinished"></translation>
+        <translation>Ažurirane</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Skipped</source>
-        <translation type="unfinished"></translation>
+        <translation>Preskočene</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -6163,7 +6163,7 @@ u smeće?</translation>
     <message>
         <location filename="../core/storage.cpp" line="+255"/>
         <source>No Path was provided for the Storage: %1. Edit the device to provide one and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Za skladište nije navedena putanja: %1. Uredite uređaj da biste je naveli i pokušajte ponovo.</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -6172,14 +6172,20 @@ u smeće?</translation>
 The source folder does not contain any file: &apos;%2&apos;
 
 This could mean that the device is not mounted to this folder, or the folder is simply empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>Skladište: &apos;%1&apos;
+
+Izvorna fascikla ne sadrži nijednu datoteku: &apos;%2&apos;
+
+To može značiti da uređaj nije montiran u ovu fasciklu ili da je fascikla jednostavno prazna.</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Katalog could not get values.
 
 Check that the source folder (%1) is correct, or that the device is mounted to the source folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalog nije mogao da dobije vrednosti.
+
+Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran u izvornu fasciklu.</translation>
     </message>
 </context>
 <context>
@@ -8864,32 +8870,32 @@ Errors: %3</source>
     <message>
         <location line="-562"/>
         <source>Storage devices linked to a missing storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Uređaji skladišta povezani sa nepostojećim skladištem</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>Skladišta koja nisu povezana ni sa jednim uređajem</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage IDs used by more than one storage</source>
-        <translation type="unfinished"></translation>
+        <translation>ID-ovi skladišta koje koristi više od jednog skladišta</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalog devices linked to a missing catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Uređaji kataloga povezani sa nepostojećim katalogom</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalogs not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalozi koji nisu povezani ni sa jednim uređajem</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Devices with a missing parent device</source>
-        <translation type="unfinished"></translation>
+        <translation>Uređaji sa nepostojećim roditeljskim uređajem</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -8915,7 +8921,7 @@ Errors: %3</source>
         <location line="+25"/>
         <location line="+292"/>
         <source>Quality check</source>
-        <translation type="unfinished"></translation>
+        <translation>Provera kvaliteta</translation>
     </message>
     <message>
         <location line="-312"/>
@@ -8927,13 +8933,13 @@ Errors: %3</source>
         <location line="-90"/>
         <location line="+84"/>
         <source>Nothing found</source>
-        <translation type="unfinished"></translation>
+        <translation>Ništa nije pronađeno</translation>
     </message>
     <message>
         <location line="-78"/>
         <location line="+49"/>
         <source>No issues found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nisu pronađeni problemi.</translation>
     </message>
     <message>
         <location line="-29"/>
@@ -9084,7 +9090,7 @@ Errors: %3</source>
     <message>
         <location line="+10"/>
         <source>Reset window size</source>
-        <translation type="unfinished"></translation>
+        <translation>Vrati veličinu prozora</translation>
     </message>
     <message>
         <location line="-188"/>

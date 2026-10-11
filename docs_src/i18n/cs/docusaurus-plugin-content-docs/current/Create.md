@@ -1,202 +1,151 @@
 ---
-version: "2.12"
+version: "3.0"
 ---
 # Vytvořit
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
-## Souhrn
-Tato stránka popisuje všechny funkce obrazovky **Vytvořit** a jak je používat.<br/>
-Na této obrazovce může uživatel **vytvořit katalog souborů**.<br/>
-Provádí se ve 3 hlavních krocích:
-1. Vybrat cestu ke zdroji: zařízení nebo adresář se soubory, které mají být zahrnuty do nového katalogu.
-1. Vybrat možnosti pro zahrnutí nebo vyloučení některých souborů.
-1. Vybrat [Úložiště](DevicesStorage), definovat název katalogu a vytvořit katalog.
+## Shrnutí
+Tato stránka popisuje stránku **Vytvořit**, kde se vytváří nový **katalog**: rejstřík souborů jedné složky, uložený v kolekci, aby v něm bylo možné vyhledávat a procházet ho, i když je zařízení odpojené.
 
-![Přehled obrazovky Vytvořit](/img/k2/screen_create_01.png)
+Probíhá ve třech krocích:
+1. [Definujte katalog](#definition): složku k indexování, její úložné zařízení a název.
+1. Zvolte [možnosti obsahu](#content-options): typy souborů, podsložky, skryté soubory, metadata, kontrolní součty a vyloučení.
+1. Klikněte na *Vytvořit*.
 
-## Vybrat cestu ke zdroji
-Existují 3 způsoby, jak vybrat zdrojovou cestu k adresáři se soubory, které mají být zahrnuty do nového [Katalogu](DevicesCatalogs):
-1. zadáním cesty do textového pole
-1. pomocí stromového zobrazení systému souborů — stačí rozbalit a kliknout na správné zařízení nebo adresář
-1. nebo kliknutím na tlačítko *Vybrat*, které otevře dialogové okno pro výběr složky.
+![Stránka Vytvořit: definice katalogu, možnosti obsahu a globální parametry](/img/create_01_overview.png)
 
-Vybraná cesta se vždy zobrazí v textovém poli a aplikace ji použije k procházení a katalogizaci obsahu.
+## Definice katalogu {#definition}
 
-## Vybrat možnosti pro zahrnutí/vyloučení souborů {#select-options-to-includeexclude-files}
-Zvolte, které typy souborů mají být zahrnuty do katalogu.
+| Pole | Popis |
+|------|-------|
+| *Zdrojová cesta* | Složka k indexování. Vyplní se cestou zařízení vybraného na stránce [Výběr](Selection) a lze ji zadat nebo zvolit pomocí *Vyberte cestu*. |
+| *Úložiště* | Úložné zařízení, na kterém složka je: disk nebo počítač (viz [Zařízení](Devices#model)). Zobrazují se pouze úložná zařízení. Nová kolekce již jedno má, *Lokální disk*. Další přidáte pomocí *Přidat úložiště* na stránce [Zařízení](Devices#page-actions). |
+| *Název katalogu* | Název nového katalogu. Každý katalog potřebuje vlastní název. *Vytvořit název z cesty* (tlačítko vedle pole) ho vytvoří ze zdrojové cesty, se `_` místo `/` a `:`. |
 
-### Filtrování typů souborů {#enhanced-file-type-filtering}
-Katalog používá inteligentní detekci typů souborů podle přípony, která automaticky podporuje stovky formátů.
+Když pole chybí nebo je chybné, zpráva v horní části stránky uvede, co je potřeba, například *Zadejte název pro tento nový katalog.* Zmizí, jakmile je pole opraveno. Totéž nastane, když zdrojová složka neexistuje nebo když stejný název již má jiný katalog.
 
-**Jak detekce typů souborů funguje:**
-- **Počáteční detekce**: typy souborů jsou určeny analýzou přípon pomocí inteligentní mezipaměti přípon sestavené z databáze MIME systému
-- **Rozsáhlá podpora**: podporuje stovky formátů souborů
-- **Perspektivní**: nové formáty jsou automaticky rozpoznány při aktualizaci systému
+Když zdrojová složka neobsahuje žádný soubor, nejprve se zobrazí otázka: složka může být prázdná, nebo zařízení nemusí být připojeno na tomto místě. *Ano* katalog přesto vytvoří, prázdný.
 
-**Poznámka k přesnosti**:
-- Typy souborů jsou při vytváření katalogu určeny z analýzy přípon, aby byla maximalizována rychlost indexování.
-- Mohou však nastat chyby přípon nebo chybějící přípony
-- Pro maximální přesnost je možné spustit ověření MIME na existujících katalozích přes obrazovku Zařízení a opravit soubory s zavádějícími příponami.
+## Možnosti obsahu {#content-options}
+Možnosti určují, co se indexuje. Lze je později změnit úpravou katalogu (viz [Úprava zařízení](DevicesEdit#content-options)); katalog pak potřebuje aktualizaci, aby se jim přizpůsobil.
 
-### Kategorie typů souborů
-Obsah katalogu může být omezen na konkrétní typ souborů.
-Tato možnost se bude vztahovat na katalog dopředu. Lze ji později změnit úpravou [Katalogu](DevicesCatalogs).
+### Typ souboru {#file-type}
+Katalog lze omezit na jeden typ souborů.
 
-| Typ   | Popis | Definice | Příklady přípon |
-| ------| ------|----------|-----------------|
-| Vše   | Všechny typy souborů bez filtrování | | |
-| Audio | Hudba, podcasty, zvukové nahrávky a zvukové soubory | (dle typů MIME) | MP3, FLAC, AAC, M4A, OGG, WAV, AIFF, Opus, WMA, MIDI, AMR (50+ formátů) |
-| Obrázek | Fotografie, grafika, diagramy, ikony a vizuální obsah | (dle typů MIME) | JPG, PNG, HEIC, WebP, TIFF, RAW, SVG, XCF, GIF, BMP (100+ formátů) |
-| Text  | Dokumenty, zdrojové soubory, značkovací jazyky, datové soubory a čitelný obsah | (specifická definice Katalog)<br/>Zahrnuje všechny soubory MIME začínající na „text/" a také aplikační soubory jako PDF, Word atd. | PDF, DOCX, ODT, Markdown, HTML, JSON, zdrojový kód, e-knihy (100+ formátů) |
-| Video | Filmy, klipy, animace a video obsah | (dle typů MIME) | MP4, MKV, AVI, WebM, MOV, FLV, 3GP, OGV, M2TS (40+ formátů) |
-| Ostatní | Všechny ostatní typy nepokryté výše uvedenými kategoriemi | (specifická definice Katalog) | ZIP, RAR, EXE, DLL, ISO, aplikační soubory neklasifikované jako Text |
-| Žádný | Soubory, jejichž typ nelze určit podle přípony | Soubory bez přípony nebo s neznámými příponami | |
+| Typ | Popis | Definice | Příklady přípon |
+|-----|-------|----------|-----------------|
+| Všechno | Všechny typy souborů, bez filtrování. | | |
+| Zvuk | Hudba, podcasty, zvukové nahrávky a zvukové soubory. | Podle definice typů MIME. | MP3, FLAC, AAC, M4A, OGG, WAV, AIFF, Opus, WMA, MIDI, AMR (více než 50 formátů) |
+| Obraz | Fotografie, grafika, diagramy, ikony a vizuální obsah. | Podle definice typů MIME. | JPG, PNG, HEIC, WebP, TIFF, RAW, SVG, XCF, GIF, BMP (více než 100 formátů) |
+| Text | Dokumenty, soubory kódu, značkovací jazyky, datové soubory a čitelný obsah. | Vlastní definice Katalogu: všechny soubory s typem MIME začínajícím `text/` a navíc soubory aplikací, jako jsou dokumenty PDF a Word. | PDF, DOCX, ODT, Markdown, HTML, JSON, soubory zdrojového kódu, e-knihy (více než 100 formátů) |
+| Video | Filmy, klipy, animace a video obsah. | Podle definice typů MIME. | MP4, MKV, AVI, WebM, MOV, FLV, 3GP, OGV, M2TS (více než 40 formátů) |
+| Jiné | Všechny ostatní typy souborů. | Vlastní definice Katalogu. | ZIP, RAR, EXE, DLL, ISO: spustitelné soubory, archivy, systémové soubory a soubory aplikací nezařazené jako Text. |
+| Žádné | Soubory, jejichž typ nelze určit z přípony. | Soubory bez přípony nebo s neznámou příponou. | |
 
-### Extrakce metadat {#metadata-extraction}
-Zvolte, kolik metadat se má z vašich souborů extrahovat při vytváření katalogu.
-<br/>To ovlivňuje rychlost katalogizace nebo velikost kolekce, ale poskytuje bohatší informace o souborech pro vyhledávání a statistiky.
+Typ souboru se určuje podle jeho **přípony** pomocí databáze MIME systému: rozpoznávají se stovky formátů a s aktualizacemi systému i nové. Díky tomu je indexace rychlá. Soubor s chybnou nebo chybějící příponou proto může dostat nesprávný typ.
 
-**Dostupné možnosti:**
-- **None**: žádná extrakce metadat (nejrychlejší katalogizace)
-- **Media Basic**: extrakce základních metadat z obrázků, videí a zvukových souborů
-- **Media Extended**: extrakce komplexních metadat včetně technických detailů
-- **Full Extended**: maximální extrakce metadat pro všechny podporované typy souborů
+### Zahrnout podadresáře {#include-subdirectories}
+Zaškrtnuto (výchozí): indexují se soubory všech podsložek. Nezaškrtnuto: pouze soubory přímo ve zdrojové cestě.
 
-**Co extrahuje Media Basic:**
-- **Audio**: interpret, album, detaily stopy, délka, datový tok
-- **Obrázky**: rozměry, orientace
-- **Videa**: rozměry, délka, kodek a snímková frekvence
+### Zahrnout skryté soubory {#include-hidden-files}
+*Žádné* (výchozí) skryté soubory a složky přeskočí; *Všechno* je zahrne.<br/>
+V domovské složce nebo na systémovém disku mohou skryté složky (`.cache`, `.local`…) obsahovat mnoho souborů: vyloučením nepotřebných zůstane katalog malý.
 
-**Co extrahuje Extended:**
-Tento mechanismus je postaven na knihovně KFileMetaData, která určuje podporované typy souborů a metadata.
+### Zahrnout metadata {#include-metadata}
+Kolik informací se čte z obsahu souborů. Indexace se tím prodlouží, ale výsledky ve [Vyhledávání](Search) (rozměry, délka, umělec…) a ve [Statistice](Statistics) jsou bohatší.
 
-**Vliv na výkon:**
-- **None**: nejrychlejší možnost, vhodná pro velké adresáře nebo když metadata nejsou potřeba
-- **Media Basic/Extended**: mírný dopad, zpracovává pouze multimediální soubory
-- **Full Extended**: pomalejší, ale nejkompletnější — extrahuje ze všech podporovaných formátů
+| Úroveň | Co se čte |
+|--------|-----------|
+| *Žádné* | Žádná metadata: nejrychlejší. |
+| *Média základní* | To podstatné z obrázků, videí a zvukových souborů: rozměry a orientace obrázků; rozměry, délka, kodek a snímková frekvence videí; umělec, album, stopa, délka a datový tok zvukových souborů. |
+| *Média rozšířené* | Všechna metadata obrázků, videí a zvukových souborů, včetně technických údajů. |
+| *Úplné rozšířené* | Všechna metadata každého podporovaného typu souboru. |
 
-**Podporované typy souborů pro metadata:**
-- **Obrázky**: jpg, png, gif, bmp, tiff, webp, svg, heic, raw, xcf
-- **Videa**: mp4, mkv, avi, mov, wmv, flv, webm, m4v, mpg, 3gp, ogv, vob
-- **Audio**: mp3, wav, flac, ogg, m4a, aac, wma, opus, aiff, mid, amr
+Rozšířené úrovně používají knihovnu KFileMetaData, která určuje podporované typy a pole; jejich metadata lze zobrazit pomocí *Zobrazit rozšířená metadata (JSON)* ve výsledcích vyhledávání a na stránce Prozkoumat.<br/>
+Úrovně Média čtou pouze multimediální soubory: ostatní soubory se přeskočí. Poškozené nebo nečitelné soubory se přeskočí, aniž by se vytváření katalogu zastavilo.
 
-Toto nastavení se vztahuje pouze na tento katalog a lze je později změnit úpravou [Katalogu](DevicesCatalogs).
+Podporované multimediální soubory:
+* **Obrázky**: jpg, png, gif, bmp, tiff, webp, svg, heic, raw, xcf
+* **Videa**: mp4, mkv, avi, mov, wmv, flv, webm, m4v, mpg, 3gp, ogv, vob
+* **Zvuk**: mp3, wav, flac, ogg, m4a, aac, wma, opus, aiff, mid, amr
 
-**Poznámka:** Extrakce metadat vyžaduje čitelné soubory. Poškozené soubory nebo soubory s omezeným přístupem budou přeskočeny bez vlivu na proces katalogizace.
+### Zahrnout kontrolní součet {#include-checksum}
+*SHA-256* vypočítá kontrolní součet každého souboru: otisk jeho obsahu. Kontrolní součty zpřesňují [hledání duplikátů a rozdílů](Search) a umožňují později ověřit, že se soubory nezměnily.<br/>
+⚠️ Trvá to mnohem déle než ostatní možnosti, protože se čtou **všechna** data každého souboru (viz [Průvodce výkonem](#performance)).
 
-### Kontrolní součet souboru {#file-checksum}
-Kontrolní součet SHA256 lze vypočítat během indexování pro vyhledávání duplicit nebo rozdílů.
-⚠️ Je to výrazně delší proces než ostatní možnosti indexování, protože čte VŠECHNA data pro výpočet kontrolních součtů.
-Stejně jako metadata lze tuto možnost vybrat při vytváření katalogu nebo změnit později; při přerušení procesu jsou již vypočítané kontrolní součty uloženy a příští aktualizace bude pokračovat pro zbývající soubory.
-Kontrolní součty souborů lze použít jako možnost vyhledávání duplicit nebo vyhledávání rozdílů.
+### Vyloučit složky nebo soubory {#exclude-folders-or-files}
+Cesty nebo názvy, které se **v tomto katalogu** neindexují.<br/>
+Zadejte cestu nebo název do *Cesta nebo název k vyloučení* nebo zvolte složku pomocí *Vyberte cestu* a klikněte na *Přidat*. Tlačítko *Odebrat* vedle položky ji ze seznamu odebere.<br/>
+Seznam se ukládá spolu s katalogem.
 
-### Zahrnout skryté soubory {#other-options}
-Skryté soubory nejsou ve výchozím nastavení zahrnuty, ale tato možnost je umožňuje zahrnout.<br/>
-Tato možnost se bude vztahovat na katalog dopředu.<br/>
-Lze ji později změnit úpravou [Katalogu](DevicesCatalogs).
+## Globální parametry {#global-parameters}
+Sekce *Globální parametry* obsahuje nastavení společná pro **všechny katalogy** kolekce. Tlačítko na řádku jejího nadpisu ji sbalí nebo rozbalí.
 
-### Panel Globální parametry
+### Globální vyloučení složek {#exclude-directories}
+Cesty vyloučené z **každého katalogu**, při jeho vytvoření i při každé aktualizaci.<br/>
+Zadejte cestu do *Cesta ke globálnímu vyloučení* (nebo použijte *Vyberte cestu*) a klikněte na *Přidat*. *Odebrat* vedle položky ji odebere.
 
-Panel *Globální parametry* sdružuje nastavení, která se vztahují na všechny katalogy. Lze jej sbalit nebo rozbalit pomocí přepínacího tlačítka v horní části panelu.
+### Jak vyloučení fungují
+Globální vyloučení a vyloučení katalogu se sčítají: soubor nebo složka vynechaná kterýmkoli seznamem se neindexuje.<br/>
+Vyloučení je **shoda textu**: každý soubor nebo složka, jejíž úplná cesta **obsahuje** daný text, se přeskočí. Shoda rozlišuje velká a malá písmena.
+* **Úplná cesta**: `/home/username/Downloads/temp` přeskočí tuto složku a celý její obsah.
+* **Název složky**: `node_modules` přeskočí **každou** složku `node_modules`, ať je kdekoli.
+* **Část názvu**: `.cache` přeskočí `/home/username/.cache/`, ale i `/home/username/.cachedata/`, protože obě cesty daný text obsahují.
 
-### Vyloučit adresáře (globálně) {#exclude-directories}
+## Vytvoření katalogu {#creating}
+*Vytvořit* uloží katalog a spustí indexaci. Průběh se zobrazuje v panelu činnosti dole v okně (viz [Rozhraní](Interface)). Pokud probíhá jiná operace, vytvoření čeká ve frontě.
 
-:::note
-Tato vyloučení jsou **globální**: platí pro **všechny** katalogy, jak při vytváření nových katalogů, tak při aktualizaci stávajících.
-:::
+Indexace probíhá ve dvou fázích:
+1. načte se a uloží **seznam souborů**: katalog lze používat, jakmile tato fáze skončí,
+2. poté, pokud byla zvolena, se čtou **metadata** a **kontrolní součty**.
 
-Z katalogizace je možné vyloučit adresáře, a to jak při vytváření, tak při aktualizacích.<br/>
-Zadejte cestu nebo textový vzor a klikněte na *Přidat*.<br/>
-Záznam se pak zobrazí v seznamu níže.<br/>
-Libovolný záznam lze odebrat kliknutím pravým tlačítkem a výběrem *Odebrat*.<br/>
+*Zastavit* ukončí vytváření:
+* během první fáze se katalog nevytvoří,
+* během druhé fáze se katalog **zachová** s úplným seznamem souborů; dosud nenačtená metadata nebo kontrolní součty se doplní při příští aktualizaci katalogu.
 
-**Jak vyloučení funguje:**
+Po dokončení se nový katalog vybere na stránce [Výběr](Selection) a otevře se stránka [Zařízení](Devices) se zprávou: název a cesta katalogu, počet souborů a celková velikost a, pokud bylo aktualizováno jeho úložiště, využité, volné a celkové místo úložiště s tím, co přibylo. Pokud kontrola metadat nebo kontrolních součtů nebyla dokončena, místo toho to vysvětlí zpráva.<br/>
+*Zavřít* (nebo `Esc`) stránku zavře.
 
-Vyloučení používá **textovou shodu**: jakýkoli soubor nebo složka, jejichž celá cesta **obsahuje** text vyloučení, bude přeskočen. To znamená:
+## Průvodce výkonem {#performance}
 
-- **Celá cesta**: zadání `/home/user/Downloads/temp` vyloučí tento konkrétní adresář a veškerý jeho obsah.
-- **Název složky**: zadání `node_modules` vyloučí **každý** adresář `node_modules` ve všech katalozích.
-- **Částečná cesta**: zadání `.cache` vyloučí adresáře jako `/home/user/.cache/`, ale také `/home/user/.cachedata/`, protože shoda je založena na obsahu textu.
+### Co ovlivňuje rychlost prohledávání?
 
-Shoda rozlišuje **velká a malá písmena**.
 
-![Seznam globálně vyloučených adresářů s ukázkovými záznamy](/img/k2/screen_create_04_exclude.png)
+| # | Faktor | Míra dopadu | Co ho určuje | Poznámky |
+|---|--------|:---:|---|---|
+| 1 | **Kontrolní součet souborů** | ⚫⚫⚫⚫⚫ Kritická | **Celkový objem dat** (čte 100 % bajtů, vyrovnávací paměť 8 MB), pak rychlost disku, pak počet souborů | SHA-256 přes Qt `QCryptographicHash`. Pevný disk 2 TB při ~100 MB/s = ~5,5 hodiny jen na V/V. SSD při ~500 MB/s ≈ 1 hodina. Po přerušení lze pokračovat. |
+| 2 | **Úložný hardware** | ⚫⚫⚫⚫ Velmi vysoká | Sekvenční nebo náhodný V/V, propustnost, latence | SSD ~100 000 souborů/min, pevný disk ~20–30 000 (fragmentace to zhoršuje). Síť: velmi proměnlivé. Ovlivňuje VŠECHNY ostatní faktory. |
+| 3 | **Metadata: Úplné rozšířené** | ⚫⚫⚫ Vysoká | **Počet souborů** (zejména videa: 5–15 ms/soubor na analýzu kontejnerů), rozložení typů souborů | Používá KFileMetaData. Video a zvuk vyžadují přesuny ve struktuře souboru. Hlášeno ~10× zpomalení oproti Žádné. |
+| 4 | **Metadata: Média základní/rozšířené** | ⚫⚫⚫ Vysoká | Pouze počet multimediálních souborů | Čte jen hlavičky (obrázky: ~2–3 ms). Nemultimediální soubory se zcela přeskočí, takže na skladbě typů souborů hodně záleží. |
+| 6 | **Zahrnout skryté soubory**  | ⚫⚫  Střední | Další soubory navíc (na systémových/domovských discích může jít o obrovské množství: `.cache`, `.local`, `node_modules`…) | Násobící efekt: více souborů = více všeho výše uvedeného. Řešením jsou vyloučené složky. |
+| 7 | **Režim databáze** | ⚫ Nízká až střední | Propustnost zápisu během indexace | Paměť > Soubor > Hostováno. Režim Paměť se při prohledávání vyhne zápisům do SQLite; režim Soubor je omezen zápisy. Dávkové transakce (1000 souborů/dávka) to již zmírňují. |
+| 8 | **Filtr typu souboru** | ⚫ Nízká až střední | Snižuje počet souborů zpracovávaných kvůli metadatům | Filtr na Zvuk/Video/Obraz přeskočí u metadat všechny Text/Jiné: významné u disku se smíšeným obsahem. |
+| 9 | **Počet souborů (celkem)** | ⚫ Nízká | Určuje dobu procházení souborového systému a počet vložení do databáze | I bez jakýchkoli možností zabere výčet 500 000 souborů čas. Nezávisí na velikostech. |
+| 10 | **Vyloučené složky** | ⚫ Nízká | Snižuje skutečný počet souborů | `node_modules`, `.cache` a dočasné složky mohou tvořit 20–30 % souborů domovské složky. |
+| 11 | **Zatížení systému / procesor** | ⚫ Nízká | Paralelní extrakce metadat využívá 4–8 jader | Kontrolní součet je omezen V/V, takže na procesoru tam záleží méně. Metadata jsou omezena procesorem. |
 
-### Vyloučit složky (pro každý katalog)
+Další dlouhé procesy, které Vytvořit ani Aktualizace nepoužívají:
 
-Kromě globálních vyloučení je možné definovat vyloučené složky, které platí pouze pro katalog, který se právě vytváří.
+| # | Faktor | Míra dopadu | Co ho určuje | Poznámky |
+|---|--------|:---:|---|---|
+| 5 | **Ověření typů MIME** | ⚫⚫⚫⚫ Velmi vysoká | Počet souborů (čte část obsahu každého souboru) | Operace pouze při aktualizaci. „Odhad“ podle přípony nic nestojí; ověření čte bajty souborů. Dopad roste s počtem souborů, ne s velikostí. |
+| 12 | **Export kolekce** | ⚫⚫⚫⚫ Velmi vysoká | Export tabulek do SQLite nebo csv || 20 minut až přes 1 hodinu pro 1 milion souborů
 
-- Zadejte cestu ke složce ručně nebo ji vyhledejte pomocí tlačítka *Vybrat*.
-- Klikněte na *Přidat* pro přidání do čekajícího seznamu.
-- Odeberte libovolný záznam kliknutím pravým tlačítkem a výběrem *Odebrat*.
 
-Vyloučení pro každý katalog jsou uložena spolu s katalogem po dokončení jeho vytváření. Uplatňují se navíc ke globálním vyloučením — složka přeskočená libovolným pravidlem nebude indexována.
+Testovací vzorek / sada dat: 60 GB, 40 000 souborů, z toho jeden soubor 20 GB, a směs textů, obrázků a videí.
 
-Tuto možnost lze později změnit úpravou [Katalogu](DevicesCatalogs).
+| Test | Vzorek  | SSD 2 TB (extrapolováno) | Pevný disk 2 TB (odhad) | Základ extrapolace |
+|---------|:-:|:-:|:-:|---|
+| Základní indexace | 00:00:04 | **~00:02:37** | ~00:05–08:00 | Počet souborů |
+| Média základní | 00:01:23 | **~00:54:00** | ~02:00–03:00 | Počet souborů (pouze multimediální) |
+| Média rozšířené | 00:01:52 | **~01:13:00** | ~03:00–04:00 | Počet souborů (náročnější u videa) |
+| Úplné rozšířené | 00:01:23 | **~00:54:00** | ~02:00–03:00 | Počet souborů  |
+| Pouze kontrolní součet | 00:09:20 | **~06:06:00** | ~20:00–30:00 | Celkem bajtů / propustnost |
+| Kontrolní součet + Média základní | 00:11:06 | **~07:15:00** | ~22:00–33:00 | Bajty (převažují) + počet |
 
-## Definovat a vytvořit katalog
-#### Vybrat úložné zařízení
-Katalog musí být spojen s fyzickým zařízením [Úložiště](DevicesStorage), aby se usnadnilo pozdější vyhledávání nebo statistiky.<br/>
-Ve výchozím nastavení Katalog předvytváří výchozí úložné zařízení, místní disk.<br/>
-Toto lze později aktualizovat na obrazovce virtuálního stromu [Zařízení](DevicesTree).<br/>
-Pokud pro tento katalog potřebujete jiné úložiště, klikněte na *Přidat úložiště* a přidejte jej pomocí obrazovek [Zařízení](DevicesTree) nebo [Úložiště](DevicesStorage).
-
-Tato volba se bude vztahovat na katalog dopředu.<br/>
-Lze ji později změnit úpravou [Katalogu](DevicesCatalogs).
-
-#### Zadat název
-Zadejte název katalogu.<br/>
-Duplicitní názvy v současné době nejsou povoleny.
-
-Tlačítko *Generovat* může vytvořit název na základě cesty ke složce a nahradit lomítka <code>/</code> podtržítkem <code>_</code>.
-
-#### Vytvořit katalog
-Až budete připraveni, klikněte na tlačítko *Vytvořit katalog* pro uložení katalogu a zahájení procesu katalogizace obsahu cesty rekurzivně (budou zahrnuty všechny podadresáře).
-
-Jakmile je proces dokončen,
-- Zpráva potvrdí vytvoření a poskytne počet souborů a celkovou velikost souboru vybrané složky pro tento katalog.
-- váš místní disk (úložné zařízení přidané automaticky) byl také aktualizován a zpráva uvádí volné, použité a celkové místo:
-
-![Potvrzení vytvoření katalogu s počtem souborů a přehledem úložného prostoru](/img/k2/screen_create_02.png)
-
-zobrazí se obrazovka [Zařízení](DevicesTree) pro zobrazení katalogu ve stromu zařízení.
-
-Nový katalog je automaticky vybrán na panelu [Výběr](Selection) a připraven k použití pro [Vyhledávání](Search) obsahu.
-
-## Průvodce výkonem
-
-### Co ovlivňuje rychlost skenování?
-
-#### 1. Extrakce metadat (největší dopad: ~10× zpomalení)
-- Metadata obrázků: ~2–3 ms/soubor (čtení hlavičky)
-- Metadata videí: ~5–15 ms/soubor (prohledávání a analýza kontejneru)
-- Řešení: používat pouze „Media Basic", ne „Full Extended"
-
-#### 2. Režim databáze
-- Paměťový režim: rychlejší, používá RAM
-- Souborový režim SQLite: pomalejší, omezený vstupem/výstupem
-
-#### 3. Typ úložiště
-- SSD: ~100 000 souborů/min
-- HDD: ~20 000–30 000 souborů/min (fragmentace má vliv)
-- Síťové úložiště: velmi proměnlivé
-
-#### 4. Vyloučené složky
-- Více vyloučení = rychlejší skenování
-- Příklad: vyloučit .cache, node_modules atd.
-
-#### 5. Zátěž systému
-- Jiné náročné procesy mohou zasahovat
-
-### Benchmarky výkonu
-
-| Soubory | Úložiště | Metadata | Čas |
-|---------|----------|----------|-----|
-| 5 000 | SSD | None | 10 s |
-| 5 000 | SSD | Basic | 50 s |
-| 95 000 | HDD | Basic | 47 s (1. spuštění) / 10 s (z mezipaměti) |
 
 ## Vývoj
-Některé nápady na vývoj této obrazovky:
-* Přizpůsobení typů souborů a/nebo použití MIME typů
-* Další informace najdete v nevyřízeném záznamu [vývoj Vytvořit](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=create).
+Několik nápadů na rozvoj této obrazovky:
+* Katalogizace cloudové instance (například Nextcloud).
+* Přizpůsobení typů souborů.
+* Více viz backlog [vývoje stránky Vytvořit](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=create).

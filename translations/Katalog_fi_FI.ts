@@ -586,7 +586,7 @@ Valitse toinen nimi.</translation>
     <message>
         <location line="+22"/>
         <source>Failed to update link.</source>
-        <translation type="unfinished"></translation>
+        <translation>Linkin päivittäminen epäonnistui.</translation>
     </message>
     <message>
         <location line="+106"/>
@@ -2034,17 +2034,17 @@ Haluatko tallentaa sen silti (luettelo olisi tyhjä)?</translation>
     <message>
         <location filename="../core/catalogjobstoppable.cpp" line="+270"/>
         <source>The file list is saved. Metadata and checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiedostoluettelo on tallennettu. Metatietojen ja tarkistussummien tarkistus on kesken ja jatkuu, kun katalogi päivitetään.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Metadata scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiedostoluettelo on tallennettu. Metatietojen tarkistus on kesken ja jatkuu, kun katalogi päivitetään.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiedostoluettelo on tallennettu. Tarkistussummien tarkistus on kesken ja jatkuu, kun katalogi päivitetään.</translation>
     </message>
     <message>
         <location line="+1156"/>
@@ -4615,27 +4615,27 @@ Jakamista ei suoritettu.</translation>
     <message>
         <location line="+47"/>
         <source>Matched</source>
-        <translation type="unfinished"></translation>
+        <translation>Täsmäävät</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Mismatched</source>
-        <translation type="unfinished"></translation>
+        <translation>Eivät täsmää</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Calculated</source>
-        <translation type="unfinished"></translation>
+        <translation>Laskettu</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Updated</source>
-        <translation type="unfinished"></translation>
+        <translation>Päivitetty</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Skipped</source>
-        <translation type="unfinished"></translation>
+        <translation>Ohitettu</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -6163,7 +6163,7 @@ roskakoriin?</translation>
     <message>
         <location filename="../core/storage.cpp" line="+255"/>
         <source>No Path was provided for the Storage: %1. Edit the device to provide one and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tallennustilalle ei annettu polkua: %1. Muokkaa laitetta antaaksesi polun ja yritä uudelleen.</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -6172,14 +6172,20 @@ roskakoriin?</translation>
 The source folder does not contain any file: &apos;%2&apos;
 
 This could mean that the device is not mounted to this folder, or the folder is simply empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tallennustila: &apos;%1&apos;
+
+Lähdekansio ei sisällä yhtään tiedostoa: &apos;%2&apos;
+
+Tämä voi tarkoittaa, että laitetta ei ole liitetty tähän kansioon tai kansio on yksinkertaisesti tyhjä.</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Katalog could not get values.
 
 Check that the source folder (%1) is correct, or that the device is mounted to the source folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalog ei saanut arvoja.
+
+Tarkista, että lähdekansio (%1) on oikea tai että laite on liitetty lähdekansioon.</translation>
     </message>
 </context>
 <context>
@@ -8864,32 +8870,32 @@ Virheitä: %3</translation>
     <message>
         <location line="-562"/>
         <source>Storage devices linked to a missing storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Tallennuslaitteet, jotka on linkitetty puuttuvaan tallennustilaan</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>Tallennustilat, joita ei ole linkitetty mihinkään laitteeseen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage IDs used by more than one storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Tallennustila-ID:t, joita käyttää useampi kuin yksi tallennustila</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalog devices linked to a missing catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalogilaitteet, jotka on linkitetty puuttuvaan katalogiin</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalogs not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalogit, joita ei ole linkitetty mihinkään laitteeseen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Devices with a missing parent device</source>
-        <translation type="unfinished"></translation>
+        <translation>Laitteet, joiden ylälaite puuttuu</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -8915,7 +8921,7 @@ Virheitä: %3</translation>
         <location line="+25"/>
         <location line="+292"/>
         <source>Quality check</source>
-        <translation type="unfinished"></translation>
+        <translation>Laaduntarkistus</translation>
     </message>
     <message>
         <location line="-312"/>
@@ -8927,13 +8933,13 @@ Virheitä: %3</translation>
         <location line="-90"/>
         <location line="+84"/>
         <source>Nothing found</source>
-        <translation type="unfinished"></translation>
+        <translation>Mitään ei löytynyt</translation>
     </message>
     <message>
         <location line="-78"/>
         <location line="+49"/>
         <source>No issues found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ongelmia ei löytynyt.</translation>
     </message>
     <message>
         <location line="-29"/>
@@ -9084,7 +9090,7 @@ Virheitä: %3</translation>
     <message>
         <location line="+10"/>
         <source>Reset window size</source>
-        <translation type="unfinished"></translation>
+        <translation>Palauta ikkunan koko</translation>
     </message>
     <message>
         <location line="-188"/>

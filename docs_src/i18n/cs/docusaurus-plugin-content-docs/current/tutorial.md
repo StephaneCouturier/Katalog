@@ -1,47 +1,52 @@
 ---
 sidebar_position: 1
-version: "2.13"
+version: "3.0"
 ---
 
 # Tutoriál
-![2.13](https://img.shields.io/badge/Version-2.13-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
-Pojďme objevit **Katalog za méně než 5 minut**.
+Pojďme objevit **Katalog za méně než 5 minut**: vytvořit kolekci, katalogizovat složku a vyhledávat v ní.
 
-## Stažení
-Pro Linux je nejlepší volbou [Flatpak z Flathub](https://flathub.org/en/apps/io.github.stephanecouturier.Katalog).
-<br/>Jinak [stáhněte nejnovější verzi](https://sourceforge.net/projects/katalogg/files/latest/download) ze SourceForge. Váš operační systém (Linux, Windows nebo macOS) by měl být detekován.
+## Stažení a spuštění
+Stáhněte si Katalog pro Linux, Windows nebo macOS: dostupné balíčky a systémové požadavky viz [Podpora více platforem](Overview#multi-platform-support).
 
-## Nainstalujte a spusťte
-- **Linux / přenosný**: rozbalte soubor *Katalog_linux_portable_x.xx.tar.gz* a poté spusťte soubor **Katalog.sh**
-- **Windows / instalace**: spusťte win64 **installer.exe**, který vytvoří položku nabídky
-- **Windows / přenosné**: pokud jste si stáhli verzi zip souboru win64, extrahujte zip a spusťte soubor *Katalog.exe*
+## První spuštění {#first-start}
+Při prvním spuštění uvítací zpráva uvede použitý jazyk a téma (lze je později změnit v [Nastavení](Settings#application)) a nabídne:
+* *Vytvořit nový...*: vytvoří novou **kolekci**, místo, kde Katalog uchovává všechna svá data. Dialog navrhne, kam ji uložit, jako databázový soubor (`.db`). Vhodným místem je složka ve vašem domovském adresáři.
+* *Otevřít existující...*: otevře dříve vytvořenou databázi kolekce (`.db`), například z Katalogu 2.
 
-## První použití / tipy
+Dialogy lze zavřít i bez volby: Katalog se pak spustí bez kolekce a kolekci lze otevřít nebo vytvořit později z postranního panelu (viz [Rozhraní](Interface)).
 
-### Nejprve začněte výběrem složky sbírky
-- Při prvním spuštění se aplikace zeptá na výběr **[složka sbírky](/Katalog/cs/docs/Settings#collection)**, kde jsou uložena všechna data sbírky.
-- Proto je obvykle nejlepším místem složka ve vašem uživatelském adresáři.
-- Poznámka: po prvním spuštění je možné přepnout do jiného režimu správy dat.
-- Dialog lze také zavřít: aplikace se spustí bez sbírky a tu lze vybrat později na obrazovce **[Nastavení](/Katalog/cs/docs/Settings)**.
+![První spuštění: uvítací zpráva](/img/tutorial_01_welcome.png)
 
-### Vytvořte katalog
-- Aplikace se spustí na obrazovce **[Vytvořit](/Katalog/cs/docs/Create)**.
-- Stačí vybrat složku, kterou chcete skenovat, abyste katalogizovali soubory (zde je vybrán adresář */home*),
-- a klikněte na tlačítko **Vytvořit katalog**.
-![Obrazovka Vytvořit s vybranou složkou](/img/k2/screen_create_01.png)
-- Zpráva potvrdí vytvoření a poskytne počet souborů a celkovou velikost souboru vybrané složky pro tento katalog.
-- váš místní disk (úložné zařízení, které bylo přidáno automaticky) byl také aktualizován a zpráva poskytuje pohled na volné, použité a celkové místo:
-![Potvrzovací zpráva o vytvoření katalogu](/img/k2/screen_create_02.png)
-- Aplikace nyní přejde na kartu **[Zařízení](/Katalog/cs/docs/Devices)**, kde vám zobrazí katalog vytvořený pro váš místní disk:
-![Obrazovka Zařízení zobrazující nově vytvořený katalog](/img/k2/screen_create_03.png)
+Po *Vytvořit nový...* zpráva vypíše tři kroky k vytvoření prvního katalogu. *OK* otevře stránku [Vytvořit](Create).
 
-### Vyhledávání soubory v tomto katalogu
-- Přejděte na obrazovku **[Vyhledávání](/Katalog/cs/docs/Search)** kliknutím na první kartu *Vyhledávání* v horní části aplikace.
-- Catlog, který jste vytvořili, je již vybrán, takže můžete soubory ihned vyhledávat.
-- Zkuste zadat text názvu souboru a klikněte na tlačítko **Vyhledávání**
-![Obrazovka Vyhledávání s výsledky](/img/k2/screen_search_01.png)
+## Vytvoření katalogu {#create}
+**Katalog** je rejstřík souborů jedné složky.
+1. *Zdrojová cesta*: zadejte složku ke katalogizaci nebo ji zvolte pomocí *Vyberte cestu*. Například svou složku *Dokumenty*.
+1. *Úložiště*: ponechte *Lokální disk*, úložné zařízení, které Katalog vytvořil pro váš počítač.
+1. *Název katalogu*: zadejte název nebo použijte *Vytvořit název z cesty*.
+1. Klikněte na *Vytvořit* v horní části stránky.
 
-Můžete pokračovat v experimentování na obrazovce Vyhledávání a použít více kritérií a omezit počet výsledků.
+![Stránka Vytvořit se zvolenou složkou](/img/tutorial_02_create.png)
 
-Všechny funkce jsou popsány na stránce **[Vyhledávání](/Katalog/cs/docs/Search)**.
+Průběh se zobrazuje dole v okně. Po dokončení zpráva potvrdí, že byl katalog vytvořen, a ten se objeví ve stromu zařízení na stránce [Výběr](Selection), pod *Lokální disk*.
+
+## Vyhledávání souborů {#search}
+1. Na stránce [Výběr](Selection) klikněte pravým tlačítkem na nový katalog a zvolte *Vyhledávání*: katalog se vybere a vedle se otevře stránka [Vyhledávání](Search).
+1. Zadejte text do pole názvu souboru, například `report`.
+1. Klikněte na *Vyhledávání* (nebo stiskněte `Enter`).
+
+Vpravo se otevře stránka [Výsledky](SearchResults) s nalezenými soubory. Kliknutím na soubor ho otevřete, kliknutím pravým tlačítkem získáte další akce.
+
+![Vyhledávání a výsledky](/img/interface_01_overview.png)
+
+V katalogu lze vyhledávat, i když složka nebo disk nejsou připojeny: právě k tomu Katalog slouží. Stejným způsobem katalogizujte své externí disky, každý pod vlastním úložným zařízením (viz [Zařízení](Devices)), a prohledávejte je všechny najednou výběrem *Fyzická skupina* na stránce Výběr.
+
+## Další kroky
+* Použijte další [kritéria vyhledávání](Search): velikost, data, typy souborů, duplikáty, rozdíly.
+* Procházejte katalog na stránce [Prozkoumat](Explore).
+* Uspořádejte své disky na stránce [Zařízení](Devices).
+* Zálohujte složku pomocí stránky [Záloha](BackUp).
+* Všechny části okna jsou popsány na stránce [Rozhraní](Interface).

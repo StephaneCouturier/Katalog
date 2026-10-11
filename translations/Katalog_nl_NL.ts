@@ -586,7 +586,7 @@ Kies een andere naam.</translation>
     <message>
         <location line="+22"/>
         <source>Failed to update link.</source>
-        <translation type="unfinished"></translation>
+        <translation>Koppeling bijwerken mislukt.</translation>
     </message>
     <message>
         <location line="+106"/>
@@ -2034,17 +2034,17 @@ Wilt u het toch opslaan (de catalogus zou leeg zijn)?</translation>
     <message>
         <location filename="../core/catalogjobstoppable.cpp" line="+270"/>
         <source>The file list is saved. Metadata and checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>De bestandslijst is opgeslagen. Het scannen van metadata en controlesommen is onvolledig en gaat verder wanneer de catalogus wordt bijgewerkt.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Metadata scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>De bestandslijst is opgeslagen. Het scannen van metadata is onvolledig en gaat verder wanneer de catalogus wordt bijgewerkt.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>De bestandslijst is opgeslagen. Het scannen van controlesommen is onvolledig en gaat verder wanneer de catalogus wordt bijgewerkt.</translation>
     </message>
     <message>
         <location line="+1156"/>
@@ -4615,27 +4615,27 @@ Splitsen is niet uitgevoerd.</translation>
     <message>
         <location line="+47"/>
         <source>Matched</source>
-        <translation type="unfinished"></translation>
+        <translation>Overeenkomend</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Mismatched</source>
-        <translation type="unfinished"></translation>
+        <translation>Niet overeenkomend</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Calculated</source>
-        <translation type="unfinished"></translation>
+        <translation>Berekend</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Updated</source>
-        <translation type="unfinished"></translation>
+        <translation>Bijgewerkt</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Skipped</source>
-        <translation type="unfinished"></translation>
+        <translation>Overgeslagen</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -6162,7 +6162,7 @@ naar de prullenbak verplaatsen?</translation>
     <message>
         <location filename="../core/storage.cpp" line="+255"/>
         <source>No Path was provided for the Storage: %1. Edit the device to provide one and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Er is geen pad opgegeven voor de opslag: %1. Bewerk het apparaat om er een op te geven en probeer het opnieuw.</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -6171,14 +6171,20 @@ naar de prullenbak verplaatsen?</translation>
 The source folder does not contain any file: &apos;%2&apos;
 
 This could mean that the device is not mounted to this folder, or the folder is simply empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslag: &apos;%1&apos;
+
+De bronmap bevat geen bestanden: &apos;%2&apos;
+
+Dit kan betekenen dat het apparaat niet op deze map is aangekoppeld, of dat de map gewoon leeg is.</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Katalog could not get values.
 
 Check that the source folder (%1) is correct, or that the device is mounted to the source folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalog kon geen waarden ophalen.
+
+Controleer of de bronmap (%1) juist is, of dat het apparaat op de bronmap is aangekoppeld.</translation>
     </message>
 </context>
 <context>
@@ -8863,32 +8869,32 @@ Fouten: %3</translation>
     <message>
         <location line="-562"/>
         <source>Storage devices linked to a missing storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslagapparaten gekoppeld aan een ontbrekende opslag</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslag die aan geen enkel apparaat is gekoppeld</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage IDs used by more than one storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslag-ID&apos;s die door meer dan één opslag worden gebruikt</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalog devices linked to a missing catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Catalogusapparaten gekoppeld aan een ontbrekende catalogus</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalogs not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>Catalogi die aan geen enkel apparaat zijn gekoppeld</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Devices with a missing parent device</source>
-        <translation type="unfinished"></translation>
+        <translation>Apparaten met een ontbrekend bovenliggend apparaat</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -8914,7 +8920,7 @@ Fouten: %3</translation>
         <location line="+25"/>
         <location line="+292"/>
         <source>Quality check</source>
-        <translation type="unfinished"></translation>
+        <translation>Kwaliteitscontrole</translation>
     </message>
     <message>
         <location line="-312"/>
@@ -8926,13 +8932,13 @@ Fouten: %3</translation>
         <location line="-90"/>
         <location line="+84"/>
         <source>Nothing found</source>
-        <translation type="unfinished"></translation>
+        <translation>Niets gevonden</translation>
     </message>
     <message>
         <location line="-78"/>
         <location line="+49"/>
         <source>No issues found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen problemen gevonden.</translation>
     </message>
     <message>
         <location line="-29"/>
@@ -9083,7 +9089,7 @@ Fouten: %3</translation>
     <message>
         <location line="+10"/>
         <source>Reset window size</source>
-        <translation type="unfinished"></translation>
+        <translation>Venstergrootte herstellen</translation>
     </message>
     <message>
         <location line="-188"/>

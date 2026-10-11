@@ -1,202 +1,151 @@
 ---
-version: "2.12"
+version: "3.0"
 ---
 # Créer
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
 ## Résumé
-Cette page décrit toutes les fonctionnalités de l'écran **Créer** et comment les utiliser.<br/>
-Depuis cet écran, l'utilisateur peut **créer un catalogue de fichiers**.<br/>
-Cela se fait en 3 étapes principales :
-1. Sélectionner le chemin source : le périphérique ou le répertoire contenant les fichiers à inclure dans le nouveau catalogue.
-1. Sélectionner les options pour inclure ou exclure certains fichiers.
-1. Sélectionner le [Stockage](DevicesStorage), définir le nom du catalogue et créer le catalogue.
+Cette page décrit la page **Créer**, où un nouveau **catalogue** est créé : un index des fichiers d'un dossier, conservé dans la collection pour pouvoir être recherché et exploré même lorsque le périphérique est déconnecté.
 
-![Aperçu de l'écran Créer](/img/k2/screen_create_01.png)
+Cela se fait en trois étapes :
+1. [Définir le catalogue](#definition) : le dossier à indexer, son périphérique de stockage et son nom.
+1. Choisir les [options de contenu](#content-options) : types de fichiers, sous-dossiers, fichiers cachés, métadonnées, sommes de contrôle et exclusions.
+1. Cliquer sur *Créer*.
 
-## Sélectionner le chemin source
-Il existe 3 façons de sélectionner le chemin source du répertoire contenant les fichiers à inclure dans le nouveau [Catalogue](DevicesCatalogs) :
-1. en tapant le chemin dans la zone de texte
-1. en utilisant l'arborescence du système de fichiers, développez et cliquez sur le bon périphérique ou répertoire
-1. ou en cliquant sur le bouton *Sélectionner* qui ouvrira une fenêtre de dialogue pour aider à choisir le dossier.
+![Page Créer : définition du catalogue, options de contenu et paramètres globaux](/img/create_01_overview.png)
 
-Le chemin sélectionné apparaîtra toujours dans la zone de texte et l'application utilisera ce chemin pour parcourir et cataloguer son contenu.
+## Définition du catalogue {#definition}
 
-## Sélectionner les options pour inclure/exclure des fichiers {#select-options-to-includeexclude-files}
-Choisissez les types de fichiers à inclure dans votre catalogue.
+| Champ | Description |
+|-------|-------------|
+| *Chemin source* | Le dossier à indexer. Il est rempli avec le chemin du périphérique sélectionné sur la page [Sélection](Selection), et peut être saisi ou choisi avec *Sélectionner le chemin*. |
+| *Stockage* | Le périphérique de stockage où se trouve le dossier : le disque ou l'ordinateur (voir [Périphériques](Devices#model)). Seuls les périphériques de stockage sont listés. Une nouvelle collection en a déjà un, *Disque local*. Pour en ajouter un autre, utilisez *Ajouter un Stockage* sur la page [Périphériques](Devices#page-actions). |
+| *Nom du catalogue* | Le nom du nouveau catalogue. Chaque catalogue doit avoir son propre nom. *Générer le nom à partir du chemin* (le bouton à côté du champ) en crée un à partir du chemin source, avec `_` à la place de `/` et `:`. |
 
-### Filtrage des types de fichiers {#enhanced-file-type-filtering}
-Katalog utilise une détection intelligente des types de fichiers basée sur l'extension, qui prend en charge des centaines de formats automatiquement.
+Lorsqu'un champ manque ou est incorrect, un message en haut de la page indique ce qui est nécessaire, par exemple *Indiquez un nom pour ce nouveau catalogue.* Il disparaît lorsque le champ est corrigé. Il en va de même lorsque le dossier source n'existe pas, ou lorsqu'un autre catalogue porte déjà ce nom.
 
-**Fonctionnement de la détection des types de fichiers :**
-- **Détection initiale** : les types de fichiers sont déterminés en analysant les extensions à l'aide d'un cache d'extension intelligent construit à partir de la base de données MIME du système
-- **Support étendu** : prend en charge des centaines de formats de fichiers
-- **Évolutif** : les nouveaux formats sont automatiquement reconnus lors de la mise à jour du système
+Lorsque le dossier source ne contient aucun fichier, une question est d'abord posée : le dossier est peut-être vide, ou le périphérique n'est peut-être pas monté à cet endroit. *Oui* crée tout de même le catalogue, vide.
 
-**Remarque sur la précision** :
-- Les types de fichiers sont déterminés à partir de l'analyse des extensions lors de la création du catalogue, afin de maximiser les performances d'indexation.
-- Mais des erreurs d'extension ou des extensions manquantes sont possibles
-- Pour maximiser la précision, il est possible d'exécuter une vérification MIME sur les catalogues existants depuis l'écran Périphériques, et de corriger les fichiers avec des extensions trompeuses.
+## Options de contenu {#content-options}
+Les options déterminent ce qui est indexé. Elles peuvent être modifiées plus tard en modifiant le catalogue (voir [Modifier un périphérique](DevicesEdit#content-options)) ; le catalogue doit alors être mis à jour pour en tenir compte.
 
-### Catégories de types de fichiers
-Le contenu du catalogue peut être limité à un type particulier de fichiers.
-Cette option sera applicable pour le catalogue à venir. Elle peut être modifiée ultérieurement en éditant le [Catalogue](DevicesCatalogs).
+### Type de fichier {#file-type}
+Le catalogue peut être limité à un type de fichiers.
 
-| Type  | Description | Définition | Exemples d'extensions |
-| ------| ------------|------------|----------------------|
-| Tous  | Tous les types de fichiers sans filtrage | | |
-| Audio | Musique, podcasts, enregistrements audio et fichiers sonores | (selon les types MIME) | MP3, FLAC, AAC, M4A, OGG, WAV, AIFF, Opus, WMA, MIDI, AMR (50+ formats) |
-| Image | Photos, graphiques, diagrammes, icônes et contenu visuel | (selon les types MIME) | JPG, PNG, HEIC, WebP, TIFF, RAW, SVG, XCF, GIF, BMP (100+ formats) |
-| Texte | Documents, fichiers de code, balisage, fichiers de données et contenu lisible | (définition spécifique Katalog)<br/>Inclut tous les fichiers MIME commençant par « text/ » ainsi que des fichiers applicatifs comme PDF, Word, etc. | PDF, DOCX, ODT, Markdown, HTML, JSON, code source, ebooks (100+ formats) |
-| Vidéo | Films, clips, animations et contenu vidéo | (selon les types MIME) | MP4, MKV, AVI, WebM, MOV, FLV, 3GP, OGV, M2TS (40+ formats) |
-| Autre | Tous les autres types non couverts par les catégories ci-dessus | (définition spécifique Katalog) | ZIP, RAR, EXE, DLL, ISO, fichiers applicatifs non classifiés en Texte |
-| Aucun | Fichiers dont le type n'a pas pu être déterminé à partir de l'extension | Fichiers sans extension ou avec des extensions inconnues | |
+| Type | Description | Définition | Exemples d'extensions |
+|------|-------------|------------|-----------------------|
+| Tous | Tous les types de fichiers, sans filtrage. | | |
+| Audio | Musique, podcasts, enregistrements audio et fichiers sonores. | Selon la définition des types MIME. | MP3, FLAC, AAC, M4A, OGG, WAV, AIFF, Opus, WMA, MIDI, AMR (plus de 50 formats) |
+| Image | Photos, graphiques, diagrammes, icônes et contenus visuels. | Selon la définition des types MIME. | JPG, PNG, HEIC, WebP, TIFF, RAW, SVG, XCF, GIF, BMP (plus de 100 formats) |
+| Texte | Documents, fichiers de code, balisage, fichiers de données et contenus lisibles. | Définition propre à Katalog : tous les fichiers dont le type MIME commence par `text/`, plus des fichiers d'application comme les documents PDF et Word. | PDF, DOCX, ODT, Markdown, HTML, JSON, fichiers de code source, livres numériques (plus de 100 formats) |
+| Vidéo | Films, clips, animations et contenus vidéo. | Selon la définition des types MIME. | MP4, MKV, AVI, WebM, MOV, FLV, 3GP, OGV, M2TS (plus de 40 formats) |
+| Autre | Tous les autres types de fichiers. | Définition propre à Katalog. | ZIP, RAR, EXE, DLL, ISO : exécutables, archives, fichiers système et fichiers d'application non classés comme Texte. |
+| Aucun | Fichiers dont le type ne peut pas être déterminé à partir de l'extension. | Fichiers sans extension ou avec une extension inconnue. | |
 
-### Extraction de métadonnées {#metadata-extraction}
-Choisissez la quantité de métadonnées à extraire de vos fichiers lors de la création du catalogue.
-<br/>Cela affecte la vitesse de catalogage ou la taille de la collection, mais fournit des informations plus riches pour les recherches et les statistiques.
+Le type d'un fichier est déterminé à partir de son **extension**, à l'aide de la base de données MIME du système : des centaines de formats sont reconnus, et de nouveaux au fil des mises à jour du système. Cela permet une indexation rapide. Un fichier dont l'extension est erronée ou absente peut donc recevoir un mauvais type.
 
-**Options disponibles :**
-- **None** : aucune extraction de métadonnées (catalogage le plus rapide)
-- **Media Basic** : extraction des métadonnées essentielles des images, vidéos et fichiers audio
-- **Media Extended** : extraction de métadonnées complètes incluant les détails techniques
-- **Full Extended** : extraction maximale pour tous les types de fichiers pris en charge
+### Inclure les sous-dossiers {#include-subdirectories}
+Coché (par défaut), les fichiers de tous les sous-dossiers sont indexés. Décoché, uniquement les fichiers situés directement dans le chemin source.
 
-**Ce qu'extrait Media Basic :**
-- **Audio** : artiste, album, détails de la piste, durée, débit
-- **Images** : dimensions, orientation
-- **Vidéos** : dimensions, durée, codec et fréquence d'images
+### Inclure les fichiers cachés {#include-hidden-files}
+*Aucun* (par défaut) ignore les fichiers et dossiers cachés ; *Tous* les inclut.<br/>
+Sur un dossier personnel ou un disque système, les dossiers cachés (`.cache`, `.local`…) peuvent contenir beaucoup de fichiers : exclure ceux qui ne sont pas utiles permet de garder un catalogue léger.
 
-**Ce qu'extrait Extended :**
-Ce mécanisme repose sur la bibliothèque KFileMetaData, qui détermine les types de fichiers pris en charge et les métadonnées.
+### Inclure les métadonnées {#include-metadata}
+La quantité d'informations lue dans le contenu des fichiers. Cela allonge l'indexation, mais donne des résultats plus riches dans la [Recherche](Search) (dimensions, durée, artiste…) et dans les [Statistiques](Statistics).
 
-**Impact sur les performances :**
-- **None** : option la plus rapide, adaptée aux grands répertoires ou quand les métadonnées ne sont pas nécessaires
-- **Media Basic/Extended** : impact modéré, traite uniquement les fichiers multimédia
-- **Full Extended** : plus lent mais le plus complet, extrait depuis tous les formats pris en charge
+| Niveau | Ce qui est lu |
+|--------|---------------|
+| *Aucun* | Aucune métadonnée : le plus rapide. |
+| *Média basique* | L'essentiel des images, vidéos et fichiers audio : dimensions et orientation des images ; dimensions, durée, codec et fréquence d'images des vidéos ; artiste, album, piste, durée et débit des fichiers audio. |
+| *Média étendu* | Toutes les métadonnées des images, vidéos et fichiers audio, y compris les détails techniques. |
+| *Complet étendu* | Toutes les métadonnées de chaque type de fichier pris en charge. |
 
-**Types de fichiers pris en charge pour les métadonnées :**
-- **Images** : jpg, png, gif, bmp, tiff, webp, svg, heic, raw, xcf
-- **Vidéos** : mp4, mkv, avi, mov, wmv, flv, webm, m4v, mpg, 3gp, ogv, vob
-- **Audio** : mp3, wav, flac, ogg, m4a, aac, wma, opus, aiff, mid, amr
+Les niveaux étendus utilisent la bibliothèque KFileMetaData, qui détermine les types et champs pris en charge ; leurs métadonnées peuvent être consultées avec *Afficher les métadonnées étendues (JSON)* dans les résultats de recherche et dans Explorer.<br/>
+Les niveaux Média ne lisent que les fichiers multimédias : les autres fichiers sont ignorés. Les fichiers endommagés ou illisibles sont ignorés sans interrompre le catalogue.
 
-Ce paramètre s'applique uniquement à ce catalogue et peut être modifié ultérieurement en éditant le [Catalogue](DevicesCatalogs).
+Fichiers multimédias pris en charge :
+* **Images** : jpg, png, gif, bmp, tiff, webp, svg, heic, raw, xcf
+* **Vidéos** : mp4, mkv, avi, mov, wmv, flv, webm, m4v, mpg, 3gp, ogv, vob
+* **Audio** : mp3, wav, flac, ogg, m4a, aac, wma, opus, aiff, mid, amr
 
-**Remarque :** l'extraction de métadonnées nécessite des fichiers lisibles. Les fichiers corrompus ou avec des restrictions d'accès seront ignorés sans affecter le processus de catalogage.
+### Inclure la somme de contrôle {#include-checksum}
+*SHA-256* calcule une somme de contrôle pour chaque fichier : une empreinte de son contenu. Les sommes de contrôle rendent exactes les [recherches de doublons et de différences](Search), et permettent de vérifier plus tard que les fichiers n'ont pas changé.<br/>
+⚠️ C'est beaucoup plus long que les autres options, car **toutes** les données de chaque fichier sont lues (voir le [Guide de performance](#performance)).
 
-### Somme de contrôle des fichiers {#file-checksum}
-La somme de contrôle SHA256 peut être calculée lors de l'indexation pour la recherche de doublons ou de différences.
-⚠️ C'est un processus bien plus long que les autres options d'indexation car il lit TOUTES les données pour calculer les sommes de contrôle.
-Comme pour les métadonnées, l'option peut être sélectionnée à la création du catalogue ou modifiée ultérieurement ; en cas d'interruption du processus, les sommes de contrôle déjà calculées sont sauvegardées et la prochaine mise à jour reprendra pour les fichiers restants.
-Les sommes de contrôle peuvent être utilisées comme option de recherche de doublons ou de recherche de différences.
+### Exclure les dossiers ou fichiers {#exclude-folders-or-files}
+Chemins ou noms qui ne sont pas indexés **dans ce catalogue**.<br/>
+Saisissez un chemin ou un nom dans *Chemin ou nom à exclure*, ou choisissez un dossier avec *Sélectionner le chemin*, puis cliquez sur *Ajouter*. Le bouton *Supprimer* à côté d'une entrée la retire de la liste.<br/>
+La liste est enregistrée avec le catalogue.
 
-### Inclure les fichiers cachés {#other-options}
-Les fichiers cachés ne sont pas inclus par défaut, mais cette option permet de les inclure.<br/>
-Cette option sera applicable pour le catalogue à venir.<br/>
-Elle peut être modifiée ultérieurement en éditant le [Catalogue](DevicesCatalogs).
+## Paramètres globaux {#global-parameters}
+La section *Paramètres globaux* contient les paramètres partagés par **tous les catalogues** de la collection. Le bouton sur sa ligne de titre la replie ou la déplie.
 
-### Panneau Paramètres globaux
+### Exclusions globales de dossiers {#exclude-directories}
+Chemins exclus de **chaque catalogue**, lors de sa création et à chacune de ses mises à jour.<br/>
+Saisissez un chemin dans *Chemin à exclure globalement* (ou utilisez *Sélectionner le chemin*), puis cliquez sur *Ajouter*. *Supprimer* à côté d'une entrée la retire.
 
-Le panneau *Paramètres globaux* regroupe les paramètres qui s'appliquent à tous les catalogues. Il peut être réduit ou développé à l'aide du bouton bascule en haut du panneau.
+### Fonctionnement des exclusions
+Les exclusions globales et celles du catalogue s'additionnent : un fichier ou un dossier écarté par l'une ou l'autre liste n'est pas indexé.<br/>
+Une exclusion est une **correspondance de texte** : tout fichier ou dossier dont le chemin complet **contient** le texte est ignoré. La correspondance est sensible à la casse.
+* **Chemin complet** : `/home/username/Downloads/temp` ignore ce dossier et tout son contenu.
+* **Nom de dossier** : `node_modules` ignore **tous** les dossiers `node_modules`, où qu'ils soient.
+* **Partie d'un nom** : `.cache` ignore `/home/username/.cache/`, mais aussi `/home/username/.cachedata/`, puisque les deux chemins contiennent le texte.
 
-### Exclure des répertoires (global) {#exclude-directories}
+## Création du catalogue {#creating}
+*Créer* enregistre le catalogue et lance l'indexation. La progression est affichée dans le panneau d'activité en bas de la fenêtre (voir [Interface](Interface)). Si une autre opération est en cours, la création attend dans la file d'attente.
 
-:::note
-Ces exclusions sont **globales** : elles s'appliquent à **tous** les catalogues, aussi bien lors de la création de nouveaux catalogues que lors de la mise à jour des catalogues existants.
-:::
+L'indexation se déroule en deux phases :
+1. la **liste des fichiers** est lue et enregistrée : le catalogue est utilisable dès la fin de cette phase,
+2. ensuite, si elles ont été choisies, les **métadonnées** et les **sommes de contrôle** sont lues.
 
-Il est possible d'exclure des répertoires du catalogage, lors de la création ou lors des mises à jour.<br/>
-Saisissez un chemin ou un motif textuel, puis cliquez sur *Ajouter*.<br/>
-L'entrée est alors visible dans la liste ci-dessous.<br/>
-Toute entrée peut être supprimée par un clic droit et en sélectionnant *Supprimer*.<br/>
+*Stop* met fin à la création :
+* pendant la première phase, le catalogue n'est pas créé,
+* pendant la seconde phase, le catalogue est **conservé** avec sa liste complète de fichiers ; les métadonnées ou sommes de contrôle pas encore lues sont complétées à la prochaine mise à jour du catalogue.
 
-**Fonctionnement de l'exclusion :**
+À la fin de la création, le nouveau catalogue est sélectionné sur la page [Sélection](Selection) et la page [Périphériques](Devices) s'ouvre avec un rapport : le nom et le chemin du catalogue, son nombre de fichiers et sa taille totale, et, lorsque son stockage a été mis à jour, l'espace utilisé, libre et total du stockage avec ce qui a été ajouté. Si une analyse des métadonnées ou des sommes de contrôle n'est pas terminée, un message l'explique à la place.<br/>
+*Fermer* (ou `Échap`) ferme la page.
 
-L'exclusion utilise une **correspondance textuelle** : tout fichier ou dossier dont le chemin complet **contient** le texte d'exclusion sera ignoré. Cela signifie :
+## Guide de performance {#performance}
 
-- **Chemin complet** : saisir `/home/user/Downloads/temp` exclura ce répertoire spécifique et tout son contenu.
-- **Nom de dossier** : saisir `node_modules` exclura **chaque** répertoire `node_modules` dans tous les catalogues.
-- **Chemin partiel** : saisir `.cache` exclura des répertoires comme `/home/user/.cache/` mais aussi `/home/user/.cachedata/` car la correspondance est basée sur le contenu du texte.
+### Qu'est-ce qui influence la vitesse d'analyse ?
 
-La correspondance est **sensible à la casse**.
 
-![Liste des répertoires exclus globalement avec des exemples d'entrées](/img/k2/screen_create_04_exclude.png)
+| # | Facteur | Niveau d'impact | Ce qui le détermine | Remarques |
+|---|---------|:---:|---|---|
+| 1 | **Somme de contrôle des fichiers** | ⚫⚫⚫⚫⚫ Critique | **Volume total de données** (lit 100 % des octets, tampon de 8 Mo), puis vitesse du disque, puis nombre de fichiers | SHA-256 via Qt `QCryptographicHash`. Un disque dur de 2 To à ~100 Mo/s = ~5,5 heures rien que pour les E/S. SSD à ~500 Mo/s ≈ 1 heure. Reprise possible en cas d'interruption. |
+| 2 | **Matériel de stockage** | ⚫⚫⚫⚫ Très élevé | E/S séquentielles ou aléatoires, débit, latence | SSD ~100 000 fichiers/min, disque dur ~20–30 000 (la fragmentation aggrave la situation). Réseau : très variable. Influence TOUS les autres facteurs. |
+| 3 | **Métadonnées : Complet étendu** | ⚫⚫⚫ Élevé | **Nombre de fichiers** (surtout les vidéos : 5–15 ms/fichier pour analyser les conteneurs), répartition des types de fichiers | Utilise KFileMetaData. La vidéo et l'audio nécessitent de se déplacer dans la structure du fichier. Ralentissement d'environ ×10 par rapport à Aucun constaté. |
+| 4 | **Métadonnées : Média basique/étendu** | ⚫⚫⚫ Élevé | Nombre de fichiers multimédias uniquement | Lit uniquement les en-têtes (images : ~2–3 ms). Les fichiers non multimédias sont entièrement ignorés : la répartition des types de fichiers compte donc beaucoup. |
+| 6 | **Inclure les fichiers cachés**  | ⚫⚫  Moyen | Nombre de fichiers supplémentaires (peut être énorme sur les disques système/personnels : `.cache`, `.local`, `node_modules`…) | Effet multiplicateur : plus de fichiers = plus de tout ce qui précède. Les dossiers exclus sont la parade. |
+| 7 | **Mode de base de données** | ⚫ Faible à moyen | Débit d'écriture pendant l'indexation | Mémoire > Fichier > Hébergé. Le mode Mémoire évite les E/S d'écriture SQLite pendant l'analyse ; le mode Fichier est limité par les écritures. Les transactions par lots (1000 fichiers/lot) atténuent déjà cet effet. |
+| 8 | **Filtre de type de fichier** | ⚫ Faible à moyen | Réduit le nombre de fichiers traités pour les métadonnées | Filtrer sur Audio/Vidéo/Image ignore tous les Texte/Autre pour les métadonnées : important pour un disque au contenu mélangé. |
+| 9 | **Nombre de fichiers (total)** | ⚫ Faible | Détermine le temps de parcours du système de fichiers et le nombre d'insertions en base | Même sans aucune option, énumérer 500 000 fichiers prend du temps. Indépendant des tailles. |
+| 10 | **Dossiers exclus** | ⚫ Faible | Réduit le nombre effectif de fichiers | `node_modules`, `.cache` et les dossiers temporaires peuvent représenter 20–30 % des fichiers d'un dossier personnel. |
+| 11 | **Charge du système / processeur** | ⚫ Faible | L'extraction parallèle des métadonnées utilise 4–8 cœurs | La somme de contrôle est limitée par les E/S, le processeur y compte donc moins. Les métadonnées sont limitées par le processeur. |
 
-### Exclure des dossiers (par catalogue)
+Autres traitements longs, non utilisés par Créer ou Actualiser :
 
-En plus des exclusions globales, il est possible de définir des dossiers exclus s'appliquant uniquement au catalogue en cours de création.
+| # | Facteur | Niveau d'impact | Ce qui le détermine | Remarques |
+|---|---------|:---:|---|---|
+| 5 | **Vérification des types MIME** | ⚫⚫⚫⚫ Très élevé | Nombre de fichiers (lit une partie du contenu de chaque fichier) | Opération de mise à jour uniquement. La « déduction » à partir de l'extension ne coûte rien ; la vérification lit les octets des fichiers. L'impact dépend du nombre de fichiers, pas de leur taille. |
+| 12 | **Export de la collection** | ⚫⚫⚫⚫ Très élevé | Export des tables vers SQLite ou csv || De 20 minutes à plus d'1 heure pour 1 million de fichiers
 
-- Saisissez un chemin de dossier manuellement, ou accédez-y à l'aide du bouton *Choisir*.
-- Cliquez sur *Ajouter* pour l'ajouter à la liste en attente.
-- Supprimez toute entrée par un clic droit et en sélectionnant *Supprimer*.
 
-Les exclusions par catalogue sont sauvegardées avec le catalogue une fois sa création terminée. Elles s'appliquent en complément des exclusions globales — un dossier ignoré par l'une ou l'autre règle ne sera pas indexé.
+Échantillon de test / jeu de données : 60 Go, 40 000 fichiers, dont un fichier de 20 Go, et un mélange de textes, d'images et de vidéos.
 
-Cette option peut être modifiée ultérieurement en éditant le [Catalogue](DevicesCatalogs).
+| Test | Échantillon  | SSD 2 To (extrapolé) | Disque dur 2 To (estimé) | Base de l'extrapolation |
+|---------|:-:|:-:|:-:|---|
+| Indexation de base | 00:00:04 | **~00:02:37** | ~00:05–08:00 | Nombre de fichiers |
+| Média basique | 00:01:23 | **~00:54:00** | ~02:00–03:00 | Nombre de fichiers (multimédias uniquement) |
+| Média étendu | 00:01:52 | **~01:13:00** | ~03:00–04:00 | Nombre de fichiers (plus lourd par vidéo) |
+| Complet étendu | 00:01:23 | **~00:54:00** | ~02:00–03:00 | Nombre de fichiers  |
+| Somme de contrôle seule | 00:09:20 | **~06:06:00** | ~20:00–30:00 | Octets totaux / débit |
+| Somme de contrôle + Média basique | 00:11:06 | **~07:15:00** | ~22:00–33:00 | Octets (prépondérant) + nombre |
 
-## Définir et créer le catalogue
-#### Sélectionner le périphérique de stockage
-Un catalogue doit être associé à un périphérique physique [Stockage](DevicesStorage), pour faciliter la recherche ultérieure ou activer les statistiques.<br/>
-Par défaut, Katalog pré-crée un périphérique de stockage par défaut, le disque local.<br/>
-Cela peut être mis à jour ultérieurement dans l'écran de l'[Arborescence](DevicesTree).<br/>
-Si vous avez besoin d'un stockage différent pour ce catalogue, cliquez sur *Ajouter un stockage* et ajoutez-en un via les écrans [Arborescence](DevicesTree) ou [Stockage](DevicesStorage).
-
-Ce choix sera applicable pour le catalogue à venir.<br/>
-Il peut être modifié ultérieurement en éditant le [Catalogue](DevicesCatalogs).
-
-#### Saisir un nom
-Saisissez un nom pour votre catalogue.<br/>
-Les noms en double ne sont actuellement pas autorisés.
-
-Le bouton *Générer* permet de créer un nom basé sur le chemin du dossier, en remplaçant les barres obliques <code>/</code> par le trait de soulignement <code>_</code>.
-
-#### Créer le catalogue
-Lorsque vous êtes prêt, cliquez sur le bouton *Créer un catalogue* pour enregistrer le catalogue et démarrer le processus de catalogage récursif du contenu du chemin (tous les sous-répertoires seront inclus).
-
-Une fois le processus terminé,
-- Un message confirme la création et indique le nombre de fichiers et la taille totale des fichiers du dossier sélectionné.
-- votre disque local (un périphérique de stockage ajouté automatiquement) a également été mis à jour, et le message indique l'espace libre, utilisé et total :
-
-![Message de confirmation de création avec le nombre de fichiers et le résumé de l'espace de stockage](/img/k2/screen_create_02.png)
-
-l'écran [Périphériques](DevicesTree) s'affichera pour montrer le catalogue dans l'arborescence des périphériques.
-
-Le nouveau catalogue est automatiquement sélectionné dans le panneau [Sélection](Selection), prêt à être utilisé pour [Rechercher](Search) du contenu.
-
-## Guide de performances
-
-### Qu'est-ce qui affecte la vitesse d'analyse ?
-
-#### 1. Extraction de métadonnées (impact le plus fort : ~10× de ralentissement)
-- Métadonnées d'images : ~2–3 ms/fichier (lecture de l'en-tête)
-- Métadonnées vidéo : ~5–15 ms/fichier (recherche et analyse du conteneur)
-- Solution : utiliser « Media Basic » uniquement, pas « Full Extended »
-
-#### 2. Mode de base de données
-- Mode mémoire : plus rapide, utilise la RAM
-- Mode fichier SQLite : plus lent, limité par les entrées/sorties
-
-#### 3. Type de stockage
-- SSD : ~100 000 fichiers/min
-- HDD : ~20 000–30 000 fichiers/min (la fragmentation a un impact)
-- Stockage réseau : très variable
-
-#### 4. Dossiers exclus
-- Plus il y a d'exclusions, plus l'analyse est rapide
-- Exemple : exclure .cache, node_modules, etc.
-
-#### 5. Charge du système
-- D'autres processus intensifs peuvent interférer
-
-### Benchmarks de performances
-
-| Fichiers | Stockage | Métadonnées | Durée |
-|----------|----------|-------------|-------|
-| 5 000 | SSD | None | 10 s |
-| 5 000 | SSD | Basic | 50 s |
-| 95 000 | HDD | Basic | 47 s (1re fois) / 10 s (en cache) |
 
 ## Développement
-Quelques idées d'évolutions pour cet écran :
-* Personnaliser les types de fichiers et/ou utiliser les types MIME
-* Pour en savoir plus, consultez la liste de [développements Créer](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=create).
+Quelques idées de développement pour cet écran :
+* Cataloguer une instance cloud (par exemple Nextcloud).
+* Personnaliser les types de fichiers.
+* Pour en savoir plus, voir le backlog du [développement de Créer](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=create).

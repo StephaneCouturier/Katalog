@@ -1,79 +1,128 @@
 ---
-version: "2.13"
+version: "3.0"
 ---
 # Zařízení
-![2.13](https://img.shields.io/badge/Version-2.13-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
-## Souhrn
-Tato stránka popisuje koncept **Zařízení** v Katalogu a horní část obrazovky **Zařízení**.
+## Shrnutí
+Tato stránka popisuje stránku **Zařízení**, kde se zobrazují a spravují zařízení kolekce:
+* [model zařízení](#model): katalogy, úložiště, virtuální zařízení a skupiny,
+* [zobrazení](#views): všechna zařízení, úložiště nebo katalogy, jako karty nebo tabulka,
+* [akce stránky](#page-actions): aktualizace všech aktivních katalogů, snímek, nová skupina nebo úložiště,
+* [místní nabídka](#context-menu) zařízení: aktualizace, prozkoumání, úprava, kontrolní součty, rozdělení, přiřazení, smazání.
 
-![Příklad zobrazující katalogy uspořádané pod fyzickými disky a virtuální skupinou Photos](/img/k2/devices_example1_cut.png)
+Úprava zařízení (název, cesta, možnosti katalogu, údaje o úložišti) je popsána na stránce [Úprava zařízení](DevicesEdit).
 
-V tomto příkladu bylo vytvořeno několik katalogů ze 2 fyzických disků.<br/>
-Katalogy s fotkami/obrázky byly přiřazeny k virtuálnímu zařízení *Photos*.<br/>
-To umožňuje vyhledávat pouze v nich a poskytuje celkový počet a velikost fotografických souborů.
+![Stránka Zařízení: všechna zařízení jako strom karet](/img/devices_01_overview.png)
 
-## Model
+## Model zařízení {#model}
 
 ### Definice
+* **Katalog** je rejstřík souborů jednoho adresáře: jeho **zdrojové cesty**. Katalogy se vytvářejí na stránce [Vytvořit](Create).
+* **Úložné** zařízení je fyzický disk nebo jiné médium, na kterém jsou uloženy soubory. Má cestu, kde je připojeno, a fyzický prostor.
+* **Virtuální** zařízení seskupuje jiná zařízení. Nemá vlastní data a sčítá údaje zařízení pod sebou.
+* **Skupina** je virtuální zařízení na vrcholu stromu:
+    * **Fyzická skupina** je jediná a vyhrazená pro fyzická zařízení (počítač, disk, telefon…) a jejich katalogy,
+    * každá jiná je **Virtuální skupina**, ke které se přiřazují existující katalogy, například všechny katalogy fotografií do skupiny *Photos*.
 
-* Zařízení **[Katalogu](DevicesCatalogs)** je index souborů z určitého adresáře.
-
-* Zařízení **[Úložiště](DevicesStorage)** je fyzický disk, na kterém jsou uloženy soubory. Obvykle je připojen k počítači a má fyzický úložný prostor.
-
-* **Virtuální** zařízení je jakákoli nefyzická položka používaná ke seskupování dalších zařízení. Samo o sobě nemá žádné vlastnosti a může agregovat součty ze souvisejících podzařízení.
-
-* **Skupina** je virtuální zařízení na vrcholu hierarchie.
-
-    * **Fyzická skupina** je jedinečná a vyhrazená skupina pro hierarchii fyzických zařízení (počítač, telefon, disk atd.).
-
-    * Jakákoli jiná je **Virtuální skupina**, ke které lze přiřadit existující katalogy pro usnadnění vyhledávání a statistiky.
-
-* Každé zařízení může mít **Komentář**: volný textový popisek, který se zadává ve formuláři úprav zařízení a zobrazuje se vedle názvu zařízení v seznamu zařízení.
+Každé zařízení může mít **komentář**: volnou poznámku zobrazenou vedle jeho názvu.
 
 ### Hierarchie
 
-![Diagram zobrazující hierarchii zařízení se skupinami, úložišti a katalogy](/img/devices_model.png)
+![Hierarchie zařízení: skupiny, virtuální zařízení, úložná zařízení a katalogy](/img/devices_model.png)
 
-## Funkce
+Katalog patří k jednomu úložišti ve Fyzické skupině. Může být také přiřazen k virtuálním zařízením Virtuálních skupin: to umožňuje vyhledávat pouze v těchto katalozích a vidět jejich součty.
 
-Vždy dostupné v horní části obrazovky:
+### Dostupná zařízení {#available}
+Zařízení je **dostupné**, když je jeho cesta dosažitelná: disk je připojen a namountován. Jeho ikona je barevná; nedostupné zařízení má šedou ikonu.<br/>
+V katalozích nedostupných zařízení lze stále vyhledávat a prozkoumávat je; zařízení potřebují pouze akce, které čtou disk (aktualizace, otevření, kontrolní součty…).
 
-### Výběr mezi 3 zobrazeními
+## Zobrazení {#views}
+Lišta v horní části stránky volí, co se zobrazuje a jak.
 
-Zařízení lze zobrazovat a spravovat třemi způsoby:
+| Tlačítko | Účinek |
+|----------|--------|
+| *Všechna zařízení* | Celý strom: Fyzická skupina s úložišti a katalogy a Virtuální skupiny s přiřazenými zařízeními. |
+| *Úložiště* | Pouze úložná zařízení. |
+| *Katalogy* | Pouze katalogy. |
+| *Karty* | Každé zařízení je karta s názvem, komentářem, údaji a nabídkou akcí. |
+| *Tabulka* | Každé zařízení je řádek, s jedním sloupcem pro každou hodnotu. |
+| *Celá tabulka* | V tabulce zobrazí všechny sloupce, včetně interních ID a méně používaných údajů. |
+| *Filtrovat z výběru* | Zobrazí pouze zařízení vybrané na stránce [Výběr](Selection) a zařízení pod ním. |
 
-**[Strom zařízení](DevicesTree)**: Zobrazuje úplný a nefiltrovaný seznam všech zařízení v hierarchické / stromové struktuře.
+Volby se ukládají pro každou kolekci.
 
-**[Seznam úložiště](DevicesStorage)**: Zobrazuje pouze úložná zařízení, filtrovaná podle panelu [Výběr](Selection).
+![Stránka Zařízení: seznam úložišť jako tabulka s lištou součtů](/img/devices_02_table.png)
 
-**[Seznam katalogů](DevicesCatalogs)**: Zobrazuje pouze katalogová zařízení, filtrovaná podle panelu [Výběr](Selection).
+### Součty
+Se zobrazením *Úložiště* nebo *Katalogy* ukazuje lišta pod tlačítky součty zobrazených zařízení:
+* *Katalogy*: počet katalogů, *Celková velikost souboru*, *Celkový počet souborů*,
+* *Úložiště*: počet zařízení, *Celkové místo*, místo *Použitý* a *Volný*.
 
-### Výběr mezi kartami a tabulkou
+### Karty
+Karta ukazuje ikonu a název zařízení, jeho komentář a řádek s typem, počtem souborů a velikostí, u úložiště využitým, volným a celkovým místem a datem poslední aktualizace.<br/>
+Ve zobrazení *Všechna zařízení* jsou karty odsazené podle stromu a šipka vpravo na kartě sbalí nebo rozbalí zařízení pod ní.<br/>
+Tlačítko nabídky vpravo na kartě, kliknutí pravým tlačítkem nebo dlouhý stisk otevře [místní nabídku](#context-menu).
 
-V **Seznamu úložišť** a v **Seznamu katalogů** lze zařízení zobrazit dvěma způsoby:
+### Tabulka
+* **Kliknutím na nadpis sloupce** seřadíte podle tohoto sloupce; dalším kliknutím pořadí obrátíte. Čísla, velikosti a data se řadí podle hodnoty.
+* Ve zobrazení *Všechna zařízení* šipka před názvem sbalí nebo rozbalí zařízení pod ním.
+* **Kliknutím pravým tlačítkem** na řádek (nebo dlouhým stiskem) otevřete stejnou [místní nabídku](#context-menu) jako na kartě.
+* Klávesnice funguje jako ve [výsledcích vyhledávání](SearchResults#keyboard). Ve zobrazení *Všechna zařízení* `←` a `→` také sbalují a rozbalují vybraný řádek.
 
-**Karty**: každé zařízení je karta s názvem, hlavními údaji a nabídkou akcí. Pohodlné pro čtení několika zařízení.
+Hlavní sloupce:
 
-**Tabulka**: zařízení jsou zobrazena v řádcích a sloupcích, stejně jako v předchozí verzi Katalogu. Hodnoty jsou zarovnány v každém sloupci, takže lze zařízení porovnat na první pohled, a kliknutím na záhlaví sloupce se seznam podle tohoto sloupce seřadí — dalším kliknutím se pořadí obrátí. Čísla, velikosti a data se řadí podle skutečné hodnoty, nikoli abecedně.
+| Zobrazení | Sloupce |
+|-----------|---------|
+| *Všechna zařízení* | *Název*, *Počet souborů*, *Celková velikost*, *Použité místo*, *Volný prostor*, *Celkový prostor*, *Datum aktualizováno*, *Cesta*. |
+| *Úložiště* | *Název*, *ID úložiště*, *Počet souborů*, *Celková velikost*, *Použité místo*, *Volný prostor*, *Celkový prostor*, *Datum aktualizováno*, *Cesta*, *Označení*, *Souborový systém*. |
+| *Katalogy* | *Název*, *Počet souborů*, *Celková velikost*, *Datum aktualizováno*, *Cesta*, *Typ souboru*, *Skrytý*, *Metadata*, *Kontrolní součet*, *Rodičovské úložiště*. |
 
-Tato volba platí pro oba seznamy a je zapamatována pro každou sbírku. Zobrazení **Strom zařízení** je vždy zobrazeno jako karty.
+*Celá tabulka* přidává podle zobrazení: *Typ zařízení*, *Aktivní*, ID, *Typ*, *Značka*, *Model*, *Sériové číslo*, *Datum výroby*, *Komentář 1* až *Komentář 3*, *Verze aplikace* a v režimu Paměť *Datum načtení* a *Cesta k souboru*.
 
-Kliknutím pravým tlačítkem na řádek tabulky se otevře stejná nabídka akcí jako u karty.
+## Akce stránky {#page-actions}
 
-### Zobrazit celou tabulku
-Pokud je povoleno, zobrazí se v aktuálním zobrazení všechny dostupné sloupce.
+| Akce | Popis |
+|------|-------|
+| *Všechny aktivní* | Aktualizuje všechny **dostupné** katalogy pod zařízením vybraným na stránce [Výběr](Selection) (celou kolekci, když je vybráno *Všechno*). Nejprve se zobrazí otázka, zda zobrazit shrnutí pro každý katalog (*Ano*), pouze celkový výsledek (*Ne*), nebo akci zrušit. |
+| *Zastavit* | Zastaví probíhající aktualizaci. |
+| *Snímek* | Zaznamená aktuální údaje celé kolekce (soubory a velikost katalogů, volné a celkové místo úložišť) pro [Statistiku](Statistics). Shrnutí ukáže nové součty a co se změnilo od předchozího snímku. |
+| *Vložit virtuální skupinu* | Vytvoří novou Virtuální skupinu a otevře ji v [Úpravě zařízení](DevicesEdit). |
+| *Přidat úložiště* | Vytvoří nové úložné zařízení ve Fyzické skupině a otevře ho v [Úpravě zařízení](DevicesEdit). |
+| *Zavřít* | Zavře stránku (také `Esc`). |
 
-Pokud není zaškrtnuto, sloupce, které nejsou každodenně potřebné (jako interní ID), jsou skryty, čímž je zobrazení jednodušší a čitelnější.
+Aktualizace vyžádané během jiné probíhající aktualizace se neztratí: čekají ve frontě zobrazené v panelu činnosti (viz [Rozhraní](Interface)).
 
-### Aktualizovat aktivní zařízení
-Aktualizuje aktuálně vybrané zařízení — znovu prohledá jeho soubory ze zdrojové cesty.
+## Místní nabídka {#context-menu}
 
-Toto tlačítko je povoleno, pokud je v některém ze tří zobrazení vybráno zařízení s dostupnou zdrojovou cestou (zobrazeno barevnou ikonou).
+![Místní nabídka karty katalogu](/img/devices_03_context_menu.png)
 
-### Zaznamenat snímek
-Zaznamená aktuální hodnoty všech zařízení (počet souborů, velikost souborů, volné místo, celkový prostor) nezávisle na aktuálním výběru nebo filtrech.
+Nabídka začíná názvem zařízení. Její položky závisí na typu zařízení:
 
-Po zaznamenání se zobrazí souhrn s novými součty a změnou oproti předchozímu snímku (delta).
+| Položka | Pro | Akce |
+|---------|-----|------|
+| *Aktualizovat* | Úložiště, Virtuální, dostupný Katalog | Znovu načte soubory ze zařízení a aktualizuje katalog. U úložného nebo virtuálního zařízení aktualizuje všechny katalogy pod ním. |
+| *Prozkoumat* | Katalog | Otevře katalog na stránce [Prozkoumat](Explore). |
+| *Upravit* | Všechna | Otevře zařízení v [Úpravě zařízení](DevicesEdit). |
+| *Otevřít složku* | Zařízení s cestou | Otevře cestu ve správci souborů. |
+| *Filelight* | Dostupné Úložiště a Katalog | Otevře [Filelight](https://apps.kde.org/filelight/) na cestě, aby bylo vidět, co zabírá místo. Vyžaduje nainstalovaný Filelight. |
+| *Ověřit kontrolní součty* | Katalog | Po potvrzení znovu vypočítá kontrolní součty všech souborů a porovná je s uloženými. Zpráva uvede celkový počet souborů a počet ověřených, neshodných a chybějících. |
+| *Ověřit typy MIME* | Dostupný Katalog | Přečte obsah každého dosud neověřeného souboru, zjistí jeho skutečný typ a opraví typ odhadnutý při indexaci podle přípony. Když se typ od přípony liší, zpráva uvede počet neshod a cestu ke zprávě uložené ve složce kolekce (v režimu *Hostováno* v domovské složce), s tlačítkem *Otevřít zprávu*. Není dostupné během jiné operace se zařízením nebo během vyhledávání. |
+| *Rozdělit katalog podle podadresáře* | Katalog | Viz [Rozdělení katalogu](#split). |
+| *Rozdělit katalog podle typu souboru* | Katalog | Viz [Rozdělení katalogu](#split). |
+| *Přidat virtuální zařízení* | Virtuální | Vytvoří pod tímto zařízením virtuální zařízení a otevře ho v [Úpravě zařízení](DevicesEdit). |
+| *Přidat úložné zařízení* | Virtuální, ve Fyzické skupině | Vytvoří pod tímto zařízením úložné zařízení a otevře ho v [Úpravě zařízení](DevicesEdit). |
+| *Přiřadit vybraný katalog* | Virtuální, ve Virtuální skupině | Přiřadí tomuto virtuálnímu zařízení katalog vybraný na stránce [Výběr](Selection). Dostupné, když je vybrán katalog. |
+| *Zrušit přiřazení tohoto katalogu*, *Zrušit přiřazení tohoto úložiště* | Katalog nebo úložiště ve Virtuální skupině | Po potvrzení odebere zařízení z tohoto virtuálního zařízení. Samotné zařízení se zachová. |
+| *Smazat tento katalog*, *Smazat toto úložiště*, *Smazat* | Všechna ostatní | Po potvrzení smaže zařízení z kolekce. Zařízení, pod kterým jsou ještě jiná zařízení, smazat nelze. Soubory na disku zůstanou nedotčeny. |
 
-Tyto záznamy podporují [Statistiku](Statistics) a umožňují sledovat sbírku globálně v průběhu času.
+### Rozdělení katalogu {#split}
+Katalog lze nahradit několika menšími katalogy. Původní katalog se odstraní: **tuto akci nelze vrátit zpět.**
+
+* *Rozdělit katalog podle podadresáře*: vytvoří jeden katalog pro každý podadresář přímo pod zdrojovou cestou, pojmenovaný `<název katalogu>_<podadresář>`, a jeden pojmenovaný `<název katalogu>_(root)` pro soubory přímo ve zdrojové cestě. Nejprve se vyžádá potvrzení.
+* *Rozdělit katalog podle typu souboru*: vytvoří jeden katalog pro každý nalezený typ souboru (Zvuk, Obraz, Text, Video, Jiné) na stejné zdrojové cestě. Dialog nabízí:
+    * *Ověřit a rozdělit*: nejprve spustí *Ověřit typy MIME* pro přesný výsledek, pak rozdělí. Dostupné, když je zařízení dostupné.
+    * *Rozdělit bez ověření*: použije typy souborů již uložené v katalogu.
+
+## Vývoj
+* Viz backlog [vývoje Zařízení](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=devices).

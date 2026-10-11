@@ -1,47 +1,52 @@
 ---
 sidebar_position: 1
-version: "2.13"
+version: "3.0"
 ---
 
 # Tutoriel
-![2.13](https://img.shields.io/badge/Version-2.13-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
-Découvrons **Katalog en moins de 5 minutes**.
+Découvrons **Katalog en moins de 5 minutes** : créer une collection, cataloguer un dossier et y faire une recherche.
 
-## Télécharger
-Pour Linux, la meilleure option est [Flatpak depuis Flathub](https://flathub.org/en/apps/io.github.stephanecouturier.Katalog).
-<br/>Sinon, [télécharger la dernière version](https://sourceforge.net/projects/katalogg/files/latest/download) depuis SourceForge. Votre système d'exploitation (Linux, Windows ou macOS) devrait être détecté.
+## Télécharger et lancer
+Téléchargez Katalog pour Linux, Windows ou macOS : voir [Support multi-plateformes](Overview#multi-platform-support) pour les paquets disponibles et la configuration requise.
 
-## Installer et lancer
-- **Linux / portable** : extraire le fichier *Katalog_linux_portable_x.xx.tar.gz*, puis exécuter le fichier **Katalog.sh**
-- **Windows / installateur** : exécuter le **installer.exe** win64 qui créera une entrée de menu.
-- **Windows / portable** : si vous avez téléchargé la version win64 du fichier zip, extraire le zip et exécutez le fichier *Katalog.exe*.
+## Premier démarrage {#first-start}
+Au premier démarrage, un message de bienvenue indique la langue et le thème appliqués (ils peuvent être changés plus tard dans les [Paramètres](Settings#application)), et propose :
+* *Créer nouveau...* : crée une nouvelle **collection**, l'endroit où Katalog conserve toutes ses données. Une boîte de dialogue propose où l'enregistrer, sous forme de fichier de base de données (`.db`). Un dossier de votre répertoire personnel est un bon emplacement.
+* *Ouvrir existant...* : ouvre une base de données de collection (`.db`) créée auparavant, par exemple avec Katalog 2.
 
-## Première utilisation / astuces
+Il est possible de fermer les boîtes de dialogue sans choisir : Katalog démarre alors sans collection, et une collection est ouverte ou créée plus tard depuis le panneau latéral (voir [Interface](Interface)).
 
-### Premier démarrage, choisir un dossier de collection
-- Au premier démarrage, l'application vous demandera de sélectionner le **[dossier de collection](/Katalog/fr/docs/Settings#collection)**, où sont stockées toutes les données d'une collection.
-- Par conséquent, un dossier dans votre répertoire utilisateur est généralement le meilleur emplacement.
-- Remarque : après le premier démarrage, il est possible de passer à un autre mode de gestion des données.
-- La boîte de dialogue peut aussi être fermée : l'application démarre sans collection, et il est possible d'en choisir une plus tard depuis l'écran **[Paramètres](/Katalog/fr/docs/Settings)**.
+![Premier démarrage : message de bienvenue](/img/tutorial_01_welcome.png)
 
-### Créer un catalogue
-- L'application démarre sur l'écran **[Créer](/Katalog/fr/docs/Create)**.
-- Il suffit de sélectionner un dossier à parcourir pour cataloguer les fichiers (ici, le répertoire */home* est sélectionné),
-- et de cliquer sur le bouton **Créer le catalogue**.
-![Écran Créer avec un dossier sélectionné](/img/k2/screen_create_01.png)
-- Un message confirme la création et fournit le nombre de fichiers et la taille totale des fichiers du dossier sélectionné pour ce catalogue.
-- Votre disque local (un périphérique de Stockage qui a été ajouté automatiquement) a également été mis à jour, et le message fournit une vue de l'espace libre, de l'espace utilisé et de l'espace total :
-![Message de confirmation de création du catalogue](/img/k2/screen_create_02.png)
-- L'application passe maintenant à l'onglet **[Périphériques](/Katalog/fr/docs/Devices)** pour vous montrer le catalogue créé pour votre disque local :
-![Écran Périphériques montrant le catalogue nouvellement créé](/img/k2/screen_create_03.png)
+Après *Créer nouveau...*, un message liste les trois étapes pour créer un premier catalogue. *OK* ouvre la page [Créer](Create).
 
-### Rechercher des fichiers dans ce catalogue
-- Accédez à l'écran **[Recherche](/Katalog/fr/docs/Search)** en cliquant sur le premier onglet *Chercher* en haut de l'application.
-- Le catalogue que vous avez créé est déjà sélectionné, vous pouvez donc rechercher des fichiers immédiatement.
-- Essayez de saisir un texte pour le nom du fichier et cliquez sur le bouton **Recherche**.
-![Écran Recherche avec des résultats](/img/k2/screen_search_01.png)
+## Créer un catalogue {#create}
+Un **catalogue** est l'index des fichiers d'un dossier.
+1. *Chemin source* : saisissez le dossier à cataloguer, ou choisissez-le avec *Sélectionner le chemin*. Par exemple, votre dossier *Documents*.
+1. *Stockage* : gardez *Disque local*, le périphérique de stockage que Katalog a créé pour votre ordinateur.
+1. *Nom du catalogue* : saisissez un nom, ou utilisez *Générer le nom à partir du chemin*.
+1. Cliquez sur *Créer* en haut de la page.
 
-Vous pouvez continuer à expérimenter l'écran de recherche pour utiliser d'autres critères et limiter le nombre de résultats.
+![Page Créer avec un dossier sélectionné](/img/tutorial_02_create.png)
 
-Toutes les fonctionnalités sont décrites sur la page **[Recherche](/Katalog/fr/docs/Search)**.
+La progression est affichée en bas de la fenêtre. À la fin, un message confirme que le catalogue a été créé, et il apparaît dans l'arborescence des périphériques de la page [Sélection](Selection), sous *Disque local*.
+
+## Rechercher des fichiers {#search}
+1. Sur la page [Sélection](Selection), faites un clic droit sur le nouveau catalogue et choisissez *Chercher* : le catalogue est sélectionné et la page [Chercher](Search) s'ouvre à côté.
+1. Saisissez un texte dans le champ du nom de fichier, par exemple `report`.
+1. Cliquez sur *Chercher* (ou appuyez sur `Entrée`).
+
+La page [Résultats](SearchResults) s'ouvre à droite, avec les fichiers trouvés. Cliquez sur un fichier pour l'ouvrir, ou faites un clic droit dessus pour plus d'actions.
+
+![Recherche et résultats](/img/interface_01_overview.png)
+
+Le catalogue reste consultable lorsque le dossier ou le disque n'est pas connecté : c'est la raison d'être de Katalog. Cataloguez vos disques externes de la même façon, chacun sous son propre périphérique de stockage (voir [Périphériques](Devices)), et recherchez dans tous à la fois en sélectionnant le *Groupe physique* sur la page Sélection.
+
+## Étapes suivantes
+* Utilisez d'autres [critères de recherche](Search) : taille, dates, types de fichiers, doublons, différences.
+* Parcourez un catalogue dans [Explorer](Explore).
+* Organisez vos disques dans [Périphériques](Devices).
+* Sauvegardez un dossier avec [Sauvegarde](BackUp).
+* Toutes les parties de la fenêtre sont décrites dans [Interface](Interface).

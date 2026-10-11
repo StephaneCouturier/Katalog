@@ -1,50 +1,33 @@
 ---
-version: "2.12"
+version: "3.0"
 ---
 # Štítky
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
-## Souhrn
-Tato stránka popisuje všechny funkce obrazovky **Štítky** a jak je používat.<br/>
-Na této obrazovce může uživatel **přiřadit několik značek libovolné složce**.<br/>
-To pak lze použít na obrazovce [Vyhledávání](Search) k upřesnění výsledků;<br/>
+## Shrnutí
+Tato stránka popisuje stránku **Štítky**, kde se **složkám přiřazují štítky**: například *Dovolená* složkám s fotografiemi z dovolené, ať jsou kdekoli.<br/>
+Štítek pak lze použít ve [Vyhledávání](Search#tags-criteria) k nalezení pouze souborů ve složkách s tímto štítkem.
 
-Označení složky se provádí ve 3 hlavních krocích:
-1. Vyberte zdrojovou cestu složky,
-1. Vyberte nebo vytvořte nový štítek,
-1. Klepnutím označte složku.
+![Stránka Štítky: přidání štítku a seznam aktuálních složek a štítků](/img/tags_01_overview.png)
 
-![Obrazovka Štítky zobrazující rozhraní pro přiřazování štítků](/img/k2/screen_tags_01.png)
+Štítek se přiřazuje **cestě ke složce**, nikoli katalogu ani zařízení: platí pro každý katalog, který tuto cestu obsahuje.<br/>
+Složka může mít více štítků a štítek může být na více složkách, ale složka má každý štítek jen jednou.
 
-## Přiřaďte štítky adresářům
-Poznámka: Štítky jsou přiřazeny k absolutní cestě ke složce, proto jsou nezávislé na hierarchii zařízení a katalozích.
+## Přidání štítku {#add}
+1. *Složka*: zadejte cestu ke složce nebo ji zvolte pomocí *Vyberte složku*. Je již vyplněna, pokud byla stránka Štítky otevřena volbou *Označit tuto složku štítkem* na stránce [Prozkoumat](Explore#tag-folder).
+1. *Štítek*: zvolte existující štítek ze seznamu nebo zadejte nový název.
+1. Klikněte na *Označit složku štítkem*.
 
-### Vyberte cestu ke zdroji
-Existují 3 způsoby, jak vybrat zdrojovou cestu ke složce se soubory, které mají být zahrnuty do nového katalogu:
-1. zadáním cesty v zóně pro úpravy textu
-1. pomocí stromového zobrazení systému souborů stačí rozbalit a kliknout na správné zařízení nebo složku
-1. nebo kliknutím na tlačítko *Vybrat*, které otevře dialogové okno pro pomoc s výběrem složky.
+Když chybí složka nebo název štítku, nebo když složka již tento štítek má, oznámí to zpráva v horní části stránky.<br/>
+Nové přiřazení se objeví v seznamu níže.
 
-Vybraná cesta se vždy objeví v zóně pro úpravy textu a aplikace tuto cestu použije pro značku.
-
-### Vyberte existující značku nebo ji vytvořte
-* zadejte nový název značky v oblasti úprav pod "Vybrat značku"
-* nebo kliknutím na libovolnou položku v seznamu existujících značek znovu použijte existující
-
-### Přiřaďte značku vybrané složce
-Klikněte na tlačítko "Označit složku".<br/>
-Tím se zaznamená spojení mezi složkou a názvem značky.<br/>
-Seznam "Aktuální složky a značky" se aktualizuje novým záznamem.
-
-## Úprava značek
-### Smazat existující přidružení
-V seznamu "Aktuální složky a značky" klikněte pravým tlačítkem na asociaci, kterou chcete odstranit, a vyberte *Odstranit tuto značku*.
-### Upravte soubor značek
-V režimu *Paměť* lze pomocí tlačítka *Otevřít soubor* přímo upravit zdrojový soubor (formát by se neměl měnit).
-
+## Aktuální složky a štítky {#list}
+Seznam ukazuje každou složku s jejím štítkem.
+* Seznam nad sloupcem *Štítek* filtruje podle jednoho štítku; *Všechno* zobrazí všechny.
+* Tlačítko na konci řádku (*Odebrat tento štítek*) toto přiřazení odebere. Složky ani jejích souborů se to nedotkne.
 
 ## Vývoj
-Některé nápady na vývoj této obrazovky:
-* Označte zařízení
-* Složky značek v konkrétních katalozích
-* Další informace najdete v nevyřízeném záznamu [Vývoj značek](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=tag).
+Několik nápadů na rozvoj této obrazovky:
+* Štítky pro zařízení.
+* Štítky pro složky v konkrétních katalozích.
+* Více viz backlog [vývoje Štítků](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=tag).

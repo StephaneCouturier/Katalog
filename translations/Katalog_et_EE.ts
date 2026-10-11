@@ -586,7 +586,7 @@ Vali teine nimi.</translation>
     <message>
         <location line="+22"/>
         <source>Failed to update link.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lingi uuendamine ebaõnnestus.</translation>
     </message>
     <message>
         <location line="+106"/>
@@ -1999,17 +1999,17 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
     <message>
         <location filename="../core/catalogjobstoppable.cpp" line="+270"/>
         <source>The file list is saved. Metadata and checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Failide loend on salvestatud. Metaandmete ja kontrollsummade skannimine on lõpetamata ja jätkub kataloogi uuendamisel.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Metadata scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Failide loend on salvestatud. Metaandmete skannimine on lõpetamata ja jätkub kataloogi uuendamisel.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Failide loend on salvestatud. Kontrollsummade skannimine on lõpetamata ja jätkub kataloogi uuendamisel.</translation>
     </message>
     <message>
         <location line="+1156"/>
@@ -5114,27 +5114,27 @@ Jagamist ei tehtud.</translation>
     <message>
         <location line="+47"/>
         <source>Matched</source>
-        <translation type="unfinished"></translation>
+        <translation>Kattuvad</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Mismatched</source>
-        <translation type="unfinished"></translation>
+        <translation>Mittekattuvad</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Calculated</source>
-        <translation type="unfinished"></translation>
+        <translation>Arvutatud</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Updated</source>
-        <translation type="unfinished"></translation>
+        <translation>Uuendatud</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Skipped</source>
-        <translation type="unfinished"></translation>
+        <translation>Vahele jäetud</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -6163,7 +6163,7 @@ Jagamist ei tehtud.</translation>
     <message>
         <location filename="../core/storage.cpp" line="+255"/>
         <source>No Path was provided for the Storage: %1. Edit the device to provide one and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvestusruumile ei antud teed: %1. Muutke seadet, et tee määrata, ja proovige uuesti.</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -6172,14 +6172,20 @@ Jagamist ei tehtud.</translation>
 The source folder does not contain any file: &apos;%2&apos;
 
 This could mean that the device is not mounted to this folder, or the folder is simply empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvestusruum: &apos;%1&apos;
+
+Lähtekaust ei sisalda ühtegi faili: &apos;%2&apos;
+
+See võib tähendada, et seade pole sellesse kausta ühendatud või kaust on lihtsalt tühi.</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Katalog could not get values.
 
 Check that the source folder (%1) is correct, or that the device is mounted to the source folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalog ei saanud väärtusi kätte.
+
+Kontrollige, et lähtekaust (%1) on õige või et seade on lähtekausta ühendatud.</translation>
     </message>
 </context>
 <context>
@@ -8864,32 +8870,32 @@ Vigu: %3</translation>
     <message>
         <location line="-562"/>
         <source>Storage devices linked to a missing storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvestusseadmed, mis on seotud puuduva salvestusruumiga</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvestusruumid, mis pole seotud ühegi seadmega</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage IDs used by more than one storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvestusruumi ID-d, mida kasutab rohkem kui üks salvestusruum</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalog devices linked to a missing catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Kataloogiseadmed, mis on seotud puuduva kataloogiga</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalogs not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>Kataloogid, mis pole seotud ühegi seadmega</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Devices with a missing parent device</source>
-        <translation type="unfinished"></translation>
+        <translation>Seadmed, mille ülemseade puudub</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -8915,7 +8921,7 @@ Vigu: %3</translation>
         <location line="+25"/>
         <location line="+292"/>
         <source>Quality check</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvaliteedikontroll</translation>
     </message>
     <message>
         <location line="-312"/>
@@ -8927,13 +8933,13 @@ Vigu: %3</translation>
         <location line="-90"/>
         <location line="+84"/>
         <source>Nothing found</source>
-        <translation type="unfinished"></translation>
+        <translation>Midagi ei leitud</translation>
     </message>
     <message>
         <location line="-78"/>
         <location line="+49"/>
         <source>No issues found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Probleeme ei leitud.</translation>
     </message>
     <message>
         <location line="-29"/>
@@ -9084,7 +9090,7 @@ Vigu: %3</translation>
     <message>
         <location line="+10"/>
         <source>Reset window size</source>
-        <translation type="unfinished"></translation>
+        <translation>Lähtesta akna suurus</translation>
     </message>
     <message>
         <location line="-188"/>

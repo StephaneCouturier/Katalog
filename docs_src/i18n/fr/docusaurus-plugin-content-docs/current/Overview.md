@@ -1,85 +1,73 @@
 ---
-version: "2.13"
+version: "3.0"
 ---
 # Aperçu général
-![2.13](https://img.shields.io/badge/Version-2.13-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
 ## Indexation de fichiers & Gestionnaire de périphériques de stockage
-Katalog est un puissant <b>gestionnaire de catalogue de fichiers</b> qui vous aide à organiser et à retrouver vos fichiers.<br/>
-Il donne une vue complète des fichiers présents sur <b>plusieurs périphériques de stockage sans avoir besoin de les connecter</b>.<br/>
-Katalog crée des <b>index complets pour que vous puissiez rechercher dans toute votre collection de fichiers depuis un seul endroit</b>, que vous gériez des disques internes et externes, des clés USB, des stockages réseau ou des disques optiques (Blu-ray, DVD, CD).
+Katalog est un <b>gestionnaire de catalogues de fichiers</b> qui vous aide à organiser et à retrouver vos fichiers.<br/>
+Il donne une vue complète des fichiers répartis sur <b>plusieurs périphériques de stockage, sans qu'ils aient besoin d'être connectés</b>.<br/>
+Katalog crée des <b>index pour que vous puissiez rechercher dans toute votre collection de fichiers depuis un seul endroit</b>, que vous gériez des disques internes et externes, des clés USB, du stockage réseau ou des disques optiques (Blu-ray, DVD, CD).
 
-- **Cataloguez tout** : Créez des index détaillés des fichiers de n'importe quel périphérique de stockage
-- **Recherchez hors ligne** : Trouvez des fichiers instantanément sans connecter ou monter le périphérique d'origine
-- **Organisez votre collection** : Gérez plusieurs périphériques de stockage et leurs catalogues dans une hiérarchie unifiée
+- **Tout cataloguer** : créer des index détaillés des fichiers de n'importe quel périphérique de stockage.
+- **Rechercher hors ligne** : trouver des fichiers sans connecter ni monter le périphérique d'origine.
+- **Organiser la collection** : gérer les périphériques de stockage et leurs catalogues dans une seule hiérarchie.
+- **Sauvegarder** : copier ou déplacer les fichiers absents d'une sauvegarde, à l'aide des catalogues.
 
+![Fenêtre de Katalog : pages Sélection, Chercher et Résultats côte à côte](/img/interface_01_overview.png)
 
-![Résultats de recherche dans plusieurs catalogues](/img/k2/screen_search_01.png)
-<b>8 onglets principaux pour 8 fonctionnalités principales</b>
-![Les 8 onglets principaux de Katalog](/img/k2/global_tabwidget.png)
-1. [Rechercher](Search) des fichiers sur plusieurs périphériques de stockage **sans avoir besoin de les connecter**
-1. Organiser les [Périphériques](Devices) de stockage et leurs catalogues dans une hiérarchie unifiée avec des périphériques **Virtuels**
-1. [Explorer](Explore) la hiérarchie des catalogues et les fichiers
-1. [Créer](Create) des catalogues de **fichiers**
-1. Obtenir des [Statistiques](Statistics) sur vos collections de fichiers et l'utilisation du stockage
-1. Personnaliser les [Étiquettes](Tags) et les attribuer aux répertoires pour des capacités de recherche supplémentaires
-1. Comparer les catalogues de [Sauvegarde](BackUp) pour confirmer la couverture des fichiers et dossiers sauvegardés entre les périphériques source et cible
-1. Personnaliser votre expérience avec vos [Paramètres](Settings) tels que la langue et le thème
-<br/>
+## Pages
+La fenêtre affiche la page **[Sélection](Selection)** à gauche : l'arborescence de tous les périphériques de la collection. Sélectionner un périphérique définit la portée des autres pages. Chaque fonctionnalité s'ouvre comme une page à côté d'elle, depuis le panneau latéral (voir [Interface](Interface)) :
 
-<div className="row">
-  <div className="col col--6">
-  <br/><br/>et un <b>panneau de [Sélection](Selection)</b> pour
-  <br/>
-  * Choisir de rechercher dans les <b>Catalogues</b> ou directement dans les <b>Lecteurs connectés</b><br/>
-  * Définir le périphérique dans la <b>hiérarchie à utiliser</b> pour *Rechercher*, *Créer* (périphérique parent), *Statistiques* ou la gestion de *Sauvegarde*<br/>
-  </div>
-  <div className="col col--6" style={{maxWidth: '200px'}}>
-    ![Panneau de sélection](/img/k2/global_selection_panel.png)
-  </div>
-</div>
+1. [Rechercher](Search) des fichiers sur tous les périphériques de stockage, **sans qu'ils aient besoin d'être connectés**, et agir sur les [résultats](SearchResults).
+1. Organiser les [Périphériques](Devices) et leurs catalogues dans une seule hiérarchie, avec des périphériques **virtuels** pour les regrouper, et les [modifier](DevicesEdit).
+1. [Explorer](Explore) les dossiers et les fichiers d'un catalogue.
+1. [Créer](Create) des catalogues de fichiers.
+1. Copier ou déplacer des fichiers avec des liens de [Sauvegarde](BackUp), et vérifier la couverture des sauvegardes.
+1. Suivre la croissance de la collection dans les [Statistiques](Statistics).
+1. Attribuer des [Étiquettes](Tags) à des dossiers, pour des possibilités de recherche supplémentaires.
+1. Configurer la collection et l'application dans les [Paramètres](Settings) : mode de données, import, thème, langue.
 
 ---
-## Fonctionnalités principales
+## Fonctionnalités clés
 
-### Informations détaillées sur les fichiers
-- **[Intelligence du type de fichier](Create#enhanced-file-type-filtering)** : Détection standard par extension et vérification du type MIME
-- **[Options de catalogue](Create#select-options-to-includeexclude-files)** : Inclure uniquement un [type de fichiers](Create#enhanced-file-type-filtering), et [inclure/exclure les répertoires ou fichiers cachés](Create#other-options)
-- **[Extraction de métadonnées](Create#metadata-extraction)** : Extraction automatique des métadonnées des images (dimensions, informations de l'appareil photo), vidéos (durée, résolution) et fichiers audio (artiste, album, durée) ou tout autre type de fichier.
-- **[Somme de contrôle](Create#file-checksum)** : Calcul SHA256 pour la détection de doublons et de différences
-- **[Système d'étiquettes de dossier](Tags)** : Organisez et catégorisez les dossiers avec des étiquettes personnalisées
+### Informations riches sur les fichiers
+- **[Détection du type de fichier](Create#file-type)** : le type de chaque fichier est déterminé à partir de son extension, pour des centaines de formats.
+- **[Options du catalogue](Create#content-options)** : inclure seulement un [type de fichiers](Create#file-type), les sous-dossiers ou non, les [fichiers cachés](Create#include-hidden-files), et [exclure des dossiers ou des fichiers](Create#global-parameters).
+- **[Extraction des métadonnées](Create#include-metadata)** : dimensions des images et des vidéos, durée des vidéos et des fichiers audio, artiste et album de la musique, ou toute métadonnée des autres types de fichiers.
+- **[Somme de contrôle des fichiers](Create#include-checksum)** : sommes de contrôle SHA-256 pour des recherches exactes de doublons et de différences, et pour vérifier les fichiers.
+- **[Étiquettes de dossiers](Tags)** : organiser et classer les dossiers avec vos propres étiquettes.
 
-### Recherche et découverte puissantes
-- **[Paramètres de recherche avancés](Search#search-text-criteria)** : Trouvez des fichiers par nom, chemin, taille, date, type de fichier et métadonnées
-- **[Filtrage intelligent](Search#file-criteria)** : Utilisez plusieurs critères simultanément pour affiner rapidement les résultats
-- **[Trouver les doublons](Search#duplicates-on)** : Identifiez les fichiers en double sur différents périphériques de stockage
-- **[Trouver les différences](Search#differences-on)** : Visualisez les différences entre deux emplacements de stockage ou versions de sauvegarde
+### Recherche et découverte
+- **[Critères de recherche](Search)** : trouver des fichiers par nom (plusieurs textes, exclusions, expressions régulières), dossier, taille, date, type de fichier et métadonnées.
+- **[Trouver les doublons](Search#duplicates-on)** : repérer les fichiers en double entre périphériques.
+- **[Trouver les différences](Search#differences-on)** : voir les différences entre deux périphériques, par exemple un dossier et sa sauvegarde.
+- **[Actions sur les résultats](SearchResults#batch-process)** : filtrer les résultats, les exporter, vérifier les sommes de contrôle, extraire les métadonnées, déplacer dans la corbeille.
 
-
-### Gestion des périphériques et catalogues
-- **[Organisation des périphériques](Devices)** : Organisez les périphériques de stockage dans une structure hiérarchique (Virtuel > Stockage > Catalogues)
-- **[Mise à jour](DevicesCatalogs)** : Maintenez les catalogues à jour avec des mises à jour manuelles ou automatiques
-- **[Support d'importation](DevicesCatalogs#import)** : Importez des catalogues d'autres outils comme VVV
-- **[Import et mise à jour de collection](Settings#import-update)** : Importez des appareils depuis une autre collection Katalog, ou actualisez des appareils précédemment importés lorsque la source change
-
+### Périphériques et catalogues
+- **[Hiérarchie des périphériques](Devices#model)** : groupe physique, périphériques de stockage et catalogues, et groupes virtuels.
+- **[Mise à jour](Devices#context-menu)** : garder les catalogues à jour, un par un ou tous les disponibles en une fois.
+- **[Changements de chemin](DevicesEdit#path-change)** : lorsqu'un disque est monté ailleurs, corriger tous ses catalogues en quelques secondes, sans lire le disque.
+- **[Import et mise à jour de collection](Settings#import-update)** : importer des périphériques depuis une autre collection Katalog ou depuis VVV, et les actualiser plus tard.
 
 ### Analyse et gestion
-- **[Explorateur de fichiers](Explore)** : Parcourez le contenu des catalogues comme si le périphérique était connecté
-- **[Statistiques](Statistics)** : Suivez vos collections de fichiers et l'utilisation du stockage
-- **[Gestion des sauvegardes et archives](BackUp)** : Copiez ou déplacez des fichiers entre catalogues, comparez la couverture des sauvegardes et gérez les liens de sauvegarde
-- **[Opérations par lots](Search#batch-process)** : Exportez les résultats et effectuez des actions par lots sur les fichiers
+- **[Explorateur de fichiers](Explore)** : parcourir le contenu d'un catalogue comme si le périphérique était connecté, avec la taille de chaque dossier.
+- **[Statistiques](Statistics)** : suivre la croissance de la collection et de l'espace de stockage.
+- **[Sauvegarde et archivage](BackUp)** : copier ou déplacer des fichiers entre catalogues, prévisualiser, exécuter plusieurs liens en une fois, et vérifier la couverture.
+- **[Modes de données](Settings#database-memory-mode)** : conserver la collection dans un dossier de fichiers, dans une base de données SQLite, ou dans une base de données hébergée.
 
-### Capacités avancées
-- **[Interface en ligne de commande](CommandLines)** : Automatisez les mises à jour de catalogues et les recherches via la ligne de commande (Linux)
-- **[Flexibilité de la base de données](Settings#collection)** : Choisissez entre le stockage en fichiers CSV ou base de données SQLite
+### Katalog 2
+Katalog 2 reste disponible, avec sa [documentation](Katalog2), y compris la [ligne de commande](k2/CommandLines) (Linux).
 
 ---
-## Support multi-plateformes
-| Système d'exploitation principal | Distributions / Versions    | Packaging    |
+## Support multi-plateformes {#multi-platform-support}
+
+| Système d'exploitation principal | Distributions / Versions minimales    | Packaging    |
 |-------------------|-------------|-------------|
-| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/linux.png').default} width="40" /> GNU/Linux</div>         | Tout 64bits, glibc 2.38+ <br/>Tout 32bits, glibc 2.35     | [FlatHub/Flatpak](https://flathub.org/en/apps/io.github.stephanecouturier.Katalog)<br/>[AppImage](https://sourceforge.net/projects/katalogg/files/) <br/>[Portable](https://sourceforge.net/projects/katalogg/files/) |
+| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/linux.png').default} width="40" /> GNU/Linux</div>         | 64bits, glibc 2.38+ <br/>32bits, glibc 2.35     | [FlatHub/Flatpak](https://flathub.org/en/apps/io.github.stephanecouturier.Katalog)<br/>[AppImage](https://sourceforge.net/projects/katalogg/files/) <br/>[Portable](https://sourceforge.net/projects/katalogg/files/) |
 | <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/windows.png').default} width="40" /> Microsoft Windows</div> | 64bits : Windows 10 & Windows 11    | [Installateur](https://sourceforge.net/projects/katalogg/files/) <br/> [Portable](https://sourceforge.net/projects/katalogg/files/)       |
-| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/macos.png').default} width="40" /> Apple macOS</div>       | 14 (Sonoma)      | [Installateur](https://sourceforge.net/projects/katalogg/files/)<br/> [Portable](https://sourceforge.net/projects/katalogg/files/)       |
+| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/macos.png').default} width="40" /> Apple macOS</div>       | 14 (Sonoma)  | [Installateur](https://sourceforge.net/projects/katalogg/files/)<br/> [Portable](https://sourceforge.net/projects/katalogg/files/)       |
+
 
 ### Compatibilité macOS
 
@@ -109,24 +97,24 @@ Une version héritée (v2.5, Qt6 pur, sans dépendances KF6) est également disp
 Katalog est disponible en :
 
 | Locale | Langue | Locale | Langue | Locale | Langue |
-|---|---|---|---|---|---|
-| bg_BG | Bulgare | hi_IN | Hindi | pl_PL | Polonais |
-| cz_CZ | Tchèque | hr_HR | Croate | pt_PT | Portugais |
-| da_DK | Danois | hu_HU | Hongrois | ro_RO | Roumain |
-| de_DE | Allemand | id_ID | Indonésien | si_SI | Slovène |
-| en_US | Anglais | it_IT | Italien | sk_SK | Slovaque |
-| es_ES | Espagnol | ja_JP | Japonais | sr_RS | Serbe |
-| et_EE | Estonien | lt_LT | Lituanien | sv_SE | Suédois |
-| fi_FI | Finnois | lv_LV | Letton | uk_UA | Ukrainien |
-| fr_FR | Français | nb_NO | Norvégien | zh_CN | Chinois |
-| el_GR | Grec | nl_NL | Néerlandais |  |  |
+|--------|--------|--------|--------|--------|--------|
+| bg_BG  | Bulgare    | hi_IN  | Hindi      | pl_PL  | Polonais   |
+| cs_CZ  | Tchèque    | hr_HR  | Croate     | pt_PT  | Portugais  |
+| da_DK  | Danois     | hu_HU  | Hongrois   | ro_RO  | Roumain    |
+| de_DE  | Allemand   | id_ID  | Indonésien | si_SI  | Slovène    |
+| en_US  | Anglais    | it_IT  | Italien    | sk_SK  | Slovaque   |
+| es_ES  | Espagnol   | ja_JP  | Japonais   | sr_RS  | Serbe      |
+| et_EE  | Estonien   | lt_LT  | Lituanien  | sv_SE  | Suédois    |
+| fi_FI  | Finnois    | lv_LV  | Letton     | uk_UA  | Ukrainien  |
+| fr_FR  | Français   | nb_NO  | Norvégien  | zh_CN  | Chinois    |
+| el_GR  | Grec       | nl_NL  | Néerlandais |       |            |
 
 ### Langues de la documentation
 La documentation est disponible en :
 | Locale   | Langue    |
 |----------|-----------|
 | en_US    | Anglais   |
-| cz_CZ    | Tchèque   |
+| cs_CZ    | Tchèque   |
 | fr_FR    | Français  |
 
 ---

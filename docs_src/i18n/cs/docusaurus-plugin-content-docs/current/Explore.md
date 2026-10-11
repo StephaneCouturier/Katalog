@@ -1,98 +1,121 @@
 ---
-version: "2.13"
+version: "3.0"
 ---
 # Prozkoumat
-![2.13](https://img.shields.io/badge/Version-2.13-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
 ## Shrnutí
-Tato stránka popisuje všechny funkce obrazovky **Prozkoumat** a jak je používat.
+Tato stránka popisuje stránku **Prozkoumat**, která zobrazuje obsah **jednoho katalogu** jako strom adresářů a seznam souborů, **i když jeho zařízení není připojeno**:
+* [strom adresářů](#directory-tree) katalogu, vlevo,
+* [seznam souborů](#file-list) vybrané složky, vpravo, s velikostí každé podsložky,
+* [místní nabídka](#file-context-menu) souboru nebo složky,
+* [označení adresáře](#tag-folder) stromu štítkem.
 
-Cílem této obrazovky je **prozkoumat obsah katalogu souborů**, i když fyzické zařízení není připojeno.
+![Stránka Prozkoumat: strom adresářů vlevo, seznam souborů vybrané složky vpravo](/img/explore_01_overview.png)
 
-Toto zobrazení načte data po kliknutí pravým tlačítkem na katalog z panelu **[Výběr](Selection)** nebo zobrazení seznamu **[Katalogy](DevicesCatalogs)** a výběru položky *Prozkoumat* z kontextové nabídky.
+## Otevření katalogu {#opening}
+Katalog se na stránce Prozkoumat otevře volbou *Prozkoumat* v místní nabídce katalogu:
+* na stránce [Výběr](Selection#context-menu): katalog se zároveň vybere,
+* na stránce [Zařízení](Devices),
+* z výsledku vyhledávání volbou *Prozkoumat složku* (viz [Výsledky vyhledávání](SearchResults#file-context-menu)): Prozkoumat se otevře přímo ve složce souboru.
 
-![Obrazovka Prozkoumat zobrazující stromové zobrazení adresářů vlevo a seznam souborů vpravo](/img/k2/explore_01.png)
+*Prozkoumat* v postranním panelu znovu zobrazí stránku s posledním katalogem prozkoumaným od spuštění Katalogu.<br/>
+*Zavřít* (nebo `Esc`) stránku zavře. Pokud byla otevřena z výsledku vyhledávání, vrátí se ke stejným výsledkům.
 
-## Funkce
+## Strom adresářů {#directory-tree}
+Levý panel ukazuje počet adresářů katalogu a jeho **celkovou velikost**, pod tím strom jeho adresářů.
 
-Obrazovka je rozdělena do dvou panelů:
+Při otevření katalogu strom ukazuje složku katalogu a první dvě úrovně adresářů pod ní; hlubší úrovně jsou zpočátku sbalené.<br/>
+Adresář, který obsahuje podadresáře, má šipku: kliknutím na ni tuto větev sbalíte nebo rozbalíte.<br/>
+Kliknutím na adresář zobrazíte jeho obsah v seznamu souborů.
 
-- **Levý panel** — stromové zobrazení adresářů katalogu. Kliknutím na adresář se zobrazí jeho soubory v pravém panelu.
-- **Pravý panel** — seznam souborů pro vybraný adresář.
-
-Kliknutím na soubor v pravém panelu se aplikace pokusí otevřít jej výchozí aplikací systému, pokud je zařízení připojeno. Kliknutím na položku složky se přejde do této složky.
-
-Jsou-li složky zobrazeny, u každé se uvádí její celková velikost — soubory v ní obsažené plus vše ve složkách pod ní — takže lze největší složky odhalit bez připojení zařízení. Celková velikost celého katalogu se zobrazuje nahoře vedle cesty ke složce.
-
-### Stromové zobrazení adresářů
-
-Levý panel se otevře na kořenu katalogu a jeho prvních dvou úrovních adresářů; hlubší úrovně jsou zpočátku sbalené.
-
-Adresář, který obsahuje podadresáře, nese malou šipku: kliknutím na ni se daná větev sbalí nebo rozbalí. Adresáře bez podadresářů šipku nemají a všechny řádky zůstávají zarovnané.
-
-Čtyři tlačítka nad stromem mění, kolik hierarchie je zobrazeno najednou:
+Čtyři tlačítka nad stromem mění, jak velká část stromu je zobrazena najednou:
 
 | Tlačítko | Účinek |
 |----------|--------|
-| *Sbalit o jednu úroveň* | Sbalí nejhlubší aktuálně zobrazenou úroveň |
-| *Rozbalit o jednu úroveň* | Rozbalí o jednu úroveň stromu více |
-| *Sbalit vše* | Sbalí vše zpět na kořen katalogu |
-| *Rozbalit vše* | Rozbalí každý adresář katalogu |
+| *Sbalit o jednu úroveň* | Sbalí nejhlubší aktuálně zobrazenou úroveň. |
+| *Rozbalit o jednu úroveň* | Rozbalí o jednu úroveň více. |
+| *Sbalit vše* | Sbalí vše zpět na složku katalogu. |
+| *Rozbalit vše* | Rozbalí všechny adresáře katalogu. |
 
-Tlačítko je zašedlé, pokud už nemá co sbalit nebo rozbalit.
+Tlačítko je zašedlé, když už není co sbalit nebo rozbalit.<br/>
+Otevření podsložky ze seznamu souborů rozbalí její větev, takže vybraný adresář je ve stromu vždy vidět.<br/>
+Sbalené a rozbalené větve se neukládají: strom začíná znovu od prvních dvou úrovní při každém otevření katalogu.
 
-Přechod do složky z pravého panelu rozbalí větev, do které složka patří, takže vybraný adresář je ve stromu vždy viditelný.
+### Označit tuto složku štítkem {#tag-folder}
+**Kliknutím pravým tlačítkem** na adresář stromu (nebo dlouhým stiskem) otevřete jeho nabídku s jedinou položkou: *Označit tuto složku štítkem*.<br/>
+Ta otevře stránku [Štítky](Tags) přes celou stránku Prozkoumat, s již vyplněnou cestou k tomuto adresáři; tam zvolte štítek a potvrďte. Adresář vybraný ve stromu a seznam souborů se nemění.<br/>
+*Zavřít* (nebo `Esc`) na stránce Štítky pak vrátí na stejnou stránku Prozkoumat a stejný adresář.
 
-Strom se vždy znovu otevře na kořenu katalogu a jeho prvních dvou úrovních: sbalený nebo rozbalený stav se mezi návštěvami neuchovává.
+## Seznam souborů {#file-list}
+Horní část seznamu souborů ukazuje cestu k vybrané složce a možnosti zobrazení:
 
-### Možnosti zobrazení
+| Možnost | Účinek |
+|---------|--------|
+| *Zobrazit složky* | Zobrazí podsložky spolu se soubory. |
+| *a všechny podsložky* | Zobrazí obsah všech podsložek v libovolné hloubce. Dostupné se *Zobrazit složky*. |
+| *Řadit složky jako první* | Seřadí seznam se složkami na začátku, potom soubory. Dostupné se *Zobrazit složky*. |
 
-Tři možnosti ovládají, co se zobrazuje v seznamu souborů:
+Pod tím *Počet souborů* a *Celková velikost* udávají soubory **přímo** ve vybrané složce, bez jejích podsložek.
 
-- **Zobrazit složky** — pokud je povoleno, zobrazují se položky složek spolu se soubory. Povolením této možnosti se aktivují i dvě níže uvedené možnosti.
-- **Zobrazit podsložky** — pokud je povoleno, soubory ze všech podsložek jsou uvedeny společně v seznamu souborů.
-- **Složky napřed** — tlačítko, které přeřadí seznam tak, aby se nejprve zobrazily složky (abecedně), pak soubory (abecedně).
+### Velikosti složek
+Každá zobrazená složka ukazuje ve sloupci *Velikost* celkovou velikost **všeho, co obsahuje**, v libovolné hloubce. Složka bez souborů má velikost 0.<br/>
+Největší složky tak lze najít bez připojení zařízení.
 
-## Kontextová nabídka adresářů (kliknutí pravým tlačítkem) {#directory-context-menu}
+Táž složka může ukazovat dvě různá čísla: svou velikost v seznamu nadřazené složky (vše, co obsahuje) a svou *Celková velikost*, když je vybrána (pouze soubory přímo v ní).<br/>
+S volbou *a všechny podsložky* se složka započítává i do velikosti každé složky nad ní: velikosti v seznamu se nesčítají do celku.
 
-Kliknutí pravým tlačítkem na adresář v levém panelu zobrazí:
+### Sloupce
+| Sloupec | Obsah |
+|---------|-------|
+| *Název* | Název souboru nebo složky s ikonou jeho typu. |
+| *Velikost* | Velikost souboru nebo celková velikost složky. |
+| *Datum* | Datum poslední změny. |
+| *Typ souboru*, *Typ MIME* | Typ souboru. |
+| *Šířka*, *Výška*, *Délka* | Rozměry obrázků a videí, délka zvukových a video souborů. |
+| *Umělec*, *Album*, *Název* | U zvukových souborů. |
+| *Kontrolní součet (SHA256)*, *Datum kontrolního součtu* | Kontrolní součet souboru a datum jeho výpočtu. |
 
-![Kontextová nabídka adresáře s možností označit složku](/img/k2/explore_02_context.png)
+Sloupce *Šířka* až *Název* se zobrazují pouze u katalogů, které obsahují metadata, a sloupce kontrolního součtu jsou vyplněny pouze u katalogů vytvořených s kontrolními součty (viz [Vytvořit](Create)).
 
-- *Označit tuto složku* — otevře obrazovku [Štítky](Tags) s předvyplněnou touto složkou pro přiřazení štítku.
+### Práce se seznamem
+* **Kliknutím** na soubor ho otevřete ve výchozí aplikaci. **Kliknutím** na složku ji otevřete na stránce Prozkoumat.
+* **Kliknutím pravým tlačítkem** na řádek (nebo dlouhým stiskem) otevřete jeho [místní nabídku](#file-context-menu).
+* **Kliknutím na nadpis sloupce** seřadíte podle tohoto sloupce; dalším kliknutím pořadí obrátíte. Řazení se zachová pro další návštěvy.
+* **Přetažením** čáry mezi dvěma nadpisy sloupců změníte šířku sloupce; **dvojitým kliknutím** na ni přizpůsobíte sloupec obsahu. Šířka sloupce *Název* se zachová.
+* Klávesnice funguje jako ve [výsledcích vyhledávání](SearchResults#keyboard): šipky, `Page Up` `Page Down`, `Home` `End`, `Enter` pro otevření, `Menu` nebo `Shift+F10` pro místní nabídku, psaní písmen pro přechod na název.
 
-## Kontextová nabídka souborů a složek (kliknutí pravým tlačítkem) {#file-context-menu}
+Když zařízení katalogu není dostupné (odpojené nebo se změnila jeho cesta), katalog lze stále procházet, ale otevření souboru nebo složky ve správci souborů se odmítne a stránka zobrazí: *Zařízení není aktivní. Může být odpojeno nebo se změnila jeho cesta.*
 
-Kliknutí pravým tlačítkem na položku v pravém panelu zobrazí kontextovou nabídku přizpůsobenou typu vybrané položky.
+## Místní nabídka {#file-context-menu}
 
-![Kontextová nabídka souborů zobrazující operace: otevřít, kopírovat, kontrolní součet a smazat](/img/k2/explore_03_context.png)
+![Místní nabídka souboru na stránce Prozkoumat](/img/explore_02_context_menu.png)
 
-### Pro soubory
+Kliknutí pravým tlačítkem na řádek otevře nabídku přizpůsobenou typu řádku.
 
-| Akce | Popis |
-|------|-------|
-| *Otevřít soubor* | Otevře soubor výchozí aplikací systému. Pokud prozkoumávané zařízení není připojeno, zobrazí se upozornění a soubor se neotevře. |
-| *Otevřít složku* | Otevře nadřazenou složku souboru ve správci souborů |
-| *Zobrazit rozšířená metadata (JSON)* | Zobrazí podrobná metadata (k dispozici pouze pokud byl katalog indexován s rozšířenými metadaty) |
-| *Kopírovat cestu složky* | Zkopíruje cestu nadřazené složky do schránky |
-| *Kopírovat absolutní cestu souboru* | Zkopíruje úplnou cestu souboru do schránky |
-| *Kopírovat název souboru s příponou* | Zkopíruje název souboru (s příponou) do schránky |
-| *Kopírovat název souboru bez přípony* | Zkopíruje název souboru (bez přípony) do schránky |
-| *Kopírovat kontrolní součet* | Zkopíruje uložený kontrolní součet do schránky (zobrazí se pouze pokud je kontrolní součet uložen) |
-| *Vypočítat kontrolní součet (SHA-256)* | Vypočítá a uloží kontrolní součet SHA-256 souboru (zobrazí se pouze pokud ještě není kontrolní součet uložen) |
-| *Ověřit kontrolní součet (SHA-256)* | Přepočítá kontrolní součet a porovná ho s uloženou hodnotou (zobrazí se pouze pokud je kontrolní součet uložen) |
-| *Přesunout soubor do koše* | Přesune soubor do systémového koše |
-| *Smazat soubor* | Trvale smaže soubor |
+### U souboru
+| Položka | Akce |
+|---------|------|
+| *Otevřít soubor* | Otevře soubor ve výchozí aplikaci. |
+| *Otevřít složku* | Otevře složku souboru ve správci souborů. |
+| *Zobrazit rozšířená metadata (JSON)* | Zobrazí všechna metadata uložená pro soubor jako tabulku, s tlačítkem *Kopírovat JSON*. Zobrazeno, když katalog obsahuje rozšířená metadata. |
+| *Kopírovat název souboru bez přípony* | Zkopíruje `report_2025` z `/home/username/Documents/report_2025.pdf`. |
+| *Kopírovat název souboru s příponou* | Zkopíruje `report_2025.pdf`. |
+| *Kopírovat cestu ke složce* | Zkopíruje `/home/username/Documents`. |
+| *Kopírovat absolutní cestu k souboru* | Zkopíruje `/home/username/Documents/report_2025.pdf`. |
+| *Kopírovat kontrolní součet* | Zkopíruje uložený kontrolní součet. Zobrazeno, když ho soubor má. |
+| *Vypočítat kontrolní součet (SHA-256)* | Vypočítá kontrolní součet souboru a uloží ho. Zobrazeno, když soubor ještě nemá kontrolní součet. |
+| *Ověřit kontrolní součet (SHA-256)* | Znovu vypočítá kontrolní součet a porovná ho s uloženým. Pokud se liší, zobrazí se obě hodnoty s tlačítkem *Aktualizovat kontrolní součet* pro uložení nové hodnoty. |
+| *Přesunout soubor do koše* | Přesune soubor do systémového koše. |
+| *Smazat soubor* | Po potvrzení soubor **trvale** smaže. Dostupné pouze tehdy, když je v [Nastavení](Settings#behavior) zapnuto *Povolit akce, které mažou soubory (bez možnosti obnovení)*. |
 
-### Pro složky
-
-| Akce | Popis |
-|------|-------|
-| *Otevřít složku* | Otevře složku ve správci souborů systému |
-| *Kopírovat cestu složky* | Zkopíruje cestu složky do schránky |
-| *Kopírovat název složky* | Zkopíruje název složky do schránky |
-| *Přesunout složku do koše* | Přesune složku do systémového koše |
+### U složky
+| Položka | Akce |
+|---------|------|
+| *Otevřít složku* | Otevře složku ve správci souborů. |
+| *Kopírovat název složky* | Zkopíruje `Documents` z `/home/username/Documents`. |
+| *Kopírovat cestu ke složce* | Zkopíruje `/home/username/Documents`. |
+| *Přesunout složku do koše* | Přesune složku a její obsah do systémového koše. |
 
 ## Vývoj
-Některé nápady na vývoj této obrazovky:
-* Podívejte se na nevyřízené položky [vývoje Prozkoumat](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=explore).
+* Viz backlog [vývoje stránky Prozkoumat](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=explore).

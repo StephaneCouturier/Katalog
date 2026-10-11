@@ -1,98 +1,121 @@
 ---
-version: "2.13"
+version: "3.0"
 ---
 # Explorer
-![2.13](https://img.shields.io/badge/Version-2.13-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
 ## Résumé
-Cette page décrit toutes les fonctionnalités de l'écran **Explorer** et comment les utiliser.
+Cette page décrit la page **Explorer**, qui montre le contenu d'**un catalogue** sous forme d'arborescence de répertoires et de liste de fichiers, **même lorsque son périphérique n'est pas connecté** :
+* l'[arborescence des répertoires](#directory-tree) du catalogue, à gauche,
+* la [liste des fichiers](#file-list) du dossier sélectionné, à droite, avec la taille de chaque sous-dossier,
+* le [menu contextuel](#file-context-menu) d'un fichier ou d'un dossier,
+* l'[étiquetage d'un répertoire](#tag-folder) de l'arborescence.
 
-L'objectif de cet écran est d'**explorer le contenu d'un catalogue de fichiers** même lorsque le périphérique physique n'est pas connecté.
+![Page Explorer : arborescence des répertoires à gauche, liste des fichiers du dossier sélectionné à droite](/img/explore_01_overview.png)
 
-Cette vue charge les données après un clic droit sur un catalogue depuis le panneau **[Sélection](Selection)** ou la vue de liste **[Catalogues](DevicesCatalogs)**, en choisissant l'entrée de menu *Explorer*.
+## Ouvrir un catalogue {#opening}
+Un catalogue s'ouvre dans Explorer avec *Explorer*, dans le menu contextuel d'un catalogue :
+* sur la page [Sélection](Selection#context-menu) : le catalogue est également sélectionné,
+* sur la page [Périphériques](Devices),
+* depuis un résultat de recherche, avec *Explorer le dossier* (voir [Résultats de recherche](SearchResults#file-context-menu)) : Explorer s'ouvre directement sur le dossier du fichier.
 
-![Écran Explorer affichant l'arborescence des répertoires à gauche et la liste des fichiers à droite](/img/k2/explore_01.png)
+*Explorer* dans le panneau latéral affiche à nouveau la page avec le dernier catalogue exploré depuis le démarrage de Katalog.<br/>
+*Fermer* (ou `Échap`) ferme la page. Lorsqu'elle a été ouverte depuis un résultat de recherche, elle revient aux mêmes résultats.
 
-## Fonctionnalités
+## Arborescence des répertoires {#directory-tree}
+Le panneau de gauche indique le nombre de répertoires du catalogue et sa **taille totale**, puis l'arborescence de ses répertoires.
 
-L'écran est divisé en deux panneaux :
+À l'ouverture d'un catalogue, l'arborescence montre le dossier du catalogue et les deux premiers niveaux de répertoires en dessous ; les niveaux plus profonds sont d'abord repliés.<br/>
+Un répertoire qui contient des sous-répertoires a une flèche : cliquez dessus pour replier ou déplier cette branche.<br/>
+Cliquez sur un répertoire pour afficher son contenu dans la liste des fichiers.
 
-- **Panneau gauche** — arborescence des répertoires du catalogue. Cliquer sur un répertoire affiche ses fichiers dans le panneau de droite.
-- **Panneau droit** — liste des fichiers du répertoire sélectionné.
-
-Cliquer sur un fichier dans le panneau de droite tentera de l'ouvrir avec l'application par défaut du système, si le périphérique est connecté. Cliquer sur un dossier navigue à l'intérieur de ce dossier.
-
-Lorsque les dossiers sont affichés, chacun indique sa taille totale — les fichiers qu'il contient plus tout ce que contiennent les dossiers en dessous — afin de repérer les dossiers les plus volumineux sans connecter le périphérique. La taille totale du catalogue est affichée en haut, à côté du chemin du dossier.
-
-### Arborescence des répertoires
-
-Le panneau gauche s'ouvre sur la racine du catalogue et ses deux premiers niveaux de répertoires ; les niveaux plus profonds sont repliés au départ.
-
-Un répertoire qui contient des sous-répertoires porte une petite flèche : cliquer dessus replie ou déplie cette branche. Les répertoires sans sous-répertoire n'ont pas de flèche, et toutes les lignes restent alignées.
-
-Quatre boutons au-dessus de l'arborescence changent la quantité de hiérarchie affichée d'un seul coup :
+Quatre boutons au-dessus de l'arborescence changent la part de l'arborescence affichée à la fois :
 
 | Bouton | Effet |
 |--------|-------|
-| *Réduire d'un niveau* | Replie le niveau le plus profond actuellement affiché |
-| *Développer d'un niveau* | Déplie un niveau supplémentaire de l'arborescence |
-| *Tout réduire* | Replie tout jusqu'à la racine du catalogue |
-| *Tout développer* | Déplie tous les répertoires du catalogue |
+| *Réduire d'un niveau* | Replie le niveau le plus profond actuellement affiché. |
+| *Développer d'un niveau* | Déplie un niveau supplémentaire. |
+| *Tout réduire* | Replie tout jusqu'au dossier du catalogue. |
+| *Tout développer* | Déplie tous les répertoires du catalogue. |
 
-Un bouton est grisé lorsqu'il n'a plus rien à replier ou à déplier.
+Un bouton est grisé lorsqu'il n'y a plus rien à replier ou à déplier.<br/>
+Ouvrir un sous-dossier depuis la liste des fichiers déplie sa branche : le répertoire sélectionné est ainsi toujours visible dans l'arborescence.<br/>
+Les branches repliées et dépliées ne sont pas conservées : l'arborescence repart des deux premiers niveaux à chaque ouverture d'un catalogue.
 
-Naviguer dans un dossier depuis le panneau de droite déplie la branche à laquelle il appartient, afin que le répertoire sélectionné soit toujours visible dans l'arborescence.
+### Étiqueter ce dossier {#tag-folder}
+**Faites un clic droit** sur un répertoire de l'arborescence (ou un appui long) pour ouvrir son menu, qui contient une entrée : *Étiqueter ce dossier*.<br/>
+Elle ouvre la page [Étiquettes](Tags) par-dessus toute la page Explorer, avec le chemin de ce répertoire déjà rempli ; choisissez l'étiquette et confirmez-la là. Le répertoire sélectionné dans l'arborescence et la liste des fichiers ne changent pas.<br/>
+*Fermer* (ou `Échap`) sur Étiquettes revient ensuite à la même page Explorer et au même répertoire.
 
-L'arborescence se rouvre toujours sur la racine du catalogue et ses deux premiers niveaux : l'état replié ou déplié n'est pas conservé d'une visite à l'autre.
+## Liste des fichiers {#file-list}
+Le haut de la liste des fichiers indique le chemin du dossier sélectionné, ainsi que les options d'affichage :
 
-### Options d'affichage
+| Option | Effet |
+|--------|-------|
+| *Afficher les dossiers* | Liste les sous-dossiers avec les fichiers. |
+| *et tous les sous-dossiers* | Liste le contenu de tous les sous-dossiers, à n'importe quelle profondeur. Disponible avec *Afficher les dossiers*. |
+| *Trier d'abord les dossiers* | Trie la liste avec les dossiers en premier, puis les fichiers. Disponible avec *Afficher les dossiers*. |
 
-Trois options contrôlent ce qui apparaît dans la liste des fichiers :
+En dessous, *Nombre de Fichiers* et *Taille Totale* portent sur les fichiers situés **directement** dans le dossier sélectionné, sans ses sous-dossiers.
 
-- **Afficher les dossiers** — lorsqu'activé, les entrées de dossiers sont affichées avec les fichiers. L'activation de cette option active également les deux options ci-dessous.
-- **Afficher les sous-dossiers** — lorsqu'activé, les fichiers de tous les sous-dossiers sont listés ensemble dans la liste de fichiers.
-- **Trier les dossiers en premier** — bouton qui retrie la liste pour afficher d'abord les dossiers (alphabétiquement), puis les fichiers (alphabétiquement).
+### Taille des dossiers
+Chaque dossier listé indique, dans la colonne *Taille*, la taille totale de **tout ce qu'il contient**, à n'importe quelle profondeur. Un dossier sans fichier affiche une taille de 0.<br/>
+Les plus gros dossiers peuvent ainsi être repérés sans connecter le périphérique.
 
-## Menu contextuel des répertoires (clic droit) {#directory-context-menu}
+Un même dossier peut afficher deux chiffres différents : sa taille dans la liste de son dossier parent (tout ce qu'il contient), et sa *Taille Totale* une fois sélectionné (uniquement les fichiers qu'il contient directement).<br/>
+Avec *et tous les sous-dossiers*, un dossier est aussi compté dans la taille de chaque dossier au-dessus de lui : les tailles de la liste ne s'additionnent pas pour donner le total.
 
-Un clic droit sur un répertoire dans le panneau gauche affiche :
+### Colonnes
+| Colonne | Contenu |
+|---------|---------|
+| *Nom* | Nom du fichier ou du dossier, avec une icône pour son type. |
+| *Taille* | Taille du fichier, ou taille totale d'un dossier. |
+| *Date* | Date de dernière modification. |
+| *Type de Fichier*, *Type MIME* | Type du fichier. |
+| *Largeur*, *Hauteur*, *Durée* | Dimensions des images et des vidéos, durée des fichiers audio et vidéo. |
+| *Artiste*, *Album*, *Titre* | Pour les fichiers audio. |
+| *Somme de contrôle (SHA256)*, *Date de somme de contrôle* | Somme de contrôle du fichier, et date de son calcul. |
 
-![Menu contextuel du répertoire avec l'option d'étiqueter le dossier](/img/k2/explore_02_context.png)
+Les colonnes *Largeur* à *Titre* ne sont affichées que pour les catalogues qui incluent les métadonnées, et les colonnes de somme de contrôle ne sont remplies que pour les catalogues créés avec les sommes de contrôle (voir [Créer](Create)).
 
-- *Étiqueter ce dossier* — ouvre l'écran [Étiquettes](Tags) avec ce dossier pré-rempli, pour lui attribuer une étiquette.
+### Utiliser la liste
+* **Cliquez** sur un fichier pour l'ouvrir avec son application par défaut. **Cliquez** sur un dossier pour l'ouvrir dans Explorer.
+* **Faites un clic droit** sur une ligne (ou un appui long) pour ouvrir son [menu contextuel](#file-context-menu).
+* **Cliquez sur le titre d'une colonne** pour trier selon cette colonne ; cliquez à nouveau pour inverser l'ordre. Le tri est conservé pour les visites suivantes.
+* **Faites glisser** la ligne entre deux titres de colonnes pour changer la largeur d'une colonne ; **double-cliquez** dessus pour ajuster la colonne à son contenu. La largeur de *Nom* est conservée.
+* Le clavier fonctionne comme dans les [résultats de recherche](SearchResults#keyboard) : flèches, `Page préc.` `Page suiv.`, `Début` `Fin`, `Entrée` pour ouvrir, `Menu` ou `Maj+F10` pour le menu contextuel, saisie de lettres pour aller à un nom.
 
-## Menu contextuel fichiers et dossiers (clic droit) {#file-context-menu}
+Lorsque le périphérique du catalogue n'est pas disponible (déconnecté, ou son chemin a changé), le catalogue peut toujours être parcouru, mais l'ouverture d'un fichier, ou d'un dossier dans le gestionnaire de fichiers, est refusée et la page affiche : *Le périphérique n'est pas actif. Il est peut-être déconnecté, ou son chemin a peut-être changé.*
 
-Un clic droit sur une entrée dans le panneau droit affiche un menu contextuel qui s'adapte au type d'entrée sélectionnée.
+## Menu contextuel {#file-context-menu}
 
-![Menu contextuel des fichiers affichant les opérations disponibles : ouvrir, copier, somme de contrôle et supprimer](/img/k2/explore_03_context.png)
+![Menu contextuel d'un fichier dans Explorer](/img/explore_02_context_menu.png)
 
-### Pour les fichiers
+Un clic droit sur une ligne ouvre un menu adapté au type de la ligne.
 
-| Action | Description |
-|--------|-------------|
-| *Ouvrir le fichier* | Ouvre le fichier avec l'application par défaut du système. Si le périphérique exploré n'est pas connecté, un avertissement s'affiche et le fichier n'est pas ouvert. |
-| *Ouvrir le dossier* | Ouvre le dossier parent du fichier dans le gestionnaire de fichiers |
-| *Afficher les métadonnées étendues (JSON)* | Affiche les métadonnées détaillées (disponible uniquement si le catalogue a été indexé avec les métadonnées étendues) |
-| *Copier le chemin du dossier* | Copie le chemin du dossier parent dans le presse-papiers |
-| *Copier le chemin absolu du fichier* | Copie le chemin complet du fichier dans le presse-papiers |
-| *Copier le nom du fichier avec extension* | Copie le nom du fichier (avec extension) dans le presse-papiers |
-| *Copier le nom du fichier sans extension* | Copie le nom du fichier (sans extension) dans le presse-papiers |
-| *Copier la somme de contrôle* | Copie la somme de contrôle stockée dans le presse-papiers (affiché uniquement si une somme de contrôle est stockée) |
-| *Calculer la somme de contrôle (SHA-256)* | Calcule et enregistre la somme de contrôle SHA-256 du fichier (affiché uniquement si aucune somme de contrôle n'est stockée) |
-| *Vérifier la somme de contrôle (SHA-256)* | Recalcule la somme de contrôle et la compare avec la valeur stockée (affiché uniquement si une somme de contrôle est stockée) |
-| *Déplacer le fichier vers la corbeille* | Déplace le fichier vers la corbeille du système |
-| *Supprimer le fichier* | Supprime définitivement le fichier |
+### Pour un fichier
+| Élément | Action |
+|---------|--------|
+| *Ouvrir le fichier* | Ouvre le fichier avec son application par défaut. |
+| *Ouvrir le dossier* | Ouvre le dossier du fichier dans le gestionnaire de fichiers. |
+| *Afficher les métadonnées étendues (JSON)* | Affiche toutes les métadonnées enregistrées pour le fichier, sous forme de tableau, avec *Copier JSON*. Affiché lorsque le catalogue inclut les métadonnées étendues. |
+| *Copier le nom de fichier sans extension* | Copie `report_2025` depuis `/home/username/Documents/report_2025.pdf`. |
+| *Copier le nom de fichier avec extension* | Copie `report_2025.pdf`. |
+| *Copier le chemin du répertoire* | Copie `/home/username/Documents`. |
+| *Copier le chemin absolu du fichier* | Copie `/home/username/Documents/report_2025.pdf`. |
+| *Copier la somme de contrôle* | Copie la somme de contrôle enregistrée. Affiché lorsque le fichier en a une. |
+| *Calculer la somme de contrôle (SHA-256)* | Calcule la somme de contrôle du fichier et l'enregistre. Affiché lorsque le fichier n'a pas encore de somme de contrôle. |
+| *Vérifier la somme de contrôle (SHA-256)* | Calcule à nouveau la somme de contrôle et la compare à celle enregistrée. Si elles diffèrent, les deux valeurs sont affichées, avec *Mettre à jour la somme de contrôle* pour enregistrer la nouvelle. |
+| *Déplacer le fichier vers la corbeille* | Déplace le fichier dans la corbeille du système. |
+| *Supprimer le fichier* | Supprime le fichier **définitivement**, après confirmation. Disponible uniquement lorsque *Autoriser les actions qui suppriment des fichiers (sans récupération)* est activé dans les [Paramètres](Settings#behavior). |
 
-### Pour les dossiers
-
-| Action | Description |
-|--------|-------------|
-| *Ouvrir le dossier* | Ouvre le dossier dans le gestionnaire de fichiers du système |
-| *Copier le chemin du dossier* | Copie le chemin du dossier dans le presse-papiers |
-| *Copier le nom du dossier* | Copie le nom du dossier dans le presse-papiers |
-| *Déplacer le dossier vers la corbeille* | Déplace le dossier vers la corbeille du système |
+### Pour un dossier
+| Élément | Action |
+|---------|--------|
+| *Ouvrir le dossier* | Ouvre le dossier dans le gestionnaire de fichiers. |
+| *Copier le nom du dossier* | Copie `Documents` depuis `/home/username/Documents`. |
+| *Copier le chemin du répertoire* | Copie `/home/username/Documents`. |
+| *Déplacer le dossier vers la corbeille* | Déplace le dossier et son contenu dans la corbeille du système. |
 
 ## Développement
-Quelques idées d'évolutions pour cet écran :
-* Voir la liste de [développement Explorer](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=explore).
+* Voir le backlog du [développement d'Explorer](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=explore).

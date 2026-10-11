@@ -1,306 +1,177 @@
 ---
-version: "2.13"
+version: "3.0"
 ---
 # Sauvegarde
-![2.13](https://img.shields.io/badge/Version-2.13-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
 ## Résumé
-Cette page décrit toutes les fonctionnalités de l'écran **BackUp** et comment les utiliser.<br/>
-Depuis cet écran, l'utilisateur peut **gérer les sauvegardes de catalogue (copie) ou l'archivage (déplacement)**.<br/>
+Cette page décrit la page **Sauvegarde**, où des fichiers sont copiés ou déplacés d'un catalogue vers un autre, en utilisant les données des catalogues pour savoir ce qui manque :
+* les [concepts](#concepts) : liens, sauvegarde et archivage, conflits, mode source,
+* la [liste des liens](#links), avec leur couverture et leur dernière exécution,
+* la [création et la modification d'un lien](#link-form),
+* l'[aperçu](#preview) et l'[exécution](#run) d'un lien, ou de [tous les liens listés](#run-listed),
+* les [autres actions](#more-actions) sur un lien : dupliquer, répliquer les répertoires, inverser, exporter, supprimer, LuckyBackup.
 
-![Écran principal BackUp](/img/k2/screen_backup_01.png)
+![Page Sauvegarde : liste des liens avec leur source, leur cible, la différence et la dernière sauvegarde](/img/backup_01_overview.png)
 
-## Concepts principaux
+## Concepts {#concepts}
 
-### Liens de catalogue
+### Liens
+Un **lien** associe un catalogue **source** à un catalogue **cible**, où ses fichiers sont sauvegardés. Les deux sont des catalogues de la collection (voir [Périphériques](Devices#model)) : pour sauvegarder un dossier sur un disque externe, le dossier et le dossier de sauvegarde sur le disque doivent d'abord avoir chacun un catalogue (voir [Créer](Create)).
 
-L'écran permet d'<b>associer un catalogue</b>, considéré comme la <b><i>source</i></b>, à un autre catalogue, considéré comme la <b><i>cible</i></b> de la sauvegarde.<br/>C'est le concept central de toutes les fonctionnalités de cet écran.
+Katalog compare les deux catalogues pour trouver les fichiers de la source **absents de la cible**, puis les copie ou les déplace. Il n'a besoin d'aucun outil externe.
 
-### Comparaison des catalogues
+### Sauvegarde ou Archive {#type}
 
-L'écran affiche la liste des liens et la <b>couverture des sauvegardes</b> pour l'ensemble de la sélection et par lien, en comparant la taille, le nombre de fichiers et la date de mise à jour de la source et de la cible.
+| Type | Opération | Objectif |
+|------|-----------|----------|
+| **Sauvegarde** | **Copie** les fichiers manquants vers la cible. | La source n'est jamais modifiée. L'objectif est la redondance et la récupération. |
+| **Archive** | **Déplace** les fichiers vers la cible. | Chaque fichier est supprimé de la source une fois sa copie confirmée. L'objectif est de libérer la source, pour un stockage à long terme. Les dossiers vides laissés dans la source ne sont **pas** supprimés. |
 
-### Réplication de répertoires
+Une sauvegarde :
+* recrée la structure de dossiers de la source sur la cible, puis copie les fichiers manquants,
+* n'écrase **pas** un fichier déjà présent dans la cible, même s'il est différent (voir [conflits](#conflicts)),
+* ne supprime **pas** les fichiers de la cible absents de la source.
 
-Nécessaire lors du processus de sauvegarde, il est possible de déclencher la copie de l'arborescence de dossiers séparément, sans les fichiers.
+Un archivage sur le même système de fichiers déplace les fichiers instantanément ; entre systèmes de fichiers différents, chaque fichier est copié, puis supprimé de la source une fois la copie terminée. Si la copie échoue, le fichier source reste intact.
 
-## BackUp ou Archive
+### Conflits {#conflicts}
+Un **conflit** est un fichier présent au même endroit dans la source et dans la cible, mais avec une date, une taille ou une somme de contrôle différente. L'option *En cas de conflit* du lien décide de ce qui se passe :
 
-| Opération | Traitement des fichiers | Objectif |
-|-----------|------------------------|----------|
-| **BackUp** | Opération de **copie** d'un catalogue source vers un catalogue cible. | La source n'est jamais modifiée. L'objectif est la redondance et la récupération. <br/> Plusieurs stratégies existeront avec le temps (complète, incrémentale, synchronisation). |
-| **Archive** | Opération de **déplacement** d'un catalogue source vers un catalogue cible. | Les fichiers sont transférés puis supprimés de la source une fois la copie vérifiée. L'objectif est le déchargement à long terme et l'organisation du stockage. Les répertoires vides laissés dans la source ne sont **pas** supprimés. |
+| Situation | *Ignorer - laisser la cible inchangée* | *Renommer le plus ancien - renommer la cible, copier la source* |
+|-----------|------|---------------|
+| Source plus récente que la cible | conflit signalé | cible renommée, puis source copiée |
+| Cible plus récente que la source | conflit signalé | ignoré, pour protéger la cible plus récente |
+| Même date, taille différente | conflit signalé | ignoré (pas de gagnant évident) |
+| Fichier source absent du disque | erreur | erreur |
 
-
-
-### Sauvegarde incrémentale (copie de fichiers)
-
-La sauvegarde Katalog copie les fichiers d'un **catalogue source** vers un **catalogue cible** en utilisant les données indexées de Katalog.
-<br/>Pour que cela fonctionne complètement, les catalogues seront mis à jour avant la sauvegarde et après (optionnel mais fortement recommandé).
-<br/>Il n'y a aucune dépendance à un outil externe.
-<br/><br/>Séquence d'actions :
-- Compare les catalogues source et cible pour trouver les **fichiers manquants dans la cible**.
-- Copie les fichiers manquants vers la cible, en recréant l'arborescence de dossiers.
-- Ne **remplace pas** les fichiers existants dans la cible (même s'ils sont différents).
-- Ne **supprime pas** les fichiers de la cible qui sont absents de la source.
-
-Options "Copie stricte"
-- <i>Copie stricte</i> (par défaut) : Katalog copiera les fichiers même s'ils sont déjà présents dans la cible. Si décoché, les fichiers déjà présents dans la cible (selon le nom, la taille et la date) ne seront pas copiés à nouveau.
-
-Options "Répertoires"
-- <i>Inclure les vides</i> (par défaut : coché) : l'arborescence des répertoires de la source est recréée dans la cible avant toute copie de fichier. Si coché, un répertoire qui ne contient rien du tout — ni fichier ni sous-répertoire — est également recréé. Si décoché, un tel répertoire n'est pas créé, tandis que tout répertoire qui contient quelque chose l'est toujours. Décocher cette option ne supprime jamais un répertoire déjà présent dans la cible.
-
-Options de gestion des conflits
-- <i>En cas de conflit</i> (par défaut : <i>Renommer le plus ancien</i>)
-
-Katalog peut gérer les conflits de différentes manières, lorsqu'un fichier existe dans la cible mais que la date, la taille ou la somme de contrôle sont différentes.
-
-Un **conflit** survient lorsqu'un fichier existe à la fois dans la source et dans la cible au même chemin, mais que la date, la taille ou la somme de contrôle diffèrent. Le mode contrôle le comportement dans ce cas.
-
-#### Modes disponibles {#available-modes}
-
-| Mode | Comportement |
-|------|-------------|
-| **Ignorer** (par défaut) | Aucune opération — la source n'est pas copiée, la cible n'est pas modifiée. Le conflit est signalé pour examen. |
-| **Renommer le plus ancien** | Si la source est plus récente : renomme le fichier cible (en ajoutant un suffixe horodaté), puis copie la source. Si la cible est plus récente ou de même date : ignore (protège la cible plus récente). |
-
-#### Tableau complet des scénarios
-
-| # | Situation | Ignorer | Renommer le plus ancien |
-|---|-----------|---------|------------------------|
-| A | Source plus récente que la cible | conflit signalé | renomme la cible → copie la source ✓ |
-| B | Cible plus récente que la source | conflit signalé | ignore (protège la cible plus récente) |
-| C | Même date, taille différente | conflit signalé | ignore (pas de gagnant évident) |
-| D | Fichier source manquant sur le disque | erreur | erreur |
-
-> **Renommer le plus ancien — format du nom archivé** : l'ancien fichier cible est renommé en `nomoriginal_AAAAMMJJ-HHmmss.ext` (ex. `rapport_20260225-102559.docx`). L'horodatage est inséré avant l'extension afin que le fichier reste ouvrable. Ces fichiers s'accumulent sur la cible et doivent être supprimés manuellement pour récupérer de l'espace.
-
-> **Renommer le plus ancien — garantie de sécurité** : si la copie du fichier source échoue après que la cible a déjà été renommée, le fichier renommé est automatiquement restauré à son nom d'origine. Aucune donnée n'est perdue.
-
-
-### Archive (déplacement de fichiers)
-
-L'opération Archive **déplace** les fichiers de la source vers la cible au lieu de les copier. Les fichiers sources sont supprimés après un transfert réussi et confirmé — en cas d'échec du transfert, le fichier source est conservé intact.
-
-- Sur le **même système de fichiers** : le déplacement est instantané — aucune donnée n'est physiquement copiée ; seul l'emplacement du fichier change.
-- **Entre systèmes de fichiers différents** : le fichier est d'abord copié vers la cible, puis supprimé de la source une fois la copie confirmée.
+Avec *Renommer l'ancien*, l'ancien fichier cible est renommé `nom_AAAAMMJJ-HHmmss.ext` (par exemple `report_20260225-102559.docx`) : la date est insérée avant l'extension, pour que le fichier puisse toujours être ouvert. Si la copie de la source échoue ensuite, le fichier renommé retrouve son nom : rien n'est perdu.<br/>
+Ces fichiers renommés restent sur la cible et occupent de l'espace : ils se nettoient manuellement.
 
 ### Mode source {#source-mode}
+* Par défaut, la liste des fichiers source provient du **catalogue** : cela fonctionne avec la source déconnectée pour la comparaison, et les dossiers exclus du catalogue ne sont pas sauvegardés.
+* Avec *Analyser directement le disque source (nécessite une source connectée)*, le dossier source est lu sur le **disque** : chaque fichier est inclus, quels que soient le catalogue et ses exclusions. La source doit être connectée.
 
-Chaque lien de sauvegarde possède un **Mode source** qui contrôle ce qui est utilisé comme source lors de la comparaison et de la copie de fichiers.
+### Espace sur la cible {#space}
 
-| Mode | Description |
-|------|-------------|
-| **Catalogue** (par défaut) | Utilise l'index du catalogue. Fonctionne hors connexion — le périphérique source n'a pas besoin d'être connecté. Les règles d'exclusion de dossiers du catalogue sont appliquées : les dossiers exclus ne sont pas sauvegardés. |
-| **Disque** | Parcourt directement le système de fichiers source. Le périphérique source **doit être connecté et monté**. Tous les fichiers sous le chemin source sont inclus — l'index du catalogue et les règles d'exclusion de dossiers sont entièrement ignorés. |
+| Opération | Espace nécessaire sur la cible | Effet sur la source |
+|-----------|-------------------------------|---------------------|
+| **Sauvegarde** | Tous les fichiers à copier. | Aucun. |
+| **Archive, même système de fichiers** | Aucun : les fichiers sont seulement déplacés. | Espace libéré. |
+| **Archive, autre système de fichiers** | Tous les fichiers à déplacer. | Espace libéré après la suppression de chaque fichier. |
+| **Conflits** ***Renommer l'ancien*** | Les fichiers renommés sont conservés : une copie de plus pour chacun. | Aucun. |
 
-**Interface** : la case à cocher *Analyser le disque source directement* dans le panneau Créer un lien contrôle ce paramètre. Décochée = Catalogue (par défaut), cochée = Disque.
+L'[aperçu](#preview) vérifie l'espace disponible sur la cible et avertit lorsqu'il est insuffisant ou faible (moins de 512 Mo restants après l'opération). Une exécution est vérifiée à nouveau avant de démarrer : si l'espace est insuffisant, elle est refusée, et le message indique l'espace requis, disponible et manquant. Lorsque l'espace de la cible ne peut pas être lu (disques réseau ou virtuels), il n'y a pas de vérification.
 
-### Profil LuckyBackup
+## Liste des liens {#links}
+La page liste les liens sous forme de cartes.
 
-Il est possible d'exporter les liens BackUp vers un profil [LuckyBackup](https://luckybackup.sourceforge.net).
-Voir la page dédiée : [Profil LuckyBackup](BackUp_luckybackup_profile)
+### Filtres
+| Filtre | Effet |
+|--------|-------|
+| *Type* | *Tous*, *Sauvegarde* ou *Archive*. |
+| *Filtre* | *Tous* les liens, ou uniquement ceux dont le périphérique sélectionné sur la page [Sélection](Selection) est la *Source* ou la *Cible*. |
 
+Une ligne au-dessus des cartes donne, pour le périphérique sélectionné, le nombre de liens, la taille de leurs sources et, pour les sauvegardes, le pourcentage **couvert** : la part des sources déjà présente dans les cibles.
 
-## Gestion des liens BackUp
+### Cartes
+Chaque carte indique :
+* le nom du lien et son type,
+* les catalogues **Source** et **Cible**, avec leur taille et leur nombre de fichiers,
+* *Diff* pour une sauvegarde : ce qui manque à la cible, ou *À jour* ; *À déplacer* pour une archive : ce qui est encore dans la source, ou *Rien à déplacer*,
+* *Dernière sauvegarde* ou *Dernier archivage* : date et taille de la dernière exécution, ou *jamais*,
+* les boutons *Lancer la sauvegarde* / *Lancer l'archivage*, *Aperçu de la sauvegarde* / *Aperçu de l'archivage*, et *Plus d'actions*.
 
-Pour aider à lister et comparer les répertoires sources et leurs sauvegardes, Katalog permet de lier des catalogues.
+Lorsqu'il n'y a encore aucun lien, la page l'indique et *Ajouter* crée le premier.
 
-### Créer un lien BackUp
+## Créer ou modifier un lien {#link-form}
+*Ajouter* dans la barre d'outils de la page ouvre le formulaire *Ajouter un lien* ; *Modifier* dans *Plus d'actions* ouvre le même formulaire, *Modifier le lien*, pour un lien existant.
 
-Le panneau *Créer un lien* peut être replié ou déplié à l'aide du bouton bascule en haut du panneau.
-
-#### Champs du lien
+![Formulaire Ajouter un lien](/img/backup_02_link_form.png)
 
 | Champ | Description |
 |-------|-------------|
-| Nom | Étiquette du lien. Peut être généré automatiquement sous la forme `"<nom source> -> <nom cible>"`. |
-| Type | `BackUp` (copie) ou `Archive` (déplacement). Contrôle si les fichiers source sont supprimés après le transfert. |
-| Périphérique source | Le catalogue source. Les fichiers sont lus depuis son chemin indexé. |
-| Périphérique cible | Le catalogue de destination de la sauvegarde. Les fichiers sont écrits dans son chemin. |
-| Date de dernière sauvegarde | Date de la dernière sauvegarde complétée. Mise à jour automatiquement. |
-| Taille de la dernière sauvegarde | Total d'octets transférés lors de la dernière sauvegarde. Mise à jour automatiquement. |
-| Copie stricte | Si activé (par défaut), copie les fichiers par chemin — même si le fichier existe déjà ailleurs dans la cible. Si désactivé, ignore les fichiers déjà présents dans la cible (mode dédoublonnage). Non applicable pour les liens *Archive* (désactivé automatiquement). |
-| En cas de conflit | Comportement lorsqu'un fichier existe au même chemin dans la source et la cible mais diffère. Par défaut : `RenommerLePlusAncien`. Voir [Modes disponibles](#available-modes). |
-| Mode source | `Catalogue` (par défaut) ou `Disque`. Contrôle si la source est lue depuis l'index du catalogue ou en parcourant directement le système de fichiers. Voir [Mode source](#source-mode). |
-| Répertoires - Inclure les vides | Si activé (par défaut), les répertoires qui ne contiennent ni fichier ni sous-répertoire sont recréés dans la cible. Si désactivé, seuls les répertoires qui contiennent quelque chose sont créés. |
+| *Catalogue source* | Le catalogue dont les fichiers sont sauvegardés. |
+| *Catalogue cible* | Le catalogue où ils sont écrits. |
+| *Nom* | Nom du lien. Le bouton à côté (*Générer le nom automatiquement*) crée `<source> -> <cible>`. |
+| *Type* | *Sauvegarde* (copie) ou *Archive* (déplacement), voir [ci-dessus](#type). |
+| *Dossiers* | *Inclure les vides* (coché par défaut) : les dossiers qui ne contiennent rien, ni fichier ni sous-dossier, sont aussi recréés sur la cible. Décoché, seuls les dossiers qui contiennent quelque chose sont créés. Cela ne supprime jamais un dossier déjà présent sur la cible. |
+| *Copie stricte* | *Reproduire exactement la structure des dossiers (par défaut)* : chaque fichier est copié à sa propre place, même si le même fichier se trouve déjà ailleurs dans la cible. Décoché, un fichier est ignoré lorsqu'un fichier de même nom et de même taille se trouve déjà n'importe où dans la cible : pas de doublons. Toujours désactivé pour une archive. |
+| *En cas de conflit* | Voir [conflits](#conflicts). |
+| *Mode source* | Voir [mode source](#source-mode). |
 
-#### Exemple et catalogues
-Objectif : créer un lien entre la source sur le disque local et la cible sur un disque externe.
-![Exemple de périphériques source et cible](/img/k2/screen_backup_1_devices.png)
+*Enregistrer* crée ou met à jour le lien ; *Annuler* ferme le formulaire. Un message en haut du formulaire indique ce qui manque.
 
-#### Sélectionner la source et la cible
-- Avec le panneau Sélection et les 2 boutons "Charger les catalogues" pour la source et la cible, obtenez la liste des catalogues disponibles.
-- Le bouton "sans liens" permet de limiter le nombre de catalogues affichés, en n'affichant que les catalogues qui n'ont pas encore de lien en tant que source (ou cible).
-- Sélectionnez une source et une cible.
+## Aperçu {#preview}
+*Aperçu de la sauvegarde* / *Aperçu de l'archivage* calcule ce que ferait une exécution, **sans rien copier**. Lorsque *Mettre à jour les catalogues* est coché, les deux catalogues sont d'abord mis à jour. Le résultat s'ouvre sur sa propre page :
+* un résumé : fichiers à copier ou à déplacer, conflits, fichiers déjà présents dans la cible, et un avertissement lorsque la source ou la cible est hors ligne,
+* la [vérification de l'espace](#space) de la cible,
+* la liste des fichiers, avec leur *Statut* (*Copier*, *Déplacer* ou *Conflit*), *Nom du fichier*, *Chemin* et *Taille*,
+* *Exporter en CSV* enregistre la liste dans le dossier de la collection (le dossier personnel en mode *Hébergé*), et affiche le chemin du fichier.
 
-![Sélection de la source et de la cible](/img/k2/screen_backup_2_select_source_target.png)
+![Aperçu de la sauvegarde : résumé, vérification de l'espace et liste des fichiers](/img/backup_03_preview.png)
 
+## Exécution {#run}
+*Lancer la sauvegarde* / *Lancer l'archivage* démarre le lien. La source et la cible doivent toutes deux être disponibles.
 
-#### Définir le nom, les options et créer
-- Générer un nom : nom du catalogue source + " -> " + nom du catalogue cible
-- Définir l'option "Copie stricte"
-- Définir l'option "Répertoires"
-- Définir le comportement en cas de détection de conflit
-- Créer le lien
+* Avec *Mettre à jour les catalogues* coché (recommandé), les deux catalogues sont mis à jour **avant** la comparaison, pour que la sauvegarde travaille sur des données actuelles. Après une exécution qui n'a pas été annulée, la cible est de nouveau mise à jour (et la source aussi, pour une archive), pour que les catalogues montrent le résultat.
+* Pendant l'exécution, la carte affiche la progression, le fichier en cours de copie, la vitesse et le temps restant (*Reste*). *Pause* la suspend après le fichier en cours, *Reprendre* continue, *Annuler* l'arrête : un fichier en cours de copie est supprimé de la cible, pour ne laisser aucun fichier partiel.
+* À la fin, une ligne en haut de la page donne le résultat : fichiers copiés ou déplacés, archivés et copiés (*Renommer l'ancien*), conflits et erreurs. *Dernière sauvegarde* est mise à jour sur la carte.
+* *Rapport*, sur cette ligne, ouvre la liste des fichiers de l'exécution, une ligne par fichier avec son statut (*Copié*, *Déplacé*, *Archivé & Copié*, *Conflit*, *Erreur*), son nom, son chemin et sa taille, ainsi que les totaux. C'est le rapport de la dernière exécution (du dernier lien, après *Lancer les liens listés*) ; il est conservé jusqu'à l'exécution suivante ou jusqu'à la fermeture de Katalog.
 
-![Création du lien](/img/k2/screen_backup_4_create_mapping.png)
+### Lancer les liens listés {#run-listed}
+*Lancer les liens listés* exécute **les liens listés sur la page**, l'un après l'autre : un ensemble de sauvegardes peut ainsi être lancé en une fois et laissé se terminer.
+* Les filtres déterminent ce qui est exécuté : pour exécuter un autre ensemble, changez d'abord les filtres.
+* Seuls les liens dont la source **et** la cible sont disponibles sont exécutés ; les autres sont ignorés.
+* Une confirmation est d'abord demandée : le nombre de liens qui seront exécutés, le volume des archives (une borne supérieure) et des sauvegardes (approximatif), et le nombre de liens ignorés. Ce sont des estimations à partir des totaux des catalogues ; pour un chiffre exact, utilisez l'*Aperçu* sur un lien.
+* Chaque lien s'exécute comme s'il était lancé depuis sa propre carte, y compris *Mettre à jour les catalogues*.
+* *Annuler* arrête **toute** l'exécution : les liens encore en attente ne sont pas démarrés. *Pause* et *Reprendre* agissent sur le lien en cours.
 
-#### Comparer la source et la cible de sauvegarde
-- Le lien apparaît dans la liste et la couverture est calculée.
-![Comparaison source et cible](/img/k2/screen_backup_5_comparison.png)
-
-### Filtres de la liste des liens
-
-La liste des liens peut être filtrée pour n'afficher que les liens pertinents :
-- Boutons radio **Source / Cible** — affiche uniquement les liens pour lesquels le périphérique sélectionné est la source ou la cible.
-- Menu déroulant **Type** — filtre par *BackUp* ou *Archive*.
-- Case à cocher **Afficher le tableau complet** — affiche ou masque les colonnes de détail supplémentaires.
-
-### Exécuter plusieurs liens à la fois
-
-Le bouton **Lancer les liens listés** exécute les liens actuellement affichés dans la liste, l'un après l'autre : un ensemble de sauvegardes peut ainsi être lancé en une seule fois, puis laissé se terminer.
-
-- Les filtres de la liste *constituent* la sélection : ce que les filtres Source/Cible et Type laissent à l'écran est ce qui sera exécuté. Pour exécuter un autre ensemble, modifier d'abord les filtres.
-- Seuls les liens dont la source **et** la cible sont disponibles sont réellement exécutés. Les liens affichés dont le périphérique est hors ligne sont ignorés, et la confirmation en indique le nombre.
-- Une confirmation apparaît d'abord, résumant le nombre de liens à exécuter, le volume à copier et — pour les liens *Archive* — le volume qui sera **déplacé hors de la source**. Ces volumes sont des estimations issues des totaux du catalogue, et non d'une comparaison calculée : le chiffre d'archivage est une borne supérieure et celui de sauvegarde est approximatif. Pour un chiffre exact, utiliser *Aperçu* sur un lien.
-- **Arrêter** met fin à l'exécution complète, et pas seulement au lien en cours : les liens encore en attente sont abandonnés. *Pause* et *Reprendre* agissent sur le lien en cours d'exécution.
-- Chaque lien se comporte exactement comme s'il avait été lancé depuis sa propre carte, y compris la mise à jour des catalogues avant et après lorsque *Mettre à jour les catalogues* est coché.
-
-### Menu contextuel d'un lien
-
-Un clic droit sur un lien dans la liste ouvre un menu contextuel avec les actions suivantes :
+## Plus d'actions {#more-actions}
 
 | Action | Description |
 |--------|-------------|
-| *Lancer la sauvegarde* / *Lancer l'archivage* | Démarre l'opération de sauvegarde ou d'archivage pour ce lien. |
-| *Aperçu de la sauvegarde* / *Aperçu de l'archivage* | Lance un aperçu (simulation) sans copier aucun fichier. |
-| *Répliquer les répertoires* | Copie uniquement l'arborescence de dossiers, sans les fichiers. |
-| *Inverser (échanger source et cible)* | Échange la source et la cible du lien en un clic — utile pour inverser le sens d'une sauvegarde. |
-| *Supprimer* | Supprime le lien (sans affecter les fichiers sur le disque). |
+| *Modifier* | Ouvre le lien dans le [formulaire](#link-form). |
+| *Dupliquer* | Crée un nouveau lien avec les mêmes paramètres, pour l'adapter. |
+| *Répliquer les répertoires* | Crée la structure de dossiers de la source sur la cible, sans les fichiers. Le résultat donne les dossiers créés, ceux qui existaient déjà, et les erreurs. |
+| *Inverser (échanger source et cible)* | Échange la source et la cible, par exemple pour une restauration. Lorsque le nom contient une flèche, ses deux moitiés sont aussi échangées. |
+| *Exporter en CSV* | Calcule l'aperçu de ce lien, puis enregistre sa liste de fichiers dans un fichier CSV dans le dossier de la collection (le dossier personnel en mode *Hébergé*), et affiche le chemin du fichier. |
+| *Supprimer* | Supprime le lien, après confirmation. Aucun fichier n'est touché, ni sur la source ni sur la cible. |
 
-**Création de profil LuckyBackUp**
-Katalog peut générer un profil LuckyBackUp prêt à l'emploi à partir des liens BackUp :
-- Enregistré dans le répertoire `~/.luckyBackup/profiles/`
-- Chaque lien de sauvegarde devient une tâche dans le profil
-- Par défaut, **tous** les liens sont inclus
-- Cocher *Liens sélectionnés uniquement* pour n'inclure que les liens visibles dans la liste filtrée (filtrée par périphérique Source/Cible et/ou Type)
-
-## Exécution de la sauvegarde ou de l'archivage
-
-### Prérequis
-- Un lien BackUp/Archive est sélectionné
-- Les deux catalogues doivent appartenir à des périphériques avec des chemins valides et accessibles.
-- L'espace disponible sur la cible doit être suffisant pour copier/déplacer les fichiers.
-- Bien que facultatif, il est recommandé de garder "Mettre à jour les catalogues" sélectionné pour une mise à jour avant et après la fin du processus.
-
-### Aperçu
-- Un aperçu (simulation) peut être lancé pour tester l'effet de la sauvegarde ou de l'archivage et générer un rapport.
-- Le résultat de l'aperçu peut être **exporté** via le bouton *Exporter*, enregistrant la liste des opérations prévues dans un fichier.
-
-### Pause, Reprise et Annulation
-
-Pendant l'exécution, le bouton **Lancer la sauvegarde** change d'étiquette et de fonction :
-- En cours d'**exécution** → cliquer pour **Mettre en pause** (suspend après la fin du fichier en cours)
-- En **pause** → cliquer pour **Reprendre**
-
-Un bouton **Annuler** est toujours disponible pendant l'exécution ou la pause. L'annulation arrête proprement l'opération — tout fichier en cours de copie est supprimé de la cible (aucun fichier partiel n'est laissé).
-
-### Mise à jour du catalogue après exécution
-
-Après une sauvegarde réussie, le catalogue cible sera mis à jour automatiquement pour refléter les fichiers nouvellement copiés, sans nécessiter une réindexation complète. *(Prévu — pas encore disponible.)*
-
-## Comportement principal : copie ou archivage incrémental
-
-Critères de comparaison :
-- Correspondance par **nom de fichier + chemin relatif** (même fichier au même emplacement relatif).
-- Un fichier est "manquant" si aucune correspondance n'existe dans le catalogue cible.
-
-**Gestion des conflits**
-| Décision | Choix | Justification |
-|----------|-------|---------------|
-| Supprimer des fichiers dans la cible ? | Non (v1). | Commencer prudemment — incrémental uniquement. |
-| Écraser les conflits ? | Non (v1). Les signaler. | Éviter la perte de données. |
-| Créer les répertoires manquants ? | Oui, toujours. | Nécessaire pour toute copie de fichier. |
-
-### Gestion de l'espace disque
-
-L'espace disque est une contrainte critique pour les opérations de sauvegarde et d'archivage. Manquer d'espace en cours d'opération laisse la cible dans un état partiel.
-
-Besoins en espace par opération :
-
-| Opération | Ce qui consomme de l'espace cible | Effet net sur la source |
-|-----------|----------------------------------|------------------------|
-| **BackUp** | Tous les fichiers à copier | Aucun |
-| **Archive (même FS)** | Zéro — déplacement de métadonnées uniquement | Espace libéré sur la source |
-| **Archive (FS différents)** | Fichiers copiés avant suppression de la source | Espace libéré après suppression |
-| **Conflit RenommerLePlusAncien** | Fichier cible renommé et conservé (+1 copie) | Aucun jusqu'au nettoyage manuel |
-
-### Vérification de l'espace (implémentée)
-
-Calculée avant l'exécution et affichée dans l'aperçu.
-
-| Condition | Seuil | Action |
-|-----------|-------|--------|
-| **Insuffisant** | espace disponible < espace requis | Bloqué : avertissement, opération non démarrée |
-| **Faible** | disponible − requis < 512 Mo | Demande confirmation (Oui/Non pour continuer) |
-| **OK** | disponible − requis ≥ 512 Mo | Continue sans notification |
-
-Dans l'aperçu, le statut de l'espace est ajouté au résumé :
-- **Insuffisant** → avertissement rouge : `⚠ Espace cible : X disponible, Y nécessaire`
-- **Faible** → avertissement orange : `⚠ Espace cible faible : Z restant après l'opération`
-- **OK** → aucune annotation
-
-> **Remarque** : le mode *Renommer le plus ancien* ajoute définitivement des copies renommées sur la cible. Ces fichiers (`nom_AAAAMMJJ-HHmmss.ext`) doivent être supprimés manuellement pour récupérer de l'espace.
-
-## Rapport
-Après l'exécution, le tableau d'aperçu est remplacé par un **rapport de sauvegarde** — un tableau à quatre colonnes : **Statut**, **Nom du fichier**, **Chemin** et **Taille**.
-
-Chaque ligne correspond à un fichier, avec les valeurs de statut suivantes :
-
-| Statut | Signification |
-|--------|---------------|
-| *Copié* | Fichier copié avec succès vers la cible. |
-| *Déplacé* | Fichier déplacé avec succès vers la cible (opération Archive). |
-| *Archivé & Copié* | Un fichier cible en conflit a été renommé (mode RenommerLePlusAncien), puis la source a été copiée. |
-| *Conflit* | Le fichier existe au même chemin dans la source et la cible mais diffère — non écrasé, signalé pour examen. |
-| *Erreur* | Le fichier n'a pas pu être copié ou déplacé (permissions refusées, disque plein, etc.). |
-
-Une ligne de résumé au-dessus du tableau affiche les totaux : fichiers copiés, archivés & copiés, conflits et erreurs.
-
----
+### Profil LuckyBackup {#luckybackup}
+*LuckyBackup* dans la barre d'outils de la page crée un profil [LuckyBackup](https://luckybackup.sourceforge.net) à partir des **liens listés** sur la page : chaque lien devient une tâche. Le profil est enregistré dans `~/.luckyBackup/profiles/`. Voir [Profil LuckyBackup](BackUp_luckybackup_profile).
 
 ## Développement
-Quelques idées de développements pour cet écran :
+Quelques idées de développement pour cet écran :
 
 ### Fonctionnalités futures
 - [ ] Gestion des instantanés
-- [ ] Filtres d'inclusion/exclusion
+- [ ] Motifs d'exclusion/inclusion
 - [ ] Planification (cron/systemd/Planificateur de tâches)
-- [ ] Fonctionnalité de restauration
+- [ ] Fonction de restauration
 - [ ] Options de compression
 - [ ] Sauvegardes distantes (ssh)
 
-### Modes de conflit futurs
+### Futurs modes de conflit
 
 | Mode | Comportement |
-|------|-------------|
-| **Écraser** | La source prime toujours — écrase la cible silencieusement. Pour les utilisateurs qui veulent que la source fasse autorité quelle que soit la date. |
-| **Toujours renommer** | Renomme toujours la cible et copie la source, même si la cible est plus récente — archivage agressif et explicite. |
+|------|--------------|
+| **Écraser** | La source l'emporte toujours : la cible est écrasée sans avertissement. Pour les utilisateurs qui veulent que la source fasse foi quelle que soit la date. |
+| **Toujours renommer** | Renomme toujours la cible et copie la source, même lorsque la cible est plus récente : archivage explicite et systématique. |
 
 ### Options futures
 
-- **Nettoyage de la source après archivage** : option pour supprimer les répertoires vides laissés dans la source après une opération Archive.
-- **Mode suppression** : option pour supprimer les fichiers cibles absents de la source.
-- **Comparaison par somme de contrôle** : détecter les modifications de contenu même lorsque le nom, la taille et la date correspondent.
+- **Nettoyage de la source après archivage** : option facultative pour supprimer les dossiers vides laissés dans la source après une opération d'Archive (déplacement).
+- **Mode suppression** : option facultative pour supprimer les fichiers de la cible absents de la source.
+- **Comparaison par somme de contrôle** : détecter les changements de contenu même lorsque le nom, la taille et la date correspondent.
 - **Sauvegarde planifiée/automatique** : exécution sur minuterie ou lors de la mise à jour d'un catalogue.
-- **Historique des sauvegardes** : journal des sauvegardes passées avec dates et statistiques.
+- **Historique des sauvegardes** : journal des exécutions passées avec dates et statistiques.
 
-### Options futures — Espace disque
-- **Espace minimum par lien** : plancher configurable par l'utilisateur (ex. : toujours conserver 5 Go libres).
-- **Arrêt anticipé en cas de saturation** : détecter les erreurs d'espace disque pendant la copie et arrêter immédiatement.
-- **Vérification post-archivage** : confirmer que l'espace source a bien été libéré après l'archivage.
-- **Affichage de la tendance d'espace** : afficher l'évolution de l'espace cible dans l'onglet Statistiques.
-- **Outil de nettoyage des fichiers archivés** : lister et supprimer en masse les fichiers `nom_AAAAMMJJ-HHmmss.ext` produits par le mode RenommerLePlusAncien.
+### Fonctionnalités futures pour l'espace disque
+- **Espace libre minimal par lien** : seuil configurable par l'utilisateur (par exemple, toujours garder 5 Go libres).
+- **Arrêt anticipé en cas d'épuisement de l'espace en cours d'opération** : détecter les erreurs ENOSPC pendant la copie et s'arrêter immédiatement au lieu de continuer à échouer fichier après fichier.
+- **Vérification de la source après archivage** : confirmer que l'espace de la source a bien été libéré à la fin de l'Archive.
+- **Affichage de l'évolution de l'espace** : montrer l'espace de la cible au fil du temps dans l'onglet Statistiques.
+- **Outil de nettoyage des fichiers archivés** : lister et supprimer en masse les fichiers `nom_AAAAMMJJ-HHmmss.ext` produits par le mode Renommer l'ancien.
 
-* Pour en savoir plus, consultez le backlog de [développement BackUp](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=BackUp).
+* Pour en savoir plus, voir le backlog du [développement de la Sauvegarde](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=BackUp).

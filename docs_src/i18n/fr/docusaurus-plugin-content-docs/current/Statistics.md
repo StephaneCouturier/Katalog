@@ -1,37 +1,42 @@
 ---
-version: "2.12"
+version: "3.0"
 ---
 # Statistiques
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
 ## Résumé
-Cette page décrit toutes les fonctionnalités de l'écran **Statistiques** et comment les utiliser.
+Cette page décrit la page **Statistiques** : un graphique de l'évolution d'un périphérique dans le temps, pour le périphérique sélectionné sur la page [Sélection](Selection).
 
-Toutes les données proviennent d'enregistrements de diverses mises à jour ou *instantanés*.
+![Page Statistiques : graphique d'un périphérique de stockage, avec la taille totale des fichiers, l'espace utilisé et l'espace total](/img/statistics_01_overview.png)
 
-Cet écran permet de visualiser le contenu et l'évolution d'une collection :
-1. Pour les périphériques de catalogue : le nombre de fichiers ou la taille totale du fichier.
-1. Pour les périphériques de stockage : espace utilisé et total, ainsi que la taille totale des fichiers des catalogues associés, ou le nombre de fichiers.
-1. Pour les périphériques virtuels : nombre de fichiers des périphériques associés, ou espace total et taille totale des fichiers des catalogues associés.
+## Origine des données {#data}
+Chaque fois qu'un périphérique est mis à jour, et chaque fois qu'un **instantané** est enregistré (*Instantané* sur la page [Périphériques](Devices#page-actions)), Katalog conserve un relevé de ses chiffres : nombre de fichiers, taille totale des fichiers, et pour les périphériques de stockage, espace libre et total.<br/>
+Le graphique trace ces relevés. Un périphérique qui n'a jamais été mis à jour, ni jamais fait partie d'un instantané, n'a pas de données : le graphique affiche *Aucune donnée*.
 
-![Écran Statistiques montrant le graphique d'évolution de la collection](/img/k2/screen_statistics_01.png)
+## Ce qui est affiché {#chart}
+Le titre du graphique indique le nom du périphérique, la donnée affichée et son unité.
 
-## Caractéristiques
-### Option de Données
-* Les données sont basées sur le périphérique sélectionné dans le panneau [Sélection] (Selection).
-* *Source* : choisissez si toutes les données doivent être utilisées, ou les mises à jour et les instantanés indépendamment.
-* *Type de données* : choisissez d'afficher la taille totale du fichier (qui peut inclure l'appareil utilisé et l'espace total) ou le nombre de fichiers uniquement.
-* *Afficher chaque valeur* : choisissez d'afficher un petit losange pour chaque point de données
+| Périphérique sélectionné | *Taille Totale des Fichiers* | *Nombre de Fichiers* |
+|--------------------------|------------------------------|----------------------|
+| Catalogue | Taille totale de ses fichiers. | Nombre de ses fichiers. |
+| Stockage, Virtuel | Taille totale des fichiers de ses catalogues, plus l'espace **utilisé** et l'**espace total** du stockage. | Nombre de fichiers de ses catalogues. |
 
-### Modifier le fichier
-* disponible en [Mode mémoire](Settings#database-memory-mode) uniquement.
-* Bouton *Modifier les statistiques* : Il peut être utile d'éditer le fichier Statistiques pour corriger certains chiffres, le bouton ouvrira le fichier dans l'application associée aux fichiers csv. Veillez à le conserver dans un **fichier séparé par des tabulations**
-* Bouton *Recharger* : les données sont rechargées et le graphique rafraîchi.
+Les tailles sont affichées dans l'unité adaptée aux valeurs (KiB, MiB, GiB ou TiB).
 
-### Graphique
-* clic gauche et maintien pour zoomer sur une partie du graphique.
-* clic droit pour effectuer un zoom arrière.
-* cliquez sur le bouton *Recharger* pour revenir au zoom d'origine.
+## Options {#options}
+
+| Option | Effet |
+|--------|-------|
+| *Source* | *tous les enregistrements*, *mises à jour uniquement* ou *instantanés uniquement*. Les instantanés donnent des points réguliers pour toute la collection ; les mises à jour ajoutent un point à chaque mise à jour du périphérique. |
+| *Données* | *Taille Totale des Fichiers* ou *Nombre de Fichiers*. |
+| *À partir du* | N'affiche que les relevés à partir de cette date. *Sélectionner une date* ouvre une boîte de dialogue avec des choix rapides (*Il y a 1 jour*, *Il y a 1 semaine*, *Il y a 1 mois*, *Il y a 1 an*) ; *Effacer* affiche à nouveau tous les relevés. |
+| *Afficher chaque valeur* | Marque chaque relevé d'un point sur les courbes. |
+
+Les options sont conservées pour la collection.
+
+## Zoom {#zoom}
+* **Cliquez et faites glisser** sur le graphique pour zoomer sur cette zone.
+* **Faites un clic droit** ou **double-cliquez** pour revenir au graphique complet.
 
 ## Développement
-* Voir la liste de [développement de Statistiques](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=statistics).
+* Voir le backlog du [développement des Statistiques](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=statistics).

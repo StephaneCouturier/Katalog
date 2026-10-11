@@ -1,305 +1,175 @@
 ---
-version: "2.13"
+version: "3.0"
 ---
 # Rechercher
-![2.13](https://img.shields.io/badge/Version-2.13-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
 ## Résumé
-Cette page décrit toutes les fonctionnalités de l'écran **Rechercher** et comment les utiliser.
+Cette page décrit la page **Chercher** : les critères de recherche, le lancement d'une recherche et l'historique des recherches.
 
-Les principales fonctionnalités de cet écran sont :
+* Rechercher des fichiers dans les **catalogues** du périphérique sélectionné, ou directement dans un **lecteur connecté**.
+* Combiner des **critères** pour affiner les résultats :
+  * le [nom de fichier](#search-text-criteria), avec un ou plusieurs textes de recherche,
+  * les [attributs de fichier](#file-criteria) : type, taille et date,
+  * les [métadonnées du fichier](#file-metadata-criteria) : texte, dimensions d'image ou de vidéo, durée,
+  * les [critères de dossier](#folder-criteria) : lister uniquement les dossiers, ou seulement les dossiers étiquetés,
+  * trouver des [doublons](#duplicates-on), ou des [différences](#differences-on) entre 2 périphériques.
+* Réutiliser les critères d'une recherche précédente depuis l'[historique](#search-history).
 
-* Rechercher des fichiers dans les catalogues ou sur des lecteurs connectés
-* Utiliser plusieurs **critères** pour affiner et réduire le nombre de résultats :
-  * filtrer par [texte dans le nom de fichier ou le chemin](Search#search-text-criteria),
-  * filtrer par [attributs de fichier](Search#file-criteria) tels que la taille, le type ou la date,
-  * filtrer par [métadonnées de fichier](Search#file-metadata-criteria) telles que les dimensions d'image ou la durée audio/vidéo,
-  * mettre en évidence les [fichiers dupliqués](Search#duplicates-on),
-  * ou mettre en évidence les [différences](Search#differences-on) entre 2 catalogues.
-* Utiliser les **Résultats** avec un [menu contextuel](Search#file-context-menu) (clic droit) ou [traiter les résultats en lot](Search#batch-process),
-* Réutiliser les critères précédents depuis l'historique de recherche.
-* Tous les critères de recherche sont enregistrés et disponibles lors de la prochaine ouverture de Katalog, à l'exception des résultats eux-mêmes.
+Les résultats s'ouvrent dans la page **Résultats**, à droite de la page Chercher : voir [Résultats de recherche](SearchResults).
 
-![Écran Rechercher affichant le panneau de critères à gauche et les résultats à droite](/img/k2/screen_search_01.png)
+![Page Chercher avec « sunset » dans les critères de nom de fichier, à côté de la page Résultats](/img/search_01_overview.png)
 
-## Source de recherche
+## Où chercher {#search-source}
 
-### Rechercher dans les catalogues de fichiers
-Le panneau **[Sélection](Selection)** sur la gauche fournit des filtres optionnels pour limiter les catalogues dans lesquels rechercher :
-- *Emplacement* : limite les catalogues à ceux correspondant à l'emplacement sélectionné dans l'écran [Stockage](DevicesStorage).
-- *Stockage* : limite les catalogues à ceux d'un périphérique de stockage spécifique.
-- *Catalogue* : restreint la recherche à un seul catalogue.
-
-### Rechercher dans les lecteurs connectés
-Recherchez directement sur l'ordinateur et les lecteurs connectés sans avoir besoin d'un catalogue.
-C'est utile pour chercher dans un dossier précis, ou pour obtenir un aperçu rapide après des modifications récentes sans mettre à jour un catalogue au préalable.
+| Option | Description |
+|--------|-------------|
+| *Catalogues* | Cherche dans les catalogues du périphérique sélectionné dans la [Sélection](Selection) : un catalogue, tous les catalogues d'un périphérique de stockage, ou d'un périphérique virtuel. Sans périphérique sélectionné (*Tous*), cherche dans tous les catalogues. |
+| *Lecteur connecté* | Cherche directement dans un dossier de l'ordinateur ou d'un lecteur connecté, sans catalogue. Saisissez le chemin, ou utilisez *Sélectionner le chemin*. Pratique pour chercher dans un dossier qui n'a pas de catalogue, ou pour voir des changements récents sans mettre d'abord un catalogue à jour. |
 
 ## Critères de recherche
-Ce panneau regroupe tous les critères qui affinent et réduisent le nombre de résultats. Le panneau peut être masqué pour économiser de l'espace.
+Les critères sont regroupés en sections. La case à cocher devant le titre d'une section active ou désactive toute la section **sans perdre ce qui y a été saisi**. Il en va de même pour les cases à cocher devant un critère isolé (*Type*, *Taille*, *Date*...).
 
-Ils s'appliquent aux chemins et noms de fichiers, aux attributs de fichiers, aux métadonnées, aux étiquettes, et peuvent identifier des doublons ou des différences entre 2 catalogues.
-Les résultats peuvent être une liste de fichiers, ou une liste de dossiers contenant les fichiers correspondants.
+### Nom de fichier {#search-text-criteria}
 
-![Panneau des critères de recherche affichant les sections texte, fichier, métadonnées, doublons et différences](/img/k2/screen_search_02.png)
+![Critères de nom de fichier avec deux textes de recherche et un texte d'exclusion](/img/search_02_file_name.png)
 
-### Critères de texte {#search-text-criteria}
+#### texte
+Le texte à rechercher. Il peut s'agir d'**un ou plusieurs textes de recherche**, un par ligne :
+* *+* ajoute une ligne, *−* la retire (la dernière ligne ne peut pas être retirée),
+* un fichier est trouvé lorsqu'il correspond à **l'une quelconque** des lignes,
+* la croix d'une ligne la vide.
 
-#### Nom de fichier
-Saisir le texte à rechercher dans les noms de fichiers et/ou les chemins de dossiers.
+Boutons à côté des lignes :
+* *Coller depuis le presse-papier* : remplace les lignes par le contenu du presse-papiers, une ligne par ligne de texte. Pratique pour chercher une liste copiée depuis un tableur, un éditeur de texte ou un gestionnaire de fichiers.
+* *Nettoyer le Texte de recherche des caractères comme _ - . ,* : remplace ces caractères par des espaces dans chaque ligne.
 
-Un « mot » est un groupe de caractères séparé d'un autre groupe par un espace. Cela peut être utilisé pour trouver des dossiers, des fichiers, ou des fichiers dans certains dossiers.
+Coller plusieurs lignes avec `Ctrl+V` dans une ligne les ajoute comme nouvelles lignes. `Entrée` dans n'importe quelle ligne lance la recherche.
 
-Le champ de texte accepte plusieurs lignes. Chaque ligne est traitée comme un terme de recherche indépendant et les résultats correspondant à **n'importe quelle** ligne sont retournés (logique OU). Cela fonctionne avec tous les modes *Avec*.
-
-- Appuyer sur **Entrée** pour lancer la recherche.
-- Appuyer sur **Maj+Entrée** pour insérer un nouveau ligne.
-
-![Champ de texte de recherche affichant plusieurs lignes utilisées comme termes de recherche indépendants en logique OU](/img/k2/screen_search_05_list_for_file_name.png)
-
-Boutons à côté du champ de texte :
-- *Coller depuis le presse-papiers* — colle le contenu du presse-papiers dans le champ de recherche.
-- *Nettoyer le texte de recherche* — supprime les caractères spéciaux (`.  ,  _  -  (  )  [  ]  {  }  /  \  '  "`).
-
-Lorsqu'une case à cocher est placée avant un critère, il peut être activé ou désactivé sans perdre la valeur saisie.
-
-#### Avec
-Spécifie comment les mots du champ *Texte* doivent être mis en correspondance :
+#### avec
+Comment les mots de chaque ligne sont recherchés :
 
 | Option | Comportement |
-|--------|-------------|
-| *Tous les mots* | Retourne les résultats uniquement si tous les mots sont trouvés (par défaut) |
-| *Expression exacte* | Retourne les résultats où l'expression exacte (y compris l'ordre des mots et les espaces) est trouvée |
-| *Commence par* | Le nom de fichier doit commencer par le texte — disponible uniquement avec *Noms de fichiers uniquement* |
-| *N'importe quel mot* | Retourne les résultats si au moins un des mots est trouvé |
-| *Regex* | Le texte de recherche est utilisé comme expression régulière (syntaxe PCRE2) |
+|--------|--------------|
+| *Tous les Mots* | Tous les mots de la ligne sont trouvés, dans n'importe quel ordre (par défaut). |
+| *Phrase exacte* | La ligne est trouvée telle que saisie, les mots dans le même ordre. |
+| *Commence Par* | Le nom de fichier commence par la ligne. Uniquement avec *Noms de fichiers uniquement*. |
+| *Un des Mots* | Au moins un mot de la ligne est trouvé. |
+| *Regex* | La ligne est une expression régulière (syntaxe PCRE2). Une expression invalide ne trouve rien. |
 
-:::note
-En mode *Regex*, un motif invalide ne retourne aucun résultat. L'option *Sensible à la casse* s'applique toujours.
-:::
+Un « mot » est un groupe de caractères séparé d'un autre par un espace.
 
-#### Dans
-Spécifie quelle partie du chemin de fichier doit être recherchée :
+#### dans
+Où le texte est recherché :
 
 | Option | Comportement |
-|--------|-------------|
-| *Noms de fichiers uniquement* | Recherche uniquement dans les noms de fichiers (par défaut) |
-| *Noms de fichiers ou chemins de dossiers* | Recherche dans les noms de fichiers et les chemins de dossiers |
-| *Chemin de dossier uniquement* | Recherche uniquement dans les chemins de dossiers (non disponible avec *Commence par*) |
+|--------|--------------|
+| *Noms de fichiers uniquement* | Dans les noms de fichiers (par défaut). |
+| *Noms de fichiers ou chemins des dossiers* | Dans les noms de fichiers et dans les chemins des dossiers. |
+| *Chemins des Dossiers uniquement* | Uniquement dans les chemins des dossiers. |
 
-#### Sensible à la casse
-Force la correspondance exacte des caractères (majuscules et minuscules sont distinguées).
+#### sensible à la casse
+Les majuscules et les minuscules sont considérées comme différentes.
 
-#### Exclure
-Exclut les résultats si *l'un quelconque* des mots fournis est trouvé dans le chemin ou le nom du fichier.
+#### exclure
+Les fichiers sont écartés des résultats lorsqu'ils correspondent à **l'une quelconque** des lignes d'exclusion. Les lignes d'exclusion fonctionnent comme les lignes de recherche : *+*, *−*, coller et nettoyer.
 
-### Critères de fichier {#file-criteria}
+### Attributs de fichier {#file-criteria}
 
-Toute la section des critères de fichier peut être activée ou désactivée avec sa case à cocher.
-
-#### Taille
-Définir une taille minimale et/ou maximale de fichier. Chaque limite accepte un nombre et une unité.
-
-Unités disponibles : **Octets**, **Kio**, **Mio**, **Gio**, **Tio**
-
-#### Type de fichier
-Filtrer les résultats par type de fichier. Types disponibles :
+#### Type
+Uniquement les fichiers d'un type. Lorsque *Type* n'est pas coché, tous les types sont recherchés.
 
 | Type | Description |
 |------|-------------|
-| Tous | Pas de filtre de type (par défaut) |
-| Audio | Fichiers audio (ex. mp3, ogg, wav, flac…) |
-| Image | Fichiers image (ex. jpg, png, gif, raw…) |
-| Texte | Documents et fichiers texte (ex. pdf, docx, odt, epub…) |
-| Vidéo | Fichiers vidéo (ex. mp4, mkv, avi, mov…) |
-| Autre | Fichiers ne correspondant à aucun des types ci-dessus |
-| Aucun | Fichiers sans type reconnu |
+| *Tous* | Aucun filtre de type. |
+| *Audio* | Fichiers audio (mp3, ogg, wav, flac...). |
+| *Image* | Fichiers image (jpg, png, gif, raw...). |
+| *Texte* | Documents et fichiers texte (pdf, docx, odt, epub...). |
+| *Vidéo* | Fichiers vidéo (mp4, mkv, avi, mov...). |
+| *Autre* | Fichiers d'aucun des types ci-dessus. |
+| *Aucun* | Fichiers sans type reconnu. |
 
-Les types de fichiers sont détectés dynamiquement à partir de la base de données MIME du système (KFileMetadata), la liste exacte des extensions s'adapte donc au système.
+Les types de fichiers sont reconnus à partir de la base des types de fichiers du système : la liste exacte des extensions suit donc le système.
 
-#### Dates
-Définir une date de modification minimale et/ou maximale.
+#### Taille
+Une taille minimale et une taille maximale, chacune avec son unité : Octets, KiB, MiB, GiB ou TiB.
 
-### Critères de métadonnées de fichier {#file-metadata-criteria}
+#### Date
+Une date de modification minimale et maximale. *Sélectionner une date* ouvre un calendrier, avec des raccourcis : *Maintenant*, *Il y a 1 jour*, *Il y a 1 semaine*, *Il y a 1 mois*, *Il y a 1 an*.
 
-La section de métadonnées permet de rechercher dans le contenu embarqué dans les fichiers (nécessite que le catalogue ait été indexé avec les métadonnées étendues).
+### Métadonnées du fichier {#file-metadata-criteria}
+Critères portant sur des informations enregistrées à l'intérieur des fichiers. Ils nécessitent des catalogues créés ou mis à jour avec l'option *Inclure les métadonnées* (voir [Créer](Create)).
 
-![Section des critères de métadonnées affichant les champs de texte, les dimensions d'image et la durée](/img/k2/screen_search_metadata_criteria.png)
+| Critère | Description |
+|---------|-------------|
+| *Texte* | Texte dans les métadonnées, comme un artiste, un album, un titre ou un auteur. |
+| *Taille* | *Largeur* et *Hauteur* en pixels, chacune avec un minimum et un maximum (images et vidéos). |
+| *Durée* | Durée minimale et maximale, en heures:minutes:secondes (audio et vidéo). |
 
-Toute la section de métadonnées peut être activée ou désactivée avec sa case à cocher.
+### Critères de dossier {#folder-criteria}
 
-#### Texte des métadonnées
-Rechercher du texte dans les champs de métadonnées tels que le nom d'artiste, l'album, le titre, l'auteur ou tout autre contenu textuel embarqué.
+#### lister uniquement les dossiers dans les résultats
+Les résultats sont les dossiers qui contiennent des fichiers correspondants, au lieu des fichiers.
 
-#### Dimensions des métadonnées (images et vidéos)
-Filtrer par dimensions en pixels :
-- *Hauteur min / max* — plage de hauteur en pixels
-- *Largeur min / max* — plage de largeur en pixels
-
-#### Durée des métadonnées (audio et vidéo)
-Filtrer par durée de lecture en utilisant une plage horaire.
-
-### Critères de dossier
-
-#### Afficher les dossiers uniquement
-Affiche les chemins de dossiers comme résultats au lieu des fichiers individuels.
-
-:::note
-*Afficher les dossiers uniquement* ne peut pas être combiné avec *Trouver les différences*.
-:::
-
-#### Étiquettes {#tags-criteria}
-Filtrer les résultats aux fichiers ou dossiers auxquels une étiquette spécifique est attribuée.
-Les étiquettes sont définies dans l'écran [Étiquettes](Tags).
+#### Étiquette {#tags-criteria}
+Uniquement les fichiers des dossiers qui portent cette étiquette. Les étiquettes s'attribuent dans la page [Étiquettes](Tags).
 
 ### Doublons {#duplicates-on}
+Trouve les fichiers qui sont probablement le même fichier à plusieurs endroits.
 
-Trouver les fichiers potentiellement dupliqués, en fonction d'un ou d'une combinaison de :
+*Sur* : ce que deux fichiers doivent avoir en commun, un ou plusieurs parmi :
 
 | Champ | Description |
 |-------|-------------|
-| *Nom de fichier* | Même nom de fichier |
-| *Taille de fichier* | Même taille de fichier |
-| *Date de modification* | Même date de modification |
-| *Somme de contrôle (SHA-256)* | Même valeur de somme de contrôle ou valeur différente |
+| *Nom* | Même nom de fichier. |
+| *Taille* | Même taille. |
+| *Date* | Même date de modification. |
+| *Somme de contrôle* | Avec `=`, même somme de contrôle : le contenu est identique. Avec `≠`, somme de contrôle différente : même nom ou même taille, mais un contenu différent. |
 
-L'**opérateur de somme de contrôle** (= ou ≠) permet de trouver les fichiers avec la *même* somme de contrôle (vrais doublons) ou les fichiers avec des sommes de contrôle *différentes* malgré d'autres attributs identiques.
+Les sommes de contrôle ne sont disponibles que pour les catalogues créés ou mis à jour avec l'option *Inclure la somme de contrôle* (voir [Créer](Create)).
 
-**Options de portée :**
-- *Dans le périphérique/catalogue sélectionné* — trouve les doublons à l'intérieur du périphérique ou catalogue actuellement sélectionné.
-- *Comparer deux périphériques* — compare les fichiers entre deux périphériques ou catalogues sélectionnés pour trouver des doublons entre eux.
-
-:::note
-Au moins un champ doit être sélectionné pour lancer une recherche de doublons.
-:::
+*Portée* :
+* *Dans le périphérique sélectionné* : doublons à l'intérieur du périphérique sélectionné,
+* *Comparer deux périphériques* : doublons entre *Périphérique 1* et *Périphérique 2*, par exemple un ordinateur et un ancien portable.
 
 ### Différences {#differences-on}
+Compare deux périphériques, *Entre* et *Et*, par exemple un dossier et sa sauvegarde. Trouve les fichiers présents dans un seul des deux, ou présents dans les deux mais avec une valeur différente pour les champs choisis dans *Sur* : *Nom*, *Taille*, *Date*, *Somme de contrôle* (`=` ou `≠`, comme pour les Doublons).
 
-Trouver les fichiers présents dans un périphérique mais pas dans l'autre, ou avec des valeurs d'attributs différentes — utile pour comparer une source avec une sauvegarde.
-
-![Section des critères de différences affichant les sélecteurs de périphériques et les cases à cocher des attributs](/img/k2/screen_search_03_diff.png)
-
-Sélectionner deux périphériques (Virtuel, Stockage ou Catalogue) à comparer, et choisir les attributs qui définissent une différence :
-
-| Champ | Description |
-|-------|-------------|
-| *Nom de fichier* | Fichiers avec des noms différents |
-| *Taille de fichier* | Fichiers avec des tailles différentes |
-| *Date de modification* | Fichiers avec des dates de modification différentes |
-| *Somme de contrôle (SHA-256)* | Fichiers avec la même somme de contrôle ou une différente |
-
-L'**opérateur de somme de contrôle** (= ou ≠) fonctionne de la même manière que pour les Doublons.
+Les Différences ne sont disponibles que pour une recherche dans les *Catalogues*.
 
 :::note
-Au moins un champ doit être sélectionné. *Trouver les différences* ne peut pas être combiné avec *Afficher les dossiers uniquement* ni avec *Trouver les doublons*.
+*Doublons* et *Différences* ne peuvent pas être utilisés en même temps.
 :::
 
-## Lancer une recherche
+## Lancer une recherche {#running}
+Les boutons en haut de la page :
 
-### Bouton Rechercher
-Cliquer sur *Rechercher* pour démarrer. Le bouton change d'état selon l'opération :
+| Bouton | Action |
+|--------|--------|
+| *Chercher* | Lance la recherche. `Entrée` dans un champ de texte fait de même. |
+| *Pause* / *Reprendre* | Met en pause la recherche en cours et la reprend. |
+| *Stop* | Arrête la recherche en cours. Les résultats déjà trouvés sont conservés. |
+| *Réinitialiser* | Remet tous les critères à leurs valeurs par défaut. |
+| *Historique* | Ouvre l'[historique des recherches](#search-history). |
+| *Fermer* | Ferme la page Chercher. |
 
-Une recherche ne peut pas être lancée pendant la création d'un catalogue ou la mise à jour d'un périphérique, et celles-ci ne peuvent pas être lancées pendant une recherche : le bouton *Rechercher* est alors désactivé. La progression est affichée dans le panneau d'activité, avec toutes les autres opérations.
+La progression de la recherche est affichée dans le [panneau d'activité](Interface#activity-panel).<br/>
+Une recherche ne peut pas démarrer pendant la création d'un catalogue ou la mise à jour d'un périphérique : *Chercher* est désactivé pendant ce temps.
 
-| État | Libellé du bouton | Bouton Arrêter |
-|------|------------------|----------------|
-| Inactif | *Rechercher* (vert) | Désactivé |
-| En cours | *Pause* | Activé |
-| En pause | *Reprendre* | Activé |
+## Historique des recherches {#search-history}
 
-![Barre de statut affichant l'état de pause pendant une opération de recherche](/img/k2/screen_search_statusbar_paused.png)
+![Historique des recherches : recherches passées avec leur date, leur périphérique et leurs critères](/img/search_03_history.png)
 
-- **Pause / Reprendre** — suspendre et continuer la recherche sans perdre la progression. Non disponible en mode base de données Mémoire.
-- **Arrêter** — annuler la recherche en cours. Les résultats partiels déjà trouvés sont affichés.
+Chaque recherche est enregistrée dans l'historique de la collection, avec ses critères et le périphérique sur lequel elle a été lancée.
 
-### Réinitialiser
-Le bouton *Réinitialiser tout* remet tous les critères à leurs valeurs par défaut.
+*Historique* ouvre la liste des recherches passées. Chaque ligne indique la date, le périphérique parcouru (ou *Tous*) et un résumé des critères.<br/>
+Cliquer sur une ligne **restaure tous ses critères et le périphérique sélectionné**. Cliquez sur *Chercher* pour la relancer.
 
-## Résultats
-
-### Catalogues avec résultats
-Le panneau gauche liste les catalogues dans lesquels des fichiers correspondants ont été trouvés.
-Cliquer sur un catalogue dans cette liste relance la recherche restreinte à ce seul catalogue.
-Ce panneau peut être masqué pour économiser de l'espace.
-
-### Fichiers trouvés
-Le panneau droit liste les fichiers ou dossiers correspondant aux critères de recherche.
-
-L'en-tête indique le nombre de fichiers ou de doublons trouvés et la taille totale.
-Cliquer sur l'icône statistiques ouvre la **boîte de dialogue des statistiques détaillées** :
-
-| Statistique | Description |
-|-------------|-------------|
-| Fichiers trouvés | Nombre total de résultats correspondants |
-| Fichiers traités | Nombre total de fichiers examinés |
-| Complétion | Pourcentage traité (si la recherche a été arrêtée avant la fin, les résultats sont signalés comme incomplets) |
-| Taille totale | Somme des tailles de fichiers |
-| Taille min / max / moyenne | Distribution des tailles |
-| Date min / max | Plage de dates des résultats |
-| Catalogues traités | Nombre de catalogues recherchés sur le total |
-
-### Menu contextuel {#file-context-menu}
-
-Un clic droit sur une ligne de résultat ouvre un menu contextuel :
-
-**Navigation :**
-| Action | Description |
-|--------|-------------|
-| *Ouvrir le fichier* | Ouvre le fichier avec l'application par défaut du système. Si le périphérique du fichier n'est pas connecté, un avertissement s'affiche et le fichier n'est pas ouvert. |
-| *Ouvrir le dossier* | Ouvre le dossier parent du fichier dans le gestionnaire de fichiers |
-| *Explorer le dossier* | Navigue vers le dossier du fichier dans l'écran [Explorer](Explore) de Katalog |
-
-**Métadonnées :**
-| Action | Description |
-|--------|-------------|
-| *Afficher les métadonnées étendues (JSON)* | Affiche les métadonnées embarquées du fichier (disponible si le catalogue a été indexé avec les métadonnées étendues, ou si le type de fichier les prend en charge) |
-
-**Copier dans le presse-papiers :** *(exemple : `/home/user/documents/fichier.txt`)*
-| Action | Valeur copiée |
-|--------|--------------|
-| *Copier le chemin du dossier* | `/home/user/documents` |
-| *Copier le chemin absolu du fichier* | `/home/user/documents/fichier.txt` |
-| *Copier le nom du fichier avec extension* | `fichier.txt` |
-| *Copier le nom du fichier sans extension* | `fichier` |
-
-**Somme de contrôle :**
-| Action | Condition | Description |
-|--------|-----------|-------------|
-| *Calculer la somme de contrôle (SHA-256)* | Aucune somme de contrôle stockée | Calcule et enregistre le hachage SHA-256 |
-| *Copier la somme de contrôle* | Somme de contrôle stockée | Copie le hachage dans le presse-papiers |
-| *Vérifier la somme de contrôle (SHA-256)* | Somme de contrôle stockée | Recalcule et compare avec la valeur stockée |
-
-**Opérations sur les fichiers :**
-| Action | Description |
-|--------|-------------|
-| *Déplacer vers la corbeille* | Déplace le fichier vers la corbeille système (avec confirmation) |
-| *Supprimer le fichier* | Supprime définitivement le fichier (avec confirmation) |
-
-### Traitement par lot {#batch-process}
-
-Le bouton *Traiter les résultats* ouvre un menu d'opérations appliquées à tous les fichiers des résultats :
-
-| Action | Description |
-|--------|-------------|
-| *Exporter les résultats* | Exporter vers un nouveau catalogue (pour des recherches plus précises) **ou** vers un fichier CSV nommé avec la date et enregistré dans le [dossier Collection](Settings#database-memory-mode) |
-| *Renommer (KRename)* | Ouvre tous les fichiers des résultats dans [KRename](https://apps.kde.org/krename/) pour le renommage par lot |
-| *Vérifier les sommes de contrôle* | Pour chaque fichier des résultats : si aucune somme de contrôle n'est encore enregistrée, calcule et sauvegarde le hachage SHA-256 ; si une somme est déjà enregistrée, compare la valeur réelle avec la valeur stockée (correspondance / divergence). La progression est affichée dans la barre d'état. |
-| *Inclure les métadonnées* | Extrait les métadonnées étendues (dimensions des images, durée audio/vidéo, etc.) pour chaque fichier des résultats et les enregistre dans le catalogue. Utile pour les fichiers initialement indexés sans métadonnées. La progression est affichée dans la barre d'état. |
-| ⚠ *Déplacer vers la corbeille* | Déplace tous les fichiers des résultats vers la corbeille système (avec confirmation affichant le nombre et la taille totale) |
-| ⚠ *Supprimer* | Supprime définitivement tous les fichiers des résultats (avec confirmation — aucune récupération possible) |
-
-## Historique des recherches
-Chaque fois qu'une recherche est lancée, les critères et la sélection de périphérique sont enregistrés dans un fichier d'historique dans le dossier Collection.
-
-Cet historique est affiché dans un tableau en bas de l'écran. Cliquer sur une ligne restaure tous les critères — la recherche doit ensuite être déclenchée manuellement.
-
-Deux boutons permettent de gérer la liste de l'historique :
-- *Garder les 10 dernières* — supprime toutes les entrées sauf les 10 plus récentes (avec confirmation).
-- *Réinitialiser* — supprime toutes les entrées de l'historique (avec confirmation).
-
-Ce panneau peut être masqué pour économiser de l'espace.
-
-![Panneau d'historique des recherches affichant les recherches précédentes avec horodatages et critères](/img/k2/screen_search_04_search_history.png)
+| Bouton | Action |
+|--------|--------|
+| *Conserver les 10 derniers* | Supprime toutes les recherches sauf les 10 plus récentes, après confirmation. |
+| *Effacer* | Supprime tout l'historique, après confirmation. |
+| *Annuler* | Ferme l'historique. |
 
 ## Développement
-Quelques idées d'évolutions pour cet écran :
-* Voir la liste de [développement Rechercher](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=search).
+* Voir le backlog du [développement de la Recherche](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=search).

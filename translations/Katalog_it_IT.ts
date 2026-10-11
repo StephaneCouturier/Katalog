@@ -586,7 +586,7 @@ Scegliere un nome diverso.</translation>
     <message>
         <location line="+22"/>
         <source>Failed to update link.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile aggiornare il collegamento.</translation>
     </message>
     <message>
         <location line="+106"/>
@@ -2054,17 +2054,17 @@ Vuoi salvarlo comunque (il catalogo sarebbe vuoto)?</translation>
     <message>
         <location filename="../core/catalogjobstoppable.cpp" line="+270"/>
         <source>The file list is saved. Metadata and checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;elenco dei file è salvato. L&apos;analisi di metadati e checksum è incompleta e proseguirà all&apos;aggiornamento del catalogo.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Metadata scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;elenco dei file è salvato. L&apos;analisi dei metadati è incompleta e proseguirà all&apos;aggiornamento del catalogo.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;elenco dei file è salvato. L&apos;analisi dei checksum è incompleta e proseguirà all&apos;aggiornamento del catalogo.</translation>
     </message>
     <message>
         <location line="+1156"/>
@@ -5766,27 +5766,27 @@ nel cestino?</translation>
     <message>
         <location line="+47"/>
         <source>Matched</source>
-        <translation type="unfinished"></translation>
+        <translation>Corrispondenti</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Mismatched</source>
-        <translation type="unfinished"></translation>
+        <translation>Non corrispondenti</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Calculated</source>
-        <translation type="unfinished"></translation>
+        <translation>Calcolati</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Updated</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiornati</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Skipped</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignorati</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -6163,7 +6163,7 @@ nel cestino?</translation>
     <message>
         <location filename="../core/storage.cpp" line="+255"/>
         <source>No Path was provided for the Storage: %1. Edit the device to provide one and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nessun percorso indicato per l&apos;archiviazione: %1. Modifica il dispositivo per indicarne uno e riprova.</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -6172,14 +6172,20 @@ nel cestino?</translation>
 The source folder does not contain any file: &apos;%2&apos;
 
 This could mean that the device is not mounted to this folder, or the folder is simply empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>Archiviazione: &apos;%1&apos;
+
+La cartella di origine non contiene alcun file: &apos;%2&apos;
+
+Potrebbe significare che il dispositivo non è montato in questa cartella, oppure che la cartella è semplicemente vuota.</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Katalog could not get values.
 
 Check that the source folder (%1) is correct, or that the device is mounted to the source folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalog non è riuscito a ottenere i valori.
+
+Verifica che la cartella di origine (%1) sia corretta, o che il dispositivo sia montato nella cartella di origine.</translation>
     </message>
 </context>
 <context>
@@ -8864,32 +8870,32 @@ Errori: %3</translation>
     <message>
         <location line="-562"/>
         <source>Storage devices linked to a missing storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivi di archiviazione collegati a un&apos;archiviazione mancante</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>Archiviazioni non collegate ad alcun dispositivo</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage IDs used by more than one storage</source>
-        <translation type="unfinished"></translation>
+        <translation>ID archiviazione usati da più di un&apos;archiviazione</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalog devices linked to a missing catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivi catalogo collegati a un catalogo mancante</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalogs not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>Cataloghi non collegati ad alcun dispositivo</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Devices with a missing parent device</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivi con un dispositivo padre mancante</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -8915,7 +8921,7 @@ Errori: %3</translation>
         <location line="+25"/>
         <location line="+292"/>
         <source>Quality check</source>
-        <translation type="unfinished"></translation>
+        <translation>Controllo qualità</translation>
     </message>
     <message>
         <location line="-312"/>
@@ -8927,13 +8933,13 @@ Errori: %3</translation>
         <location line="-90"/>
         <location line="+84"/>
         <source>Nothing found</source>
-        <translation type="unfinished"></translation>
+        <translation>Nessun risultato</translation>
     </message>
     <message>
         <location line="-78"/>
         <location line="+49"/>
         <source>No issues found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nessun problema rilevato.</translation>
     </message>
     <message>
         <location line="-29"/>
@@ -9084,7 +9090,7 @@ Errori: %3</translation>
     <message>
         <location line="+10"/>
         <source>Reset window size</source>
-        <translation type="unfinished"></translation>
+        <translation>Ripristina dimensione finestra</translation>
     </message>
     <message>
         <location line="-188"/>

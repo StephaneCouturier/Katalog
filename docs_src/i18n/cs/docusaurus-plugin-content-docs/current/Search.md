@@ -1,305 +1,175 @@
 ---
-version: "2.13"
+version: "3.0"
 ---
 # Vyhledávání
-![2.13](https://img.shields.io/badge/Version-2.13-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
 ## Shrnutí
-Tato stránka popisuje všechny funkce obrazovky **Vyhledávání** a jak je používat.
+Tato stránka popisuje stránku **Vyhledávání**: kritéria vyhledávání, spuštění vyhledávání a historii vyhledávání.
 
-Hlavní funkce této obrazovky jsou:
+* Vyhledávejte soubory v **katalozích** vybraného zařízení nebo přímo na **připojeném disku**.
+* Kombinujte **kritéria** pro zúžení výsledků:
+  * [název souboru](#search-text-criteria), s jedním nebo více hledanými texty,
+  * [atributy souboru](#file-criteria): typ, velikost a datum,
+  * [metadata souboru](#file-metadata-criteria): text, rozměry obrázku nebo videa, délka,
+  * [kritéria složky](#folder-criteria): zobrazit pouze složky nebo pouze složky se štítkem,
+  * hledání [duplikátů](#duplicates-on) nebo [rozdílů](#differences-on) mezi 2 zařízeními.
+* Znovu použijte kritéria předchozího vyhledávání z [historie](#search-history).
 
-* Vyhledávání souborů z katalogů nebo z připojených jednotek
-* Použití více **kritérií** k upřesnění a snížení počtu výsledků:
-  * filtrovat podle [textu v názvu souboru nebo cestě](Search#search-text-criteria),
-  * filtrovat podle [atributů souboru](Search#file-criteria), jako je velikost, typ nebo datum,
-  * filtrovat podle [metadat souboru](Search#file-metadata-criteria), jako jsou rozměry obrázku nebo délka audia/videa,
-  * zvýraznit [duplicitní soubory](Search#duplicates-on),
-  * nebo zvýraznit [rozdíly](Search#differences-on) mezi 2 katalogy.
-* Použít **Výsledky** s [kontextovou nabídkou](Search#file-context-menu) (kliknutí pravým tlačítkem) nebo [dávkově zpracovat výsledky](Search#batch-process),
-* Znovu použít předchozí kritéria z historie vyhledávání.
-* Všechna kritéria vyhledávání jsou uložena a dostupná při příštím otevření Katalogu, kromě samotných výsledků.
+Výsledky se otevírají na stránce **Výsledky**, vpravo od stránky Vyhledávání: viz [Výsledky vyhledávání](SearchResults).
 
-![Obrazovka Vyhledávání zobrazující panel kritérií vlevo a výsledky vpravo](/img/k2/screen_search_01.png)
+![Stránka Vyhledávání se slovem „sunset“ v kritériích názvu souboru, vedle stránky Výsledky](/img/search_01_overview.png)
 
-## Zdroj vyhledávání
+## Kde vyhledávat {#search-source}
 
-### Vyhledávání v katalozích souborů
-Panel **[Výběr](Selection)** na levé straně poskytuje volitelné filtry pro omezení katalogů, ve kterých se má hledat:
-- *Umístění*: omezí katalogy na ty odpovídající vybranému umístění definovanému na obrazovce [Úložiště](DevicesStorage).
-- *Úložiště*: omezí katalogy na ty pod konkrétním úložným zařízením.
-- *Katalog*: zúží vyhledávání na jediný konkrétní katalog.
-
-### Vyhledávání v připojených jednotkách
-Vyhledávejte přímo v počítači a na připojených jednotkách bez potřeby katalogu.
-To je užitečné pro hledání v konkrétní složce nebo pro rychlý přehled po nedávných změnách bez nutnosti aktualizace katalogu.
+| Možnost | Popis |
+|---------|-------|
+| *Katalogy* | Vyhledává v katalozích zařízení vybraného na stránce [Výběr](Selection): v katalogu, ve všech katalozích úložného zařízení nebo virtuálního zařízení. Když není vybráno žádné zařízení (*Všechno*), vyhledává ve všech katalozích. |
+| *Připojený disk* | Vyhledává přímo ve složce počítače nebo připojeného disku, bez katalogu. Zadejte cestu nebo použijte *Vyberte cestu*. Užitečné pro vyhledávání ve složce, která nemá katalog, nebo pro zobrazení nedávných změn bez předchozí aktualizace katalogu. |
 
 ## Kritéria vyhledávání
-Tento panel seskupuje všechna kritéria, která upřesňují a snižují počet výsledků. Panel lze skrýt, aby se ušetřilo místo.
+Kritéria jsou seskupena do sekcí. Zaškrtávací políčko před nadpisem sekce zapne nebo vypne celou sekci, **aniž by se ztratilo, co v ní bylo zadáno**. Totéž platí pro zaškrtávací políčka před jednotlivým kritériem (*Typ*, *Velikost*, *Datum*...).
 
-Vztahují se na cesty a názvy souborů, atributy souborů, metadata, štítky a mohou identifikovat duplikáty nebo rozdíly mezi 2 katalogy.
-Výsledky mohou být seznam souborů nebo seznam složek obsahujících odpovídající soubory.
+### Název souboru {#search-text-criteria}
 
-![Panel kritérií vyhledávání zobrazující sekce textu, souboru, metadat, duplikátů a rozdílů](/img/k2/screen_search_02.png)
+![Kritéria názvu souboru se dvěma hledanými texty a jedním vylučovacím textem](/img/search_02_file_name.png)
 
-### Kritéria textu {#search-text-criteria}
+#### text
+Hledaný text. Může jít o **jeden nebo více hledaných textů**, jeden na řádek:
+* *+* přidá řádek, *−* ho odebere (poslední řádek odebrat nelze),
+* soubor je nalezen, když odpovídá **kterémukoli** z řádků,
+* křížek v řádku ho vyprázdní.
 
-#### Název souboru
-Zadat text pro vyhledávání v názvech souborů a/nebo cestách složek.
+Tlačítka vedle řádků:
+* *Vložte text ze schránky*: nahradí řádky obsahem schránky, jeden řádek na každý řádek textu. Užitečné pro hledání seznamu zkopírovaného z tabulkového procesoru, textového editoru nebo správce souborů.
+* *Vyčistěte hledaný text od znaků jako _ - . ,*: nahradí tyto znaky mezerami v každém řádku.
 
-„Slovo" je skupina znaků oddělená od jiné skupiny mezerou. To lze použít k vyhledání složek, souborů nebo souborů v určitých složkách.
+Vložení více řádků pomocí `Ctrl+V` do řádku je přidá jako nové řádky. `Enter` v kterémkoli řádku spustí vyhledávání.
 
-Textové pole přijímá více řádků. Každý řádek je zpracován jako nezávislý vyhledávací výraz a jsou vráceny výsledky odpovídající **libovolnému** řádku (logika NEBO). Funguje se všemi režimy *S*.
-
-- Stisknutím **Enter** spustíte vyhledávání.
-- Stisknutím **Shift+Enter** vložíte nový řádek.
-
-![Vyhledávací textové pole zobrazující více řádků použitých jako nezávislé vyhledávací výrazy v logice NEBO](/img/k2/screen_search_05_list_for_file_name.png)
-
-Tlačítka vedle textového pole:
-- *Vložit ze schránky* — vloží obsah schránky do vyhledávacího pole.
-- *Vyčistit text vyhledávání* — odstraní speciální znaky (`.  ,  _  -  (  )  [  ]  {  }  /  \  '  "`).
-
-Pokud je před kritériem zaškrtávací políčko, lze ho zapnout nebo vypnout bez ztráty zadané hodnoty.
-
-#### S
-Určuje, jak mají být slova v poli *Text* porovnávána:
+#### s
+Jak se hledají slova každého řádku:
 
 | Možnost | Chování |
 |---------|---------|
-| *Všechna slova* | Vrátí výsledky pouze pokud jsou nalezena všechna slova (výchozí) |
-| *Přesná fráze* | Vrátí výsledky, kde je nalezena přesná fráze (včetně pořadí slov a mezer) |
-| *Začíná na* | Název souboru musí začínat textem — dostupné pouze s *Pouze názvy souborů* |
-| *Jakékoli slovo* | Vrátí výsledky, pokud je nalezeno alespoň jedno ze slov |
-| *Regex* | Text vyhledávání je použit jako vzor regulárního výrazu (syntaxe PCRE2) |
+| *Všechna slova* | Nalezena jsou všechna slova řádku, v libovolném pořadí (výchozí). |
+| *Přesná fráze* | Řádek je nalezen tak, jak byl zadán, slova ve stejném pořadí. |
+| *Začíná s* | Název souboru začíná řádkem. Pouze s volbou *Pouze názvy souborů*. |
+| *Jakékoli slovo* | Nalezeno je alespoň jedno slovo řádku. |
+| *Regex* | Řádek je regulární výraz (syntaxe PCRE2). Neplatný výraz nenajde nic. |
 
-:::note
-V režimu *Regex* neplatný vzor nevrátí žádné výsledky. Možnost *Rozlišovat velikost písmen* se nadále uplatňuje.
-:::
+„Slovo“ je skupina znaků oddělená od jiné mezerou.
 
-#### V
-Určuje, ve které části cesty souboru se má hledat:
+#### v
+Kde se text hledá:
 
 | Možnost | Chování |
 |---------|---------|
-| *Pouze názvy souborů* | Hledá pouze v názvech souborů (výchozí) |
-| *Názvy souborů nebo cesty složek* | Hledá v názvech souborů i cestách složek |
-| *Pouze cesta složky* | Hledá pouze v cestách složek (nedostupné s *Začíná na*) |
+| *Pouze názvy souborů* | V názvech souborů (výchozí). |
+| *Názvy souborů nebo cesty ke složkám* | V názvech souborů a v cestách ke složkám. |
+| *Pouze cesta ke složce* | Pouze v cestách ke složkám. |
 
-#### Rozlišovat velikost písmen
-Vynutí přesnou shodu znaků (velká a malá písmena jsou rozlišována).
+#### citlivý na velká písmena
+Velká a malá písmena se považují za odlišná.
 
-#### Vyloučit
-Vyloučí výsledky, pokud je v cestě nebo názvu souboru nalezeno *jakékoli* z uvedených slov.
+#### vyloučit
+Soubory jsou z výsledků vynechány, když odpovídají **kterémukoli** z vylučovacích řádků. Vylučovací řádky fungují jako řádky vyhledávání: *+*, *−*, vložení a vyčištění.
 
-### Kritéria souboru {#file-criteria}
+### Atributy souboru {#file-criteria}
 
-Celou sekci kritérií souborů lze zapnout nebo vypnout pomocí zaškrtávacího políčka.
-
-#### Velikost
-Nastavte minimální a/nebo maximální velikost souboru. Každá hranice přijímá číslo a jednotku.
-
-Dostupné jednotky: **Bajty**, **KiB**, **MiB**, **GiB**, **TiB**
-
-#### Typ souboru
-Filtruje výsledky podle typu souboru. Dostupné typy:
+#### Typ
+Pouze soubory jednoho typu. Když *Typ* není zaškrtnut, prohledávají se všechny typy.
 
 | Typ | Popis |
 |-----|-------|
-| Vše | Bez filtru typu (výchozí) |
-| Audio | Zvukové soubory (např. mp3, ogg, wav, flac…) |
-| Obrázek | Obrazové soubory (např. jpg, png, gif, raw…) |
-| Text | Dokumenty a textové soubory (např. pdf, docx, odt, epub…) |
-| Video | Video soubory (např. mp4, mkv, avi, mov…) |
-| Ostatní | Soubory neodpovídající žádnému z výše uvedených typů |
-| Žádný | Soubory bez rozpoznaného typu |
+| *Všechno* | Bez filtru typu. |
+| *Zvuk* | Zvukové soubory (mp3, ogg, wav, flac...). |
+| *Obraz* | Obrázkové soubory (jpg, png, gif, raw...). |
+| *Text* | Dokumenty a textové soubory (pdf, docx, odt, epub...). |
+| *Video* | Video soubory (mp4, mkv, avi, mov...). |
+| *Jiné* | Soubory žádného z výše uvedených typů. |
+| *Žádné* | Soubory bez rozpoznaného typu. |
 
-Typy souborů jsou dynamicky detekovány z databáze MIME systému (KFileMetadata), takže přesný seznam přípon se přizpůsobuje systému.
+Typy souborů se rozpoznávají podle systémové databáze typů souborů, takže přesný seznam přípon se řídí systémem.
+
+#### Velikost
+Minimální a maximální velikost, každá se svou jednotkou: Bajty, KiB, MiB, GiB nebo TiB.
 
 #### Datum
-Nastavte minimální a/nebo maximální datum změny souboru.
+Minimální a maximální datum změny. *Vyberte datum* otevře kalendář se zkratkami: *Nyní*, *Před 1 dnem*, *Před 1 týdnem*, *Před 1 měsícem*, *Před 1 rokem*.
 
-### Kritéria metadat souboru {#file-metadata-criteria}
+### Metadata souboru {#file-metadata-criteria}
+Kritéria pro informace uložené uvnitř souborů. Vyžadují katalogy vytvořené nebo aktualizované s volbou *Zahrnout metadata* (viz [Vytvořit](Create)).
 
-Sekce metadat umožňuje vyhledávání v obsahu vloženém do souborů (vyžaduje, aby byl katalog indexován s rozšířenými metadaty).
+| Kritérium | Popis |
+|-----------|-------|
+| *Text* | Text v metadatech, například umělec, album, název nebo autor. |
+| *Velikost* | *Šířka* a *Výška* v pixelech, každá s minimem a maximem (obrázky a videa). |
+| *Délka* | Minimální a maximální délka ve formátu hodiny:minuty:sekundy (zvuk a video). |
 
-![Sekce kritérií metadat zobrazující pole pro text, rozměry obrázku a délku](/img/k2/screen_search_metadata_criteria.png)
+### Kritéria složky {#folder-criteria}
 
-Celou sekci metadat lze zapnout nebo vypnout pomocí zaškrtávacího políčka.
+#### ve výsledcích zobrazí pouze složky
+Výsledkem jsou složky, které obsahují odpovídající soubory, místo samotných souborů.
 
-#### Text metadat
-Vyhledávání textu v polích metadat, jako je jméno interpreta, album, název, autor nebo jiný vložený textový obsah.
-
-#### Rozměry metadat (obrázky a videa)
-Filtrovat podle rozměrů v pixelech:
-- *Min / Max výška* — rozsah výšky v pixelech
-- *Min / Max šířka* — rozsah šířky v pixelech
-
-#### Délka metadat (audio a video)
-Filtrovat podle délky přehrávání pomocí časového rozsahu.
-
-### Kritéria složky
-
-#### Zobrazit pouze složky
-Zobrazí cesty složek jako výsledky místo jednotlivých souborů.
-
-:::note
-*Zobrazit pouze složky* nelze kombinovat s *Najít rozdíly*.
-:::
-
-#### Štítky {#tags-criteria}
-Filtruje výsledky na soubory nebo složky, kterým je přiřazen konkrétní štítek.
-Štítky jsou definovány na obrazovce [Štítky](Tags).
+#### Štítek {#tags-criteria}
+Pouze soubory ve složkách, které mají tento štítek. Štítky se přiřazují na stránce [Štítky](Tags).
 
 ### Duplikáty {#duplicates-on}
+Najde soubory, které jsou pravděpodobně tentýž soubor na více místech.
 
-Najde potenciálně duplicitní soubory na základě jednoho nebo kombinace:
+*Na*: co musí mít dva soubory společné, jedno nebo více z:
 
 | Pole | Popis |
 |------|-------|
-| *Název souboru* | Stejný název souboru |
-| *Velikost souboru* | Stejná velikost souboru |
-| *Datum změny* | Stejné datum změny |
-| *Kontrolní součet (SHA-256)* | Stejná nebo odlišná hodnota kontrolního součtu |
+| *Název* | Stejný název souboru. |
+| *Velikost* | Stejná velikost. |
+| *Datum* | Stejné datum změny. |
+| *Kontrolní součet* | Se `=` stejný kontrolní součet: obsah je totožný. Se `≠` odlišný kontrolní součet: stejný název nebo velikost, ale jiný obsah. |
 
-**Operátor kontrolního součtu** (= nebo ≠) umožňuje najít soubory se *stejným* kontrolním součtem (skutečné duplikáty) nebo soubory s *odlišnými* kontrolními součty přes jinak shodné atributy.
+Kontrolní součty jsou k dispozici pouze pro katalogy vytvořené nebo aktualizované s volbou *Zahrnout kontrolní součet* (viz [Vytvořit](Create)).
 
-**Možnosti rozsahu:**
-- *V rámci vybraného zařízení/katalogu* — najde duplikáty uvnitř aktuálně vybraného zařízení nebo katalogu.
-- *Porovnat dvě zařízení* — porovná soubory mezi dvěma vybranými zařízeními nebo katalogy pro nalezení duplikátů mezi nimi.
-
-:::note
-Pro spuštění vyhledávání duplikátů musí být vybráno alespoň jedno pole.
-:::
+*Rozsah*:
+* *V rámci vybraného zařízení*: duplikáty uvnitř vybraného zařízení,
+* *Porovnat dvě zařízení*: duplikáty mezi *Zařízení 1* a *Zařízení 2*, například mezi počítačem a starým notebookem.
 
 ### Rozdíly {#differences-on}
+Porovná dvě zařízení, *Mezi* a *A*, například složku a její zálohu. Najde soubory, které jsou jen v jednom z nich, nebo jsou v obou, ale s odlišnou hodnotou v polích zvolených v *Na*: *Název*, *Velikost*, *Datum*, *Kontrolní součet* (`=` nebo `≠`, jako u Duplikátů).
 
-Najde soubory přítomné v jednom zařízení, ale ne v druhém, nebo se soubory s odlišnými hodnotami atributů — užitečné pro porovnání zdroje se zálohou.
-
-![Sekce kritérií rozdílů zobrazující výběrové prvky zařízení a zaškrtávací políčka atributů](/img/k2/screen_search_03_diff.png)
-
-Vyberte dvě zařízení (Virtuální, Úložiště nebo Katalog) k porovnání a zvolte, které atributy definují rozdíl:
-
-| Pole | Popis |
-|------|-------|
-| *Název souboru* | Soubory s odlišnými názvy |
-| *Velikost souboru* | Soubory s odlišnými velikostmi |
-| *Datum změny* | Soubory s odlišnými daty změny |
-| *Kontrolní součet (SHA-256)* | Soubory se stejným nebo odlišným kontrolním součtem |
-
-**Operátor kontrolního součtu** (= nebo ≠) funguje stejně jako u Duplikátů.
+Rozdíly jsou k dispozici pouze při vyhledávání v *Katalogy*.
 
 :::note
-Musí být vybráno alespoň jedno pole. *Najít rozdíly* nelze kombinovat s *Zobrazit pouze složky* ani s *Najít duplikáty*.
+*Duplikáty* a *Rozdíly* nelze používat současně.
 :::
 
-## Spuštění vyhledávání
+## Spuštění vyhledávání {#running}
+Tlačítka v horní části stránky:
 
-### Tlačítko Vyhledat
-Kliknutím na *Vyhledat* spustíte vyhledávání. Tlačítko mění stav podle operace:
+| Tlačítko | Akce |
+|----------|------|
+| *Vyhledávání* | Spustí vyhledávání. Totéž udělá `Enter` v textovém poli. |
+| *Pauza* / *Obnovit* | Pozastaví probíhající vyhledávání a obnoví ho. |
+| *Zastavit* | Zastaví probíhající vyhledávání. Dosud nalezené výsledky se zachovají. |
+| *Resetovat* | Vrátí všechna kritéria na výchozí hodnoty. |
+| *Historie* | Otevře [historii vyhledávání](#search-history). |
+| *Zavřít* | Zavře stránku Vyhledávání. |
 
-Vyhledávání nelze spustit během vytváření katalogu nebo aktualizace zařízení a ty nelze spustit během vyhledávání – tlačítko *Vyhledat* je mezitím zakázáno. Průběh se zobrazuje v panelu aktivit společně se všemi ostatními operacemi.
+Průběh vyhledávání se zobrazuje v [panelu činnosti](Interface#activity-panel).<br/>
+Vyhledávání nelze spustit, dokud se vytváří katalog nebo aktualizuje zařízení: *Vyhledávání* je mezitím neaktivní.
 
-| Stav | Popisek tlačítka | Tlačítko Zastavit |
-|------|-----------------|-------------------|
-| Nečinný | *Vyhledat* (zelené) | Zakázáno |
-| Probíhá | *Pauza* | Povoleno |
-| Pozastaveno | *Pokračovat* | Povoleno |
+## Historie vyhledávání {#search-history}
 
-![Stavový řádek zobrazující stav pauzy během operace vyhledávání](/img/k2/screen_search_statusbar_paused.png)
+![Historie vyhledávání: minulá vyhledávání s datem, zařízením a kritérii](/img/search_03_history.png)
 
-- **Pauza / Pokračovat** — pozastavit a pokračovat ve vyhledávání bez ztráty průběhu. Není dostupné v paměťovém databázovém režimu.
-- **Zastavit** — zrušit aktuální vyhledávání. Zobrazí se částečné výsledky, které již byly nalezeny.
+Každé vyhledávání se ukládá do historie kolekce, s kritérii a zařízením, ve kterém bylo spuštěno.
 
-### Resetovat
-Tlačítko *Resetovat vše* obnoví všechna kritéria na výchozí hodnoty.
+*Historie* otevře seznam minulých vyhledávání. Každý řádek ukazuje datum, prohledané zařízení (nebo *Všechno*) a shrnutí kritérií.<br/>
+Kliknutí na řádek **obnoví všechna jeho kritéria a vybrané zařízení**. Klikněte na *Vyhledávání* pro opětovné spuštění.
 
-## Výsledky
-
-### Katalogy s výsledky
-Levý panel zobrazuje seznam katalogů, ve kterých byly nalezeny odpovídající soubory.
-Kliknutím na katalog v tomto seznamu se vyhledávání spustí znovu, ale omezeno pouze na tento katalog.
-Tento panel lze skrýt, aby se ušetřilo místo.
-
-### Nalezené soubory
-Pravý panel zobrazuje soubory nebo složky odpovídající kritériím vyhledávání.
-
-Záhlaví ukazuje počet nalezených souborů nebo duplikátů a celkovou velikost.
-Kliknutím na ikonu statistiky se otevře **dialog s podrobnými statistikami**:
-
-| Statistika | Popis |
-|------------|-------|
-| Nalezené soubory | Celkový počet odpovídajících výsledků |
-| Zpracované soubory | Celkový počet zkoumaných souborů |
-| Dokončení | Procento zpracovaných souborů (pokud bylo vyhledávání zastaveno, výsledky jsou označeny jako neúplné) |
-| Celková velikost | Součet velikostí souborů |
-| Min / Max / Průměrná velikost | Distribuce velikostí |
-| Min / Max datum | Rozsah dat výsledků |
-| Zpracované katalogy | Počet prohledaných katalogů z celkového počtu |
-
-### Kontextová nabídka {#file-context-menu}
-
-Kliknutím pravým tlačítkem na řádek výsledku se otevře kontextová nabídka:
-
-**Navigace:**
-| Akce | Popis |
-|------|-------|
-| *Otevřít soubor* | Otevře soubor výchozí aplikací systému. Pokud zařízení souboru není připojeno, zobrazí se upozornění a soubor se neotevře. |
-| *Otevřít složku* | Otevře nadřazenou složku souboru ve správci souborů |
-| *Prozkoumat složku* | Přejde do složky souboru na obrazovce [Prozkoumat](Explore) v Katalogu |
-
-**Metadata:**
-| Akce | Popis |
-|------|-------|
-| *Zobrazit rozšířená metadata (JSON)* | Zobrazí vložená metadata souboru (dostupné pokud byl katalog indexován s rozšířenými metadaty, nebo pokud typ souboru je podporuje) |
-
-**Kopírovat do schránky:** *(příklad: `/home/uzivatel/dokumenty/soubor.txt`)*
-| Akce | Kopírovaná hodnota |
-|------|------------------|
-| *Kopírovat cestu složky* | `/home/uzivatel/dokumenty` |
-| *Kopírovat absolutní cestu souboru* | `/home/uzivatel/dokumenty/soubor.txt` |
-| *Kopírovat název souboru s příponou* | `soubor.txt` |
-| *Kopírovat název souboru bez přípony* | `soubor` |
-
-**Kontrolní součet:**
-| Akce | Podmínka | Popis |
-|------|----------|-------|
-| *Vypočítat kontrolní součet (SHA-256)* | Žádný kontrolní součet uložen | Vypočítá a uloží SHA-256 hash |
-| *Kopírovat kontrolní součet* | Kontrolní součet uložen | Zkopíruje hash do schránky |
-| *Ověřit kontrolní součet (SHA-256)* | Kontrolní součet uložen | Přepočítá a porovná s uloženou hodnotou |
-
-**Operace se soubory:**
-| Akce | Popis |
-|------|-------|
-| *Přesunout do koše* | Přesune soubor do systémového koše (s potvrzením) |
-| *Smazat soubor* | Trvale smaže soubor (s potvrzením) |
-
-### Dávkové zpracování {#batch-process}
-
-Tlačítko *Zpracovat výsledky* otevře nabídku dávkových operací aplikovaných na všechny soubory ve výsledcích:
-
-| Akce | Popis |
-|------|-------|
-| *Exportovat výsledky* | Exportovat do nového katalogu (pro další přesnější vyhledávání) **nebo** do souboru CSV pojmenovaného s datem a uloženého ve [složce Kolekce](Settings#database-memory-mode) |
-| *Přejmenovat (KRename)* | Otevře všechny soubory výsledků v [KRename](https://apps.kde.org/krename/) pro dávkové přejmenování |
-| *Ověřit kontrolní součty* | Pro každý soubor výsledků: pokud není kontrolní součet dosud uložen, vypočítá a uloží hash SHA-256; pokud je kontrolní součet již uložen, porovná skutečnou hodnotu s uloženou (shoda / neshoda). Průběh je zobrazen ve stavovém řádku. |
-| *Zahrnout metadata* | Extrahuje rozšířená metadata (rozměry obrázků, délka audia/videa atd.) pro každý soubor výsledků a uloží je do katalogu. Užitečné pro soubory původně indexované bez metadat. Průběh je zobrazen ve stavovém řádku. |
-| ⚠ *Přesunout do koše* | Přesune všechny soubory výsledků do systémového koše (s potvrzením zobrazujícím počet a celkovou velikost) |
-| ⚠ *Smazat* | Trvale smaže všechny soubory výsledků (s potvrzením — bez možnosti obnovy) |
-
-## Historie vyhledávání
-Pokaždé, když je spuštěno vyhledávání, jsou kritéria a výběr zařízení uloženy do souboru historie ve složce Kolekce.
-
-Tato historie je zobrazena v tabulce ve spodní části obrazovky. Kliknutím na řádek se obnoví všechna kritéria — vyhledávání je pak nutné spustit ručně.
-
-Dvě tlačítka umožňují spravovat seznam historie:
-- *Ponechat posledních 10* — odstraní všechny záznamy kromě 10 nejnovějších (s potvrzením).
-- *Resetovat* — smaže všechny záznamy historie (s potvrzením).
-
-Tento panel lze skrýt, aby se ušetřilo místo.
-
-![Panel historie vyhledávání zobrazující předchozí vyhledávání s časovými razítky a kritérii](/img/k2/screen_search_04_search_history.png)
+| Tlačítko | Akce |
+|----------|------|
+| *Ponechat posledních 10* | Po potvrzení smaže všechna vyhledávání kromě 10 nejnovějších. |
+| *Vymazat* | Po potvrzení smaže celou historii. |
+| *Zrušit* | Zavře historii. |
 
 ## Vývoj
-Některé nápady na vývoj této obrazovky:
-* Podívejte se na nevyřízené položky [vývoje Vyhledávání](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=search).
+* Viz backlog [vývoje Vyhledávání](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=search).

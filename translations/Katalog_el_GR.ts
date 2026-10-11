@@ -586,7 +586,7 @@ Choose a different name.</source>
     <message>
         <location line="+22"/>
         <source>Failed to update link.</source>
-        <translation type="unfinished"></translation>
+        <translation>Η ενημέρωση του συνδέσμου απέτυχε.</translation>
     </message>
     <message>
         <location line="+106"/>
@@ -2034,17 +2034,17 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     <message>
         <location filename="../core/catalogjobstoppable.cpp" line="+270"/>
         <source>The file list is saved. Metadata and checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Η λίστα αρχείων αποθηκεύτηκε. Η σάρωση μεταδεδομένων και αθροισμάτων ελέγχου δεν ολοκληρώθηκε και θα συνεχιστεί κατά την ενημέρωση του καταλόγου.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Metadata scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Η λίστα αρχείων αποθηκεύτηκε. Η σάρωση μεταδεδομένων δεν ολοκληρώθηκε και θα συνεχιστεί κατά την ενημέρωση του καταλόγου.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The file list is saved. Checksum scanning is incomplete and continues when the catalog is updated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Η λίστα αρχείων αποθηκεύτηκε. Η σάρωση αθροισμάτων ελέγχου δεν ολοκληρώθηκε και θα συνεχιστεί κατά την ενημέρωση του καταλόγου.</translation>
     </message>
     <message>
         <location line="+1156"/>
@@ -5767,27 +5767,27 @@ Split was not performed.</source>
     <message>
         <location line="+47"/>
         <source>Matched</source>
-        <translation type="unfinished"></translation>
+        <translation>Ταιριάζουν</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Mismatched</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν ταιριάζουν</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Calculated</source>
-        <translation type="unfinished"></translation>
+        <translation>Υπολογίστηκαν</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Updated</source>
-        <translation type="unfinished"></translation>
+        <translation>Ενημερώθηκαν</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Skipped</source>
-        <translation type="unfinished"></translation>
+        <translation>Παραλείφθηκαν</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -6164,7 +6164,7 @@ Split was not performed.</source>
     <message>
         <location filename="../core/storage.cpp" line="+255"/>
         <source>No Path was provided for the Storage: %1. Edit the device to provide one and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν δόθηκε διαδρομή για την αποθήκευση: %1. Επεξεργαστείτε τη συσκευή για να ορίσετε μία και δοκιμάστε ξανά.</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -6173,14 +6173,20 @@ Split was not performed.</source>
 The source folder does not contain any file: &apos;%2&apos;
 
 This could mean that the device is not mounted to this folder, or the folder is simply empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>Αποθήκευση: &apos;%1&apos;
+
+Ο φάκελος προέλευσης δεν περιέχει κανένα αρχείο: &apos;%2&apos;
+
+Αυτό μπορεί να σημαίνει ότι η συσκευή δεν είναι προσαρτημένη σε αυτόν τον φάκελο ή ότι ο φάκελος είναι απλώς κενός.</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Katalog could not get values.
 
 Check that the source folder (%1) is correct, or that the device is mounted to the source folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το Katalog δεν μπόρεσε να λάβει τιμές.
+
+Ελέγξτε ότι ο φάκελος προέλευσης (%1) είναι σωστός ή ότι η συσκευή είναι προσαρτημένη στον φάκελο προέλευσης.</translation>
     </message>
 </context>
 <context>
@@ -8865,32 +8871,32 @@ Errors: %3</source>
     <message>
         <location line="-562"/>
         <source>Storage devices linked to a missing storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Συσκευές αποθήκευσης συνδεδεμένες με αποθήκευση που λείπει</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>Αποθηκεύσεις που δεν συνδέονται με καμία συσκευή</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage IDs used by more than one storage</source>
-        <translation type="unfinished"></translation>
+        <translation>ID αποθήκευσης που χρησιμοποιούνται από περισσότερες από μία αποθηκεύσεις</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalog devices linked to a missing catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Συσκευές καταλόγου συνδεδεμένες με κατάλογο που λείπει</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalogs not linked to any device</source>
-        <translation type="unfinished"></translation>
+        <translation>Κατάλογοι που δεν συνδέονται με καμία συσκευή</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Devices with a missing parent device</source>
-        <translation type="unfinished"></translation>
+        <translation>Συσκευές με γονική συσκευή που λείπει</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -8916,7 +8922,7 @@ Errors: %3</source>
         <location line="+25"/>
         <location line="+292"/>
         <source>Quality check</source>
-        <translation type="unfinished"></translation>
+        <translation>Έλεγχος ποιότητας</translation>
     </message>
     <message>
         <location line="-312"/>
@@ -8928,13 +8934,13 @@ Errors: %3</source>
         <location line="-90"/>
         <location line="+84"/>
         <source>Nothing found</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν βρέθηκε τίποτα</translation>
     </message>
     <message>
         <location line="-78"/>
         <location line="+49"/>
         <source>No issues found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν βρέθηκαν προβλήματα.</translation>
     </message>
     <message>
         <location line="-29"/>
@@ -9085,7 +9091,7 @@ Errors: %3</source>
     <message>
         <location line="+10"/>
         <source>Reset window size</source>
-        <translation type="unfinished"></translation>
+        <translation>Επαναφορά μεγέθους παραθύρου</translation>
     </message>
     <message>
         <location line="-188"/>

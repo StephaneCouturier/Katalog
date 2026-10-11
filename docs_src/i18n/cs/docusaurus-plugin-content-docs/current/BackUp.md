@@ -1,283 +1,154 @@
 ---
-version: "2.13"
+version: "3.0"
 ---
 # Záloha
-![2.13](https://img.shields.io/badge/Version-2.13-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
 ## Shrnutí
-Tato stránka popisuje všechny funkce obrazovky **BackUp** a jejich použití.<br/>
-Z této obrazovky může uživatel **spravovat zálohy katalogů (kopírování) nebo archivaci (přesun)**.<br/>
+Tato stránka popisuje stránku **Záloha**, kde se soubory kopírují nebo přesouvají z jednoho katalogu do druhého, přičemž se z dat katalogů zjišťuje, co chybí:
+* [pojmy](#concepts): odkazy, záloha a archiv, konflikty, zdrojový režim,
+* [seznam odkazů](#links) s jejich pokrytím a posledním spuštěním,
+* [vytvoření a úprava odkazu](#link-form),
+* [náhled](#preview) a [spuštění](#run) odkazu nebo [všech uvedených odkazů](#run-listed),
+* [další akce](#more-actions) s odkazem: duplikovat, replikovat adresáře, invertovat, exportovat, smazat, LuckyBackup.
 
-![Hlavní obrazovka BackUp](/img/k2/screen_backup_01.png)
+![Stránka Záloha: seznam odkazů se zdrojem, cílem, rozdílem a poslední zálohou](/img/backup_01_overview.png)
 
-## Hlavní koncepty
+## Pojmy {#concepts}
 
-### Zálohovací propojení
+### Odkazy
+**Odkaz** spojuje **zdrojový** katalog s **cílovým** katalogem, do kterého se jeho soubory zálohují. Oba jsou katalogy kolekce (viz [Zařízení](Devices#model)): chcete-li zálohovat složku na externí disk, musí mít složka i záložní složka na disku nejprve každá svůj katalog (viz [Vytvořit](Create)).
 
-Obrazovka umožňuje <b>přiřadit katalog</b>, považovaný za <b><i>zdroj</i></b>, k jinému katalogu, považovanému za zálohovací <b><i>cíl</i></b>.<br/>Toto je základní prvek všech funkcí této obrazovky.
+Katalog porovná oba katalogy, najde soubory zdroje, které **v cíli chybí**, a pak je zkopíruje nebo přesune. Nepotřebuje žádný externí nástroj.
 
-### Porovnání katalogů
+### Záloha nebo Archiv {#type}
 
-Obrazovka zobrazuje seznam propojení a <b>pokrytí záloh</b> pro celý výběr i jednotlivá propojení, přičemž porovnává velikost, počet souborů a datum aktualizace zdroje a cíle.
+| Typ | Operace | Účel |
+|-----|---------|------|
+| **Záloha** | **Zkopíruje** chybějící soubory do cíle. | Zdroj se nikdy nemění. Cílem je redundance a obnova. |
+| **Archiv** | **Přesune** soubory do cíle. | Každý soubor se ze zdroje odstraní, jakmile je potvrzena jeho kopie. Cílem je uvolnit zdroj pro dlouhodobé uložení. Prázdné složky, které ve zdroji zůstanou, se **nemažou**. |
 
-### Replikace adresářů
+Záloha:
+* znovu vytvoří strukturu složek zdroje v cíli a pak zkopíruje chybějící soubory,
+* **nepřepíše** soubor, který již v cíli je, i když se liší (viz [konflikty](#conflicts)),
+* **nemaže** soubory cíle, které ve zdroji nejsou.
 
-V průběhu zálohovacího procesu je možné samostatně spustit kopírování hierarchie složek bez souborů.
+Archivace na stejném souborovém systému přesune soubory okamžitě; mezi různými souborovými systémy se každý soubor zkopíruje a po dokončení kopie ze zdroje smaže. Pokud kopírování selže, zdrojový soubor zůstane nedotčen.
 
-## BackUp nebo Archive
+### Konflikty {#conflicts}
+**Konflikt** je soubor, který je na stejném místě ve zdroji i v cíli, ale s jiným datem, velikostí nebo kontrolním součtem. Co se stane, určuje volba odkazu *Při konfliktu*:
 
-| Operace | Zpracování souborů | Účel |
-|---------|-------------------|------|
-| **BackUp** | Operace **kopírování** ze zdrojového katalogu do cílového katalogu. | Zdroj není nikdy změněn. Cílem je redundance a obnova. <br/> Postupem času budou k dispozici různé strategie (úplná, přírůstková, synchronizace). |
-| **Archive** | Operace **přesunu** ze zdrojového katalogu do cílového katalogu. | Soubory jsou přesunuty a po ověření kopie odstraněny ze zdroje. Cílem je dlouhodobé přesouvání a organizace úložiště. Prázdné adresáře zanechané ve zdroji **nejsou** odstraněny. |
+| Situace | *Přeskočit – ponechat cíl beze změny* | *Přejmenovat nejstarší – přejmenovat cíl, kopírovat zdroj* |
+|---------|------|---------------|
+| Zdroj novější než cíl | konflikt nahlášen | cíl přejmenován, pak zdroj zkopírován |
+| Cíl novější než zdroj | konflikt nahlášen | přeskočeno, pro ochranu novějšího cíle |
+| Stejné datum, jiná velikost | konflikt nahlášen | přeskočeno (není jasný vítěz) |
+| Zdrojový soubor na disku chybí | chyba | chyba |
 
-
-
-### Přírůstková záloha (kopírování souborů)
-
-Záloha Katalog kopíruje soubory ze **zdrojového katalogu** do **cílového katalogu** s použitím indexovaných dat Katalog.
-<br/>Aby to fungovalo správně, budou katalogy aktualizovány před zálohou i po ní (volitelné, ale velmi doporučené).
-<br/>Není vyžadován žádný externí nástroj.
-<br/><br/>Pořadí akcí:
-- Porovná zdrojový a cílový katalog a nalezne **soubory chybějící v cíli**.
-- Zkopíruje chybějící soubory do cíle a znovu vytvoří strukturu složek.
-- **Nepřepisuje** existující soubory v cíli (ani pokud jsou odlišné).
-- **Neodstraňuje** soubory z cíle, které nejsou ve zdroji.
-
-Možnosti „Přísné kopírování"
-- <i>Přísné kopírování</i> (výchozí): Katalog zkopíruje soubory, i když jsou již v cíli přítomny. Pokud není zaškrtnuto, soubory již přítomné v cíli (podle názvu, velikosti a data) nebudou znovu kopírovány.
-
-Možnosti „Adresáře"
-- <i>Zahrnout prázdné</i> (výchozí: zaškrtnuto): struktura adresářů zdroje je v cíli vytvořena před zkopírováním jakéhokoli souboru. Pokud je zaškrtnuto, je vytvořen i adresář, který neobsahuje vůbec nic — žádný soubor ani podadresář. Pokud není zaškrtnuto, takový adresář vytvořen není, zatímco každý adresář, který něco obsahuje, vytvořen je. Zrušení zaškrtnutí nikdy neodstraní adresář, který je již v cíli přítomen.
-
-Možnosti řešení konfliktů
-- <i>Při konfliktu</i> (výchozí: <i>Přejmenovat nejstarší</i>)
-
-Katalog může řešit konflikty různými způsoby, pokud soubor existuje v cíli, ale datum, velikost nebo kontrolní součet se liší.
-
-**Konflikt** nastane, pokud soubor existuje ve zdroji i v cíli na stejné cestě, ale datum, velikost nebo kontrolní součet se liší. Režim určuje, jak se v takovém případě postupuje.
-
-#### Dostupné režimy {#available-modes}
-
-| Režim | Chování |
-|-------|---------|
-| **Přeskočit** (výchozí) | Žádná operace — zdroj není zkopírován, cíl není změněn. Konflikt je zaznamenán pro kontrolu uživatelem. |
-| **Přejmenovat nejstarší** | Pokud je zdroj novější: přejmenuje starší cílový soubor (přidá časové razítko), poté zkopíruje zdroj. Pokud je cíl novější nebo stejného data: přeskočí (chrání novější cíl). |
-
-#### Úplná tabulka scénářů
-
-| # | Situace | Přeskočit | Přejmenovat nejstarší |
-|---|---------|-----------|----------------------|
-| A | Zdroj novější než cíl | konflikt zaznamenán | přejmenuje cíl → zkopíruje zdroj ✓ |
-| B | Cíl novější než zdroj | konflikt zaznamenán | přeskočí (chrání novější cíl) |
-| C | Stejné datum, různá velikost | konflikt zaznamenán | přeskočí (není jasný vítěz) |
-| D | Zdrojový soubor na disku chybí | chyba | chyba |
-
-> **Přejmenovat nejstarší — formát archivovaného názvu**: starý cílový soubor je přejmenován na `původnínázev_RRRRMMDD-HHmmss.ext` (např. `zpráva_20260225-102559.docx`). Časové razítko je vloženo před příponu, aby soubor zůstal otevíratelný. Tyto soubory se hromadí v cíli a je nutné je ručně odstranit pro uvolnění místa.
-
-> **Přejmenovat nejstarší — bezpečnostní záruka**: pokud kopírování zdrojového souboru selže poté, co byl cíl již přejmenován, přejmenovaný soubor je automaticky obnoven na původní název. Žádná data nejsou ztracena.
-
-
-### Archive (přesun souborů)
-
-Operace Archive **přesouvá** soubory ze zdroje do cíle místo jejich kopírování. Zdrojové soubory jsou odstraněny po úspěšném a potvrzeném přenosu — pokud přenos selže, zdrojový soubor zůstane nedotčen.
-
-- Na **stejném souborovém systému**: přesun je okamžitý — žádná data nejsou fyzicky kopírována; mění se pouze umístění souboru.
-- **Mezi různými souborovými systémy**: soubor je nejprve zkopírován do cíle, poté odstraněn ze zdroje po potvrzení kopírování.
+S volbou *Přejmenovat nejstarší* se starý cílový soubor přejmenuje na `název_RRRRMMDD-HHmmss.ext` (například `report_20260225-102559.docx`): datum se vloží před příponu, aby soubor šel stále otevřít. Pokud pak kopírování zdroje selže, přejmenovaný soubor dostane zpět svůj název: nic se neztratí.<br/>
+Tyto přejmenované soubory zůstávají v cíli a zabírají místo: odstraňují se ručně.
 
 ### Zdrojový režim {#source-mode}
+* Ve výchozím stavu pochází seznam zdrojových souborů z **katalogu**: porovnání funguje i s odpojeným zdrojem a složky vyloučené z katalogu se nezálohují.
+* S volbou *Skenovat zdrojový disk přímo (vyžaduje připojený zdroj)* se zdrojová složka čte z **disku**: zahrne se každý soubor bez ohledu na katalog a jeho vyloučení. Zdroj musí být připojen.
 
-Každé zálohovací propojení má **Zdrojový režim**, který určuje, co se používá jako zdroj při porovnávání a kopírování souborů.
+### Místo v cíli {#space}
 
-| Režim | Popis |
-|-------|-------|
-| **Katalog** (výchozí) | Používá index katalogu. Funguje offline — zdrojové zařízení nemusí být připojeno. Jsou uplatňována pravidla pro vyloučení složek katalogu: vyloučené složky nejsou zálohovány. |
-| **Disk** | Prochází přímo zdrojový souborový systém. Zdrojové zařízení **musí být připojeno a namontováno**. Jsou zahrnuty všechny soubory pod zdrojovou cestou — index katalogu a pravidla pro vyloučení složek jsou zcela ignorovány. |
+| Operace | Místo potřebné v cíli | Účinek na zdroj |
+|---------|-----------------------|-----------------|
+| **Záloha** | Všechny soubory ke kopírování. | Žádný. |
+| **Archiv, stejný souborový systém** | Žádné: soubory se pouze přesouvají. | Místo uvolněno. |
+| **Archiv, jiný souborový systém** | Všechny soubory k přesunutí. | Místo uvolněno po smazání každého souboru. |
+| **Konflikty** ***Přejmenovat nejstarší*** | Přejmenované soubory se zachovají: o jednu kopii více u každého. | Žádný. |
 
-**Rozhraní**: zaškrtávací políčko *Prohledat zdrojový disk přímo* na panelu Vytvořit propojení ovládá toto nastavení. Nezaškrtnuto = Katalog (výchozí), zaškrtnuto = Disk.
+[Náhled](#preview) zkontroluje volné místo v cíli a upozorní, když je nedostatečné nebo malé (méně než 512 MB zbývajících po operaci). Spuštění se před startem znovu zkontroluje: při nedostatku místa se odmítne a zpráva uvede potřebné, dostupné a chybějící místo. Když nelze místo v cíli zjistit (síťové nebo virtuální disky), kontrola neproběhne.
 
-### Profil LuckyBackup
+## Seznam odkazů {#links}
+Stránka zobrazuje odkazy jako karty.
 
-Je možné exportovat zálohovací propojení do profilu [LuckyBackup](https://luckybackup.sourceforge.net).
-Viz samostatná stránka: [Profil LuckyBackup](BackUp_luckybackup_profile)
+### Filtry
+| Filtr | Účinek |
+|-------|--------|
+| *Typ* | *Všechno*, *Záloha* nebo *Archiv*. |
+| *Filtr* | *Všechno*: všechny odkazy, nebo pouze ty, u nichž je zařízení vybrané na stránce [Výběr](Selection) *Zdroj* nebo *Cíl*. |
 
+Řádek nad kartami uvádí pro vybrané zařízení počet odkazů, velikost jejich zdrojů a u záloh procento **pokrytí**: kolik ze zdrojů už je v cílech.
 
-## Správa zálohovacích propojení
+### Karty
+Každá karta ukazuje:
+* název odkazu a jeho typ,
+* katalogy **Zdroj** a **Cíl** s jejich velikostí a počtem souborů,
+* *Rozdíl* u zálohy: co v cíli chybí, nebo *Aktuální*; *K přesunutí* u archivu: co je ještě ve zdroji, nebo *Není co přesouvat*,
+* *Poslední záloha* nebo *Poslední archivace*: datum a velikost posledního spuštění, nebo *nikdy*,
+* tlačítka *Spustit zálohu* / *Spustit archivaci*, *Náhled zálohy* / *Náhled archivu* a *Další akce*.
 
-Pro přehledné zobrazení a porovnání zdrojových adresářů a jejich záloh umožňuje Katalog propojovat katalogy.
+Když ještě žádný odkaz neexistuje, stránka to oznámí a *Přidat* vytvoří první.
 
-### Vytvoření zálohovacího propojení
+## Vytvoření nebo úprava odkazu {#link-form}
+*Přidat* na panelu nástrojů stránky otevře formulář *Přidat odkaz*; *Upravit* v *Další akce* otevře stejný formulář, *Upravit odkaz*, pro existující odkaz.
 
-Panel *Vytvořit propojení* lze sbalit nebo rozbalit pomocí přepínacího tlačítka v horní části panelu.
-
-#### Pole propojení
+![Formulář Přidat odkaz](/img/backup_02_link_form.png)
 
 | Pole | Popis |
 |------|-------|
-| Název | Označení propojení. Lze automaticky vygenerovat ve formátu `"<název zdroje> -> <název cíle>"`. |
-| Typ | `BackUp` (kopírování) nebo `Archive` (přesun). Určuje, zda jsou zdrojové soubory po přenosu odstraněny. |
-| Zdrojové zařízení | Zdrojový katalog. Soubory jsou čteny z jeho indexované cesty. |
-| Cílové zařízení | Cílový katalog zálohy. Soubory jsou zapisovány do jeho cesty. |
-| Datum poslední zálohy | Datum posledního dokončeného zálohovacího běhu. Aktualizováno automaticky. |
-| Velikost poslední zálohy | Celkový počet bajtů přenesených při posledním zálohovacím běhu. Aktualizováno automaticky. |
-| Přísné kopírování | Pokud je povoleno (výchozí), kopíruje soubory podle cesty — i když soubor již existuje jinde v cíli. Pokud je zakázáno, přeskočí soubory již přítomné v cíli (režim deduplikace). Nelze použít pro propojení *Archive* (automaticky zakázáno). |
-| Při konfliktu | Co dělat, pokud soubor existuje na stejné cestě ve zdroji i cíli, ale liší se. Výchozí: `PřejmenovatNejstarší`. Viz [Dostupné režimy](#available-modes). |
-| Zdrojový režim | `Katalog` (výchozí) nebo `Disk`. Určuje, zda je zdroj čten z indexu katalogu nebo přímým procházením souborového systému. Viz [Zdrojový režim](#source-mode). |
-| Adresáře - Zahrnout prázdné | Pokud je povoleno (výchozí), adresáře, které neobsahují žádný soubor ani podadresář, jsou vytvořeny v cíli. Pokud je zakázáno, jsou vytvořeny pouze adresáře, které něco obsahují. |
+| *Zdrojový katalog* | Katalog, jehož soubory se zálohují. |
+| *Cílový katalog* | Katalog, do kterého se zapisují. |
+| *Název* | Název odkazu. Tlačítko vedle (*Automaticky vygenerovat název*) vytvoří `<zdroj> -> <cíl>`. |
+| *Typ* | *Záloha* (kopírování) nebo *Archiv* (přesun), viz [výše](#type). |
+| *Složky* | *Zahrnout prázdné* (ve výchozím stavu zaškrtnuto): složky, které nic neobsahují, žádný soubor ani podsložku, se v cíli také vytvoří. Nezaškrtnuto: vytvoří se pouze složky, které něco obsahují. Nikdy neodstraní složku, která již v cíli je. |
+| *Přesné kopírování* | *Přesně zrcadlit strukturu složek (výchozí)*: každý soubor se zkopíruje na své vlastní místo, i když stejný soubor už je jinde v cíli. Nezaškrtnuto: soubor se přeskočí, když soubor se stejným názvem a velikostí už je kdekoli v cíli: žádné duplikáty. U archivu vždy vypnuto. |
+| *Při konfliktu* | Viz [konflikty](#conflicts). |
+| *Zdrojový režim* | Viz [zdrojový režim](#source-mode). |
 
-#### Příklad a katalogy
-Cíl: vytvořit propojení mezi zdrojem na místním disku a cílem na externím disku.
-![Příklad zdrojového a cílového zařízení](/img/k2/screen_backup_1_devices.png)
+*Uložit* vytvoří nebo aktualizuje odkaz; *Zrušit* zavře formulář. Zpráva v horní části formuláře uvede, co chybí.
 
-#### Výběr zdroje a cíle
-- S panelem Výběr a 2 tlačítky „Načíst katalogy" pro zdroj a cíl získejte seznam katalogů k výběru.
-- Tlačítko „bez propojení" pomáhá omezit počet zobrazených katalogů — zobrazí pouze katalogy, které ještě nemají propojení jako zdroj (nebo cíl).
-- Vyberte zdroj a cíl.
+## Náhled {#preview}
+*Náhled zálohy* / *Náhled archivu* vypočítá, co by spuštění udělalo, **aniž by cokoli kopíroval**. Když je zaškrtnuto *Aktualizovat katalogy*, oba katalogy se nejprve aktualizují. Výsledek se otevře na vlastní stránce:
+* shrnutí: soubory ke kopírování nebo přesunutí, konflikty, soubory, které už v cíli jsou, a upozornění, když je zdroj nebo cíl offline,
+* [kontrola místa](#space) v cíli,
+* seznam souborů s jejich *Stav* (*Kopírovat*, *Přesunout* nebo *Konflikt*), *Název souboru*, *Cesta* a *Velikost*,
+* *Exportovat do CSV* uloží seznam do složky kolekce (v režimu *Hostováno* do domovské složky) a ukáže cestu k souboru.
 
-![Výběr zdroje a cíle](/img/k2/screen_backup_2_select_source_target.png)
+![Náhled zálohy: shrnutí, kontrola místa a seznam souborů](/img/backup_03_preview.png)
 
+## Spuštění {#run}
+*Spustit zálohu* / *Spustit archivaci* spustí odkaz. Zdroj i cíl musí být dostupné.
 
-#### Nastavení názvu, možností a vytvoření
-- Vygenerovat název: název zdrojového katalogu + „ -> " + název cílového katalogu
-- Nastavit možnost „Přísné kopírování"
-- Nastavit možnost „Adresáře"
-- Nastavit chování při detekci konfliktu
-- Vytvořit propojení
+* Se zaškrtnutým *Aktualizovat katalogy* (doporučeno) se oba katalogy aktualizují **před** porovnáním, takže záloha pracuje s aktuálními daty. Po spuštění, které nebylo zrušeno, se cíl znovu aktualizuje (u archivu i zdroj), aby katalogy ukazovaly výsledek.
+* Během běhu karta ukazuje průběh, právě kopírovaný soubor, rychlost a zbývající čas (*Zbývá*). *Pauza* běh pozastaví po aktuálním souboru, *Obnovit* pokračuje, *Zrušit* ho zastaví: právě kopírovaný soubor se z cíle odstraní, takže nezůstane žádný neúplný soubor.
+* Na konci řádek v horní části stránky uvede výsledek: zkopírované nebo přesunuté soubory, archivované a zkopírované (*Přejmenovat nejstarší*), konflikty a chyby. Na kartě se aktualizuje *Poslední záloha*.
+* *Sestava* na tomto řádku otevře seznam souborů spuštění, jeden řádek na soubor s jeho stavem (*Zkopírováno*, *Přesunuto*, *Archivováno & Zkopírováno*, *Konflikt*, *Chyba*), názvem, cestou a velikostí, a součty. Je to sestava posledního spuštění (posledního odkazu, po *Spustit uvedené odkazy*); uchovává se do dalšího spuštění nebo do zavření Katalogu.
 
-![Vytvoření propojení](/img/k2/screen_backup_4_create_mapping.png)
+### Spustit uvedené odkazy {#run-listed}
+*Spustit uvedené odkazy* spustí **odkazy uvedené na stránce**, jeden po druhém, takže sadu záloh lze spustit najednou a nechat doběhnout.
+* Co se spustí, určují filtry: chcete-li spustit jinou sadu, nejprve změňte filtry.
+* Spustí se pouze odkazy, jejichž zdroj **i** cíl jsou dostupné; ostatní se přeskočí.
+* Nejprve se zobrazí potvrzení: počet odkazů, které se spustí, objem archivů (horní mez) a záloh (přibližně) a počet přeskočených odkazů. Jde o odhady ze součtů katalogů; přesné číslo dá *Náhled* u odkazu.
+* Každý odkaz běží, jako by byl spuštěn ze své vlastní karty, včetně *Aktualizovat katalogy*.
+* *Zrušit* zastaví **celé** spuštění: dosud čekající odkazy se nespustí. *Pauza* a *Obnovit* působí na právě běžící odkaz.
 
-#### Porovnání zdroje a zálohovacího cíle
-- Propojení se zobrazí v seznamu a pokrytí je vypočteno.
-![Porovnání zdroje a cíle](/img/k2/screen_backup_5_comparison.png)
-
-### Filtry seznamu propojení
-
-Seznam propojení lze filtrovat pro zobrazení pouze relevantních propojení:
-- Přepínače **Zdroj / Cíl** — zobrazí pouze propojení, ve kterých vybrané zařízení funguje jako zdroj nebo cíl.
-- Rozbalovací nabídka **Typ** — filtruje podle *BackUp* nebo *Archive*.
-- Zaškrtávací políčko **Zobrazit celou tabulku** — přepíná zobrazení dalších sloupců s podrobnostmi.
-
-### Spuštění více propojení najednou
-
-Tlačítko **Spustit uvedené odkazy** spustí propojení aktuálně zobrazená v seznamu, jedno po druhém, takže lze sadu záloh spustit jedním gestem a nechat ji doběhnout.
-
-- Filtry seznamu *jsou* výběrem: spustí se to, co filtry Zdroj/Cíl a Typ ponechají na obrazovce. Pro spuštění jiné sady je třeba nejprve změnit filtry.
-- Skutečně se spustí pouze propojení, jejichž zdroj **i** cíl jsou dostupné. Zobrazená propojení s nedostupným zařízením jsou přeskočena a potvrzení uvádí jejich počet.
-- Nejprve se zobrazí potvrzení se shrnutím, kolik propojení se spustí, kolik dat se zkopíruje a — u propojení typu *Archive* — kolik dat bude **přesunuto ze zdroje**. Tyto objemy jsou odhady vycházející z celkových hodnot katalogu, nikoli z vypočteného porovnání: hodnota pro archivaci je horní mez a hodnota pro zálohu je přibližná. Přesnou hodnotu poskytne *Náhled* na propojení.
-- **Zastavit** ukončí celý běh, nejen probíhající propojení: propojení, která ještě čekají, jsou opuštěna. *Pozastavit* a *Pokračovat* působí na právě probíhající propojení.
-- Každé propojení se chová přesně tak, jako by bylo spuštěno ze své vlastní karty, včetně aktualizace katalogů před a po, pokud je zaškrtnuto *Aktualizovat katalogy*.
-
-### Kontextové menu propojení
-
-Kliknutím pravým tlačítkem na propojení v seznamu se otevře kontextové menu s následujícími akcemi:
+## Další akce {#more-actions}
 
 | Akce | Popis |
 |------|-------|
-| *Spustit zálohu* / *Spustit archivaci* | Spustí zálohovací nebo archivační operaci pro toto propojení. |
-| *Náhled zálohy* / *Náhled archivace* | Spustí náhled (simulaci) bez kopírování souborů. |
-| *Replikovat adresáře* | Zkopíruje pouze strukturu složek bez souborů. |
-| *Invertovat (prohodit zdroj a cíl)* | Prohodí zdroj a cíl propojení jedním kliknutím — užitečné pro obrácení směru zálohy. |
-| *Smazat* | Odstraní propojení (soubory na disku nejsou ovlivněny). |
+| *Upravit* | Otevře odkaz ve [formuláři](#link-form). |
+| *Duplikovat* | Vytvoří nový odkaz se stejným nastavením k úpravě. |
+| *Replikovat adresáře* | Vytvoří v cíli strukturu složek zdroje, bez souborů. Výsledek uvede vytvořené složky, již existující složky a chyby. |
+| *Invertovat (prohodit zdroj a cíl)* | Prohodí zdroj a cíl, například pro obnovu. Když název obsahuje šipku, prohodí se i jeho dvě poloviny. |
+| *Exportovat do CSV* | Vypočítá náhled tohoto odkazu, pak uloží jeho seznam souborů do souboru CSV ve složce kolekce (v režimu *Hostováno* do domovské složky) a ukáže cestu k souboru. |
+| *Smazat* | Po potvrzení smaže odkaz. Žádného souboru ve zdroji ani v cíli se to nedotkne. |
 
-**Vytvoření profilu LuckyBackUp**
-Katalog může vygenerovat profil LuckyBackUp připravený k použití na základě zálohovacích propojení:
-- Uloženo do adresáře `~/.luckyBackup/profiles/`
-- Každé zálohovací propojení se stane jedním úkolem v profilu
-- Ve výchozím nastavení jsou zahrnuta **všechna** propojení
-- Zaškrtnutím *Pouze vybrané odkazy* zahrnete pouze propojení aktuálně viditelná ve filtrovaném seznamu (filtrovaném podle zařízení Zdroj/Cíl a/nebo Typu)
-
-## Spuštění zálohy nebo archivace
-
-### Předpoklady
-- Je vybráno propojení BackUp/Archive
-- Oba katalogy musí patřit zařízením s platnými a přístupnými cestami.
-- Na cíli musí být dostatek místa pro kopírování/přesun souborů.
-- Ačkoli je to volitelné, doporučuje se ponechat zaškrtnutou možnost „Aktualizovat katalogy" pro aktualizaci před zahájením a po dokončení procesu.
-
-### Náhled
-- Náhled (simulace) lze spustit pro otestování efektu zálohy nebo archivace a vygenerování protokolu.
-- Výsledek náhledu lze **exportovat** pomocí tlačítka *Exportovat*, čímž se seznam plánovaných operací uloží do souboru.
-
-### Pozastavení, obnovení a zrušení
-
-Během provádění se tlačítko **Spustit zálohu** mění na jiný popis a funkci:
-- Při **spuštění** → kliknutím **Pozastavit** (pozastaví po dokončení aktuálního souboru)
-- Při **pozastavení** → kliknutím **Pokračovat**
-
-Tlačítko **Zrušit** je vždy dostupné během provádění nebo pozastavení. Zrušení operaci čistě zastaví — jakýkoli právě kopírovaný soubor je z cíle odstraněn (nezůstanou žádné neúplné soubory).
-
-### Aktualizace katalogu po provedení
-
-Po úspěšné záloze bude cílový katalog automaticky aktualizován, aby odrážel nově zkopírované soubory, bez nutnosti úplného přeindexování. *(Plánováno — zatím není k dispozici.)*
-
-## Základní chování: přírůstkové kopírování nebo archivace
-
-Kritéria porovnání:
-- Shoda podle **názvu souboru + relativní cesty složky** (stejný soubor na stejném relativním místě).
-- Soubor je „chybějící", pokud v cílovém katalogu neexistuje žádná shoda.
-
-**Správa konfliktů**
-| Rozhodnutí | Volba | Zdůvodnění |
-|------------|-------|------------|
-| Smazat soubory v cíli? | Ne (v1). | Začít bezpečně — pouze přírůstkově. |
-| Přepsat konflikty? | Ne (v1). Zaznamenat je. | Zabránit ztrátě dat. |
-| Vytvořit chybějící adresáře? | Ano, vždy. | Nutné pro jakékoli kopírování souborů. |
-
-### Správa místa na disku
-
-Místo na disku je kritickým omezením pro operace zálohy i archivace. Nedostatek místa v průběhu operace ponechá cíl v částečném stavu.
-
-Požadavky na místo podle operace:
-
-| Operace | Co spotřebovává místo na cíli | Čistý efekt na zdroj |
-|---------|------------------------------|---------------------|
-| **BackUp** | Všechny soubory ke kopírování | Žádný |
-| **Archive (stejný FS)** | Nula — přesun pouze metadat | Místo uvolněno ve zdroji |
-| **Archive (různé FS)** | Soubory zkopírovány před odstraněním zdroje | Místo uvolněno po odstranění |
-| **Konflikt PřejmenovatNejstarší** | Přejmenovaný cílový soubor zachován (+1 kopie) | Žádný do ručního vyčištění |
-
-### Kontrola místa (implementováno)
-
-Vypočteno před spuštěním a zobrazeno v náhledu.
-
-| Podmínka | Práh | Akce |
-|----------|------|------|
-| **Nedostatečné** | dostupné < požadované | Blokováno: varování, operace nespuštěna |
-| **Nízké** | dostupné − požadované < 512 MB | Žádost o potvrzení (Ano/Ne pro pokračování) |
-| **OK** | dostupné − požadované ≥ 512 MB | Pokračuje bez oznámení |
-
-V náhledu je stav místa přidán k souhrnu:
-- **Nedostatečné** → červené varování: `⚠ Místo na cíli: X dostupné, Y potřebné`
-- **Nízké** → oranžové varování: `⚠ Nízké místo na cíli: Z zbývající po operaci`
-- **OK** → bez anotace
-
-> **Poznámka**: Režim *PřejmenovatNejstarší* trvale přidává přejmenované kopie na cíl. Tyto soubory (`název_RRRRMMDD-HHmmss.ext`) je nutné ručně odstranit pro uvolnění místa.
-
-## Protokol
-Po provedení je tabulka náhledu nahrazena **zálohovacím protokolem** — tabulkou se čtyřmi sloupci: **Stav**, **Název souboru**, **Cesta** a **Velikost**.
-
-Každý řádek odpovídá jednomu souboru s následujícími hodnotami stavu:
-
-| Stav | Význam |
-|------|--------|
-| *Zkopírováno* | Soubor byl úspěšně zkopírován do cíle. |
-| *Přesunuto* | Soubor byl úspěšně přesunut do cíle (operace Archive). |
-| *Archivováno & Zkopírováno* | Konfliktní cílový soubor byl přejmenován (režim PřejmenovatNejstarší), poté byl zkopírován zdroj. |
-| *Konflikt* | Soubor existuje na stejné cestě ve zdroji i cíli, ale liší se — nepřepsán, zaznamenán pro kontrolu. |
-| *Chyba* | Soubor nebylo možné zkopírovat nebo přesunout (přístup odepřen, disk plný atd.). |
-
-Souhrnný řádek nad tabulkou zobrazuje celkové počty: zkopírované soubory, archivované & zkopírované, konflikty a chyby.
-
----
+### Profil LuckyBackup {#luckybackup}
+*LuckyBackup* na panelu nástrojů stránky vytvoří profil [LuckyBackup](https://luckybackup.sourceforge.net) z **odkazů uvedených** na stránce: každý odkaz se stane úlohou. Profil se uloží do `~/.luckyBackup/profiles/`. Viz [Profil LuckyBackup](BackUp_luckybackup_profile).
 
 ## Vývoj
 Několik nápadů na rozvoj této obrazovky:
 
 ### Budoucí funkce
 - [ ] Správa snímků
-- [ ] Filtry zahrnutí/vyloučení
+- [ ] Vzory vyloučení/zahrnutí
 - [ ] Plánování (cron/systemd/Plánovač úloh)
-- [ ] Funkce obnovení
+- [ ] Funkce obnovy
 - [ ] Možnosti komprese
 - [ ] Vzdálené zálohy (ssh)
 
@@ -285,22 +156,22 @@ Několik nápadů na rozvoj této obrazovky:
 
 | Režim | Chování |
 |-------|---------|
-| **Přepsat** | Zdroj vždy vyhraje — přepíše cíl bez upozornění. Pro uživatele, kteří chtějí, aby zdroj byl autoritativní bez ohledu na datum. |
-| **Vždy přejmenovat** | Vždy přejmenuje cíl a zkopíruje zdroj, i když je cíl novější — agresivní, explicitní archivace. |
+| **Přepsat** | Zdroj vždy vítězí: cíl se bez upozornění přepíše. Pro uživatele, kteří chtějí, aby zdroj platil bez ohledu na datum. |
+| **Vždy přejmenovat** | Vždy přejmenuje cíl a zkopíruje zdroj, i když je cíl novější: důsledná, výslovná archivace. |
 
 ### Budoucí možnosti
 
-- **Vyčištění zdroje po archivaci**: volitelné odstranění prázdných adresářů zanechaných ve zdroji po operaci Archive.
-- **Režim mazání**: volitelné odstranění cílových souborů nepřítomných ve zdroji.
-- **Porovnání pomocí kontrolního součtu**: detekce změn obsahu i při shodě názvu, velikosti a data.
-- **Plánovaná/automatická záloha**: spuštění podle časovače nebo při aktualizaci katalogu.
-- **Historie záloh**: protokol minulých zálohovacích běhů s daty a statistikami.
+- **Úklid zdroje po archivaci**: volitelné mazání prázdných složek, které ve zdroji zůstanou po operaci Archiv (přesun).
+- **Režim mazání**: volitelné odstranění souborů cíle, které ve zdroji nejsou.
+- **Porovnání kontrolním součtem**: odhalení změn obsahu, i když se shoduje název, velikost a datum.
+- **Plánovaná/automatická záloha**: spuštění časovačem nebo při aktualizaci katalogu.
+- **Historie záloh**: záznam minulých spuštění s daty a statistikami.
 
-### Budoucí možnosti — Místo na disku
-- **Minimální volné místo pro propojení**: uživatelsky konfigurovatelná spodní hranice (např. vždy ponechat 5 GB volných).
-- **Předčasné přerušení při zaplnění disku**: detekce chyb při kopírování a okamžité zastavení.
-- **Ověření po archivaci**: potvrzení, že místo na zdroji bylo po archivaci skutečně uvolněno.
-- **Zobrazení trendu místa**: sledování místa na cíli v průběhu času na kartě Statistiky.
-- **Nástroj pro čištění archivovaných souborů**: výpis a hromadné odstranění souborů `název_RRRRMMDD-HHmmss.ext` vytvořených režimem PřejmenovatNejstarší.
+### Budoucí funkce pro místo na disku
+- **Minimální volné místo pro každý odkaz**: nastavitelná spodní hranice (například vždy ponechat 5 GB volných).
+- **Předčasné ukončení při vyčerpání místa za běhu**: zachytit chyby ENOSPC během kopírování a okamžitě skončit, místo aby selhával soubor za souborem.
+- **Ověření zdroje po archivaci**: potvrdit, že se po dokončení Archivu místo ve zdroji skutečně uvolnilo.
+- **Zobrazení vývoje místa**: zobrazit místo v cíli v čase na kartě Statistika.
+- **Nástroj pro úklid archivovaných souborů**: vypsat a hromadně smazat soubory `název_RRRRMMDD-HHmmss.ext` vytvořené režimem Přejmenovat nejstarší.
 
-* Další informace naleznete v backlogu [vývoje BackUp](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=BackUp).
+* Více viz backlog [vývoje Zálohy](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=BackUp).

@@ -1,37 +1,42 @@
 ---
-version: "2.12"
+version: "3.0"
 ---
 # Statistika
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
-## Souhrn
-Tato stránka popisuje všechny funkce obrazovky **Statistiky** a jak je používat.
+## Shrnutí
+Tato stránka popisuje stránku **Statistika**: graf vývoje zařízení v čase, pro zařízení vybrané na stránce [Výběr](Selection).
 
-Všechna data pocházejí ze záznamů různých aktualizací nebo *snapshotů*.
+![Stránka Statistika: graf úložného zařízení s celkovou velikostí souborů, využitým místem a celkovým místem](/img/statistics_01_overview.png)
 
-Tato obrazovka poskytuje pohledy na obsah a vývoj kolekce:
-1. Pro katalogová zařízení: počet souborů nebo celková velikost souboru.
-1. Pro úložná zařízení: použitý a celkový prostor a celková velikost souboru souvisejících katalogů nebo počet souborů.
-1. Pro virtuální zařízení: související zařízení počet souborů nebo celkový prostor a celková velikost souborů souvisejících katalogů.
+## Odkud data pocházejí {#data}
+Pokaždé, když se zařízení aktualizuje, a pokaždé, když se zaznamená **snímek** (*Snímek* na stránce [Zařízení](Devices#page-actions)), Katalog uloží záznam jeho údajů: počet souborů, celkovou velikost souborů a u úložných zařízení volné a celkové místo.<br/>
+Graf tyto záznamy vykresluje. Zařízení, které nikdy nebylo aktualizováno a nikdy nebylo součástí snímku, nemá data: graf zobrazí *Žádná data*.
 
-![Obrazovka Statistiky zobrazující graf vývoje kolekce](/img/k2/screen_statistics_01.png)
+## Co se zobrazuje {#chart}
+Nadpis grafu uvádí název zařízení, zobrazený údaj a jeho jednotku.
 
-## Funkce
-### Možnost dat
-* Údaje jsou založeny na vybraném zařízení z panelu [Výběr](Selection).
-* *Zdroj*: zvolte, zda mají být použita všechna data, nebo aktualizace a snímky současně.
-* *Typ dat*: zvolte zobrazení celkové velikosti souboru (která může zahrnovat použité zařízení a celkový prostor) nebo pouze počet souborů.
-* *Zobrazit každou hodnotu*: zvolte zobrazení malého kosočtverce pro každý datový bod
+| Vybrané zařízení | *Celková velikost souboru* | *Počet souborů* |
+|------------------|----------------------------|-----------------|
+| Katalog | Celková velikost jeho souborů. | Počet jeho souborů. |
+| Úložiště, Virtuální | Celková velikost souborů jeho katalogů a navíc **využité** a **celkové místo** úložiště. | Počet souborů jeho katalogů. |
 
-### Upravit soubor
-* k dispozici pouze v [Režim paměti](Settings#database-memory-mode).
-* Tlačítko *Upravit statistiku*: Může být užitečné upravit soubor statistik pro opravu některých čísel, tlačítko otevře soubor v aplikaci spojené se soubory csv. Dejte pozor, aby to byl **soubor oddělený tabulátory**
-* Tlačítko *Reload*: data se znovu načtou a graf se obnoví.
+Velikosti se zobrazují v jednotce odpovídající hodnotám (KiB, MiB, GiB nebo TiB).
 
-### Graf
-* Kliknutím levým tlačítkem a podržením přiblížíte část grafu.
-* klikněte pravým tlačítkem pro oddálení.
-* kliknutím na tlačítko *Znovu načíst* se vrátíte k původnímu přiblížení.
+## Možnosti {#options}
+
+| Možnost | Účinek |
+|---------|--------|
+| *Zdroj* | *všechny záznamy*, *pouze aktualizace* nebo *pouze snímky*. Snímky dávají pravidelné body pro celou kolekci; aktualizace přidávají bod při každé aktualizaci zařízení. |
+| *Data* | *Celková velikost souboru* nebo *Počet souborů*. |
+| *Od data* | Zobrazí pouze záznamy od tohoto data. *Vyberte datum* otevře dialog s rychlými volbami (*Před 1 dnem*, *Před 1 týdnem*, *Před 1 měsícem*, *Před 1 rokem*); *Vymazat* znovu zobrazí všechny záznamy. |
+| *Zobrazte každou hodnotu* | Označí každý záznam bodem na čarách. |
+
+Možnosti se ukládají pro kolekci.
+
+## Přiblížení {#zoom}
+* **Kliknutím a tažením** přes graf přiblížíte danou oblast.
+* **Kliknutím pravým tlačítkem** nebo **dvojitým kliknutím** se vrátíte k celému grafu.
 
 ## Vývoj
-* Podívejte se na nevyřízené položky [Vývoj statistik](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=statistics).
+* Viz backlog [vývoje Statistiky](https://github.com/users/StephaneCouturier/projects/7/views/1?filterQuery=statistics).
