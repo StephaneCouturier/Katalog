@@ -391,7 +391,10 @@ ScrollablePageFitted {
             Kirigami.FormLayout {
                 id: collectionForm
                 Layout.fillWidth: true
-                Layout.maximumWidth: implicitWidth  // left-aligned, never centred (PGL-F19)
+                // Full page width (PGL-F20): in wide mode Kirigami sizes its grid to
+                // implicitWidth and centres it, so the full width keeps it on the
+                // left (PGL-F19) and lets the path fields stretch.
+                implicitWidth: formColumn.width
                 twinFormLayouts: [hostedForm, importForm]
 
                 Controls.Label {
@@ -534,7 +537,10 @@ ScrollablePageFitted {
             Kirigami.FormLayout {
                 id: hostedForm
                 Layout.fillWidth: true
-                Layout.maximumWidth: implicitWidth  // left-aligned, never centred (PGL-F19)
+                // Full page width (PGL-F20): in wide mode Kirigami sizes its grid to
+                // implicitWidth and centres it, so the full width keeps it on the
+                // left (PGL-F19) and lets the path fields stretch.
+                implicitWidth: formColumn.width
                 Layout.topMargin: Kirigami.Units.largeSpacing
                 visible: appManager1.databaseMode === "Hosted" || showHostedForm
                 twinFormLayouts: [collectionForm, importForm]
@@ -593,7 +599,10 @@ ScrollablePageFitted {
             Kirigami.FormLayout {
                 id: importForm
                 Layout.fillWidth: true
-                Layout.maximumWidth: implicitWidth  // left-aligned, never centred (PGL-F19)
+                // Full page width (PGL-F20): in wide mode Kirigami sizes its grid to
+                // implicitWidth and centres it, so the full width keeps it on the
+                // left (PGL-F19) and lets the path fields stretch.
+                implicitWidth: formColumn.width
                 twinFormLayouts: [collectionForm, hostedForm]
 
                 ComboBoxFitted {
@@ -970,7 +979,9 @@ ScrollablePageFitted {
             Kirigami.FormLayout {
                 id: appInfoForm
                 Layout.fillWidth: true
-                Layout.maximumWidth: implicitWidth  // left-aligned, never centred (PGL-F19)
+                // Full page width (PGL-F20), as on the Collection tab, so the
+                // settings file path stretches.
+                implicitWidth: formColumn.width
                 twinFormLayouts: [interfaceForm]
 
                 Flow {
