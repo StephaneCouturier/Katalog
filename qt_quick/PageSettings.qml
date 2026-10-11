@@ -712,305 +712,332 @@ ScrollablePageFitted {
             }
         }
 
-        // Application tab (SET-F2): the tab title replaces the section heading.
-        // Groups are set apart by FormLayout's own spacer (isSection, no label).
-        Kirigami.FormLayout {
+        // Application tab (SET-F2): sections "Interface" and "App information".
+        // Its FormLayouts are twinned so both sections share one label column
+        // (PGL-C13).
+        ColumnLayout {
             visible: settingsTabBar.currentIndex === 0
             Layout.fillWidth: true
-            Layout.maximumWidth: implicitWidth  // left-aligned, never centred (PGL-F19)
-            Layout.topMargin: Kirigami.Units.largeSpacing
+            spacing: Kirigami.Units.smallSpacing
 
-            Flow {
-                Kirigami.FormData.label: qsTr("Version")
-                Kirigami.FormData.buddyFor: releaseNotesButton
+            // ── Interface ──────────────────────────────────────────────────
+            RowLayout {
+                Layout.fillWidth: true
+                Layout.topMargin: Kirigami.Units.smallSpacing
                 spacing: Kirigami.Units.largeSpacing
-                Layout.fillWidth: true
-                Layout.preferredWidth: pageSettingsRoot.fitWidth(childrenRect.width)
-                // Same height as the button beside them, text centred on it.
-                Controls.Label { text: About.version;
-                                 height: releaseNotesButton.height; verticalAlignment: Text.AlignVCenter }
-                Controls.Label { text: appManager1.appReleaseDate; opacity: 0.7
-                                 height: releaseNotesButton.height; verticalAlignment: Text.AlignVCenter }
-                Controls.Button {
-                    id: releaseNotesButton
-                    text: qsTr("Release Notes")
-                    icon.name: "view-list-text"
-                    //onClicked: Qt.openUrlExternally("https://github.com/StephaneCouturier/Katalog/releases")
-                    onClicked: Qt.openUrlExternally("https://stephanecouturier.github.io/Katalog/docs/Development-Roadmap#katalog-3")
-                }
-            }
-            Controls.CheckBox {
-                text: qsTr("Check for a new version on startup")
-                checked: appManager1.checkVersionChoice
-                onCheckedChanged: appManager1.checkVersionChoice = checked
-                Layout.fillWidth: true
-                Layout.preferredWidth: pageSettingsRoot.fitWidth(implicitWidth)
-                Component.onCompleted: contentItem.wrapMode = Text.WordWrap  // PGL-F16
+                Controls.Label { text: qsTr("Interface"); color: applicationWindow().titleColor }
+                Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
             }
 
-            Item { Kirigami.FormData.isSection: true }
+            Kirigami.FormLayout {
+                id: interfaceForm
+                Layout.fillWidth: true
+                Layout.maximumWidth: implicitWidth  // left-aligned, never centred (PGL-F19)
+                twinFormLayouts: [appInfoForm]
 
-            ComboBoxFitted {
-                id: languageComboBox
-                Kirigami.FormData.label: qsTr("Language")
-                Layout.preferredWidth: Kirigami.Units.gridUnit * 12
-                Layout.maximumWidth: Kirigami.Units.gridUnit * 12  // set width, same as Theme; shrinks only to fit (CBX-C7)
-                rowLeadingWidth: 20 + Kirigami.Units.smallSpacing  // flag
-                textRole: "displayName"
-                valueRole: "code"
-                // Suppress the style's built-in text so only the custom
-                // contentItem (flag + label) renders — otherwise the selected
-                // language name is drawn twice, overlapping.
-                displayText: ""
+                ComboBoxFitted {
+                    id: languageComboBox
+                    Kirigami.FormData.label: qsTr("Language")
+                    Layout.preferredWidth: Kirigami.Units.gridUnit * 12
+                    Layout.maximumWidth: Kirigami.Units.gridUnit * 12  // set width, same as Theme; shrinks only to fit (CBX-C7)
+                    rowLeadingWidth: 20 + Kirigami.Units.smallSpacing  // flag
+                    textRole: "displayName"
+                    valueRole: "code"
+                    // Suppress the style's built-in text so only the custom
+                    // contentItem (flag + label) renders — otherwise the selected
+                    // language name is drawn twice, overlapping.
+                    displayText: ""
 
-                model: appManager1.getLanguageList()
+                    model: appManager1.getLanguageList()
 
-                contentItem: RowLayout {
-                    function positionToRectangle(pos) { return Qt.rect(0, 0, 0, 0) }
-                    property int selectionStart: 0
-                    spacing: Kirigami.Units.smallSpacing
-                    Image {
-                        source: languageComboBox.currentIndex >= 0
-                                ? "qrc" + languageComboBox.model[languageComboBox.currentIndex].flagPath
-                                : ""
-                        width:  20; height: 14
-                        fillMode: Image.PreserveAspectFit
-                        sourceSize.width: 20; sourceSize.height: 14
-                    }
-                    Controls.Label {
-                        text: languageComboBox.currentIndex >= 0
-                              ? languageComboBox.model[languageComboBox.currentIndex].displayName
-                              : ""
-                        Layout.fillWidth: true
-                        elide: Text.ElideRight
-                    }
-                }
-
-                delegate: Controls.ItemDelegate {
-                    width: ListView.view ? ListView.view.width : languageComboBox.width  // fills the list, which may be wider than the box
                     contentItem: RowLayout {
+                        function positionToRectangle(pos) { return Qt.rect(0, 0, 0, 0) }
+                        property int selectionStart: 0
                         spacing: Kirigami.Units.smallSpacing
                         Image {
-                            source: "qrc" + modelData.flagPath
+                            source: languageComboBox.currentIndex >= 0
+                                    ? "qrc" + languageComboBox.model[languageComboBox.currentIndex].flagPath
+                                    : ""
                             width:  20; height: 14
                             fillMode: Image.PreserveAspectFit
                             sourceSize.width: 20; sourceSize.height: 14
                         }
                         Controls.Label {
-                            text: modelData.displayName
+                            text: languageComboBox.currentIndex >= 0
+                                  ? languageComboBox.model[languageComboBox.currentIndex].displayName
+                                  : ""
                             Layout.fillWidth: true
+                            elide: Text.ElideRight
                         }
                     }
-                    highlighted: languageComboBox.highlightedIndex === index
-                }
 
-                Component.onCompleted: {
-                    // Resolved by code, never by list position: the order is
-                    // arbitrary and its first entry is Bulgarian, so a code that
-                    // is not found must not leave the box sitting on index 0 —
-                    // one click there stored Bulgarian for good (LNG-C1). A
-                    // stored code absent from the list has already been
-                    // sanitised to en_US at startup (LNG-F3), so en_US is the
-                    // language actually in effect and what this shows (LNG-F5).
-                    var lang = appManager1.getCurrentLanguage()
-                    var langs = appManager1.getLanguageList()
-                    var found = -1
-                    var english = -1
-                    for (var i = 0; i < langs.length; i++) {
-                        if (langs[i].code === lang)    found = i
-                        if (langs[i].code === "en_US") english = i
+                    delegate: Controls.ItemDelegate {
+                        width: ListView.view ? ListView.view.width : languageComboBox.width  // fills the list, which may be wider than the box
+                        contentItem: RowLayout {
+                            spacing: Kirigami.Units.smallSpacing
+                            Image {
+                                source: "qrc" + modelData.flagPath
+                                width:  20; height: 14
+                                fillMode: Image.PreserveAspectFit
+                                sourceSize.width: 20; sourceSize.height: 14
+                            }
+                            Controls.Label {
+                                text: modelData.displayName
+                                Layout.fillWidth: true
+                            }
+                        }
+                        highlighted: languageComboBox.highlightedIndex === index
                     }
-                    currentIndex = found >= 0 ? found : english
-                }
 
-                onActivated: {
-                    appManager1.setLanguage(currentValue)
-                }
-
-                // The 30-language list would otherwise span the full window
-                // height. The popup opens below the field, and is pushed up
-                // when it does not fit there, so cap its height to the larger
-                // of the space below the field and the space above it minus a
-                // header clearance — this keeps the top below the page header
-                // bar and tab bar. The list scrolls when taller than the cap.
-                Binding {
-                    target: languageComboBox.popup
-                    property: "height"
-                    value: {
-                        var top = languageComboBox.mapToItem(null, 0, 0).y
-                        var above = top - Kirigami.Units.gridUnit * 3 - settingsTabBar.height
-                        var below = (languageComboBox.Window.window ? languageComboBox.Window.window.height : 0)
-                                    - top - languageComboBox.height - Kirigami.Units.gridUnit
-                        return Math.min(languageComboBox.popup.contentItem.implicitHeight
-                                        + languageComboBox.popup.topPadding
-                                        + languageComboBox.popup.bottomPadding,
-                                        Math.max(above, below))
+                    Component.onCompleted: {
+                        // Resolved by code, never by list position: the order is
+                        // arbitrary and its first entry is Bulgarian, so a code that
+                        // is not found must not leave the box sitting on index 0 —
+                        // one click there stored Bulgarian for good (LNG-C1). A
+                        // stored code absent from the list has already been
+                        // sanitised to en_US at startup (LNG-F3), so en_US is the
+                        // language actually in effect and what this shows (LNG-F5).
+                        var lang = appManager1.getCurrentLanguage()
+                        var langs = appManager1.getLanguageList()
+                        var found = -1
+                        var english = -1
+                        for (var i = 0; i < langs.length; i++) {
+                            if (langs[i].code === lang)    found = i
+                            if (langs[i].code === "en_US") english = i
+                        }
+                        currentIndex = found >= 0 ? found : english
                     }
-                }
-            }
 
-            Item { Kirigami.FormData.isSection: true }
+                    onActivated: {
+                        appManager1.setLanguage(currentValue)
+                    }
 
-            ComboBoxFitted {
-                id: themeComboBox
-                Kirigami.FormData.label: qsTr("Theme")
-                // Listed with the two desktop variants together, but the
-                // stored numbers are unchanged: 0 Desktop Theme, 1 Katalog
-                // Colors, 2 Desktop Theme (gray). 0 and 1 are K2's own
-                // values in Settings/Theme, so a choice made there still
-                // means the same thing here.
-                model: [
-                    { text: qsTr("Desktop Theme"),        value: 0 },
-                    { text: qsTr("Desktop Theme (gray)"), value: 2 },
-                    { text: qsTr("Katalog Colors"),       value: 1 }
-                ]
-                textRole: "text"
-                valueRole: "value"
-                // Set once the model exists rather than bound: as a binding,
-                // indexOfValue() ran before the model was ready and returned
-                // -1, leaving the box blank. Same approach as the language
-                // combo above.
-                Component.onCompleted: currentIndex = indexOfValue(appManager1.themeId)
-                onActivated: appManager1.themeId = currentValue
-
-                // Follow the setting if it changes elsewhere.
-                Connections {
-                    target: appManager1
-                    function onThemeIdChanged() {
-                        themeComboBox.currentIndex =
-                            themeComboBox.indexOfValue(appManager1.themeId)
+                    // The 30-language list would otherwise span the full window
+                    // height. The popup opens below the field, and is pushed up
+                    // when it does not fit there, so cap its height to the larger
+                    // of the space below the field and the space above it minus a
+                    // header clearance — this keeps the top below the page header
+                    // bar and tab bar. The list scrolls when taller than the cap.
+                    Binding {
+                        target: languageComboBox.popup
+                        property: "height"
+                        value: {
+                            var top = languageComboBox.mapToItem(null, 0, 0).y
+                            var above = top - Kirigami.Units.gridUnit * 3 - settingsTabBar.height
+                            var below = (languageComboBox.Window.window ? languageComboBox.Window.window.height : 0)
+                                        - top - languageComboBox.height - Kirigami.Units.gridUnit
+                            return Math.min(languageComboBox.popup.contentItem.implicitHeight
+                                            + languageComboBox.popup.topPadding
+                                            + languageComboBox.popup.bottomPadding,
+                                            Math.max(above, below))
+                        }
                     }
                 }
-                Layout.preferredWidth: Kirigami.Units.gridUnit * 12
-                Layout.maximumWidth: Kirigami.Units.gridUnit * 12  // set width, shrinks only to fit (CBX-C7)
-            }
-            // K2's own option, on K2's own key, so a choice made in either
-            // version is read by the other (THM-F7 / THM-C8). K2 applies it to
-            // its eight tree views; K3 consumes it in the Devices cards for now
-            // (THM-C10).
-            Controls.CheckBox {
-                text: qsTr("Use bigger icon size")
-                checked: appManager1.biggerIconSize
-                onToggled: appManager1.biggerIconSize = checked
-                Layout.fillWidth: true
-                Layout.preferredWidth: pageSettingsRoot.fitWidth(implicitWidth)
-                Component.onCompleted: contentItem.wrapMode = Text.WordWrap  // PGL-F16
-            }
-            // App-wide text size (TYP-F9): 0.8 to 1.2, step 0.1.
-            RowLayout {
-                Layout.fillWidth: true
-                Layout.preferredWidth: pageSettingsRoot.fitWidth(implicitWidth)
-                spacing: Kirigami.Units.smallSpacing
-                Controls.Label { text: qsTr("Text size") }
-                Controls.ToolButton {
-                    icon.name: "zoom-out"
-                    Controls.ToolTip.text: qsTr("Decrease text size")
-                    Controls.ToolTip.visible: hovered
-                    enabled: textSizeSlider.value > textSizeSlider.from
-                    onClicked: pageSettingsRoot.textScaleEdited(
-                                   Math.max(textSizeSlider.from, textSizeSlider.value - textSizeSlider.stepSize))
+
+                ComboBoxFitted {
+                    id: themeComboBox
+                    Kirigami.FormData.label: qsTr("Theme")
+                    // Listed with the two desktop variants together, but the
+                    // stored numbers are unchanged: 0 Desktop Theme, 1 Katalog
+                    // Colors, 2 Desktop Theme (gray). 0 and 1 are K2's own
+                    // values in Settings/Theme, so a choice made there still
+                    // means the same thing here.
+                    model: [
+                        { text: qsTr("Desktop Theme"),        value: 0 },
+                        { text: qsTr("Desktop Theme (gray)"), value: 2 },
+                        { text: qsTr("Katalog Colors"),       value: 1 }
+                    ]
+                    textRole: "text"
+                    valueRole: "value"
+                    // Set once the model exists rather than bound: as a binding,
+                    // indexOfValue() ran before the model was ready and returned
+                    // -1, leaving the box blank. Same approach as the language
+                    // combo above.
+                    Component.onCompleted: currentIndex = indexOfValue(appManager1.themeId)
+                    onActivated: appManager1.themeId = currentValue
+
+                    // Follow the setting if it changes elsewhere.
+                    Connections {
+                        target: appManager1
+                        function onThemeIdChanged() {
+                            themeComboBox.currentIndex =
+                                themeComboBox.indexOfValue(appManager1.themeId)
+                        }
+                    }
+                    Layout.preferredWidth: Kirigami.Units.gridUnit * 12
+                    Layout.maximumWidth: Kirigami.Units.gridUnit * 12  // set width, shrinks only to fit (CBX-C7)
                 }
-                Controls.Slider {
-                    id: textSizeSlider
-                    from: 0.8
-                    to: 1.2
-                    stepSize: 0.1
-                    snapMode: Controls.Slider.SnapAlways
-                    value: pageSettingsRoot.textScale
-                    onMoved: pageSettingsRoot.textScaleEdited(value)
-                    // Shrinks with a narrow page rather than widening it (PGL-C11)
+
+                // App-wide text size (TYP-F9): 0.8 to 1.2, step 0.1.
+                RowLayout {
+                    Kirigami.FormData.label: qsTr("Text size")
                     Layout.fillWidth: true
-                    Layout.maximumWidth: Kirigami.Units.gridUnit * 8
+                    Layout.preferredWidth: pageSettingsRoot.fitWidth(implicitWidth)
+                    spacing: Kirigami.Units.smallSpacing
+                    Controls.ToolButton {
+                        icon.name: "zoom-out"
+                        Controls.ToolTip.text: qsTr("Decrease text size")
+                        Controls.ToolTip.visible: hovered
+                        enabled: textSizeSlider.value > textSizeSlider.from
+                        onClicked: pageSettingsRoot.textScaleEdited(
+                                       Math.max(textSizeSlider.from, textSizeSlider.value - textSizeSlider.stepSize))
+                    }
+                    Controls.Slider {
+                        id: textSizeSlider
+                        from: 0.8
+                        to: 1.2
+                        stepSize: 0.1
+                        snapMode: Controls.Slider.SnapAlways
+                        value: pageSettingsRoot.textScale
+                        onMoved: pageSettingsRoot.textScaleEdited(value)
+                        // Shrinks with a narrow page rather than widening it (PGL-C11)
+                        Layout.fillWidth: true
+                        Layout.maximumWidth: Kirigami.Units.gridUnit * 8
+                    }
+                    Controls.ToolButton {
+                        icon.name: "zoom-in"
+                        Controls.ToolTip.text: qsTr("Increase text size")
+                        Controls.ToolTip.visible: hovered
+                        enabled: textSizeSlider.value < textSizeSlider.to
+                        onClicked: pageSettingsRoot.textScaleEdited(
+                                       Math.min(textSizeSlider.to, textSizeSlider.value + textSizeSlider.stepSize))
+                    }
+                    Item { Layout.fillWidth: true }
                 }
-                Controls.ToolButton {
-                    icon.name: "zoom-in"
-                    Controls.ToolTip.text: qsTr("Increase text size")
-                    Controls.ToolTip.visible: hovered
-                    enabled: textSizeSlider.value < textSizeSlider.to
-                    onClicked: pageSettingsRoot.textScaleEdited(
-                                   Math.min(textSizeSlider.to, textSizeSlider.value + textSizeSlider.stepSize))
-                }
-                Item { Layout.fillWidth: true }
-            }
-            // Back to the default window size (WIN-F4, SpecWindowGeometry.md).
-            // Icon of the Search Reset action; tooltip = the size, untranslated (WIN-C5).
-            Controls.Button {
-                text: qsTr("Reset window size")
-                icon.name: "edit-clear-history"
-                Controls.ToolTip.text: appManager1.getDefaultWindowSizeText()
-                Controls.ToolTip.visible: hovered
-                onClicked: applicationWindow().resetWindowSize()
-            }
-
-            Item { Kirigami.FormData.isSection: true }
-
-            Controls.CheckBox {
-                id: caseSensitiveCheckBox
-                Kirigami.FormData.label: qsTr("Behavior")
-                text: qsTr("File sorting is Case Sensitive")
-                checked: appManager1.fileSortCaseSensitive
-                onCheckedChanged: appManager1.fileSortCaseSensitive = checked
-                Controls.ToolTip.visible: hovered
-                Controls.ToolTip.text: qsTr("If enabled, the sorting will respect case sensitive sorting, so as to have this order AA, AB, AC, Aa, Ab, Ac")
-                Layout.fillWidth: true
-                Layout.preferredWidth: pageSettingsRoot.fitWidth(implicitWidth)
-                Component.onCompleted: contentItem.wrapMode = Text.WordWrap  // PGL-F16
-            }
-            Controls.CheckBox {
-                text: qsTr("Refresh device status when returning to the application")
-                checked: appManager1.refreshDeviceStatusOnActivation
-                onToggled: appManager1.refreshDeviceStatusOnActivation = checked
-                Layout.fillWidth: true
-                Layout.preferredWidth: pageSettingsRoot.fitWidth(implicitWidth)
-                Component.onCompleted: contentItem.wrapMode = Text.WordWrap  // PGL-F16
-            }
-            Controls.CheckBox {
-                text: qsTr("Authorize actions that delete files (no recovery)")
-                checked: appManager1.allowFileDeletion
-                onToggled: appManager1.allowFileDeletion = checked
-                Layout.fillWidth: true
-                Layout.preferredWidth: pageSettingsRoot.fitWidth(implicitWidth)
-                Component.onCompleted: contentItem.wrapMode = Text.WordWrap  // PGL-F16
-            }
-
-            Item { Kirigami.FormData.isSection: true }
-
-            RowLayout {
-                Kirigami.FormData.label: qsTr("Settings file")
-                Layout.fillWidth: true
-                spacing: Kirigami.Units.smallSpacing
-                Controls.Label {
-                    text: appManager1.getSettingsFilePath() || qsTr("(none)")
-                    elide: Text.ElideMiddle
+                // K2's own option, on K2's own key, so a choice made in either
+                // version is read by the other (THM-F7 / THM-C8). K2 applies it to
+                // its eight tree views; K3 consumes it in the Devices cards for now
+                // (THM-C10).
+                Controls.CheckBox {
+                    Kirigami.FormData.label: qsTr("Icon size")
+                    text: qsTr("Use bigger icon size")
+                    checked: appManager1.biggerIconSize
+                    onToggled: appManager1.biggerIconSize = checked
                     Layout.fillWidth: true
-                    // The elided path must not size the form (PGL-F16)
-                    Layout.preferredWidth: Kirigami.Units.gridUnit * 6
+                    Layout.preferredWidth: pageSettingsRoot.fitWidth(implicitWidth)
+                    Component.onCompleted: contentItem.wrapMode = Text.WordWrap  // PGL-F16
                 }
+                // Back to the default window size (WIN-F4, SpecWindowGeometry.md).
+                // Icon of the Search Reset action; tooltip = the size, untranslated (WIN-C5).
                 Controls.Button {
-                    text: qsTr("Open")
-                    icon.name: "document-edit"
-                    onClicked: appManager1.openSettingsFile()
+                    Kirigami.FormData.label: qsTr("Window size")
+                    text: qsTr("Reset window size")
+                    icon.name: "edit-clear-history"
+                    Controls.ToolTip.text: appManager1.getDefaultWindowSizeText()
+                    Controls.ToolTip.visible: hovered
+                    onClicked: applicationWindow().resetWindowSize()
+                }
+
+                Controls.CheckBox {
+                    id: caseSensitiveCheckBox
+                    Kirigami.FormData.label: qsTr("Behavior")
+                    text: qsTr("File sorting is Case Sensitive")
+                    checked: appManager1.fileSortCaseSensitive
+                    onCheckedChanged: appManager1.fileSortCaseSensitive = checked
+                    Controls.ToolTip.visible: hovered
+                    Controls.ToolTip.text: qsTr("If enabled, the sorting will respect case sensitive sorting, so as to have this order AA, AB, AC, Aa, Ab, Ac")
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: pageSettingsRoot.fitWidth(implicitWidth)
+                    Component.onCompleted: contentItem.wrapMode = Text.WordWrap  // PGL-F16
+                }
+                Controls.CheckBox {
+                    text: qsTr("Refresh device status when returning to the application")
+                    checked: appManager1.refreshDeviceStatusOnActivation
+                    onToggled: appManager1.refreshDeviceStatusOnActivation = checked
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: pageSettingsRoot.fitWidth(implicitWidth)
+                    Component.onCompleted: contentItem.wrapMode = Text.WordWrap  // PGL-F16
+                }
+                Controls.CheckBox {
+                    text: qsTr("Authorize actions that delete files (no recovery)")
+                    checked: appManager1.allowFileDeletion
+                    onToggled: appManager1.allowFileDeletion = checked
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: pageSettingsRoot.fitWidth(implicitWidth)
+                    Component.onCompleted: contentItem.wrapMode = Text.WordWrap  // PGL-F16
                 }
             }
-            /*
-            // ── Separator ──────────────────────────────────────────────────
-            // ── Search ────────────────────────────────────────────────────
+
+            // ── App information ────────────────────────────────────────────
             RowLayout {
-                Layout.columnSpan: 2
                 Layout.fillWidth: true
                 Layout.topMargin: Kirigami.Units.largeSpacing * 2
                 spacing: Kirigami.Units.largeSpacing
-                Controls.Label { text: qsTr("Search"); color: applicationWindow().titleColor }
+                Controls.Label { text: qsTr("App information"); color: applicationWindow().titleColor }
                 Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
             }
 
-            Controls.Label { text: qsTr("Layout"); opacity: 0.7; }
-            Controls.CheckBox {
-                text: qsTr("Keep Selection visible with Search and Results")
-                checked: appManager1.searchKeepsSelection
-                onCheckedChanged: appManager1.searchKeepsSelection = checked
+            Kirigami.FormLayout {
+                id: appInfoForm
+                Layout.fillWidth: true
+                Layout.maximumWidth: implicitWidth  // left-aligned, never centred (PGL-F19)
+                twinFormLayouts: [interfaceForm]
+
+                Flow {
+                    Kirigami.FormData.label: qsTr("Version")
+                    Kirigami.FormData.buddyFor: releaseNotesButton
+                    spacing: Kirigami.Units.largeSpacing
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: pageSettingsRoot.fitWidth(childrenRect.width)
+                    // Same height as the button beside them, text centred on it.
+                    Controls.Label { text: About.version;
+                                     height: releaseNotesButton.height; verticalAlignment: Text.AlignVCenter }
+                    Controls.Label { text: appManager1.appReleaseDate; opacity: 0.7
+                                     height: releaseNotesButton.height; verticalAlignment: Text.AlignVCenter }
+                    Controls.Button {
+                        id: releaseNotesButton
+                        text: qsTr("Release Notes")
+                        icon.name: "view-list-text"
+                        //onClicked: Qt.openUrlExternally("https://github.com/StephaneCouturier/Katalog/releases")
+                        onClicked: Qt.openUrlExternally("https://stephanecouturier.github.io/Katalog/docs/Development-Roadmap#katalog-3")
+                    }
+                }
+                Controls.CheckBox {
+                    text: qsTr("Check for a new version on startup")
+                    checked: appManager1.checkVersionChoice
+                    onCheckedChanged: appManager1.checkVersionChoice = checked
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: pageSettingsRoot.fitWidth(implicitWidth)
+                    Component.onCompleted: contentItem.wrapMode = Text.WordWrap  // PGL-F16
+                }
+
+                RowLayout {
+                    Kirigami.FormData.label: qsTr("Settings file")
+                    Layout.fillWidth: true
+                    spacing: Kirigami.Units.smallSpacing
+                    Controls.Label {
+                        text: appManager1.getSettingsFilePath() || qsTr("(none)")
+                        elide: Text.ElideMiddle
+                        Layout.fillWidth: true
+                        // The elided path must not size the form (PGL-F16)
+                        Layout.preferredWidth: Kirigami.Units.gridUnit * 6
+                    }
+                    Controls.Button {
+                        text: qsTr("Open")
+                        icon.name: "document-edit"
+                        onClicked: appManager1.openSettingsFile()
+                    }
+                }
+                /*
+                // ── Separator ──────────────────────────────────────────────────
+                // ── Search ────────────────────────────────────────────────────
+                RowLayout {
+                    Layout.columnSpan: 2
+                    Layout.fillWidth: true
+                    Layout.topMargin: Kirigami.Units.largeSpacing * 2
+                    spacing: Kirigami.Units.largeSpacing
+                    Controls.Label { text: qsTr("Search"); color: applicationWindow().titleColor }
+                    Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
+                }
+
+                Controls.Label { text: qsTr("Layout"); opacity: 0.7; }
+                Controls.CheckBox {
+                    text: qsTr("Keep Selection visible with Search and Results")
+                    checked: appManager1.searchKeepsSelection
+                    onCheckedChanged: appManager1.searchKeepsSelection = checked
+                }
+                */
             }
-            */
         }
     }
 }

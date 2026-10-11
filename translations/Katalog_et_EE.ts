@@ -4,7 +4,7 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+182"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+160"/>
         <location line="+110"/>
         <location line="+14"/>
         <location line="+4687"/>
@@ -773,7 +773,7 @@ Vali teine nimi.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2760"/>
+        <location filename="../core/collection.cpp" line="+2785"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>See kaust sisaldab mälu režiimi kogumisfaile, kuid olete praegu faili režiimis.&lt;br/&gt;Lülituge mälu režiimi või valige teine kaust.</translation>
     </message>
@@ -1712,7 +1712,7 @@ Kas soovite selle ikkagi salvestada (kataloog oleks tühi)?</translation>
         <translation>Vali andmebaas, mida luua ja avada:</translation>
     </message>
     <message>
-        <location filename="../qt_quick/main.cpp" line="+135"/>
+        <location filename="../qt_quick/main.cpp" line="+166"/>
         <source>Catalog your devices to search, analyze, and backup your files.</source>
         <translation>Kataloogige oma seadmed, et otsida, analüüsida ja varundada oma faile.</translation>
     </message>
@@ -7645,37 +7645,37 @@ Kontrollige, et lähtekaust (%1) on õige või et seade on lähtekausta ühendat
         <translation>Seade ei ole aktiivne. See võib olla lahti ühendatud või on selle tee muutunud.</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+20"/>
         <source>No folder selected</source>
         <translation>Ühtegi kausta pole valitud</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+22"/>
         <source>Display folders</source>
         <translation>Kuva kaustad</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+18"/>
         <source>and all sub-folders</source>
         <translation>ja kõik alamkaustad</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+17"/>
         <source>Order folders first</source>
         <translation>Järjesta kaustad esimesena</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+30"/>
         <source>Number of Files</source>
         <translation>Failide arv</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+10"/>
         <source>Total Size</source>
         <translation>Kogusuurus</translation>
     </message>
     <message>
-        <location line="+345"/>
+        <location line="+346"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>Ava kaust</translation>
@@ -8684,72 +8684,72 @@ Vigu: %3</translation>
         <translation>Seaded</translation>
     </message>
     <message>
-        <location line="+279"/>
+        <location line="+287"/>
         <source>Close</source>
         <translation>Sulge</translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+90"/>
         <source>Collection &amp; Database</source>
         <translation>Kogu ja andmebaas</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+11"/>
         <source>Database Mode</source>
         <translation>Andmebaasi režiim</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location line="+221"/>
+        <location line="+3"/>
+        <location line="+201"/>
         <source>Memory</source>
         <translation>Mälu</translation>
     </message>
     <message>
-        <location line="-220"/>
-        <location line="+220"/>
+        <location line="-200"/>
+        <location line="+200"/>
         <source>File</source>
         <translation>Fail</translation>
     </message>
     <message>
-        <location line="-219"/>
+        <location line="-199"/>
         <source>Hosted</source>
         <translation>Majutatud</translation>
     </message>
     <message>
-        <location line="-265"/>
-        <location line="+231"/>
-        <location line="+40"/>
+        <location line="-275"/>
+        <location line="+233"/>
+        <location line="+48"/>
         <source>Collection</source>
         <translation>Kogu</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <location line="+1"/>
-        <location line="+582"/>
+        <location line="+593"/>
         <source>(none)</source>
         <translation>(puudub)</translation>
     </message>
     <message>
-        <location line="-574"/>
+        <location line="-583"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
         <translation>Muuda</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Database Version</source>
         <translation>Andmebaasi versioon</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+53"/>
         <source>Images folder</source>
         <translation>Piltide kaust</translation>
     </message>
     <message>
-        <location line="-231"/>
-        <location line="+242"/>
-        <location line="+132"/>
+        <location line="-244"/>
+        <location line="+254"/>
+        <location line="+110"/>
         <source>Select</source>
         <translation>Vali</translation>
     </message>
@@ -8774,27 +8774,27 @@ Vigu: %3</translation>
         <translation type="vanished">Parool:</translation>
     </message>
     <message>
-        <location line="-108"/>
+        <location line="-76"/>
         <source>Host Name</source>
         <translation>Serveri nimi</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+6"/>
         <source>Database Name</source>
         <translation>Andmebaasi nimi</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+5"/>
         <source>Port</source>
         <translation>Port</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+5"/>
         <source>User Name</source>
         <translation>Kasutajanimi</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+5"/>
         <source>Password</source>
         <translation>Parool</translation>
     </message>
@@ -8807,22 +8807,22 @@ Vigu: %3</translation>
         <translation type="vanished">Ühenda käivitamisel automaatselt</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+6"/>
         <source>phpMyAdmin URL</source>
         <translation>phpMyAdmini URL</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+6"/>
         <source>Connect</source>
         <translation>Ühenda</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+12"/>
         <source>Collection Import &amp; Synchronization</source>
         <translation>Kogu import ja sünkroonimine</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+12"/>
         <source>Data mode</source>
         <translation>Andmerežiim</translation>
     </message>
@@ -8839,17 +8839,17 @@ Vigu: %3</translation>
         <translation type="vanished">VVV tabeldusmärgiga eraldatud väärtused</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+1"/>
         <source>Tab Separated Values</source>
         <translation>Tabeldusmärgiga eraldatud väärtused</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Source</source>
         <translation>Allikas</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>VVV export file (.tsv)</source>
         <translation>VVV ekspordifail (.tsv)</translation>
     </message>
@@ -8859,16 +8859,16 @@ Vigu: %3</translation>
         <translation>Tee</translation>
     </message>
     <message>
-        <location line="-517"/>
+        <location line="-507"/>
         <location line="+3"/>
         <location line="+2"/>
         <location line="+0"/>
-        <location line="+534"/>
+        <location line="+525"/>
         <source>Device</source>
         <translation>Seade</translation>
     </message>
     <message>
-        <location line="-562"/>
+        <location line="-553"/>
         <source>Storage devices linked to a missing storage</source>
         <translation>Salvestusseadmed, mis on seotud puuduva salvestusruumiga</translation>
     </message>
@@ -8919,12 +8919,12 @@ Vigu: %3</translation>
     <message>
         <location line="+16"/>
         <location line="+25"/>
-        <location line="+292"/>
+        <location line="+303"/>
         <source>Quality check</source>
         <translation>Kvaliteedikontroll</translation>
     </message>
     <message>
-        <location line="-312"/>
+        <location line="-323"/>
         <location line="+92"/>
         <source>Error: </source>
         <translation>Viga: </translation>
@@ -8967,7 +8967,7 @@ Vigu: %3</translation>
         <translation>Tühista</translation>
     </message>
     <message>
-        <location line="+118"/>
+        <location line="+130"/>
         <source>Export to SQLite file</source>
         <translation>Ekspordi SQLite faili</translation>
     </message>
@@ -8992,28 +8992,33 @@ Vigu: %3</translation>
         <translation>Kehtiv:</translation>
     </message>
     <message>
-        <location line="+144"/>
+        <location line="+123"/>
         <source>Import</source>
         <translation>Impordi</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+21"/>
         <location line="+11"/>
         <source>Update</source>
         <translation>Värskenda</translation>
     </message>
     <message>
-        <location line="-336"/>
+        <location line="-326"/>
         <source>Application</source>
         <translation>Rakendus</translation>
     </message>
     <message>
-        <location line="+376"/>
+        <location line="+606"/>
+        <source>App information</source>
+        <translation>Rakenduse teave</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Version</source>
         <translation>Versioon</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+12"/>
         <source>Release Notes</source>
         <translation>Väljalaskemärkmed</translation>
     </message>
@@ -9023,12 +9028,27 @@ Vigu: %3</translation>
         <translation>Kontrolli käivitamisel uut versiooni</translation>
     </message>
     <message>
-        <location line="+202"/>
+        <location line="-63"/>
         <source>Behavior</source>
         <translation>Käitumine</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="-205"/>
+        <source>Interface</source>
+        <translation>Liides</translation>
+    </message>
+    <message>
+        <location line="+184"/>
+        <source>Icon size</source>
+        <translation>Ikoonide suurus</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Window size</source>
+        <translation>Akna suurus</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>File sorting is Case Sensitive</source>
         <translation>Failide järjestamine on tõstutundlik</translation>
     </message>
@@ -9038,22 +9058,22 @@ Vigu: %3</translation>
         <translation>Kui lubatud, järjestamine arvestab suurtähtede tundlikkust, nii et järjekord oleks AA, AB, AC, Aa, Ab, Ac</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>Refresh device status when returning to the application</source>
         <translation>Seadmete oleku värskendamine rakendusse naasmisel</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+8"/>
         <source>Authorize actions that delete files (no recovery)</source>
         <translation>Luba toimingud, mis kustutavad faile (taastamine pole võimalik)</translation>
     </message>
     <message>
-        <location line="-110"/>
+        <location line="-113"/>
         <source>Theme</source>
         <translation>Teema</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+7"/>
         <source>Desktop Theme</source>
         <translation>Töölaua teema</translation>
     </message>
@@ -9068,37 +9088,37 @@ Vigu: %3</translation>
         <translation>Katalogi värvid</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+65"/>
         <source>Use bigger icon size</source>
         <translation>Kasuta suuremat ikooni suurust</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="-40"/>
         <source>Text size</source>
         <translation>Teksti suurus</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>Decrease text size</source>
         <translation>Vähenda teksti suurust</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+20"/>
         <source>Increase text size</source>
         <translation>Suurenda teksti suurust</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+25"/>
         <source>Reset window size</source>
         <translation>Lähtesta akna suurus</translation>
     </message>
     <message>
-        <location line="-188"/>
+        <location line="-184"/>
         <source>Language</source>
         <translation>Keel</translation>
     </message>
     <message>
-        <location line="+221"/>
+        <location line="+265"/>
         <source>Settings file</source>
         <translation>Sätete fail</translation>
     </message>

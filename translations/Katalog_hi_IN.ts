@@ -4,7 +4,7 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+182"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+160"/>
         <location line="+110"/>
         <location line="+14"/>
         <location line="+4687"/>
@@ -773,7 +773,7 @@ Choose a different name.</source>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2760"/>
+        <location filename="../core/collection.cpp" line="+2785"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>इस फ़ोल्डर में मेमोरी मोड संग्रह फ़ाइलें हैं, लेकिन आप वर्तमान में फ़ाइल मोड में हैं।&lt;br/&gt;मेमोरी मोड पर स्विच करें या कोई भिन्न फ़ोल्डर चुनें।</translation>
     </message>
@@ -1712,7 +1712,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>बनाने और खोलने के लिए डेटाबेस चुनें:</translation>
     </message>
     <message>
-        <location filename="../qt_quick/main.cpp" line="+135"/>
+        <location filename="../qt_quick/main.cpp" line="+166"/>
         <source>Catalog your devices to search, analyze, and backup your files.</source>
         <translation>अपनी फ़ाइलों को खोजने, विश्लेषण करने और बैकअप लेने के लिए अपने उपकरणों को सूचीबद्ध करें।</translation>
     </message>
@@ -7644,37 +7644,37 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>डिवाइस सक्रिय नहीं है। यह डिस्कनेक्ट हो सकता है, या इसका पथ बदल गया हो सकता है।</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+20"/>
         <source>No folder selected</source>
         <translation>कोई फ़ोल्डर चयनित नहीं</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+22"/>
         <source>Display folders</source>
         <translation>फ़ोल्डर प्रदर्शित करें</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+18"/>
         <source>and all sub-folders</source>
         <translation>और सभी उप-फ़ोल्डर</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+17"/>
         <source>Order folders first</source>
         <translation>पहले फ़ोल्डर क्रम में</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+30"/>
         <source>Number of Files</source>
         <translation>फ़ाइलों की संख्या</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+10"/>
         <source>Total Size</source>
         <translation>कुल आकार</translation>
     </message>
     <message>
-        <location line="+345"/>
+        <location line="+346"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>फ़ोल्डर खोलें</translation>
@@ -8683,72 +8683,72 @@ Errors: %3</source>
         <translation>सेटिंग्स</translation>
     </message>
     <message>
-        <location line="+279"/>
+        <location line="+287"/>
         <source>Close</source>
         <translation>बंद करें</translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+90"/>
         <source>Collection &amp; Database</source>
         <translation>संग्रह और डेटाबेस</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+11"/>
         <source>Database Mode</source>
         <translation>डेटाबेस मोड</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location line="+221"/>
+        <location line="+3"/>
+        <location line="+201"/>
         <source>Memory</source>
         <translation>मेमोरी</translation>
     </message>
     <message>
-        <location line="-220"/>
-        <location line="+220"/>
+        <location line="-200"/>
+        <location line="+200"/>
         <source>File</source>
         <translation>फ़ाइल</translation>
     </message>
     <message>
-        <location line="-219"/>
+        <location line="-199"/>
         <source>Hosted</source>
         <translation>होस्ट किया गया</translation>
     </message>
     <message>
-        <location line="-265"/>
-        <location line="+231"/>
-        <location line="+40"/>
+        <location line="-275"/>
+        <location line="+233"/>
+        <location line="+48"/>
         <source>Collection</source>
         <translation>संग्रह</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <location line="+1"/>
-        <location line="+582"/>
+        <location line="+593"/>
         <source>(none)</source>
         <translation>(कोई नहीं)</translation>
     </message>
     <message>
-        <location line="-574"/>
+        <location line="-583"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
         <translation>संपादन</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Database Version</source>
         <translation>डेटाबेस संस्करण</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+53"/>
         <source>Images folder</source>
         <translation>चित्र फ़ोल्डर</translation>
     </message>
     <message>
-        <location line="-231"/>
-        <location line="+242"/>
-        <location line="+132"/>
+        <location line="-244"/>
+        <location line="+254"/>
+        <location line="+110"/>
         <source>Select</source>
         <translation>चुनें</translation>
     </message>
@@ -8773,27 +8773,27 @@ Errors: %3</source>
         <translation type="vanished">पासवर्ड:</translation>
     </message>
     <message>
-        <location line="-108"/>
+        <location line="-76"/>
         <source>Host Name</source>
         <translation>होस्ट नाम</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+6"/>
         <source>Database Name</source>
         <translation>डेटाबेस नाम</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+5"/>
         <source>Port</source>
         <translation>पोर्ट</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+5"/>
         <source>User Name</source>
         <translation>उपयोगकर्ता नाम</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+5"/>
         <source>Password</source>
         <translation>पासवर्ड</translation>
     </message>
@@ -8806,22 +8806,22 @@ Errors: %3</source>
         <translation type="vanished">स्टार्टअप पर स्वचालित रूप से कनेक्ट करें</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+6"/>
         <source>phpMyAdmin URL</source>
         <translation>phpMyAdmin URL</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+6"/>
         <source>Connect</source>
         <translation>कनेक्ट करें</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+12"/>
         <source>Collection Import &amp; Synchronization</source>
         <translation>संग्रह आयात और समन्वयन</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+12"/>
         <source>Data mode</source>
         <translation>डेटा मोड</translation>
     </message>
@@ -8838,17 +8838,17 @@ Errors: %3</source>
         <translation type="vanished">VVV टैब पृथक मान</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+1"/>
         <source>Tab Separated Values</source>
         <translation>टैब द्वारा अलग किए गए मान</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Source</source>
         <translation>स्रोत</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>VVV export file (.tsv)</source>
         <translation>VVV निर्यात फ़ाइल (.tsv)</translation>
     </message>
@@ -8858,16 +8858,16 @@ Errors: %3</source>
         <translation>पथ</translation>
     </message>
     <message>
-        <location line="-517"/>
+        <location line="-507"/>
         <location line="+3"/>
         <location line="+2"/>
         <location line="+0"/>
-        <location line="+534"/>
+        <location line="+525"/>
         <source>Device</source>
         <translation>डिवाइस</translation>
     </message>
     <message>
-        <location line="-562"/>
+        <location line="-553"/>
         <source>Storage devices linked to a missing storage</source>
         <translation>लापता स्टोरेज से जुड़े स्टोरेज डिवाइस</translation>
     </message>
@@ -8918,12 +8918,12 @@ Errors: %3</source>
     <message>
         <location line="+16"/>
         <location line="+25"/>
-        <location line="+292"/>
+        <location line="+303"/>
         <source>Quality check</source>
         <translation>गुणवत्ता जाँच</translation>
     </message>
     <message>
-        <location line="-312"/>
+        <location line="-323"/>
         <location line="+92"/>
         <source>Error: </source>
         <translation>त्रुटि: </translation>
@@ -8966,7 +8966,7 @@ Errors: %3</source>
         <translation>रद्द करें</translation>
     </message>
     <message>
-        <location line="+118"/>
+        <location line="+130"/>
         <source>Export to SQLite file</source>
         <translation>SQLite फ़ाइल में निर्यात</translation>
     </message>
@@ -8991,28 +8991,33 @@ Errors: %3</source>
         <translation>मान्य:</translation>
     </message>
     <message>
-        <location line="+144"/>
+        <location line="+123"/>
         <source>Import</source>
         <translation>आयात</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+21"/>
         <location line="+11"/>
         <source>Update</source>
         <translation>अपडेट</translation>
     </message>
     <message>
-        <location line="-336"/>
+        <location line="-326"/>
         <source>Application</source>
         <translation>अनुप्रयोग</translation>
     </message>
     <message>
-        <location line="+376"/>
+        <location line="+606"/>
+        <source>App information</source>
+        <translation>ऐप की जानकारी</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Version</source>
         <translation>संस्करण</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+12"/>
         <source>Release Notes</source>
         <translation>रिलीज़ नोट्स</translation>
     </message>
@@ -9022,12 +9027,27 @@ Errors: %3</source>
         <translation>स्टार्टअप पर नए संस्करण की जाँच करें</translation>
     </message>
     <message>
-        <location line="+202"/>
+        <location line="-63"/>
         <source>Behavior</source>
         <translation>व्यवहार</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="-205"/>
+        <source>Interface</source>
+        <translation>इंटरफ़ेस</translation>
+    </message>
+    <message>
+        <location line="+184"/>
+        <source>Icon size</source>
+        <translation>आइकन का आकार</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Window size</source>
+        <translation>विंडो का आकार</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>File sorting is Case Sensitive</source>
         <translation>फ़ाइल सॉर्टिंग केस सेंसिटिव है</translation>
     </message>
@@ -9037,22 +9057,22 @@ Errors: %3</source>
         <translation>यदि सक्षम है, तो सॉर्टिंग केस सेंसिटिव सॉर्टिंग का सम्मान करेगी, जैसे AA, AB, AC, Aa, Ab, Ac क्रम में</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>Refresh device status when returning to the application</source>
         <translation>अनुप्रयोग पर लौटने पर डिवाइस स्थिति रीफ्रेश करें</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+8"/>
         <source>Authorize actions that delete files (no recovery)</source>
         <translation>फ़ाइलें डिलीट करने वाली क्रियाओं की अनुमति दें (पुनर्प्राप्ति संभव नहीं)</translation>
     </message>
     <message>
-        <location line="-110"/>
+        <location line="-113"/>
         <source>Theme</source>
         <translation>थीम</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+7"/>
         <source>Desktop Theme</source>
         <translation>डेस्कटॉप थीम</translation>
     </message>
@@ -9067,37 +9087,37 @@ Errors: %3</source>
         <translation>Katalog रंग</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+65"/>
         <source>Use bigger icon size</source>
         <translation>बड़ा आइकन आकार उपयोग करें</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="-40"/>
         <source>Text size</source>
         <translation>टेक्स्ट का आकार</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>Decrease text size</source>
         <translation>टेक्स्ट का आकार घटाएँ</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+20"/>
         <source>Increase text size</source>
         <translation>टेक्स्ट का आकार बढ़ाएँ</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+25"/>
         <source>Reset window size</source>
         <translation>विंडो का आकार रीसेट करें</translation>
     </message>
     <message>
-        <location line="-188"/>
+        <location line="-184"/>
         <source>Language</source>
         <translation>भाषा</translation>
     </message>
     <message>
-        <location line="+221"/>
+        <location line="+265"/>
         <source>Settings file</source>
         <translation>सेटिंग्स फ़ाइल</translation>
     </message>

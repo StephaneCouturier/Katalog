@@ -4,7 +4,7 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+182"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+160"/>
         <location line="+110"/>
         <location line="+14"/>
         <location line="+4687"/>
@@ -773,7 +773,7 @@ Välj ett annat namn.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2760"/>
+        <location filename="../core/collection.cpp" line="+2785"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Denna mapp innehåller samlingar i minnesläge, men du är för närvarande i filläge.&lt;br/&gt;Byt till minnesläge eller välj en annan mapp.</translation>
     </message>
@@ -1712,7 +1712,7 @@ Vill du spara den ändå (katalogen blir tom)?</translation>
         <translation>Välj databasen att skapa och öppna:</translation>
     </message>
     <message>
-        <location filename="../qt_quick/main.cpp" line="+135"/>
+        <location filename="../qt_quick/main.cpp" line="+166"/>
         <source>Catalog your devices to search, analyze, and backup your files.</source>
         <translation>Katalogisera dina enheter för att söka, analysera och säkerhetskopiera dina filer.</translation>
     </message>
@@ -7645,37 +7645,37 @@ Kontrollera att källmappen (%1) är korrekt, eller att enheten är monterad i k
         <translation>Enheten är inte aktiv. Den kan vara frånkopplad, eller så kan dess sökväg ha ändrats.</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+20"/>
         <source>No folder selected</source>
         <translation>Ingen mapp vald</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+22"/>
         <source>Display folders</source>
         <translation>Visa mappar</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+18"/>
         <source>and all sub-folders</source>
         <translation>och alla undermappar</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+17"/>
         <source>Order folders first</source>
         <translation>Ordna mappar först</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+30"/>
         <source>Number of Files</source>
         <translation>Antal filer</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+10"/>
         <source>Total Size</source>
         <translation>Total storlek</translation>
     </message>
     <message>
-        <location line="+345"/>
+        <location line="+346"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>Öppna mapp</translation>
@@ -8684,72 +8684,72 @@ Fel: %3</translation>
         <translation>Inställningar</translation>
     </message>
     <message>
-        <location line="+279"/>
+        <location line="+287"/>
         <source>Close</source>
         <translation>Stäng</translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+90"/>
         <source>Collection &amp; Database</source>
         <translation>Samling och databas</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+11"/>
         <source>Database Mode</source>
         <translation>Databasläge</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location line="+221"/>
+        <location line="+3"/>
+        <location line="+201"/>
         <source>Memory</source>
         <translation>Minne</translation>
     </message>
     <message>
-        <location line="-220"/>
-        <location line="+220"/>
+        <location line="-200"/>
+        <location line="+200"/>
         <source>File</source>
         <translation>Fil</translation>
     </message>
     <message>
-        <location line="-219"/>
+        <location line="-199"/>
         <source>Hosted</source>
         <translation>Värdbaserad</translation>
     </message>
     <message>
-        <location line="-265"/>
-        <location line="+231"/>
-        <location line="+40"/>
+        <location line="-275"/>
+        <location line="+233"/>
+        <location line="+48"/>
         <source>Collection</source>
         <translation>Samling</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <location line="+1"/>
-        <location line="+582"/>
+        <location line="+593"/>
         <source>(none)</source>
         <translation>(ingen)</translation>
     </message>
     <message>
-        <location line="-574"/>
+        <location line="-583"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
         <translation>Redigera</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Database Version</source>
         <translation>Databasversion</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+53"/>
         <source>Images folder</source>
         <translation>Bildmapp</translation>
     </message>
     <message>
-        <location line="-231"/>
-        <location line="+242"/>
-        <location line="+132"/>
+        <location line="-244"/>
+        <location line="+254"/>
+        <location line="+110"/>
         <source>Select</source>
         <translation>Välj</translation>
     </message>
@@ -8774,27 +8774,27 @@ Fel: %3</translation>
         <translation type="vanished">Lösenord:</translation>
     </message>
     <message>
-        <location line="-108"/>
+        <location line="-76"/>
         <source>Host Name</source>
         <translation>Värdnamn</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+6"/>
         <source>Database Name</source>
         <translation>Databasnamn</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+5"/>
         <source>Port</source>
         <translation>Port</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+5"/>
         <source>User Name</source>
         <translation>Användarnamn</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+5"/>
         <source>Password</source>
         <translation>Lösenord</translation>
     </message>
@@ -8807,22 +8807,22 @@ Fel: %3</translation>
         <translation type="vanished">Anslut automatiskt vid uppstart</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+6"/>
         <source>phpMyAdmin URL</source>
         <translation>phpMyAdmin-URL</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+6"/>
         <source>Connect</source>
         <translation>Anslut</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+12"/>
         <source>Collection Import &amp; Synchronization</source>
         <translation>Import och synkronisering av samling</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+12"/>
         <source>Data mode</source>
         <translation>Dataläge</translation>
     </message>
@@ -8839,17 +8839,17 @@ Fel: %3</translation>
         <translation type="vanished">VVV tabbavgränsade värden</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+1"/>
         <source>Tab Separated Values</source>
         <translation>Tabbavgränsade värden</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Source</source>
         <translation>Källa</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>VVV export file (.tsv)</source>
         <translation>VVV-exportfil (.tsv)</translation>
     </message>
@@ -8859,16 +8859,16 @@ Fel: %3</translation>
         <translation>Sökväg</translation>
     </message>
     <message>
-        <location line="-517"/>
+        <location line="-507"/>
         <location line="+3"/>
         <location line="+2"/>
         <location line="+0"/>
-        <location line="+534"/>
+        <location line="+525"/>
         <source>Device</source>
         <translation>Enhet</translation>
     </message>
     <message>
-        <location line="-562"/>
+        <location line="-553"/>
         <source>Storage devices linked to a missing storage</source>
         <translation>Lagringsenheter kopplade till en saknad lagring</translation>
     </message>
@@ -8919,12 +8919,12 @@ Fel: %3</translation>
     <message>
         <location line="+16"/>
         <location line="+25"/>
-        <location line="+292"/>
+        <location line="+303"/>
         <source>Quality check</source>
         <translation>Kvalitetskontroll</translation>
     </message>
     <message>
-        <location line="-312"/>
+        <location line="-323"/>
         <location line="+92"/>
         <source>Error: </source>
         <translation>Fel: </translation>
@@ -8967,7 +8967,7 @@ Fel: %3</translation>
         <translation>Avbryt</translation>
     </message>
     <message>
-        <location line="+118"/>
+        <location line="+130"/>
         <source>Export to SQLite file</source>
         <translation>Exportera till SQLite-fil</translation>
     </message>
@@ -8992,28 +8992,33 @@ Fel: %3</translation>
         <translation>Giltigt:</translation>
     </message>
     <message>
-        <location line="+144"/>
+        <location line="+123"/>
         <source>Import</source>
         <translation>Importera</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+21"/>
         <location line="+11"/>
         <source>Update</source>
         <translation>Uppdatera</translation>
     </message>
     <message>
-        <location line="-336"/>
+        <location line="-326"/>
         <source>Application</source>
         <translation>Program</translation>
     </message>
     <message>
-        <location line="+376"/>
+        <location line="+606"/>
+        <source>App information</source>
+        <translation>Programinformation</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Version</source>
         <translation>Version</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+12"/>
         <source>Release Notes</source>
         <translation>Versionsanteckningar</translation>
     </message>
@@ -9023,12 +9028,27 @@ Fel: %3</translation>
         <translation>Sök efter en ny version vid uppstart</translation>
     </message>
     <message>
-        <location line="+202"/>
+        <location line="-63"/>
         <source>Behavior</source>
         <translation>Beteende</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="-205"/>
+        <source>Interface</source>
+        <translation>Gränssnitt</translation>
+    </message>
+    <message>
+        <location line="+184"/>
+        <source>Icon size</source>
+        <translation>Ikonstorlek</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Window size</source>
+        <translation>Fönsterstorlek</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>File sorting is Case Sensitive</source>
         <translation>Filsortering är skiftlägeskänslig</translation>
     </message>
@@ -9038,22 +9058,22 @@ Fel: %3</translation>
         <translation>Om aktiverad kommer sorteringen att respektera skiftlägeskänslig sortering, så att ordningen blir AA, AB, AC, Aa, Ab, Ac</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>Refresh device status when returning to the application</source>
         <translation>Uppdatera enhetsstatus vid återgång till programmet</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+8"/>
         <source>Authorize actions that delete files (no recovery)</source>
         <translation>Tillåt åtgärder som tar bort filer (ingen återställning)</translation>
     </message>
     <message>
-        <location line="-110"/>
+        <location line="-113"/>
         <source>Theme</source>
         <translation>Tema</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+7"/>
         <source>Desktop Theme</source>
         <translation>Skrivbordstema</translation>
     </message>
@@ -9068,37 +9088,37 @@ Fel: %3</translation>
         <translation>Katalog-färger</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+65"/>
         <source>Use bigger icon size</source>
         <translation>Använd större ikonstorlek</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="-40"/>
         <source>Text size</source>
         <translation>Textstorlek</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>Decrease text size</source>
         <translation>Minska textstorleken</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+20"/>
         <source>Increase text size</source>
         <translation>Öka textstorleken</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+25"/>
         <source>Reset window size</source>
         <translation>Återställ fönsterstorlek</translation>
     </message>
     <message>
-        <location line="-188"/>
+        <location line="-184"/>
         <source>Language</source>
         <translation>Språk</translation>
     </message>
     <message>
-        <location line="+221"/>
+        <location line="+265"/>
         <source>Settings file</source>
         <translation>Inställningsfil</translation>
     </message>

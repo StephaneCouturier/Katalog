@@ -4,7 +4,7 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+182"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+160"/>
         <location line="+110"/>
         <location line="+14"/>
         <location line="+4687"/>
@@ -773,7 +773,7 @@ Choose a different name.</source>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2760"/>
+        <location filename="../core/collection.cpp" line="+2785"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>このフォルダにはメモリモードのコレクションファイルが含まれていますが、現在ファイルモードです。&lt;br/&gt;メモリモードに切り替えるか、別のフォルダを選択してください。</translation>
     </message>
@@ -1712,7 +1712,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>作成して開くデータベースを選択：</translation>
     </message>
     <message>
-        <location filename="../qt_quick/main.cpp" line="+135"/>
+        <location filename="../qt_quick/main.cpp" line="+166"/>
         <source>Catalog your devices to search, analyze, and backup your files.</source>
         <translation>デバイスをカタログ化して、ファイルの検索、分析、バックアップを行います。</translation>
     </message>
@@ -7644,37 +7644,37 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>デバイスがアクティブではありません。接続が解除されているか、パスが変更された可能性があります。</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+20"/>
         <source>No folder selected</source>
         <translation>フォルダーが選択されていません</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+22"/>
         <source>Display folders</source>
         <translation>フォルダを表示</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+18"/>
         <source>and all sub-folders</source>
         <translation>およびすべてのサブフォルダ</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+17"/>
         <source>Order folders first</source>
         <translation>フォルダを最初に並べる</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+30"/>
         <source>Number of Files</source>
         <translation>ファイル数</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+10"/>
         <source>Total Size</source>
         <translation>総サイズ</translation>
     </message>
     <message>
-        <location line="+345"/>
+        <location line="+346"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>フォルダを開く</translation>
@@ -8683,72 +8683,72 @@ Errors: %3</source>
         <translation>設定</translation>
     </message>
     <message>
-        <location line="+279"/>
+        <location line="+287"/>
         <source>Close</source>
         <translation>閉じる</translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+90"/>
         <source>Collection &amp; Database</source>
         <translation>コレクションとデータベース</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+11"/>
         <source>Database Mode</source>
         <translation>データベースモード</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location line="+221"/>
+        <location line="+3"/>
+        <location line="+201"/>
         <source>Memory</source>
         <translation>メモリ</translation>
     </message>
     <message>
-        <location line="-220"/>
-        <location line="+220"/>
+        <location line="-200"/>
+        <location line="+200"/>
         <source>File</source>
         <translation>ファイル</translation>
     </message>
     <message>
-        <location line="-219"/>
+        <location line="-199"/>
         <source>Hosted</source>
         <translation>ホスト型</translation>
     </message>
     <message>
-        <location line="-265"/>
-        <location line="+231"/>
-        <location line="+40"/>
+        <location line="-275"/>
+        <location line="+233"/>
+        <location line="+48"/>
         <source>Collection</source>
         <translation>コレクション</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <location line="+1"/>
-        <location line="+582"/>
+        <location line="+593"/>
         <source>(none)</source>
         <translation>(なし)</translation>
     </message>
     <message>
-        <location line="-574"/>
+        <location line="-583"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
         <translation>編集</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Database Version</source>
         <translation>データベースのバージョン</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+53"/>
         <source>Images folder</source>
         <translation>画像フォルダー</translation>
     </message>
     <message>
-        <location line="-231"/>
-        <location line="+242"/>
-        <location line="+132"/>
+        <location line="-244"/>
+        <location line="+254"/>
+        <location line="+110"/>
         <source>Select</source>
         <translation>選択</translation>
     </message>
@@ -8773,27 +8773,27 @@ Errors: %3</source>
         <translation type="vanished">パスワード:</translation>
     </message>
     <message>
-        <location line="-108"/>
+        <location line="-76"/>
         <source>Host Name</source>
         <translation>ホスト名</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+6"/>
         <source>Database Name</source>
         <translation>データベース名</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+5"/>
         <source>Port</source>
         <translation>ポート</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+5"/>
         <source>User Name</source>
         <translation>ユーザー名</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+5"/>
         <source>Password</source>
         <translation>パスワード</translation>
     </message>
@@ -8806,22 +8806,22 @@ Errors: %3</source>
         <translation type="vanished">起動時に自動的に接続する</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+6"/>
         <source>phpMyAdmin URL</source>
         <translation>phpMyAdmin の URL</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+6"/>
         <source>Connect</source>
         <translation>接続</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+12"/>
         <source>Collection Import &amp; Synchronization</source>
         <translation>コレクションのインポートと同期</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+12"/>
         <source>Data mode</source>
         <translation>データモード</translation>
     </message>
@@ -8838,17 +8838,17 @@ Errors: %3</source>
         <translation type="vanished">VVV タブ区切り値</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+1"/>
         <source>Tab Separated Values</source>
         <translation>タブ区切り値</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Source</source>
         <translation>ソース</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>VVV export file (.tsv)</source>
         <translation>VVV エクスポートファイル (.tsv)</translation>
     </message>
@@ -8858,16 +8858,16 @@ Errors: %3</source>
         <translation>パス</translation>
     </message>
     <message>
-        <location line="-517"/>
+        <location line="-507"/>
         <location line="+3"/>
         <location line="+2"/>
         <location line="+0"/>
-        <location line="+534"/>
+        <location line="+525"/>
         <source>Device</source>
         <translation>デバイス</translation>
     </message>
     <message>
-        <location line="-562"/>
+        <location line="-553"/>
         <source>Storage devices linked to a missing storage</source>
         <translation>存在しないストレージにリンクされたストレージデバイス</translation>
     </message>
@@ -8918,12 +8918,12 @@ Errors: %3</source>
     <message>
         <location line="+16"/>
         <location line="+25"/>
-        <location line="+292"/>
+        <location line="+303"/>
         <source>Quality check</source>
         <translation>品質チェック</translation>
     </message>
     <message>
-        <location line="-312"/>
+        <location line="-323"/>
         <location line="+92"/>
         <source>Error: </source>
         <translation>エラー: </translation>
@@ -8966,7 +8966,7 @@ Errors: %3</source>
         <translation>キャンセル</translation>
     </message>
     <message>
-        <location line="+118"/>
+        <location line="+130"/>
         <source>Export to SQLite file</source>
         <translation>SQLiteファイルにエクスポート</translation>
     </message>
@@ -8991,28 +8991,33 @@ Errors: %3</source>
         <translation>有効:</translation>
     </message>
     <message>
-        <location line="+144"/>
+        <location line="+123"/>
         <source>Import</source>
         <translation>インポート</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+21"/>
         <location line="+11"/>
         <source>Update</source>
         <translation>更新</translation>
     </message>
     <message>
-        <location line="-336"/>
+        <location line="-326"/>
         <source>Application</source>
         <translation>アプリケーション</translation>
     </message>
     <message>
-        <location line="+376"/>
+        <location line="+606"/>
+        <source>App information</source>
+        <translation>アプリ情報</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Version</source>
         <translation>バージョン</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+12"/>
         <source>Release Notes</source>
         <translation>リリースノート</translation>
     </message>
@@ -9022,12 +9027,27 @@ Errors: %3</source>
         <translation>起動時に新しいバージョンを確認する</translation>
     </message>
     <message>
-        <location line="+202"/>
+        <location line="-63"/>
         <source>Behavior</source>
         <translation>動作</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="-205"/>
+        <source>Interface</source>
+        <translation>インターフェース</translation>
+    </message>
+    <message>
+        <location line="+184"/>
+        <source>Icon size</source>
+        <translation>アイコンサイズ</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Window size</source>
+        <translation>ウィンドウサイズ</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>File sorting is Case Sensitive</source>
         <translation>ファイルソートは大文字小文字を区別</translation>
     </message>
@@ -9037,22 +9057,22 @@ Errors: %3</source>
         <translation>有効にすると、大文字小文字を区別したソートが適用され、AA、AB、AC、Aa、Ab、Acの順序になります</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>Refresh device status when returning to the application</source>
         <translation>アプリケーションに戻ったときにデバイスのステータスを更新する</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+8"/>
         <source>Authorize actions that delete files (no recovery)</source>
         <translation>ファイルを削除する操作を許可 (復元不可)</translation>
     </message>
     <message>
-        <location line="-110"/>
+        <location line="-113"/>
         <source>Theme</source>
         <translation>テーマ</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+7"/>
         <source>Desktop Theme</source>
         <translation>デスクトップテーマ</translation>
     </message>
@@ -9067,37 +9087,37 @@ Errors: %3</source>
         <translation>Katalog カラー</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+65"/>
         <source>Use bigger icon size</source>
         <translation>大きなアイコンサイズを使用</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="-40"/>
         <source>Text size</source>
         <translation>文字サイズ</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>Decrease text size</source>
         <translation>文字サイズを小さくする</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+20"/>
         <source>Increase text size</source>
         <translation>文字サイズを大きくする</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+25"/>
         <source>Reset window size</source>
         <translation>ウィンドウサイズをリセット</translation>
     </message>
     <message>
-        <location line="-188"/>
+        <location line="-184"/>
         <source>Language</source>
         <translation>言語</translation>
     </message>
     <message>
-        <location line="+221"/>
+        <location line="+265"/>
         <source>Settings file</source>
         <translation>設定ファイル</translation>
     </message>

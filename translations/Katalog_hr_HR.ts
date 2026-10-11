@@ -4,7 +4,7 @@
 <context>
     <name>AppManager</name>
     <message>
-        <location filename="../qt_quick/appmanager.cpp" line="+182"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+160"/>
         <location line="+110"/>
         <location line="+14"/>
         <location line="+4687"/>
@@ -773,7 +773,7 @@ Odaberite drugi naziv.</translation>
 <context>
     <name>Collection</name>
     <message>
-        <location filename="../core/collection.cpp" line="+2760"/>
+        <location filename="../core/collection.cpp" line="+2785"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
         <translation>Ova mapa sadrži datoteke zbirke u načinu memorije, ali trenutno ste u načinu datoteke.&lt;br/&gt;Prebacite se na način memorije ili odaberite drugu mapu.</translation>
     </message>
@@ -1712,7 +1712,7 @@ To može značiti da je izvor prazan ili uređaj nije montiran na ovu mapu.
         <translation>Odaberite bazu podataka za stvaranje i otvaranje:</translation>
     </message>
     <message>
-        <location filename="../qt_quick/main.cpp" line="+135"/>
+        <location filename="../qt_quick/main.cpp" line="+166"/>
         <source>Catalog your devices to search, analyze, and backup your files.</source>
         <translation>Katalogizirajte svoje uređaje za pretraživanje, analizu i sigurnosno kopiranje datoteka.</translation>
     </message>
@@ -7645,37 +7645,37 @@ Provjerite je li izvorna mapa (%1) ispravna ili je li uređaj montiran u izvornu
         <translation>Uređaj nije aktivan. Možda je odspojen ili je njegova putanja promijenjena.</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+20"/>
         <source>No folder selected</source>
         <translation>Nije odabrana mapa</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+22"/>
         <source>Display folders</source>
         <translation>Prikaži mape</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+18"/>
         <source>and all sub-folders</source>
         <translation>i sve podmape</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+17"/>
         <source>Order folders first</source>
         <translation>Poredaj mape prvo</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+30"/>
         <source>Number of Files</source>
         <translation>Broj datoteka</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+10"/>
         <source>Total Size</source>
         <translation>Ukupna veličina</translation>
     </message>
     <message>
-        <location line="+345"/>
+        <location line="+346"/>
         <location line="+11"/>
         <source>Open folder</source>
         <translation>Otvori mapu</translation>
@@ -8684,72 +8684,72 @@ Pogreške: %3</translation>
         <translation>Postavke</translation>
     </message>
     <message>
-        <location line="+279"/>
+        <location line="+287"/>
         <source>Close</source>
         <translation>Zatvori</translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+90"/>
         <source>Collection &amp; Database</source>
         <translation>Zbirka i baza podataka</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+11"/>
         <source>Database Mode</source>
         <translation>Način rada baze podataka</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location line="+221"/>
+        <location line="+3"/>
+        <location line="+201"/>
         <source>Memory</source>
         <translation>Memorija</translation>
     </message>
     <message>
-        <location line="-220"/>
-        <location line="+220"/>
+        <location line="-200"/>
+        <location line="+200"/>
         <source>File</source>
         <translation>Datoteka</translation>
     </message>
     <message>
-        <location line="-219"/>
+        <location line="-199"/>
         <source>Hosted</source>
         <translation>Hostovan</translation>
     </message>
     <message>
-        <location line="-265"/>
-        <location line="+231"/>
-        <location line="+40"/>
+        <location line="-275"/>
+        <location line="+233"/>
+        <location line="+48"/>
         <source>Collection</source>
         <translation>Zbirka</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <location line="+1"/>
-        <location line="+582"/>
+        <location line="+593"/>
         <source>(none)</source>
         <translation>(nijedna)</translation>
     </message>
     <message>
-        <location line="-574"/>
+        <location line="-583"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
         <translation>Uredi</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Database Version</source>
         <translation>Verzija baze podataka</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+53"/>
         <source>Images folder</source>
         <translation>Mapa slika</translation>
     </message>
     <message>
-        <location line="-231"/>
-        <location line="+242"/>
-        <location line="+132"/>
+        <location line="-244"/>
+        <location line="+254"/>
+        <location line="+110"/>
         <source>Select</source>
         <translation>Odaberi</translation>
     </message>
@@ -8774,27 +8774,27 @@ Pogreške: %3</translation>
         <translation type="vanished">Lozinka:</translation>
     </message>
     <message>
-        <location line="-108"/>
+        <location line="-76"/>
         <source>Host Name</source>
         <translation>Naziv glavnog računala</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+6"/>
         <source>Database Name</source>
         <translation>Naziv baze podataka</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+5"/>
         <source>Port</source>
         <translation>Port</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+5"/>
         <source>User Name</source>
         <translation>Korisničko ime</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+5"/>
         <source>Password</source>
         <translation>Lozinka</translation>
     </message>
@@ -8807,22 +8807,22 @@ Pogreške: %3</translation>
         <translation type="vanished">Automatski se poveži pri pokretanju</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+6"/>
         <source>phpMyAdmin URL</source>
         <translation>phpMyAdmin URL</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+6"/>
         <source>Connect</source>
         <translation>Poveži se</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+12"/>
         <source>Collection Import &amp; Synchronization</source>
         <translation>Uvoz i sinkronizacija zbirke</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+12"/>
         <source>Data mode</source>
         <translation>Način rada s podacima</translation>
     </message>
@@ -8839,17 +8839,17 @@ Pogreške: %3</translation>
         <translation type="vanished">VVV vrijednosti odvojene tabulatorima</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+1"/>
         <source>Tab Separated Values</source>
         <translation>Vrijednosti odvojene tabulatorima</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Source</source>
         <translation>Izvor</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>VVV export file (.tsv)</source>
         <translation>VVV izvozna datoteka (.tsv)</translation>
     </message>
@@ -8859,16 +8859,16 @@ Pogreške: %3</translation>
         <translation>Putanja</translation>
     </message>
     <message>
-        <location line="-517"/>
+        <location line="-507"/>
         <location line="+3"/>
         <location line="+2"/>
         <location line="+0"/>
-        <location line="+534"/>
+        <location line="+525"/>
         <source>Device</source>
         <translation>Uređaj</translation>
     </message>
     <message>
-        <location line="-562"/>
+        <location line="-553"/>
         <source>Storage devices linked to a missing storage</source>
         <translation>Uređaji pohraništa povezani s nepostojećim pohraništem</translation>
     </message>
@@ -8919,12 +8919,12 @@ Pogreške: %3</translation>
     <message>
         <location line="+16"/>
         <location line="+25"/>
-        <location line="+292"/>
+        <location line="+303"/>
         <source>Quality check</source>
         <translation>Provjera kvalitete</translation>
     </message>
     <message>
-        <location line="-312"/>
+        <location line="-323"/>
         <location line="+92"/>
         <source>Error: </source>
         <translation>Pogreška: </translation>
@@ -8967,7 +8967,7 @@ Pogreške: %3</translation>
         <translation>Odustani</translation>
     </message>
     <message>
-        <location line="+118"/>
+        <location line="+130"/>
         <source>Export to SQLite file</source>
         <translation>Izvezi u SQLite datoteku</translation>
     </message>
@@ -8992,28 +8992,33 @@ Pogreške: %3</translation>
         <translation>Valjano:</translation>
     </message>
     <message>
-        <location line="+144"/>
+        <location line="+123"/>
         <source>Import</source>
         <translation>Uvezi</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+21"/>
         <location line="+11"/>
         <source>Update</source>
         <translation>Ažuriraj</translation>
     </message>
     <message>
-        <location line="-336"/>
+        <location line="-326"/>
         <source>Application</source>
         <translation>Aplikacija</translation>
     </message>
     <message>
-        <location line="+376"/>
+        <location line="+606"/>
+        <source>App information</source>
+        <translation>Informacije o aplikaciji</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Version</source>
         <translation>Verzija</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+12"/>
         <source>Release Notes</source>
         <translation>Napomene o izdanju</translation>
     </message>
@@ -9023,12 +9028,27 @@ Pogreške: %3</translation>
         <translation>Provjeri novu verziju pri pokretanju</translation>
     </message>
     <message>
-        <location line="+202"/>
+        <location line="-63"/>
         <source>Behavior</source>
         <translation>Ponašanje</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="-205"/>
+        <source>Interface</source>
+        <translation>Sučelje</translation>
+    </message>
+    <message>
+        <location line="+184"/>
+        <source>Icon size</source>
+        <translation>Veličina ikona</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Window size</source>
+        <translation>Veličina prozora</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>File sorting is Case Sensitive</source>
         <translation>Sortiranje datoteka razlikuje velika i mala slova</translation>
     </message>
@@ -9038,22 +9058,22 @@ Pogreške: %3</translation>
         <translation>Ako je omogućeno, sortiranje će poštovati razlikovanje velikih i malih slova, tako da imamo ovaj redoslijed AA, AB, AC, Aa, Ab, Ac</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>Refresh device status when returning to the application</source>
         <translation>Osvježi status uređaja pri povratku u aplikaciju</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+8"/>
         <source>Authorize actions that delete files (no recovery)</source>
         <translation>Dopusti radnje koje brišu datoteke (bez oporavka)</translation>
     </message>
     <message>
-        <location line="-110"/>
+        <location line="-113"/>
         <source>Theme</source>
         <translation>Tema</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+7"/>
         <source>Desktop Theme</source>
         <translation>Tema radne površine</translation>
     </message>
@@ -9068,37 +9088,37 @@ Pogreške: %3</translation>
         <translation>Katalog boje</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+65"/>
         <source>Use bigger icon size</source>
         <translation>Koristi veću veličinu ikona</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="-40"/>
         <source>Text size</source>
         <translation>Veličina teksta</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>Decrease text size</source>
         <translation>Smanji veličinu teksta</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+20"/>
         <source>Increase text size</source>
         <translation>Povećaj veličinu teksta</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+25"/>
         <source>Reset window size</source>
         <translation>Vrati veličinu prozora</translation>
     </message>
     <message>
-        <location line="-188"/>
+        <location line="-184"/>
         <source>Language</source>
         <translation>Jezik</translation>
     </message>
     <message>
-        <location line="+221"/>
+        <location line="+265"/>
         <source>Settings file</source>
         <translation>Datoteka postavki</translation>
     </message>

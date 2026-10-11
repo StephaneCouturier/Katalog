@@ -6,7 +6,9 @@ version: "3.0"
 
 ## Résumé
 Cette page décrit toutes les fonctionnalités de l'écran **Paramètres** et comment les utiliser. L'écran a deux onglets :
-* *Application* : [version, langue, thème, taille du texte, taille de la fenêtre et options de comportement](#application),
+* *Application* :
+  * [Interface](#interface) : langue, thème, taille du texte, taille des icônes, taille de la fenêtre et options de comportement,
+  * [Informations sur l'application](#app-information) : version et fichier de configuration,
 * *Collection* :
   * [Collection et base de données](#collection-database) : la collection ouverte, son mode de données, l'[export vers un autre mode de données](#export), la version de la base de données et le contrôle qualité, et le dossier d'images,
   * [Importation et synchronisation de la collection](#import-update) : importer des périphériques depuis une autre collection, ou mettre à jour ceux importés précédemment.
@@ -17,14 +19,12 @@ Cette page décrit toutes les fonctionnalités de l'écran **Paramètres** et co
 
 ![Onglet Application : version, langue, thème, taille du texte, réinitialisation de la taille de la fenêtre et options de comportement](/img/settings_05_application.png)
 
-### Version
-* La version et la date de publication de Katalog, et *Notes de Version* pour lire ce qui a changé.
-* *Vérifier les nouvelles versions au démarrage* : lorsque cette option est activée, Katalog vérifie au démarrage si une version plus récente est disponible.
+### Interface {#interface}
 
-### Langue {#language}
+#### Langue {#language}
 La langue de l'interface. Au premier démarrage, Katalog utilise la langue du système lorsqu'elle est disponible, et l'anglais (US) sinon.
 
-### Thème {#theme}
+#### Thème {#theme}
 | Thème | Description |
 |-------|-------------|
 | *Thème du bureau* | Suit les couleurs du bureau. |
@@ -37,19 +37,29 @@ Avec chaque thème, Katalog suit le **mode clair ou sombre** du système, sous L
 Sur certains bureaux Linux (par exemple Linux Mint avec Cinnamon), le mode sombre n'est pas détecté au démarrage de Katalog : la fenêtre s'ouvre en clair, puis suit le prochain changement de mode clair ou sombre.
 :::
 
-La même ligne contient :
-* *Utiliser une taille d'icône plus grande* : affiche des icônes plus grandes dans les listes.
-* *Taille du texte* : rend tout le texte de Katalog plus petit ou plus grand, de 80 % à 120 %, avec le curseur ou ses deux boutons. La taille part de la taille de police définie dans le système, et suit donc aussi un changement de la police du système. Le nom de la collection en haut du panneau latéral et les titres des pages gardent la taille du système.
-* *Réinitialiser la taille de la fenêtre* : remet la fenêtre à sa taille par défaut, **1280×800** (ou la taille de l'écran, s'il est plus petit). Une fenêtre agrandie est d'abord restaurée. La position de la fenêtre n'est pas modifiée. C'est aussi la taille de la fenêtre au tout premier démarrage de Katalog.
+#### Taille du texte {#text-size}
+Rend tout le texte de Katalog plus petit ou plus grand, de 80 % à 120 %, avec le curseur ou ses deux boutons. La taille part de la taille de police définie dans le système, et suit donc aussi un changement de la police du système. Le nom de la collection en haut du panneau latéral et les titres des pages gardent la taille du système.
 
-### Comportement {#behavior}
+#### Taille des icônes {#icon-size}
+*Utiliser une taille d'icône plus grande* : affiche des icônes plus grandes dans les listes.
+
+#### Taille de la fenêtre {#window-size}
+*Réinitialiser la taille de la fenêtre* : remet la fenêtre à sa taille par défaut, **1280×800** (ou la taille de l'écran, s'il est plus petit). Une fenêtre agrandie est d'abord restaurée. La position de la fenêtre n'est pas modifiée. C'est aussi la taille de la fenêtre au tout premier démarrage de Katalog.
+
+#### Comportement {#behavior}
 | Option | Description |
 |--------|-------------|
 | *Le tri des fichiers est sensible à la casse* | Lorsque cette option est activée, le tri respecte la casse des lettres, ce qui donne cet ordre : AA, AB, AC, Aa, Ab, Ac. |
 | *Actualiser le statut des périphériques au retour dans l’application* | Lorsque cette option est activée, le statut des périphériques (disponible ou non) est vérifié à nouveau chaque fois que la fenêtre de Katalog devient active : un disque branché ou retiré entre-temps est ainsi affiché correctement. Désactivée par défaut. |
 | *Autoriser les actions qui suppriment des fichiers (sans récupération)* | Lorsque cette option est activée, des fichiers peuvent être **supprimés définitivement** depuis les résultats de [recherche](Search) et l'écran [Explorer](Explore). Désactivée par défaut : ces actions sont alors grisées. *Déplacer dans la corbeille*, qui peut être annulé, est toujours disponible. |
 
-### Fichier de configuration
+### Informations sur l'application {#app-information}
+
+#### Version
+* La version et la date de publication de Katalog, et *Notes de Version* pour lire ce qui a changé.
+* *Vérifier les nouvelles versions au démarrage* : lorsque cette option est activée, Katalog vérifie au démarrage si une version plus récente est disponible.
+
+#### Fichier de configuration
 Le chemin du fichier dans lequel Katalog conserve ses paramètres et ses derniers choix. *Ouvrir* l'ouvre dans l'application associée.
 
 ## Collection et base de données {#collection-database}

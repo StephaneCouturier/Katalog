@@ -6,7 +6,9 @@ version: "3.0"
 
 ## Shrnutí
 Tato stránka popisuje všechny funkce obrazovky **Nastavení** a jak je používat. Obrazovka má dvě karty:
-* *Aplikace*: [verze, jazyk, téma, velikost textu, velikost okna a možnosti chování](#application),
+* *Aplikace*:
+  * [Rozhraní](#interface): jazyk, téma, velikost textu, velikost ikon, velikost okna a možnosti chování,
+  * [Informace o aplikaci](#app-information): verze a soubor s nastavením,
 * *Sbírka*:
   * [Sbírka a databáze](#collection-database): otevřená kolekce, její datový režim, [export do jiného datového režimu](#export), verze databáze a kontrola kvality a složka obrázků,
   * [Import a synchronizace sbírky](#import-update): import zařízení z jiné kolekce nebo aktualizace dříve importovaných zařízení.
@@ -17,14 +19,12 @@ Tato stránka popisuje všechny funkce obrazovky **Nastavení** a jak je použí
 
 ![Karta Aplikace: verze, jazyk, téma, velikost textu, obnovení velikosti okna a možnosti chování](/img/settings_05_application.png)
 
-### Verze
-* Verze a datum vydání Katalogu a *Poznámky k vydání*, kde si lze přečíst, co se změnilo.
-* *Zkontrolovat novou verzi při spuštění*: je-li zapnuto, Katalog při spuštění zkontroluje, zda je k dispozici novější verze.
+### Rozhraní {#interface}
 
-### Jazyk {#language}
+#### Jazyk {#language}
 Jazyk rozhraní. Při prvním spuštění Katalog použije jazyk systému, pokud je k dispozici, jinak angličtinu (US).
 
-### Téma {#theme}
+#### Téma {#theme}
 | Téma | Popis |
 |------|-------|
 | *Téma plochy* | Řídí se barvami plochy. |
@@ -37,19 +37,29 @@ S každým tématem se Katalog řídí **světlým nebo tmavým režimem** syst�
 V některých linuxových prostředích (například Linux Mint s Cinnamonem) se tmavý režim při spuštění Katalogu nerozpozná: okno se otevře světlé a pak se řídí další změnou světlého nebo tmavého režimu.
 :::
 
-Na stejném řádku jsou:
-* *Použijte větší velikost ikony*: zobrazí v seznamech větší ikony.
-* *Velikost textu*: zmenší nebo zvětší veškerý text Katalogu, od 80 % do 120 %, posuvníkem nebo jeho dvěma tlačítky. Velikost vychází z velikosti písma nastavené v systému, takže se řídí i změnou systémového písma. Název kolekce v horní části postranního panelu a nadpisy stránek si ponechávají systémovou velikost.
-* *Obnovit velikost okna*: vrátí okno na výchozí velikost **1280×800** (nebo na velikost obrazovky, je-li menší). Maximalizované okno se nejprve obnoví. Poloha okna se nemění. Stejnou velikost má okno při úplně prvním spuštění Katalogu.
+#### Velikost textu {#text-size}
+Zmenší nebo zvětší veškerý text Katalogu, od 80 % do 120 %, posuvníkem nebo jeho dvěma tlačítky. Velikost vychází z velikosti písma nastavené v systému, takže se řídí i změnou systémového písma. Název kolekce v horní části postranního panelu a nadpisy stránek si ponechávají systémovou velikost.
 
-### Chování {#behavior}
+#### Velikost ikon {#icon-size}
+*Použijte větší velikost ikony*: zobrazí v seznamech větší ikony.
+
+#### Velikost okna {#window-size}
+*Obnovit velikost okna*: vrátí okno na výchozí velikost **1280×800** (nebo na velikost obrazovky, je-li menší). Maximalizované okno se nejprve obnoví. Poloha okna se nemění. Stejnou velikost má okno při úplně prvním spuštění Katalogu.
+
+#### Chování {#behavior}
 | Možnost | Popis |
 |---------|-------|
 | *Třídění souborů rozlišuje malá a velká písmena* | Je-li zapnuto, třídění rozlišuje velikost písmen a dává toto pořadí: AA, AB, AC, Aa, Ab, Ac. |
 | *Obnovit stav zařízení při návratu do aplikace* | Je-li zapnuto, stav zařízení (dostupné nebo ne) se znovu zkontroluje pokaždé, když se okno Katalogu stane aktivním, takže disk mezitím připojený nebo odpojený se zobrazí správně. Ve výchozím stavu vypnuto. |
 | *Povolit akce, které mažou soubory (bez možnosti obnovení)* | Je-li zapnuto, lze soubory **trvale smazat** z výsledků [vyhledávání](Search) a z obrazovky [Prozkoumat](Explore). Ve výchozím stavu vypnuto: tyto akce jsou pak zašedlé. *Přesunout do koše*, které lze vrátit zpět, je vždy dostupné. |
 
-### Soubor s nastavením
+### Informace o aplikaci {#app-information}
+
+#### Verze
+* Verze a datum vydání Katalogu a *Poznámky k vydání*, kde si lze přečíst, co se změnilo.
+* *Zkontrolovat novou verzi při spuštění*: je-li zapnuto, Katalog při spuštění zkontroluje, zda je k dispozici novější verze.
+
+#### Soubor s nastavením
 Cesta k souboru, ve kterém Katalog uchovává svá nastavení a poslední volby. *Otevřít* ho otevře v přidružené aplikaci.
 
 ## Sbírka a databáze {#collection-database}

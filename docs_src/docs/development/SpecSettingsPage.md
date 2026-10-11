@@ -45,7 +45,7 @@ is not part of this layout; restoring it is a separate decision.
 | ID | Requirement | Status |
 |----|-------------|--------|
 | SET-F1 | The K3 Settings page shows a tab bar at the top with two tabs, in this order: "Application", then "Collection". The titles reuse the existing PageSettings strings `qsTr("Application")` and `qsTr("Collection")` byte-for-byte. | [Planned] |
-| SET-F2 | The Application tab holds the rows of the former Application section in this order: Version, Language, Theme (including the text size and *Reset window size*), Behavior, settings file. *(Order set by the maintainer on 2026-10-10: Language before Theme, Behavior after Theme.)* The section heading "Application" is **not** shown inside the tab: the tab title replaces it. The rows are unchanged. | [Planned] |
+| SET-F2 | The Application tab holds two sections, each with a section title (`SpecPageLayout.md` PGL-F5, PGL-C13): **"Interface"**, with rows in this order: Language, Theme, Text size, Icon size (the *Use bigger icon size* checkbox), Window size (the *Reset window size* button), Behavior; then **"App information"**, with rows in this order: Version (with *Release Notes*), the *Check for a new version on startup* checkbox, Settings file. No "Application" heading is shown inside the tab: the tab title replaces it. The controls are unchanged; only their grouping, order and row labels change. *(Amended 2026-10-11 by the maintainer: was Version, Language, Theme (including the text size and *Reset window size*), Behavior, settings file, with no section titles.)* | [Planned] |
 | SET-F3 | The Collection tab holds the "Collection & Database" section (Database Mode, Collection, Database Version with the Quality check button, Database Name / hosted form) and then the "Collection Import & Synchronization" section, each with its heading. The rows are unchanged, except for the export buttons added to "Collection & Database", which are owned by `SpecCollectionExport.md` (CEX-F1). *(Amendment approved by the maintainer on 2026-10-10.)* | [Planned] |
 | SET-F4 | Opening Settings from the drawer *Settings* entry, or by restoring the last page at startup, always shows the Application tab. | [Planned] |
 | SET-F5 | Opening Settings from the drawer *Open... > Hosted Database...* shows the Collection tab, with the hosted form visible. | [Planned] |
@@ -56,14 +56,14 @@ is not part of this layout; restoring it is a separate decision.
 | ID | Requirement | Status |
 |----|-------------|--------|
 | SET-C1 | K3 only. No change to `core/` or to K2's Settings tab. | [Planned] |
-| SET-C2 | The tab split adds no user-visible string. Every row keeps its existing `qsTr` text. Strings added by a section's own spec (for example the export buttons, `SpecCollectionExport.md` CEX-C3) are governed by that spec, not by this constraint. *(Amendment approved by the maintainer on 2026-10-10.)* | [Planned] |
+| SET-C2 | The tab split adds no user-visible string. Every row keeps its existing `qsTr` text. Strings added by a section's own spec (for example the export buttons, `SpecCollectionExport.md` CEX-C3) are governed by that spec, not by this constraint. *(Amendment approved by the maintainer on 2026-10-10.)* *(Amendment 2026-10-11: the SET-F2 sections add four strings, each approved by the maintainer: "Interface", "App information", "Icon size", "Window size". "Text size" becomes a row label with its existing qsTr string unchanged.)* | [Planned] |
 | SET-C3 | The tab choice is not persisted: no new key in `katalog3_prerelease_settings.ini`. Beta1/beta2 settings files are unaffected. | [Planned] |
 
 ---
 
 ## Manual test charter
 
-- **SET-F1 / SET-F2 / SET-F3** — Open Settings: the tabs are *Application* then *Collection*. The Application tab shows Version, Language, Theme, Behavior and the settings file, in that order, with no "Application" heading. The Collection tab shows "Collection & Database" then "Collection Import & Synchronization". Switch the language: both tab titles are translated.
+- **SET-F1 / SET-F2 / SET-F3** — Open Settings: the tabs are *Application* then *Collection*. The Application tab shows the title "Interface" (Language, Theme, Text size, Icon size, Window size, Behavior), then the title "App information" (Version, Check for a new version on startup, Settings file), with no "Application" heading. Both titles use the PGL-F5 row, and all labels of the tab share one column. The Collection tab shows "Collection & Database" then "Collection Import & Synchronization". Switch the language: both tab titles are translated.
 - **SET-F4** — Open Settings from the drawer, switch to Collection, close, reopen: the Application tab shows. Quit with Settings as the last page and restart: the Application tab shows.
 - **SET-F6** — On Breeze and on Fusion, at a wide and a narrow window: the *Application* and *Collection* tabs are of equal width and together fill the tab bar.
 - **SET-F5** — Drawer *Open... > Hosted Database...*: the Collection tab shows with the hosted form.
