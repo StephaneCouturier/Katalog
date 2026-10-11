@@ -36,6 +36,12 @@ bold & line)". The Backup "Add Link" / "Edit Link" form leaves Kirigami.FormLayo
 (`SpecPageLayout.md` PGL-F9), so K3 no longer shows any `FormLayout` section
 title; that exception is removed from TYP-F5.
 
+**Note of 2026-10-11 (forms back on FormLayout).** K3 form pages move to
+Kirigami.FormLayout for responsiveness (`SpecPageLayout.md` PGL-O3, PGL-F15),
+Settings first, and PGL-F9 is removed. Their section titles stay K3's own title
+row (PGL-C13), not Kirigami's built-in section heading, so K3 still shows no
+`FormLayout` section title: TYP-F4 and TYP-F5 are unchanged.
+
 **Decision of 2026-09-26 (text-size setting).** As a first step, the text-size
 setting scales **text only**, app-wide; it does not scale icons or spacing. The
 existing drawer "Card text size" slider becomes that setting: its value now

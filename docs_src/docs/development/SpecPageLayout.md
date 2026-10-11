@@ -1,7 +1,7 @@
 ---
 id: SpecPageLayout
 title: Page Layout — Scrollbar Margin and Section Titles
-description: Requirements for K3 scrollable pages to keep their content clear of the vertical scrollbar, with a margin read from the running style, through one shared page component, and how section titles are drawn on K3 form pages.
+description: Requirements for K3 scrollable pages to keep their content clear of the vertical scrollbar, with a margin read from the running style, through one shared page component, how section titles are drawn on K3 form pages, and how K3 pages stay usable as the window narrows to phone size.
 version: "2.13"
 ---
 
@@ -48,6 +48,32 @@ so that the body starts aligned with the section title; a checkbox that opens a
 body row is left-aligned with the section title checkbox above it (PGL-F10,
 PGL-C7).
 
+**Decision of 2026-10-11 (responsiveness).** An audit found that, in a window
+360 px wide, the K3 Settings page lays out wider than the page on both tabs
+(Application about 396 px, Collection about 390 px, for 288 px available), and
+its right side is clipped: buttons (Edit, Select, Quality check, Export, Open),
+long checkboxes, hosted fields. The cause is the hand-made two-column grid
+(labels left, fields right), which never adapts, together with checkbox text
+that does not wrap and Export buttons in a fixed row. The maintainer approved a
+new app-wide objective (PGL-O3) and stressed that responsiveness is a
+**critical** K3 requirement. It is not expressed as pixel breakpoints:
+adaptation is decided by Kirigami's own components (FormLayout wide/narrow
+mode, ActionToolBar overflow, card lists), never by thresholds of our own
+(PGL-C11). Tables are the desktop rendering and are a stated limit of the
+objective (see [Out of scope](#out-of-scope); `SpecCardsAndTables.md` CDT-O1).
+Layout decision: Kirigami.FormLayout "for now — simpler and reliable"; Kirigami
+Addons FormCard / ConfigurationView was set aside and no library is added
+(PGL-C12). Settings is the first page to move and validates these
+requirements: "ok, let's implement on Settings, before any of other page to
+validate the specs" (PGL-F17). Create, Device Edit, Tags and the Backup link
+form follow later (PGL-F18, Backlog), which reverses PGL-F9.
+
+**Decision of 2026-10-11 (forms aligned to the left).** In wide mode
+Kirigami.FormLayout centres the form in the page. The maintainer: "the centered
+view is maybe very common for Mobile but today Katalog is only used on desktop.
+the Search page form is not centered but aligned on the left. I want first to
+have a consistent UI: all aligned to the left." (PGL-F19).
+
 > **Reading the requirement IDs.** Each requirement has a permanent ID.
 > IDs are never renumbered or reused; a retired requirement is marked
 > `[Removed]`, not deleted. Status is one of
@@ -63,7 +89,9 @@ Tags, Backup, Backup mapping and Settings; the presentation of section titles
 on the K3 form pages Settings, Search, Create, Tags, Device Edit and the Backup
 "Add Link" / "Edit Link" form (PGL-F5 to F9); the left margin of section
 bodies on the K3 Search form, relative to their section title (PGL-F10,
-PGL-C7).
+PGL-C7); the responsiveness of every K3 page as the window narrows to phone
+size (PGL-O3), and the label/field layout of the K3 form pages (PGL-F15 to
+F18, PGL-C11 to C13).
 
 **Out of scope:** see [Out of scope](#out-of-scope).
 
@@ -75,6 +103,7 @@ PGL-C7).
 |----|-------------|--------|
 | PGL-O1 | On every scrollable K3 page, in any window size and interface language, the page's vertical scrollbar never covers or touches the page content; content and scrollbar stay visibly separate. | [Planned] |
 | PGL-O2 | On K3 form pages, every section title is set apart from the content above it in the same way, as in other Plasma/Kirigami applications, so all section titles of a page look alike. | [Planned] |
+| PGL-O3 | Every K3 page keeps all its content visible and usable as the window narrows to phone size, using Kirigami's adaptive components rather than fixed widths. *(Approved by the maintainer on 2026-10-11; tables are a stated limit, see Out of scope.)* | [Planned] |
 
 ## Functional requirements — *what the system does*
 
@@ -87,13 +116,18 @@ PGL-C7).
 | PGL-F5 | A section title is drawn as one row: the title text, then on the same line a horizontal separator (Kirigami.Separator) that fills the remaining row width, vertically centred on the text. No separator is drawn on a row of its own above the title. | [Planned] |
 | PGL-F6 | The first section title of a page carries the line of PGL-F5 too. | [Planned] |
 | PGL-F7 | When a title row carries a trailing control, the line sits between the title and that control: Create "Global Parameters" (Expand/Collapse button). On Search, where the title is a checkbox that switches the section on, the line follows the checkbox. Tags "Current folders and tags" carries no trailing control: its title and line span the full width, and the tag filter combo sits on the row below, in the right-hand column it occupied before (above the "Tag" column header). *(Amended 2026-09-30: the Tags combo was on the title row.)* | [Planned] |
-| PGL-F8 | PGL-F5 to F7 apply to these titles: Settings (Collection & Database; Collection Import & Synchronization; Application; Search, when that section is enabled), Search (File name; File attributes; File metadata; Folder criteria; Duplicates; Differences), Create (Catalog definition; Content options; Global Parameters), Tags (Add a tag; Current folders and tags), Device Edit (Device; Location; Content options; Storage details — each shown only for the device types that show it today), Backup "Add Link" / "Edit Link" form (Source; Target; Options). The Backup page itself has no section title. *(Amended 2026-09-30: Backup link form added.)* | [Planned] |
-| PGL-F9 | The Backup "Add Link" / "Edit Link" form uses the two-column grid of Create and Settings instead of Kirigami.FormLayout: field labels in the left column, left-aligned, at the dimmed opacity (0.7) of the other forms; fields in the right column. Its fields, their order and their behaviour are unchanged; each label keeps its former text verbatim (no colon added). | [Planned] |
+| PGL-F8 | PGL-F5 to F7 apply to these titles: Settings (Collection & Database; Collection Import & Synchronization; Search, when that section is enabled), Search (File name; File attributes; File metadata; Folder criteria; Duplicates; Differences), Create (Catalog definition; Content options; Global Parameters), Tags (Add a tag; Current folders and tags), Device Edit (Device; Location; Content options; Storage details — each shown only for the device types that show it today), Backup "Add Link" / "Edit Link" form (Source; Target; Options). The Backup page itself has no section title. *(Amended 2026-09-30: Backup link form added.)* *(Amended 2026-10-11: Settings "Application" removed; the tab title replaces it, `SpecSettingsPage.md` SET-F2.)* | [Planned] |
+| PGL-F9 | The Backup "Add Link" / "Edit Link" form uses the two-column grid of Create and Settings instead of Kirigami.FormLayout: field labels in the left column, left-aligned, at the dimmed opacity (0.7) of the other forms; fields in the right column. Its fields, their order and their behaviour are unchanged; each label keeps its former text verbatim (no colon added). *(Removed 2026-10-11: replaced by PGL-F15 and PGL-F18; the Backup link form returns to Kirigami.FormLayout. Its section titles stay governed by PGL-F5 and PGL-F8.)* | [Removed] |
 | PGL-F10 | On the Search form, the body of every section listed for Search in PGL-F8 (File name; File attributes; File metadata; Folder criteria; Duplicates; Differences) starts at the same left margin as its section title row, and that margin is the same for all six sections. When the first item of a body row is a checkbox (e.g. File attributes "Type", Folder criteria "Tag", the File metadata checkboxes), that checkbox is left-aligned with the section title checkbox above it. Layout nested inside a body (e.g. the device lists of Duplicates and Differences, offset by the label column) keeps its offset relative to the body. The text of a plain label in the left column of a section body ("text", "with", "in", "exclude"; Duplicates "On", "Scope"; Differences "On") is left-aligned with the text of the section title checkbox, i.e. it starts one checkbox width in. *(Amended 2026-10-02.)* | [Planned] |
 | PGL-F11 | On the Search form, the left label column is wide enough for the French Folder criteria "Etiquette" checkbox to fit on one line. A longer translation (e.g. German, Latvian) may wrap onto a second line but is never elided (PGL-C2). The column is not widened further. *(User's choice, 2026-10-02.)* | [Planned] |
 | PGL-F12 | On the Search form, every left-column label or checkbox is vertically centred on the first line of the fields in its row, as File name "text" already is. This includes File attributes "Size", "Date"; File metadata "Size", "Duration"; Duplicates "On", "Scope"; Differences "On". | [Planned] |
 | PGL-F13 | On the Search form, the vertical gap between rows of a section body and between wrapped lines inside a row is the same: Kirigami.Units.mediumSpacing. Consequently the horizontal gap between groups on a wrapped line (e.g. "> 0 Bytes" and "< 1000 GiB") becomes mediumSpacing too. The other K3 forms keep smallSpacing; the wider gap on Search is the user's choice. *(Amended 2026-10-02: was smallSpacing, as on the other K3 forms.)* | [Planned] |
 | PGL-F14 | On the Search form File metadata "Size" row, when the page is narrowed and the maximum group wraps onto its own line, the `<` sign and its maximum field start at the same x as the `>` sign and minimum field above them. This applies on both the Width and the Height lines, so the signs and fields form one column. The "Width"/"Height" labels keep their text and width. | [Planned] |
+| PGL-F15 | On a K3 form page, each field label and its field are laid out by Kirigami.FormLayout: the label sits beside its field when there is room and above it when the page is narrow, and FormLayout decides which. Every label keeps its qsTr text verbatim, with no colon added. | [Planned] |
+| PGL-F16 | On a K3 form page, no row is wider than the page. Checkbox and label texts wrap onto further lines. When a row of buttons does not fit, the buttons that do not fit move to the next line. Nothing is hidden or shortened (PGL-C2). | [Planned] |
+| PGL-F17 | PGL-F15 and PGL-F16 apply to the Settings page, both tabs (Application and Collection). Settings is the page that validates these requirements before any other page moves. | [Planned] |
+| PGL-F18 | PGL-F15 and PGL-F16 apply to Create, Device Edit, Tags and the Backup "Add Link" / "Edit Link" form. | [Backlog] |
+| PGL-F19 | A K3 form on Kirigami.FormLayout is aligned to the left, like the Search form, never centred. When labels sit beside their fields, the form starts at the page's left content edge with its label column first; labels stay aligned against their field as FormLayout draws them. When labels sit above their fields, the form uses the full page width, unchanged. Applies wherever PGL-F15 applies (Settings now, PGL-F17; the PGL-F18 pages when they move). *(Decision of 2026-10-11.)* | [Planned] |
 
 ## Constructional requirements — *how it is built / limits / MUST-NOTs*
 
@@ -109,6 +143,9 @@ PGL-C7).
 | PGL-C8 | The left padding that PGL-F10 adds to plain labels is the x position, within the section title checkbox control, of the first visible pixel column of the box the running style draws for it. It is measured at run time from an image of the title checkbox's indicator (its control padding and indicator position plus the transparent inset inside the indicator), because no Qt Quick Controls property exposes that inset. It is never a hardcoded pixel value and has no per-style branch. The measurement is taken once, when the title checkbox is first shown. If it cannot be taken, the padding falls back to the indicator's x position within the control. It is defined once on the Search form page, beside the margin of PGL-C7, and sits inside the label, so the label column width does not change. *(Amended 2026-10-02: was the checkbox's own left padding, which is 0 on Breeze while the visible box starts a few pixels in, and still left labels misaligned on Windows.)* *(Removed 2026-10-02 at the user's request, never implemented: plain-label alignment with the checkbox box abandoned; PGL-F10 keeps checkbox alignment only.)* | [Removed] |
 | PGL-C9 | The offset of PGL-F10's plain labels is where the section title checkbox's text starts (its content item's x plus that item's left padding), read at run time. It has no hardcoded value and no style branch, is defined once on the Search form page beside the margin of PGL-C7, and is applied as padding inside the label, so the label column, the fields and the Duplicates/Differences device lists do not move. | [Planned] |
 | PGL-C10 | The Search form's label column width (Kirigami.Units.gridUnit * 5) and its row gap (PGL-F13) are each defined once on the page, beside the margin of PGL-C7. The centring of PGL-F12 is computed at run time from the actual height of the row's first line of fields, with no hardcoded pixel value. | [Planned] |
+| PGL-C11 | How a page adapts to its width is decided by Kirigami components (FormLayout wide/narrow mode, ActionToolBar overflow, card lists). There are no pixel breakpoints or width thresholds of our own, and no hardcoded width that can make a page wider than the window. | [Planned] |
+| PGL-C12 | No library or module is added for PGL-O3. Kirigami Addons (FormCard, ConfigurationView) is not used. | [Planned] |
+| PGL-C13 | Inside a FormLayout, a section title is K3's own title row (PGL-F5, PGL-F6, PGL-C6, `SpecTypography.md` TYP-F4) spanning the form width. Kirigami's built-in section label (FormData.isSection with a FormData.label, drawn as a Heading) is not used. All label/field rows of one tab or page share one label column. | [Planned] |
 
 ---
 
@@ -120,11 +157,15 @@ Run with the interface in French, on Linux (Breeze) and on Windows (Fusion).
 - **PGL-F2**: make the window tall enough that the scrollbar disappears: the right margin returns to the normal page padding.
 - **PGL-F3**: repeat both checks on Selection, Create, Device Edit, Tags, Backup, Backup mapping and Settings.
 - **PGL-C1**: a code search finds no literal scrollbar width.
-- **PGL-F8 / F9 (Backup)**: open Backup, then "Add Link" and "Edit Link" on an existing link. "Source", "Target" and "Options" are in the title colour of THM-F17 (link colour under theme 0, text colour under theme 2), regular weight, each followed by a line on the same row. Field labels sit left-aligned in the left column, dimmed like the Create form, fields in the right column, in the same order as before; every field still works (catalog pickers, name, type, directories, strict copy, on conflict, source mode) and saving a link behaves as before.
+- **PGL-F8 (Backup)**: open Backup, then "Add Link" and "Edit Link" on an existing link. "Source", "Target" and "Options" are in the title colour of THM-F17 (link colour under theme 0, text colour under theme 2), regular weight, each followed by a line on the same row; every field still works (catalog pickers, name, type, directories, strict copy, on conflict, source mode) and saving a link behaves as before.
 - **PGL-C3**: `git diff` shows no `qsTr` / `tr` string change.
 - **PGL-O2 / F5 to F8 / C6**: open Settings, Search, Create, Tags and Device Edit (for a Catalog, a Storage and a Virtual device), in French and English. Each title listed in PGL-F8, including the first one on the page, shows its text followed by a line on the same row, vertically centred, filling up to the page margin (PGL-F1). There is no full-width separator on its own row above any of these titles. On Create "Global Parameters" and Tags "Current folders and tags", the line stops before the button or combo. On Search the line follows each section checkbox. On Tags, "Current folders and tags" and its line span the full width, with the tag filter combo on the row below, above the "Tag" column header. `git diff` shows no qsTr change and nothing under core/ or qt_widgets/.
 - **PGL-F10 / C7**: open Search with every section switched on, in French and English. In each of the six sections, the left edge of the body content lines up with the section title checkbox; the "Type" (File attributes), "Tag" (Folder criteria) and File metadata checkboxes sit exactly under their section title checkbox; all six sections share the same body margin. The device lists in Duplicates and Differences keep their position relative to the label column. A code search shows the margin defined once on the page. `git diff` shows no qsTr change and nothing under core/ or qt_widgets/. The text of the plain labels ("text", "with", "in", "exclude", "On", "Scope") starts under the text of the checkboxes above, on Breeze and on Windows; no label is elided (PGL-C2).
 - **PGL-F11 to F13 / C10**: in French, on a normal and then a narrowed Search page: "Etiquette" fits on one line; every left-column label and checkbox is centred on the first line of its fields ("Taille" level with "Largeur"); every gap between rows and between wrapped lines is the same. In German and Latvian, long labels wrap but are never elided. A code search shows the label width and the row gap each defined once on the page.
+- **PGL-O3 / F15 to F17 (Settings)**: set the window to about 360 px wide, in French and in German, and open Settings on both tabs. Nothing is clipped or passes under the scrollbar; field labels move above their fields; long checkbox texts wrap; the Export buttons wrap onto a further line; Edit, Select, Quality check and Open stay reachable; the hosted fields and the HST-F4 message fit the width. Widen the window: labels return beside their fields.
+- **PGL-F19**: on a wide window, open Settings on both tabs: the form starts at the left page margin, not centred, with labels against their fields; it lines up on the left with the Search form. Narrow the window until labels move above fields: the form uses the full width. Widen again: labels return beside their fields, form still on the left. Repeat on Breeze and Fusion.
+- **PGL-C11 / C12**: a code search on PageSettings.qml finds no width threshold or breakpoint; `git diff` adds no library or CMake module.
+- **PGL-C13**: on Settings, "Collection & Database" and "Collection Import & Synchronization" keep the PGL-F5 title row (text then line, title colour, regular weight); all labels of a tab share one column.
 - **PGL-F14**: narrow the Search page until the File metadata Size groups wrap: on the Width and Height lines, each `<` field sits directly under the `>` field above it, in French and English.
 
 ---
@@ -145,5 +186,11 @@ Run with the interface in French, on Linux (Breeze) and on Windows (Fusion).
 - Sub-titles that are not section titles (e.g. Device Edit "Exclude folders or
   files", inside Content options).
 - The quality-check dialog.
+- **Tables (limit of PGL-O3).** Tables (Search Results, Explore files, Devices
+  in Table mode, Backup preview) are the desktop rendering. At phone width they
+  may elide (`SpecCardsAndTables.md` CDT-F2) or scroll; their phone and tablet
+  rendering is the card list (CDT-O1), not a responsive table.
+- The Search form label column (PGL-F10 to F14) is not moved to FormLayout by
+  PGL-F15 to F18; that is a separate decision.
 - The width of the Search form label column (a separate request); the left
   margins of forms other than Search.

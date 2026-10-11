@@ -51,6 +51,14 @@ ScrollablePageFitted {
         }
     }
 
+    // FormLayout never sizes an item below its preferred width, so an item
+    // whose natural width follows its content (checkbox text, combo entries,
+    // button rows) asks for no more than the form has: it keeps its natural
+    // width when that fits, and wraps or shrinks to the page otherwise (PGL-F16).
+    // Not a breakpoint: nothing switches at a given width (PGL-C11).
+    // Rounded up: a fractional text width rounded down by the layout wraps the last word.
+    function fitWidth(natural) { return Math.min(Math.ceil(natural), formColumn.width) }
+
     // Settings Connect: empty host becomes localhost (HST-F1), then the host
     // checks (HST-F2..F4) before anything is saved or connected
     function requestHostedConnect() {
@@ -347,28 +355,32 @@ ScrollablePageFitted {
     // Open... > Hosted Database... opens Collection (SET-F5). Not persisted (SET-C3).
     header: Controls.TabBar {
         id: settingsTabBar
-        Controls.TabButton { text: qsTr("Application") }
-        Controls.TabButton { text: qsTr("Collection") }
+        // Equal shares of the full width on every style: Breeze sizes tab
+        // buttons to their text, Fusion already shares the width.
+        Controls.TabButton { text: qsTr("Application"); width: settingsTabBar.width / settingsTabBar.count }
+        Controls.TabButton { text: qsTr("Collection");  width: settingsTabBar.width / settingsTabBar.count }
     }
 
+    // Label/field rows are laid out by Kirigami.FormLayout (PGL-F15/F17): the
+    // label sits beside its field when there is room and above it when the page
+    // is narrow, as FormLayout decides — no width threshold of ours (PGL-C11).
+    // Long checkbox texts wrap and button rows wrap (PGL-F16).
     ColumnLayout {
+        id: formColumn
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.leftMargin: Kirigami.Units.gridUnit
         anchors.rightMargin: Kirigami.Units.gridUnit
 
-        // Collection tab (SET-F3). One GridLayout per tab so column 0 width is
-        // shared across the sections of that tab.
-        GridLayout {
+        // Collection tab (SET-F3). Its FormLayouts are twinned so all sections
+        // share one label column (PGL-C13).
+        ColumnLayout {
             visible: settingsTabBar.currentIndex === 1
             Layout.fillWidth: true
-            columns: 2
-            columnSpacing: Kirigami.Units.largeSpacing
-            rowSpacing: Kirigami.Units.smallSpacing
+            spacing: Kirigami.Units.smallSpacing
 
             // ── Collection & Database ──────────────────────────────────────
             RowLayout {
-                Layout.columnSpan: 2
                 Layout.fillWidth: true
                 Layout.topMargin: Kirigami.Units.smallSpacing
                 spacing: Kirigami.Units.largeSpacing
@@ -376,122 +388,131 @@ ScrollablePageFitted {
                 Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
             }
 
-            Controls.Label { text: qsTr("Database Mode"); opacity: 0.7; Layout.topMargin: Kirigami.Units.largeSpacing }
-            Controls.Label {
-                text: {
-                    var m = appManager1.databaseMode
-                    if (m === "Memory") return qsTr("Memory")
-                    if (m === "File")   return qsTr("File")
-                    if (m === "Hosted") return qsTr("Hosted")
-                    return "—"
-                }
-                Layout.topMargin: Kirigami.Units.largeSpacing
-            }
-
-            Controls.Label { text: qsTr("Collection"); opacity: 0.7 }
-            RowLayout {
+            Kirigami.FormLayout {
+                id: collectionForm
                 Layout.fillWidth: true
-                spacing: Kirigami.Units.smallSpacing
+                Layout.maximumWidth: implicitWidth  // left-aligned, never centred (PGL-F19)
+                twinFormLayouts: [hostedForm, importForm]
+
                 Controls.Label {
+                    Kirigami.FormData.label: qsTr("Database Mode")
                     text: {
-                        var mode = appManager1.databaseMode
-                        if (mode === "Memory") return appManager1.getCollectionFolder() || qsTr("(none)")
-                        if (mode === "File")   return appManager1.getDatabaseFilePath() || qsTr("(none)")
-                        if (mode === "Hosted") return appManager1.getHostName() + "/" + appManager1.getDatabaseName()
+                        var m = appManager1.databaseMode
+                        if (m === "Memory") return qsTr("Memory")
+                        if (m === "File")   return qsTr("File")
+                        if (m === "Hosted") return qsTr("Hosted")
                         return "—"
                     }
-                    elide: Text.ElideMiddle
-                    Layout.fillWidth: true
                 }
-                Controls.Button {
-                    text: qsTr("Edit")
-                    icon.name: "document-edit"
-                    visible: appManager1.databaseMode === "File"
-                    onClicked: appManager1.openDatabaseFile()
-                }
-                Controls.Button {
-                    text: qsTr("Edit")
-                    icon.name: "document-edit"
-                    visible: appManager1.databaseMode === "Memory"
-                    onClicked: appManager1.openFolder(appManager1.getCollectionFolder())
-                }
-                Controls.Button {
-                    text: qsTr("Edit")
-                    icon.name: "document-edit"
-                    visible: appManager1.databaseMode === "Hosted"
-                    onClicked: Qt.openUrlExternally(appManager1.getPhpMyAdminUrl()
-                                                    + encodeURIComponent(appManager1.getDatabaseName()))
-                }
-            }
 
-            Controls.Label { text: qsTr("Database Version"); opacity: 0.7; Layout.alignment: Qt.AlignVCenter }
-            RowLayout {
-                Layout.fillWidth: true
-                spacing: Kirigami.Units.smallSpacing
-                Controls.Label {
-                    text: appManager1.databaseSchemaVersion || "—"
+                RowLayout {
+                    Kirigami.FormData.label: qsTr("Collection")
                     Layout.fillWidth: true
-                }
-                // Quality Check, SpecQualityCheck.md QCK-F13
-                Controls.Button {
-                    text: qsTr("Quality check")
-                    icon.name: "checkmark"
-                    onClicked: qualityCheckDialog.run()
-                }
-            }
-
-            // ── Export to another mode (SpecCollectionExport.md CEX-F1, CEX-F12) ──
-            Controls.Label { text: " " }
-            RowLayout {
-                id: exportRow
-                readonly property bool exportAllowed: !appManager1.exportIsRunning
-                                                      && !appManager1.searchIsRunning
-                                                      && !appManager1.catalogIsCreating
-                                                      && !appManager1.deviceUpdateIsRunning
-                Layout.fillWidth: true
-                spacing: Kirigami.Units.smallSpacing
-                Controls.Button {
-                    text: qsTr("Export to SQLite file")
-                    icon.name: "document-export"
-                    visible: appManager1.databaseMode === "Memory" || appManager1.databaseMode === "Hosted"
-                    enabled: exportRow.exportAllowed
-                    onClicked: {
-                        // Browse folder: Hosted mode has no collection folder
-                        var folder = appManager1.getCollectionBrowsePath()
-                        exportFileDialog.currentFolder = appManager1.pathToFileUrl(folder)
-                        exportFileDialog.selectedFile  = appManager1.pathToFileUrl(folder + "/export.db")
-                        exportFileDialog.open()
+                    spacing: Kirigami.Units.smallSpacing
+                    Controls.Label {
+                        text: {
+                            var mode = appManager1.databaseMode
+                            if (mode === "Memory") return appManager1.getCollectionFolder() || qsTr("(none)")
+                            if (mode === "File")   return appManager1.getDatabaseFilePath() || qsTr("(none)")
+                            if (mode === "Hosted") return appManager1.getHostName() + "/" + appManager1.getDatabaseName()
+                            return "—"
+                        }
+                        elide: Text.ElideMiddle
+                        Layout.fillWidth: true
+                        // The elided path must not size the form (PGL-F16)
+                        Layout.preferredWidth: Kirigami.Units.gridUnit * 6
+                    }
+                    Controls.Button {
+                        text: qsTr("Edit")
+                        icon.name: "document-edit"
+                        visible: appManager1.databaseMode === "File"
+                        onClicked: appManager1.openDatabaseFile()
+                    }
+                    Controls.Button {
+                        text: qsTr("Edit")
+                        icon.name: "document-edit"
+                        visible: appManager1.databaseMode === "Memory"
+                        onClicked: appManager1.openFolder(appManager1.getCollectionFolder())
+                    }
+                    Controls.Button {
+                        text: qsTr("Edit")
+                        icon.name: "document-edit"
+                        visible: appManager1.databaseMode === "Hosted"
+                        onClicked: Qt.openUrlExternally(appManager1.getPhpMyAdminUrl()
+                                                        + encodeURIComponent(appManager1.getDatabaseName()))
                     }
                 }
-                Controls.Button {
-                    text: qsTr("Export to Memory mode (csv)")
-                    icon.name: "document-export"
-                    visible: appManager1.databaseMode === "File" || appManager1.databaseMode === "Hosted"
-                    enabled: exportRow.exportAllowed
-                    onClicked: {
-                        exportFolderDialog.currentFolder = appManager1.pathToFileUrl(appManager1.getCollectionBrowsePath())
-                        exportFolderDialog.open()
+
+                RowLayout {
+                    Kirigami.FormData.label: qsTr("Database Version")
+                    Layout.fillWidth: true
+                    spacing: Kirigami.Units.smallSpacing
+                    Controls.Label {
+                        text: appManager1.databaseSchemaVersion || "—"
+                        Layout.fillWidth: true
+                    }
+                    // Quality Check, SpecQualityCheck.md QCK-F13
+                    Controls.Button {
+                        text: qsTr("Quality check")
+                        icon.name: "checkmark"
+                        onClicked: qualityCheckDialog.run()
                     }
                 }
-            }
 
-            // ── Images folder ──────────────────────────────────────────────
-            Controls.Label { text: qsTr("Images folder"); opacity: 0.7; Layout.alignment: Qt.AlignVCenter }
-            RowLayout {
-                Layout.fillWidth: true
-                spacing: Kirigami.Units.smallSpacing
-                Controls.TextField {
-                    id: imageFolderField
-                    text: appManager1.imageFolderPath
+                // ── Export to another mode (SpecCollectionExport.md CEX-F1, CEX-F12) ──
+                // A Flow: the second button moves to the next line when both do not fit (PGL-F16).
+                Flow {
+                    id: exportRow
+                    readonly property bool exportAllowed: !appManager1.exportIsRunning
+                                                          && !appManager1.searchIsRunning
+                                                          && !appManager1.catalogIsCreating
+                                                          && !appManager1.deviceUpdateIsRunning
                     Layout.fillWidth: true
-                    onEditingFinished: appManager1.imageFolderPath = text
+                    Layout.preferredWidth: pageSettingsRoot.fitWidth(childrenRect.width)
+                    spacing: Kirigami.Units.smallSpacing
+                    Controls.Button {
+                        text: qsTr("Export to SQLite file")
+                        icon.name: "document-export"
+                        visible: appManager1.databaseMode === "Memory" || appManager1.databaseMode === "Hosted"
+                        enabled: exportRow.exportAllowed
+                        onClicked: {
+                            // Browse folder: Hosted mode has no collection folder
+                            var folder = appManager1.getCollectionBrowsePath()
+                            exportFileDialog.currentFolder = appManager1.pathToFileUrl(folder)
+                            exportFileDialog.selectedFile  = appManager1.pathToFileUrl(folder + "/export.db")
+                            exportFileDialog.open()
+                        }
+                    }
+                    Controls.Button {
+                        text: qsTr("Export to Memory mode (csv)")
+                        icon.name: "document-export"
+                        visible: appManager1.databaseMode === "File" || appManager1.databaseMode === "Hosted"
+                        enabled: exportRow.exportAllowed
+                        onClicked: {
+                            exportFolderDialog.currentFolder = appManager1.pathToFileUrl(appManager1.getCollectionBrowsePath())
+                            exportFolderDialog.open()
+                        }
+                    }
                 }
-                Controls.Button {
-                    text: qsTr("Select")
-                    icon.name: "edit-select"
-                    onClicked: {
-                        imageFolderDialog.currentFolder = appManager1.pathToFileUrl(imageFolderField.text || appManager1.getCollectionFolder())
-                        imageFolderDialog.open()
+
+                // ── Images folder ──────────────────────────────────────────
+                RowLayout {
+                    Kirigami.FormData.label: qsTr("Images folder")
+                    Layout.fillWidth: true
+                    spacing: Kirigami.Units.smallSpacing
+                    Controls.TextField {
+                        id: imageFolderField
+                        text: appManager1.imageFolderPath
+                        Layout.fillWidth: true
+                        onEditingFinished: appManager1.imageFolderPath = text
+                    }
+                    Controls.Button {
+                        text: qsTr("Select")
+                        icon.name: "edit-select"
+                        onClicked: {
+                            imageFolderDialog.currentFolder = appManager1.pathToFileUrl(imageFolderField.text || appManager1.getCollectionFolder())
+                            imageFolderDialog.open()
+                        }
                     }
                 }
             }
@@ -500,9 +521,8 @@ ScrollablePageFitted {
             // Refused host (HST-F4): blocking validation error at the top of the form
             Kirigami.InlineMessage {
                 id: invalidHostMessage
-                Layout.columnSpan: 2
                 Layout.fillWidth: true
-                Layout.topMargin: Kirigami.Units.largeSpacing * 2
+                Layout.topMargin: Kirigami.Units.largeSpacing
                 type: Kirigami.MessageType.Warning
                 showCloseButton: true
                 visible: false
@@ -510,87 +530,59 @@ ScrollablePageFitted {
                       + qsTr("Only local or private network allowed.") + "\n"
                       + qsTr("Valid:") + " localhost, 127.x.x.x, 192.168.x.x, 10.x.x.x, 172.16-31.x.x"
             }
-            Controls.Label {
-                text: qsTr("Host Name"); opacity: 0.7
-                visible: appManager1.databaseMode === "Hosted" || showHostedForm
-                Layout.topMargin: Kirigami.Units.largeSpacing * 2
-            }
-            Controls.TextField {
-                id: hostField
+
+            Kirigami.FormLayout {
+                id: hostedForm
                 Layout.fillWidth: true
-                onTextEdited: invalidHostMessage.visible = false
+                Layout.maximumWidth: implicitWidth  // left-aligned, never centred (PGL-F19)
+                Layout.topMargin: Kirigami.Units.largeSpacing
                 visible: appManager1.databaseMode === "Hosted" || showHostedForm
-                Layout.topMargin: Kirigami.Units.largeSpacing * 2
-            }
+                twinFormLayouts: [collectionForm, importForm]
 
-            Controls.Label {
-                text: qsTr("Database Name"); opacity: 0.7
-                visible: appManager1.databaseMode === "Hosted" || showHostedForm
-            }
-            Controls.TextField {
-                id: dbNameField
-                Layout.fillWidth: true
-                visible: appManager1.databaseMode === "Hosted" || showHostedForm
-            }
-
-            Controls.Label {
-                text: qsTr("Port"); opacity: 0.7
-                visible: appManager1.databaseMode === "Hosted" || showHostedForm
-            }
-            Controls.SpinBox {
-                id: portField
-                from: 1; to: 65535; value: 3306
-                visible: appManager1.databaseMode === "Hosted" || showHostedForm
-            }
-
-            Controls.Label {
-                text: qsTr("User Name"); opacity: 0.7
-                visible: appManager1.databaseMode === "Hosted" || showHostedForm
-            }
-            Controls.TextField {
-                id: userField
-                Layout.fillWidth: true
-                visible: appManager1.databaseMode === "Hosted" || showHostedForm
-            }
-
-            Controls.Label {
-                text: qsTr("Password"); opacity: 0.7
-                visible: appManager1.databaseMode === "Hosted" || showHostedForm
-            }
-            Controls.TextField {
-                id: passwordField
-                echoMode: TextInput.Password
-                Layout.fillWidth: true
-                visible: appManager1.databaseMode === "Hosted" || showHostedForm
-            }
-
-            Controls.Label {
-                text: qsTr("phpMyAdmin URL"); opacity: 0.7
-                visible: appManager1.databaseMode === "Hosted" || showHostedForm
-            }
-            Controls.TextField {
-                id: phpMyAdminUrlField
-                text: appManager1.getPhpMyAdminUrl()
-                Layout.fillWidth: true
-                visible: appManager1.databaseMode === "Hosted" || showHostedForm
-                onEditingFinished: appManager1.setPhpMyAdminUrl(text)
-            }
-
-            Controls.Label {
-                text: " "
-                visible: appManager1.databaseMode === "Hosted" || showHostedForm
-            }
-            Controls.Button {
-                text: qsTr("Connect")
-                icon.name: "network-connect"
-                enabled: dbNameField.text.length > 0
-                visible: appManager1.databaseMode === "Hosted" || showHostedForm
-                onClicked: pageSettingsRoot.requestHostedConnect()
+                Controls.TextField {
+                    id: hostField
+                    Kirigami.FormData.label: qsTr("Host Name")
+                    Layout.fillWidth: true
+                    onTextEdited: invalidHostMessage.visible = false
+                }
+                Controls.TextField {
+                    id: dbNameField
+                    Kirigami.FormData.label: qsTr("Database Name")
+                    Layout.fillWidth: true
+                }
+                Controls.SpinBox {
+                    id: portField
+                    Kirigami.FormData.label: qsTr("Port")
+                    from: 1; to: 65535; value: 3306
+                }
+                Controls.TextField {
+                    id: userField
+                    Kirigami.FormData.label: qsTr("User Name")
+                    Layout.fillWidth: true
+                }
+                Controls.TextField {
+                    id: passwordField
+                    Kirigami.FormData.label: qsTr("Password")
+                    echoMode: TextInput.Password
+                    Layout.fillWidth: true
+                }
+                Controls.TextField {
+                    id: phpMyAdminUrlField
+                    Kirigami.FormData.label: qsTr("phpMyAdmin URL")
+                    text: appManager1.getPhpMyAdminUrl()
+                    Layout.fillWidth: true
+                    onEditingFinished: appManager1.setPhpMyAdminUrl(text)
+                }
+                Controls.Button {
+                    text: qsTr("Connect")
+                    icon.name: "network-connect"
+                    enabled: dbNameField.text.length > 0
+                    onClicked: pageSettingsRoot.requestHostedConnect()
+                }
             }
 
             // ── Import ─────────────────────────────────────────────────────
             RowLayout {
-                Layout.columnSpan: 2
                 Layout.fillWidth: true
                 Layout.topMargin: Kirigami.Units.largeSpacing * 2
                 spacing: Kirigami.Units.largeSpacing
@@ -598,389 +590,401 @@ ScrollablePageFitted {
                 Kirigami.Separator { Layout.fillWidth: true; Layout.alignment: Qt.AlignVCenter }
             }
 
-            Controls.Label { text: qsTr("Data mode"); opacity: 0.7; Layout.alignment: Qt.AlignVCenter; Layout.topMargin: Kirigami.Units.largeSpacing }
-            ComboBoxFitted {
-                id: importModeCombo
-                model: ["Katalog / " + qsTr("File"), "Katalog / " + qsTr("Memory"), "VVV / " + qsTr("Tab Separated Values")]
+            Kirigami.FormLayout {
+                id: importForm
                 Layout.fillWidth: true
-                Layout.maximumWidth: Number.POSITIVE_INFINITY  // stretches with the form (CBX-C7)
-                onCurrentIndexChanged: importPathField.text = ""
-                Layout.topMargin: Kirigami.Units.largeSpacing
-            }
+                Layout.maximumWidth: implicitWidth  // left-aligned, never centred (PGL-F19)
+                twinFormLayouts: [collectionForm, hostedForm]
 
-            Controls.Label { text: qsTr("Source"); opacity: 0.7; Layout.alignment: Qt.AlignVCenter }
-            RowLayout {
-                Layout.fillWidth: true
-                spacing: Kirigami.Units.smallSpacing
-                Controls.TextField {
-                    id: importPathField
-                    placeholderText: importModeCombo.currentIndex === 2 ? qsTr("VVV export file (.tsv)") : qsTr("Path")
-                    Layout.fillWidth: true
-                    readOnly: true
-                }
-                Controls.Button {
-                    text: qsTr("Select")
-                    icon.name: "edit-select"
-                    onClicked: {
-                        if (importModeCombo.currentIndex === 0) {
-                            importFileDialog.currentFolder = appManager1.pathToFileUrl(appManager1.getCollectionFolder())
-                            importFileDialog.open()
-                        } else if (importModeCombo.currentIndex === 1) {
-                            importFolderDialog.currentFolder = appManager1.pathToFileUrl(appManager1.getCollectionFolder())
-                            importFolderDialog.open()
-                        } else {
-                            importFileDialog.currentFolder = appManager1.pathToFileUrl(appManager1.getCollectionFolder())
-                            importFileDialog.open()
-                        }
-                    }
-                }
-            }
-
-            Controls.Label { text: qsTr("Device"); opacity: 0.7; Layout.alignment: Qt.AlignVCenter }
-            RowLayout {
-                Layout.fillWidth: true
-                spacing: Kirigami.Units.smallSpacing
-                DeviceTreeComboBox {
-                    id: importDeviceCombo
-                    Layout.fillWidth: true
-                    Layout.maximumWidth: Number.POSITIVE_INFINITY  // stretches with the form (CBX-C7)
-                    sourceModel: appManager1.importSourceDeviceModel
-                    // The import source picker must not track the app-selected device:
-                    // source-collection IDs are independent, so following the app
-                    // selection could auto-select the wrong source device by ID collision.
-                    followAppSelection: false
-                    enabled: importModeCombo.currentIndex < 2 && !appManager1.importIsRunning
-                }
-                Controls.Button {
-                    text: qsTr("Import")
-                    icon.name: "document-import"
-                    enabled: !appManager1.importIsRunning && (
-                        importModeCombo.currentIndex === 2
-                            ? importPathField.text.length > 0
-                            : importDeviceCombo.selectedDeviceName.length > 0
-                    )
-                    onClicked: {
-                        if (importModeCombo.currentIndex === 2) {
-                            var err = appManager1.importFromVVV(importPathField.text)
-                            if (err.length > 0)
-                                importErrorMessage.text = err
-                            importErrorMessage.visible = err.length > 0
-                        } else {
-                            appManager1.importDevice(importDeviceCombo.selectedDeviceId)
-                        }
-                    }
-                }
-            }
-
-            Controls.Label { text: qsTr("Update"); opacity: 0.7; Layout.alignment: Qt.AlignVCenter }
-            RowLayout {
-                Layout.fillWidth: true
-                spacing: Kirigami.Units.smallSpacing
                 ComboBoxFitted {
-                    id: importUpdateSourceCombo
+                    id: importModeCombo
+                    Kirigami.FormData.label: qsTr("Data mode")
+                    model: ["Katalog / " + qsTr("File"), "Katalog / " + qsTr("Memory"), "VVV / " + qsTr("Tab Separated Values")]
                     Layout.fillWidth: true
                     Layout.maximumWidth: Number.POSITIVE_INFINITY  // stretches with the form (CBX-C7)
-                    enabled: importModeCombo.currentIndex < 2 && !appManager1.importIsRunning
+                    Layout.preferredWidth: pageSettingsRoot.fitWidth(implicitWidth)
+                    onCurrentIndexChanged: importPathField.text = ""
                 }
-                Controls.Button {
-                    text: qsTr("Update")
-                    icon.name: "view-refresh"
-                    enabled: importModeCombo.currentIndex < 2 && importUpdateSourceCombo.count > 0 && !appManager1.importIsRunning
-                    onClicked: appManager1.updateAllImportsFromSource(importUpdateSourceCombo.currentText)
+
+                RowLayout {
+                    Kirigami.FormData.label: qsTr("Source")
+                    Layout.fillWidth: true
+                    spacing: Kirigami.Units.smallSpacing
+                    Controls.TextField {
+                        id: importPathField
+                        placeholderText: importModeCombo.currentIndex === 2 ? qsTr("VVV export file (.tsv)") : qsTr("Path")
+                        Layout.fillWidth: true
+                        readOnly: true
+                    }
+                    Controls.Button {
+                        text: qsTr("Select")
+                        icon.name: "edit-select"
+                        onClicked: {
+                            if (importModeCombo.currentIndex === 0) {
+                                importFileDialog.currentFolder = appManager1.pathToFileUrl(appManager1.getCollectionFolder())
+                                importFileDialog.open()
+                            } else if (importModeCombo.currentIndex === 1) {
+                                importFolderDialog.currentFolder = appManager1.pathToFileUrl(appManager1.getCollectionFolder())
+                                importFolderDialog.open()
+                            } else {
+                                importFileDialog.currentFolder = appManager1.pathToFileUrl(appManager1.getCollectionFolder())
+                                importFileDialog.open()
+                            }
+                        }
+                    }
+                }
+
+                RowLayout {
+                    Kirigami.FormData.label: qsTr("Device")
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: pageSettingsRoot.fitWidth(implicitWidth)
+                    spacing: Kirigami.Units.smallSpacing
+                    DeviceTreeComboBox {
+                        id: importDeviceCombo
+                        Layout.fillWidth: true
+                        Layout.maximumWidth: Number.POSITIVE_INFINITY  // stretches with the form (CBX-C7)
+                        sourceModel: appManager1.importSourceDeviceModel
+                        // The import source picker must not track the app-selected device:
+                        // source-collection IDs are independent, so following the app
+                        // selection could auto-select the wrong source device by ID collision.
+                        followAppSelection: false
+                        enabled: importModeCombo.currentIndex < 2 && !appManager1.importIsRunning
+                    }
+                    Controls.Button {
+                        text: qsTr("Import")
+                        icon.name: "document-import"
+                        enabled: !appManager1.importIsRunning && (
+                            importModeCombo.currentIndex === 2
+                                ? importPathField.text.length > 0
+                                : importDeviceCombo.selectedDeviceName.length > 0
+                        )
+                        onClicked: {
+                            if (importModeCombo.currentIndex === 2) {
+                                var err = appManager1.importFromVVV(importPathField.text)
+                                if (err.length > 0)
+                                    importErrorMessage.text = err
+                                importErrorMessage.visible = err.length > 0
+                            } else {
+                                appManager1.importDevice(importDeviceCombo.selectedDeviceId)
+                            }
+                        }
+                    }
+                }
+
+                RowLayout {
+                    Kirigami.FormData.label: qsTr("Update")
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: pageSettingsRoot.fitWidth(implicitWidth)
+                    spacing: Kirigami.Units.smallSpacing
+                    ComboBoxFitted {
+                        id: importUpdateSourceCombo
+                        Layout.fillWidth: true
+                        Layout.maximumWidth: Number.POSITIVE_INFINITY  // stretches with the form (CBX-C7)
+                        enabled: importModeCombo.currentIndex < 2 && !appManager1.importIsRunning
+                    }
+                    Controls.Button {
+                        text: qsTr("Update")
+                        icon.name: "view-refresh"
+                        enabled: importModeCombo.currentIndex < 2 && importUpdateSourceCombo.count > 0 && !appManager1.importIsRunning
+                        onClicked: appManager1.updateAllImportsFromSource(importUpdateSourceCombo.currentText)
+                    }
+                }
+
+                Kirigami.InlineMessage {
+                    id: importErrorMessage
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: pageSettingsRoot.fitWidth(implicitWidth)
+                    type: Kirigami.MessageType.Error
+                    visible: false
+                    showCloseButton: true
+                }
+
+                // Update report — file-count and size changes after a Collection Update.
+                Kirigami.InlineMessage {
+                    id: importReportMessage
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: pageSettingsRoot.fitWidth(implicitWidth)
+                    type: Kirigami.MessageType.Positive
+                    text: appManager1.importReportText
+                    visible: appManager1.importReportText.length > 0
+                    showCloseButton: true
                 }
             }
-
-            Controls.Label { visible: importErrorMessage.visible }
-            Kirigami.InlineMessage {
-                id: importErrorMessage
-                Layout.fillWidth: true
-                type: Kirigami.MessageType.Error
-                visible: false
-                showCloseButton: true
-            }
-
-            // Update report — file-count and size changes after a Collection Update.
-            Controls.Label { visible: importReportMessage.visible }
-            Kirigami.InlineMessage {
-                id: importReportMessage
-                Layout.fillWidth: true
-                Layout.columnSpan: 1
-                type: Kirigami.MessageType.Positive
-                text: appManager1.importReportText
-                visible: appManager1.importReportText.length > 0
-                showCloseButton: true
-            }
-
         }
 
         // Application tab (SET-F2): the tab title replaces the section heading.
-        GridLayout {
+        // Groups are set apart by FormLayout's own spacer (isSection, no label).
+        Kirigami.FormLayout {
             visible: settingsTabBar.currentIndex === 0
             Layout.fillWidth: true
-            columns: 2
-            columnSpacing: Kirigami.Units.largeSpacing
-            rowSpacing: Kirigami.Units.smallSpacing
+            Layout.maximumWidth: implicitWidth  // left-aligned, never centred (PGL-F19)
+            Layout.topMargin: Kirigami.Units.largeSpacing
 
-            // Row labels are centred on the first line of their column (the first
-            // control), not on the whole column.
-            Controls.Label { text: qsTr("Version"); opacity: 0.7; Layout.alignment: Qt.AlignTop
-                             Layout.topMargin: Kirigami.Units.largeSpacing + Math.max(0, (releaseNotesButton.height - implicitHeight) / 2) }
-            ColumnLayout {
-                spacing: Kirigami.Units.smallSpacing
-                Layout.topMargin: Kirigami.Units.largeSpacing
-                Flow {
-                    spacing: Kirigami.Units.largeSpacing
-                    Layout.fillWidth: true
-                    // Same height as the button beside them, text centred on it.
-                    Controls.Label { text: About.version;
-                                     height: releaseNotesButton.height; verticalAlignment: Text.AlignVCenter }
-                    Controls.Label { text: appManager1.appReleaseDate; opacity: 0.7
-                                     height: releaseNotesButton.height; verticalAlignment: Text.AlignVCenter }
-                    Controls.Button {
-                        id: releaseNotesButton
-                        text: qsTr("Release Notes")
-                        icon.name: "view-list-text"
-                        //onClicked: Qt.openUrlExternally("https://github.com/StephaneCouturier/Katalog/releases")
-                        onClicked: Qt.openUrlExternally("https://stephanecouturier.github.io/Katalog/docs/Development-Roadmap#katalog-3")
-                    }
-                }
-                Controls.CheckBox {
-                    text: qsTr("Check for a new version on startup")
-                    checked: appManager1.checkVersionChoice
-                    onCheckedChanged: appManager1.checkVersionChoice = checked
+            Flow {
+                Kirigami.FormData.label: qsTr("Version")
+                Kirigami.FormData.buddyFor: releaseNotesButton
+                spacing: Kirigami.Units.largeSpacing
+                Layout.fillWidth: true
+                Layout.preferredWidth: pageSettingsRoot.fitWidth(childrenRect.width)
+                // Same height as the button beside them, text centred on it.
+                Controls.Label { text: About.version;
+                                 height: releaseNotesButton.height; verticalAlignment: Text.AlignVCenter }
+                Controls.Label { text: appManager1.appReleaseDate; opacity: 0.7
+                                 height: releaseNotesButton.height; verticalAlignment: Text.AlignVCenter }
+                Controls.Button {
+                    id: releaseNotesButton
+                    text: qsTr("Release Notes")
+                    icon.name: "view-list-text"
+                    //onClicked: Qt.openUrlExternally("https://github.com/StephaneCouturier/Katalog/releases")
+                    onClicked: Qt.openUrlExternally("https://stephanecouturier.github.io/Katalog/docs/Development-Roadmap#katalog-3")
                 }
             }
+            Controls.CheckBox {
+                text: qsTr("Check for a new version on startup")
+                checked: appManager1.checkVersionChoice
+                onCheckedChanged: appManager1.checkVersionChoice = checked
+                Layout.fillWidth: true
+                Layout.preferredWidth: pageSettingsRoot.fitWidth(implicitWidth)
+                Component.onCompleted: contentItem.wrapMode = Text.WordWrap  // PGL-F16
+            }
 
-            Controls.Label { text: qsTr("Language"); opacity: 0.7; Layout.alignment: Qt.AlignTop
-                             Layout.topMargin: Kirigami.Units.largeSpacing * 2 + Math.max(0, (languageComboBox.height - implicitHeight) / 2) }
-            ColumnLayout {
-                spacing: Kirigami.Units.smallSpacing
-                Layout.topMargin: Kirigami.Units.largeSpacing * 2
+            Item { Kirigami.FormData.isSection: true }
 
-                ComboBoxFitted {
-                    id: languageComboBox
-                    Layout.preferredWidth: Kirigami.Units.gridUnit * 12
-                    Layout.maximumWidth: Kirigami.Units.gridUnit * 12  // set width, same as Theme; shrinks only to fit (CBX-C7)
-                    rowLeadingWidth: 20 + Kirigami.Units.smallSpacing  // flag
-                    textRole: "displayName"
-                    valueRole: "code"
-                    // Suppress the style's built-in text so only the custom
-                    // contentItem (flag + label) renders — otherwise the selected
-                    // language name is drawn twice, overlapping.
-                    displayText: ""
+            ComboBoxFitted {
+                id: languageComboBox
+                Kirigami.FormData.label: qsTr("Language")
+                Layout.preferredWidth: Kirigami.Units.gridUnit * 12
+                Layout.maximumWidth: Kirigami.Units.gridUnit * 12  // set width, same as Theme; shrinks only to fit (CBX-C7)
+                rowLeadingWidth: 20 + Kirigami.Units.smallSpacing  // flag
+                textRole: "displayName"
+                valueRole: "code"
+                // Suppress the style's built-in text so only the custom
+                // contentItem (flag + label) renders — otherwise the selected
+                // language name is drawn twice, overlapping.
+                displayText: ""
 
-                    model: appManager1.getLanguageList()
+                model: appManager1.getLanguageList()
 
+                contentItem: RowLayout {
+                    function positionToRectangle(pos) { return Qt.rect(0, 0, 0, 0) }
+                    property int selectionStart: 0
+                    spacing: Kirigami.Units.smallSpacing
+                    Image {
+                        source: languageComboBox.currentIndex >= 0
+                                ? "qrc" + languageComboBox.model[languageComboBox.currentIndex].flagPath
+                                : ""
+                        width:  20; height: 14
+                        fillMode: Image.PreserveAspectFit
+                        sourceSize.width: 20; sourceSize.height: 14
+                    }
+                    Controls.Label {
+                        text: languageComboBox.currentIndex >= 0
+                              ? languageComboBox.model[languageComboBox.currentIndex].displayName
+                              : ""
+                        Layout.fillWidth: true
+                        elide: Text.ElideRight
+                    }
+                }
+
+                delegate: Controls.ItemDelegate {
+                    width: ListView.view ? ListView.view.width : languageComboBox.width  // fills the list, which may be wider than the box
                     contentItem: RowLayout {
-                        function positionToRectangle(pos) { return Qt.rect(0, 0, 0, 0) }
-                        property int selectionStart: 0
                         spacing: Kirigami.Units.smallSpacing
                         Image {
-                            source: languageComboBox.currentIndex >= 0
-                                    ? "qrc" + languageComboBox.model[languageComboBox.currentIndex].flagPath
-                                    : ""
+                            source: "qrc" + modelData.flagPath
                             width:  20; height: 14
                             fillMode: Image.PreserveAspectFit
                             sourceSize.width: 20; sourceSize.height: 14
                         }
                         Controls.Label {
-                            text: languageComboBox.currentIndex >= 0
-                                  ? languageComboBox.model[languageComboBox.currentIndex].displayName
-                                  : ""
+                            text: modelData.displayName
                             Layout.fillWidth: true
-                            elide: Text.ElideRight
                         }
                     }
+                    highlighted: languageComboBox.highlightedIndex === index
+                }
 
-                    delegate: Controls.ItemDelegate {
-                        width: ListView.view ? ListView.view.width : languageComboBox.width  // fills the list, which may be wider than the box
-                        contentItem: RowLayout {
-                            spacing: Kirigami.Units.smallSpacing
-                            Image {
-                                source: "qrc" + modelData.flagPath
-                                width:  20; height: 14
-                                fillMode: Image.PreserveAspectFit
-                                sourceSize.width: 20; sourceSize.height: 14
-                            }
-                            Controls.Label {
-                                text: modelData.displayName
-                                Layout.fillWidth: true
-                            }
-                        }
-                        highlighted: languageComboBox.highlightedIndex === index
+                Component.onCompleted: {
+                    // Resolved by code, never by list position: the order is
+                    // arbitrary and its first entry is Bulgarian, so a code that
+                    // is not found must not leave the box sitting on index 0 —
+                    // one click there stored Bulgarian for good (LNG-C1). A
+                    // stored code absent from the list has already been
+                    // sanitised to en_US at startup (LNG-F3), so en_US is the
+                    // language actually in effect and what this shows (LNG-F5).
+                    var lang = appManager1.getCurrentLanguage()
+                    var langs = appManager1.getLanguageList()
+                    var found = -1
+                    var english = -1
+                    for (var i = 0; i < langs.length; i++) {
+                        if (langs[i].code === lang)    found = i
+                        if (langs[i].code === "en_US") english = i
                     }
+                    currentIndex = found >= 0 ? found : english
+                }
 
-                    Component.onCompleted: {
-                        // Resolved by code, never by list position: the order is
-                        // arbitrary and its first entry is Bulgarian, so a code that
-                        // is not found must not leave the box sitting on index 0 —
-                        // one click there stored Bulgarian for good (LNG-C1). A
-                        // stored code absent from the list has already been
-                        // sanitised to en_US at startup (LNG-F3), so en_US is the
-                        // language actually in effect and what this shows (LNG-F5).
-                        var lang = appManager1.getCurrentLanguage()
-                        var langs = appManager1.getLanguageList()
-                        var found = -1
-                        var english = -1
-                        for (var i = 0; i < langs.length; i++) {
-                            if (langs[i].code === lang)    found = i
-                            if (langs[i].code === "en_US") english = i
-                        }
-                        currentIndex = found >= 0 ? found : english
-                    }
+                onActivated: {
+                    appManager1.setLanguage(currentValue)
+                }
 
-                    onActivated: {
-                        appManager1.setLanguage(currentValue)
-                    }
-
-                    // The 30-language list would otherwise span the full window
-                    // height. The popup opens below the field, and is pushed up
-                    // when it does not fit there, so cap its height to the larger
-                    // of the space below the field and the space above it minus a
-                    // header clearance — this keeps the top below the page header
-                    // bar and tab bar. The list scrolls when taller than the cap.
-                    Binding {
-                        target: languageComboBox.popup
-                        property: "height"
-                        value: {
-                            var top = languageComboBox.mapToItem(null, 0, 0).y
-                            var above = top - Kirigami.Units.gridUnit * 3 - settingsTabBar.height
-                            var below = (languageComboBox.Window.window ? languageComboBox.Window.window.height : 0)
-                                        - top - languageComboBox.height - Kirigami.Units.gridUnit
-                            return Math.min(languageComboBox.popup.contentItem.implicitHeight
-                                            + languageComboBox.popup.topPadding
-                                            + languageComboBox.popup.bottomPadding,
-                                            Math.max(above, below))
-                        }
+                // The 30-language list would otherwise span the full window
+                // height. The popup opens below the field, and is pushed up
+                // when it does not fit there, so cap its height to the larger
+                // of the space below the field and the space above it minus a
+                // header clearance — this keeps the top below the page header
+                // bar and tab bar. The list scrolls when taller than the cap.
+                Binding {
+                    target: languageComboBox.popup
+                    property: "height"
+                    value: {
+                        var top = languageComboBox.mapToItem(null, 0, 0).y
+                        var above = top - Kirigami.Units.gridUnit * 3 - settingsTabBar.height
+                        var below = (languageComboBox.Window.window ? languageComboBox.Window.window.height : 0)
+                                    - top - languageComboBox.height - Kirigami.Units.gridUnit
+                        return Math.min(languageComboBox.popup.contentItem.implicitHeight
+                                        + languageComboBox.popup.topPadding
+                                        + languageComboBox.popup.bottomPadding,
+                                        Math.max(above, below))
                     }
                 }
             }
 
-            Controls.Label { text: qsTr("Theme"); opacity: 0.7; Layout.alignment: Qt.AlignTop
-                             Layout.topMargin: Kirigami.Units.largeSpacing * 2 + Math.max(0, (themeComboBox.height - implicitHeight) / 2) }
-            ColumnLayout {
-                spacing: Kirigami.Units.smallSpacing
-                Layout.topMargin: Kirigami.Units.largeSpacing * 2
-                RowLayout {
-                    spacing: Kirigami.Units.largeSpacing
-                    ComboBoxFitted {
-                        id: themeComboBox
-                        // Listed with the two desktop variants together, but the
-                        // stored numbers are unchanged: 0 Desktop Theme, 1 Katalog
-                        // Colors, 2 Desktop Theme (gray). 0 and 1 are K2's own
-                        // values in Settings/Theme, so a choice made there still
-                        // means the same thing here.
-                        model: [
-                            { text: qsTr("Desktop Theme"),        value: 0 },
-                            { text: qsTr("Desktop Theme (gray)"), value: 2 },
-                            { text: qsTr("Katalog Colors"),       value: 1 }
-                        ]
-                        textRole: "text"
-                        valueRole: "value"
-                        // Set once the model exists rather than bound: as a binding,
-                        // indexOfValue() ran before the model was ready and returned
-                        // -1, leaving the box blank. Same approach as the language
-                        // combo below.
-                        Component.onCompleted: currentIndex = indexOfValue(appManager1.themeId)
-                        onActivated: appManager1.themeId = currentValue
+            Item { Kirigami.FormData.isSection: true }
 
-                        // Follow the setting if it changes elsewhere.
-                        Connections {
-                            target: appManager1
-                            function onThemeIdChanged() {
-                                themeComboBox.currentIndex =
-                                    themeComboBox.indexOfValue(appManager1.themeId)
-                            }
-                        }
-                        Layout.preferredWidth: Kirigami.Units.gridUnit * 12
-                        Layout.maximumWidth: Kirigami.Units.gridUnit * 12  // set width, shrinks only to fit (CBX-C7)
+            ComboBoxFitted {
+                id: themeComboBox
+                Kirigami.FormData.label: qsTr("Theme")
+                // Listed with the two desktop variants together, but the
+                // stored numbers are unchanged: 0 Desktop Theme, 1 Katalog
+                // Colors, 2 Desktop Theme (gray). 0 and 1 are K2's own
+                // values in Settings/Theme, so a choice made there still
+                // means the same thing here.
+                model: [
+                    { text: qsTr("Desktop Theme"),        value: 0 },
+                    { text: qsTr("Desktop Theme (gray)"), value: 2 },
+                    { text: qsTr("Katalog Colors"),       value: 1 }
+                ]
+                textRole: "text"
+                valueRole: "value"
+                // Set once the model exists rather than bound: as a binding,
+                // indexOfValue() ran before the model was ready and returned
+                // -1, leaving the box blank. Same approach as the language
+                // combo above.
+                Component.onCompleted: currentIndex = indexOfValue(appManager1.themeId)
+                onActivated: appManager1.themeId = currentValue
+
+                // Follow the setting if it changes elsewhere.
+                Connections {
+                    target: appManager1
+                    function onThemeIdChanged() {
+                        themeComboBox.currentIndex =
+                            themeComboBox.indexOfValue(appManager1.themeId)
                     }
                 }
-                // K2's own option, on K2's own key, so a choice made in either
-                // version is read by the other (THM-F7 / THM-C8). K2 applies it to
-                // its eight tree views; K3 consumes it in the Devices cards for now
-                // (THM-C10).
-                Controls.CheckBox {
-                    text: qsTr("Use bigger icon size")
-                    checked: appManager1.biggerIconSize
-                    onToggled: appManager1.biggerIconSize = checked
-                }
-                // App-wide text size (TYP-F9): 0.8 to 1.2, step 0.1.
-                RowLayout {
-                    spacing: Kirigami.Units.smallSpacing
-                    Controls.Label { text: qsTr("Text size") }
-                    Controls.ToolButton {
-                        icon.name: "zoom-out"
-                        Controls.ToolTip.text: qsTr("Decrease text size")
-                        Controls.ToolTip.visible: hovered
-                        enabled: textSizeSlider.value > textSizeSlider.from
-                        onClicked: pageSettingsRoot.textScaleEdited(
-                                       Math.max(textSizeSlider.from, textSizeSlider.value - textSizeSlider.stepSize))
-                    }
-                    Controls.Slider {
-                        id: textSizeSlider
-                        from: 0.8
-                        to: 1.2
-                        stepSize: 0.1
-                        snapMode: Controls.Slider.SnapAlways
-                        value: pageSettingsRoot.textScale
-                        onMoved: pageSettingsRoot.textScaleEdited(value)
-                        Layout.preferredWidth: Kirigami.Units.gridUnit * 8
-                    }
-                    Controls.ToolButton {
-                        icon.name: "zoom-in"
-                        Controls.ToolTip.text: qsTr("Increase text size")
-                        Controls.ToolTip.visible: hovered
-                        enabled: textSizeSlider.value < textSizeSlider.to
-                        onClicked: pageSettingsRoot.textScaleEdited(
-                                       Math.min(textSizeSlider.to, textSizeSlider.value + textSizeSlider.stepSize))
-                    }
-                }
-                // Back to the default window size (WIN-F4, SpecWindowGeometry.md).
-                // Icon of the Search Reset action; tooltip = the size, untranslated (WIN-C5).
-                Controls.Button {
-                    text: qsTr("Reset window size")
-                    icon.name: "edit-clear-history"
-                    Controls.ToolTip.text: appManager1.getDefaultWindowSizeText()
-                    Controls.ToolTip.visible: hovered
-                    onClicked: applicationWindow().resetWindowSize()
-                }
+                Layout.preferredWidth: Kirigami.Units.gridUnit * 12
+                Layout.maximumWidth: Kirigami.Units.gridUnit * 12  // set width, shrinks only to fit (CBX-C7)
             }
-
-            Controls.Label { text: qsTr("Behavior"); opacity: 0.7; Layout.alignment: Qt.AlignTop
-                             Layout.topMargin: Kirigami.Units.largeSpacing * 2 + Math.max(0, (caseSensitiveCheckBox.height - implicitHeight) / 2) }
-            ColumnLayout {
-                spacing: Kirigami.Units.smallSpacing
-                Layout.topMargin: Kirigami.Units.largeSpacing * 2
-                Controls.CheckBox {
-                    id: caseSensitiveCheckBox
-                    text: qsTr("File sorting is Case Sensitive")
-                    checked: appManager1.fileSortCaseSensitive
-                    onCheckedChanged: appManager1.fileSortCaseSensitive = checked
-                    Controls.ToolTip.visible: hovered
-                    Controls.ToolTip.text: qsTr("If enabled, the sorting will respect case sensitive sorting, so as to have this order AA, AB, AC, Aa, Ab, Ac")
-                }
-                Controls.CheckBox {
-                    text: qsTr("Refresh device status when returning to the application")
-                    checked: appManager1.refreshDeviceStatusOnActivation
-                    onToggled: appManager1.refreshDeviceStatusOnActivation = checked
-                }
-                Controls.CheckBox {
-                    text: qsTr("Authorize actions that delete files (no recovery)")
-                    checked: appManager1.allowFileDeletion
-                    onToggled: appManager1.allowFileDeletion = checked
-                }
+            // K2's own option, on K2's own key, so a choice made in either
+            // version is read by the other (THM-F7 / THM-C8). K2 applies it to
+            // its eight tree views; K3 consumes it in the Devices cards for now
+            // (THM-C10).
+            Controls.CheckBox {
+                text: qsTr("Use bigger icon size")
+                checked: appManager1.biggerIconSize
+                onToggled: appManager1.biggerIconSize = checked
+                Layout.fillWidth: true
+                Layout.preferredWidth: pageSettingsRoot.fitWidth(implicitWidth)
+                Component.onCompleted: contentItem.wrapMode = Text.WordWrap  // PGL-F16
             }
-
-            Controls.Label { text: qsTr("Settings file"); opacity: 0.7; Layout.topMargin: Kirigami.Units.largeSpacing * 2 }
+            // App-wide text size (TYP-F9): 0.8 to 1.2, step 0.1.
             RowLayout {
                 Layout.fillWidth: true
-                Layout.topMargin: Kirigami.Units.largeSpacing * 2
+                Layout.preferredWidth: pageSettingsRoot.fitWidth(implicitWidth)
+                spacing: Kirigami.Units.smallSpacing
+                Controls.Label { text: qsTr("Text size") }
+                Controls.ToolButton {
+                    icon.name: "zoom-out"
+                    Controls.ToolTip.text: qsTr("Decrease text size")
+                    Controls.ToolTip.visible: hovered
+                    enabled: textSizeSlider.value > textSizeSlider.from
+                    onClicked: pageSettingsRoot.textScaleEdited(
+                                   Math.max(textSizeSlider.from, textSizeSlider.value - textSizeSlider.stepSize))
+                }
+                Controls.Slider {
+                    id: textSizeSlider
+                    from: 0.8
+                    to: 1.2
+                    stepSize: 0.1
+                    snapMode: Controls.Slider.SnapAlways
+                    value: pageSettingsRoot.textScale
+                    onMoved: pageSettingsRoot.textScaleEdited(value)
+                    // Shrinks with a narrow page rather than widening it (PGL-C11)
+                    Layout.fillWidth: true
+                    Layout.maximumWidth: Kirigami.Units.gridUnit * 8
+                }
+                Controls.ToolButton {
+                    icon.name: "zoom-in"
+                    Controls.ToolTip.text: qsTr("Increase text size")
+                    Controls.ToolTip.visible: hovered
+                    enabled: textSizeSlider.value < textSizeSlider.to
+                    onClicked: pageSettingsRoot.textScaleEdited(
+                                   Math.min(textSizeSlider.to, textSizeSlider.value + textSizeSlider.stepSize))
+                }
+                Item { Layout.fillWidth: true }
+            }
+            // Back to the default window size (WIN-F4, SpecWindowGeometry.md).
+            // Icon of the Search Reset action; tooltip = the size, untranslated (WIN-C5).
+            Controls.Button {
+                text: qsTr("Reset window size")
+                icon.name: "edit-clear-history"
+                Controls.ToolTip.text: appManager1.getDefaultWindowSizeText()
+                Controls.ToolTip.visible: hovered
+                onClicked: applicationWindow().resetWindowSize()
+            }
+
+            Item { Kirigami.FormData.isSection: true }
+
+            Controls.CheckBox {
+                id: caseSensitiveCheckBox
+                Kirigami.FormData.label: qsTr("Behavior")
+                text: qsTr("File sorting is Case Sensitive")
+                checked: appManager1.fileSortCaseSensitive
+                onCheckedChanged: appManager1.fileSortCaseSensitive = checked
+                Controls.ToolTip.visible: hovered
+                Controls.ToolTip.text: qsTr("If enabled, the sorting will respect case sensitive sorting, so as to have this order AA, AB, AC, Aa, Ab, Ac")
+                Layout.fillWidth: true
+                Layout.preferredWidth: pageSettingsRoot.fitWidth(implicitWidth)
+                Component.onCompleted: contentItem.wrapMode = Text.WordWrap  // PGL-F16
+            }
+            Controls.CheckBox {
+                text: qsTr("Refresh device status when returning to the application")
+                checked: appManager1.refreshDeviceStatusOnActivation
+                onToggled: appManager1.refreshDeviceStatusOnActivation = checked
+                Layout.fillWidth: true
+                Layout.preferredWidth: pageSettingsRoot.fitWidth(implicitWidth)
+                Component.onCompleted: contentItem.wrapMode = Text.WordWrap  // PGL-F16
+            }
+            Controls.CheckBox {
+                text: qsTr("Authorize actions that delete files (no recovery)")
+                checked: appManager1.allowFileDeletion
+                onToggled: appManager1.allowFileDeletion = checked
+                Layout.fillWidth: true
+                Layout.preferredWidth: pageSettingsRoot.fitWidth(implicitWidth)
+                Component.onCompleted: contentItem.wrapMode = Text.WordWrap  // PGL-F16
+            }
+
+            Item { Kirigami.FormData.isSection: true }
+
+            RowLayout {
+                Kirigami.FormData.label: qsTr("Settings file")
+                Layout.fillWidth: true
                 spacing: Kirigami.Units.smallSpacing
                 Controls.Label {
                     text: appManager1.getSettingsFilePath() || qsTr("(none)")
                     elide: Text.ElideMiddle
                     Layout.fillWidth: true
+                    // The elided path must not size the form (PGL-F16)
+                    Layout.preferredWidth: Kirigami.Units.gridUnit * 6
                 }
                 Controls.Button {
                     text: qsTr("Open")

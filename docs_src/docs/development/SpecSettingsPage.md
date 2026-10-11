@@ -49,6 +49,7 @@ is not part of this layout; restoring it is a separate decision.
 | SET-F3 | The Collection tab holds the "Collection & Database" section (Database Mode, Collection, Database Version with the Quality check button, Database Name / hosted form) and then the "Collection Import & Synchronization" section, each with its heading. The rows are unchanged, except for the export buttons added to "Collection & Database", which are owned by `SpecCollectionExport.md` (CEX-F1). *(Amendment approved by the maintainer on 2026-10-10.)* | [Planned] |
 | SET-F4 | Opening Settings from the drawer *Settings* entry, or by restoring the last page at startup, always shows the Application tab. | [Planned] |
 | SET-F5 | Opening Settings from the drawer *Open... > Hosted Database...* shows the Collection tab, with the hosted form visible. | [Planned] |
+| SET-F6 | The two tab buttons each take an equal share of the full width of the tab bar, on every style (Breeze sized them to their text; Fusion already shared the width). *(Requested by the maintainer on 2026-10-11: "I'ld like to test the tabs using all the width of the window" … "my question is only on the individual tab size".)* | [Implemented] |
 
 ## Constructional requirements — *how it is built / limits / MUST-NOTs*
 
@@ -64,6 +65,7 @@ is not part of this layout; restoring it is a separate decision.
 
 - **SET-F1 / SET-F2 / SET-F3** — Open Settings: the tabs are *Application* then *Collection*. The Application tab shows Version, Language, Theme, Behavior and the settings file, in that order, with no "Application" heading. The Collection tab shows "Collection & Database" then "Collection Import & Synchronization". Switch the language: both tab titles are translated.
 - **SET-F4** — Open Settings from the drawer, switch to Collection, close, reopen: the Application tab shows. Quit with Settings as the last page and restart: the Application tab shows.
+- **SET-F6** — On Breeze and on Fusion, at a wide and a narrow window: the *Application* and *Collection* tabs are of equal width and together fill the tab bar.
 - **SET-F5** — Drawer *Open... > Hosted Database...*: the Collection tab shows with the hosted form.
 - **SET-C3** — After the steps above, the settings file has no new key.
 - Re-run the charter lines of CEX-F1 / CEX-F2: the export buttons are in "Collection & Database" on the Collection tab.
