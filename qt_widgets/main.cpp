@@ -42,13 +42,14 @@
 
 #include "mainwindow.h"
 #include "core/commandline.h"
+#include "version.h"
 #include "core/language.h"
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     app.setApplicationName("Katalog");
-    app.setApplicationVersion("2.6");
+    app.setApplicationVersion(KatalogVersion::string());
     app.setOrganizationName("Katalog");
     app.setOrganizationDomain("stephanecouturier.github.io/Katalog");
 
@@ -148,8 +149,7 @@ int main(int argc, char *argv[])
         for (int i = 1; i < args.size(); ++i) {
             QString arg = args[i];
             if (arg == "list_catalogs" || arg == "update_catalog" || arg == "update_all_active" ||
-                arg == "search" || arg == "--search" || arg == "-s" ||
-                arg == "--csv" || arg == "--report" ||
+                arg == "search" ||
                 arg == "--help" || arg == "-h" ||
                 arg == "--version" || arg == "-v") {
                 hasCommandLineArgs = true;

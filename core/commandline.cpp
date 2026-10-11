@@ -100,11 +100,11 @@ void CommandLineHandler::setupCommandLineParser()
     parser.setApplicationDescription(
         "Katalog - File Catalog Management and Search Tool\n\n"
         "Examples:\n"
-        "  katalog search                                     # Use collection and device from settings\n"
-        "  katalog search --selectedDeviceID 4                # Use collection from settings, device ID 4\n"
-        "  katalog search --collection /path/to/collection    # Use specified collection, all devices\n"
-        "  katalog search --collection /path/to/collection --selectedDeviceID 4  # Use specified collection, device ID 4\n"
-        "  katalog search --collection /path/to/collection --selectedDeviceID 0  # Use specified collection, all devices (explicit)"
+        "  Katalog search                                     # Use collection and device from settings\n"
+        "  Katalog search --selectedDeviceID 4                # Use collection from settings, device ID 4\n"
+        "  Katalog search --collection /path/to/collection    # Use specified collection, all devices\n"
+        "  Katalog search --collection /path/to/collection --selectedDeviceID 4  # Use specified collection, device ID 4\n"
+        "  Katalog search --collection /path/to/collection --selectedDeviceID 0  # Use specified collection, all devices (explicit)"
         );
 
     parser.addHelpOption();
@@ -341,14 +341,10 @@ int CommandLineHandler::processCommandLine(QCoreApplication &app)
             stderr_stream << "Error: Invalid device ID: " << positionalArgs.value(1) << Qt::endl;
             return 1;
         }
-        bool displayReport = parser.isSet("report");
-        cmd_updateCatalog(deviceId, displayReport);
-        return 0;
+        return cmd_updateCatalog(deviceId, false) ? 0 : 1;
     }
     else if (requestedAction == "update_all_active") {
-        bool displayReport = parser.isSet("report");
-        cmd_updateAllActive(displayReport);
-        return 0;
+        return cmd_updateAllActive(false) ? 0 : 1;
     }
     else {
         QTextStream stderr_stream(stderr);
@@ -369,19 +365,12 @@ bool CommandLineHandler::initializeDatabase()
 {
     // Initialize collection object
     collection = new Collection();
-    collection->appVersion = "2.6";
+    collection->appVersion = QCoreApplication::applicationVersion();
 
-    // Get user home path for settings
-    QStringList standardsPaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
-    QString homePath = standardsPaths[0];
-    QString applicationDirPath = QCoreApplication::applicationDirPath();
+    // Same settings file as the window of the running application
+    collection->settingsFilePath = Collection::resolveSettingsFilePath(collection->appVersion);
 
-    // Define Settings file path
-    collection->settingsFilePath = applicationDirPath + "/katalog_settings.ini";
-    QFile settingsFile(collection->settingsFilePath);
-    if (!settingsFile.exists()) {
-        collection->settingsFilePath = homePath + "/.config/katalog_settings.ini";
-    }
+    QString homePath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0);
 
     // Auto-detect database mode if collection path provided
     QString databaseMode;
@@ -937,7 +926,7 @@ Device* CommandLineHandler::getSelectedDevice()
 }
 
 //--- Commands ---------------------------------------------------------------------------
-void CommandLineHandler::cmd_updateCatalog(int deviceId, bool displayReport)
+bool CommandLineHandler::cmd_updateCatalog(int deviceId, bool displayReport)
 {
     Q_UNUSED(displayReport); // TODO: Implement reporting for command line
 
@@ -955,7 +944,8 @@ void CommandLineHandler::cmd_updateCatalog(int deviceId, bool displayReport)
         qInfo() << "Device Name:" << selectedDevice->name;
         qInfo() << "Device Type:" << selectedDevice->type;
         delete selectedDevice;
-        return;
+        selectedDevice = nullptr;
+        return false;
     }
 
     if (!selectedDevice->active) {
@@ -964,7 +954,8 @@ void CommandLineHandler::cmd_updateCatalog(int deviceId, bool displayReport)
         qInfo() << "Device ID:" << selectedDevice->ID;
         qInfo() << "Device Name:" << selectedDevice->name;
         delete selectedDevice;
-        return;
+        selectedDevice = nullptr;
+        return false;
     }
 
     qInfo() << "-----------------------------------------------------------------------";
@@ -986,10 +977,25 @@ void CommandLineHandler::cmd_updateCatalog(int deviceId, bool displayReport)
     // Simple event loop to wait for completion (same pattern as UI)
     QEventLoop loop;
 
-    // Connect to the same signals as UI
-    connect(catalogManager, &CatalogManager::catalogOperationCompleted, &loop, &QEventLoop::quit);
-    connect(catalogManager, &CatalogManager::catalogOperationError, &loop, &QEventLoop::quit);
-    connect(catalogManager, &CatalogManager::catalogOperationCancelled, &loop, &QEventLoop::quit);
+    // Connect to the same signals as UI, and record the outcome for the exit code
+    bool finished = false;
+    bool succeeded = false;
+    QString failureMessage;
+    connect(catalogManager, &CatalogManager::catalogOperationCompleted, &loop, [&]() {
+        finished = true;
+        succeeded = true;
+        loop.quit();
+    });
+    connect(catalogManager, &CatalogManager::catalogOperationError, &loop, [&](const QString &error) {
+        finished = true;
+        failureMessage = error;
+        loop.quit();
+    });
+    connect(catalogManager, &CatalogManager::catalogOperationCancelled, &loop, [&]() {
+        finished = true;
+        failureMessage = "Operation cancelled";
+        loop.quit();
+    });
 
     // Timeout protection
     QTimer::singleShot(60 * 60 * 1000, &loop, &QEventLoop::quit); // 1 hour timeout
@@ -1004,16 +1010,19 @@ void CommandLineHandler::cmd_updateCatalog(int deviceId, bool displayReport)
         );
 
     qInfo() << "Waiting for catalog update to complete...";
-    loop.exec();
+    // An invalid configuration is reported before the loop starts
+    if (!finished)
+        loop.exec();
 
-    // Check if operation was successful (simple check)
-    if (catalogManager->catalogOperationRunning()) {
+    if (!finished && catalogManager->catalogOperationRunning()) {
         // Still running = timeout
         qInfo() << "---";
         qWarning() << "WARNING: Catalog update FAILED: Operation timed out";
         catalogManager->stopCatalogOperation();
+    } else if (!succeeded) {
+        qInfo() << "---";
+        qWarning() << "WARNING: Catalog update FAILED:" << failureMessage;
     } else {
-        // Completed - assume success (same as UI behavior)
         qInfo() << "Catalog operation completed";
 
         // Reload device to get updated statistics
@@ -1037,9 +1046,12 @@ void CommandLineHandler::cmd_updateCatalog(int deviceId, bool displayReport)
     // Clean up
     catalogManager->deleteLater();
     delete selectedDevice;
+    selectedDevice = nullptr;
+
+    return succeeded;
 }
 
-void CommandLineHandler::cmd_updateAllActive(bool displayReport)
+bool CommandLineHandler::cmd_updateAllActive(bool displayReport)
 {
     qInfo() << "Starting update of all active catalogs...";
 
@@ -1056,7 +1068,7 @@ void CommandLineHandler::cmd_updateAllActive(bool displayReport)
 
     if (!query.exec()) {
         qWarning() << "WARNING: Error querying active catalogs:" << query.lastError().text();
-        return;
+        return false;
     }
 
     // Collect all device IDs first
@@ -1067,7 +1079,7 @@ void CommandLineHandler::cmd_updateAllActive(bool displayReport)
 
     if (deviceIDs.isEmpty()) {
         qInfo() << "No active catalogs found to update.";
-        return;
+        return true;
     }
 
     qInfo() << QString("Found %1 active catalog(s) to update.").arg(deviceIDs.size());
@@ -1096,9 +1108,14 @@ void CommandLineHandler::cmd_updateAllActive(bool displayReport)
 
         try {
             // Use the updated single catalog method
-            cmd_updateCatalog(deviceID, displayReport);
-            successCount++;
-            qInfo() << "✓ Catalog" << deviceID << "updated successfully";
+            if (cmd_updateCatalog(deviceID, displayReport)) {
+                successCount++;
+                qInfo() << "✓ Catalog" << deviceID << "updated successfully";
+            } else {
+                errorCount++;
+                errorCatalogs.append(QString("%1 (%2)").arg(tempDevice.name).arg(deviceID));
+                qWarning() << "WARNING: ✗ Catalog" << deviceID << "failed";
+            }
 
         } catch (const std::exception& e) {
             errorCount++;
@@ -1131,6 +1148,8 @@ void CommandLineHandler::cmd_updateAllActive(bool displayReport)
     qInfo() << "=======================================================================";
     qInfo() << "All active catalogs processing completed.";
     qInfo() << "=======================================================================";
+
+    return errorCount == 0;
 }
 
 void CommandLineHandler::cmd_listGroup0Catalogs()

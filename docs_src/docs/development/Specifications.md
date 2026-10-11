@@ -27,6 +27,7 @@ specification and the code disagree, the specification is what was agreed.
 | [SpecCollectionIdentity](SpecCollectionIdentity.md) | COLLECTION IDENTITY — NAMING COLLECTIONS IN THE K3 DRAWER | Approved | planned | — |
 | [SpecCollectionOpen](SpecCollectionOpen.md) | COLLECTION OPEN — FIRST RUN AND NEW DATABASE | Approved | complete | — |
 | [SpecComboBoxes](SpecComboBoxes.md) | COMBO BOXES — WIDTH AND DROP-DOWN LIST | Approved | planned | — |
+| [SpecCommandLine](SpecCommandLine.md) | COMMAND LINE — RUNNING KATALOG ACTIONS FROM A TERMINAL | Draft | K2 partial, K3 planned | — |
 | [SpecDeviceActiveStatus](SpecDeviceActiveStatus.md) | DEVICE Active Status | Approved | — | — |
 | [SpecDeviceComment](SpecDeviceComment.md) | DEVICE Comment | Approved | complete | — |
 | [SpecDeviceStorageRoot](SpecDeviceStorageRoot.md) | DEVICE Storage Root | Approved | partial | — |

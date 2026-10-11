@@ -1,8 +1,8 @@
 ---
-version: "2.12"
+version: "3.0"
 ---
 # Příkazová Řádka
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
 ## Shrnutí
 Tato stránka popisuje dostupné funkce a možnosti příkazové řádky, které lze spouštět z konzole.
@@ -15,8 +15,28 @@ Tyto příkazy aktuálně fungují pouze pod **Linuxem**.
 ## Syntaxe
 
 ```bash
-./Katalog.sh [AKCE] [MOŽNOSTI] [ARGUMENTY]
+Katalog [AKCE] [MOŽNOSTI] [ARGUMENTY]
 ```
+
+### Spuštění příkazu `Katalog`
+Příklady na této stránce používají jako název příkazu `Katalog`. Způsob, jak Katalog spustit z terminálu, závisí na způsobu instalace:
+
+- **Flatpak** (Flathub): akce a možnosti se zadávají za identifikátor aplikace.
+  ```bash
+  flatpak run io.github.stephanecouturier.Katalog list_catalogs
+  ```
+  Flatpak také instaluje spouštěč s názvem `io.github.stephanecouturier.Katalog`, který lze volat přímo, pokud je jeho složka v `PATH`.
+- **AppImage**: akce a možnosti se zadávají za soubor AppImage.
+  ```bash
+  ./Katalog_linux_v3.0-qt6.AppImage list_catalogs
+  ```
+
+Chcete-li psát `Katalog` jako v příkladech, definujte alias, například v `~/.bashrc`:
+```bash
+alias Katalog='flatpak run io.github.stephanecouturier.Katalog'
+```
+
+Příkazová řádka používá stejný soubor nastavení jako okno, takže bez `--collection` pracuje s kolekcí naposledy otevřenou v Katalogu.
 
 ## Akce
 
@@ -27,22 +47,22 @@ Vypíše všechny katalogy s jejich ID, aktivním stavem a názvem.
 
 **Použití:**
 ```bash
-./Katalog.sh list_catalogs [MOŽNOSTI]
+Katalog list_catalogs [MOŽNOSTI]
 ```
 
 **Příklad:**
 ```bash
-./Katalog.sh list_catalogs --verbose
+Katalog list_catalogs --verbose
 ```
 
 ![Výstup příkazové řádky se seznamem všech katalogů s ID, stavem a názvem](/img/k2/commandlines_02_list.png)
 
 ### `update_catalog`
-Aktualizuje konkrétní katalog podle ID zařízení.
+Aktualizuje konkrétní Katalog podle ID zařízení.
 
 **Použití:**
 ```bash
-./Katalog.sh update_catalog <deviceID> [MOŽNOSTI]
+Katalog update_catalog <deviceID> [MOŽNOSTI]
 ```
 
 **Argumenty:**
@@ -50,7 +70,7 @@ Aktualizuje konkrétní katalog podle ID zařízení.
 
 **Příklad:**
 ```bash
-./Katalog.sh update_catalog 5
+Katalog update_catalog 5
 ```
 ![Výstup příkazové řádky po aktualizaci konkrétního katalogu](/img/k2/commandlines_03_catalog.png)
 
@@ -59,12 +79,12 @@ Aktualizuje všechny aktivní katalogy v kolekci.
 
 **Použití:**
 ```bash
-./Katalog.sh update_all_active [MOŽNOSTI]
+Katalog update_all_active [MOŽNOSTI]
 ```
 
 **Příklad:**
 ```bash
-./Katalog.sh update_all_active --verbose
+Katalog update_all_active --verbose
 ```
 ![Výstup příkazové řádky po aktualizaci všech aktivních katalogů](/img/k2/commandlines_04_all.png)
 
@@ -73,12 +93,12 @@ Provede vyhledávání pomocí posledních kritérií vyhledávání z historie,
 
 **Použití:**
 ```bash
-./Katalog.sh search [MOŽNOSTI]
+Katalog search [MOŽNOSTI]
 ```
 
 **Příklad:**
 ```bash
-./Katalog.sh search --text "dovolená" --type image --limit 100
+Katalog search --text "dovolená" --type image --limit 100
 ```
 
 ## Obecné Možnosti
@@ -94,7 +114,7 @@ Určuje cestu ke složce kolekce.
 
 **Příklad:**
 ```bash
-./Katalog.sh search --collection "/cesta/k/mé/kolekci"
+Katalog search --collection "/cesta/k/mé/kolekci"
 ```
 
 ### `--verbose`
@@ -102,7 +122,7 @@ Povolí podrobný výstup pro ladění a detailní informace.
 
 **Příklad:**
 ```bash
-./Katalog.sh list_catalogs --verbose
+Katalog list_catalogs --verbose
 ```
 
 ## Možnosti Vyhledávání
@@ -114,7 +134,7 @@ Omezí počet souborů k zobrazení ve výsledcích vyhledávání.
 
 **Příklad:**
 ```bash
-./Katalog.sh search --limit 50
+Katalog search --limit 50
 ```
 
 ### `--selectedDeviceID <deviceID>`
@@ -124,7 +144,7 @@ Určuje ID zařízení, ve kterém se má vyhledávat.
 
 **Příklad:**
 ```bash
-./Katalog.sh search --selectedDeviceID 2
+Katalog search --selectedDeviceID 2
 ```
 
 ### `--text <hledaný-výraz>`
@@ -132,7 +152,7 @@ Určuje text nebo frázi k vyhledání.
 
 **Příklad:**
 ```bash
-./Katalog.sh search --text "rodinné fotky"
+Katalog search --text "rodinné fotky"
 ```
 
 ### `--type <typ-souboru>`
@@ -147,7 +167,7 @@ Filtruje výsledky podle typu souboru.
 
 **Příklad:**
 ```bash
-./Katalog.sh search --type audio
+Katalog search --type audio
 ```
 
 ### `--size-min <velikost>`
@@ -157,7 +177,7 @@ Nastaví filtr minimální velikosti souboru.
 
 **Příklad:**
 ```bash
-./Katalog.sh search --size-min 1MB
+Katalog search --size-min 1MB
 ```
 
 ### `--size-max <velikost>`
@@ -167,7 +187,7 @@ Nastaví filtr maximální velikosti souboru.
 
 **Příklad:**
 ```bash
-./Katalog.sh search --size-max 100MB
+Katalog search --size-max 100MB
 ```
 
 ### `--date-after <datum>`
@@ -177,7 +197,7 @@ Filtruje soubory upravené po zadaném datu.
 
 **Příklad:**
 ```bash
-./Katalog.sh search --date-after 2023-01-01
+Katalog search --date-after 2023-01-01
 ```
 
 ### `--date-before <datum>`
@@ -187,7 +207,7 @@ Filtruje soubory upravené před zadaným datem.
 
 **Příklad:**
 ```bash
-./Katalog.sh search --date-before 2023-12-31
+Katalog search --date-before 2023-12-31
 ```
 
 ### `--case-sensitive`
@@ -195,7 +215,7 @@ Povolí vyhledávání textu citlivé na velikost písmen.
 
 **Příklad:**
 ```bash
-./Katalog.sh search --text "MůjSoubor" --case-sensitive
+Katalog search --text "MůjSoubor" --case-sensitive
 ```
 
 ### `--search-in <rozsah>`
@@ -208,7 +228,7 @@ Definuje rozsah vyhledávání pro shodu textu.
 
 **Příklad:**
 ```bash
-./Katalog.sh search --text "dokumenty" --search-in folder-paths
+Katalog search --text "dokumenty" --search-in folder-paths
 ```
 
 ### `--text-criteria <kritéria>`
@@ -222,7 +242,7 @@ Určuje, jak má být vyhledáván text.
 
 **Příklad:**
 ```bash
-./Katalog.sh search --text "dovolená fotka" --text-criteria exact-phrase
+Katalog search --text "dovolená fotka" --text-criteria exact-phrase
 ```
 
 ### `--exclude <výrazy-k-vyloučení>`
@@ -230,7 +250,7 @@ Vyloučí soubory obsahující zadané výrazy.
 
 **Příklad:**
 ```bash
-./Katalog.sh search --text "fotka" --exclude "záloha temp"
+Katalog search --text "fotka" --exclude "záloha temp"
 ```
 
 ### `--no-history`
@@ -238,7 +258,7 @@ Začne s výchozími kritérii vyhledávání místo načítání z historie vyh
 
 **Příklad:**
 ```bash
-./Katalog.sh search --no-history --text "novýsoubor"
+Katalog search --no-history --text "novýsoubor"
 ```
 
 ## Návratové Kódy
@@ -253,56 +273,56 @@ Začne s výchozími kritérii vyhledávání místo načítání z historie vyh
 
 Vypsat všechny katalogy:
 ```bash
-./Katalog.sh list_catalogs
+Katalog list_catalogs
 ```
 
-Aktualizovat konkrétní katalog s podrobným výstupem:
+Aktualizovat konkrétní Katalog s podrobným výstupem:
 ```bash
-./Katalog.sh update_catalog 3 --verbose
+Katalog update_catalog 3 --verbose
 ```
 
 Aktualizovat všechny aktivní katalogy:
 ```bash
-./Katalog.sh update_all_active
+Katalog update_all_active
 ```
 
 ### Příklady Vyhledávání
 
 Jednoduché textové vyhledávání:
 ```bash
-./Katalog.sh search --text "dovolená"
+Katalog search --text "dovolená"
 ```
 
 Vyhledat obrázky větší než 5MB:
 ```bash
-./Katalog.sh search --type image --size-min 5MB
+Katalog search --type image --size-min 5MB
 ```
 
 Vyhledat soubory upravené v roce 2023:
 ```bash
-./Katalog.sh search --date-after 2023-01-01 --date-before 2023-12-31
+Katalog search --date-after 2023-01-01 --date-before 2023-12-31
 ```
 
 Složité vyhledávání s více kritérii:
 ```bash
-./Katalog.sh search --text "projekt" --type text --search-in files-and-folders --case-sensitive --limit 200
+Katalog search --text "projekt" --type text --search-in files-and-folders --case-sensitive --limit 200
 ```
 
 Vyhledat v konkrétním zařízení:
 ```bash
-./Katalog.sh search --selectedDeviceID 2 --text "dokumenty" --verbose
+Katalog search --selectedDeviceID 2 --text "dokumenty" --verbose
 ```
 
 ### Použití Vlastní Cesty Kolekce
 
 Vyhledat v jiné kolekci:
 ```bash
-./Katalog.sh --collection "/cesta/ke/kolekci" search --text "fotky"
+Katalog --collection "/cesta/ke/kolekci" search --text "fotky"
 ```
 
 Aktualizovat katalogy v konkrétní kolekci:
 ```bash
-./Katalog.sh --collection "/cesta/ke/kolekci" update_all_active
+Katalog --collection "/cesta/ke/kolekci" update_all_active
 ```
 
 ## Poznámky
@@ -317,7 +337,7 @@ Aktualizovat katalogy v konkrétní kolekci:
 ## Řešení Problémů
 
 **Neplatné ID zařízení:**
-Ujistěte se, že ID zařízení existuje spuštěním `./Katalog.sh list_catalogs` nejprve.
+Ujistěte se, že ID zařízení existuje spuštěním `Katalog list_catalogs` nejprve.
 
 **Problémy s připojením k databázi:**
 Ověřte, že cesta kolekce je správná a přístupná.

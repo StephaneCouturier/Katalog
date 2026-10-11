@@ -36,6 +36,8 @@
 #include <QMutex>
 #include <QStorageInfo>
 #include <QSet>
+#include <QCoreApplication>
+#include <QStandardPaths>
 
 namespace {
 
@@ -83,6 +85,29 @@ QString unescapeHistoryField(const QString &value)
 Collection::Collection(QObject *parent) : QObject(parent)
 {
 
+}
+
+//Settings file ------------------------------------------------------------------
+// Single rule for the settings file, shared by the K3 window (AppManager) and the
+// command line, so both open the same collection (SpecCommandLine.md CLI-C2/F9).
+// A pre-release build (alpha/beta in the version) keeps its own settings file:
+// testers start as a new user and cannot land on a real collection at startup.
+// Keyed off the version string so it lapses on its own at release.
+// For portable mode, a settings file located with the executable is used first,
+// otherwise the one in ~/.config.
+QString Collection::resolveSettingsFilePath(const QString &appVersion)
+{
+    const bool preRelease = appVersion.contains(QLatin1String("beta"), Qt::CaseInsensitive)
+                            || appVersion.contains(QLatin1String("alpha"), Qt::CaseInsensitive);
+    const QString settingsFileName = preRelease ? QStringLiteral("katalog3_prerelease_settings.ini")
+                                                : QStringLiteral("katalog_settings.ini");
+
+    const QString portablePath = QCoreApplication::applicationDirPath() + "/" + settingsFileName;
+    if (QFile::exists(portablePath))
+        return portablePath;
+
+    const QString homePath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0);
+    return homePath + "/.config/" + settingsFileName;
 }
 
 //Database Schema Version--------------------------------------------------------

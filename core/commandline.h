@@ -65,9 +65,9 @@ public:
     void setCollection(Collection *collection);
 
     // Command line catalog operations (moved from MainWindow)
-    void cmd_updateCatalog(int deviceId, bool displayReport);
+    bool cmd_updateCatalog(int deviceId, bool displayReport);
     void cmd_listGroup0Catalogs();
-    void cmd_updateAllActive(bool displayReport);
+    bool cmd_updateAllActive(bool displayReport);
 
 private slots:
     // Search completion handling

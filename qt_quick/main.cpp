@@ -12,6 +12,7 @@
 
 #include "appmanager.h"
 #include "core/collection.h"
+#include "core/commandline.h"
 #include "core/language.h"
 #include "adapters/search.h"
 #include "PageSearch.h"
@@ -25,6 +26,36 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+    app.setApplicationVersion(QStringLiteral(KATALOG_VERSION_STRING));
+
+    // Command line mode (SpecCommandLine.md). Detected before anything else is
+    // created: a command line run builds no QML engine, AppManager, window or
+    // translator, and writes nothing to the settings file. Only the actions and
+    // options the handler defines trigger it; anything else opens the window.
+    {
+        static const QStringList cliTriggers = {
+            QStringLiteral("list_catalogs"), QStringLiteral("update_catalog"),
+            QStringLiteral("update_all_active"), QStringLiteral("search"),
+            QStringLiteral("--help"), QStringLiteral("-h"),
+            QStringLiteral("--version"), QStringLiteral("-v")
+        };
+        const QStringList args = QCoreApplication::arguments();
+        bool hasCommandLineArgs = false;
+        for (int i = 1; i < args.size(); ++i) {
+            if (cliTriggers.contains(args[i])) {
+                hasCommandLineArgs = true;
+                break;
+            }
+        }
+
+        if (hasCommandLineArgs) {
+            CommandLineHandler cmdHandler;
+            const int result = cmdHandler.processCommandLine(app);
+            if (result >= 0)
+                return result;
+            // -1: no action given, continue to the window
+        }
+    }
 
     // Qt Quick Controls style. On Linux (KDE) the system org.kde.desktop/Breeze
     // style is used, which gives dialog buttons a uniform minimum width. On other

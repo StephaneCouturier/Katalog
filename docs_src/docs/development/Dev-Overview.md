@@ -3,29 +3,31 @@ This page documents the practices for developing Katalog.<br/>
 
 ## Features management
 ### Roadmap
-* [Roadmap](Dev-Roadmap), introducing Katalog 3
+* [Roadmap](Dev-Roadmap)
 
 ### Backlog
 Katalo's Backlog is available in GitHub with 3 views:
 * [Full backlog](https://github.com/users/StephaneCouturier/projects/7/views/1?sliceBy[columnId]=Labels)
-* [Next milestone](https://github.com/users/StephaneCouturier/projects/7/views/3) = current development
+* [Next milestone](https://github.com/users/StephaneCouturier/projects/7/views/3) = current development, preparing next release
 * [Next milestone + 1](https://github.com/users/StephaneCouturier/projects/7/views/5) = probable next developments
 
 
 ### Specifications
+* [Specification pages](Specifications)
+
 Documentation of the implementation of specific features & code:
-* [Updates with metadata](../DevicesCatalogMetadata) (v2.8)
-* [Progress Reporting](SpecProgressReport) (v2.8)
-* [Version Numbers](SpecVersions) (v2.8)
+* [Updates with metadata](../DevicesCatalogMetadata)
+* [Progress Reporting](SpecProgressReport)
+* [Version Numbers](SpecVersions)
 
 ## **Code**
 
 ### Source code on GitHub
-* katalog_master branch: https://github.com/StephaneCouturier/Katalog
-* Source Code: katalog_development branch: https://github.com/StephaneCouturier/Katalog/tree/katalog_development
+* **katalog_master** branch: https://github.com/StephaneCouturier/Katalog
 ```
 git clone https://github.com/StephaneCouturier/Katalog.git
 ```
+* **katalog_development** branch: https://github.com/StephaneCouturier/Katalog/tree/katalog_development
 
 ### Released packages on SourceForge
 Desipe some feature in GitHub to provide downloads, SourceForge is still used as the place for user to download all versions.

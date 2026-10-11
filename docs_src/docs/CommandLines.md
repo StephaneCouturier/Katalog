@@ -1,8 +1,8 @@
 ---
-version: "2.12"
+version: "3.0"
 ---
 # Command Lines
-![2.12](https://img.shields.io/badge/Version-2.12-blue)
+![3.0](https://img.shields.io/badge/Version-3.0-blue)
 
 ## Summary
 This page describes available command line features and options that can be run from the console.
@@ -15,8 +15,29 @@ These commands currently run only under **Linux**.
 ## Synopsis
 
 ```bash
-./Katalog.sh [ACTION] [OPTIONS] [ARGUMENTS]
+Katalog [ACTION] [OPTIONS] [ARGUMENTS]
 ```
+
+### Running the `Katalog` command
+The examples on this page use `Katalog` as the command name. How to call Katalog from a terminal depends on how it was installed:
+
+- **Flatpak** (Flathub): put the actions and options after the application ID.
+  ```bash
+  flatpak run io.github.stephanecouturier.Katalog list_catalogs
+  ```
+  Flatpak also installs a launcher named `io.github.stephanecouturier.Katalog`, which can be called directly when its folder is in the `PATH`.
+- **AppImage**: put the actions and options after the AppImage file.
+  ```bash
+  ./Katalog_linux_v3.0-qt6.AppImage list_catalogs
+  ```
+
+To type `Katalog` as in the examples, define an alias, for instance in `~/.bashrc`:
+```bash
+alias Katalog='flatpak run io.github.stephanecouturier.Katalog'
+```
+
+The command line uses the same settings file as the window, so without `--collection` it works on the collection last opened in Katalog.
+
 ## Actions
 
 The following actions are available as positional arguments:
@@ -26,12 +47,12 @@ Lists all catalogs with their ID, active state, and name.
 
 **Usage:**
 ```bash
-./Katalog.sh list_catalogs [OPTIONS]
+Katalog list_catalogs [OPTIONS]
 ```
 
 **Example:**
 ```bash
-./Katalog.sh list_catalogs --verbose
+Katalog list_catalogs --verbose
 ```
 
 ![Command line output listing all catalogs with ID, state, and name](/img/k2/commandlines_02_list.png)
@@ -41,7 +62,7 @@ Updates a specific catalog by device ID.
 
 **Usage:**
 ```bash
-./Katalog.sh update_catalog <deviceID> [OPTIONS]
+Katalog update_catalog <deviceID> [OPTIONS]
 ```
 
 **Arguments:**
@@ -49,7 +70,7 @@ Updates a specific catalog by device ID.
 
 **Example:**
 ```bash
-./Katalog.sh update_catalog 5
+Katalog update_catalog 5
 ```
 ![Command line output after updating a specific catalog](/img/k2/commandlines_03_catalog.png)
 
@@ -58,12 +79,12 @@ Updates all active catalogs in the collection.
 
 **Usage:**
 ```bash
-./Katalog.sh update_all_active [OPTIONS]
+Katalog update_all_active [OPTIONS]
 ```
 
 **Example:**
 ```bash
-./Katalog.sh update_all_active --verbose
+Katalog update_all_active --verbose
 ```
 ![Command line output after updating all active catalogs](/img/k2/commandlines_04_all.png)
 
@@ -72,12 +93,12 @@ Executes a search using the last search criteria from history, with optional ove
 
 **Usage:**
 ```bash
-./Katalog.sh search [OPTIONS]
+Katalog search [OPTIONS]
 ```
 
 **Example:**
 ```bash
-./Katalog.sh search --text "vacation" --type image --limit 100
+Katalog search --text "vacation" --type image --limit 100
 ```
 
 ## General Options
@@ -93,7 +114,7 @@ Specifies the path to the collection folder.
 
 **Example:**
 ```bash
-./Katalog.sh search --collection "/path/to/my/collection"
+Katalog search --collection "/path/to/my/collection"
 ```
 
 ### `--verbose`
@@ -101,7 +122,7 @@ Enables verbose output for debugging and detailed information.
 
 **Example:**
 ```bash
-./Katalog.sh list_catalogs --verbose
+Katalog list_catalogs --verbose
 ```
 
 ## Search Options
@@ -113,7 +134,7 @@ Limits the number of files to display in search results.
 
 **Example:**
 ```bash
-./Katalog.sh search --limit 50
+Katalog search --limit 50
 ```
 
 ### `--selectedDeviceID <deviceID>`
@@ -123,7 +144,7 @@ Specifies which device ID to search in.
 
 **Example:**
 ```bash
-./Katalog.sh search --selectedDeviceID 2
+Katalog search --selectedDeviceID 2
 ```
 
 ### `--text <search-term>`
@@ -131,7 +152,7 @@ Specifies the search text or phrase to look for.
 
 **Example:**
 ```bash
-./Katalog.sh search --text "family photos"
+Katalog search --text "family photos"
 ```
 
 ### `--type <file-type>`
@@ -146,7 +167,7 @@ Filters results by file type.
 
 **Example:**
 ```bash
-./Katalog.sh search --type audio
+Katalog search --type audio
 ```
 
 ### `--size-min <size>`
@@ -156,7 +177,7 @@ Sets minimum file size filter.
 
 **Example:**
 ```bash
-./Katalog.sh search --size-min 1MB
+Katalog search --size-min 1MB
 ```
 
 ### `--size-max <size>`
@@ -166,7 +187,7 @@ Sets maximum file size filter.
 
 **Example:**
 ```bash
-./Katalog.sh search --size-max 100MB
+Katalog search --size-max 100MB
 ```
 
 ### `--date-after <date>`
@@ -176,7 +197,7 @@ Filters files modified after the specified date.
 
 **Example:**
 ```bash
-./Katalog.sh search --date-after 2023-01-01
+Katalog search --date-after 2023-01-01
 ```
 
 ### `--date-before <date>`
@@ -186,7 +207,7 @@ Filters files modified before the specified date.
 
 **Example:**
 ```bash
-./Katalog.sh search --date-before 2023-12-31
+Katalog search --date-before 2023-12-31
 ```
 
 ### `--case-sensitive`
@@ -194,7 +215,7 @@ Enables case-sensitive text search.
 
 **Example:**
 ```bash
-./Katalog.sh search --text "MyFile" --case-sensitive
+Katalog search --text "MyFile" --case-sensitive
 ```
 
 ### `--search-in <scope>`
@@ -207,7 +228,7 @@ Defines the search scope for text matching.
 
 **Example:**
 ```bash
-./Katalog.sh search --text "documents" --search-in folder-paths
+Katalog search --text "documents" --search-in folder-paths
 ```
 
 ### `--text-criteria <criteria>`
@@ -221,7 +242,7 @@ Specifies how the search text should be matched.
 
 **Example:**
 ```bash
-./Katalog.sh search --text "vacation photo" --text-criteria exact-phrase
+Katalog search --text "vacation photo" --text-criteria exact-phrase
 ```
 
 ### `--exclude <exclude-terms>`
@@ -229,7 +250,7 @@ Excludes files containing the specified terms.
 
 **Example:**
 ```bash
-./Katalog.sh search --text "photo" --exclude "backup temp"
+Katalog search --text "photo" --exclude "backup temp"
 ```
 
 ### `--no-history`
@@ -237,7 +258,7 @@ Starts with default search criteria instead of loading from search history.
 
 **Example:**
 ```bash
-./Katalog.sh search --no-history --text "newfile"
+Katalog search --no-history --text "newfile"
 ```
 
 ## Exit Codes
@@ -252,56 +273,56 @@ Starts with default search criteria instead of loading from search history.
 
 List all catalogs:
 ```bash
-./Katalog.sh list_catalogs
+Katalog list_catalogs
 ```
 
 Update a specific catalog with verbose output:
 ```bash
-./Katalog.sh update_catalog 3 --verbose
+Katalog update_catalog 3 --verbose
 ```
 
 Update all active catalogs:
 ```bash
-./Katalog.sh update_all_active
+Katalog update_all_active
 ```
 
 ### Search Examples
 
 Simple text search:
 ```bash
-./Katalog.sh search --text "vacation"
+Katalog search --text "vacation"
 ```
 
 Search for images larger than 5MB:
 ```bash
-./Katalog.sh search --type image --size-min 5MB
+Katalog search --type image --size-min 5MB
 ```
 
 Search for files modified in 2023:
 ```bash
-./Katalog.sh search --date-after 2023-01-01 --date-before 2023-12-31
+Katalog search --date-after 2023-01-01 --date-before 2023-12-31
 ```
 
 Complex search with multiple criteria:
 ```bash
-./Katalog.sh search --text "project" --type text --search-in files-and-folders --case-sensitive --limit 200
+Katalog search --text "project" --type text --search-in files-and-folders --case-sensitive --limit 200
 ```
 
 Search in a specific device:
 ```bash
-./Katalog.sh search --selectedDeviceID 2 --text "documents" --verbose
+Katalog search --selectedDeviceID 2 --text "documents" --verbose
 ```
 
 ### Using Custom Collection Path
 
 Search in a different collection:
 ```bash
-./Katalog.sh --collection "/path/to/collection" search --text "photos"
+Katalog --collection "/path/to/collection" search --text "photos"
 ```
 
 Update catalogs in a specific collection:
 ```bash
-./Katalog.sh --collection "/path/to/collection" update_all_active
+Katalog --collection "/path/to/collection" update_all_active
 ```
 
 ## Notes
@@ -316,7 +337,7 @@ Update catalogs in a specific collection:
 ## Troubleshooting
 
 **Invalid device ID:**
-Ensure the device ID exists by running `./Katalog.sh list_catalogs` first.
+Ensure the device ID exists by running `Katalog list_catalogs` first.
 
 **Database connection issues:**
 Verify the collection path is correct and accessible.

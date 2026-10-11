@@ -65,6 +65,9 @@ public:
     QString folder;
     QString settingsFilePath;
 
+    //Settings file used by the application of version appVersion (window and command line)
+    static QString resolveSettingsFilePath(const QString &appVersion);
+
     QString loadDatabaseSchemaVersion();
     void setDatabaseSchemaVersion();
     QString imageFolderPath;
