@@ -128,73 +128,113 @@ Item {
                 implicitWidth:  Kirigami.Units.iconSizes.small
                 implicitHeight: Kirigami.Units.iconSizes.small
             }
+            // Path and options share the row: each starts from its natural
+            // width and both give way as the window narrows.
             Controls.Label {
                 text: root.currentFolderPath !== "" ? root.currentFolderPath : qsTr("No folder selected")
                 elide: Text.ElideLeft
                 Layout.fillWidth: true
+                Layout.preferredWidth: implicitWidth
                 font.italic: true
                 color: Kirigami.Theme.disabledTextColor
             }
 
-            Controls.CheckBox {
-                id: showFoldersCheck
-                text: qsTr("Display folders")
-                checked: root.showFolders
-                onCheckedChanged: {
-                    root.showFolders = checked
-                    if (!checked) {
-                        root.showSubFolders = false
-                        showSubFoldersCheck.checked = false
+            // An ActionToolBar rather than a plain row, as on Devices: what no
+            // longer fits moves into the overflow menu instead of being clipped
+            // (EXP-F24). Folding runs from the end, so "Order folders first"
+            // goes first and "Display folders" last. The two options keep their
+            // tick boxes in the row; in the menu they are checkable entries.
+            Kirigami.ActionToolBar {
+                Layout.fillWidth: true
+                Layout.preferredWidth: maximumContentWidth
+                alignment: Qt.AlignRight
+                background: null
+
+                actions: [
+                    Kirigami.Action {
+                        id: showFoldersAction
+                        text: qsTr("Display folders")
+                        checkable: true
+                        checked: root.showFolders
+                        displayComponent: Controls.CheckBox {
+                            text: showFoldersAction.text
+                            checked: showFoldersAction.checked
+                            onToggled: showFoldersAction.trigger()
+                        }
+                        onTriggered: {
+                            root.showFolders = checked
+                            if (!checked)
+                                root.showSubFolders = false
+                            root.loadEntries()
+                            checked = Qt.binding(() => root.showFolders)
+                        }
+                    },
+                    Kirigami.Action {
+                        id: showSubFoldersAction
+                        text: qsTr("and all sub-folders")
+                        checkable: true
+                        checked: root.showSubFolders
+                        enabled: root.showFolders
+                        displayComponent: Controls.CheckBox {
+                            text: showSubFoldersAction.text
+                            checked: showSubFoldersAction.checked
+                            enabled: showSubFoldersAction.enabled
+                            onToggled: showSubFoldersAction.trigger()
+                        }
+                        onTriggered: {
+                            root.showSubFolders = checked
+                            root.loadEntries()
+                            checked = Qt.binding(() => root.showSubFolders)
+                        }
+                    },
+                    Kirigami.Action {
+                        text: qsTr("Order folders first")
+                        icon.name: "view-sort"
+                        enabled: root.showFolders
+                        onTriggered: {
+                            root.sortColumn    = -1
+                            root.sortAscending = true
+                            appManager1.sortExplore(6, 0)   // folders-first key, K2's index (EXP-F18)
+                        }
                     }
-                    root.loadEntries()
-                }
-            }
-
-            Controls.CheckBox {
-                id: showSubFoldersCheck
-                text: qsTr("and all sub-folders")
-                checked: root.showSubFolders
-                enabled: root.showFolders
-                onCheckedChanged: {
-                    root.showSubFolders = checked
-                    root.loadEntries()
-                }
-            }
-
-            Controls.Button {
-                text: qsTr("Order folders first")
-                icon.name: "view-sort"
-                enabled: root.showFolders
-                onClicked: {
-                    root.sortColumn    = -1
-                    root.sortAscending = true
-                    appManager1.sortExplore(6, 0)   // folders-first key, K2's index (EXP-F18)
-                }
+                ]
             }
         }
 
         Kirigami.Separator { Layout.fillWidth: true }
 
-        // Files count and total size row
-        RowLayout {
+        // Files count and total size row. A Flow of two label/value groups:
+        // when both do not fit, the total size moves to a second line rather
+        // than being clipped. On one line it keeps the header row height, so
+        // it still lines up with the directory tree's second row.
+        Flow {
             Layout.fillWidth: true
             Layout.leftMargin:   Kirigami.Units.smallSpacing
             Layout.rightMargin:  Kirigami.Units.smallSpacing
-            Layout.preferredHeight: applicationWindow().headerRowHeight
-            spacing: Kirigami.Units.smallSpacing
 
-            Controls.Label { text: qsTr("Number of Files") }
-            Controls.Label {
-                text: root.folderFileCount.toLocaleString(Qt.locale(), "f", 0)
-                font.bold: true
+            // The gap between the groups is the first group's right padding, not
+            // the Flow spacing, which would also open a gap between wrapped lines.
+            Row {
+                height: applicationWindow().headerRowHeight
+                spacing: Kirigami.Units.smallSpacing
+                rightPadding: Kirigami.Units.gridUnit
+                Controls.Label { text: qsTr("Number of Files"); anchors.verticalCenter: parent.verticalCenter }
+                Controls.Label {
+                    text: root.folderFileCount.toLocaleString(Qt.locale(), "f", 0)
+                    font.bold: true
+                    anchors.verticalCenter: parent.verticalCenter
+                }
             }
-            Item { Layout.preferredWidth: Kirigami.Units.gridUnit }
-            Controls.Label { text: qsTr("Total Size") }
-            Controls.Label {
-                text: appManager1.formatDataSize(root.folderTotalSize) || "0"
-                font.bold: true
+            Row {
+                height: applicationWindow().headerRowHeight
+                spacing: Kirigami.Units.smallSpacing
+                Controls.Label { text: qsTr("Total Size"); anchors.verticalCenter: parent.verticalCenter }
+                Controls.Label {
+                    text: appManager1.formatDataSize(root.folderTotalSize) || "0"
+                    font.bold: true
+                    anchors.verticalCenter: parent.verticalCenter
+                }
             }
-            Item { Layout.fillWidth: true }
         }
 
         Kirigami.Separator { Layout.fillWidth: true }
