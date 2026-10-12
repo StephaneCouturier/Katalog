@@ -13,7 +13,10 @@ on:
 
 jobs:
   build-macos-k3:
-    runs-on: macos-14  # macOS Sonoma (Apple Silicon)
+    # macOS 15 Sequoia, Apple Silicon. Homebrew only publishes bottles for the
+    # three latest macOS releases; on an older runner it compiles Qt itself,
+    # which shipped 3.0.beta3 with broken PNG loading (SpecK3Deployment DPL-C7).
+    runs-on: macos-15
 
     steps:
     - name: Checkout code
@@ -45,6 +48,22 @@ jobs:
             brew install "$qt_mod"
           fi
         done
+
+        # Every Qt module must come from a Homebrew bottle. When no bottle exists
+        # for this runner's macOS, brew compiles Qt here instead: that is how
+        # 3.0.beta3 got a Qt built against libpng 1.4.12 headers, running with
+        # the bundled libpng 1.6.59, and loaded no PNG at all (DPL-C8).
+        for qt_mod in qtbase qtdeclarative qtsvg qtcharts qttools qt5compat qtimageformats; do
+          POURED=$(brew info --json=v2 "$qt_mod" | jq -r '.formulae[0].installed[0].poured_from_bottle')
+          if [ "$POURED" != "true" ]; then
+            echo "❌ $qt_mod was built from source, not installed from a bottle"
+            echo "   Homebrew has no bottle for this runner's macOS: move the runner (DPL-C7)."
+            echo "- **Qt from bottles**: NO - $qt_mod built from source" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+        done
+        echo "✅ All Qt modules installed from Homebrew bottles"
+        echo "- **Qt from bottles**: yes" >> $GITHUB_STEP_SUMMARY
 
         brew install extra-cmake-modules || echo "extra-cmake-modules install failed"
         brew install git wget python3 || echo "Some tools already installed"
@@ -206,7 +225,7 @@ jobs:
 
         # Which processor this build actually runs on. Recorded rather than
         # enforced: no CMAKE_OSX_ARCHITECTURES is set, so the build is native to
-        # the runner (macos-14 = Apple Silicon) and will NOT start on an Intel
+        # the runner (macos-15 = Apple Silicon) and will NOT start on an Intel
         # Mac. When a user reports "it does not start", this line says in one
         # glance whether that build could ever have run on their machine.
         ARCHS=$(lipo -archs qt_quick/Katalog.app/Contents/MacOS/Katalog 2>/dev/null || echo "unknown")
@@ -437,6 +456,14 @@ jobs:
         # then reports that. It is correct first-run behaviour, not a missing
         # SQLite plugin, and the plugin's presence is checked at deploy time
         # instead, where it can actually be judged.
+        # The libpng mismatch line means every PNG fails to load: the app runs
+        # but shows no icons and no combo-box arrows (3.0.beta3, DPL-C9).
+        if grep -qE "libpng warning: Application built with" launch.log; then
+          echo "❌ Qt and the bundled libpng do not match: no PNG image will load."
+          echo "- **Images load**: NO - libpng mismatch, see the log" >> $GITHUB_STEP_SUMMARY
+          exit 1
+        fi
+
         if grep -qE "Library not loaded|dyld|image not found|failed to load component|plugin .* not found|no Qt platform plugin could be initialized" launch.log; then
           echo "❌ The app could not start with only the bundle to rely on."
           echo "   That is exactly what a user's Mac would do."
