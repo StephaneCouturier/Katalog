@@ -19,7 +19,10 @@ on:
 
 jobs:
   build-macos-qt6-kf6:
-    runs-on: macos-14  # macOS Sonoma (Apple Silicon)
+    # macOS 15 Sequoia, Apple Silicon. Homebrew only publishes bottles for the
+    # three latest macOS releases; on an older runner it compiles Qt itself,
+    # which shipped K3 3.0.beta3 with broken PNG loading (SpecK2Deployment K2D-C6).
+    runs-on: macos-15
 
     steps:
     - name: Checkout master branch
@@ -86,6 +89,22 @@ jobs:
             brew install "$qt_mod"
           fi
         done
+
+        # Every Qt module must come from a Homebrew bottle. When no bottle exists
+        # for this runner's macOS, brew compiles Qt here instead: that is how
+        # K3 3.0.beta3 got a Qt built against libpng 1.4.12 headers, running with
+        # the bundled libpng 1.6.59, and loaded no PNG at all (K2D-C7).
+        for qt_mod in qtbase qtdeclarative qtsvg qtcharts qttools qt5compat qtimageformats; do
+          POURED=$(brew info --json=v2 "$qt_mod" | jq -r '.formulae[0].installed[0].poured_from_bottle')
+          if [ "$POURED" != "true" ]; then
+            echo "❌ $qt_mod was built from source, not installed from a bottle"
+            echo "   Homebrew has no bottle for this runner's macOS: move the runner (K2D-C6)."
+            echo "- **Qt from bottles**: NO - $qt_mod built from source" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+        done
+        echo "✅ All Qt modules installed from Homebrew bottles"
+        echo "- **Qt from bottles**: yes" >> $GITHUB_STEP_SUMMARY
 
         # Install dependencies for building KF6
         echo "Installing KF6 build dependencies..."
@@ -891,7 +910,7 @@ jobs:
         echo "- **Version**: ${{ env.KATALOG_VERSION }}" >> $GITHUB_STEP_SUMMARY
         echo "- **File**: ${{ env.ARTIFACT_BASE }}.dmg" >> $GITHUB_STEP_SUMMARY
         echo "- **Size**: $(ls -lh build/Katalog_*.dmg 2>/dev/null | awk '{print $5}' || echo 'N/A')" >> $GITHUB_STEP_SUMMARY
-        echo "- **Target**: macOS 11.0+ (Big Sur and later)" >> $GITHUB_STEP_SUMMARY
+        echo "- **Target**: macOS 15 (Sequoia) and later, Apple Silicon" >> $GITHUB_STEP_SUMMARY
         echo "- **Architecture**: $(uname -m)" >> $GITHUB_STEP_SUMMARY
         echo "- **Qt Version**: $($(brew --prefix)/bin/qmake -version | grep 'Qt version' || echo 'Unknown')" >> $GITHUB_STEP_SUMMARY
         echo "- **KF6 Version**: ${{ env.KF6_BUILD_VERSION }}" >> $GITHUB_STEP_SUMMARY
