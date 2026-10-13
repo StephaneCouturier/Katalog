@@ -309,6 +309,9 @@ public slots:
     Q_INVOKABLE QString     getStatisticsSetting(const QString &key) const;
     Q_INVOKABLE int         getColumnWidthSetting(const QString &key) const;
     Q_INVOKABLE void        setColumnWidthSetting(const QString &key, int width);
+    // Explore tree / file list division, in K2's splitter keys (EXP-F34/C27)
+    Q_INVOKABLE QVariantList getExploreSplitterWidths() const;
+    Q_INVOKABLE void         setExploreSplitterSizes(int treeWidth, int treeHeight, int filesWidth, int filesHeight);
     Q_INVOKABLE void        setStatisticsSetting(const QString &key, const QVariant &value);
 
     // Backup

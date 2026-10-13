@@ -27,7 +27,8 @@ V režimu *Paměť* se soubory katalogu nejprve načtou do paměti. U velkého k
 *Zavřít* (nebo `Esc`) stránku zavře. Pokud byla otevřena z výsledku vyhledávání, vrátí se ke stejným výsledkům.
 
 ## Strom adresářů {#directory-tree}
-Levý panel ukazuje počet adresářů katalogu a jeho **celkovou velikost**, pod tím strom jeho adresářů.
+Levý panel ukazuje počet adresářů katalogu a jeho **celkovou velikost**, pod tím strom jeho adresářů.<br/>
+Tažením čáry mezi stromem a seznamem souborů strom rozšíříte nebo zúžíte; šířka se zachová pro příště a sdílí se s Katalogem 2.
 
 Při otevření katalogu strom ukazuje složku katalogu a první dvě úrovně adresářů pod ní; hlubší úrovně jsou zpočátku sbalené.<br/>
 Adresář, který obsahuje podadresáře, má šipku: kliknutím na ni tuto větev sbalíte nebo rozbalíte.<br/>

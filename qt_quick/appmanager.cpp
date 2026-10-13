@@ -2053,6 +2053,28 @@ void AppManager::setColumnWidthSetting(const QString &key, int width)
     settings.setValue(key, width);
 }
 //----------------------------------------------------------------------
+// K2's Explore splitter keys, shared so a division set in one version shows in
+// the other (EXP-F34). Read and written as QSize, the form K2 uses (EXP-C27).
+// Empty unless both are present, K2's restore rule.
+QVariantList AppManager::getExploreSplitterWidths() const
+{
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    const int tree  = settings.value("Explore/ExploreSplitterWidget1Size").toSize().width();
+    const int files = settings.value("Explore/ExploreSplitterWidget2Size").toSize().width();
+    if (tree <= 0 || files <= 0)
+        return {};
+    return { tree, files };
+}
+//----------------------------------------------------------------------
+void AppManager::setExploreSplitterSizes(int treeWidth, int treeHeight, int filesWidth, int filesHeight)
+{
+    if (treeWidth <= 0 || filesWidth <= 0)
+        return;
+    QSettings settings(collection->settingsFilePath, QSettings::IniFormat);
+    settings.setValue("Explore/ExploreSplitterWidget1Size", QSize(treeWidth, treeHeight));
+    settings.setValue("Explore/ExploreSplitterWidget2Size", QSize(filesWidth, filesHeight));
+}
+//----------------------------------------------------------------------
 bool AppManager::shouldShowAlphaWarning() const
 {
     QSettings settings(collection->settingsFilePath, QSettings::IniFormat);

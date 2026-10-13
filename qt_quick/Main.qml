@@ -2401,15 +2401,57 @@ Kirigami.ApplicationWindow {
             }
         ]
 
-        RowLayout {
+        // The tree's width is the user's, as K2's splitter (EXP-F34). Saved
+        // when a drag ends; restored as the saved share of the width each
+        // time Explore opens, within both minimums (EXP-C27).
+        Controls.SplitView {
+            id: exploreSplit
             anchors.fill: parent
-            spacing: 0
+            orientation: Qt.Horizontal
+
+            // A 1 px line, as the separator it replaces. Wider, its transparent
+            // sides showed the window background as a grey band; the grab
+            // area is the strip laid over it below (exploreSplitGrab).
+            handle: Kirigami.Separator { implicitWidth: 1 }
+
+            readonly property real treeMinimum:  Kirigami.Units.gridUnit * 10
+            readonly property real filesMinimum: Kirigami.Units.gridUnit * 8
+
+            // Held until the page has a width: it is laid out after it shows.
+            property bool restorePending: false
+            function restoreDivision() {
+                let saved = appManager1.getExploreSplitterWidths()
+                if (saved.length !== 2)
+                    return
+                if (width <= 0) {
+                    restorePending = true
+                    return
+                }
+                restorePending = false
+                let share = saved[0] / (saved[0] + saved[1])
+                let room  = width - filesMinimum
+                exploreFolders.Controls.SplitView.preferredWidth =
+                    Math.max(treeMinimum, Math.min(room, width * share))
+            }
+            function saveDivision() {
+                appManager1.setExploreSplitterSizes(exploreFolders.width, exploreFolders.height,
+                                                    exploreFiles.width,   exploreFiles.height)
+            }
+            onResizingChanged: if (!resizing) saveDivision()
+            onWidthChanged: if (restorePending) restoreDivision()
+            Connections {
+                target: pageExplore
+                function onVisibleChanged() {
+                    if (pageExplore.visible)
+                        Qt.callLater(exploreSplit.restoreDivision)
+                }
+            }
+            Component.onCompleted: if (pageExplore.visible) Qt.callLater(restoreDivision)
 
             PageExploreFolders {
                 id: exploreFolders
-                Layout.preferredWidth: 280
-                Layout.minimumWidth:   180
-                Layout.fillHeight: true
+                Controls.SplitView.preferredWidth: Kirigami.Units.gridUnit * 16
+                Controls.SplitView.minimumWidth:   exploreSplit.treeMinimum
 
                 onFolderClicked: function(folderPath) {
                     exploreFiles.currentFolderPath = folderPath
@@ -2425,18 +2467,44 @@ Kirigami.ApplicationWindow {
                 }
             }
 
-            Kirigami.Separator { Layout.fillHeight: true }
-
             PageExploreFiles {
                 id: exploreFiles
-                Layout.fillWidth: true
-                Layout.fillHeight: true
+                Controls.SplitView.fillWidth:    true
+                Controls.SplitView.minimumWidth: exploreSplit.filesMinimum
 
                 onFolderNavigated: function(folderPath) {
                     exploreFolders.selectedFolderPath = folderPath
                     exploreFiles.currentFolderPath    = folderPath
                 }
             }
+        }
+
+        // The styles' handle grabs only its own 1-2 px (measured) and SplitView
+        // ignores a wider containmentMask, so this strip, laid over the line
+        // and a few pixels each side of it, does the drag (EXP-F34).
+        MouseArea {
+            id: exploreSplitGrab
+            x: exploreSplit.x + exploreFolders.width - Kirigami.Units.smallSpacing
+            y: exploreSplit.y
+            width:  Kirigami.Units.smallSpacing * 2 + 1
+            height: exploreSplit.height
+            cursorShape: Qt.SplitHCursor
+            preventStealing: true
+            // In window coordinates: the strip itself moves with the line.
+            property real startSceneX: 0
+            property real startWidth:  0
+            onPressed: function(mouse) {
+                startSceneX = mapToItem(null, mouse.x, 0).x
+                startWidth  = exploreFolders.width
+            }
+            onPositionChanged: function(mouse) {
+                if (!pressed)
+                    return
+                let treeWidth = startWidth + mapToItem(null, mouse.x, 0).x - startSceneX
+                exploreFolders.Controls.SplitView.preferredWidth = Math.max(exploreSplit.treeMinimum,
+                    Math.min(exploreSplit.width - exploreSplit.filesMinimum - 1, treeWidth))
+            }
+            onReleased: exploreSplit.saveDivision()
         }
     }
 

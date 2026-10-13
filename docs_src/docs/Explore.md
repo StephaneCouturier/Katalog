@@ -27,7 +27,8 @@ In *Memory* mode, a catalog's files are first loaded into memory. For a large ca
 *Close* (or `Esc`) closes the page. When it was opened from a search result, it goes back to the same results.
 
 ## Directory tree {#directory-tree}
-The left panel shows the number of directories of the catalog and its **total size**, then the tree of its directories.
+The left panel shows the number of directories of the catalog and its **total size**, then the tree of its directories.<br/>
+Drag the line between the tree and the file list to make the tree wider or narrower; the width is kept for the next time, and shared with Katalog 2.
 
 When a catalog is opened, the tree shows the catalog folder and the first two levels of directories below it; deeper levels start folded.<br/>
 A directory that contains sub-directories has an arrow: click it to fold or unfold that branch.<br/>

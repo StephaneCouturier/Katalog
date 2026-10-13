@@ -27,7 +27,8 @@ En mode *Mémoire*, les fichiers d'un catalogue sont d'abord chargés en mémoir
 *Fermer* (ou `Échap`) ferme la page. Lorsqu'elle a été ouverte depuis un résultat de recherche, elle revient aux mêmes résultats.
 
 ## Arborescence des répertoires {#directory-tree}
-Le panneau de gauche indique le nombre de répertoires du catalogue et sa **taille totale**, puis l'arborescence de ses répertoires.
+Le panneau de gauche indique le nombre de répertoires du catalogue et sa **taille totale**, puis l'arborescence de ses répertoires.<br/>
+Faites glisser la ligne entre l'arborescence et la liste des fichiers pour élargir ou réduire l'arborescence ; la largeur est conservée pour la fois suivante, et partagée avec Katalog 2.
 
 À l'ouverture d'un catalogue, l'arborescence montre le dossier du catalogue et les deux premiers niveaux de répertoires en dessous ; les niveaux plus profonds sont d'abord repliés.<br/>
 Un répertoire qui contient des sous-répertoires a une flèche : cliquez dessus pour replier ou déplier cette branche.<br/>
