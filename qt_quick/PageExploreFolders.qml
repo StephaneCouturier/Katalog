@@ -82,10 +82,40 @@ Item {
     }
 
     // Open a catalog by device ID (called from Devices/Selection context menus)
-    function openByDeviceId(deviceId) {
+    // folderPath: a folder to select once the catalog is open (EXP-F8), or none.
+    // In Memory mode the open may finish later, after a reported load
+    // (EXP-F28): exploreCatalogOpened then brings the result.
+    property string _pendingFolder: ""
+    function openByDeviceId(deviceId, folderPath) {
+        appManager1.setBusyCursor(true)   // as K2 does while opening a catalog
         const info = appManager1.exploreOpenCatalog(deviceId)
-        root.openedDeviceId = info.success ? deviceId : -1
+        if (info.deferred)                // a load runs; this one follows it (EXP-F31)
+            return
+        root._pendingFolder = folderPath ?? ""
+        if (info.loading)
+            return
+        _handleOpenResult(info)
+    }
+    function _handleOpenResult(info) {
+        appManager1.setBusyCursor(false)
+        if (info.refused) {               // another operation runs (EXP-F32)
+            applicationWindow().showPassiveNotification(info.message)
+            return
+        }
+        if (info.stopped)                 // Explore keeps what it showed (EXP-F30)
+            return
+        root.openedDeviceId = info.success ? info.deviceId : -1
         _applyOpenResult(info)
+        if (info.success && root._pendingFolder !== "") {
+            root.selectedFolderPath = root._pendingFolder
+            root.folderClicked(root._pendingFolder)
+        }
+        root._pendingFolder = ""
+    }
+    Connections {
+        target: appManager1
+        function onExploreCatalogOpened(info) { root._handleOpenResult(info) }
+        function onExploreOpenPending(deviceId) { root.openByDeviceId(deviceId) }
     }
 
     function _applyOpenResult(info) {

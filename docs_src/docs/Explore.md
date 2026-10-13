@@ -21,6 +21,8 @@ A catalog is opened in Explore with *Explore*, in the context menu of a catalog:
 
 While the Explore page is open, **clicking a catalog** on the [Selection](Selection) page opens it in Explore as well.
 
+In *Memory* mode, a catalog's files are first loaded into memory. For a large catalog this can take a while: the progress is shown in the activity panel at the bottom of the window, and *Stop* cancels the load (Explore then keeps showing the previous catalog). Opening another catalog during a load replaces it. A catalog already loaded opens at once.
+
 *Explore* in the drawer shows the page again with the last catalog explored since Katalog was started.<br/>
 *Close* (or `Esc`) closes the page. When it was opened from a search result, it goes back to the same results.
 

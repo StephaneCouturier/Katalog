@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+160"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4690"/>
+        <location line="+4837"/>
         <source>Search</source>
         <translation>Пошук</translation>
     </message>
     <message>
-        <location line="-4810"/>
+        <location line="-4957"/>
         <source>Stopped</source>
         <translation>Зупинено</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3258"/>
+        <location line="+3279"/>
         <source>Evaluated</source>
         <translation>Оцінено</translation>
     </message>
     <message>
-        <location line="-3376"/>
+        <location line="-3397"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -45,13 +45,15 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2178"/>
+        <location line="+2199"/>
         <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
         <location line="+380"/>
         <location line="+33"/>
-        <location line="+813"/>
+        <location line="+596"/>
+        <location line="+37"/>
+        <location line="+306"/>
         <location line="+11"/>
         <location line="+87"/>
         <location line="+29"/>
@@ -65,8 +67,9 @@
         <translation>Виконується</translation>
     </message>
     <message>
-        <location line="-4691"/>
-        <location line="+4125"/>
+        <location line="-4838"/>
+        <location line="+3939"/>
+        <location line="+333"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
@@ -75,7 +78,7 @@
         <translation>Завершено</translation>
     </message>
     <message>
-        <location line="-4331"/>
+        <location line="-4473"/>
         <source>Empty database path provided</source>
         <translation>Вказано порожній шлях до бази даних</translation>
     </message>
@@ -115,7 +118,7 @@
         <translation>Локальний диск</translation>
     </message>
     <message>
-        <location line="+460"/>
+        <location line="+476"/>
         <source>search_results</source>
         <translation>результати_пошуку</translation>
     </message>
@@ -161,12 +164,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2795"/>
+        <location line="+2921"/>
         <source>Size</source>
         <translation>Розмір</translation>
     </message>
     <message>
-        <location line="-2794"/>
+        <location line="-2920"/>
         <source>Date</source>
         <translation>Дата</translation>
     </message>
@@ -261,11 +264,12 @@ Choose a different name and try again.</source>
     <message>
         <location line="-20"/>
         <location line="+1140"/>
+        <location line="+607"/>
         <source>A device operation is already running.</source>
         <translation>Операція пристрою вже виконується.</translation>
     </message>
     <message>
-        <location line="-1056"/>
+        <location line="-1663"/>
         <location line="+662"/>
         <source>Create</source>
         <translation>Створити</translation>
@@ -458,12 +462,12 @@ Choose a different name.</source>
         <translation type="vanished">Сховище з таким ідентифікатором уже існує. Виберіть інший ідентифікатор.</translation>
     </message>
     <message>
-        <location line="+174"/>
+        <location line="+199"/>
         <source>Selected device is not a catalog</source>
         <translation>Вибраний пристрій не є каталогом</translation>
     </message>
     <message>
-        <location line="+220"/>
+        <location line="+321"/>
         <source>Error: could not open collection</source>
         <translation>Помилка: не вдалося відкрити колекцію</translation>
     </message>
@@ -515,7 +519,8 @@ Choose a different name.</source>
         <translation>Експортувати</translation>
     </message>
     <message>
-        <location line="-81"/>
+        <location line="-483"/>
+        <location line="+402"/>
         <location line="+26"/>
         <location line="+17"/>
         <location line="+50"/>
@@ -525,7 +530,14 @@ Choose a different name.</source>
         <translation>Скасовано</translation>
     </message>
     <message>
-        <location line="-859"/>
+        <location line="-1331"/>
+        <location line="+29"/>
+        <source>Explore</source>
+        <translation>Переглянути</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location line="+441"/>
         <location line="+10"/>
         <source>Loaded</source>
         <translation>Завантажено</translation>
@@ -822,7 +834,7 @@ Choose a different name.</source>
 <context>
     <name>DeviceTableModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicetablemodel.cpp" line="+385"/>
+        <location filename="../qt_quick/adapters/devicetablemodel.cpp" line="+400"/>
         <source>None</source>
         <translation>Немає</translation>
     </message>
@@ -1066,7 +1078,7 @@ Choose a different name.</source>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+1363"/>
+        <location filename="../qt_quick/Main.qml" line="+1396"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Бажаєте &lt;b&gt;видалити&lt;/b&gt; цей пристрій %1?&lt;br/&gt;&lt;br/&gt;Назва: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -1084,13 +1096,13 @@ Choose a different name.</source>
         <location line="-444"/>
         <location line="+60"/>
         <location line="+239"/>
-        <location line="+838"/>
+        <location line="+837"/>
         <location line="+125"/>
         <source>Cancel</source>
         <translation>Скасувати</translation>
     </message>
     <message>
-        <location line="-1365"/>
+        <location line="-1364"/>
         <location line="+68"/>
         <location line="+69"/>
         <location line="+172"/>
@@ -1114,18 +1126,18 @@ Choose a different name.</source>
         <translation>Налаштування</translation>
     </message>
     <message>
-        <location line="-413"/>
+        <location line="-403"/>
         <source>Open...</source>
         <translation>Відкрити...</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+11"/>
         <source>Collection Folder...</source>
         <translation>Тека колекції...</translation>
     </message>
     <message>
-        <location line="-14"/>
-        <location line="+102"/>
+        <location line="-7"/>
+        <location line="+92"/>
         <source>SQLite Database...</source>
         <translation>База даних SQLite...</translation>
     </message>
@@ -1152,36 +1164,36 @@ Choose a different name.</source>
     </message>
     <message>
         <location line="-856"/>
-        <location line="+1219"/>
+        <location line="+1218"/>
         <source>Devices</source>
         <translation>Пристрої</translation>
     </message>
     <message>
-        <location line="-1214"/>
-        <location line="+1311"/>
+        <location line="-1213"/>
+        <location line="+1310"/>
         <source>Explore</source>
         <translation>Переглянути</translation>
     </message>
     <message>
-        <location line="-1301"/>
-        <location line="+1547"/>
+        <location line="-1300"/>
+        <location line="+1546"/>
         <source>Backup</source>
         <translation>Резервна копія</translation>
     </message>
     <message>
-        <location line="-1542"/>
-        <location line="+1499"/>
+        <location line="-1541"/>
+        <location line="+1498"/>
         <source>Statistics</source>
         <translation>Статистика</translation>
     </message>
     <message>
-        <location line="-1494"/>
-        <location line="+1516"/>
+        <location line="-1493"/>
+        <location line="+1515"/>
         <source>Tags</source>
         <translation>Теги</translation>
     </message>
     <message>
-        <location line="-1503"/>
+        <location line="-1502"/>
         <source>Documentation</source>
         <translation>Документація</translation>
     </message>
@@ -1511,7 +1523,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Назва</translation>
     </message>
     <message>
-        <location line="+151"/>
+        <location line="+152"/>
         <source>Resume</source>
         <translation>Продовжити</translation>
     </message>
@@ -1522,13 +1534,13 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+117"/>
+        <location line="+115"/>
         <location line="+184"/>
         <source>Stop</source>
         <translation>Зупинити</translation>
     </message>
     <message>
-        <location line="-294"/>
+        <location line="-292"/>
         <source>Reset</source>
         <translation>Скинути</translation>
     </message>
@@ -1538,10 +1550,10 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Історія</translation>
     </message>
     <message>
-        <location line="-290"/>
-        <location line="+298"/>
+        <location line="-291"/>
+        <location line="+299"/>
         <location line="+39"/>
-        <location line="+109"/>
+        <location line="+107"/>
         <location line="+39"/>
         <location line="+99"/>
         <location line="+104"/>
@@ -1551,7 +1563,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Закрити</translation>
     </message>
     <message>
-        <location line="-1365"/>
+        <location line="-1364"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1595,7 +1607,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Розгорнути на один рівень</translation>
     </message>
     <message>
-        <location line="+143"/>
+        <location line="+144"/>
         <source>Duplicates (%1)</source>
         <translation>Дублікати (%1)</translation>
     </message>
@@ -1610,7 +1622,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Результати</translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+53"/>
         <source>All active</source>
         <translation>Усі активні</translation>
     </message>
@@ -1643,8 +1655,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Не вдалося створити каталог: </translation>
     </message>
     <message>
-        <location line="-1381"/>
-        <location line="+1365"/>
+        <location line="-1380"/>
+        <location line="+1364"/>
         <location line="+32"/>
         <source>Create</source>
         <translation>Створити</translation>
@@ -1697,17 +1709,17 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Згенерувати профіль LuckyBackup</translation>
     </message>
     <message>
-        <location line="+100"/>
+        <location line="+102"/>
         <source>Select Collection Folder</source>
         <translation>Виберіть теку колекції</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+12"/>
         <source>Open SQLite Database</source>
         <translation>Відкрити базу даних SQLite</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>Select the database to create and open:</source>
         <translation>Виберіть базу даних для створення та відкриття:</translation>
     </message>
@@ -6228,12 +6240,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>OperationQueueView</name>
     <message>
-        <location filename="../qt_quick/OperationQueueView.qml" line="+99"/>
+        <location filename="../qt_quick/OperationQueueView.qml" line="+107"/>
         <source>Stop</source>
         <translation>Зупинити</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+28"/>
         <source>Queue</source>
         <translation>Черга</translation>
     </message>
@@ -6824,7 +6836,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageCreateForm</name>
     <message>
-        <location filename="../qt_quick/PageCreateForm.qml" line="+213"/>
+        <location filename="../qt_quick/PageCreateForm.qml" line="+221"/>
         <location line="+47"/>
         <source>All</source>
         <translation>Усі</translation>
@@ -6840,7 +6852,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Аудіо</translation>
     </message>
     <message>
-        <location line="-191"/>
+        <location line="-199"/>
         <source>Provide a name for this new catalog.</source>
         <translation>Вкажіть назву для цього нового каталогу.</translation>
     </message>
@@ -6857,7 +6869,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 (Панель вибору ліворуч і розкривний список)</translation>
     </message>
     <message>
-        <location line="+107"/>
+        <location line="+116"/>
         <source>Catalog definition</source>
         <translation>Визначення каталогу</translation>
     </message>
@@ -6873,13 +6885,13 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+6"/>
-        <location line="+157"/>
-        <location line="+82"/>
+        <location line="+156"/>
+        <location line="+81"/>
         <source>Select the path</source>
         <translation>Вибрати шлях</translation>
     </message>
     <message>
-        <location line="-230"/>
+        <location line="-229"/>
         <source>Storage</source>
         <translation>Сховище</translation>
     </message>
@@ -6990,19 +7002,19 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="vanished">Шлях для виключення</translation>
     </message>
     <message>
-        <location line="+14"/>
-        <location line="+82"/>
+        <location line="+13"/>
+        <location line="+81"/>
         <source>Add</source>
         <translation>Додати</translation>
     </message>
     <message>
-        <location line="-54"/>
-        <location line="+85"/>
+        <location line="-53"/>
+        <location line="+84"/>
         <source>Remove</source>
         <translation>Видалити</translation>
     </message>
     <message>
-        <location line="-69"/>
+        <location line="-68"/>
         <source>Global Parameters</source>
         <translation>Глобальні параметри</translation>
     </message>
@@ -7045,7 +7057,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Виключені папки або файли змінено</translation>
     </message>
     <message>
-        <location line="+99"/>
+        <location line="+105"/>
         <source>Another storage already uses this ID.</source>
         <translation>Цей ID вже використовує інше сховище.</translation>
     </message>
@@ -7056,12 +7068,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+4"/>
-        <location line="+266"/>
+        <location line="+264"/>
         <source>Type</source>
         <translation>Тип</translation>
     </message>
     <message>
-        <location line="-263"/>
+        <location line="-261"/>
         <source>Name</source>
         <translation>Назва</translation>
     </message>
@@ -7087,7 +7099,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+12"/>
-        <location line="+136"/>
+        <location line="+135"/>
         <source>Select the path</source>
         <translation>Вибрати шлях</translation>
     </message>
@@ -7203,7 +7215,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="vanished">Шлях для виключення</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+13"/>
         <source>Add</source>
         <translation>Додати</translation>
     </message>
@@ -7296,7 +7308,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDevicesView</name>
     <message>
-        <location filename="../qt_quick/PageDevicesView.qml" line="+182"/>
+        <location filename="../qt_quick/PageDevicesView.qml" line="+205"/>
         <location line="+37"/>
         <source>Split Catalog</source>
         <translation>Розділити каталог</translation>
@@ -7551,12 +7563,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+8"/>
-        <location line="+25"/>
+        <location line="+26"/>
         <source>Filelight</source>
         <translation>Filelight</translation>
     </message>
     <message>
-        <location line="-16"/>
+        <location line="-17"/>
         <source>Verify Checksums</source>
         <translation>Перевірити контрольні суми</translation>
     </message>
@@ -7566,7 +7578,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Перевірити типи MIME</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+17"/>
         <source>Split catalog by sub-directory</source>
         <translation>Розділити каталог за підкаталогом</translation>
     </message>
@@ -7883,7 +7895,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Позначити цю папку тегом</translation>
     </message>
     <message>
-        <location line="+287"/>
+        <location line="+326"/>
         <source>Directories</source>
         <translation>Каталоги</translation>
     </message>
@@ -8674,7 +8686,7 @@ Errors: %3</source>
 <context>
     <name>PageSelectionDelegate</name>
     <message>
-        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+61"/>
+        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+66"/>
         <source>Search</source>
         <translation>Пошук</translation>
     </message>
@@ -8715,7 +8727,7 @@ Errors: %3</source>
         <translation>Налаштування</translation>
     </message>
     <message>
-        <location line="+287"/>
+        <location line="+299"/>
         <source>Close</source>
         <translation>Закрити</translation>
     </message>
@@ -8731,24 +8743,24 @@ Errors: %3</source>
     </message>
     <message>
         <location line="+3"/>
-        <location line="+207"/>
+        <location line="+205"/>
         <source>Memory</source>
         <translation>Пам&apos;ять</translation>
     </message>
     <message>
-        <location line="-206"/>
-        <location line="+206"/>
+        <location line="-204"/>
+        <location line="+204"/>
         <source>File</source>
         <translation>Файл</translation>
     </message>
     <message>
-        <location line="-205"/>
+        <location line="-203"/>
         <source>Hosted</source>
         <translation>Розміщена</translation>
     </message>
     <message>
-        <location line="-278"/>
-        <location line="+233"/>
+        <location line="-290"/>
+        <location line="+245"/>
         <location line="+51"/>
         <source>Collection</source>
         <translation>Колекція</translation>
@@ -8756,12 +8768,12 @@ Errors: %3</source>
     <message>
         <location line="+6"/>
         <location line="+1"/>
-        <location line="+600"/>
+        <location line="+595"/>
         <source>(none)</source>
         <translation>(немає)</translation>
     </message>
     <message>
-        <location line="-590"/>
+        <location line="-585"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8773,14 +8785,14 @@ Errors: %3</source>
         <translation>Версія бази даних</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+52"/>
         <source>Images folder</source>
         <translation>Папка зображень</translation>
     </message>
     <message>
-        <location line="-247"/>
-        <location line="+257"/>
-        <location line="+116"/>
+        <location line="-255"/>
+        <location line="+265"/>
+        <location line="+115"/>
         <source>Select</source>
         <translation>Вибрати</translation>
     </message>
@@ -8890,16 +8902,16 @@ Errors: %3</source>
         <translation>Шлях</translation>
     </message>
     <message>
-        <location line="-516"/>
+        <location line="-526"/>
         <location line="+3"/>
         <location line="+2"/>
         <location line="+0"/>
-        <location line="+534"/>
+        <location line="+541"/>
         <source>Device</source>
         <translation>Пристрій</translation>
     </message>
     <message>
-        <location line="-562"/>
+        <location line="-569"/>
         <source>Storage devices linked to a missing storage</source>
         <translation>Пристрої зберігання, пов&apos;язані з відсутнім сховищем</translation>
     </message>
@@ -8950,12 +8962,12 @@ Errors: %3</source>
     <message>
         <location line="+16"/>
         <location line="+25"/>
-        <location line="+306"/>
+        <location line="+318"/>
         <source>Quality check</source>
         <translation>Перевірка якості</translation>
     </message>
     <message>
-        <location line="-326"/>
+        <location line="-338"/>
         <location line="+92"/>
         <source>Error: </source>
         <translation>Помилка: </translation>
@@ -8983,17 +8995,17 @@ Errors: %3</source>
         <translation>Скопійовано</translation>
     </message>
     <message>
-        <location line="+98"/>
+        <location line="+103"/>
         <source>Select a folder</source>
         <translation>Вибрати папку</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Export</source>
         <translation>Експортувати</translation>
     </message>
     <message>
-        <location line="+74"/>
+        <location line="+80"/>
         <source>Cancel</source>
         <translation>Скасувати</translation>
     </message>
@@ -9008,7 +9020,7 @@ Errors: %3</source>
         <translation>Експортувати в режим пам&apos;яті (csv)</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+40"/>
         <source>Invalid hostname.</source>
         <translation>Недійсне ім&apos;я хоста.</translation>
     </message>
@@ -9023,7 +9035,7 @@ Errors: %3</source>
         <translation>Дійсне:</translation>
     </message>
     <message>
-        <location line="+129"/>
+        <location line="+126"/>
         <source>Import</source>
         <translation>Імпорт</translation>
     </message>
@@ -9034,12 +9046,12 @@ Errors: %3</source>
         <translation>Оновити</translation>
     </message>
     <message>
-        <location line="-335"/>
+        <location line="-330"/>
         <source>Application</source>
         <translation>Програма</translation>
     </message>
     <message>
-        <location line="+615"/>
+        <location line="+610"/>
         <source>App information</source>
         <translation>Інформація про застосунок</translation>
     </message>
@@ -9311,18 +9323,18 @@ Errors: %3</source>
 <context>
     <name>PageTagsForm</name>
     <message>
-        <location filename="../qt_quick/PageTagsForm.qml" line="+61"/>
+        <location filename="../qt_quick/PageTagsForm.qml" line="+64"/>
         <source>Add a tag</source>
         <translation>Додати тег</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location line="+94"/>
+        <location line="+92"/>
         <source>Folder</source>
         <translation>Папка</translation>
     </message>
     <message>
-        <location line="-88"/>
+        <location line="-86"/>
         <source>Folder path</source>
         <translation>Шлях до папки</translation>
     </message>
@@ -9332,7 +9344,7 @@ Errors: %3</source>
         <translation>Вибрати папку</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+8"/>
         <location line="+78"/>
         <source>Tag</source>
         <translation>Тег</translation>

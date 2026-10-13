@@ -627,10 +627,20 @@ Kirigami.ApplicationWindow {
 
     // A catalog card tapped on Selection while Explore is open opens there
     // too; one already on show is not reloaded (EXP-F27).
+    // The open is held back so the newly selected card is painted first: the
+    // load blocks the window (OPQ-F11 delay). A later tap replaces a pending one.
     function followSelectionInExplore(deviceId) {
         if (indexOfPage(pageExplore) < 0 || exploreFolders.openedDeviceId === deviceId)
             return
-        exploreFolders.openByDeviceId(deviceId)
+        appManager1.setBusyCursor(true)
+        exploreFollowTimer.deviceId = deviceId
+        exploreFollowTimer.restart()
+    }
+    Timer {
+        id: exploreFollowTimer
+        property int deviceId: -1
+        interval: appManager1.startDeferralMs()
+        onTriggered: exploreFolders.openByDeviceId(deviceId)
     }
 
     // True when Explore was opened after Results (SRS-F8).
@@ -2137,6 +2147,7 @@ Kirigami.ApplicationWindow {
                 enabled:     !appManager1.searchIsRunning
                              && !appManager1.deviceUpdateIsRunning
                              && !appManager1.catalogIsCreating
+                             && !appManager1.exploreLoadIsRunning   // OPQ-F20
                 onTriggered: pageSearch.runSearch()
             },
             Kirigami.Action {
@@ -2231,9 +2242,7 @@ Kirigami.ApplicationWindow {
                 // Same opening path as the Devices page Explore action (SRS-C3),
                 // then the row's folder is selected and revealed (EXP-F8).
                 appManager1.setLastPage("Explore")
-                exploreFolders.openByDeviceId(deviceId)
-                exploreFolders.selectedFolderPath = folderPath
-                exploreFiles.currentFolderPath    = folderPath
+                exploreFolders.openByDeviceId(deviceId, folderPath)
                 root.showExploreAfterResults()
             }
             onCloseRequested: {

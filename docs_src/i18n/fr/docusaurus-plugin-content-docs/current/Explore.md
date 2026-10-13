@@ -21,6 +21,8 @@ Un catalogue s'ouvre dans Explorer avec *Explorer*, dans le menu contextuel d'un
 
 Tant que la page Explorer est ouverte, **cliquer sur un catalogue** dans la page [Sélection](Selection) l'ouvre aussi dans Explorer.
 
+En mode *Mémoire*, les fichiers d'un catalogue sont d'abord chargés en mémoire. Pour un grand catalogue, cela peut prendre un moment : la progression s'affiche dans le panneau d'activité en bas de la fenêtre, et *Stop* annule le chargement (Explorer continue alors d'afficher le catalogue précédent). Ouvrir un autre catalogue pendant un chargement le remplace. Un catalogue déjà chargé s'ouvre immédiatement.
+
 *Explorer* dans le panneau latéral affiche à nouveau la page avec le dernier catalogue exploré depuis le démarrage de Katalog.<br/>
 *Fermer* (ou `Échap`) ferme la page. Lorsqu'elle a été ouverte depuis un résultat de recherche, elle revient aux mêmes résultats.
 

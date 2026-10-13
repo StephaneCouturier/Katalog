@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+160"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4690"/>
+        <location line="+4837"/>
         <source>Search</source>
         <translation>Søk</translation>
     </message>
     <message>
-        <location line="-4810"/>
+        <location line="-4957"/>
         <source>Stopped</source>
         <translation>Stoppet</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3258"/>
+        <location line="+3279"/>
         <source>Evaluated</source>
         <translation>Evaluert</translation>
     </message>
     <message>
-        <location line="-3376"/>
+        <location line="-3397"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -45,13 +45,15 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2178"/>
+        <location line="+2199"/>
         <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
         <location line="+380"/>
         <location line="+33"/>
-        <location line="+813"/>
+        <location line="+596"/>
+        <location line="+37"/>
+        <location line="+306"/>
         <location line="+11"/>
         <location line="+87"/>
         <location line="+29"/>
@@ -65,8 +67,9 @@
         <translation>Pågår</translation>
     </message>
     <message>
-        <location line="-4691"/>
-        <location line="+4125"/>
+        <location line="-4838"/>
+        <location line="+3939"/>
+        <location line="+333"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
@@ -75,7 +78,7 @@
         <translation>Fullført</translation>
     </message>
     <message>
-        <location line="-4331"/>
+        <location line="-4473"/>
         <source>Empty database path provided</source>
         <translation>Tom databasesti angitt</translation>
     </message>
@@ -115,7 +118,7 @@
         <translation>Lokal disk</translation>
     </message>
     <message>
-        <location line="+460"/>
+        <location line="+476"/>
         <source>search_results</source>
         <translation>søkeresultater</translation>
     </message>
@@ -161,12 +164,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2795"/>
+        <location line="+2921"/>
         <source>Size</source>
         <translation>Størrelse</translation>
     </message>
     <message>
-        <location line="-2794"/>
+        <location line="-2920"/>
         <source>Date</source>
         <translation>Dato</translation>
     </message>
@@ -261,11 +264,12 @@ Velg et annet navn og prøv igjen.</translation>
     <message>
         <location line="-20"/>
         <location line="+1140"/>
+        <location line="+607"/>
         <source>A device operation is already running.</source>
         <translation>En enhetsoperasjon kjører allerede.</translation>
     </message>
     <message>
-        <location line="-1056"/>
+        <location line="-1663"/>
         <location line="+662"/>
         <source>Create</source>
         <translation>Opprett</translation>
@@ -458,12 +462,12 @@ Velg et annet navn.</translation>
         <translation type="vanished">Det finnes allerede en lagringsenhet med denne ID-en. Velg en annen ID.</translation>
     </message>
     <message>
-        <location line="+174"/>
+        <location line="+199"/>
         <source>Selected device is not a catalog</source>
         <translation>Valgt enhet er ikke en katalog</translation>
     </message>
     <message>
-        <location line="+220"/>
+        <location line="+321"/>
         <source>Error: could not open collection</source>
         <translation>Feil: kunne ikke åpne samlingen</translation>
     </message>
@@ -515,7 +519,8 @@ Velg et annet navn.</translation>
         <translation>Eksporter</translation>
     </message>
     <message>
-        <location line="-81"/>
+        <location line="-483"/>
+        <location line="+402"/>
         <location line="+26"/>
         <location line="+17"/>
         <location line="+50"/>
@@ -525,7 +530,14 @@ Velg et annet navn.</translation>
         <translation>Avbrutt</translation>
     </message>
     <message>
-        <location line="-859"/>
+        <location line="-1331"/>
+        <location line="+29"/>
+        <source>Explore</source>
+        <translation>Utforsk</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location line="+441"/>
         <location line="+10"/>
         <source>Loaded</source>
         <translation>Lastet</translation>
@@ -822,7 +834,7 @@ Velg et annet navn.</translation>
 <context>
     <name>DeviceTableModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicetablemodel.cpp" line="+385"/>
+        <location filename="../qt_quick/adapters/devicetablemodel.cpp" line="+400"/>
         <source>None</source>
         <translation>Ingen</translation>
     </message>
@@ -1066,7 +1078,7 @@ Velg et annet navn.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+1363"/>
+        <location filename="../qt_quick/Main.qml" line="+1396"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Vil du &lt;b&gt;slette&lt;/b&gt; denne %1-enheten?&lt;br/&gt;&lt;br/&gt;Navn: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -1084,13 +1096,13 @@ Velg et annet navn.</translation>
         <location line="-444"/>
         <location line="+60"/>
         <location line="+239"/>
-        <location line="+838"/>
+        <location line="+837"/>
         <location line="+125"/>
         <source>Cancel</source>
         <translation>Avbryt</translation>
     </message>
     <message>
-        <location line="-1365"/>
+        <location line="-1364"/>
         <location line="+68"/>
         <location line="+69"/>
         <location line="+172"/>
@@ -1114,18 +1126,18 @@ Velg et annet navn.</translation>
         <translation>Innstillinger</translation>
     </message>
     <message>
-        <location line="-413"/>
+        <location line="-403"/>
         <source>Open...</source>
         <translation>Åpne...</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+11"/>
         <source>Collection Folder...</source>
         <translation>Samlingsmappe...</translation>
     </message>
     <message>
-        <location line="-14"/>
-        <location line="+102"/>
+        <location line="-7"/>
+        <location line="+92"/>
         <source>SQLite Database...</source>
         <translation>SQLite-database...</translation>
     </message>
@@ -1152,36 +1164,36 @@ Velg et annet navn.</translation>
     </message>
     <message>
         <location line="-856"/>
-        <location line="+1219"/>
+        <location line="+1218"/>
         <source>Devices</source>
         <translation>Enheter</translation>
     </message>
     <message>
-        <location line="-1214"/>
-        <location line="+1311"/>
+        <location line="-1213"/>
+        <location line="+1310"/>
         <source>Explore</source>
         <translation>Utforsk</translation>
     </message>
     <message>
-        <location line="-1301"/>
-        <location line="+1547"/>
+        <location line="-1300"/>
+        <location line="+1546"/>
         <source>Backup</source>
         <translation>Sikkerhetskopi</translation>
     </message>
     <message>
-        <location line="-1542"/>
-        <location line="+1499"/>
+        <location line="-1541"/>
+        <location line="+1498"/>
         <source>Statistics</source>
         <translation>Statistikk</translation>
     </message>
     <message>
-        <location line="-1494"/>
-        <location line="+1516"/>
+        <location line="-1493"/>
+        <location line="+1515"/>
         <source>Tags</source>
         <translation>Tagger</translation>
     </message>
     <message>
-        <location line="-1503"/>
+        <location line="-1502"/>
         <source>Documentation</source>
         <translation>Dokumentasjon</translation>
     </message>
@@ -1511,7 +1523,7 @@ Vil du lagre den likevel (katalogen blir tom)?</translation>
         <translation>Navn</translation>
     </message>
     <message>
-        <location line="+151"/>
+        <location line="+152"/>
         <source>Resume</source>
         <translation>Gjenoppta</translation>
     </message>
@@ -1522,13 +1534,13 @@ Vil du lagre den likevel (katalogen blir tom)?</translation>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+117"/>
+        <location line="+115"/>
         <location line="+184"/>
         <source>Stop</source>
         <translation>Stopp</translation>
     </message>
     <message>
-        <location line="-294"/>
+        <location line="-292"/>
         <source>Reset</source>
         <translation>Tilbakestill</translation>
     </message>
@@ -1538,10 +1550,10 @@ Vil du lagre den likevel (katalogen blir tom)?</translation>
         <translation>Historikk</translation>
     </message>
     <message>
-        <location line="-290"/>
-        <location line="+298"/>
+        <location line="-291"/>
+        <location line="+299"/>
         <location line="+39"/>
-        <location line="+109"/>
+        <location line="+107"/>
         <location line="+39"/>
         <location line="+99"/>
         <location line="+104"/>
@@ -1551,7 +1563,7 @@ Vil du lagre den likevel (katalogen blir tom)?</translation>
         <translation>Lukk</translation>
     </message>
     <message>
-        <location line="-1365"/>
+        <location line="-1364"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1595,7 +1607,7 @@ Vil du lagre den likevel (katalogen blir tom)?</translation>
         <translation>Utvid ett nivå</translation>
     </message>
     <message>
-        <location line="+143"/>
+        <location line="+144"/>
         <source>Duplicates (%1)</source>
         <translation>Duplikater (%1)</translation>
     </message>
@@ -1610,7 +1622,7 @@ Vil du lagre den likevel (katalogen blir tom)?</translation>
         <translation>Resultater</translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+53"/>
         <source>All active</source>
         <translation>Alle aktive</translation>
     </message>
@@ -1643,8 +1655,8 @@ Vil du lagre den likevel (katalogen blir tom)?</translation>
         <translation>Oppretting av katalog mislyktes: </translation>
     </message>
     <message>
-        <location line="-1381"/>
-        <location line="+1365"/>
+        <location line="-1380"/>
+        <location line="+1364"/>
         <location line="+32"/>
         <source>Create</source>
         <translation>Opprett</translation>
@@ -1697,17 +1709,17 @@ Vil du lagre den likevel (katalogen blir tom)?</translation>
         <translation>Generer LuckyBackup-profil</translation>
     </message>
     <message>
-        <location line="+100"/>
+        <location line="+102"/>
         <source>Select Collection Folder</source>
         <translation>Velg samlingsmappe</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+12"/>
         <source>Open SQLite Database</source>
         <translation>Åpne SQLite-database</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>Select the database to create and open:</source>
         <translation>Velg databasen som skal opprettes og åpnes:</translation>
     </message>
@@ -6228,12 +6240,12 @@ Kontroller at kildemappen (%1) er riktig, eller at enheten er montert i kildemap
 <context>
     <name>OperationQueueView</name>
     <message>
-        <location filename="../qt_quick/OperationQueueView.qml" line="+99"/>
+        <location filename="../qt_quick/OperationQueueView.qml" line="+107"/>
         <source>Stop</source>
         <translation>Stopp</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+28"/>
         <source>Queue</source>
         <translation>Kø</translation>
     </message>
@@ -6824,7 +6836,7 @@ Kontroller at kildemappen (%1) er riktig, eller at enheten er montert i kildemap
 <context>
     <name>PageCreateForm</name>
     <message>
-        <location filename="../qt_quick/PageCreateForm.qml" line="+213"/>
+        <location filename="../qt_quick/PageCreateForm.qml" line="+221"/>
         <location line="+47"/>
         <source>All</source>
         <translation>Alle</translation>
@@ -6840,7 +6852,7 @@ Kontroller at kildemappen (%1) er riktig, eller at enheten er montert i kildemap
         <translation>Lyd</translation>
     </message>
     <message>
-        <location line="-191"/>
+        <location line="-199"/>
         <source>Provide a name for this new catalog.</source>
         <translation>Oppgi et navn for denne nye katalogen.</translation>
     </message>
@@ -6857,7 +6869,7 @@ Kontroller at kildemappen (%1) er riktig, eller at enheten er montert i kildemap
 (Utvalgspanel til venstre og nedtrekksliste)</translation>
     </message>
     <message>
-        <location line="+107"/>
+        <location line="+116"/>
         <source>Catalog definition</source>
         <translation>Katalogdefinisjon</translation>
     </message>
@@ -6873,13 +6885,13 @@ Kontroller at kildemappen (%1) er riktig, eller at enheten er montert i kildemap
     </message>
     <message>
         <location line="+6"/>
-        <location line="+157"/>
-        <location line="+82"/>
+        <location line="+156"/>
+        <location line="+81"/>
         <source>Select the path</source>
         <translation>Velg stien</translation>
     </message>
     <message>
-        <location line="-230"/>
+        <location line="-229"/>
         <source>Storage</source>
         <translation>Lagring</translation>
     </message>
@@ -6990,19 +7002,19 @@ Kontroller at kildemappen (%1) er riktig, eller at enheten er montert i kildemap
         <translation type="vanished">Sti som skal utelates</translation>
     </message>
     <message>
-        <location line="+14"/>
-        <location line="+82"/>
+        <location line="+13"/>
+        <location line="+81"/>
         <source>Add</source>
         <translation>Legg til</translation>
     </message>
     <message>
-        <location line="-54"/>
-        <location line="+85"/>
+        <location line="-53"/>
+        <location line="+84"/>
         <source>Remove</source>
         <translation>Fjern</translation>
     </message>
     <message>
-        <location line="-69"/>
+        <location line="-68"/>
         <source>Global Parameters</source>
         <translation>Globale parametere</translation>
     </message>
@@ -7045,7 +7057,7 @@ Kontroller at kildemappen (%1) er riktig, eller at enheten er montert i kildemap
         <translation>Utelatte mapper eller filer er endret</translation>
     </message>
     <message>
-        <location line="+99"/>
+        <location line="+105"/>
         <source>Another storage already uses this ID.</source>
         <translation>En annen lagring bruker allerede denne ID-en.</translation>
     </message>
@@ -7056,12 +7068,12 @@ Kontroller at kildemappen (%1) er riktig, eller at enheten er montert i kildemap
     </message>
     <message>
         <location line="+4"/>
-        <location line="+266"/>
+        <location line="+264"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
     <message>
-        <location line="-263"/>
+        <location line="-261"/>
         <source>Name</source>
         <translation>Navn</translation>
     </message>
@@ -7087,7 +7099,7 @@ Kontroller at kildemappen (%1) er riktig, eller at enheten er montert i kildemap
     </message>
     <message>
         <location line="+12"/>
-        <location line="+136"/>
+        <location line="+135"/>
         <source>Select the path</source>
         <translation>Velg stien</translation>
     </message>
@@ -7203,7 +7215,7 @@ Kontroller at kildemappen (%1) er riktig, eller at enheten er montert i kildemap
         <translation type="vanished">Sti som skal utelates</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+13"/>
         <source>Add</source>
         <translation>Legg til</translation>
     </message>
@@ -7296,7 +7308,7 @@ Kontroller at kildemappen (%1) er riktig, eller at enheten er montert i kildemap
 <context>
     <name>PageDevicesView</name>
     <message>
-        <location filename="../qt_quick/PageDevicesView.qml" line="+182"/>
+        <location filename="../qt_quick/PageDevicesView.qml" line="+205"/>
         <location line="+37"/>
         <source>Split Catalog</source>
         <translation>Del opp katalog</translation>
@@ -7551,12 +7563,12 @@ Kontroller at kildemappen (%1) er riktig, eller at enheten er montert i kildemap
     </message>
     <message>
         <location line="+8"/>
-        <location line="+25"/>
+        <location line="+26"/>
         <source>Filelight</source>
         <translation>Filelight</translation>
     </message>
     <message>
-        <location line="-16"/>
+        <location line="-17"/>
         <source>Verify Checksums</source>
         <translation>Verifiser sjekksummer</translation>
     </message>
@@ -7566,7 +7578,7 @@ Kontroller at kildemappen (%1) er riktig, eller at enheten er montert i kildemap
         <translation>Verifiser MIME-typer</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+17"/>
         <source>Split catalog by sub-directory</source>
         <translation>Del katalog etter undermappe</translation>
     </message>
@@ -7883,7 +7895,7 @@ Kontroller at kildemappen (%1) er riktig, eller at enheten er montert i kildemap
         <translation>Tagg denne mappen</translation>
     </message>
     <message>
-        <location line="+287"/>
+        <location line="+326"/>
         <source>Directories</source>
         <translation>Kataloger</translation>
     </message>
@@ -8674,7 +8686,7 @@ Feil: %3</translation>
 <context>
     <name>PageSelectionDelegate</name>
     <message>
-        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+61"/>
+        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+66"/>
         <source>Search</source>
         <translation>Søk</translation>
     </message>
@@ -8715,7 +8727,7 @@ Feil: %3</translation>
         <translation>Innstillinger</translation>
     </message>
     <message>
-        <location line="+287"/>
+        <location line="+299"/>
         <source>Close</source>
         <translation>Lukk</translation>
     </message>
@@ -8731,24 +8743,24 @@ Feil: %3</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location line="+207"/>
+        <location line="+205"/>
         <source>Memory</source>
         <translation>Minne</translation>
     </message>
     <message>
-        <location line="-206"/>
-        <location line="+206"/>
+        <location line="-204"/>
+        <location line="+204"/>
         <source>File</source>
         <translation>Fil</translation>
     </message>
     <message>
-        <location line="-205"/>
+        <location line="-203"/>
         <source>Hosted</source>
         <translation>Hostet</translation>
     </message>
     <message>
-        <location line="-278"/>
-        <location line="+233"/>
+        <location line="-290"/>
+        <location line="+245"/>
         <location line="+51"/>
         <source>Collection</source>
         <translation>Samling</translation>
@@ -8756,12 +8768,12 @@ Feil: %3</translation>
     <message>
         <location line="+6"/>
         <location line="+1"/>
-        <location line="+600"/>
+        <location line="+595"/>
         <source>(none)</source>
         <translation>(ingen)</translation>
     </message>
     <message>
-        <location line="-590"/>
+        <location line="-585"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8773,14 +8785,14 @@ Feil: %3</translation>
         <translation>Databaseversjon</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+52"/>
         <source>Images folder</source>
         <translation>Bildemapp</translation>
     </message>
     <message>
-        <location line="-247"/>
-        <location line="+257"/>
-        <location line="+116"/>
+        <location line="-255"/>
+        <location line="+265"/>
+        <location line="+115"/>
         <source>Select</source>
         <translation>Velg</translation>
     </message>
@@ -8890,16 +8902,16 @@ Feil: %3</translation>
         <translation>Sti</translation>
     </message>
     <message>
-        <location line="-516"/>
+        <location line="-526"/>
         <location line="+3"/>
         <location line="+2"/>
         <location line="+0"/>
-        <location line="+534"/>
+        <location line="+541"/>
         <source>Device</source>
         <translation>Enhet</translation>
     </message>
     <message>
-        <location line="-562"/>
+        <location line="-569"/>
         <source>Storage devices linked to a missing storage</source>
         <translation>Lagringsenheter koblet til en manglende lagring</translation>
     </message>
@@ -8950,12 +8962,12 @@ Feil: %3</translation>
     <message>
         <location line="+16"/>
         <location line="+25"/>
-        <location line="+306"/>
+        <location line="+318"/>
         <source>Quality check</source>
         <translation>Kvalitetskontroll</translation>
     </message>
     <message>
-        <location line="-326"/>
+        <location line="-338"/>
         <location line="+92"/>
         <source>Error: </source>
         <translation>Feil: </translation>
@@ -8983,17 +8995,17 @@ Feil: %3</translation>
         <translation>Kopiert</translation>
     </message>
     <message>
-        <location line="+98"/>
+        <location line="+103"/>
         <source>Select a folder</source>
         <translation>Velg en mappe</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Export</source>
         <translation>Eksporter</translation>
     </message>
     <message>
-        <location line="+74"/>
+        <location line="+80"/>
         <source>Cancel</source>
         <translation>Avbryt</translation>
     </message>
@@ -9008,7 +9020,7 @@ Feil: %3</translation>
         <translation>Eksporter til minnemodus (csv)</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+40"/>
         <source>Invalid hostname.</source>
         <translation>Ugyldig vertsnavn.</translation>
     </message>
@@ -9023,7 +9035,7 @@ Feil: %3</translation>
         <translation>Gyldig:</translation>
     </message>
     <message>
-        <location line="+129"/>
+        <location line="+126"/>
         <source>Import</source>
         <translation>Importer</translation>
     </message>
@@ -9034,12 +9046,12 @@ Feil: %3</translation>
         <translation>Oppdater</translation>
     </message>
     <message>
-        <location line="-335"/>
+        <location line="-330"/>
         <source>Application</source>
         <translation>Program</translation>
     </message>
     <message>
-        <location line="+615"/>
+        <location line="+610"/>
         <source>App information</source>
         <translation>Programinformasjon</translation>
     </message>
@@ -9311,18 +9323,18 @@ Feil: %3</translation>
 <context>
     <name>PageTagsForm</name>
     <message>
-        <location filename="../qt_quick/PageTagsForm.qml" line="+61"/>
+        <location filename="../qt_quick/PageTagsForm.qml" line="+64"/>
         <source>Add a tag</source>
         <translation>Legg til en tagg</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location line="+94"/>
+        <location line="+92"/>
         <source>Folder</source>
         <translation>Mappe</translation>
     </message>
     <message>
-        <location line="-88"/>
+        <location line="-86"/>
         <source>Folder path</source>
         <translation>Mappesti</translation>
     </message>
@@ -9332,7 +9344,7 @@ Feil: %3</translation>
         <translation>Velg en mappe</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+8"/>
         <location line="+78"/>
         <source>Tag</source>
         <translation>Tagg</translation>

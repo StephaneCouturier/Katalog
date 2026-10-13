@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+160"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4690"/>
+        <location line="+4837"/>
         <source>Search</source>
         <translation>Meklēt</translation>
     </message>
     <message>
-        <location line="-4810"/>
+        <location line="-4957"/>
         <source>Stopped</source>
         <translation>Apstādināts</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3258"/>
+        <location line="+3279"/>
         <source>Evaluated</source>
         <translation>Novērtēts</translation>
     </message>
     <message>
-        <location line="-3376"/>
+        <location line="-3397"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -45,13 +45,15 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2178"/>
+        <location line="+2199"/>
         <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
         <location line="+380"/>
         <location line="+33"/>
-        <location line="+813"/>
+        <location line="+596"/>
+        <location line="+37"/>
+        <location line="+306"/>
         <location line="+11"/>
         <location line="+87"/>
         <location line="+29"/>
@@ -65,8 +67,9 @@
         <translation>Procesā</translation>
     </message>
     <message>
-        <location line="-4691"/>
-        <location line="+4125"/>
+        <location line="-4838"/>
+        <location line="+3939"/>
+        <location line="+333"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
@@ -75,7 +78,7 @@
         <translation>Pabeigts</translation>
     </message>
     <message>
-        <location line="-4331"/>
+        <location line="-4473"/>
         <source>Empty database path provided</source>
         <translation>Norādīts tukšs datubāzes ceļš</translation>
     </message>
@@ -115,7 +118,7 @@
         <translation>Lokālais disks</translation>
     </message>
     <message>
-        <location line="+460"/>
+        <location line="+476"/>
         <source>search_results</source>
         <translation>meklēšanas_rezultāti</translation>
     </message>
@@ -161,12 +164,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2795"/>
+        <location line="+2921"/>
         <source>Size</source>
         <translation>Izmērs</translation>
     </message>
     <message>
-        <location line="-2794"/>
+        <location line="-2920"/>
         <source>Date</source>
         <translation>Datums</translation>
     </message>
@@ -261,11 +264,12 @@ Izvēlieties citu nosaukumu un mēģiniet vēlreiz.</translation>
     <message>
         <location line="-20"/>
         <location line="+1140"/>
+        <location line="+607"/>
         <source>A device operation is already running.</source>
         <translation>Ierīces darbība jau darbojas.</translation>
     </message>
     <message>
-        <location line="-1056"/>
+        <location line="-1663"/>
         <location line="+662"/>
         <source>Create</source>
         <translation>Izveidot</translation>
@@ -458,12 +462,12 @@ Izvēlieties citu nosaukumu.</translation>
         <translation type="vanished">Krātuve ar šādu ID jau pastāv. Izvēlieties citu ID.</translation>
     </message>
     <message>
-        <location line="+174"/>
+        <location line="+199"/>
         <source>Selected device is not a catalog</source>
         <translation>Atlasītā ierīce nav katalogs</translation>
     </message>
     <message>
-        <location line="+220"/>
+        <location line="+321"/>
         <source>Error: could not open collection</source>
         <translation>Kļūda: neizdevās atvērt kolekciju</translation>
     </message>
@@ -515,7 +519,8 @@ Izvēlieties citu nosaukumu.</translation>
         <translation>Eksportēt</translation>
     </message>
     <message>
-        <location line="-81"/>
+        <location line="-483"/>
+        <location line="+402"/>
         <location line="+26"/>
         <location line="+17"/>
         <location line="+50"/>
@@ -525,7 +530,14 @@ Izvēlieties citu nosaukumu.</translation>
         <translation>Atcelts</translation>
     </message>
     <message>
-        <location line="-859"/>
+        <location line="-1331"/>
+        <location line="+29"/>
+        <source>Explore</source>
+        <translation>Pārlūkot</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location line="+441"/>
         <location line="+10"/>
         <source>Loaded</source>
         <translation>Ielādēts</translation>
@@ -822,7 +834,7 @@ Izvēlieties citu nosaukumu.</translation>
 <context>
     <name>DeviceTableModel</name>
     <message>
-        <location filename="../qt_quick/adapters/devicetablemodel.cpp" line="+385"/>
+        <location filename="../qt_quick/adapters/devicetablemodel.cpp" line="+400"/>
         <source>None</source>
         <translation>Nav</translation>
     </message>
@@ -1066,7 +1078,7 @@ Izvēlieties citu nosaukumu.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+1363"/>
+        <location filename="../qt_quick/Main.qml" line="+1396"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Vai vēlaties &lt;b&gt;dzēst&lt;/b&gt; šo %1 ierīci?&lt;br/&gt;&lt;br/&gt;Nosaukums: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -1084,13 +1096,13 @@ Izvēlieties citu nosaukumu.</translation>
         <location line="-444"/>
         <location line="+60"/>
         <location line="+239"/>
-        <location line="+838"/>
+        <location line="+837"/>
         <location line="+125"/>
         <source>Cancel</source>
         <translation>Atcelt</translation>
     </message>
     <message>
-        <location line="-1365"/>
+        <location line="-1364"/>
         <location line="+68"/>
         <location line="+69"/>
         <location line="+172"/>
@@ -1114,18 +1126,18 @@ Izvēlieties citu nosaukumu.</translation>
         <translation>Iestatījumi</translation>
     </message>
     <message>
-        <location line="-413"/>
+        <location line="-403"/>
         <source>Open...</source>
         <translation>Atvērt...</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+11"/>
         <source>Collection Folder...</source>
         <translation>Kolekcijas mape...</translation>
     </message>
     <message>
-        <location line="-14"/>
-        <location line="+102"/>
+        <location line="-7"/>
+        <location line="+92"/>
         <source>SQLite Database...</source>
         <translation>SQLite datubāze...</translation>
     </message>
@@ -1152,36 +1164,36 @@ Izvēlieties citu nosaukumu.</translation>
     </message>
     <message>
         <location line="-856"/>
-        <location line="+1219"/>
+        <location line="+1218"/>
         <source>Devices</source>
         <translation>Ierīces</translation>
     </message>
     <message>
-        <location line="-1214"/>
-        <location line="+1311"/>
+        <location line="-1213"/>
+        <location line="+1310"/>
         <source>Explore</source>
         <translation>Pārlūkot</translation>
     </message>
     <message>
-        <location line="-1301"/>
-        <location line="+1547"/>
+        <location line="-1300"/>
+        <location line="+1546"/>
         <source>Backup</source>
         <translation>Dublēšana</translation>
     </message>
     <message>
-        <location line="-1542"/>
-        <location line="+1499"/>
+        <location line="-1541"/>
+        <location line="+1498"/>
         <source>Statistics</source>
         <translation>Statistika</translation>
     </message>
     <message>
-        <location line="-1494"/>
-        <location line="+1516"/>
+        <location line="-1493"/>
+        <location line="+1515"/>
         <source>Tags</source>
         <translation>Tagi</translation>
     </message>
     <message>
-        <location line="-1503"/>
+        <location line="-1502"/>
         <source>Documentation</source>
         <translation>Dokumentācija</translation>
     </message>
@@ -1511,7 +1523,7 @@ Vai tomēr vēlaties to saglabāt (katalogs būs tukšs)?</translation>
         <translation>Nosaukums</translation>
     </message>
     <message>
-        <location line="+151"/>
+        <location line="+152"/>
         <source>Resume</source>
         <translation>Atsākt</translation>
     </message>
@@ -1522,13 +1534,13 @@ Vai tomēr vēlaties to saglabāt (katalogs būs tukšs)?</translation>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+117"/>
+        <location line="+115"/>
         <location line="+184"/>
         <source>Stop</source>
         <translation>Apturēt</translation>
     </message>
     <message>
-        <location line="-294"/>
+        <location line="-292"/>
         <source>Reset</source>
         <translation>Atiestatīt</translation>
     </message>
@@ -1538,10 +1550,10 @@ Vai tomēr vēlaties to saglabāt (katalogs būs tukšs)?</translation>
         <translation>Vēsture</translation>
     </message>
     <message>
-        <location line="-290"/>
-        <location line="+298"/>
+        <location line="-291"/>
+        <location line="+299"/>
         <location line="+39"/>
-        <location line="+109"/>
+        <location line="+107"/>
         <location line="+39"/>
         <location line="+99"/>
         <location line="+104"/>
@@ -1551,7 +1563,7 @@ Vai tomēr vēlaties to saglabāt (katalogs būs tukšs)?</translation>
         <translation>Aizvērt</translation>
     </message>
     <message>
-        <location line="-1365"/>
+        <location line="-1364"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1595,7 +1607,7 @@ Vai tomēr vēlaties to saglabāt (katalogs būs tukšs)?</translation>
         <translation>Izvērst vienu līmeni</translation>
     </message>
     <message>
-        <location line="+143"/>
+        <location line="+144"/>
         <source>Duplicates (%1)</source>
         <translation>Dublikāti (%1)</translation>
     </message>
@@ -1610,7 +1622,7 @@ Vai tomēr vēlaties to saglabāt (katalogs būs tukšs)?</translation>
         <translation>Rezultāti</translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+53"/>
         <source>All active</source>
         <translation>Visi aktīvie</translation>
     </message>
@@ -1643,8 +1655,8 @@ Vai tomēr vēlaties to saglabāt (katalogs būs tukšs)?</translation>
         <translation>Neizdevās izveidot katalogu: </translation>
     </message>
     <message>
-        <location line="-1381"/>
-        <location line="+1365"/>
+        <location line="-1380"/>
+        <location line="+1364"/>
         <location line="+32"/>
         <source>Create</source>
         <translation>Izveidot</translation>
@@ -1697,17 +1709,17 @@ Vai tomēr vēlaties to saglabāt (katalogs būs tukšs)?</translation>
         <translation>Ģenerēt LuckyBackup profilu</translation>
     </message>
     <message>
-        <location line="+100"/>
+        <location line="+102"/>
         <source>Select Collection Folder</source>
         <translation>Atlasiet kolekcijas mapi</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+12"/>
         <source>Open SQLite Database</source>
         <translation>Atvērt SQLite datubāzi</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>Select the database to create and open:</source>
         <translation>Izvēlēties datubāzi, ko izveidot un atvērt:</translation>
     </message>
@@ -6228,12 +6240,12 @@ Pārbaudiet, vai avota mape (%1) ir pareiza vai ierīce ir piemontēta avota map
 <context>
     <name>OperationQueueView</name>
     <message>
-        <location filename="../qt_quick/OperationQueueView.qml" line="+99"/>
+        <location filename="../qt_quick/OperationQueueView.qml" line="+107"/>
         <source>Stop</source>
         <translation>Apturēt</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+28"/>
         <source>Queue</source>
         <translation>Rinda</translation>
     </message>
@@ -6824,7 +6836,7 @@ Pārbaudiet, vai avota mape (%1) ir pareiza vai ierīce ir piemontēta avota map
 <context>
     <name>PageCreateForm</name>
     <message>
-        <location filename="../qt_quick/PageCreateForm.qml" line="+213"/>
+        <location filename="../qt_quick/PageCreateForm.qml" line="+221"/>
         <location line="+47"/>
         <source>All</source>
         <translation>Visi</translation>
@@ -6840,7 +6852,7 @@ Pārbaudiet, vai avota mape (%1) ir pareiza vai ierīce ir piemontēta avota map
         <translation>Audio</translation>
     </message>
     <message>
-        <location line="-191"/>
+        <location line="-199"/>
         <source>Provide a name for this new catalog.</source>
         <translation>Norādiet nosaukumu šim jaunajam katalogam.</translation>
     </message>
@@ -6857,7 +6869,7 @@ Pārbaudiet, vai avota mape (%1) ir pareiza vai ierīce ir piemontēta avota map
 (Atlases panelis pa kreisi un nolaižamais saraksts)</translation>
     </message>
     <message>
-        <location line="+107"/>
+        <location line="+116"/>
         <source>Catalog definition</source>
         <translation>Kataloga definīcija</translation>
     </message>
@@ -6873,13 +6885,13 @@ Pārbaudiet, vai avota mape (%1) ir pareiza vai ierīce ir piemontēta avota map
     </message>
     <message>
         <location line="+6"/>
-        <location line="+157"/>
-        <location line="+82"/>
+        <location line="+156"/>
+        <location line="+81"/>
         <source>Select the path</source>
         <translation>Izvēlēties ceļu</translation>
     </message>
     <message>
-        <location line="-230"/>
+        <location line="-229"/>
         <source>Storage</source>
         <translation>Krātuve</translation>
     </message>
@@ -6990,19 +7002,19 @@ Pārbaudiet, vai avota mape (%1) ir pareiza vai ierīce ir piemontēta avota map
         <translation type="vanished">Izslēdzamais ceļš</translation>
     </message>
     <message>
-        <location line="+14"/>
-        <location line="+82"/>
+        <location line="+13"/>
+        <location line="+81"/>
         <source>Add</source>
         <translation>Pievienot</translation>
     </message>
     <message>
-        <location line="-54"/>
-        <location line="+85"/>
+        <location line="-53"/>
+        <location line="+84"/>
         <source>Remove</source>
         <translation>Noņemt</translation>
     </message>
     <message>
-        <location line="-69"/>
+        <location line="-68"/>
         <source>Global Parameters</source>
         <translation>Globālie parametri</translation>
     </message>
@@ -7045,7 +7057,7 @@ Pārbaudiet, vai avota mape (%1) ir pareiza vai ierīce ir piemontēta avota map
         <translation>Izslēgtās mapes vai faili ir mainīti</translation>
     </message>
     <message>
-        <location line="+99"/>
+        <location line="+105"/>
         <source>Another storage already uses this ID.</source>
         <translation>Šo ID jau izmanto cita krātuve.</translation>
     </message>
@@ -7056,12 +7068,12 @@ Pārbaudiet, vai avota mape (%1) ir pareiza vai ierīce ir piemontēta avota map
     </message>
     <message>
         <location line="+4"/>
-        <location line="+266"/>
+        <location line="+264"/>
         <source>Type</source>
         <translation>Tips</translation>
     </message>
     <message>
-        <location line="-263"/>
+        <location line="-261"/>
         <source>Name</source>
         <translation>Nosaukums</translation>
     </message>
@@ -7087,7 +7099,7 @@ Pārbaudiet, vai avota mape (%1) ir pareiza vai ierīce ir piemontēta avota map
     </message>
     <message>
         <location line="+12"/>
-        <location line="+136"/>
+        <location line="+135"/>
         <source>Select the path</source>
         <translation>Izvēlēties ceļu</translation>
     </message>
@@ -7203,7 +7215,7 @@ Pārbaudiet, vai avota mape (%1) ir pareiza vai ierīce ir piemontēta avota map
         <translation type="vanished">Izslēdzamais ceļš</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+13"/>
         <source>Add</source>
         <translation>Pievienot</translation>
     </message>
@@ -7296,7 +7308,7 @@ Pārbaudiet, vai avota mape (%1) ir pareiza vai ierīce ir piemontēta avota map
 <context>
     <name>PageDevicesView</name>
     <message>
-        <location filename="../qt_quick/PageDevicesView.qml" line="+182"/>
+        <location filename="../qt_quick/PageDevicesView.qml" line="+205"/>
         <location line="+37"/>
         <source>Split Catalog</source>
         <translation>Sadalīt katalogu</translation>
@@ -7551,12 +7563,12 @@ Pārbaudiet, vai avota mape (%1) ir pareiza vai ierīce ir piemontēta avota map
     </message>
     <message>
         <location line="+8"/>
-        <location line="+25"/>
+        <location line="+26"/>
         <source>Filelight</source>
         <translation>Filelight</translation>
     </message>
     <message>
-        <location line="-16"/>
+        <location line="-17"/>
         <source>Verify Checksums</source>
         <translation>Pārbaudīt kontrolsummas</translation>
     </message>
@@ -7566,7 +7578,7 @@ Pārbaudiet, vai avota mape (%1) ir pareiza vai ierīce ir piemontēta avota map
         <translation>Pārbaudīt MIME tipus</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+17"/>
         <source>Split catalog by sub-directory</source>
         <translation>Sadalīt katalogu pēc apakšdirektorijas</translation>
     </message>
@@ -7883,7 +7895,7 @@ Pārbaudiet, vai avota mape (%1) ir pareiza vai ierīce ir piemontēta avota map
         <translation>Atzīmēt šo mapi</translation>
     </message>
     <message>
-        <location line="+287"/>
+        <location line="+326"/>
         <source>Directories</source>
         <translation>Direktorijas</translation>
     </message>
@@ -8674,7 +8686,7 @@ Kļūdas: %3</translation>
 <context>
     <name>PageSelectionDelegate</name>
     <message>
-        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+61"/>
+        <location filename="../qt_quick/PageSelectionDelegate.qml" line="+66"/>
         <source>Search</source>
         <translation>Meklēt</translation>
     </message>
@@ -8715,7 +8727,7 @@ Kļūdas: %3</translation>
         <translation>Iestatījumi</translation>
     </message>
     <message>
-        <location line="+287"/>
+        <location line="+299"/>
         <source>Close</source>
         <translation>Aizvērt</translation>
     </message>
@@ -8731,24 +8743,24 @@ Kļūdas: %3</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location line="+207"/>
+        <location line="+205"/>
         <source>Memory</source>
         <translation>Atmiņa</translation>
     </message>
     <message>
-        <location line="-206"/>
-        <location line="+206"/>
+        <location line="-204"/>
+        <location line="+204"/>
         <source>File</source>
         <translation>Fails</translation>
     </message>
     <message>
-        <location line="-205"/>
+        <location line="-203"/>
         <source>Hosted</source>
         <translation>Uz servera</translation>
     </message>
     <message>
-        <location line="-278"/>
-        <location line="+233"/>
+        <location line="-290"/>
+        <location line="+245"/>
         <location line="+51"/>
         <source>Collection</source>
         <translation>Kolekcija</translation>
@@ -8756,12 +8768,12 @@ Kļūdas: %3</translation>
     <message>
         <location line="+6"/>
         <location line="+1"/>
-        <location line="+600"/>
+        <location line="+595"/>
         <source>(none)</source>
         <translation>(nav)</translation>
     </message>
     <message>
-        <location line="-590"/>
+        <location line="-585"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8773,14 +8785,14 @@ Kļūdas: %3</translation>
         <translation>Datubāzes versija</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+52"/>
         <source>Images folder</source>
         <translation>Attēlu mape</translation>
     </message>
     <message>
-        <location line="-247"/>
-        <location line="+257"/>
-        <location line="+116"/>
+        <location line="-255"/>
+        <location line="+265"/>
+        <location line="+115"/>
         <source>Select</source>
         <translation>Izvēlēties</translation>
     </message>
@@ -8890,16 +8902,16 @@ Kļūdas: %3</translation>
         <translation>Ceļš</translation>
     </message>
     <message>
-        <location line="-516"/>
+        <location line="-526"/>
         <location line="+3"/>
         <location line="+2"/>
         <location line="+0"/>
-        <location line="+534"/>
+        <location line="+541"/>
         <source>Device</source>
         <translation>Ierīce</translation>
     </message>
     <message>
-        <location line="-562"/>
+        <location line="-569"/>
         <source>Storage devices linked to a missing storage</source>
         <translation>Krātuves ierīces, kas saistītas ar trūkstošu krātuvi</translation>
     </message>
@@ -8950,12 +8962,12 @@ Kļūdas: %3</translation>
     <message>
         <location line="+16"/>
         <location line="+25"/>
-        <location line="+306"/>
+        <location line="+318"/>
         <source>Quality check</source>
         <translation>Kvalitātes pārbaude</translation>
     </message>
     <message>
-        <location line="-326"/>
+        <location line="-338"/>
         <location line="+92"/>
         <source>Error: </source>
         <translation>Kļūda: </translation>
@@ -8983,17 +8995,17 @@ Kļūdas: %3</translation>
         <translation>Nokopēts</translation>
     </message>
     <message>
-        <location line="+98"/>
+        <location line="+103"/>
         <source>Select a folder</source>
         <translation>Izvēlēties mapi</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Export</source>
         <translation>Eksportēt</translation>
     </message>
     <message>
-        <location line="+74"/>
+        <location line="+80"/>
         <source>Cancel</source>
         <translation>Atcelt</translation>
     </message>
@@ -9008,7 +9020,7 @@ Kļūdas: %3</translation>
         <translation>Eksportēt uz atmiņas režīmu (csv)</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+40"/>
         <source>Invalid hostname.</source>
         <translation>Nederīgs resursdatora nosaukums.</translation>
     </message>
@@ -9023,7 +9035,7 @@ Kļūdas: %3</translation>
         <translation>Derīgs:</translation>
     </message>
     <message>
-        <location line="+129"/>
+        <location line="+126"/>
         <source>Import</source>
         <translation>Importēt</translation>
     </message>
@@ -9034,12 +9046,12 @@ Kļūdas: %3</translation>
         <translation>Atjaunināt</translation>
     </message>
     <message>
-        <location line="-335"/>
+        <location line="-330"/>
         <source>Application</source>
         <translation>Lietotne</translation>
     </message>
     <message>
-        <location line="+615"/>
+        <location line="+610"/>
         <source>App information</source>
         <translation>Lietotnes informācija</translation>
     </message>
@@ -9311,18 +9323,18 @@ Kļūdas: %3</translation>
 <context>
     <name>PageTagsForm</name>
     <message>
-        <location filename="../qt_quick/PageTagsForm.qml" line="+61"/>
+        <location filename="../qt_quick/PageTagsForm.qml" line="+64"/>
         <source>Add a tag</source>
         <translation>Pievienot tagu</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location line="+94"/>
+        <location line="+92"/>
         <source>Folder</source>
         <translation>Mape</translation>
     </message>
     <message>
-        <location line="-88"/>
+        <location line="-86"/>
         <source>Folder path</source>
         <translation>Mapes ceļš</translation>
     </message>
@@ -9332,7 +9344,7 @@ Kļūdas: %3</translation>
         <translation>Izvēlēties mapi</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+8"/>
         <location line="+78"/>
         <source>Tag</source>
         <translation>Tags</translation>

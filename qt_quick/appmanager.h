@@ -2,6 +2,7 @@
 #define APPMANAGER_H
 
 #include <QObject>
+#include <QMutex>
 #include <QDebug>
 
 //QtCore
@@ -138,6 +139,9 @@ class AppManager : public QObject
     Q_PROPERTY(QString currentCollectionDisplayName READ getCurrentCollectionDisplayName NOTIFY recentCollectionsChanged)
     Q_PROPERTY(QString currentCollectionIconName    READ getCurrentCollectionIconName    NOTIFY recentCollectionsChanged)
     Q_PROPERTY(bool    searchIsRunning   READ getSearchIsRunning   NOTIFY searchStateChanged)
+    // Memory-mode Explore load, reported in the activity panel (EXP-F28, OPQ-F19)
+    Q_PROPERTY(bool    exploreLoadIsRunning READ getExploreLoadIsRunning NOTIFY exploreLoadStateChanged)
+    Q_PROPERTY(QString exploreStatusText    READ getExploreStatusText    NOTIFY exploreStatusTextChanged)
     Q_PROPERTY(bool    searchIsPaused    READ getSearchIsPaused    NOTIFY searchStateChanged)
     Q_PROPERTY(QString searchStatusText  READ getSearchStatusText  NOTIFY searchStatusTextChanged)
     // Search results footer filters (SpecSearchResultsFilters.md). Both narrow
@@ -357,6 +361,9 @@ public slots:
     QString getSearchStatusText() const { return m_searchStatusText; }
     void onSearchProgress(int filesProcessed);
     Q_INVOKABLE void stopSearch();
+    bool    getExploreLoadIsRunning() const { return m_exploreLoadIsRunning; }
+    QString getExploreStatusText()    const { return m_exploreStatusText; }
+    Q_INVOKABLE void stopExploreLoad();
     Q_INVOKABLE void pauseSearch();
     Q_INVOKABLE void resumeSearch();
 
@@ -441,6 +448,10 @@ public slots:
     QString getDeviceUpdateStatusText() const { return m_deviceUpdateStatusText; }
 
     // Explore page
+    // Opens a catalog in Explore. Returns the open's result, or one of:
+    // refused (another operation runs, EXP-F32), deferred (a load runs; the
+    // request is kept as the pending one, EXP-F31), loading (a Memory-mode load
+    // has started; the result comes with exploreCatalogOpened, EXP-F28).
     Q_INVOKABLE QVariantMap  exploreOpenCatalog(int deviceId);
     Q_INVOKABLE QVariantList getExploreFolders();
     Q_INVOKABLE QVariantList getExploreEntries(const QString &folderPath, bool showFolders, bool showSubFolders);
@@ -523,6 +534,12 @@ public slots:
     Q_INVOKABLE int     searchRowDeviceId(int row) const;
     // Same probe for the device the Explore page is currently showing.
     Q_INVOKABLE bool    probeExploreDeviceActive();
+    // Busy cursor over the whole window while long work blocks it, as K2 does
+    // around opening a catalog in Explore. Calls do not stack.
+    Q_INVOKABLE void    setBusyCursor(bool busy);
+    // The delay that lets a change reach the screen before blocking work starts
+    // (kStartDeferralMs, OPQ-F11), for QML callers.
+    Q_INVOKABLE int     startDeferralMs() const;
     // Whether the file or folder about to be opened exists, tested once at click
     // time on that one path, so a stale catalog does not hand a missing path to
     // the desktop environment (SpecDeviceActiveStatus.md DAS-F13).
@@ -592,6 +609,12 @@ public slots:
 signals:
     void textPointSizeChanged();
     void searchStateChanged();
+    void exploreLoadStateChanged();
+    void exploreStatusTextChanged();
+    // End of a Memory-mode Explore load: the open's result, or stopped
+    void exploreCatalogOpened(const QVariantMap &info);
+    // The latest open requested during a load, to run now that it has ended
+    void exploreOpenPending(int deviceId);
     void searchStatusTextChanged();
     void searchFiltersChanged();
     void searchCatalogsFoundChanged();
@@ -661,6 +684,16 @@ signals:
     void mimeVerificationFinished(int mismatchCount, const QString &reportPath, const QString &errorMessage);
 
 private:
+    // Memory-mode Explore load (EXP-F28 to EXP-F32, EXP-C22 to EXP-C24)
+    void         runExploreLoad(int deviceId);
+    QVariantMap  finishExploreOpen(int deviceId);
+    bool    m_exploreLoadIsRunning  = false;
+    bool    m_exploreStopRequested  = false;
+    QMutex  m_exploreMutex;
+    int     m_exploreLoadingId      = -1;
+    int     m_explorePendingId      = -1;
+    QString m_exploreStatusText;
+    bool m_busyCursor = false;
     // Default window size (WIN-C1, SpecWindowGeometry.md): first start and reset.
     static constexpr int kDefaultWindowWidth  = 1280;
     static constexpr int kDefaultWindowHeight = 800;

@@ -21,6 +21,8 @@ Katalog se na stránce Prozkoumat otevře volbou *Prozkoumat* v místní nabídc
 
 Dokud je stránka Prozkoumat otevřená, **kliknutím na katalog** na stránce [Výběr](Selection) se katalog otevře také v ní.
 
+V režimu *Paměť* se soubory katalogu nejprve načtou do paměti. U velkého katalogu to může chvíli trvat: průběh se zobrazuje v panelu aktivity v dolní části okna a *Zastavit* načítání zruší (Prozkoumat pak dál zobrazuje předchozí katalog). Otevření jiného katalogu během načítání ho nahradí. Již načtený katalog se otevře okamžitě.
+
 *Prozkoumat* v postranním panelu znovu zobrazí stránku s posledním katalogem prozkoumaným od spuštění Katalogu.<br/>
 *Zavřít* (nebo `Esc`) stránku zavře. Pokud byla otevřena z výsledku vyhledávání, vrátí se ke stejným výsledkům.
 

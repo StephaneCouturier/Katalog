@@ -14,14 +14,21 @@ Controls.ToolBar {
     id: root
 
     // Creation, update and search all report here and nowhere else (OPQ-C16).
+    // The Memory-mode Explore load reports here too (OPQ-F19, EXP-F28).
     readonly property bool busy: appManager1.catalogIsCreating
                                  || appManager1.deviceUpdateIsRunning
                                  || appManager1.searchIsRunning
+                                 || appManager1.exploreLoadIsRunning
+    // The Explore load's final line stays readable through the linger: it is
+    // the last thing that ran until another operation starts.
+    property bool exploreWasLast: false
     readonly property string statusText: appManager1.catalogIsCreating
                                          ? appManager1.catalogStatusText
                                          : appManager1.searchIsRunning
                                            ? appManager1.searchStatusText
-                                           : appManager1.deviceUpdateStatusText
+                                           : (appManager1.exploreLoadIsRunning || exploreWasLast)
+                                             ? appManager1.exploreStatusText
+                                             : appManager1.deviceUpdateStatusText
 
     // How long the panel stays up after the work ends. The catalog job runs on
     // the GUI thread and pumps the event loop by hand, so a small catalog can
@@ -41,6 +48,7 @@ Controls.ToolBar {
 
     onBusyChanged: {
         if (root.busy) {
+            root.exploreWasLast = appManager1.exploreLoadIsRunning
             // A new operation supersedes the previous one's tail.
             root.lingering = false
             lingerTimer.stop()
@@ -101,7 +109,9 @@ Controls.ToolBar {
                 flat: true
                 visible: root.busy
                 onClicked: {
-                    if (appManager1.catalogIsCreating)
+                    if (appManager1.exploreLoadIsRunning)
+                        appManager1.stopExploreLoad()
+                    else if (appManager1.catalogIsCreating)
                         appManager1.stopCatalogCreation()
                     else if (appManager1.searchIsRunning)
                         appManager1.stopSearch()

@@ -151,6 +151,7 @@ Kirigami.AbstractCard {
             visible: card.devType === "Catalog"
             enabled: card.devActive && !appManager1.deviceUpdateIsRunning
                      && !appManager1.catalogIsCreating && !appManager1.searchIsRunning
+                     && !appManager1.exploreLoadIsRunning   // OPQ-F20
             onTriggered: card.verifyMimeRequested(card.devId)
         }
         Controls.MenuSeparator { visible: card.devType === "Catalog" && card.devActive }

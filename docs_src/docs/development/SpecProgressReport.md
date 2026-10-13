@@ -62,7 +62,9 @@ SEARCH | Completed   | Catalog 5 of 5 | Videos | Evaluated: 10000 of 10000 (100%
 //EXPLORE
 EXPLORE | In Progress | Catalog 1 of 1 | MyPhotos | Loaded: 100 of 1000 (10%)
 EXPLORE | In Progress | Catalog 1 of 1 | MyPhotos | Update file types: 200 of 2000 (10%)
-(note: Pause or Stop is not available)
+EXPLORE | Completed | Catalog 1 of 1 | MyPhotos | Loaded: 1000 of 1000 (100%)
+EXPLORE | Cancelled | Catalog 1 of 1 | MyPhotos | Loaded: 100 of 1000 (10%)
+(note: Pause is not available. K3 offers Stop during the Memory-mode load — SpecExplore.md EXP-F30; K2 offers neither)
 
 //UPDATE
 UPDATE | In Progress | Catalog 1 of 5 | MyPhotos | Loaded: 100 of 1000 (10%)

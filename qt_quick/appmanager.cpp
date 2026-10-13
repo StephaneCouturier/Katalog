@@ -239,7 +239,7 @@ void AppManager::executeSearch()
     // while one runs. Running it here would nest inside that job's call stack and
     // share its database connection. The UI also refuses this (Main.qml
     // runSearch), but the guard belongs where the damage would be done.
-    if (m_deviceUpdateIsRunning || m_catalogIsCreating
+    if (m_deviceUpdateIsRunning || m_catalogIsCreating || m_exploreLoadIsRunning
         || (m_deviceUpdateManager && m_deviceUpdateManager->operationRunning())) {
         qWarning() << "AppManager::executeSearch: refused, a catalog operation is running";
         return;
@@ -1437,6 +1437,22 @@ bool AppManager::probeExploreDeviceActive()
     return exploreDevice->active;
 }
 //----------------------------------------------------------------------
+void AppManager::setBusyCursor(bool busy)
+{
+    if (busy == m_busyCursor)
+        return;
+    m_busyCursor = busy;
+    if (busy)
+        QGuiApplication::setOverrideCursor(Qt::WaitCursor);
+    else
+        QGuiApplication::restoreOverrideCursor();
+}
+//----------------------------------------------------------------------
+int AppManager::startDeferralMs() const
+{
+    return kStartDeferralMs;
+}
+//----------------------------------------------------------------------
 bool AppManager::pathExists(const QString &path) const
 {
     return QFileInfo::exists(path);
@@ -2365,7 +2381,7 @@ QString AppManager::createCatalog(const QString &name, const QString &path,
     // pumping the event loop, so Create stays reachable while one runs. Starting
     // here would nest inside the search's call stack on the same database
     // connection. The UI also disables the action; this is the guard that matters.
-    if (m_searchIsRunning)
+    if (m_searchIsRunning || m_exploreLoadIsRunning)   // OPQ-F20 for the Explore load
         return tr("A device operation is already running.");
 
     // Validation
@@ -3266,8 +3282,8 @@ void AppManager::updateDevice(int deviceId)
     // Refused, not queued, while a search runs: nothing drains the queue when a
     // search ends, so a queued entry would be stranded. Queuing across operation
     // types is a separate decision that has not been taken.
-    if (m_searchIsRunning) {
-        qWarning() << "AppManager::updateDevice: refused, a search is running";
+    if (m_searchIsRunning || m_exploreLoadIsRunning) {   // OPQ-F20 for the Explore load
+        qWarning() << "AppManager::updateDevice: refused, a search or an Explore load is running";
         return;
     }
 
@@ -4094,6 +4110,141 @@ bool AppManager::removeDeviceExcludeFolder(int deviceId, const QString &path)
 QVariantMap AppManager::exploreOpenCatalog(int deviceId)
 {
     QVariantMap result;
+    result[QStringLiteral("deviceId")] = deviceId;
+
+    // A load is running: this request arrived through its pumped event loop.
+    // It must not nest; it replaces any earlier pending one and stops the
+    // running load, then runs once that load has returned (EXP-F31, EXP-C23).
+    if (m_exploreLoadIsRunning) {
+        if (deviceId != m_exploreLoadingId) {
+            m_explorePendingId = deviceId;
+            QMutexLocker locker(&m_exploreMutex);
+            m_exploreStopRequested = true;
+        }
+        result[QStringLiteral("deferred")] = true;
+        return result;
+    }
+
+    // One operation at a time (EXP-F32, OPQ-F20)
+    if (m_catalogIsCreating || m_deviceUpdateIsRunning || m_searchIsRunning
+        || (m_deviceUpdateManager && m_deviceUpdateManager->operationRunning())) {
+        result[QStringLiteral("refused")] = true;
+        result[QStringLiteral("message")] = tr("A device operation is already running.");
+        return result;
+    }
+
+    // Read into a separate device: Explore keeps reading the catalog it shows
+    // until the new one is fully loaded (EXP-C24).
+    const QString conn = m_connectionName;
+    Device candidate;
+    candidate.catalog->setConnectionName(conn);
+    candidate.setConnectionName(conn);
+    candidate.ID = deviceId;
+    candidate.loadDevice(conn);
+
+    if (candidate.type != QLatin1String("Catalog")) {
+        result[QStringLiteral("success")] = false;
+        result[QStringLiteral("message")] = tr("Selected device is not a catalog");
+        return result;
+    }
+
+    // Memory mode with files to load: reported, stoppable, and started after
+    // the panel has reached the screen (EXP-F28, OPQ-F11, OPQ-C13). Core's
+    // own test decides whether there is anything to load (EXP-C22, EXP-F29).
+    if (collection->databaseMode == QLatin1String("Memory")
+        && candidate.catalog->dateLoaded < candidate.catalog->dateUpdated) {
+        m_exploreLoadIsRunning = true;
+        m_exploreLoadingId     = deviceId;
+        m_exploreStopRequested = false;
+        m_exploreStatusText = StatusBarMessageBuilder()
+                                  .setOperation(tr("Explore"))
+                                  .setStatus(tr("In Progress"))
+                                  .setDeviceContext(1, 1, candidate.name)
+                                  .build();
+        emit exploreLoadStateChanged();
+        emit exploreStatusTextChanged();
+        QTimer::singleShot(kStartDeferralMs, this, [this, deviceId]() { runExploreLoad(deviceId); });
+        result[QStringLiteral("loading")] = true;
+        return result;
+    }
+
+    return finishExploreOpen(deviceId);
+}
+//----------------------------------------------------------------------
+void AppManager::runExploreLoad(int deviceId)
+{
+    const QString conn = m_connectionName;
+    Device candidate;
+    candidate.catalog->setConnectionName(conn);
+    candidate.setConnectionName(conn);
+    candidate.ID = deviceId;
+    candidate.loadDevice(conn);
+
+    // Progress keeps the window alive and the Stop reachable: the load runs
+    // on this thread, as Search's Memory-mode load does (EXP-C22).
+    int loaded = 0, total = 0;
+    const QString name = candidate.name;
+    auto build = [this, &name](const QString &status, int n, int of) {
+        StatusBarMessageBuilder builder;
+        builder.setOperation(tr("Explore")).setStatus(status).setDeviceContext(1, 1, name);
+        if (of > 0)
+            builder.setProcess(tr("Loaded"), n, of);
+        return builder.build();
+    };
+    const QMetaObject::Connection progress = connect(candidate.catalog, &Catalog::loadProgress, this,
+        [&](int filesLoaded, int totalFiles) {
+            loaded = filesLoaded;
+            total  = totalFiles;
+            m_exploreStatusText = build(tr("In Progress"), loaded, total);
+            emit exploreStatusTextChanged();
+            QCoreApplication::processEvents();
+        }, Qt::DirectConnection);
+
+    candidate.catalog->loadFoldersToTable();
+    QCoreApplication::processEvents();
+    if (!m_exploreStopRequested)
+        candidate.catalog->loadCatalogFileListToTable(m_exploreMutex, m_exploreStopRequested);
+    disconnect(progress);
+
+    const bool stopped = m_exploreStopRequested;
+    m_exploreLoadIsRunning = false;
+    m_exploreLoadingId     = -1;
+    m_exploreStopRequested = false;
+
+    QVariantMap info;
+    info[QStringLiteral("deviceId")] = deviceId;
+    if (stopped) {
+        // Interrupted by a newer open: no final line, the next load follows
+        // at once (EXP-F31). Stopped by the user: Cancelled (EXP-F30).
+        m_exploreStatusText = (m_explorePendingId >= 0) ? QString()
+                                                        : build(tr("Cancelled"), loaded, total);
+        info[QStringLiteral("stopped")] = true;
+    } else {
+        m_exploreStatusText = build(tr("Completed"), total, total);
+        info = finishExploreOpen(deviceId);
+    }
+    emit exploreStatusTextChanged();
+    emit exploreLoadStateChanged();
+    emit exploreCatalogOpened(info);
+
+    if (m_explorePendingId >= 0) {
+        const int next = m_explorePendingId;
+        m_explorePendingId = -1;
+        emit exploreOpenPending(next);
+    }
+}
+//----------------------------------------------------------------------
+void AppManager::stopExploreLoad()
+{
+    QMutexLocker locker(&m_exploreMutex);
+    if (m_exploreLoadIsRunning)
+        m_exploreStopRequested = true;
+}
+//----------------------------------------------------------------------
+// Switches Explore to the catalog, once nothing is left to load (EXP-C24).
+QVariantMap AppManager::finishExploreOpen(int deviceId)
+{
+    QVariantMap result;
     const QString conn = m_connectionName;
 
     exploreDevice->catalog->setConnectionName(conn);
@@ -4101,25 +4252,16 @@ QVariantMap AppManager::exploreOpenCatalog(int deviceId)
     exploreDevice->ID = deviceId;
     exploreDevice->loadDevice(conn);
 
-    if (exploreDevice->type != QLatin1String("Catalog")) {
-        result[QStringLiteral("success")] = false;
-        result[QStringLiteral("message")] = tr("Selected device is not a catalog");
-        return result;
-    }
-
-    if (collection->databaseMode == QLatin1String("Memory")) {
-        exploreDevice->catalog->loadFoldersToTable();
-        bool stopRequested = false;
-        QMutex mutex;
-        exploreDevice->catalog->loadCatalogFileListToTable(mutex, stopRequested);
-    }
+    if (collection->databaseMode == QLatin1String("Memory"))
+        exploreDevice->catalog->loadFoldersToTable();   // no-op when already in memory
 
     int folderCount = Catalog::getExploreFolderCount(conn, exploreDevice->externalID);
 
-    result[QStringLiteral("success")]    = true;
-    result[QStringLiteral("name")]       = exploreDevice->name;
-    result[QStringLiteral("path")]       = exploreDevice->path;
-    result[QStringLiteral("externalId")] = exploreDevice->externalID;
+    result[QStringLiteral("deviceId")]    = deviceId;
+    result[QStringLiteral("success")]     = true;
+    result[QStringLiteral("name")]        = exploreDevice->name;
+    result[QStringLiteral("path")]        = exploreDevice->path;
+    result[QStringLiteral("externalId")]  = exploreDevice->externalID;
     result[QStringLiteral("folderCount")] = folderCount;
     return result;
 }
