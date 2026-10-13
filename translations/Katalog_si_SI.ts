@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+160"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4690"/>
+        <location line="+4692"/>
         <source>Search</source>
         <translation>Iskanje</translation>
     </message>
     <message>
-        <location line="-4810"/>
+        <location line="-4812"/>
         <source>Stopped</source>
         <translation>Ustavljeno</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3258"/>
+        <location line="+3260"/>
         <source>Evaluated</source>
         <translation>Ovrednoteno</translation>
     </message>
     <message>
-        <location line="-3376"/>
+        <location line="-3378"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -45,7 +45,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2178"/>
+        <location line="+2180"/>
         <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
@@ -65,8 +65,8 @@
         <translation>V teku</translation>
     </message>
     <message>
-        <location line="-4691"/>
-        <location line="+4125"/>
+        <location line="-4693"/>
+        <location line="+4127"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
@@ -5384,13 +5384,17 @@ Razdelitev ni bila izvedena.</translation>
         <translation>Seznam ID-jev izbranih naprav</translation>
     </message>
     <message>
+        <source>Catalog with results</source>
+        <translation type="vanished">Katalog z rezultati</translation>
+    </message>
+    <message>
         <location filename="../qt_widgets/mainwindow.cpp" line="+58"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+6"/>
         <location line="+399"/>
         <location line="+7"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+38"/>
-        <source>Catalog with results</source>
-        <translation>Katalog z rezultati</translation>
+        <source>Catalogs with results</source>
+        <translation>Katalogi z rezultati</translation>
     </message>
     <message>
         <location line="+71"/>
@@ -8305,26 +8309,31 @@ Preverite, ali je izvorna mapa (%1) pravilna ali ali je naprava priklopljena v i
     </message>
     <message>
         <location line="+1"/>
-        <location line="+903"/>
+        <location line="+893"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Preveri nadzorne vsote</translation>
     </message>
     <message>
-        <location line="-52"/>
+        <location line="-127"/>
+        <source>Catalogs with results</source>
+        <translation>Katalogi z rezultati</translation>
+    </message>
+    <message>
+        <location line="+75"/>
         <location line="+52"/>
         <source>Include Metadata</source>
         <translation>Vključi metapodatke</translation>
     </message>
     <message>
-        <location line="-954"/>
+        <location line="-944"/>
         <location line="+592"/>
-        <location line="+307"/>
+        <location line="+297"/>
         <source>Move to Trash</source>
         <translation>Premakni v smeti</translation>
     </message>
     <message>
-        <location line="-1027"/>
+        <location line="-1017"/>
         <location line="+11"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Naprava ni aktivna. Morda je odklopljena ali pa se je spremenila njena pot.</translation>
@@ -8584,13 +8593,11 @@ Preverite, ali je izvorna mapa (%1) pravilna ali ali je naprava priklopljena v i
 %1</translation>
     </message>
     <message>
-        <location line="+75"/>
-        <location line="+6"/>
         <source>Catalog with results</source>
-        <translation>Katalog z rezultati</translation>
+        <translation type="vanished">Katalog z rezultati</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+108"/>
         <source>All</source>
         <translation>Vse</translation>
     </message>

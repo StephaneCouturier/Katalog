@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+160"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4690"/>
+        <location line="+4692"/>
         <source>Search</source>
         <translation>Paieška</translation>
     </message>
     <message>
-        <location line="-4810"/>
+        <location line="-4812"/>
         <source>Stopped</source>
         <translation>Sustabdyta</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3258"/>
+        <location line="+3260"/>
         <source>Evaluated</source>
         <translation>Įvertinta</translation>
     </message>
     <message>
-        <location line="-3376"/>
+        <location line="-3378"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -45,7 +45,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2178"/>
+        <location line="+2180"/>
         <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
@@ -65,8 +65,8 @@
         <translation>Vykdoma</translation>
     </message>
     <message>
-        <location line="-4691"/>
-        <location line="+4125"/>
+        <location line="-4693"/>
+        <location line="+4127"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
@@ -5455,7 +5455,16 @@ to the trash?</source>
         <translation>Pasirinkite duomenų bazę sukūrimui ir atidarymui:</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.cpp" line="+129"/>
+        <location filename="../qt_widgets/mainwindow.cpp" line="+58"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+6"/>
+        <location line="+399"/>
+        <location line="+7"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+329"/>
+        <source>Catalogs with results</source>
+        <translation>Katalogai su rezultatais</translation>
+    </message>
+    <message>
+        <location line="+71"/>
         <source>Some changes in the Storage device list have not been saved.&lt;br/&gt;Save and exit, discard and exit, or cancel exit?</source>
         <translation>Kai kurie saugyklų įrenginių sąrašo pakeitimai nebuvo išsaugoti.&lt;br/&gt;Išsaugoti ir išeiti, atmesti ir išeiti, ar atšaukti išėjimą?</translation>
     </message>
@@ -5475,13 +5484,8 @@ to the trash?</source>
         <translation>Pašalinti šią žymą</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.cpp" line="-71"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+6"/>
-        <location line="+399"/>
-        <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+329"/>
         <source>Catalog with results</source>
-        <translation>Katalogas su rezultatais</translation>
+        <translation type="vanished">Katalogas su rezultatais</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+436"/>
@@ -8303,26 +8307,31 @@ Patikrinkite, ar šaltinio aplankas (%1) teisingas, arba ar įrenginys prijungta
     </message>
     <message>
         <location line="+1"/>
-        <location line="+903"/>
+        <location line="+893"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Patikrinti kontrolines sumas</translation>
     </message>
     <message>
-        <location line="-52"/>
+        <location line="-127"/>
+        <source>Catalogs with results</source>
+        <translation>Katalogai su rezultatais</translation>
+    </message>
+    <message>
+        <location line="+75"/>
         <location line="+52"/>
         <source>Include Metadata</source>
         <translation>Įtraukti metaduomenis</translation>
     </message>
     <message>
-        <location line="-954"/>
+        <location line="-944"/>
         <location line="+592"/>
-        <location line="+307"/>
+        <location line="+297"/>
         <source>Move to Trash</source>
         <translation>Perkelti į šiukšlinę</translation>
     </message>
     <message>
-        <location line="-1027"/>
+        <location line="-1017"/>
         <location line="+11"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Įrenginys neaktyvus. Jis gali būti atjungtas arba pasikeitė jo kelias.</translation>
@@ -8582,13 +8591,11 @@ Patikrinkite, ar šaltinio aplankas (%1) teisingas, arba ar įrenginys prijungta
 %1</translation>
     </message>
     <message>
-        <location line="+75"/>
-        <location line="+6"/>
         <source>Catalog with results</source>
-        <translation>Katalogas su rezultatais</translation>
+        <translation type="vanished">Katalogas su rezultatais</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+108"/>
         <source>All</source>
         <translation>Visi</translation>
     </message>

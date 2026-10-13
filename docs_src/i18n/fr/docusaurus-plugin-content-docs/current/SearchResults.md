@@ -68,9 +68,9 @@ Après avoir cliqué sur une ligne, la liste peut être utilisée au clavier :
 
 La barre en bas de la page réduit la liste **sans relancer la recherche** :
 * *Rechercher…* : n'affiche que les fichiers dont le **nom** contient le texte saisi, au fur et à mesure de la saisie, sans tenir compte de la casse.
-* *Catalogue avec résultats* : liste les catalogues où des résultats ont été trouvés. Cochez un ou plusieurs catalogues pour n'afficher que leurs résultats. *Tous* coche tous les catalogues, *Aucun* efface le choix (tous les résultats sont affichés). Le bouton indique le catalogue choisi, ou le nombre de catalogues choisis.
+* *Catalogues avec résultats* : liste les catalogues où des résultats ont été trouvés. Tous sont cochés au départ ; décochez un catalogue pour masquer ses résultats. *Tous* coche tous les catalogues ; *Aucun* les décoche tous, et aucun résultat n'est affiché tant qu'un catalogue n'est pas coché à nouveau. Le bouton indique le nombre de catalogues cochés.
 
-Les deux filtres s'appliquent ensemble, et tous deux sont effacés à la fin d'une nouvelle recherche.
+Les deux filtres s'appliquent ensemble. À la fin d'une nouvelle recherche, le texte est effacé et tous les catalogues sont de nouveau cochés.
 
 ## Menu contextuel {#file-context-menu}
 

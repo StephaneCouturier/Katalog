@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+160"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4690"/>
+        <location line="+4692"/>
         <source>Search</source>
         <translation>Pretraga</translation>
     </message>
     <message>
-        <location line="-4810"/>
+        <location line="-4812"/>
         <source>Stopped</source>
         <translation>Zaustavljeno</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3258"/>
+        <location line="+3260"/>
         <source>Evaluated</source>
         <translation>Evaluirano</translation>
     </message>
     <message>
-        <location line="-3376"/>
+        <location line="-3378"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -45,7 +45,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2178"/>
+        <location line="+2180"/>
         <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
@@ -65,8 +65,8 @@
         <translation>U toku</translation>
     </message>
     <message>
-        <location line="-4691"/>
-        <location line="+4125"/>
+        <location line="-4693"/>
+        <location line="+4127"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
@@ -5456,7 +5456,16 @@ u smeće?</translation>
         <translation>Izaberi bazu podataka za kreiranje i otvaranje:</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.cpp" line="+129"/>
+        <location filename="../qt_widgets/mainwindow.cpp" line="+58"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+6"/>
+        <location line="+399"/>
+        <location line="+7"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+329"/>
+        <source>Catalogs with results</source>
+        <translation>Katalozi sa rezultatima</translation>
+    </message>
+    <message>
+        <location line="+71"/>
         <source>Some changes in the Storage device list have not been saved.&lt;br/&gt;Save and exit, discard and exit, or cancel exit?</source>
         <translation>Neke promene u listi uređaja skladišta nisu sačuvane.&lt;br/&gt;Sačuvaj i izađi, odbaci i izađi, ili otkaži izlaz?</translation>
     </message>
@@ -5476,13 +5485,8 @@ u smeće?</translation>
         <translation>Ukloni ovu oznaku</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.cpp" line="-71"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+6"/>
-        <location line="+399"/>
-        <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+329"/>
         <source>Catalog with results</source>
-        <translation>Katalog sa rezultatima</translation>
+        <translation type="vanished">Katalog sa rezultatima</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+436"/>
@@ -8304,26 +8308,31 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     </message>
     <message>
         <location line="+1"/>
-        <location line="+903"/>
+        <location line="+893"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Proveri kontrolne sume</translation>
     </message>
     <message>
-        <location line="-52"/>
+        <location line="-127"/>
+        <source>Catalogs with results</source>
+        <translation>Katalozi sa rezultatima</translation>
+    </message>
+    <message>
+        <location line="+75"/>
         <location line="+52"/>
         <source>Include Metadata</source>
         <translation>Uključi metapodatke</translation>
     </message>
     <message>
-        <location line="-954"/>
+        <location line="-944"/>
         <location line="+592"/>
-        <location line="+307"/>
+        <location line="+297"/>
         <source>Move to Trash</source>
         <translation>Premesti u korpu</translation>
     </message>
     <message>
-        <location line="-1027"/>
+        <location line="-1017"/>
         <location line="+11"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Uređaj nije aktivan. Možda je isključen ili je njegova putanja promenjena.</translation>
@@ -8583,13 +8592,11 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
 %1</translation>
     </message>
     <message>
-        <location line="+75"/>
-        <location line="+6"/>
         <source>Catalog with results</source>
-        <translation>Katalog sa rezultatima</translation>
+        <translation type="vanished">Katalog sa rezultatima</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+108"/>
         <source>All</source>
         <translation>Sve</translation>
     </message>

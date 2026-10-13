@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+160"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4690"/>
+        <location line="+4692"/>
         <source>Search</source>
         <translation>Αναζήτηση</translation>
     </message>
     <message>
-        <location line="-4810"/>
+        <location line="-4812"/>
         <source>Stopped</source>
         <translation>Σταμάτησε</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3258"/>
+        <location line="+3260"/>
         <source>Evaluated</source>
         <translation>Αξιολογημένο</translation>
     </message>
     <message>
-        <location line="-3376"/>
+        <location line="-3378"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -45,7 +45,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2178"/>
+        <location line="+2180"/>
         <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
@@ -65,8 +65,8 @@
         <translation>Σε εξέλιξη</translation>
     </message>
     <message>
-        <location line="-4691"/>
-        <location line="+4125"/>
+        <location line="-4693"/>
+        <location line="+4127"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
@@ -5027,13 +5027,17 @@ Split was not performed.</source>
         <translation type="vanished">Η επιλεγμένη συσκευή πρέπει να είναι κατάλογος. Δοκιμάστε με διαφορετικό ID συσκευής</translation>
     </message>
     <message>
+        <source>Catalog with results</source>
+        <translation type="vanished">Κατάλογος με αποτελέσματα</translation>
+    </message>
+    <message>
         <location filename="../qt_widgets/mainwindow.cpp" line="+58"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+6"/>
         <location line="+399"/>
         <location line="+7"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+66"/>
-        <source>Catalog with results</source>
-        <translation>Κατάλογος με αποτελέσματα</translation>
+        <source>Catalogs with results</source>
+        <translation>Κατάλογοι με αποτελέσματα</translation>
     </message>
     <message>
         <location line="+71"/>
@@ -8305,26 +8309,31 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+903"/>
+        <location line="+893"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Επαλήθευση αθροισμάτων ελέγχου</translation>
     </message>
     <message>
-        <location line="-52"/>
+        <location line="-127"/>
+        <source>Catalogs with results</source>
+        <translation>Κατάλογοι με αποτελέσματα</translation>
+    </message>
+    <message>
+        <location line="+75"/>
         <location line="+52"/>
         <source>Include Metadata</source>
         <translation>Συμπερίληψη μεταδεδομένων</translation>
     </message>
     <message>
-        <location line="-954"/>
+        <location line="-944"/>
         <location line="+592"/>
-        <location line="+307"/>
+        <location line="+297"/>
         <source>Move to Trash</source>
         <translation>Μετακίνηση στα απορρίμματα</translation>
     </message>
     <message>
-        <location line="-1027"/>
+        <location line="-1017"/>
         <location line="+11"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Η συσκευή δεν είναι ενεργή. Ενδέχεται να έχει αποσυνδεθεί ή να έχει αλλάξει η διαδρομή της.</translation>
@@ -8584,13 +8593,11 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 %1</translation>
     </message>
     <message>
-        <location line="+75"/>
-        <location line="+6"/>
         <source>Catalog with results</source>
-        <translation>Κατάλογος με αποτελέσματα</translation>
+        <translation type="vanished">Κατάλογος με αποτελέσματα</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+108"/>
         <source>All</source>
         <translation>Όλα</translation>
     </message>

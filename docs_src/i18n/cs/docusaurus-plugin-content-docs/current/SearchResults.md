@@ -68,9 +68,9 @@ Po kliknutí na řádek lze seznam ovládat klávesnicí:
 
 Lišta dole na stránce zúží seznam **bez nového spuštění vyhledávání**:
 * *Hledat…*: zobrazí pouze soubory, jejichž **název** obsahuje zadaný text, průběžně při psaní, bez ohledu na velikost písmen.
-* *Katalog s výsledky*: zobrazí katalogy, ve kterých byly nalezeny výsledky. Zaškrtnutím jednoho nebo více katalogů zobrazíte pouze jejich výsledky. *Všechno* zaškrtne všechny katalogy, *Žádné* volbu zruší (zobrazí se všechny výsledky). Tlačítko ukazuje zvolený katalog nebo počet zvolených katalogů.
+* *Katalogy s výsledky*: zobrazí katalogy, ve kterých byly nalezeny výsledky. Na začátku jsou všechny zaškrtnuté; odškrtnutím katalogu skryjete jeho výsledky. *Všechno* zaškrtne všechny katalogy; *Žádné* je všechny odškrtne a nezobrazí se žádný výsledek, dokud znovu nezaškrtnete některý katalog. Tlačítko ukazuje počet zaškrtnutých katalogů.
 
-Oba filtry platí současně a oba se vymažou, když skončí nové vyhledávání.
+Oba filtry platí současně. Když skončí nové vyhledávání, text se vymaže a všechny katalogy se znovu zaškrtnou.
 
 ## Místní nabídka {#file-context-menu}
 

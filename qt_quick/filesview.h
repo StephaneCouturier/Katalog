@@ -52,10 +52,12 @@ public:
     // neither re-runs the search: the rows are already in hand.
     QString nameFilter() const { return m_nameFilter; }
     void setNameFilter(const QString &text);
-    /** The catalogs to show. An EMPTY set is the unfiltered state, meaning every
-     *  catalog - not "none" (SRF-F5). */
-    QList<int> catalogFilters() const;
-    void toggleCatalogFilter(int catalogId);
+    /** The catalogs unticked by the user. Ticked means shown, and every catalog
+     *  starts ticked, so the filter keeps the hidden ones: an EMPTY set shows
+     *  every catalog (SRF-F5). */
+    QList<int> hiddenCatalogs() const;
+    void toggleCatalogHidden(int catalogId);
+    void setHiddenCatalogs(const QList<int> &catalogIds);
     void clearFilters();
 
     // Q_INVOKABLE wrapper so QML can call sort(column, Qt.AscendingOrder/Qt.DescendingOrder)
@@ -68,7 +70,7 @@ protected:
 private:
     bool    m_caseSensitive = false;
     QString   m_nameFilter;
-    QSet<int> m_catalogFilters;
+    QSet<int> m_hiddenCatalogs;
 };
 
 #endif // FILESVIEW_H

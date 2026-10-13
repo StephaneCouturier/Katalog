@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+160"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4690"/>
+        <location line="+4692"/>
         <source>Search</source>
         <translation>Chercher</translation>
     </message>
     <message>
-        <location line="-4810"/>
+        <location line="-4812"/>
         <source>Stopped</source>
         <translation>Arrêté</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3258"/>
+        <location line="+3260"/>
         <source>Evaluated</source>
         <translation>Évalué</translation>
     </message>
     <message>
-        <location line="-3376"/>
+        <location line="-3378"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -45,7 +45,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2178"/>
+        <location line="+2180"/>
         <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
@@ -65,8 +65,8 @@
         <translation>En cours</translation>
     </message>
     <message>
-        <location line="-4691"/>
-        <location line="+4125"/>
+        <location line="-4693"/>
+        <location line="+4127"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
@@ -6062,7 +6062,16 @@ to the trash?</source>
         <translation>Sélectionner la base de données à ouvrir&#xa0;:</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.cpp" line="+129"/>
+        <location filename="../qt_widgets/mainwindow.cpp" line="+58"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-785"/>
+        <location line="+399"/>
+        <location line="+7"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+329"/>
+        <source>Catalogs with results</source>
+        <translation>Catalogues avec résultats</translation>
+    </message>
+    <message>
+        <location line="+71"/>
         <source>Some changes in the Storage device list have not been saved.&lt;br/&gt;Save and exit, discard and exit, or cancel exit?</source>
         <translation>Certaines modifications apportées à la liste des périphériques de stockage n&apos;ont pas été enregistrées.&lt;br/&gt;Enregistrer et quitter, supprimer et quitter ou annuler la sortie ?</translation>
     </message>
@@ -6097,13 +6106,8 @@ to the trash?</source>
         <translation>Supprimer cette étiquette</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.cpp" line="-71"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-785"/>
-        <location line="+399"/>
-        <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+329"/>
         <source>Catalog with results</source>
-        <translation>Catalogue avec résultats</translation>
+        <translation type="vanished">Catalogue avec résultats</translation>
     </message>
     <message>
         <location filename="../qt_widgets/devicemappingview.cpp" line="-10"/>
@@ -8305,26 +8309,31 @@ Vérifiez que le dossier source (%1) est correct, ou que le périphérique est m
     </message>
     <message>
         <location line="+1"/>
-        <location line="+903"/>
+        <location line="+893"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Vérifier les sommes de contrôle</translation>
     </message>
     <message>
-        <location line="-52"/>
+        <location line="-127"/>
+        <source>Catalogs with results</source>
+        <translation>Catalogues avec résultats</translation>
+    </message>
+    <message>
+        <location line="+75"/>
         <location line="+52"/>
         <source>Include Metadata</source>
         <translation>Inclure les metadonnées</translation>
     </message>
     <message>
-        <location line="-954"/>
+        <location line="-944"/>
         <location line="+592"/>
-        <location line="+307"/>
+        <location line="+297"/>
         <source>Move to Trash</source>
         <translation>Déplacer dans la corbeille</translation>
     </message>
     <message>
-        <location line="-1027"/>
+        <location line="-1017"/>
         <location line="+11"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Le périphérique n&apos;est pas actif. Il est peut-être déconnecté, ou son chemin a peut-être changé.</translation>
@@ -8584,13 +8593,11 @@ Vérifiez que le dossier source (%1) est correct, ou que le périphérique est m
 %1</translation>
     </message>
     <message>
-        <location line="+75"/>
-        <location line="+6"/>
         <source>Catalog with results</source>
-        <translation>Catalogue avec résultats</translation>
+        <translation type="vanished">Catalogue avec résultats</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+108"/>
         <source>All</source>
         <translation>Tous</translation>
     </message>

@@ -1044,7 +1044,7 @@ ColumnLayout {
         // Several catalogs can be ticked in one visit: a Menu closes on every
         // activation, so selecting three would mean opening it three times -
         // the friction that made the previous single-select list feel broken
-        // (SRF-F9). An empty selection means every catalog (SRF-F5).
+        // (SRF-F9). Every catalog starts ticked; ticked means shown (SRF-F5).
         Controls.Button {
             id: catalogFilterButton
             enabled: appManager1.searchCatalogsFound.length > 0
@@ -1071,19 +1071,10 @@ ColumnLayout {
                     verticalAlignment: Text.AlignVCenter
                 }
             }
-            // None selected: the K2 wording. Exactly one: that catalog's name.
-            // Several: the same wording with a generated count, which is a
-            // number rather than translatable text (SRF-F10 / SRF-C3).
-            readonly property string labelText: {
-                var sel = appManager1.searchCatalogFilters
-                if (sel.length === 0) return qsTr("Catalog with results")
-                if (sel.length === 1) {
-                    var list = appManager1.searchCatalogsFound
-                    for (var i = 0; i < list.length; i++)
-                        if (list[i].catalogId === sel[0]) return list[i].name
-                }
-                return qsTr("Catalog with results") + " (" + sel.length + ")"
-            }
+            // Always the wording plus the number of ticked catalogs, which is
+            // generated rather than translatable text (SRF-F10 / SRF-C3).
+            readonly property string labelText:
+                qsTr("Catalogs with results") + " (" + appManager1.searchCatalogFilters.length + ")"
             onClicked: catalogFilterPopup.visible ? catalogFilterPopup.close()
                                                   : catalogFilterPopup.open()
 
@@ -1110,10 +1101,9 @@ ColumnLayout {
                     // Actions, not catalogs: kept above the list and separated
                     // from it so they cannot be mistaken for a catalog named
                     // "All" (SRF-F11). Both leave the popup open, like the
-                    // checkboxes below (SRF-F9). "All" and "None" show the same
-                    // rows - that is by design, not a defect: "All" is the
-                    // starting point for unticking a few, which is the only
-                    // practical way to say "everything except these".
+                    // checkboxes below (SRF-F9). "All" ticks every catalog, the
+                    // default; "None" unticks them all, so no row is shown until
+                    // one is ticked again.
                     RowLayout {
                         Layout.fillWidth: true
                         spacing: Kirigami.Units.smallSpacing

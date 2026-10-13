@@ -68,9 +68,9 @@ After clicking a row, the list can be used with the keyboard:
 
 The bar at the bottom of the page narrows the list **without running the search again**:
 * *Search...*: shows only the files whose **name** contains the typed text, as it is typed, whatever the case.
-* *Catalog with results*: lists the catalogs where results were found. Tick one or several catalogs to show only their results. *All* ticks every catalog, *None* clears the choice (all results shown). The button shows the chosen catalog, or the number of catalogs chosen.
+* *Catalogs with results*: lists the catalogs where results were found. All of them are ticked at first; untick a catalog to hide its results. *All* ticks every catalog; *None* unticks them all, so no result is shown until a catalog is ticked again. The button shows the number of ticked catalogs.
 
-Both filters apply together, and both are cleared when a new search ends.
+Both filters apply together. When a new search ends, the text is cleared and every catalog is ticked again.
 
 ## Context menu {#file-context-menu}
 

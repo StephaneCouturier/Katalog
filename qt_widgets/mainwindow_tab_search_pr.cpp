@@ -387,7 +387,7 @@ void MainWindow::resetSearchState()
 
     if (ui->Search_treeView_CatalogsFound->model()) {
         QStandardItemModel* emptyQStandardItemModel = new QStandardItemModel(this);
-        emptyQStandardItemModel->setHorizontalHeaderLabels({ tr("Catalog with results")});
+        emptyQStandardItemModel->setHorizontalHeaderLabels({ tr("Catalogs with results")});
         ui->Search_treeView_CatalogsFound->setModel(emptyQStandardItemModel);
     }
 }
@@ -786,14 +786,14 @@ void MainWindow::displaySearchResults()
 
     // List of catalogs in which results were found
     if (currentSearch->deviceFoundModel) {
-        currentSearch->deviceFoundModel->setHorizontalHeaderLabels({ QCoreApplication::translate("MainWindow", "Catalog with results") });
+        currentSearch->deviceFoundModel->setHorizontalHeaderLabels({ QCoreApplication::translate("MainWindow", "Catalogs with results") });
         ui->Search_treeView_CatalogsFound->setModel(currentSearch->deviceFoundModel);
         ui->Search_treeView_CatalogsFound->hideColumn(1);
     } else {
         qWarning() << "displaySearchResults: deviceFoundModel is null";
         // Create an empty model
         QStandardItemModel* emptyQStandardItemModel = new QStandardItemModel(this);
-        emptyQStandardItemModel->setHorizontalHeaderLabels({ tr("Catalog with results")});
+        emptyQStandardItemModel->setHorizontalHeaderLabels({ tr("Catalogs with results")});
         ui->Search_treeView_CatalogsFound->setModel(emptyQStandardItemModel);
     }
 

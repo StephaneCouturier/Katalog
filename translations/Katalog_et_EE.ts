@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+160"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4690"/>
+        <location line="+4692"/>
         <source>Search</source>
         <translation>Otsing</translation>
     </message>
     <message>
-        <location line="-4810"/>
+        <location line="-4812"/>
         <source>Stopped</source>
         <translation>Peatatud</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3258"/>
+        <location line="+3260"/>
         <source>Evaluated</source>
         <translation>Hinnatud</translation>
     </message>
     <message>
-        <location line="-3376"/>
+        <location line="-3378"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -45,7 +45,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2178"/>
+        <location line="+2180"/>
         <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
@@ -65,8 +65,8 @@
         <translation>Pooleli</translation>
     </message>
     <message>
-        <location line="-4691"/>
-        <location line="+4125"/>
+        <location line="-4693"/>
+        <location line="+4127"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
@@ -5380,7 +5380,16 @@ Jagamist ei tehtud.</translation>
         <translation>See on versioon: v%1 &lt;br/&gt;&lt;br/&gt;Saadaval on uus versioon: &lt;b&gt;v%2&lt;/b&gt; &lt;br/&gt; Leia uued funktsioonid &lt;a href=&apos;%3&apos;&gt;väljalaskemärkmetest&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Kas soovid selle alla laadida?</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.cpp" line="+129"/>
+        <location filename="../qt_widgets/mainwindow.cpp" line="+58"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+6"/>
+        <location line="+399"/>
+        <location line="+7"/>
+        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+38"/>
+        <source>Catalogs with results</source>
+        <translation>Kataloogid tulemustega</translation>
+    </message>
+    <message>
+        <location line="+71"/>
         <source>Some changes in the Storage device list have not been saved.&lt;br/&gt;Save and exit, discard and exit, or cancel exit?</source>
         <translation>Mõned muudatused salvestusseadmete nimekirjas ei ole salvestatud.&lt;br/&gt;Salvesta ja välju, hülga ja välju või tühista väljumine?</translation>
     </message>
@@ -5478,13 +5487,8 @@ Jagamist ei tehtud.</translation>
         <translation>Eemalda see silt</translation>
     </message>
     <message>
-        <location filename="../qt_widgets/mainwindow.cpp" line="-71"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+6"/>
-        <location line="+399"/>
-        <location line="+7"/>
-        <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+38"/>
         <source>Catalog with results</source>
-        <translation>Kataloog tulemustega</translation>
+        <translation type="vanished">Kataloog tulemustega</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+964"/>
@@ -8304,26 +8308,31 @@ Kontrollige, et lähtekaust (%1) on õige või et seade on lähtekausta ühendat
     </message>
     <message>
         <location line="+1"/>
-        <location line="+903"/>
+        <location line="+893"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
         <translation>Kontrolli kontrollsummasid</translation>
     </message>
     <message>
-        <location line="-52"/>
+        <location line="-127"/>
+        <source>Catalogs with results</source>
+        <translation>Kataloogid tulemustega</translation>
+    </message>
+    <message>
+        <location line="+75"/>
         <location line="+52"/>
         <source>Include Metadata</source>
         <translation>Kaasa metaandmed</translation>
     </message>
     <message>
-        <location line="-954"/>
+        <location line="-944"/>
         <location line="+592"/>
-        <location line="+307"/>
+        <location line="+297"/>
         <source>Move to Trash</source>
         <translation>Liiguta prügikasti</translation>
     </message>
     <message>
-        <location line="-1027"/>
+        <location line="-1017"/>
         <location line="+11"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Seade ei ole aktiivne. See võib olla lahti ühendatud või on selle tee muutunud.</translation>
@@ -8583,13 +8592,11 @@ Kontrollige, et lähtekaust (%1) on õige või et seade on lähtekausta ühendat
 %1</translation>
     </message>
     <message>
-        <location line="+75"/>
-        <location line="+6"/>
         <source>Catalog with results</source>
-        <translation>Kataloog tulemustega</translation>
+        <translation type="vanished">Kataloog tulemustega</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+108"/>
         <source>All</source>
         <translation>Kõik</translation>
     </message>

@@ -326,9 +326,14 @@ QVariantList AppManager::getSearchCatalogFilters() const
     QVariantList result;
     if (!m_searchSortModel)
         return result;
-    const QList<int> ids = m_searchSortModel->catalogFilters();
-    for (int id : ids)
-        result.append(id);
+    // The ticked catalogs: every listed one the user has not unticked (SRF-F5).
+    const QList<int> hidden = m_searchSortModel->hiddenCatalogs();
+    const QVariantList found = getSearchCatalogsFound();
+    for (const QVariant &entry : found) {
+        const int id = entry.toMap().value(QStringLiteral("catalogId")).toInt();
+        if (!hidden.contains(id))
+            result.append(id);
+    }
     return result;
 }
 //----------------------------------------------------------------------
@@ -336,34 +341,31 @@ void AppManager::toggleSearchCatalogFilter(int catalogId)
 {
     if (!m_searchSortModel)
         return;
-    m_searchSortModel->toggleCatalogFilter(catalogId);
+    m_searchSortModel->toggleCatalogHidden(catalogId);
     emit searchFiltersChanged();
 }
 //----------------------------------------------------------------------
-// Selects every catalog the results contain. Shows the same rows as an empty
-// set - correct, not a defect: this is the starting point for unticking a few,
-// which is how "everything except these two" is expressed (SRF-F11).
+// Ticks every catalog: the default state, and the starting point for unticking
+// a few - "everything except these" (SRF-F11).
 void AppManager::selectAllSearchCatalogFilters()
 {
     if (!m_searchSortModel)
         return;
-    const QVariantList found = getSearchCatalogsFound();
-    QList<int> selected = m_searchSortModel->catalogFilters();
-    for (const QVariant &entry : found) {
-        const int id = entry.toMap().value(QStringLiteral("catalogId")).toInt();
-        if (!selected.contains(id))
-            m_searchSortModel->toggleCatalogFilter(id);
-    }
+    m_searchSortModel->setHiddenCatalogs({});
     emit searchFiltersChanged();
 }
 //----------------------------------------------------------------------
+// Unticks every catalog, so no row is shown until one is ticked again - the
+// starting point for "only these" (SRF-F11).
 void AppManager::clearSearchCatalogFilters()
 {
     if (!m_searchSortModel)
         return;
-    const QList<int> selected = m_searchSortModel->catalogFilters();
-    for (int id : selected)
-        m_searchSortModel->toggleCatalogFilter(id);
+    QList<int> all;
+    const QVariantList found = getSearchCatalogsFound();
+    for (const QVariant &entry : found)
+        all.append(entry.toMap().value(QStringLiteral("catalogId")).toInt());
+    m_searchSortModel->setHiddenCatalogs(all);
     emit searchFiltersChanged();
 }
 //----------------------------------------------------------------------

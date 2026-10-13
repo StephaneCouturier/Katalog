@@ -119,19 +119,28 @@ void FilesView::setNameFilter(const QString &text)
     invalidateFilter();
 }
 
-QList<int> FilesView::catalogFilters() const
+QList<int> FilesView::hiddenCatalogs() const
 {
-    return QList<int>(m_catalogFilters.cbegin(), m_catalogFilters.cend());
+    return QList<int>(m_hiddenCatalogs.cbegin(), m_hiddenCatalogs.cend());
 }
 
-// Adds or removes one catalog. Removing the last one empties the set, which is
-// the unfiltered state - so the control needs no separate clear entry (SRF-F5).
-void FilesView::toggleCatalogFilter(int catalogId)
+// Unticks or re-ticks one catalog (SRF-F5).
+void FilesView::toggleCatalogHidden(int catalogId)
 {
-    if (m_catalogFilters.contains(catalogId))
-        m_catalogFilters.remove(catalogId);
+    if (m_hiddenCatalogs.contains(catalogId))
+        m_hiddenCatalogs.remove(catalogId);
     else
-        m_catalogFilters.insert(catalogId);
+        m_hiddenCatalogs.insert(catalogId);
+    invalidateFilter();
+}
+
+// "All" passes an empty list, "None" every listed catalog (SRF-F11).
+void FilesView::setHiddenCatalogs(const QList<int> &catalogIds)
+{
+    const QSet<int> hidden(catalogIds.cbegin(), catalogIds.cend());
+    if (hidden == m_hiddenCatalogs)
+        return;
+    m_hiddenCatalogs = hidden;
     invalidateFilter();
 }
 
@@ -140,10 +149,10 @@ void FilesView::toggleCatalogFilter(int catalogId)
 // rather than as a filter being active (SRF-F7).
 void FilesView::clearFilters()
 {
-    if (m_nameFilter.isEmpty() && m_catalogFilters.isEmpty())
+    if (m_nameFilter.isEmpty() && m_hiddenCatalogs.isEmpty())
         return;
     m_nameFilter.clear();
-    m_catalogFilters.clear();
+    m_hiddenCatalogs.clear();
     invalidateFilter();
 }
 
@@ -152,19 +161,18 @@ void FilesView::clearFilters()
 // case-sensitivity setting, which is about ordering, not about matching.
 bool FilesView::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
-    if (m_nameFilter.isEmpty() && m_catalogFilters.isEmpty())
+    if (m_nameFilter.isEmpty() && m_hiddenCatalogs.isEmpty())
         return true;
 
     const QAbstractItemModel *src = sourceModel();
     if (!src)
         return true;
 
-    // An empty set shows every catalog; otherwise the row's catalog must be one
-    // of those selected (SRF-F5/F6).
-    if (!m_catalogFilters.isEmpty()) {
+    // The row's catalog must still be ticked (SRF-F5/F6).
+    if (!m_hiddenCatalogs.isEmpty()) {
         const int catalogId = src->index(sourceRow, ColumnCatalogId, sourceParent)
                                   .data(Qt::DisplayRole).toInt();
-        if (!m_catalogFilters.contains(catalogId))
+        if (m_hiddenCatalogs.contains(catalogId))
             return false;
     }
 
