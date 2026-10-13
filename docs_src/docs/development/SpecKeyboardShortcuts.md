@@ -1,10 +1,10 @@
 ---
 id: SpecKeyboardShortcuts
-title: Keyboard Shortcuts — Esc Goes Back One Step
-description: Requirements for the K3 Esc key closing the last open page or layer through its existing Close or Cancel action
+title: Keyboard Shortcuts
+description: Requirements for K3 keyboard shortcuts: Esc goes back one step; Ctrl+E explores the selected search result's folder
 ---
 
-# KEYBOARD SHORTCUTS — ESC GOES BACK ONE STEP
+# KEYBOARD SHORTCUTS
 
 ![Status](https://img.shields.io/badge/Status-Approved-brightgreen) ![Implementation](https://img.shields.io/badge/K3-implemented-brightgreen) ![K2](https://img.shields.io/badge/K2-no%20change-lightgrey)
 
@@ -31,9 +31,9 @@ K2 is out of scope: it is built on tabs and has no notion of going back.
 
 **In scope:** the `Esc` key in K3 (`qt_quick/`) as a trigger for the existing
 Close action of overlay layers and pages, or the existing Cancel action on Device
-Edit; the guards that leave `Esc` to open popups and to input-method composition.
+Edit; the guards that leave `Esc` to open popups and to input-method composition; `Ctrl+E` (`Cmd+E` on macOS) on the Search Results page as a second trigger of the existing "Explore folder" row action (`SRS-F7`/`SRS-F8`, `SpecSearchResults.md`), added 2026-10-13.
 
-**Out of scope:** K2 (`qt_widgets/`). Any other shortcut. `Ctrl+F` is an open
+**Out of scope:** K2 (`qt_widgets/`). Any other shortcut. The existing Quit and Find (`Ctrl+F`) bindings are not specified here. `Ctrl+F` is an open
 question, recorded in `SpecBacklogNotes.md` and not a requirement.
 
 ---
@@ -43,6 +43,7 @@ question, recorded in `SpecBacklogNotes.md` and not a requirement.
 | ID | Requirement | Status |
 |----|-------------|--------|
 | KBS-O1 | A user can go back one step from the page they are on with the keyboard, without moving the mouse to a far-away Close button. | [Implemented] |
+| KBS-O2 | A user browsing Search results with the keyboard can jump to the selected result's folder in Explore without opening the context menu. Requested in beta feedback #3; approved by the user on 2026-10-13. | [Implemented] |
 
 ## Functional requirements — *what the system does*
 
@@ -52,6 +53,8 @@ question, recorded in `SpecBacklogNotes.md` and not a requirement.
 | KBS-F2 | On Device Edit and Create, `Esc` discards unsaved input exactly as their Cancel and Close buttons do today. No confirmation is added. This is a deliberate maintainer decision. | [Implemented] |
 | KBS-F3 | `Esc` pressed while a text field has focus still closes the page, per KBS-F1. The exception is input-method composition: while text is being composed, the input method keeps `Esc` and the page stays open. *(The input-method composition exception is not yet verified.)* | [Implemented] |
 | KBS-F4 | Any open popup keeps its own `Esc`: a dialog (modal or not), a menu, a combo dropdown, or another popup such as the Search Results catalogs filter. That `Esc` closes only the popup; the page underneath stays open. | [Implemented] |
+| KBS-F5 | On the Search Results page, `Ctrl+E` (`Cmd+E` on macOS) triggers exactly the "Explore folder" action (`SRS-F8`) for the table's selected row. It acts only under the `SRS-F7` condition: a row is selected and it belongs to a catalog device. Otherwise it does nothing. It works whether or not the table has focus, and only while Results is the current page. It does not fire while a popup, menu or dialog is open (as `KBS-F4`). | [Implemented] |
+| KBS-F6 | The "Explore folder" entry of the Results row context menu shows the `Ctrl+E` shortcut hint, in the platform's native shortcut text, where the Qt Quick Controls style displays shortcuts. | [Implemented] |
 
 ## Constructional requirements — *how it is built / limits / MUST-NOTs*
 
@@ -62,6 +65,7 @@ question, recorded in `SpecBacklogNotes.md` and not a requirement.
 | KBS-C3 | One press of `Esc` closes at most one layer or page. Kirigami's own handling MUST NOT also close something on the same press. *(Measured on 2026-09-24 with an offscreen QtTest probe on Qt 6.11.2 and the installed Kirigami: Kirigami does not pop a layer on `Esc` by itself.)* | [Implemented] |
 | KBS-C4 | `Esc` MUST NOT stop or cancel a running operation. It never triggers the Create page's Stop, the Backup page footer's Cancel for a running preview, or the activity panel's Stop. Closing a page leaves the work running, as `OPQ-O6` requires. | [Implemented] |
 | KBS-C5 | K2 (`qt_widgets/`) MUST NOT change. Its only shortcut remains Quit (`qt_widgets/mainwindow.cpp:127`). | [Implemented] |
+| KBS-C6 | `Ctrl+E` MUST call the same handler and use the same enable condition as the "Explore folder" menu entry (`pageSearchResults_column.exploreFolderRequested`, `appManager1.searchRowDeviceId(row) > 0`). It MUST NOT duplicate or reimplement the Explore opening (`SRS-C3`). It adds no user-visible string (the hint is Qt's native key text). It changes nothing in `core/` or `qt_widgets/`, creates no new file and adds no settings key. | [Implemented] |
 
 ---
 
@@ -91,3 +95,6 @@ showed the following:
 - **KBS-C3**: on every layer and page, one `Esc` goes back exactly one step.
 - **KBS-C4**: start a catalog creation and press `Esc` on Create. The page closes and the creation carries on in the activity panel. Repeat on Backup while a preview runs.
 - **KBS-C5**: K2's diff is empty.
+- **KBS-F5**: on Results, select (by mouse or arrow keys) a catalog result and press `Ctrl+E` (`Cmd+E` on macOS). Explore opens on its folder, as with the menu entry. Press `Esc`: you are back on Results. Select a result of a search run directly on a disk folder and press `Ctrl+E`: nothing happens. Click outside the table so it loses focus, then press `Ctrl+E`: it still works. With the context menu or the catalogs filter open, `Ctrl+E` does nothing. On any page other than Results, `Ctrl+E` does nothing.
+- **KBS-F6**: right-click a result. "Explore folder" shows `Ctrl+E` (`⌘E` on macOS) where the style supports it.
+- **KBS-C6**: `ninja translations_lupdate` shows no new source text. The `core/` and `qt_widgets/` diffs are empty. The shortcut's handler is the menu entry's handler.

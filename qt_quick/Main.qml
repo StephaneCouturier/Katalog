@@ -657,6 +657,29 @@ Kirigami.ApplicationWindow {
         openFeaturePage = pageSearchResults
     }
 
+    // While Explore sits after Results it is the only page shown, as K2
+    // switches to its Explore tab (SRS-F8). Whatever path removes Explore
+    // (Close, Esc, a new search), the Binding lets go and Kirigami's own
+    // width-driven column mode comes back as a binding, not a frozen value
+    // (SRS-C5). Reevaluated on every stack change: indexOfPage reads depth.
+    Binding {
+        target: pageStack.columnView
+        property: "columnResizeMode"
+        value: Kirigami.ColumnView.SingleColumn
+        when: root.exploreIsAfterResults()
+        restoreMode: Binding.RestoreBindingOrValue
+    }
+    // The switch widens every page to the window at once while the view still
+    // slid there from the old position: Selection showed full width for the
+    // first frames (measured). No slide during the switch: Explore shows at once.
+    Binding {
+        target: pageStack.columnView
+        property: "scrollDuration"
+        value: 0
+        when: root.exploreIsAfterResults()
+        restoreMode: Binding.RestoreBindingOrValue
+    }
+
     // "Tag this folder" (EXP-F23): Tags opens as a layer covering Explore, as
     // Settings covers the pages, so its Close (and Esc) returns to the same Explore.
     function showTagsAfterExplore() {
@@ -2238,6 +2261,7 @@ Kirigami.ApplicationWindow {
             id: pageSearchResultsForm
             width:  pageSearchResults.availableWidth
             height: pageSearchResults.availableHeight
+            isCurrentPage: pageStack.lastItem === pageSearchResults && pageStack.layers.depth <= 1
             onExploreFolderRequested: function(deviceId, folderPath) {
                 // Same opening path as the Devices page Explore action (SRS-C3),
                 // then the row's folder is selected and revealed (EXP-F8).

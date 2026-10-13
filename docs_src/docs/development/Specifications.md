@@ -37,7 +37,7 @@ specification and the code disagree, the specification is what was agreed.
 | [SpecHostedSecurity](SpecHostedSecurity.md) | HOSTED SECURITY — ONLY LOCAL OR PRIVATE-NETWORK SERVERS | Approved | K2 complete, K3 planned | — |
 | [SpecIconButtons](SpecIconButtons.md) | ICON BUTTONS — TOOLTIPS ON ICON-ONLY BUTTONS | Approved | planned | — |
 | [SpecImportVVV2K](SpecImportVVV2K.md) | Feature Specification: VVV2K — Full Import of a VVV Database into Katalog | — | — | — |
-| [SpecKeyboardShortcuts](SpecKeyboardShortcuts.md) | KEYBOARD SHORTCUTS — ESC GOES BACK ONE STEP | Approved | complete | — |
+| [SpecKeyboardShortcuts](SpecKeyboardShortcuts.md) | KEYBOARD SHORTCUTS | Approved | complete | — |
 | [SpecK2Deployment](SpecK2Deployment.md) | K2 DEPLOYMENT — STARTUP OF THE LINUX APPIMAGE ON ANY DESKTOP | Approved | mostly complete | — |
 | [SpecK3Deployment](SpecK3Deployment.md) | K3 DEPLOYMENT — QML MODULES AND PLATFORM INTEGRATION IN PACKAGED BUILDS | Approved | mostly complete | — |
 | [SpecK3ParityGaps](SpecK3ParityGaps.md) | K3 PARITY GAPS — K2 FEATURES NOT YET IN K3 | Reference | — | — |

@@ -82,7 +82,7 @@ Un clic droit sur une ligne ouvre un menu qui commence par le nom du fichier :
 |---------|--------|
 | *Ouvrir le fichier* | Ouvre le fichier avec son application par défaut. |
 | *Ouvrir le dossier* | Ouvre le dossier du fichier dans le gestionnaire de fichiers. |
-| *Explorer le dossier* | Ouvre le dossier dans la page [Explorer](Explore), à l'intérieur de son catalogue. *Fermer* (ou `Échap`) sur Explorer revient aux mêmes résultats. Non disponible pour une recherche dans un lecteur connecté. |
+| *Explorer le dossier* | Ouvre le dossier dans la page [Explorer](Explore), à l'intérieur de son catalogue. Explorer occupe alors toute la fenêtre. *Fermer* (ou `Échap`) sur Explorer revient aux mêmes résultats. Raccourci : `Ctrl+E` (`Cmd+E` sur macOS) sur le résultat sélectionné. Non disponible pour une recherche dans un lecteur connecté. |
 | *Afficher les métadonnées étendues (JSON)* | Affiche toutes les métadonnées enregistrées pour le fichier, sous forme de tableau, avec *Copier JSON*. |
 | *Copier le nom de fichier sans extension* | Copie `report_2025` depuis `/home/username/Documents/report_2025.pdf`. |
 | *Copier le nom de fichier avec extension* | Copie `report_2025.pdf`. |

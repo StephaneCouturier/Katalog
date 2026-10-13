@@ -23,6 +23,10 @@ ColumnLayout {
     // "Explore folder" (SRS-F8): Main.qml opens Explore after Results.
     signal exploreFolderRequested(int deviceId, string folderPath)
 
+    // Set by Main.qml: Results is the last page and no layer covers it. Ctrl+E
+    // only acts then (KBS-F5).
+    property bool isCurrentPage: false
+
     // Persisted column widths (CDT-F12/C9): Name, Directory, Catalog Name.
     // In folders-only results Directory has its own saved width, separate
     // from the file-mode one (SRS-F3, CDT-C9).
@@ -113,6 +117,16 @@ ColumnLayout {
         let lFileName = String(lm.data(lm.index(row, 0), Qt.DisplayRole) ?? "")
         let lFolder   = String(lm.data(lm.index(row, 3), Qt.DisplayRole) ?? "")
         pageSearchResults_column.openRowFile(row, lFolder + "/" + lFileName)
+    }
+
+    // "Explore folder" on a row, shared by the menu entry and Ctrl+E (KBS-C6).
+    // Only a row that belongs to a catalog device can be explored (SRS-F7).
+    function exploreRowFolder(row) {
+        let deviceId = appManager1.searchRowDeviceId(row)
+        if (row < 0 || deviceId <= 0)
+            return
+        var m = appManager1.searchSortModel
+        exploreFolderRequested(deviceId, String(m.data(m.index(row, 3), Qt.DisplayRole) ?? ""))
     }
 
     // A row's context menu, shared by the mouse and the Menu key (CDT-F8).
@@ -731,13 +745,27 @@ ColumnLayout {
             onTriggered: pageSearchResults_column.openRowFolder(resultContextMenu.row, resultContextMenu.folder)
         }
         Controls.MenuItem {
-            text: qsTr("Explore folder")
-            icon.name: "view-list-tree"
+            id: exploreMenuItem
             // Only a row that belongs to a catalog device can be explored
             // (SRS-F7); a search run directly on a disk folder has none.
             readonly property int deviceId: appManager1.searchRowDeviceId(resultContextMenu.row)
-            enabled: deviceId > 0
-            onTriggered: pageSearchResults_column.exploreFolderRequested(deviceId, resultContextMenu.folder)
+            // The Action carries Ctrl+E, so the style shows its hint (KBS-F6).
+            // Its shortcut stays live while the menu is closed (measured) and
+            // then serves the table's selected row (KBS-F5); one registration
+            // only, so no ambiguous duplicate. The trigger source tells a menu
+            // click from the key.
+            action: Controls.Action {
+                text: qsTr("Explore folder")
+                icon.name: "view-list-tree"
+                shortcut: "Ctrl+E"
+                enabled: !resultContextMenu.visible || exploreMenuItem.deviceId > 0
+                onTriggered: function(source) {
+                    if (source === exploreMenuItem)
+                        pageSearchResults_column.exploreRowFolder(resultContextMenu.row)
+                    else if (!resultContextMenu.visible && pageSearchResults_column.isCurrentPage)
+                        pageSearchResults_column.exploreRowFolder(tableView.selectedRow)
+                }
+            }
         }
         Controls.MenuSeparator {}
         Controls.MenuItem {

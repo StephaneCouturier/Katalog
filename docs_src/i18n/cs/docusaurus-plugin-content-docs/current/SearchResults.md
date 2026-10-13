@@ -82,7 +82,7 @@ Kliknutí pravým tlačítkem na řádek otevře nabídku, která začíná náz
 |---------|------|
 | *Otevřít soubor* | Otevře soubor ve výchozí aplikaci. |
 | *Otevřít složku* | Otevře složku souboru ve správci souborů. |
-| *Prozkoumat složku* | Otevře složku na stránce [Prozkoumat](Explore), uvnitř jejího katalogu. *Zavřít* (nebo `Esc`) na stránce Prozkoumat vrátí ke stejným výsledkům. Není dostupné pro vyhledávání v připojeném disku. |
+| *Prozkoumat složku* | Otevře složku na stránce [Prozkoumat](Explore), uvnitř jejího katalogu. Stránka Prozkoumat pak vyplní celé okno. *Zavřít* (nebo `Esc`) na stránce Prozkoumat vrátí ke stejným výsledkům. Zkratka: `Ctrl+E` (`Cmd+E` na macOS) na vybraném výsledku. Není dostupné pro vyhledávání v připojeném disku. |
 | *Zobrazit rozšířená metadata (JSON)* | Zobrazí všechna metadata uložená pro soubor jako tabulku, s tlačítkem *Kopírovat JSON*. |
 | *Kopírovat název souboru bez přípony* | Zkopíruje `report_2025` z `/home/username/Documents/report_2025.pdf`. |
 | *Kopírovat název souboru s příponou* | Zkopíruje `report_2025.pdf`. |

@@ -82,7 +82,7 @@ Right-clicking a row opens a menu that starts with the file name:
 |------|--------|
 | *Open file* | Opens the file with its default application. |
 | *Open folder* | Opens the folder of the file in the file manager. |
-| *Explore folder* | Opens the folder in the [Explore](Explore) page, inside its catalog. *Close* (or `Esc`) on Explore comes back to the same results. Not available for a search in a connected drive. |
+| *Explore folder* | Opens the folder in the [Explore](Explore) page, inside its catalog. Explore then fills the window. *Close* (or `Esc`) on Explore comes back to the same results. Shortcut: `Ctrl+E` (`Cmd+E` on macOS) on the selected result. Not available for a search in a connected drive. |
 | *Show extended metadata (JSON)* | Shows all the metadata stored for the file, as a table, with *Copy JSON*. |
 | *Copy file name without extension* | Copies `report_2025` from `/home/username/Documents/report_2025.pdf`. |
 | *Copy file name with extension* | Copies `report_2025.pdf`. |
