@@ -382,6 +382,12 @@ QVariant DeviceTableModel::data(const QModelIndex &index, int role) const
         case Kind::Number:
             return QLocale().toString(value.toLongLong());
         case Kind::Size:
+            // A catalog has no space of its own: its space cells stay empty
+            // rather than read 0 B. Sorting still uses the value (DVP-F33).
+            if (type == QLatin1String("Catalog")
+                && (qstrcmp(col.key, "usedSpace") == 0 || qstrcmp(col.key, "freeSpace") == 0
+                    || qstrcmp(col.key, "totalSpace") == 0))
+                return QString();
             return QLocale().formattedDataSize(value.toLongLong());
         case Kind::Boolean:
             // Drawn as a tick by the delegate, so the cell carries no text.
