@@ -213,13 +213,19 @@ ColumnLayout {
     Component.onCompleted: loadDevice()
 
     // ── Folder dialogs ─────────────────────────────────────────────────────────
-    FolderDialog {
-        id: editPathDialog
-        onAccepted: edit_lineEdit_Path.text = appManager1.normalizeSourcePath(appManager1.pathFromFileUrl(selectedFolder.toString()))
+    Component {   // a fresh dialog per open (openFreshDialog)
+        id: editPathDialogComponent
+        FolderDialog {
+            id: editPathDialog
+            onAccepted: edit_lineEdit_Path.text = appManager1.normalizeSourcePath(appManager1.pathFromFileUrl(selectedFolder.toString()))
+        }
     }
-    FolderDialog {
-        id: editExcludeDialog
-        onAccepted: edit_lineEdit_NewExcludeFolder.text = appManager1.normalizeSourcePath(appManager1.pathFromFileUrl(selectedFolder.toString()))
+    Component {   // a fresh dialog per open (openFreshDialog)
+        id: editExcludeDialogComponent
+        FolderDialog {
+            id: editExcludeDialog
+            onAccepted: edit_lineEdit_NewExcludeFolder.text = appManager1.normalizeSourcePath(appManager1.pathFromFileUrl(selectedFolder.toString()))
+        }
     }
 
     ListModel { id: excludeFoldersModel }
@@ -331,8 +337,7 @@ ColumnLayout {
                 text: qsTr("Select the path")
                 onClicked: {
                     var p = edit_lineEdit_Path.text.trim()
-                    if (p !== "") editPathDialog.currentFolder = appManager1.pathToFileUrl(p)
-                    editPathDialog.open()
+                    applicationWindow().openFreshDialog(editPathDialogComponent, p)
                 }
             }
         }
@@ -467,8 +472,7 @@ ColumnLayout {
                 text: qsTr("Select the path")
                 onClicked: {
                     var p = edit_lineEdit_Path.text.trim()
-                    if (p !== "") editExcludeDialog.currentFolder = appManager1.pathToFileUrl(p)
-                    editExcludeDialog.open()
+                    applicationWindow().openFreshDialog(editExcludeDialogComponent, p)
                 }
             }
             Controls.Button {

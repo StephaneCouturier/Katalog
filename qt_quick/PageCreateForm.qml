@@ -95,17 +95,26 @@ ColumnLayout {
     }
 
     // ── Folder dialogs ─────────────────────────────────────────────────────────
-    FolderDialog {
-        id: sourcePathDialog
-        onAccepted: create_lineEdit_NewCatalogPath.text = appManager1.normalizeSourcePath(appManager1.pathFromFileUrl(selectedFolder.toString()))
+    Component {   // a fresh dialog per open (openFreshDialog)
+        id: sourcePathDialogComponent
+        FolderDialog {
+            id: sourcePathDialog
+            onAccepted: create_lineEdit_NewCatalogPath.text = appManager1.normalizeSourcePath(appManager1.pathFromFileUrl(selectedFolder.toString()))
+        }
     }
-    FolderDialog {
-        id: perCatalogExcludeDialog
-        onAccepted: create_lineEdit_NewExcludeFolder.text = appManager1.normalizeSourcePath(appManager1.pathFromFileUrl(selectedFolder.toString()))
+    Component {   // a fresh dialog per open (openFreshDialog)
+        id: perCatalogExcludeDialogComponent
+        FolderDialog {
+            id: perCatalogExcludeDialog
+            onAccepted: create_lineEdit_NewExcludeFolder.text = appManager1.normalizeSourcePath(appManager1.pathFromFileUrl(selectedFolder.toString()))
+        }
     }
-    FolderDialog {
-        id: globalExcludeDialog
-        onAccepted: create_lineEdit_FolderToExclude.text = appManager1.normalizeSourcePath(appManager1.pathFromFileUrl(selectedFolder.toString()))
+    Component {   // a fresh dialog per open (openFreshDialog)
+        id: globalExcludeDialogComponent
+        FolderDialog {
+            id: globalExcludeDialog
+            onAccepted: create_lineEdit_FolderToExclude.text = appManager1.normalizeSourcePath(appManager1.pathFromFileUrl(selectedFolder.toString()))
+        }
     }
 
     Kirigami.InlineMessage {
@@ -154,8 +163,7 @@ ColumnLayout {
                 text: qsTr("Select the path")
                 onClicked: {
                     var p = create_lineEdit_NewCatalogPath.text.trim()
-                    if (p !== "") sourcePathDialog.currentFolder = appManager1.pathToFileUrl(p)
-                    sourcePathDialog.open()
+                    applicationWindow().openFreshDialog(sourcePathDialogComponent, p)
                 }
             }
         }
@@ -311,8 +319,7 @@ ColumnLayout {
                 text: qsTr("Select the path")
                 onClicked: {
                     var p = create_lineEdit_NewCatalogPath.text.trim()
-                    if (p !== "") perCatalogExcludeDialog.currentFolder = appManager1.pathToFileUrl(p)
-                    perCatalogExcludeDialog.open()
+                    applicationWindow().openFreshDialog(perCatalogExcludeDialogComponent, p)
                 }
             }
             Controls.Button {
@@ -393,8 +400,7 @@ ColumnLayout {
                 text: qsTr("Select the path")
                 onClicked: {
                     var p = create_lineEdit_NewCatalogPath.text.trim()
-                    if (p !== "") globalExcludeDialog.currentFolder = appManager1.pathToFileUrl(p)
-                    globalExcludeDialog.open()
+                    applicationWindow().openFreshDialog(globalExcludeDialogComponent, p)
                 }
             }
             Controls.Button {

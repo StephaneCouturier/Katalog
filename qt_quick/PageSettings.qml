@@ -245,9 +245,12 @@ ScrollablePageFitted {
         }
     }
 
-    FolderDialog {
-        id: imageFolderDialog
-        onAccepted: appManager1.imageFolderPath = appManager1.pathFromFileUrl(selectedFolder.toString())
+    Component {   // a fresh dialog per open (openFreshDialog)
+        id: imageFolderDialogComponent
+        FolderDialog {
+            id: imageFolderDialog
+            onAccepted: appManager1.imageFolderPath = appManager1.pathFromFileUrl(selectedFolder.toString())
+        }
     }
 
     // Collection export (SpecCollectionExport.md CEX-F3 / CEX-F4)
@@ -258,10 +261,13 @@ ScrollablePageFitted {
         onAccepted: appManager1.exportToSQLiteFile(appManager1.pathFromFileUrl(selectedFile.toString()))
     }
 
-    FolderDialog {
-        id: exportFolderDialog
-        title: qsTr("Select a folder")
-        onAccepted: appManager1.exportToMemoryMode(appManager1.pathFromFileUrl(selectedFolder.toString()))
+    Component {   // a fresh dialog per open (openFreshDialog)
+        id: exportFolderDialogComponent
+        FolderDialog {
+            id: exportFolderDialog
+            title: qsTr("Select a folder")
+            onAccepted: appManager1.exportToMemoryMode(appManager1.pathFromFileUrl(selectedFolder.toString()))
+        }
     }
 
     Connections {
@@ -271,23 +277,29 @@ ScrollablePageFitted {
         }
     }
 
-    FileDialog {
-        id: importFileDialog
-        fileMode: FileDialog.OpenFile
-        onAccepted: {
-            var path = appManager1.pathFromFileUrl(selectedFile.toString())
-            importPathField.text = path
-            if (importModeCombo.currentIndex < 2)
-                appManager1.openImportSource(path)
+    Component {   // a fresh dialog per open (openFreshDialog)
+        id: importFileDialogComponent
+        FileDialog {
+            id: importFileDialog
+            fileMode: FileDialog.OpenFile
+            onAccepted: {
+                var path = appManager1.pathFromFileUrl(selectedFile.toString())
+                importPathField.text = path
+                if (importModeCombo.currentIndex < 2)
+                    appManager1.openImportSource(path)
+            }
         }
     }
 
-    FolderDialog {
-        id: importFolderDialog
-        onAccepted: {
-            var path = appManager1.pathFromFileUrl(selectedFolder.toString())
-            importPathField.text = path
-            appManager1.openImportSource(path)
+    Component {   // a fresh dialog per open (openFreshDialog)
+        id: importFolderDialogComponent
+        FolderDialog {
+            id: importFolderDialog
+            onAccepted: {
+                var path = appManager1.pathFromFileUrl(selectedFolder.toString())
+                importPathField.text = path
+                appManager1.openImportSource(path)
+            }
         }
     }
 
@@ -492,8 +504,7 @@ ScrollablePageFitted {
                         visible: appManager1.databaseMode === "File" || appManager1.databaseMode === "Hosted"
                         enabled: exportRow.exportAllowed
                         onClicked: {
-                            exportFolderDialog.currentFolder = appManager1.pathToFileUrl(appManager1.getCollectionBrowsePath())
-                            exportFolderDialog.open()
+                            applicationWindow().openFreshDialog(exportFolderDialogComponent, "")
                         }
                     }
                 }
@@ -513,8 +524,7 @@ ScrollablePageFitted {
                         text: qsTr("Select")
                         icon.name: "edit-select"
                         onClicked: {
-                            imageFolderDialog.currentFolder = appManager1.pathToFileUrl(imageFolderField.text || appManager1.getCollectionFolder())
-                            imageFolderDialog.open()
+                            applicationWindow().openFreshDialog(imageFolderDialogComponent, imageFolderField.text.trim())
                         }
                     }
                 }
@@ -630,14 +640,11 @@ ScrollablePageFitted {
                         icon.name: "edit-select"
                         onClicked: {
                             if (importModeCombo.currentIndex === 0) {
-                                importFileDialog.currentFolder = appManager1.pathToFileUrl(appManager1.getCollectionFolder())
-                                importFileDialog.open()
+                                applicationWindow().openFreshDialog(importFileDialogComponent, importPathField.text.trim().replace(/[\\/][^\\/]*$/, ""))
                             } else if (importModeCombo.currentIndex === 1) {
-                                importFolderDialog.currentFolder = appManager1.pathToFileUrl(appManager1.getCollectionFolder())
-                                importFolderDialog.open()
+                                applicationWindow().openFreshDialog(importFolderDialogComponent, importPathField.text.trim())
                             } else {
-                                importFileDialog.currentFolder = appManager1.pathToFileUrl(appManager1.getCollectionFolder())
-                                importFileDialog.open()
+                                applicationWindow().openFreshDialog(importFileDialogComponent, importPathField.text.trim().replace(/[\\/][^\\/]*$/, ""))
                             }
                         }
                     }

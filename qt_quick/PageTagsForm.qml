@@ -29,9 +29,12 @@ ColumnLayout {
         folderPathField.text = folderPath
     }
 
-    FolderDialog {
-        id: tagFolderDialog
-        onAccepted: folderPathField.text = appManager1.pathFromFileUrl(selectedFolder.toString())
+    Component {   // a fresh dialog per open (openFreshDialog)
+        id: tagFolderDialogComponent
+        FolderDialog {
+            id: tagFolderDialog
+            onAccepted: folderPathField.text = appManager1.pathFromFileUrl(selectedFolder.toString())
+        }
     }
 
     Kirigami.InlineMessage {
@@ -76,9 +79,7 @@ ColumnLayout {
                 text: qsTr("Select a folder")
                 onClicked: {
                     var p = folderPathField.text.trim()
-                    tagFolderDialog.currentFolder = appManager1.pathToFileUrl(
-                        p !== "" ? p : appManager1.getCollectionBrowsePath())
-                    tagFolderDialog.open()
+                    applicationWindow().openFreshDialog(tagFolderDialogComponent, p)
                 }
             }
         }

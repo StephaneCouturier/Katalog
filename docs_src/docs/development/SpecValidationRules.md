@@ -15,7 +15,7 @@ This document is the single source of truth for **input-validation rules** on
 Katalog's data-entry forms, for **how validation feedback is presented**, for
 **dialog button order** — where the confirming and the dismissing button sit in
 any modal dialog — and for **input normalization**, the silent cleanup applied to
-a value the user picks or types. It exists so each rule is greppable and doubles
+a value the user picks or types, and for **where a folder or file picker opens**. It exists so each rule is greppable and doubles
 as a manual-test charter: every row in the tables below is a case that must hold
 after any change to the relevant screen.
 
@@ -147,6 +147,26 @@ list. Approved by the user the same day. Rules use the `L` prefix.
 |---|------|------------|--------|
 | L1 | A field label is vertically centred on the first line of the input it names. When the input grows to several lines (a list of terms, a wrapping row of options), the label stays level with that first line, not with the middle of the whole block. Likewise, a text shown in a row beside a button (e.g. the version number beside "Release Notes" in Settings) is vertically centred on that button. *Coverage on 2026-09-26: Search — File name "text" and "exclude" labels (the reported case), and the "On" / "Scope" labels of the duplicates and differences sections; Settings — Application row labels (Version, Behavior, Theme, Language) and the version number / release date beside the Release Notes button. Other forms are not yet audited against this rule.* | K3 (`qt_quick/`) | [Implemented] |
 
+## Picker start folder (where)
+
+An app-wide K3 rule for where a folder or file picker opens. The user reported on
+the Create page that the folder dialog ignored the Source path field: Qt Quick
+`FolderDialog` / `FileDialog` apply `currentFolder` only on their first show, so a
+reused dialog reopened on the last folder browsed. K3 now creates a fresh dialog
+per open. Approved by the user on 2026-10-13. Rule `P3` keeps the Tags workflow,
+where the Folder field is cleared after each tag (`T1`–`T3`) and the user tags
+neighbouring folders. Rules use the `P` prefix.
+
+| # | Rule | Applies to | Status |
+|---|------|------------|--------|
+| P1 | `P2`–`P5` apply to every K3 folder or file dialog opened by a "Select the path"-style button or a drawer action: Create (source path, per-catalog exclude folder, global exclude directory); Device edit (path, exclude folder); Tags (folder); Settings (image folder, export to folder, import file, import folder); drawer Open → SQLite Database and Open → Collection Folder. Each listed dialog is a separate dialog for `P3`. | K3 (`qt_quick/`) | [Implemented] |
+| P2 | If the dialog's related field holds a path, the dialog opens on that path. For a file picker whose field holds a file, it opens on that file's folder. | Dialogs in `P1` | [Implemented] |
+| P3 | If the related field is empty, or the dialog has no related field, the dialog opens on the last folder picked in **that same dialog** during the current session. For a file picker, the picked folder is the folder containing the picked file. Cancelling a dialog does not change its remembered folder. | Dialogs in `P1` | [Implemented] |
+| P4 | If nothing has been picked in that dialog yet this session, it opens on the collection browse folder: the `.db` file's folder in File mode, the collection folder in Memory mode, the user's home folder in Hosted mode (`AppManager::getCollectionBrowsePath`). | Dialogs in `P1` | [Implemented] |
+| P5 | The remembered folder of `P3` is never persisted: no settings key is written, and it is forgotten when K3 closes. | K3 (`qt_quick/`) | [Implemented] |
+| P6 | Settings "Export to SQLite file" is outside `P1`. Its save dialog keeps proposing `<browse folder>/export.db` (`SpecCollectionExport.md` CEX-F3). | K3 (`qt_quick/`) | [Implemented] |
+| P7 | K2 (`qt_widgets/`) is out of scope and unchanged: `QFileDialog::getExistingDirectory` uses the field's path or the system default. This rule adds no user-visible string and no `core/` change. | K2, `core/` | [Implemented] |
+
 ## Copy style
 
 - No "Please"; no bare imperative orders. State the requirement in sentence case.
@@ -273,3 +293,26 @@ For the normalization rules (N*), in K3:
   returned unchanged apart from the trailing separator.
 - N7 — the same K2 checks are expected to **fail** until the drift is closed;
   that is the documented state, not a regression.
+
+For the picker start folder rules (P*), in K3:
+
+- P2 (the reported case) — on Create, type or pick `/mnt/a/b` in Source path, then
+  press its "Select the path" button: the dialog opens on `/mnt/a/b`. Change the
+  field to `/mnt/c` and reopen: it opens on `/mnt/c`, not on the folder browsed
+  before. Repeat on every field-backed dialog in P1. For Settings import file, with
+  a file path in the field, the dialog opens on that file's folder.
+- P3 — on Tags, pick a folder, tag it (the field clears), press the folder button
+  again: it opens on the folder just picked. Pick a folder in Create's source path,
+  then open Create's exclude dialog: the exclude dialog does not open on that
+  folder, because each dialog remembers only its own pick. Pick a file in Open →
+  SQLite Database, reopen it: it opens on that file's folder. Open a dialog,
+  browse elsewhere, cancel, reopen: it opens where it opened before.
+- P4 — just after starting K3, open each P1 dialog with its field empty. File
+  mode: the `.db` file's folder. Memory mode: the collection folder. Hosted mode:
+  the home folder.
+- P5 — pick a folder in Tags, quit K3, restart, open Tags with an empty field: it
+  opens on the browse folder of P4. The settings file has no new key.
+- P6 — Settings "Export to SQLite file" still proposes `<browse folder>/export.db`,
+  even after a pick in "Export to Memory mode (csv)".
+- P7 — run `ninja translations_lupdate`: no new source text. `git diff core/` is
+  empty. K2 pickers behave as before.

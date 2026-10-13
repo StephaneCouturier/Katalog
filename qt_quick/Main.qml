@@ -391,6 +391,31 @@ Kirigami.ApplicationWindow {
     // CDT-F4 fit) and that differs from the stored one. Only positive explicit
     // widths count: Qt's transient reset on a divider double-click (-1) and a
     // hidden column (0) are never saved. Returns the updated map.
+    // Opens a folder or file picker where SpecValidationRules P2-P4 say: on
+    // the field's folder, else on the last folder picked in that same dialog
+    // this session, else on the collection browse folder. A fresh instance is
+    // created each time, because Qt Quick's FolderDialog and FileDialog apply
+    // currentFolder only on their first show. `fieldFolder` is a plain folder
+    // path, or "" when the field is empty or the dialog has none. Nothing is
+    // persisted (P5); a cancel leaves the remembered folder unchanged (P3).
+    property var _lastPickedFolders: new Map()
+    function openFreshDialog(component, fieldFolder) {
+        const start = fieldFolder ? appManager1.pathToFileUrl(fieldFolder)
+                    : _lastPickedFolders.get(component)
+                      ?? appManager1.pathToFileUrl(appManager1.getCollectionBrowsePath())
+        const dialog = component.createObject(root, { currentFolder: start })
+        dialog.accepted.connect(function() {
+            // A file picker remembers the folder holding the picked file.
+            const picked = dialog.selectedFolder !== undefined
+                         ? String(dialog.selectedFolder)
+                         : String(dialog.selectedFile).replace(/\/[^\/]*$/, "")
+            if (picked) _lastPickedFolders.set(component, picked)
+            dialog.destroy()
+        })
+        dialog.rejected.connect(function() { dialog.destroy() })
+        dialog.open()
+    }
+
     function savePersistedColumnWidths(table, keys, saved) {
         let updated = Object.assign({}, saved)
         for (const c in keys) {
@@ -888,24 +913,14 @@ Kirigami.ApplicationWindow {
                     icon.name: "network-server-database"
                     text: qsTr("SQLite Database...")
                     onTriggered: {
-                        var p = appManager1.getDatabaseFilePath()
-                        if (p.length > 0) {
-                            var slash = p.lastIndexOf("/")
-                            var folder = slash >= 0 ? p.substring(0, slash) : p
-                            var parentSlash = folder.lastIndexOf("/")
-                            databaseFileDialog.currentFolder = appManager1.pathToFileUrl(parentSlash > 0 ? folder.substring(0, parentSlash) : folder)
-                        }
-                        databaseFileDialog.open()
+                        openFreshDialog(databaseFileDialogComponent, "")
                     }
                 }
                 Kirigami.Action {
                     icon.name: "folder"
                     text: qsTr("Collection Folder...")
                     onTriggered: {
-                        var p = appManager1.getCollectionFolder()
-                        if (p.length > 0)
-                            memoryFolderDialog.currentFolder = appManager1.pathToFileUrl(p)
-                        memoryFolderDialog.open()
+                        openFreshDialog(memoryFolderDialogComponent, "")
                     }
                 }
                 Kirigami.Action {
@@ -1303,7 +1318,7 @@ Kirigami.ApplicationWindow {
                 onClicked: {
                     root._firstRunCreateNew = false
                     firstRunWelcomeDialog.close()
-                    databaseFileDialog.open()
+                    openFreshDialog(databaseFileDialogComponent, "")
                 }
             }
             Controls.Button {
@@ -2686,22 +2701,28 @@ Kirigami.ApplicationWindow {
     }
 
     // Dialogs - triggered from Open Collection menu
-    Dialogs.FolderDialog {
-        id: memoryFolderDialog
-        title: qsTr("Select Collection Folder")
-        onAccepted: {
-            var path = appManager1.pathFromFileUrl(selectedFolder.toString())
-            appManager1.openCollectionMemory(path)
+    Component {   // a fresh dialog per open (openFreshDialog)
+        id: memoryFolderDialogComponent
+        Dialogs.FolderDialog {
+            id: memoryFolderDialog
+            title: qsTr("Select Collection Folder")
+            onAccepted: {
+                var path = appManager1.pathFromFileUrl(selectedFolder.toString())
+                appManager1.openCollectionMemory(path)
+            }
         }
     }
 
-    Dialogs.FileDialog {
-        id: databaseFileDialog
-        title: qsTr("Open SQLite Database")
-        nameFilters: ["SQLite databases (*.db *.sqlite *.sqlite3)", "All files (*)"]
-        onAccepted: {
-            var path = appManager1.pathFromFileUrl(selectedFile.toString())
-            appManager1.setDatabaseFilePath(path)
+    Component {   // a fresh dialog per open (openFreshDialog)
+        id: databaseFileDialogComponent
+        Dialogs.FileDialog {
+            id: databaseFileDialog
+            title: qsTr("Open SQLite Database")
+            nameFilters: ["SQLite databases (*.db *.sqlite *.sqlite3)", "All files (*)"]
+            onAccepted: {
+                var path = appManager1.pathFromFileUrl(selectedFile.toString())
+                appManager1.setDatabaseFilePath(path)
+            }
         }
     }
 
