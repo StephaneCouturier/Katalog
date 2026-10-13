@@ -85,7 +85,9 @@ Sloupce *Šířka* až *Název* se zobrazují pouze u katalogů, které obsahuj�
 * **Přetažením** čáry mezi dvěma nadpisy sloupců změníte šířku sloupce; **dvojitým kliknutím** na ni přizpůsobíte sloupec obsahu. Šířka sloupce *Název* se zachová.
 * Klávesnice funguje jako ve [výsledcích vyhledávání](SearchResults#keyboard): šipky, `Page Up` `Page Down`, `Home` `End`, `Enter` pro otevření, `Menu` nebo `Shift+F10` pro místní nabídku, psaní písmen pro přechod na název.
 
-Když zařízení katalogu není dostupné (odpojené nebo se změnila jeho cesta), katalog lze stále procházet, ale otevření souboru nebo složky ve správci souborů se odmítne a stránka zobrazí: *Zařízení není aktivní. Může být odpojeno nebo se změnila jeho cesta.*
+Když zařízení katalogu není dostupné (odpojené nebo se změnila jeho cesta), katalog lze stále procházet, ale otevření souboru nebo složky ve správci souborů se odmítne a v dolní části okna se krátce zobrazí zpráva: *Zařízení není aktivní. Může být odpojeno nebo se změnila jeho cesta.*
+
+Když je zařízení dostupné, ale soubor nebo složka už neexistuje (například když je potřeba katalog aktualizovat), otevření se také odmítne a zpráva zní *Soubor nebyl nalezen nebo jej nelze přečíst* nebo *Složka nebyla nalezena.*
 
 ## Místní nabídka {#file-context-menu}
 

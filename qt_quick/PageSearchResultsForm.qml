@@ -103,9 +103,10 @@ ColumnLayout {
         return String(h).padStart(2, '0') + ":" + String(m).padStart(2, '0') + ":" + String(sec).padStart(2, '0')
     }
 
-    // Refuse-and-inform when the row's device is not reachable, instead of
-    // handing the path to the desktop environment and letting it report a
-    // generic "does not exist" (SpecDeviceActiveStatus.md DAS-O7 / DAS-F11).
+    // Refuse-and-inform when the row's device is not reachable, or the device is
+    // but the path is gone, instead of handing the path to the desktop
+    // environment and letting it report a generic "does not exist"
+    // (SpecDeviceActiveStatus.md DAS-O7 / DAS-F11 / DAS-F13).
     // A row's left-click action, shared by the mouse and Enter (CDT-F7, CDT-C8).
     function activateResultRow(row) {
         var lm = appManager1.searchSortModel
@@ -127,26 +128,26 @@ ColumnLayout {
     }
 
     function openRowFile(row, path) {
-        deviceInactiveMessage.visible = !appManager1.searchRowDeviceIsActive(row)
-        if (deviceInactiveMessage.visible)
+        if (!appManager1.searchRowDeviceIsActive(row)) {
+            showPassiveNotification(qsTr("The device is not active. It may be disconnected, or its path may have changed."), 3000)
             return
+        }
+        if (!appManager1.pathExists(path)) {
+            showPassiveNotification(qsTr("File not found or could not be read"), 3000)
+            return
+        }
         appManager1.openFile(path)
     }
     function openRowFolder(row, path) {
-        deviceInactiveMessage.visible = !appManager1.searchRowDeviceIsActive(row)
-        if (deviceInactiveMessage.visible)
+        if (!appManager1.searchRowDeviceIsActive(row)) {
+            showPassiveNotification(qsTr("The device is not active. It may be disconnected, or its path may have changed."), 3000)
             return
+        }
+        if (!appManager1.pathExists(path)) {
+            showPassiveNotification(qsTr("Folder not found."), 3000)
+            return
+        }
         appManager1.openFolder(path)
-    }
-
-    Kirigami.InlineMessage {
-        id: deviceInactiveMessage
-        Layout.fillWidth: true
-        Layout.margins: Kirigami.Units.smallSpacing
-        type: Kirigami.MessageType.Warning
-        showCloseButton: true
-        visible: false
-        text: qsTr("The device is not active. It may be disconnected, or its path may have changed.")
     }
 
     // ── Device path ──────────────────────────────────────────────────────

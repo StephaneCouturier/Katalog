@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+160"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4687"/>
+        <location line="+4690"/>
         <source>Search</source>
         <translation>Търсене</translation>
     </message>
     <message>
-        <location line="-4807"/>
+        <location line="-4810"/>
         <source>Stopped</source>
         <translation>Спрян</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3255"/>
+        <location line="+3258"/>
         <source>Evaluated</source>
         <translation>Оценен</translation>
     </message>
     <message>
-        <location line="-3373"/>
+        <location line="-3376"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -45,7 +45,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2175"/>
+        <location line="+2178"/>
         <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
@@ -65,8 +65,8 @@
         <translation>В процес</translation>
     </message>
     <message>
-        <location line="-4688"/>
-        <location line="+4122"/>
+        <location line="-4691"/>
+        <location line="+4125"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
@@ -75,7 +75,7 @@
         <translation>Завършен</translation>
     </message>
     <message>
-        <location line="-4327"/>
+        <location line="-4330"/>
         <source>Empty database path provided</source>
         <translation>Предоставен е празен път до базата данни</translation>
     </message>
@@ -115,7 +115,7 @@
         <translation>Локален диск</translation>
     </message>
     <message>
-        <location line="+457"/>
+        <location line="+462"/>
         <source>search_results</source>
         <translation>резултати_от_търсене</translation>
     </message>
@@ -161,12 +161,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2797"/>
+        <location line="+2795"/>
         <source>Size</source>
         <translation>Размер</translation>
     </message>
     <message>
-        <location line="-2796"/>
+        <location line="-2794"/>
         <source>Date</source>
         <translation>Дата</translation>
     </message>
@@ -201,7 +201,7 @@
         <translation>Етикет: %1</translation>
     </message>
     <message>
-        <location line="+242"/>
+        <location line="+240"/>
         <source>Memory collection opened: %1</source>
         <translation>Колекцията в паметта е отворена: %1</translation>
     </message>
@@ -1084,13 +1084,13 @@ Choose a different name.</source>
         <location line="-444"/>
         <location line="+60"/>
         <location line="+239"/>
-        <location line="+840"/>
+        <location line="+838"/>
         <location line="+125"/>
         <source>Cancel</source>
         <translation>Отказ</translation>
     </message>
     <message>
-        <location line="-1367"/>
+        <location line="-1365"/>
         <location line="+68"/>
         <location line="+69"/>
         <location line="+172"/>
@@ -1152,36 +1152,36 @@ Choose a different name.</source>
     </message>
     <message>
         <location line="-856"/>
-        <location line="+1221"/>
+        <location line="+1219"/>
         <source>Devices</source>
         <translation>Устройства</translation>
     </message>
     <message>
-        <location line="-1216"/>
-        <location line="+1313"/>
+        <location line="-1214"/>
+        <location line="+1311"/>
         <source>Explore</source>
         <translation>Разглеждане</translation>
     </message>
     <message>
-        <location line="-1303"/>
-        <location line="+1549"/>
+        <location line="-1301"/>
+        <location line="+1547"/>
         <source>Backup</source>
         <translation>Резервно копие</translation>
     </message>
     <message>
-        <location line="-1544"/>
-        <location line="+1501"/>
+        <location line="-1542"/>
+        <location line="+1499"/>
         <source>Statistics</source>
         <translation>Статистики</translation>
     </message>
     <message>
-        <location line="-1496"/>
-        <location line="+1518"/>
+        <location line="-1494"/>
+        <location line="+1516"/>
         <source>Tags</source>
         <translation>Етикети</translation>
     </message>
     <message>
-        <location line="-1505"/>
+        <location line="-1503"/>
         <source>Documentation</source>
         <translation>Документация</translation>
     </message>
@@ -1500,7 +1500,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="-804"/>
-        <location line="+1056"/>
+        <location line="+1054"/>
         <location line="+48"/>
         <source>Search</source>
         <translation>Търсене</translation>
@@ -1538,8 +1538,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>История</translation>
     </message>
     <message>
-        <location line="-292"/>
-        <location line="+300"/>
+        <location line="-290"/>
+        <location line="+298"/>
         <location line="+39"/>
         <location line="+109"/>
         <location line="+39"/>
@@ -1551,7 +1551,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Затвори</translation>
     </message>
     <message>
-        <location line="-1367"/>
+        <location line="-1365"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
@@ -1570,7 +1570,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Информацията за версията и системата е копирана в клипборда</translation>
     </message>
     <message>
-        <location line="+98"/>
+        <location line="+96"/>
         <source>All</source>
         <translation>Всички</translation>
     </message>
@@ -1643,8 +1643,8 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Създаването на каталога е неуспешно: </translation>
     </message>
     <message>
-        <location line="-1383"/>
-        <location line="+1367"/>
+        <location line="-1381"/>
+        <location line="+1365"/>
         <location line="+32"/>
         <source>Create</source>
         <translation>Създай</translation>
@@ -1717,7 +1717,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Каталогизирайте устройствата си, за да търсите, анализирате и архивирате файловете си.</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+10"/>
         <source>Founder &amp; Main Developer</source>
         <translation>Основател и главен разработчик</translation>
     </message>
@@ -7640,12 +7640,13 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageExploreFiles</name>
     <message>
-        <location filename="../qt_quick/PageExploreFiles.qml" line="+114"/>
+        <location filename="../qt_quick/PageExploreFiles.qml" line="+93"/>
+        <location line="+11"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Устройството не е активно. Възможно е да е изключено или пътят му да е променен.</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+31"/>
         <source>No folder selected</source>
         <translation>Няма избрана папка</translation>
     </message>
@@ -7734,12 +7735,18 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Изчисляване на контролна сума (SHA-256)</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="-583"/>
+        <location line="+599"/>
         <source>File not found or could not be read</source>
         <translation>Файлът не е намерен или не може да бъде прочетен</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-588"/>
+        <source>Folder not found.</source>
+        <translation>Папката не е намерена.</translation>
+    </message>
+    <message>
+        <location line="+594"/>
         <source>Verify Checksum (SHA-256)</source>
         <translation>Проверка на контролна сума (SHA-256)</translation>
     </message>
@@ -8256,7 +8263,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageSearchResultsForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+211"/>
+        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+212"/>
         <source>%1 duplicate(s) found</source>
         <translation>Намерени %1 дубликат(а)</translation>
     </message>
@@ -8316,12 +8323,18 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Премести в кошчето</translation>
     </message>
     <message>
-        <location line="-1009"/>
+        <location line="-1027"/>
+        <location line="+11"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Устройството не е активно. Възможно е да е изключено или пътят му да е променен.</translation>
     </message>
     <message>
-        <location line="+109"/>
+        <location line="+4"/>
+        <source>Folder not found.</source>
+        <translation>Папката не е намерена.</translation>
+    </message>
+    <message>
+        <location line="+112"/>
         <source>Extract Metadata</source>
         <translation>Извличане на метаданни</translation>
     </message>
@@ -8428,7 +8441,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Изчисляване на контролна сума (SHA-256)</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="-662"/>
+        <location line="+678"/>
         <source>File not found or could not be read</source>
         <translation>Файлът не е намерен или не може да бъде прочетен</translation>
     </message>
@@ -8694,43 +8708,43 @@ Errors: %3</source>
         <translation>Колекция и база данни</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+14"/>
         <source>Database Mode</source>
         <translation>Режим на базата данни</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location line="+201"/>
+        <location line="+207"/>
         <source>Memory</source>
         <translation>Памет</translation>
     </message>
     <message>
-        <location line="-200"/>
-        <location line="+200"/>
+        <location line="-206"/>
+        <location line="+206"/>
         <source>File</source>
         <translation>Файл</translation>
     </message>
     <message>
-        <location line="-199"/>
+        <location line="-205"/>
         <source>Hosted</source>
         <translation>Хостван</translation>
     </message>
     <message>
-        <location line="-275"/>
+        <location line="-278"/>
         <location line="+233"/>
-        <location line="+48"/>
+        <location line="+51"/>
         <source>Collection</source>
         <translation>Колекция</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+1"/>
-        <location line="+593"/>
+        <location line="+600"/>
         <source>(none)</source>
         <translation>(няма)</translation>
     </message>
     <message>
-        <location line="-583"/>
+        <location line="-590"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Edit</source>
@@ -8747,9 +8761,9 @@ Errors: %3</source>
         <translation>Папка с изображения</translation>
     </message>
     <message>
-        <location line="-244"/>
-        <location line="+254"/>
-        <location line="+110"/>
+        <location line="-247"/>
+        <location line="+257"/>
+        <location line="+116"/>
         <source>Select</source>
         <translation>Избери</translation>
     </message>
@@ -8774,7 +8788,7 @@ Errors: %3</source>
         <translation type="vanished">Парола:</translation>
     </message>
     <message>
-        <location line="-76"/>
+        <location line="-79"/>
         <source>Host Name</source>
         <translation>Име на хоста</translation>
     </message>
@@ -8822,7 +8836,7 @@ Errors: %3</source>
         <translation>Импортиране и синхронизиране на колекция</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+15"/>
         <source>Data mode</source>
         <translation>Режим на данни</translation>
     </message>
@@ -8859,16 +8873,16 @@ Errors: %3</source>
         <translation>Път</translation>
     </message>
     <message>
-        <location line="-507"/>
+        <location line="-516"/>
         <location line="+3"/>
         <location line="+2"/>
         <location line="+0"/>
-        <location line="+525"/>
+        <location line="+534"/>
         <source>Device</source>
         <translation>Устройство</translation>
     </message>
     <message>
-        <location line="-553"/>
+        <location line="-562"/>
         <source>Storage devices linked to a missing storage</source>
         <translation>Устройства за съхранение, свързани с липсващо съхранение</translation>
     </message>
@@ -8919,12 +8933,12 @@ Errors: %3</source>
     <message>
         <location line="+16"/>
         <location line="+25"/>
-        <location line="+303"/>
+        <location line="+306"/>
         <source>Quality check</source>
         <translation>Проверка на качеството</translation>
     </message>
     <message>
-        <location line="-323"/>
+        <location line="-326"/>
         <location line="+92"/>
         <source>Error: </source>
         <translation>Грешка: </translation>
@@ -8967,7 +8981,7 @@ Errors: %3</source>
         <translation>Отказ</translation>
     </message>
     <message>
-        <location line="+130"/>
+        <location line="+133"/>
         <source>Export to SQLite file</source>
         <translation>Експортирай в SQLite файл</translation>
     </message>
@@ -8992,7 +9006,7 @@ Errors: %3</source>
         <translation>Валидно:</translation>
     </message>
     <message>
-        <location line="+123"/>
+        <location line="+129"/>
         <source>Import</source>
         <translation>Внасяне</translation>
     </message>
@@ -9003,17 +9017,17 @@ Errors: %3</source>
         <translation>Обновяване</translation>
     </message>
     <message>
-        <location line="-326"/>
+        <location line="-335"/>
         <source>Application</source>
         <translation>Приложение</translation>
     </message>
     <message>
-        <location line="+606"/>
+        <location line="+615"/>
         <source>App information</source>
         <translation>Информация за приложението</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+13"/>
         <source>Version</source>
         <translation>Версия</translation>
     </message>
@@ -9023,12 +9037,12 @@ Errors: %3</source>
         <translation>Бележки към изданието</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Check for a new version on startup</source>
         <translation>Проверка за нова версия при стартиране</translation>
     </message>
     <message>
-        <location line="-63"/>
+        <location line="-64"/>
         <source>Behavior</source>
         <translation>Поведение</translation>
     </message>
@@ -9118,7 +9132,7 @@ Errors: %3</source>
         <translation>Език</translation>
     </message>
     <message>
-        <location line="+265"/>
+        <location line="+266"/>
         <source>Settings file</source>
         <translation>Файл с настройки</translation>
     </message>

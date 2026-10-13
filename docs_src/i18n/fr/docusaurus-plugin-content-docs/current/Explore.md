@@ -85,7 +85,9 @@ Les colonnes *Largeur* à *Titre* ne sont affichées que pour les catalogues qui
 * **Faites glisser** la ligne entre deux titres de colonnes pour changer la largeur d'une colonne ; **double-cliquez** dessus pour ajuster la colonne à son contenu. La largeur de *Nom* est conservée.
 * Le clavier fonctionne comme dans les [résultats de recherche](SearchResults#keyboard) : flèches, `Page préc.` `Page suiv.`, `Début` `Fin`, `Entrée` pour ouvrir, `Menu` ou `Maj+F10` pour le menu contextuel, saisie de lettres pour aller à un nom.
 
-Lorsque le périphérique du catalogue n'est pas disponible (déconnecté, ou son chemin a changé), le catalogue peut toujours être parcouru, mais l'ouverture d'un fichier, ou d'un dossier dans le gestionnaire de fichiers, est refusée et la page affiche : *Le périphérique n'est pas actif. Il est peut-être déconnecté, ou son chemin a peut-être changé.*
+Lorsque le périphérique du catalogue n'est pas disponible (déconnecté, ou son chemin a changé), le catalogue peut toujours être parcouru, mais l'ouverture d'un fichier, ou d'un dossier dans le gestionnaire de fichiers, est refusée et un court message apparaît en bas de la fenêtre : *Le périphérique n'est pas actif. Il est peut-être déconnecté, ou son chemin a peut-être changé.*
+
+Lorsque le périphérique est disponible mais que le fichier ou le dossier n'existe plus (par exemple si le catalogue doit être mis à jour), l'ouverture est également refusée et le message est *Fichier introuvable ou illisible* ou *Dossier introuvable.*
 
 ## Menu contextuel {#file-context-menu}
 

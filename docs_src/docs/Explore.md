@@ -85,7 +85,9 @@ The columns *Width* to *Title* are shown only for catalogs that include metadata
 * **Drag** the line between two column titles to change a column width; **double-click** it to fit the column to its content. The width of *Name* is kept.
 * The keyboard works as in the [search results](SearchResults#keyboard): arrows, `Page Up` `Page Down`, `Home` `End`, `Enter` to open, `Menu` or `Shift+F10` for the context menu, typing letters to go to a name.
 
-When the device of the catalog is not available (disconnected, or its path changed), the catalog can still be browsed, but opening a file, or a folder in the file manager, is refused and the page shows: *The device is not active. It may be disconnected, or its path may have changed.*
+When the device of the catalog is not available (disconnected, or its path changed), the catalog can still be browsed, but opening a file, or a folder in the file manager, is refused and a short message appears at the bottom of the window: *The device is not active. It may be disconnected, or its path may have changed.*
+
+When the device is available but the file or folder is no longer there (for instance the catalog needs an update), opening it is refused as well and the message is *File not found or could not be read* or *Folder not found.*
 
 ## Context menu {#file-context-menu}
 

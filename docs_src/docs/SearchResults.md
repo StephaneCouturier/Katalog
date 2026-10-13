@@ -20,7 +20,9 @@ The top of the page shows:
 * the number of results: files, folders, duplicates or differences found,
 * the total size of the files found, their smallest and largest size, and the range of their dates.
 
-When the device of a file is not available (disconnected, or its path changed), opening the file is refused and the page shows: *The device is not active. It may be disconnected, or its path may have changed.*
+When the device of a file is not available (disconnected, or its path changed), opening the file or its folder is refused and a short message appears at the bottom of the window: *The device is not active. It may be disconnected, or its path may have changed.*
+
+When the device is available but the file or folder is no longer there (for instance the catalog needs an update), opening it is refused as well and the message is *File not found or could not be read* or *Folder not found.*
 
 ## Results list {#results-list}
 

@@ -20,7 +20,9 @@ Le haut de la page indique :
 * le nombre de résultats : fichiers, dossiers, doublons ou différences trouvés,
 * la taille totale des fichiers trouvés, leur plus petite et leur plus grande taille, et l'intervalle de leurs dates.
 
-Lorsque le périphérique d'un fichier n'est pas disponible (déconnecté, ou son chemin a changé), l'ouverture du fichier est refusée et la page affiche : *Le périphérique n'est pas actif. Il est peut-être déconnecté, ou son chemin a peut-être changé.*
+Lorsque le périphérique d'un fichier n'est pas disponible (déconnecté, ou son chemin a changé), l'ouverture du fichier ou de son dossier est refusée et un court message apparaît en bas de la fenêtre : *Le périphérique n'est pas actif. Il est peut-être déconnecté, ou son chemin a peut-être changé.*
+
+Lorsque le périphérique est disponible mais que le fichier ou le dossier n'existe plus (par exemple si le catalogue doit être mis à jour), l'ouverture est également refusée et le message est *Fichier introuvable ou illisible* ou *Dossier introuvable.*
 
 ## Liste des résultats {#results-list}
 

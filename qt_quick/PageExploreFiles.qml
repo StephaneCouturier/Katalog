@@ -84,35 +84,36 @@ Item {
         root.folderTotalSize = stats.totalSize
     }
 
-    // Refuse-and-inform when the explored device is not reachable, instead of
-    // handing the path to the desktop environment and letting it report a
-    // generic "does not exist" (SpecDeviceActiveStatus.md DAS-O7 / DAS-F11).
+    // Refuse-and-inform when the explored device is not reachable, or the device is
+    // but the path is gone, instead of handing the path to the desktop
+    // environment and letting it report a generic "does not exist"
+    // (SpecDeviceActiveStatus.md DAS-O7 / DAS-F11 / DAS-F13).
     function openEntryFile(path) {
-        deviceInactiveMessage.visible = !appManager1.probeExploreDeviceActive()
-        if (deviceInactiveMessage.visible)
+        if (!appManager1.probeExploreDeviceActive()) {
+            showPassiveNotification(qsTr("The device is not active. It may be disconnected, or its path may have changed."), 3000)
             return
+        }
+        if (!appManager1.pathExists(path)) {
+            showPassiveNotification(qsTr("File not found or could not be read"), 3000)
+            return
+        }
         appManager1.openFile(path)
     }
     function openEntryFolder(path) {
-        deviceInactiveMessage.visible = !appManager1.probeExploreDeviceActive()
-        if (deviceInactiveMessage.visible)
+        if (!appManager1.probeExploreDeviceActive()) {
+            showPassiveNotification(qsTr("The device is not active. It may be disconnected, or its path may have changed."), 3000)
             return
+        }
+        if (!appManager1.pathExists(path)) {
+            showPassiveNotification(qsTr("Folder not found."), 3000)
+            return
+        }
         appManager1.openFolder(path)
     }
 
     ColumnLayout {
         anchors.fill: parent
         spacing: 0
-
-        Kirigami.InlineMessage {
-            id: deviceInactiveMessage
-            Layout.fillWidth: true
-            Layout.margins: Kirigami.Units.smallSpacing
-            type: Kirigami.MessageType.Warning
-            showCloseButton: true
-            visible: false
-            text: qsTr("The device is not active. It may be disconnected, or its path may have changed.")
-        }
 
         // Header: current folder path + options. Fixed height, matching the
         // Selection page and the Explore directory tree.

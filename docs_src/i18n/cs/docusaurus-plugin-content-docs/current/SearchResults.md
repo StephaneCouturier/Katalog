@@ -20,7 +20,9 @@ Horní část stránky ukazuje:
 * počet výsledků: nalezené soubory, složky, duplikáty nebo rozdíly,
 * celkovou velikost nalezených souborů, jejich nejmenší a největší velikost a rozmezí jejich dat.
 
-Když zařízení souboru není dostupné (odpojené nebo se změnila jeho cesta), otevření souboru se odmítne a stránka zobrazí: *Zařízení není aktivní. Může být odpojeno nebo se změnila jeho cesta.*
+Když zařízení souboru není dostupné (odpojené nebo se změnila jeho cesta), otevření souboru nebo jeho složky se odmítne a v dolní části okna se krátce zobrazí zpráva: *Zařízení není aktivní. Může být odpojeno nebo se změnila jeho cesta.*
+
+Když je zařízení dostupné, ale soubor nebo složka už neexistuje (například když je potřeba katalog aktualizovat), otevření se také odmítne a zpráva zní *Soubor nebyl nalezen nebo jej nelze přečíst* nebo *Složka nebyla nalezena.*
 
 ## Seznam výsledků {#results-list}
 

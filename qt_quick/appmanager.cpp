@@ -1430,6 +1430,11 @@ bool AppManager::probeExploreDeviceActive()
     return exploreDevice->active;
 }
 //----------------------------------------------------------------------
+bool AppManager::pathExists(const QString &path) const
+{
+    return QFileInfo::exists(path);
+}
+//----------------------------------------------------------------------
 int AppManager::selectionRowForDevice(int deviceId) const
 {
     if (!m_deviceFilterModel || deviceId <= 0)

@@ -522,6 +522,10 @@ public slots:
     Q_INVOKABLE int     searchRowDeviceId(int row) const;
     // Same probe for the device the Explore page is currently showing.
     Q_INVOKABLE bool    probeExploreDeviceActive();
+    // Whether the file or folder about to be opened exists, tested once at click
+    // time on that one path, so a stale catalog does not hand a missing path to
+    // the desktop environment (SpecDeviceActiveStatus.md DAS-F13).
+    Q_INVOKABLE bool    pathExists(const QString &path) const;
     // Row of a device in the filtered Selection list, or -1 when it is not shown.
     // Lets the UI scroll to a device without hardcoding a role number.
     Q_INVOKABLE int     selectionRowForDevice(int deviceId) const;
