@@ -49,6 +49,8 @@ Selection cards together with the alignment that depends on it (`SEL-F7`,
 `SEL-C8`), added 2026-09-12; and the **content of the Selection card's second
 line** (`SEL-F8`, `SEL-C10`).
 
+*Pointer, not a requirement:* selecting a **Catalog** card while the Explore page is open also opens that catalog in Explore. That effect is governed by `EXP-F27` and `EXP-C21` in `SpecExplore.md` (approved 2026-10-13), not by any row here; it does not change which device is selected or how (`SEL-F1`–`SEL-F6`, `SEL-C7`).
+
 *Pointer, not a requirement:* the **surface** of the `SEL-F5` reminder row — transparent when idle, tinted on hover — is governed by `THM-F10` and `THM-C13` in `SpecTheme.md`, not by any row here; `SEL-F5`, `SEL-F6` and `SEL-C7` are unchanged by it.
 
 **Out of scope (non-goals):** the device tree's collapse and expand state and its
@@ -140,4 +142,5 @@ For each row: set up the stated condition, run the operation, confirm the result
 - **SEL-C10** — Switch the interface to French and read a Selection card: the word for files is translated, not the English `files`. Run `ninja translations_lupdate`: **no** new untranslated string appears — the existing `files` is reused, now also in the device-list model context.
 - **SEL-C10 (count)** — Confirm the count is still locale-formatted, with the thousands separator of the active language, and that it is not glued to the word.
 - **SEL-C4** — Run `ninja translations_lupdate`. No new untranslated string appears for the Selection page or the search history list.
+- **SEL-F3 / EXP-F27** — With Explore open, right-click another Catalog card and choose Explore: the highlight moves, and the catalog opens in Explore once. Run the `EXP-F27` charter in `SpecExplore.md` for the selection-follow behaviour.
 - **SEL-C6** — Open the same collection in K2. Its Selection panel still shows the three labelled Virtual / Storage / Catalog rows and its history table still shows a raw ID column. Both are expected and are not defects of these rows.

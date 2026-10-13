@@ -19,6 +19,8 @@ A catalog is opened in Explore with *Explore*, in the context menu of a catalog:
 * on the [Devices](Devices) page,
 * from a search result, with *Explore folder* (see [Search results](SearchResults#file-context-menu)): Explore opens directly on the folder of the file.
 
+While the Explore page is open, **clicking a catalog** on the [Selection](Selection) page opens it in Explore as well.
+
 *Explore* in the drawer shows the page again with the last catalog explored since Katalog was started.<br/>
 *Close* (or `Esc`) closes the page. When it was opened from a search result, it goes back to the same results.
 

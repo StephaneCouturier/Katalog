@@ -74,9 +74,18 @@ Item {
     // against the tree that is on its way out.
     property bool _loading: false
 
+    // The catalog on show, so selecting it again does not reload it (EXP-F27)
+    property int openedDeviceId: -1
+    Connections {   // IDs restart in another collection
+        target: appManager1
+        function onDatabaseModeChanged() { root.openedDeviceId = -1 }
+    }
+
     // Open a catalog by device ID (called from Devices/Selection context menus)
     function openByDeviceId(deviceId) {
-        _applyOpenResult(appManager1.exploreOpenCatalog(deviceId))
+        const info = appManager1.exploreOpenCatalog(deviceId)
+        root.openedDeviceId = info.success ? deviceId : -1
+        _applyOpenResult(info)
     }
 
     function _applyOpenResult(info) {

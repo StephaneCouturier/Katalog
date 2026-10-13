@@ -19,6 +19,8 @@ Katalog se na stránce Prozkoumat otevře volbou *Prozkoumat* v místní nabídc
 * na stránce [Zařízení](Devices),
 * z výsledku vyhledávání volbou *Prozkoumat složku* (viz [Výsledky vyhledávání](SearchResults#file-context-menu)): Prozkoumat se otevře přímo ve složce souboru.
 
+Dokud je stránka Prozkoumat otevřená, **kliknutím na katalog** na stránce [Výběr](Selection) se katalog otevře také v ní.
+
 *Prozkoumat* v postranním panelu znovu zobrazí stránku s posledním katalogem prozkoumaným od spuštění Katalogu.<br/>
 *Zavřít* (nebo `Esc`) stránku zavře. Pokud byla otevřena z výsledku vyhledávání, vrátí se ke stejným výsledkům.
 

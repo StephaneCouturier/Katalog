@@ -625,6 +625,14 @@ Kirigami.ApplicationWindow {
         openFeaturePage = pageExplore
     }
 
+    // A catalog card tapped on Selection while Explore is open opens there
+    // too; one already on show is not reloaded (EXP-F27).
+    function followSelectionInExplore(deviceId) {
+        if (indexOfPage(pageExplore) < 0 || exploreFolders.openedDeviceId === deviceId)
+            return
+        exploreFolders.openByDeviceId(deviceId)
+    }
+
     // True when Explore was opened after Results (SRS-F8).
     function exploreIsAfterResults() {
         let resultsIdx = indexOfPage(pageSearchResults)

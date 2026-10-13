@@ -32,7 +32,12 @@ Kirigami.AbstractCard {
                                            : Kirigami.Units.iconSizes.smallMedium
 
     TapHandler {
-        onTapped: appManager1.selectDeviceById(model.deviceId)
+        onTapped: {
+            appManager1.selectDeviceById(model.deviceId)
+            // With Explore open, a catalog card opens there too (EXP-F27)
+            if (model.type === "Catalog")
+                root.followSelectionInExplore(model.deviceId)
+        }
     }
 
     TapHandler {

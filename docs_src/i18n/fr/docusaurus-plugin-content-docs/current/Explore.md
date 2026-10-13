@@ -19,6 +19,8 @@ Un catalogue s'ouvre dans Explorer avec *Explorer*, dans le menu contextuel d'un
 * sur la page [Périphériques](Devices),
 * depuis un résultat de recherche, avec *Explorer le dossier* (voir [Résultats de recherche](SearchResults#file-context-menu)) : Explorer s'ouvre directement sur le dossier du fichier.
 
+Tant que la page Explorer est ouverte, **cliquer sur un catalogue** dans la page [Sélection](Selection) l'ouvre aussi dans Explorer.
+
 *Explorer* dans le panneau latéral affiche à nouveau la page avec le dernier catalogue exploré depuis le démarrage de Katalog.<br/>
 *Fermer* (ou `Échap`) ferme la page. Lorsqu'elle a été ouverte depuis un résultat de recherche, elle revient aux mêmes résultats.
 

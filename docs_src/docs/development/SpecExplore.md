@@ -37,6 +37,13 @@ this same row, Planned) must fold or elide when it is built, so that it does not
 bring the clipping back. The count row below it wraps its two groups onto a
 second line rather than clipping (`EXP-F26`, "yes, make the second row wrap").
 
+**Decision of 2026-10-13 (beta feedback #8).** The maintainer approved a K3-only
+behaviour that goes beyond K2: while Explore is open, selecting a Catalog card on
+the Selection page opens that catalog in Explore at once (`EXP-O7`, `EXP-F27`,
+`EXP-C21`). K2 opens Explore only through its explicit Explore action and its
+startup restore. K2's Memory-mode warning for catalogs over 200,000 files is not
+ported; whether to port it is an open point (*Open, not authorised*).
+
 > **Reading the requirement IDs.** Each requirement has a permanent ID.
 > IDs are never renumbered or reused; a retired requirement is marked
 > `[Removed]`, not deleted. Status is one of
@@ -54,10 +61,12 @@ aggregate size figures presented in the Explore file list and its header; and
 the column set of the Explore file list and the persistence of its sort
 (`EXP-F16`–`EXP-F18`, added 2026-10-02); and the directory tree's context menu,
 with its single "Tag this folder" entry and the hand-off to the Tags page
-(`EXP-F21`–`EXP-F23`, added 2026-10-10).
+(`EXP-F21`–`EXP-F23`, added 2026-10-10); and opening a catalog in an open
+Explore page when a Catalog card is selected on the Selection page (`EXP-F27`,
+`EXP-C21`, added 2026-10-13).
 
 **Out of scope (non-goals):** everything else on the Explore screen — loading the
-catalog, the file list beyond the size figures and column set named above, the
+catalog (other than the selection trigger of `EXP-F27`), the file list beyond the size figures and column set named above, the
 display options, the context menus other than their copy entries (`EXP-F19`, `EXP-F20`, added 2026-10-03) and the directory tree's "Tag this folder" entry (`EXP-F21`), the Tags page itself beyond being opened pre-filled (`EXP-F22`), sorting other than its persistence, and the Selection page's device tree. None of those
 are governed by this spec; this spec does not authorise changing any of them.
 Persisting expansion state is explicitly excluded — see `EXP-C2`. The directory
@@ -70,6 +79,7 @@ tree computes today is a known defect, deliberately deferred and recorded in
 `EXP-F2` deliberately no longer matches; the header controls of
 `EXP-F3`–`EXP-F7` are not required in K2, which is in maintenance mode. The one
 K2 change this spec authorises is the bug fix `EXP-C19` (2026-10-10).
+`EXP-F27` is K3-only and goes beyond K2 (`EXP-C21`).
 
 ---
 
@@ -84,6 +94,7 @@ Goals in real use, independent of how they are built.
 | EXP-O3 | A user browsing a catalog while the device is disconnected sees how much space each sub-folder holds, and how large the catalog is in total, so the largest space consumers can be identified offline. | [Planned] |
 | EXP-O5 | A user copying a file's or folder's name or path from Explore finds the same entries, with the same wording, as in K2 and in Search results, listed from the shortest copied text to the longest. Approved by the user on 2026-10-03. | [Planned] |
 | EXP-O6 | A user browsing a catalog in Explore tags a folder of the directory tree without retyping or browsing for its path, and comes back to the same place in Explore afterwards, as K2 allows from its Explore tree. Approved 2026-10-10. | [Implemented] |
+| EXP-O7 | A user with Explore open moves from one catalog to another by selecting it on the Selection page, without going through the card's "Explore" action each time. Goes beyond K2. Approved 2026-10-13 (beta feedback #8). | [Implemented] |
 | EXP-O4 | A user exploring a catalog sees the same file attributes as in K2's Explore file list — type, MIME type, checksum and, for catalogs that include metadata, media dimensions, duration and audio tags — so moving from K2 to K3 loses no information. Approved by the user on 2026-10-02. | [Planned] |
 
 ## Functional requirements — *what the system does*
@@ -117,6 +128,7 @@ Observable behaviour that can be triggered and watched.
 | EXP-F18 | The sort column and order of the Explore file list are restored when the Explore page is reopened, from the same collection-settings keys K2 uses (`Explore/lastExploreSortSection`, `Explore/lastExploreSortOrder`). A given index means the same column in K2 and K3, so a sort chosen in one version is restored as the same sort in the other. "Order folders first" is index 6. Approved 2026-10-02 (resolves the earlier drift of K3 persisting index 4). | [Planned] |
 | EXP-F24 | **No control of the file-list header row is ever lost when the window narrows.** "Display folders", "and all sub-folders" and "Order folders first" sit in a toolbar at the right end of the row that shows the current folder path. What does not fit moves into the toolbar's overflow menu with its full text and the same effect; the two tick boxes stay tick boxes while in the row and appear in the overflow menu as checkable entries. The order of the three controls is unchanged. They fold in this order: "Order folders first" first, then "and all sub-folders"; "Display folders" is the last to go. Behaviour is unchanged: "and all sub-folders" is enabled only while "Display folders" is on, turning "Display folders" off also turns "and all sub-folders" off, each change reloads the list, and "Order folders first" keeps its icon, its enable rule and the folders-first sort of `EXP-F18`. The row keeps its height, matching the directory-tree header and the Selection page. The folder path keeps its left elision and takes the width the toolbar leaves. Mirrors `DVP-F27` (`SpecDevicesPage.md`), under `SpecPageLayout.md` PGL-O3. Approved 2026-10-11. | [Planned] |
 | EXP-F26 | **The file-list count row wraps rather than clipping.** The row below the folder path shows two groups, "Number of Files" with its count and "Total Size" with its size; each label stays with its value. When both groups fit on one line, the row keeps its height, matching the directory-tree header. When they do not fit, "Total Size" and its size move to a second line and the row grows taller only then. Nothing is elided or hidden. Wrapping follows the available width, with no threshold of our own (`SpecPageLayout.md` PGL-C11); the labels are reused byte for byte, with no string added, changed or removed. Under PGL-O3. *(EXP-F25 is not used: that number was a dropped draft.)* Approved 2026-10-11. | [Planned] |
+| EXP-F27 | **Explore follows the selected catalog.** While the Explore page is open in the K3 page stack, selecting a **Catalog** device by activating its card on the Selection page opens that catalog in Explore at once, exactly as its "Explore" action would: same open path, directory tree reset to the catalog root at the `EXP-F2` initial depth, file list of the root. (a) Selecting a **Storage** or **Virtual** device leaves Explore showing what it already shows. (b) Selecting the catalog Explore already shows does nothing. (c) The card's "Explore" context action (`SEL-F3`), which selects and then opens, loads the catalog **once**, not twice. (d) When Explore is not open, selecting a card changes nothing beyond the selection. Applies in File, Hosted and Memory modes; in Memory mode the catalog's files are loaded from its `.idx` file as on any Explore open (`EXP-C9`). Approved 2026-10-13 (beta feedback #8). | [Implemented] |
 
 > **Verification note (2026-08-27).** `EXP-F2` is marked `[Implemented]` on the
 > built code: the two-rank initial depth is in place and builds clean. The user
@@ -150,6 +162,7 @@ Boundaries and implementation constraints, not user-visible behaviour.
 | EXP-C16 | K2 MUST NOT be modified by `EXP-F16`–`EXP-F18`. Approved 2026-10-02. | [Planned] |
 | EXP-C18 | `EXP-F21`–`EXP-F23` reuse the existing K2 string "Tag this folder" byte for byte and add no other user-visible string. They pre-fill the existing `folderPathField` of `qt_quick/PageTagsForm.qml`; they change nothing in `core/`, add no settings key and create no new source file. The Close of the Tags layer MUST reuse the existing layer Close handling (`KBS-C1`), not a duplicate of it. Approved 2026-10-10 *(amended 2026-10-10: layer, not stack page)*. | [Implemented] |
 | EXP-C19 | **K2 bug fix (maintenance mode).** K2's "Tag this folder" MUST take the folder of the right-clicked tree row, resolved with its parent (the row at the click position, `indexAt(pos)`, with `index.parent()`), as the directory click handler already does. Today `exploreContextTagFolder()` reads `currentIndex()` under the root parent, so a sub-folder fills the Tags folder path with the wrong path. No string, menu or other K2 behaviour changes. Approved 2026-10-10. | [Implemented] |
+| EXP-C21 | `EXP-F27` reuses the existing Explore open path (`AppManager::exploreOpenCatalog`, via the Explore page's open-by-device function); it MUST NOT add a second way of opening a catalog. It adds **no** user-visible string, changes nothing in `core/`, persists nothing (no settings key, no database write beyond what the selection itself already persists, `Selection/SelectedDeviceID`), creates no new source file and leaves K2 unchanged. **Accepted divergence:** K2 opens Explore only through its explicit Explore action and its startup restore; K2 not following the selection MUST NOT be reported as drift. K3 has **no** equivalent of K2's Memory-mode confirmation for catalogs over 200,000 files (`qt_widgets/mainwindow_tab_explore.cpp:500`); `EXP-F27` MUST NOT add one — see *Open, not authorised*. Approved 2026-10-13. | [Implemented] |
 | EXP-C20 | The folding of `EXP-F24` is decided by Kirigami.ActionToolBar, with no pixel threshold or width breakpoint of our own (`SpecPageLayout.md` PGL-C11). The three labels are reused byte for byte; no user-visible string is added, changed or removed. No change to `core/`, to K2, to any persisted setting or to existing collections. The files table itself and the fixed side-by-side tree / file panels are out of scope (tables are the stated limit of PGL-O3). Approved 2026-10-11. | [Planned] |
 
 > **Cost note (2026-08-29) — not a requirement.** The per-listing aggregate of
@@ -164,6 +177,13 @@ Boundaries and implementation constraints, not user-visible behaviour.
 > catalog once. No future reader should assume a bound exists that does not.
 
 ---
+
+## Open, not authorised
+
+| Item | Detail |
+|------|--------|
+| Large-catalog warning in Memory mode (`EXP-F27`) | K2 asks for confirmation before reloading a catalog of more than 200,000 files in Memory mode (`qt_widgets/mainwindow_tab_explore.cpp:500`). K3 has no such warning, and `EXP-F27` makes reloads easier to trigger by a simple selection. The maintainer will test Memory-mode performance himself and decide later whether to port the warning. Not authorised until then. |
+| "Follow the selection" on other pages | The same behaviour could apply to other pages, such as Device edit, which would need a rule for unsaved changes. Recorded 2026-10-13 as a possible later extension; not authorised, not to be built now. |
 
 ## Manual test charter
 
@@ -199,4 +219,7 @@ For each row: set up the stated condition, run the operation, confirm the result
 - **EXP-F22 / EXP-C18** — Choose "Tag this folder" on B. The Tags page opens with its folder path field holding B's absolute path. Nothing is tagged until a tag is chosen and confirmed. Switch the interface to French: the menu entry is translated (string reused).
 - **EXP-F23** — At the default window size, Tags opened by "Tag this folder" covers Explore entirely: no part of the directory tree or file list shows beside it. Press Close: you are back on the same Explore page, same catalog, same selected folder and file list. Repeat with `Esc`. Repeat from an Explore opened by "Explore folder" on Results: Close on Tags returns to Explore, and Close on Explore then returns to Results. Open Tags from the drawer first, then go to Explore and use "Tag this folder": only one Tags is shown, as the layer. Open Tags from the drawer alone: it is a page in the stack and its Close returns to Selection.
 - **EXP-C19** — In K2 Explore, right-click a sub-folder at depth two or more (without left-clicking it first) and choose "Tag this folder". The Tags tab shows that sub-folder's full path, not the path of another row.
+- **EXP-F27** — In each of File, Hosted and Memory mode: open catalog A in Explore, keep Explore open, then tap catalog B's card on the Selection page. Explore shows B, its tree at the root with the initial two ranks open and the root's file list. Tap a Storage card, then a Virtual card: Explore still shows B. Tap B again: nothing reloads. In Memory mode, B's files are listed (loaded from its `.idx`), not an empty list.
+- **EXP-F27 (c)** — With Explore open on A, right-click catalog B's card and choose "Explore": B opens once (one load, no second progress or flicker).
+- **EXP-F27 (d) / EXP-C21** — Close Explore, then tap a Catalog card: only the selection changes, Explore is not opened. In K2, selecting a catalog in the Selection panel does not open it in Explore; that is expected. `git diff` shows no qsTr change, nothing under core/ or qt_widgets/, and no new settings key.
 - **Sorting (supporting check, no requirement)** — Sort the list by Size with folders displayed. Folder rows sort by their value among the files instead of collapsing at one end of the list.
