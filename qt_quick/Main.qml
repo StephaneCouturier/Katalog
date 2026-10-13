@@ -2160,6 +2160,9 @@ Kirigami.ApplicationWindow {
                 root.refreshTextIfStale(pageSearchResults)
                 pageStack.push(pageSearchResults)
             }
+            // The keyboard goes to the results straight away, no row selected
+            // (SRS-F11). Once the page change has settled, so it is not taken back.
+            Qt.callLater(pageSearchResultsForm.focusTable)
         }
 
         actions: [

@@ -50,7 +50,7 @@ When the search lists **folders only** (see [Folder criteria](Search#folder-crit
 * **Drag** the line between two column titles to change a column width; **double-click** it to fit the column to its content. The widths of *Name*, *Directory* and *Catalog Name* are kept.
 
 ### Keyboard
-After clicking a row, the list can be used with the keyboard:
+After a search, or after clicking a row, the list can be used with the keyboard. After a search no row is selected yet: `↓` selects the first one.
 
 | Key | Action |
 |-----|--------|
@@ -59,6 +59,7 @@ After clicking a row, the list can be used with the keyboard:
 | `Home` `End` | First or last row. |
 | `Enter` | Opens the file, as a click does. |
 | `Menu` or `Shift+F10` | Opens the context menu of the row. |
+| `Ctrl+E` (`Cmd+E` on macOS) | *Explore folder* on the row. |
 | `←` `→` | Scrolls the list horizontally. |
 | Typing letters | Goes to the next row whose name starts with the typed text. |
 

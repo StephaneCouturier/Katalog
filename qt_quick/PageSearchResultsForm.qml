@@ -129,6 +129,12 @@ ColumnLayout {
         exploreFolderRequested(deviceId, String(m.data(m.index(row, 3), Qt.DisplayRole) ?? ""))
     }
 
+    // Called when a search is run: keyboard focus only, no row is selected
+    // (SRS-F11, SRS-C6).
+    function focusTable() {
+        tableView.forceActiveFocus()
+    }
+
     // A row's context menu, shared by the mouse and the Menu key (CDT-F8).
     // anchorItem null: opens at the pointer; otherwise under that row cell.
     function openResultContextMenu(row, anchorItem) {

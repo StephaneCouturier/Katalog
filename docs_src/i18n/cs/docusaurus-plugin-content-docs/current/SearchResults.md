@@ -50,7 +50,7 @@ Když vyhledávání zobrazuje **pouze složky** (viz [Kritéria složky](Search
 * **Přetažením** čáry mezi dvěma nadpisy sloupců změníte šířku sloupce; **dvojitým kliknutím** na ni přizpůsobíte sloupec obsahu. Šířky sloupců *Název*, *Složka* a *Název katalogu* se zachovají.
 
 ### Klávesnice {#keyboard}
-Po kliknutí na řádek lze seznam ovládat klávesnicí:
+Po vyhledávání nebo po kliknutí na řádek lze seznam ovládat klávesnicí. Po vyhledávání ještě není vybrán žádný řádek: `↓` vybere první.
 
 | Klávesa | Akce |
 |---------|------|
@@ -59,6 +59,7 @@ Po kliknutí na řádek lze seznam ovládat klávesnicí:
 | `Home` `End` | První nebo poslední řádek. |
 | `Enter` | Otevře soubor, stejně jako kliknutí. |
 | `Menu` nebo `Shift+F10` | Otevře místní nabídku řádku. |
+| `Ctrl+E` (`Cmd+E` na macOS) | *Prozkoumat složku* řádku. |
 | `←` `→` | Posune seznam vodorovně. |
 | Psaní písmen | Přejde na další řádek, jehož název začíná napsaným textem. |
 

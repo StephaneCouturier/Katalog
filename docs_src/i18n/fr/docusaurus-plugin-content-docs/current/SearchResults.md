@@ -50,7 +50,7 @@ Lorsque la recherche liste **uniquement des dossiers** (voir [Critères de dossi
 * **Faites glisser** la ligne entre deux titres de colonnes pour changer la largeur d'une colonne ; **double-cliquez** dessus pour ajuster la colonne à son contenu. Les largeurs de *Nom*, *Répertoire* et *Nom du catalogue* sont conservées.
 
 ### Clavier {#keyboard}
-Après avoir cliqué sur une ligne, la liste peut être utilisée au clavier :
+Après une recherche, ou après avoir cliqué sur une ligne, la liste peut être utilisée au clavier. Après une recherche, aucune ligne n'est encore sélectionnée : `↓` sélectionne la première.
 
 | Touche | Action |
 |--------|--------|
@@ -59,6 +59,7 @@ Après avoir cliqué sur une ligne, la liste peut être utilisée au clavier :
 | `Début` `Fin` | Première ou dernière ligne. |
 | `Entrée` | Ouvre le fichier, comme un clic. |
 | `Menu` ou `Maj+F10` | Ouvre le menu contextuel de la ligne. |
+| `Ctrl+E` (`Cmd+E` sur macOS) | *Explorer le dossier* de la ligne. |
 | `←` `→` | Fait défiler la liste horizontalement. |
 | Saisie de lettres | Va à la ligne suivante dont le nom commence par le texte saisi. |
 
