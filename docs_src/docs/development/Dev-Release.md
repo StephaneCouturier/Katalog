@@ -6,6 +6,26 @@ This includes:
 - Communication
 
 ---
+## Version Number & date
+KDE-aligned versioning policy that works with current major.minor approach.
+
+### Core Principles:
+1. Single Source of Truth: **CMakeLists.txt defines the version**
+2. Automatic Propagation: Version flows to code via CMake
+3. Consistent Naming: Align with KDE practices while keeping the major.minor format (patch number only used in Katalog for Flathub publishing)
+4. Automatic Dates: Build-time date generation
+
+### Version Format
+- CMakeLists.txt: `VERSION 2.8`
+- Tags: `v2.8`, `v2.9`
+- Display: "Katalog 2.8"
+
+### Database Schema Versioning
+see [SpecVersions](SpecVersions)
+- **Schema version = App version** when DB changes occur
+- **Schema version unchanged** when no DB changes (like 2.7 staying at 2.6)
+
+
 ## Release Check list
 
 ##  Folder
@@ -53,8 +73,19 @@ Publishing
 - [ ] Close GitHub issues and milestone
 - [ ] Inform users who submitted bugs or ideas
 
+---
+## Packages on SourceForge
+Despite some features in GitHub to provide downloads, SourceForge is still used as the place for user to download all versions.
+
+https://sourceforge.net/projects/katalogg/files/
+
+Benefits: 
+* auto selection of latest version based on Operating System
+* download tracking and reporting system
+* anonymous Help & Requests forum
 
 ---
+
 ## Description & Summaries
 
 This section is the **single source of truth** for all Katalog descriptions.

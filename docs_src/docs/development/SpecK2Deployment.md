@@ -83,14 +83,16 @@ interface: K2 is in maintenance mode, and the fix is in the launcher only.
 **In scope:** the platform theme the K2 Qt6 Linux AppImage selects at launch;
 that it selects one which is present in the bundle; that a KDE session is left
 as it is today; and the rule that keeps the two K2 Qt6 workflows' launchers
-identical.
+identical — and, added 2026-10-12 at the maintainer's direction, the **build
+environment of the K2 macOS package** (`K2D-C6`, `K2D-C7`).
 
 **Out of scope (non-goals):** the appearance of the packaged K2 build beyond
 starting — the Controls style, the icon theme, and host-native file dialogs
 through the XDG desktop portal, which K3 adopted (`DPL-F3` in
 [SpecK3Deployment](SpecK3Deployment.md)) and K2 deliberately does not in this
 round (`K2D-C4`). Removing any plugin from the bundle (`K2D-C5`). The Windows
-and macOS portable bundles, and any downstream manifest. K3 packaging, which is
+and macOS portable bundles, **except** for the macOS rows `K2D-C6` / `K2D-C7`,
+and any downstream manifest. K3 packaging, which is
 [SpecK3Deployment](SpecK3Deployment.md). No change to any file under
 `qt_widgets/` or `core/` is authorised by this page (`K2D-C1`).
 
@@ -125,6 +127,8 @@ Boundaries and implementation constraints, not user-visible behaviour.
 | K2D-C3 | `unset QT_QPA_PLATFORMTHEME` MUST NOT be relied on as the mitigation. Qt still auto-selects a theme plugin from the session, so on a GTK desktop it loads a bundled plugin resolved against the host's GTK stack. The comment above the AppRun heredoc in each of the two K2 Qt6 workflows asserted that the unset works and gave a wrong reason for it; such a comment MUST be corrected in the same change as the launcher — otherwise the next reader re-derives the same incomplete mitigation from a comment that claims it is already solved. Satisfied: both comments now state that the unset is **not** enough, give the correct reason (Qt auto-selects from `XDG_CURRENT_DESKTOP`, and on a GTK desktop that is `gtk3`), and cite this page. | [Implemented] |
 | K2D-C4 | K2 does **not** adopt the K3 portal approach (`DPL-F3`) in this round. K2 is in maintenance mode, and the authorised fix is the launcher variable only. Host-native dialogs, a bundled Controls style and a bundled icon theme for the K2 AppImage are each a **separate decision**, requiring the maintainer's approval and an amendment to this page first. They are not ruled out; they are simply not sanctioned here. | [Planned] |
 | K2D-C5 | Removing a platform-theme plugin from the K2 AppDir — for example `AppDir/usr/plugins/platformthemes/libqgtk3.so`, so that no other route can load it — is **not authorised** by this page. It is recorded as a **candidate**, pending evidence that names the plugin which fails: the measurements behind `K2D-F1` locate the failure in theme and style initialisation but do not identify the plugin, and `K2D-F1` does not depend on the answer. The grep that would have named it was never run, and now that `K2D-F1` is verified on two GTK desktops there is little left to gain from chasing it: the failing plugin is no longer reachable on the session that selected it. Taking this on is a separate decision on its own merits, and would need the plugin identified first. | [Planned] |
+| K2D-C6 | The K2 macOS package is built on the GitHub runner `macos-15` (`.github/workflows/Katalog_2_Build_macOS.yml`). The runner defines the package's minimum macOS: **macOS 15 (Sequoia)**, Apple Silicon only. It MUST be a macOS release for which Homebrew publishes bottles of the Qt modules used. Homebrew bottles only the three latest macOS releases, so moving the runner when that window moves is a deliberate change, made together with an amendment of this row. No Intel or universal build is authorised. Mirrors `DPL-C7` (`SpecK3Deployment.md`). | [Planned] |
+| K2D-C7 | The K2 macOS workflow MUST fail if Homebrew built `qtbase`, or any other Qt module, from source instead of pouring a bottle. This is **preventive**: K2 2.13 was not affected (its macOS build, run 35541311468 of 2026-09-20, poured `qtbase--6.11.2.arm64_sonoma.bottle` and printed no libpng warning), but the K2 workflow had the same exposure, running on `macos-14` with Homebrew Qt. A runner-built Qt is the cause of the K3 3.0.beta3 macOS defect, measured on the K3 workflow only (no icons: built against libpng 1.4.12 headers, run with bundled 1.6.59); see `DPL-C8`. K2 gets **no** launch-test / libpng-output check (the K3 `DPL-C9`): K2 is in maintenance mode, and this row prevents the root cause. | [Planned] |
 
 ---
 
@@ -138,6 +142,7 @@ or for work that was agreed.
 | `generic` platform theme, not the desktop's | On a non-KDE session the packaged K2 build uses Qt's `generic` platform theme by `K2D-F1`. It therefore does not pick up that desktop's colours, icon theme or native file dialog. This is the price of starting at all, and it is no loss against the previous build, which on those desktops did not start. Improving it is `K2D-C4`. |
 | Failing plugin not named | The bundle keeps every platform-theme plugin it ships today (`K2D-C5`). The fix prevents Qt from selecting the failing one on a non-KDE session; it does not make the bundle incapable of loading it. |
 | A released version is affected | Confirmed on Mint / Cinnamon for **2.12 (released)** and **2.13.beta1**: this is not a 2.13 regression, and the affected users are not only beta testers. No other released version was tested, so nothing is claimed for 2.11 or earlier. Until a rebuilt AppImage ships, the only workaround available to a user on a GTK desktop is to launch with `QT_QPA_PLATFORMTHEME=generic` themselves. |
+| macOS 14 (Sonoma) and Intel Macs not supported | From the 2026-10-12 workflow change the K2 macOS package is built on macOS 15 (`K2D-C6`) and does not start on macOS 14 or earlier; Apple Silicon only, as before. The change is **preventive**: K2 2.13 was not affected (run 35541311468, 2026-09-20, poured the `arm64_sonoma` qtbase bottle, no libpng warning). The K2 workflow had the same exposure as K3's: Homebrew no longer publishes `arm64_sonoma` bottles for qtbase 6.11.2_1, so a later `macos-14` run would build Qt from source. The resulting defect was measured on the K3 workflow only (CI run 38172585493 vs beta2 run 35544535205). |
 
 ---
 
@@ -184,3 +189,8 @@ source — the whole subject of this page is the difference between the two.
   wanted for an earlier release, run that AppImage on the same virtual machine
   and record the result here. This does not gate the fix; it establishes how far
   back the defect reaches.
+- **K2D-C6** — The K2 macOS workflow's `runs-on` is `macos-15`; the built
+  binary is `arm64`. The DMG starts on macOS 15 / Apple Silicon and shows its
+  icons.
+- **K2D-C7** — The brew install log shows `Pouring` for every Qt module and no
+  `Building from source`; a forced source build makes the workflow fail.

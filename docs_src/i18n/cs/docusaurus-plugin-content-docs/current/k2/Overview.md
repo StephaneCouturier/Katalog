@@ -85,14 +85,14 @@ Katalog vytváří komplexní <b>indexy, abyste mohli prohledávat celou svou ko
 |-------------------|-------------|-------------|
 | <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/linux.png').default} width="40" /> GNU/Linux</div>         | Jakýkoli 64bitový, glibc 2.38+ <br/>Jakýkoli 32bitový, glibc 2.35     | [FlatHub/Flatpak](https://flathub.org/en/apps/io.github.stephanecouturier.Katalog)<br/>[AppImage](https://sourceforge.net/projects/katalogg/files/) <br/>[Přenosný](https://sourceforge.net/projects/katalogg/files/) |
 | <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/windows.png').default} width="40" /> Microsoft Windows</div> | 64bitový: Windows 10 a Windows 11    | [Instalátor](https://sourceforge.net/projects/katalogg/files/) <br/> [Přenosný](https://sourceforge.net/projects/katalogg/files/)       |
-| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/macos.png').default} width="40" /> Apple macOS</div>       | 14 (Sonoma)      | [Instalátor](https://sourceforge.net/projects/katalogg/files/)<br/> [Přenosný](https://sourceforge.net/projects/katalogg/files/)       |
+| <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><img src={require('/img/macos.png').default} width="40" /> Apple macOS</div>       | 15 (Sequoia)     | [Instalátor](https://sourceforge.net/projects/katalogg/files/)<br/> [Přenosný](https://sourceforge.net/projects/katalogg/files/)       |
 
 ### Kompatibilita s macOS
 
-- **Minimální verze macOS**: macOS 14 (Sonoma) nebo novější
+- **Minimální verze macOS**: macOS 15 (Sequoia) nebo novější
 - **Testováno na**: macOS 15 (Sequoia), Apple Silicon
 - **Architektura**: pouze Apple Silicon (M1/M2/M3). Intelové Macy **nejsou** podporovány — Rosetta 2 překládá software pro Intel tak, aby běžel na Apple Silicon, nikoli naopak, takže tuto verzi nelze na Intelovém Macu spustit.
-- **Sestavovací prostředí**: sestaveno na macOS 14 (Sonoma) s Qt 6 a KDE Frameworks 6 (KF6) přes Homebrew
+- **Sestavovací prostředí**: sestaveno na macOS 15 (Sequoia) s Qt 6 a KDE Frameworks 6 (KF6) přes Homebrew
 
 **Důležité: aplikace není podepsaná ani notarizovaná.**
 

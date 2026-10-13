@@ -29,12 +29,7 @@ git clone https://github.com/StephaneCouturier/Katalog.git
 ```
 * **katalog_development** branch: https://github.com/StephaneCouturier/Katalog/tree/katalog_development
 
-### Released packages on SourceForge
-Desipe some feature in GitHub to provide downloads, SourceForge is still used as the place for user to download all versions.
-Benefits: 
-* auto selection of latest version based on Operating System
-* download tracking and reporting system
-* anonymous Help & Requests forum
+
 
 ## Practices
 This provides information about how the source code is organized and any common practice used to facilitate its understanding, maintenance, and evolution.
@@ -49,49 +44,33 @@ This provides information about how the source code is organized and any common 
 * database fields: to help with compatibility between SQLite and Postgres, fields are named in lower case, words separated by underscore: this_is_a_fied_name
 
 
-## **Build**
+### Build
 see page [Build from source](Dev-Build-from-source)
+
+
 GitHub workflows:
-- AppImage Qt5 (gblic 2.35)
-- AppImage Qt6 (gblic 2.38)
-- macOS latest version
-- macOS legacy version (2.5 no KF6)
 
-
-
-
+- [Katalog 3 Linux qt6_AppImage](https://github.com/StephaneCouturier/Katalog/actions/workflows/Katalog_3_Build_linux_qt6_appimage.yml)
+- [Katalog 3 macOS](https://github.com/StephaneCouturier/Katalog/actions/workflows/Katalog_3_Build_macOS.yml)
+- [Katalog 2 Linux qt6_AppImage](https://github.com/StephaneCouturier/Katalog/actions/workflows/Katalog_2_Build_linux_qt6_appimage.yml)
+- [Katalog 2 Linux qt5_AppImage](https://github.com/StephaneCouturier/Katalog/actions/workflows/Katalog_2_Build_linux_qt5_appimage.yml)
+- [Katalog 2 macOS](https://github.com/StephaneCouturier/Katalog/actions/workflows/Katalog_2_Build_macOS.yml)
 
 ## **Testing**
-* all manual
-
+see page [Tests](Tests)
 
 ## **Documentation**
-Katalog's documentation/user guide is made using Docusaurus & github pages on https://stephanecouturier.github.io/Katalog
+Katalog's documentation & user guide is made using Docusaurus & published on Github pages (this site)
+see page [Documentation](Dev-Documentation)
 
-
-## **Release**
-### Version Number & date
-KDE-aligned versioning policy that works with current major.minor approach.
-
-#### Core Principles:
-1. Single Source of Truth: **CMakeLists.txt defines the version**
-2. Automatic Propagation: Version flows to code via CMake
-3. Consistent Naming: Align with KDE practices while keeping the major.minor format (patch number not used in Katalog)
-4. Automatic Dates: Build-time date generation
-
-#### Version Format
-- CMakeLists.txt: `VERSION 2.8`
-- Tags: `v2.8`, `v2.9`
-- Display: "Katalog 2.8"
-
-#### Database Schema Versioning
-see [SpecVersions](SpecVersions)
-- **Schema version = App version** when DB changes occur
-- **Schema version unchanged** when no DB changes (like 2.7 staying at 2.6)
-
+### Release Process
+see page [Release Process](Dev-Release)
 
 ### Load files to SourceForge
-and set default version per OS
-### Post release notes on SourceForge
-### Post release notes on Facebook
+Default version per OS is set.
+### Release notes
+- on Github
+- on SourceForge
+- on Facebook
+
 ### Close issues & close Milestone
