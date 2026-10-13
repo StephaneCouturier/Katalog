@@ -14,7 +14,7 @@
     <message>
         <location line="-4810"/>
         <source>Stopped</source>
-        <translation>Заустављено</translation>
+        <translation>Zaustavljeno</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -22,7 +22,7 @@
         <location line="+96"/>
         <location line="+3258"/>
         <source>Evaluated</source>
-        <translation>Евалуирано</translation>
+        <translation>Evaluirano</translation>
     </message>
     <message>
         <location line="-3376"/>
@@ -62,7 +62,7 @@
         <location line="+31"/>
         <location line="+387"/>
         <source>In Progress</source>
-        <translation>У току</translation>
+        <translation>U toku</translation>
     </message>
     <message>
         <location line="-4691"/>
@@ -72,7 +72,7 @@
         <location line="+47"/>
         <location line="+720"/>
         <source>Completed</source>
-        <translation>Завршено</translation>
+        <translation>Završeno</translation>
     </message>
     <message>
         <location line="-4330"/>
@@ -97,7 +97,7 @@
     <message>
         <location line="+16"/>
         <source>Could not create file: %1</source>
-        <translation>Датотеку није могуће направити: %1</translation>
+        <translation>Datoteku nije moguće napraviti: %1</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -127,32 +127,32 @@
     <message>
         <location line="+258"/>
         <source>Case sensitive</source>
-        <translation>Разликуј велика и мала слова</translation>
+        <translation>Razlikuj velika i mala slova</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Exclude: %1</source>
-        <translation>Искључи: %1</translation>
+        <translation>Isključi: %1</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Type: %1</source>
-        <translation>Врста: %1</translation>
+        <translation>Vrsta: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Size: %1 %2 – %3 %4</source>
-        <translation>Величина: %1 %2 – %3 %4</translation>
+        <translation>Veličina: %1 %2 – %3 %4</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Date: %1 – %2</source>
-        <translation>Датум: %1 – %2</translation>
+        <translation>Datum: %1 – %2</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Metadata</source>
-        <translation>Метаподаци</translation>
+        <translation>Metapodaci</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -173,22 +173,22 @@
     <message>
         <location line="+1"/>
         <source>Checksum</source>
-        <translation>Контролна сума</translation>
+        <translation>Kontrolna suma</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Duplicates: %1</source>
-        <translation>Дупликати: %1</translation>
+        <translation>Duplikati: %1</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Differences</source>
-        <translation>Разлике</translation>
+        <translation>Razlike</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Folders only</source>
-        <translation>Само фасцикле</translation>
+        <translation>Samo fascikle</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -198,7 +198,7 @@
     <message>
         <location line="+0"/>
         <source>Tag: %1</source>
-        <translation>Ознака: %1</translation>
+        <translation>Oznaka: %1</translation>
     </message>
     <message>
         <location line="+240"/>
@@ -213,7 +213,7 @@
     <message>
         <location line="+9"/>
         <source>Invalid hostname.</source>
-        <translation>Неважеће име домаћина.</translation>
+        <translation>Nevažeće ime domaćina.</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -228,24 +228,24 @@
     <message>
         <location line="+238"/>
         <source>Provide a name for this new catalog.</source>
-        <translation>Наведите назив за овај нови каталог.</translation>
+        <translation>Navedite naziv za ovaj novi katalog.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Provide a path for this new catalog.</source>
-        <translation>Наведите путању за овај нови каталог.</translation>
+        <translation>Navedite putanju za ovaj novi katalog.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Select a Storage for this new catalog.
 (Selection panel on the left and dropdown list)</source>
-        <translation>Изаберите складиште за овај нови каталог.
-(Табла за избор лево и падајућа листа)</translation>
+        <translation>Izaberite skladište za ovaj novi katalog.
+(Tabla za izbor levo i padajuća lista)</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The source directory does not exist.</source>
-        <translation>Изворни директоријум не постоји.</translation>
+        <translation>Izvorni direktorijum ne postoji.</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -253,16 +253,16 @@
 %1
 
 Choose a different name and try again.</source>
-        <translation>Већ постоји каталог са овим називом:
+        <translation>Već postoji katalog sa ovim nazivom:
 %1
 
-Изаберите други назив и покушајте поново.</translation>
+Izaberite drugi naziv i pokušajte ponovo.</translation>
     </message>
     <message>
         <location line="-20"/>
         <location line="+1140"/>
         <source>A device operation is already running.</source>
-        <translation>Операција уређаја се већ извршава.</translation>
+        <translation>Operacija uređaja se već izvršava.</translation>
     </message>
     <message>
         <location line="-1056"/>
@@ -273,18 +273,18 @@ Choose a different name and try again.</source>
     <message>
         <location line="-543"/>
         <source>Catalog creation was stopped.</source>
-        <translation>Прављење каталога је заустављено.</translation>
+        <translation>Pravljenje kataloga je zaustavljeno.</translation>
     </message>
     <message>
         <location line="+34"/>
         <location line="+19"/>
         <source>The selected device cannot be deleted as long as it has sub-devices.</source>
-        <translation>Изабрани уређај није могуће избрисати док има подуређаје.</translation>
+        <translation>Izabrani uređaj nije moguće izbrisati dok ima poduređaje.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Deletion cancelled.</source>
-        <translation>Брисање отказано.</translation>
+        <translation>Brisanje otkazano.</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -304,7 +304,7 @@ Choose a different name and try again.</source>
     <message>
         <location line="+37"/>
         <source>Error: %1</source>
-        <translation>Грешка: %1</translation>
+        <translation>Greška: %1</translation>
     </message>
     <message>
         <location line="+238"/>
@@ -315,7 +315,7 @@ Choose a different name and try again.</source>
     <message>
         <location line="+243"/>
         <source>The selected device is not a catalog.</source>
-        <translation>Изабрани уређај није каталог.</translation>
+        <translation>Izabrani uređaj nije katalog.</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -325,7 +325,7 @@ Choose a different name and try again.</source>
     <message>
         <location line="+3"/>
         <source>Failed to assign catalog to device.</source>
-        <translation>Додела каталога уређају није успела.</translation>
+        <translation>Dodela kataloga uređaju nije uspela.</translation>
     </message>
     <message>
         <location line="+58"/>
@@ -335,22 +335,22 @@ Choose a different name and try again.</source>
     </message>
     <message>
         <source>Verifying MIME types for %1…</source>
-        <translation type="vanished">Провера MIME врста за %1…</translation>
+        <translation type="vanished">Provera MIME vrsta za %1…</translation>
     </message>
     <message>
         <location line="+112"/>
         <source>Device has no catalog.</source>
-        <translation>Уређај нема каталог.</translation>
+        <translation>Uređaj nema katalog.</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Verifying checksums: %1 / %2</source>
-        <translation>Провера контролних збирова: %1 / %2</translation>
+        <translation>Provera kontrolnih zbirova: %1 / %2</translation>
     </message>
     <message>
         <location line="+30"/>
         <source>Failed to unassign device.</source>
-        <translation>Поништавање доделе уређаја није успело.</translation>
+        <translation>Poništavanje dodele uređaja nije uspelo.</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -360,44 +360,44 @@ Choose a different name and try again.</source>
     <message>
         <location line="+6"/>
         <source>File format not recognized (expected VVV CSV).</source>
-        <translation>Формат датотеке није препознат (очекује се VVV CSV).</translation>
+        <translation>Format datoteke nije prepoznat (očekuje se VVV CSV).</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>No catalog data found in file.</source>
-        <translation>У датотеци нису пронађени подаци каталога.</translation>
+        <translation>U datoteci nisu pronađeni podaci kataloga.</translation>
     </message>
     <message>
         <location line="+50"/>
         <source>Could not open file: %1</source>
-        <translation>Датотеку није могуће отворити: %1</translation>
+        <translation>Datoteku nije moguće otvoriti: %1</translation>
     </message>
     <message>
         <location line="+113"/>
         <source>There is already a catalog with this name: %1
 Choose a different name.</source>
-        <translation>Већ постоји каталог са овим називом: %1
-Изаберите други назив.</translation>
+        <translation>Već postoji katalog sa ovim nazivom: %1
+Izaberite drugi naziv.</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>A Catalog in the Physical group can only be set under a Storage device.</source>
-        <translation>Каталог из групе Физички може се поставити само испод уређаја за складиштење.</translation>
+        <translation>Katalog iz grupe Fizički može se postaviti samo ispod uređaja za skladištenje.</translation>
     </message>
     <message>
         <location line="+68"/>
         <source>File type: %1 → %2</source>
-        <translation>Врста датотеке: %1 → %2</translation>
+        <translation>Vrsta datoteke: %1 → %2</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Include subdirectories: %1 → %2</source>
-        <translation>Укључи подфолдере: %1 → %2</translation>
+        <translation>Uključi podfoldere: %1 → %2</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Include hidden: %1 → %2</source>
-        <translation>Укључи скривене: %1 → %2</translation>
+        <translation>Uključi skrivene: %1 → %2</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -409,22 +409,22 @@ Choose a different name.</source>
         <location line="-1"/>
         <location line="+1"/>
         <source>None</source>
-        <translation>Ниједан</translation>
+        <translation>Nijedan</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Include metadata: %1 → %2</source>
-        <translation>Укључи метаподатке: %1 → %2</translation>
+        <translation>Uključi metapodatke: %1 → %2</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Include checksum: %1 → %2</source>
-        <translation>Укључи контролни збир: %1 → %2</translation>
+        <translation>Uključi kontrolni zbir: %1 → %2</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Is full device: %1 → %2</source>
-        <translation>Цео уређај: %1 → %2</translation>
+        <translation>Ceo uređaj: %1 → %2</translation>
     </message>
     <message>
         <location line="-21"/>
@@ -432,18 +432,18 @@ Choose a different name.</source>
         <location line="+21"/>
         <location line="+1"/>
         <source>yes</source>
-        <translation>да</translation>
+        <translation>da</translation>
     </message>
     <message>
         <location line="-451"/>
         <source>MIME verification failed:&lt;br/&gt;%1</source>
-        <translation>MIME провера није успела:&lt;br/&gt;%1</translation>
+        <translation>MIME provera nije uspela:&lt;br/&gt;%1</translation>
     </message>
     <message>
         <location line="+34"/>
         <location line="+33"/>
         <source>Verify MIME types</source>
-        <translation>Провери MIME типове</translation>
+        <translation>Proveri MIME tipove</translation>
     </message>
     <message>
         <location line="+361"/>
@@ -451,31 +451,31 @@ Choose a different name.</source>
         <location line="+21"/>
         <location line="+1"/>
         <source>no</source>
-        <translation>не</translation>
+        <translation>ne</translation>
     </message>
     <message>
         <source>There is already a Storage with this ID. Choose a different ID.</source>
-        <translation type="vanished">Већ постоји складиште са овим ИД-ом. Изаберите други ИД.</translation>
+        <translation type="vanished">Već postoji skladište sa ovim ID-om. Izaberite drugi ID.</translation>
     </message>
     <message>
         <location line="+174"/>
         <source>Selected device is not a catalog</source>
-        <translation>Изабрани уређај није каталог</translation>
+        <translation>Izabrani uređaj nije katalog</translation>
     </message>
     <message>
         <location line="+220"/>
         <source>Error: could not open collection</source>
-        <translation>Грешка: збирку није могуће отворити</translation>
+        <translation>Greška: zbirku nije moguće otvoriti</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Schema version mismatch. Import cancelled. (%1)</source>
-        <translation>Неподударање верзије шеме. Увоз отказан. (%1)</translation>
+        <translation>Nepodudaranje verzije šeme. Uvoz otkazan. (%1)</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>No source collection is open.</source>
-        <translation>Ниједна изворна колекција није отворена.</translation>
+        <translation>Nijedna izvorna kolekcija nije otvorena.</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -483,7 +483,7 @@ Choose a different name.</source>
         <location line="+22"/>
         <location line="+19"/>
         <source>Collection Import</source>
-        <translation>Увоз колекције</translation>
+        <translation>Uvoz kolekcije</translation>
     </message>
     <message>
         <location line="-38"/>
@@ -522,13 +522,13 @@ Choose a different name.</source>
         <location line="+681"/>
         <location line="+92"/>
         <source>Cancelled</source>
-        <translation>Отказано</translation>
+        <translation>Otkazano</translation>
     </message>
     <message>
         <location line="-856"/>
         <location line="+10"/>
         <source>Loaded</source>
-        <translation>Учитано</translation>
+        <translation>Učitano</translation>
     </message>
     <message>
         <location line="+45"/>
@@ -540,7 +540,7 @@ Choose a different name.</source>
         <location line="+14"/>
         <location line="+19"/>
         <source>Collection Update</source>
-        <translation>Ажурирање колекције</translation>
+        <translation>Ažuriranje kolekcije</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -550,13 +550,13 @@ Choose a different name.</source>
     <message>
         <location line="+32"/>
         <source>Not a Storage device.</source>
-        <translation>Није уређај за складиштење.</translation>
+        <translation>Nije uređaj za skladištenje.</translation>
     </message>
     <message>
         <location line="+169"/>
         <location line="+51"/>
         <source>Provide a link name.</source>
-        <translation>Наведите назив везе.</translation>
+        <translation>Navedite naziv veze.</translation>
     </message>
     <message>
         <location line="-49"/>
@@ -581,7 +581,7 @@ Choose a different name.</source>
         <location line="+14"/>
         <location line="+15"/>
         <source>Failed to create link.</source>
-        <translation>Прављење везе није успело.</translation>
+        <translation>Pravljenje veze nije uspelo.</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -593,7 +593,7 @@ Choose a different name.</source>
         <location line="+2"/>
         <location line="+421"/>
         <source>Link not found.</source>
-        <translation>Веза није пронађена.</translation>
+        <translation>Veza nije pronađena.</translation>
     </message>
     <message>
         <location line="-408"/>
@@ -626,13 +626,13 @@ Choose a different name.</source>
         <location line="-142"/>
         <location line="+254"/>
         <source>Source not available: %1</source>
-        <translation>Извор није доступан: %1</translation>
+        <translation>Izvor nije dostupan: %1</translation>
     </message>
     <message>
         <location line="-249"/>
         <location line="+253"/>
         <source>Target not available: %1</source>
-        <translation>Одредиште није доступно: %1</translation>
+        <translation>Odredište nije dostupno: %1</translation>
     </message>
     <message>
         <location line="-203"/>
@@ -659,7 +659,7 @@ Choose a different name.</source>
         <location line="+5"/>
         <location line="+10"/>
         <source>Copied</source>
-        <translation>Копирано</translation>
+        <translation>Kopirano</translation>
     </message>
     <message>
         <location line="-9"/>
@@ -684,22 +684,22 @@ Choose a different name.</source>
     <message>
         <location line="+130"/>
         <source>No preview data to export.</source>
-        <translation>Нема података прегледа за извоз.</translation>
+        <translation>Nema podataka pregleda za izvoz.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Export failed.</source>
-        <translation>Извоз није успео.</translation>
+        <translation>Izvoz nije uspeo.</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Failed to generate Backup profile</source>
-        <translation>Прављење профила резервне копије није успело</translation>
+        <translation>Pravljenje profila rezervne kopije nije uspelo</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Backup profile created.</source>
-        <translation>Профил резервне копије креиран.</translation>
+        <translation>Profil rezervne kopije kreiran.</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -709,7 +709,7 @@ Choose a different name.</source>
     <message>
         <location line="+7"/>
         <source>Mapping not found.</source>
-        <translation>Мапирање није пронађено.</translation>
+        <translation>Mapiranje nije pronađeno.</translation>
     </message>
 </context>
 <context>
@@ -767,7 +767,7 @@ Choose a different name.</source>
     <message>
         <location line="+1"/>
         <source>Other</source>
-        <translation>Остало</translation>
+        <translation>Ostalo</translation>
     </message>
 </context>
 <context>
@@ -775,17 +775,17 @@ Choose a different name.</source>
     <message>
         <location filename="../core/collection.cpp" line="+2785"/>
         <source>This folder contains Memory mode collection files, but you are currently in File mode.&lt;br/&gt;Switch to Memory mode or select a different folder.</source>
-        <translation>Овај фолдер садржи фајлове колекције у режиму меморије, али тренутно сте у режиму фајла.&lt;br/&gt;Пребаците се у режим меморије или изаберите други фолдер.</translation>
+        <translation>Ovaj folder sadrži fajlove kolekcije u režimu memorije, ali trenutno ste u režimu fajla.&lt;br/&gt;Prebacite se u režim memorije ili izaberite drugi folder.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>This folder contains File mode collection files, but you are currently in Memory mode.&lt;br/&gt;Switch to File mode or select a different folder.</source>
-        <translation>Овај фолдер садржи фајлове колекције у режиму фајла, али тренутно сте у режиму меморије.&lt;br/&gt;Пребаците се у режим фајла или изаберите други фолдер.</translation>
+        <translation>Ovaj folder sadrži fajlove kolekcije u režimu fajla, ali trenutno ste u režimu memorije.&lt;br/&gt;Prebacite se u režim fajla ili izaberite drugi folder.</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>This folder contains user data and is not suitable for a collection.&lt;br/&gt;Collections should be stored in dedicated folders to avoid mixing with personal files.</source>
-        <translation>Овај фолдер садржи корисничке податке и није погодан за колекцију.&lt;br/&gt;Колекције треба чувати у посвећеним фолдерима да би се избегло мешање са личним фајловима.</translation>
+        <translation>Ovaj folder sadrži korisničke podatke i nije pogodan za kolekciju.&lt;br/&gt;Kolekcije treba čuvati u posvećenim folderima da bi se izbeglo mešanje sa ličnim fajlovima.</translation>
     </message>
 </context>
 <context>
@@ -811,12 +811,12 @@ Choose a different name.</source>
     <message>
         <location filename="../qt_quick/adapters/devicelistmodel.cpp" line="+86"/>
         <source>files</source>
-        <translation>датотеке</translation>
+        <translation>datoteke</translation>
     </message>
     <message>
         <location line="+147"/>
         <source>Collection</source>
-        <translation>Збирка</translation>
+        <translation>Zbirka</translation>
     </message>
 </context>
 <context>
@@ -824,22 +824,22 @@ Choose a different name.</source>
     <message>
         <location filename="../qt_quick/adapters/devicetablemodel.cpp" line="+385"/>
         <source>None</source>
-        <translation>Ниједан</translation>
+        <translation>Nijedan</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Media Basic</source>
-        <translation>Медија Основно</translation>
+        <translation>Medija Osnovno</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Media Extended</source>
-        <translation>Медија Проширено</translation>
+        <translation>Medija Prošireno</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Full Extended</source>
-        <translation>Потпуно Проширено</translation>
+        <translation>Potpuno Prošireno</translation>
     </message>
     <message>
         <location line="+124"/>
@@ -994,17 +994,17 @@ Choose a different name.</source>
     <message>
         <location line="+1"/>
         <source>Hidden</source>
-        <translation>Скривено</translation>
+        <translation>Skriveno</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Metadata</source>
-        <translation>Метаподаци</translation>
+        <translation>Metapodaci</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Checksum</source>
-        <translation>Контролна сума</translation>
+        <translation>Kontrolna suma</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -1116,7 +1116,7 @@ Choose a different name.</source>
     <message>
         <location line="-413"/>
         <source>Open...</source>
-        <translation>Отвори...</translation>
+        <translation>Otvori...</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -1137,12 +1137,12 @@ Choose a different name.</source>
     <message>
         <location line="+8"/>
         <source>Recent collections</source>
-        <translation>Недавне збирке</translation>
+        <translation>Nedavne zbirke</translation>
     </message>
     <message>
         <location line="+66"/>
         <source>New...</source>
-        <translation>Ново...</translation>
+        <translation>Novo...</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -1193,31 +1193,31 @@ Choose a different name.</source>
     <message>
         <location line="+5"/>
         <source>Quit</source>
-        <translation>Изађи</translation>
+        <translation>Izađi</translation>
     </message>
     <message>
         <location line="+25"/>
         <source>Drawer pinned</source>
-        <translation>Фиока закачена</translation>
+        <translation>Fioka zakačena</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Drawer floating</source>
-        <translation>Фиока плутајућа</translation>
+        <translation>Fioka plutajuća</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Selection shown</source>
-        <translation>Избор приказан</translation>
+        <translation>Izbor prikazan</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Selection hidden</source>
-        <translation>Избор сакривен</translation>
+        <translation>Izbor sakriven</translation>
     </message>
     <message>
         <source>Card text size</source>
-        <translation type="vanished">Величина текста картице</translation>
+        <translation type="vanished">Veličina teksta kartice</translation>
     </message>
     <message>
         <source>This is an early alpha version of Katalog intended to support development and gather feedback.
@@ -1367,17 +1367,17 @@ Choose a different name.</source>
     <message>
         <location line="+26"/>
         <source>Private network connection</source>
-        <translation>Веза са приватном мрежом</translation>
+        <translation>Veza sa privatnom mrežom</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Your data will be sent to this network database.</source>
-        <translation>Ваши подаци ће бити послати у ову мрежну базу података.</translation>
+        <translation>Vaši podaci će biti poslati u ovu mrežnu bazu podataka.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Continue?</source>
-        <translation>Настави?</translation>
+        <translation>Nastavi?</translation>
     </message>
     <message>
         <location line="+57"/>
@@ -1470,7 +1470,7 @@ Choose a different name.</source>
     <message>
         <location line="-35"/>
         <source>Virtual device updated: </source>
-        <translation>Виртуелни уређај ажуриран: </translation>
+        <translation>Virtuelni uređaj ažuriran: </translation>
     </message>
     <message>
         <location line="+7"/>
@@ -1548,7 +1548,7 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <location line="+20"/>
         <location line="+42"/>
         <source>Close</source>
-        <translation>Затвори</translation>
+        <translation>Zatvori</translation>
     </message>
     <message>
         <location line="-1365"/>
@@ -1562,12 +1562,12 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
     <message>
         <location line="+605"/>
         <source>Copy version and system information</source>
-        <translation>Копирај информације о верзији и систему</translation>
+        <translation>Kopiraj informacije o verziji i sistemu</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Version and system information copied to clipboard</source>
-        <translation>Информације о верзији и систему копиране у оставу</translation>
+        <translation>Informacije o verziji i sistemu kopirane u ostavu</translation>
     </message>
     <message>
         <location line="+96"/>
@@ -1714,12 +1714,12 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
     <message>
         <location filename="../qt_quick/main.cpp" line="+166"/>
         <source>Catalog your devices to search, analyze, and backup your files.</source>
-        <translation>Каталогизујте своје уређаје да бисте претраживали, анализирали и правили резервне копије датотека.</translation>
+        <translation>Katalogizujte svoje uređaje da biste pretraživali, analizirali i pravili rezervne kopije datoteka.</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Founder &amp; Main Developer</source>
-        <translation>Оснивач и главни програмер</translation>
+        <translation>Osnivač i glavni programer</translation>
     </message>
 </context>
 <context>
@@ -1727,7 +1727,7 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+2346"/>
         <source>Include Checksum</source>
-        <translation>Укључи контролну суму</translation>
+        <translation>Uključi kontrolnu sumu</translation>
     </message>
     <message>
         <location line="+525"/>
@@ -1738,198 +1738,198 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <location line="+15"/>
         <location line="+22"/>
         <source>Verify Checksums</source>
-        <translation>Провери контролне суме</translation>
+        <translation>Proveri kontrolne sume</translation>
     </message>
     <message>
         <location line="-45"/>
         <location filename="../qt_widgets/mainwindow_tab_settings_exp.cpp" line="+76"/>
         <location line="+7"/>
         <source>Loading</source>
-        <translation>Учитавање</translation>
+        <translation>Učitavanje</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>files</source>
-        <translation>датотеке</translation>
+        <translation>datoteke</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>No checksums to verify.</source>
-        <translation>Нема контролних сума за проверу.</translation>
+        <translation>Nema kontrolnih suma za proveru.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Verify checksums for %1 files?</source>
-        <translation>Провери контролне суме за %1 датотека?</translation>
+        <translation>Proveri kontrolne sume za %1 datoteka?</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Verifying</source>
-        <translation>Провера</translation>
+        <translation>Provera</translation>
     </message>
     <message>
         <location line="+27"/>
         <location line="+5"/>
         <source>Verified:</source>
-        <translation>Проверено:</translation>
+        <translation>Provereno:</translation>
     </message>
     <message>
         <location line="-4"/>
         <source>All checksums match.</source>
-        <translation>Све контролне суме се поклапају.</translation>
+        <translation>Sve kontrolne sume se poklapaju.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Mismatches:</source>
-        <translation>Неподударања:</translation>
+        <translation>Nepodudaranja:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Missing:</source>
-        <translation>Недостаје:</translation>
+        <translation>Nedostaje:</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Mismatched files:</source>
-        <translation>Датотеке које се не поклапају:</translation>
+        <translation>Datoteke koje se ne poklapaju:</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Missing files:</source>
-        <translation>Датотеке које недостају:</translation>
+        <translation>Datoteke koje nedostaju:</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="+8123"/>
         <source>Include File Type</source>
-        <translation>Укључи тип датотеке</translation>
+        <translation>Uključi tip datoteke</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+254"/>
         <location line="+18"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-864"/>
         <source>Copy Checksum</source>
-        <translation>Копирај контролну суму</translation>
+        <translation>Kopiraj kontrolnu sumu</translation>
     </message>
     <message>
         <location line="-8"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-8"/>
         <source>Calculate Checksum</source>
-        <translation>Израчунај контролну суму</translation>
+        <translation>Izračunaj kontrolnu sumu</translation>
     </message>
     <message>
         <location line="+13"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+13"/>
         <source>Verify Checksum</source>
-        <translation>Провери контролну суму</translation>
+        <translation>Proveri kontrolnu sumu</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="+1256"/>
         <source>Verifying checksum...</source>
-        <translation>Провера контролне суме...</translation>
+        <translation>Provera kontrolne sume...</translation>
     </message>
     <message>
         <location line="+43"/>
         <location line="+58"/>
         <location line="+68"/>
         <source>Checksum saved to database.</source>
-        <translation>Контролна сума сачувана у бази података.</translation>
+        <translation>Kontrolna suma sačuvana u bazi podataka.</translation>
     </message>
     <message>
         <location line="-124"/>
         <source>Checksums match.</source>
-        <translation>Контролне суме се поклапају.</translation>
+        <translation>Kontrolne sume se poklapaju.</translation>
     </message>
     <message>
         <location line="+5"/>
         <location line="+122"/>
         <source>Copy to Clipboard</source>
-        <translation>Копирај у оставу</translation>
+        <translation>Kopiraj u ostavu</translation>
     </message>
     <message>
         <location line="-100"/>
         <source>Checksums do not match.</source>
-        <translation>Контролне суме се не поклапају.</translation>
+        <translation>Kontrolne sume se ne poklapaju.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Expected:</source>
-        <translation>Очекивано:</translation>
+        <translation>Očekivano:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Actual:</source>
-        <translation>Стварно:</translation>
+        <translation>Stvarno:</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Update Checksum</source>
-        <translation>Ажурирај контролну суму</translation>
+        <translation>Ažuriraj kontrolnu sumu</translation>
     </message>
     <message>
         <location line="+35"/>
         <source>File not found:</source>
-        <translation>Датотека није пронађена:</translation>
+        <translation>Datoteka nije pronađena:</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Calculating checksum...</source>
-        <translation>Израчунавање контролне суме...</translation>
+        <translation>Izračunavanje kontrolne sume...</translation>
     </message>
     <message>
         <location line="+28"/>
         <source>Checksum calculation failed.</source>
-        <translation>Израчунавање контролне суме није успело.</translation>
+        <translation>Izračunavanje kontrolne sume nije uspelo.</translation>
     </message>
     <message>
         <source>Invalid database hostname.</source>
-        <translation type="vanished">Неважеће име домаћина базе података.</translation>
+        <translation type="vanished">Nevažeće ime domaćina baze podataka.</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+124"/>
         <source>Invalid hostname.</source>
-        <translation>Неважеће име домаћина.</translation>
+        <translation>Nevažeće ime domaćina.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Only local or private network allowed.</source>
-        <translation>Дозвољена је само локална или приватна мрежа.</translation>
+        <translation>Dozvoljena je samo lokalna ili privatna mreža.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Valid:</source>
-        <translation>Важеће:</translation>
+        <translation>Važeće:</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Private network connection</source>
-        <translation>Веза са приватном мрежом</translation>
+        <translation>Veza sa privatnom mrežom</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Your data will be sent to this network database.</source>
-        <translation>Ваши подаци ће бити послати у ову мрежну базу података.</translation>
+        <translation>Vaši podaci će biti poslati u ovu mrežnu bazu podataka.</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-1997"/>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+1"/>
         <source>Continue?</source>
-        <translation>Настави?</translation>
+        <translation>Nastavi?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="+549"/>
         <source>This collection was created with Katalog version %1, which is no longer supported.&lt;br/&gt;&lt;br/&gt;To convert it, open it with Katalog 2.10 first.&lt;br/&gt;&lt;br/&gt;Please select a different collection folder.</source>
-        <translation>Ова колекција је направљена у Katalog верзији %1, која више није подржана.&lt;br/&gt;&lt;br/&gt;Да бисте је конвертовали, прво је отворите у Katalog 2.10.&lt;br/&gt;&lt;br/&gt;Изаберите другу фасциклу колекције.</translation>
+        <translation>Ova kolekcija je napravljena u Katalog verziji %1, koja više nije podržana.&lt;br/&gt;&lt;br/&gt;Da biste je konvertovali, prvo je otvorite u Katalog 2.10.&lt;br/&gt;&lt;br/&gt;Izaberite drugu fasciklu kolekcije.</translation>
     </message>
     <message>
         <location filename="../core/catalogprogressmanager.cpp" line="+127"/>
         <location line="+164"/>
         <source>Metadata Extracted</source>
-        <translation>Метаподаци издвојени</translation>
+        <translation>Metapodaci izdvojeni</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Checksums Calculated</source>
-        <translation>Контролне суме израчунате</translation>
+        <translation>Kontrolne sume izračunate</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-5542"/>
@@ -1937,44 +1937,44 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-1324"/>
         <location filename="../core/search.cpp" line="+251"/>
         <source>Checksum</source>
-        <translation>Контролна сума</translation>
+        <translation>Kontrolna suma</translation>
     </message>
     <message>
         <location filename="../core/search.cpp" line="+1"/>
         <source>Checksum Date</source>
-        <translation>Датум контролне суме</translation>
+        <translation>Datum kontrolne sume</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-614"/>
         <source>Within selected device</source>
-        <translation>Унутар изабраног уређаја</translation>
+        <translation>Unutar izabranog uređaja</translation>
     </message>
     <message>
         <location line="+89"/>
         <source>Compare two devices</source>
-        <translation>Упореди два уређаја</translation>
+        <translation>Uporedi dva uređaja</translation>
     </message>
     <message>
         <location line="+170"/>
         <location line="+521"/>
         <source>compared to</source>
-        <translation>у поређењу са</translation>
+        <translation>u poređenju sa</translation>
     </message>
     <message>
         <location line="-208"/>
         <source>and</source>
-        <translation>и</translation>
+        <translation>i</translation>
     </message>
     <message>
         <location line="+2778"/>
         <location line="+2135"/>
         <source>Include files checksum</source>
-        <translation>Укључи контролну суму датотека</translation>
+        <translation>Uključi kontrolnu sumu datoteka</translation>
     </message>
     <message>
         <location line="-202"/>
         <source>Stop the cataloging (no data will be saved)</source>
-        <translation>Заустави каталогизацију (подаци неће бити сачувани)</translation>
+        <translation>Zaustavi katalogizaciju (podaci neće biti sačuvani)</translation>
     </message>
     <message>
         <location line="+1254"/>
@@ -2009,27 +2009,27 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
     <message>
         <location line="-851"/>
         <source>Generate Profile</source>
-        <translation>Генериши профил</translation>
+        <translation>Generiši profil</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Only selected</source>
-        <translation>Само изабрано</translation>
+        <translation>Samo izabrano</translation>
     </message>
     <message>
         <source>Copy file checksum</source>
-        <translation type="vanished">Копирај контролну суму датотеке</translation>
+        <translation type="vanished">Kopiraj kontrolnu sumu datoteke</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="+299"/>
         <location line="+29"/>
         <source>No backup links found.</source>
-        <translation>Нису пронађене резервне копије везе.</translation>
+        <translation>Nisu pronađene rezervne kopije veze.</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Backup profile created.</source>
-        <translation>Профил резервне копије креиран.</translation>
+        <translation>Profil rezervne kopije kreiran.</translation>
     </message>
     <message>
         <location filename="../core/catalogjobstoppable.cpp" line="+270"/>
@@ -2050,14 +2050,14 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <location line="+1156"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-29"/>
         <source>Saving</source>
-        <translation>Чување</translation>
+        <translation>Čuvanje</translation>
     </message>
     <message>
         <location filename="../core/catalogprogressmanager.cpp" line="-170"/>
         <location line="+67"/>
         <location line="+151"/>
         <source>Indexed</source>
-        <translation>Индексирано</translation>
+        <translation>Indeksirano</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+313"/>
@@ -2065,19 +2065,19 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <location line="+154"/>
         <location filename="../core/searchjobstoppable.cpp" line="+441"/>
         <source>File Types Updated</source>
-        <translation>Типови датотека ажурирани</translation>
+        <translation>Tipovi datoteka ažurirani</translation>
     </message>
     <message>
         <location filename="../core/catalogprogressmanager.cpp" line="-170"/>
         <location line="+157"/>
         <source>Counted</source>
-        <translation>Пребројано</translation>
+        <translation>Prebrojano</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-806"/>
         <location filename="../core/searchprogressmanager.cpp" line="+85"/>
         <source>Paused</source>
-        <translation>Паузирано</translation>
+        <translation>Pauzirano</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+922"/>
@@ -2095,7 +2095,7 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <location line="+18"/>
         <location line="+34"/>
         <source>Evaluated</source>
-        <translation>Евалуирано</translation>
+        <translation>Evaluirano</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-105"/>
@@ -2112,12 +2112,12 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <location filename="../core/deviceupdatemanager.cpp" line="+166"/>
         <location filename="../core/searchprogressmanager.cpp" line="-13"/>
         <source>Completed</source>
-        <translation>Завршено</translation>
+        <translation>Završeno</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_statistics.cpp" line="+361"/>
         <source>Used Space</source>
-        <translation>Искоришћен простор</translation>
+        <translation>Iskorišćen prostor</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-349"/>
@@ -2125,7 +2125,7 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <location line="+101"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-76"/>
         <source>Cancelled</source>
-        <translation>Отказано</translation>
+        <translation>Otkazano</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-19"/>
@@ -2134,7 +2134,7 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <location line="+154"/>
         <location filename="../core/searchjobstoppable.cpp" line="+38"/>
         <source>Loaded</source>
-        <translation>Учитано</translation>
+        <translation>Učitano</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+429"/>
@@ -2147,60 +2147,60 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <location filename="../core/catalogprogressmanager.cpp" line="-24"/>
         <location filename="../core/searchprogressmanager.cpp" line="-98"/>
         <source>In Progress</source>
-        <translation>У току</translation>
+        <translation>U toku</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+72"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-127"/>
         <location filename="../core/catalogprogressmanager.cpp" line="-36"/>
         <source>Stopped</source>
-        <translation>Заустављено</translation>
+        <translation>Zaustavljeno</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_ui.cpp" line="+417"/>
         <source>MIME Verification Complete</source>
-        <translation>MIME Провера Завршена</translation>
+        <translation>MIME Provera Završena</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Open Report</source>
-        <translation>Отвори Извештај</translation>
+        <translation>Otvori Izveštaj</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="-431"/>
         <source>Hidden</source>
-        <translation>Скривено</translation>
+        <translation>Skriveno</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Metadata</source>
-        <translation>Метаподаци</translation>
+        <translation>Metapodaci</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-5645"/>
         <source>File metadata</source>
-        <translation>Метаподаци датотеке</translation>
+        <translation>Metapodaci datoteke</translation>
     </message>
     <message>
         <location line="+279"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+274"/>
         <location filename="../core/search.cpp" line="-9"/>
         <source>Height</source>
-        <translation>Висина</translation>
+        <translation>Visina</translation>
     </message>
     <message>
         <location line="+169"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-1"/>
         <location filename="../core/search.cpp" line="-1"/>
         <source>Width</source>
-        <translation>Ширина</translation>
+        <translation>Širina</translation>
     </message>
     <message>
         <location line="+223"/>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="+2"/>
         <location filename="../core/search.cpp" line="+2"/>
         <source>Duration</source>
-        <translation>Трајање</translation>
+        <translation>Trajanje</translation>
     </message>
     <message>
         <location line="+60"/>
@@ -2212,24 +2212,24 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <location line="+1592"/>
         <location line="+2076"/>
         <source>Include files metadata</source>
-        <translation>Укључи метаподатке датотека</translation>
+        <translation>Uključi metapodatke datoteka</translation>
     </message>
     <message>
         <location line="-1301"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detect actual MIME types and identify mismatches (long process)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Открива стварне MIME типове и идентификује неподударности (дуг процес)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Otkriva stvarne MIME tipove i identifikuje nepodudarnosti (dug proces)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Verify MIME types</source>
-        <translation>Провери MIME типове</translation>
+        <translation>Proveri MIME tipove</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+502"/>
         <location line="+19"/>
         <location line="+11"/>
         <source>Other</source>
-        <translation>Остало</translation>
+        <translation>Ostalo</translation>
     </message>
     <message>
         <location line="-29"/>
@@ -2244,61 +2244,61 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+697"/>
         <location line="+1"/>
         <source>None</source>
-        <translation>Ниједан</translation>
+        <translation>Nijedan</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_explore.cpp" line="-658"/>
         <location filename="../qt_widgets/mainwindow_tab_search_ui.cpp" line="-957"/>
         <source>Show extended metadata (JSON)</source>
-        <translation>Прикажи проширене метаподатке (JSON)</translation>
+        <translation>Prikaži proširene metapodatke (JSON)</translation>
     </message>
     <message>
         <location line="+655"/>
         <location filename="../core/search.cpp" line="-3"/>
         <source>MIME Type</source>
-        <translation>MIME Тип</translation>
+        <translation>MIME Tip</translation>
     </message>
     <message>
         <location line="+4"/>
         <location filename="../core/search.cpp" line="+4"/>
         <source>Video Width</source>
-        <translation>Ширина Видеа</translation>
+        <translation>Širina Videa</translation>
     </message>
     <message>
         <location line="+1"/>
         <location filename="../core/search.cpp" line="+1"/>
         <source>Video Height</source>
-        <translation>Висина Видеа</translation>
+        <translation>Visina Videa</translation>
     </message>
     <message>
         <location line="+1"/>
         <location filename="../core/search.cpp" line="+1"/>
         <source>Audio Duration</source>
-        <translation>Трајање Аудиа</translation>
+        <translation>Trajanje Audia</translation>
     </message>
     <message>
         <location line="+1"/>
         <location filename="../core/search.cpp" line="+1"/>
         <source>Artist</source>
-        <translation>Уметник</translation>
+        <translation>Umetnik</translation>
     </message>
     <message>
         <location line="+1"/>
         <location filename="../core/search.cpp" line="+1"/>
         <source>Album</source>
-        <translation>Албум</translation>
+        <translation>Album</translation>
     </message>
     <message>
         <location line="+1"/>
         <location filename="../core/search.cpp" line="+1"/>
         <source>Title</source>
-        <translation>Наслов</translation>
+        <translation>Naslov</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-250"/>
         <location line="+8"/>
         <source>Copy JSON</source>
-        <translation>Копирај JSON</translation>
+        <translation>Kopiraj JSON</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_backup.cpp" line="-47"/>
@@ -2307,116 +2307,116 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <location line="+1"/>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-3"/>
         <source>Copied</source>
-        <translation>Копирано</translation>
+        <translation>Kopirano</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="+8"/>
         <source>Close</source>
-        <translation>Затвори</translation>
+        <translation>Zatvori</translation>
     </message>
     <message>
         <location line="+97"/>
         <source>File Property</source>
-        <translation>Својство Датотеке</translation>
+        <translation>Svojstvo Datoteke</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Value</source>
-        <translation>Вредност</translation>
+        <translation>Vrednost</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_settings.cpp" line="-430"/>
         <source>Invalid Collection Folder</source>
-        <translation>Неважећа Фасцикла Колекције</translation>
+        <translation>Nevažeća Fascikla Kolekcije</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&lt;br/&gt;&lt;br/&gt;Selected folder: &lt;i&gt;%1&lt;/i&gt;</source>
-        <translation>&lt;br/&gt;&lt;br/&gt;Изабрана фасцикла: &lt;i&gt;%1&lt;/i&gt;</translation>
+        <translation>&lt;br/&gt;&lt;br/&gt;Izabrana fascikla: &lt;i&gt;%1&lt;/i&gt;</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&lt;br/&gt;&lt;br/&gt;For your first collection, please choose a suitable folder.</source>
-        <translation>&lt;br/&gt;&lt;br/&gt;За вашу прву колекцију изаберите одговарајућу фасциклу.</translation>
+        <translation>&lt;br/&gt;&lt;br/&gt;Za vašu prvu kolekciju izaberite odgovarajuću fasciklu.</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Create New Collection Here</source>
-        <translation>Креирај Нову Колекцију Овде</translation>
+        <translation>Kreiraj Novu Kolekciju Ovde</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+9"/>
         <source>Select Different Folder</source>
-        <translation>Изабери Другу Фасциклу</translation>
+        <translation>Izaberi Drugu Fasciklu</translation>
     </message>
     <message>
         <location line="-6"/>
         <location line="+9"/>
         <source>Use Application Folder</source>
-        <translation>Користи Фасциклу Апликације</translation>
+        <translation>Koristi Fasciklu Aplikacije</translation>
     </message>
     <message>
         <source>MIME Type Only</source>
-        <translation type="vanished">Само MIME Тип</translation>
+        <translation type="vanished">Samo MIME Tip</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-77"/>
         <location line="+12"/>
         <source>Media Basic</source>
-        <translation>Медија Основно</translation>
+        <translation>Medija Osnovno</translation>
     </message>
     <message>
         <source>Extended Custom</source>
-        <translation type="vanished">Проширено Прилагођено</translation>
+        <translation type="vanished">Prošireno Prilagođeno</translation>
     </message>
     <message>
         <source>Extended Full</source>
-        <translation type="vanished">Проширено Потпуно</translation>
+        <translation type="vanished">Prošireno Potpuno</translation>
     </message>
     <message>
         <location line="-11"/>
         <location line="+12"/>
         <source>Media Extended</source>
-        <translation>Медија Проширено</translation>
+        <translation>Medija Prošireno</translation>
     </message>
     <message>
         <location line="-11"/>
         <location line="+12"/>
         <source>Full Extended</source>
-        <translation>Потпуно Проширено</translation>
+        <translation>Potpuno Prošireno</translation>
     </message>
     <message>
         <location filename="../core/device.cpp" line="+727"/>
         <source>Do you want to &lt;span style=&apos;color: red&apos;;&gt;delete&lt;/span&gt; this %1 device?</source>
-        <translation>Да ли желите да &lt;span style=&apos;color: red&apos;;&gt;обришете&lt;/span&gt; овај %1 уређај?</translation>
+        <translation>Da li želite da &lt;span style=&apos;color: red&apos;;&gt;obrišete&lt;/span&gt; ovaj %1 uređaj?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+789"/>
         <location line="+38"/>
         <source>Catalogs updated:&lt;b&gt; %1 &lt;/b&gt;(%2 skipped)</source>
-        <translation>Каталози ажурирани:&lt;b&gt; %1 &lt;/b&gt;(%2 прескочено)</translation>
+        <translation>Katalozi ažurirani:&lt;b&gt; %1 &lt;/b&gt;(%2 preskočeno)</translation>
     </message>
     <message>
         <location line="-14"/>
         <source>Virtual device updated: </source>
-        <translation>Виртуелни уређај ажуриран: </translation>
+        <translation>Virtuelni uređaj ažuriran: </translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-1331"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click: Stop immediately (hard stop)&lt;/p&gt;&lt;p&gt;Ctrl+Click: Stop after current catalog (gentle stop)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Клик: Заустави одмах (тврдо заустављање)&lt;/p&gt;&lt;p&gt;Ctrl+Клик: Заустави након тренутног каталога (меко заустављање)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Klik: Zaustavi odmah (tvrdo zaustavljanje)&lt;/p&gt;&lt;p&gt;Ctrl+Klik: Zaustavi nakon trenutnog kataloga (meko zaustavljanje)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="-234"/>
         <source>The source directory does not exist.</source>
-        <translation>Изворни директоријум не постоји.</translation>
+        <translation>Izvorni direktorijum ne postoji.</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_ui_wrapper_catalog.cpp" line="+77"/>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+6"/>
         <source>The source folder does not contain any file.&lt;br/&gt;This could mean that the source is empty or the device is not mounted to this folder.&lt;br/&gt;Do you want to save it anyway (the catalog would be empty)?</source>
-        <translation>Изворна фасцикла не садржи ниједан фајл.&lt;br/&gt;То може значити да је извор празан или уређај није монтиран у ову фасциклу.&lt;br/&gt;Да ли желите да га ипак сачувате (каталог би био празан)?</translation>
+        <translation>Izvorna fascikla ne sadrži nijedan fajl.&lt;br/&gt;To može značiti da je izvor prazan ili uređaj nije montiran u ovu fasciklu.&lt;br/&gt;Da li želite da ga ipak sačuvate (katalog bi bio prazan)?</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_create.cpp" line="+81"/>
@@ -2429,23 +2429,23 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <location filename="../qt_widgets/mainwindow_tab_filters.cpp" line="+246"/>
         <location line="+40"/>
         <source>A device operation is already running.</source>
-        <translation>Операција уређаја се већ извршава.</translation>
+        <translation>Operacija uređaja se već izvršava.</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_device_pr.cpp" line="+1796"/>
         <location filename="../core/deviceupdatemanager.cpp" line="+898"/>
         <source>Operation cancelled</source>
-        <translation>Операција отказана</translation>
+        <translation>Operacija otkazana</translation>
     </message>
     <message>
         <location filename="../core/deviceupdatemanager.cpp" line="-896"/>
         <source>Paths Updated</source>
-        <translation>Путање ажуриране</translation>
+        <translation>Putanje ažurirane</translation>
     </message>
     <message>
         <location line="+839"/>
         <source>Stopping after current catalog completes...</source>
-        <translation>Заустављање након завршетка тренутног каталога...</translation>
+        <translation>Zaustavljanje nakon završetka trenutnog kataloga...</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow.ui" line="-5498"/>
@@ -2998,7 +2998,7 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
     </message>
     <message>
         <source>Excluded folders from this catalog</source>
-        <translation type="vanished">Iskључene mape iz ovog kataloga</translation>
+        <translation type="vanished">Isključene mape iz ovog kataloga</translation>
     </message>
     <message>
         <location line="+2639"/>
@@ -3016,7 +3016,7 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <location line="-2511"/>
         <location line="+2083"/>
         <source>Exclude folders or files</source>
-        <translation>Искључи фасцикле или датотеке</translation>
+        <translation>Isključi fascikle ili datoteke</translation>
     </message>
     <message>
         <location line="-1898"/>
@@ -3131,7 +3131,7 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
     <message>
         <location line="+1345"/>
         <source>Images folder</source>
-        <translation>Фасцикла слика</translation>
+        <translation>Fascikla slika</translation>
     </message>
     <message>
         <source>include File Type</source>
@@ -3525,7 +3525,7 @@ To može značiti da je izvor prazan ili da uređaj nije montiran na ovu fascikl
         <location line="-3461"/>
         <location line="+2083"/>
         <source>Path or name to exclude</source>
-        <translation>Путања или име за искључивање</translation>
+        <translation>Putanja ili ime za isključivanje</translation>
     </message>
     <message>
         <location line="+1139"/>
@@ -5894,17 +5894,17 @@ u smeće?</translation>
     <message>
         <location line="+214"/>
         <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
-        <translation>MIME провера успешно завршена.&lt;br/&gt;Нису пронађена неслагања између екстензија датотека и стварног садржаја.</translation>
+        <translation>MIME provera uspešno završena.&lt;br/&gt;Nisu pronađena neslaganja između ekstenzija datoteka i stvarnog sadržaja.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
-        <translation>MIME провера завршена.&lt;br/&gt;Пронађено %1 неслагање(а) између екстензија датотека и стварног садржаја.&lt;br/&gt;&lt;br/&gt;Извештај сачуван у:&lt;br/&gt;%2</translation>
+        <translation>MIME provera završena.&lt;br/&gt;Pronađeno %1 neslaganje(a) između ekstenzija datoteka i stvarnog sadržaja.&lt;br/&gt;&lt;br/&gt;Izveštaj sačuvan u:&lt;br/&gt;%2</translation>
     </message>
     <message>
         <location line="+30"/>
         <source>MIME verification failed:&lt;br/&gt;%1</source>
-        <translation>MIME провера није успела:&lt;br/&gt;%1</translation>
+        <translation>MIME provera nije uspela:&lt;br/&gt;%1</translation>
     </message>
     <message>
         <location filename="../qt_widgets/mainwindow_tab_search_pr.cpp" line="-644"/>
@@ -6131,24 +6131,24 @@ u smeće?</translation>
         <location line="+38"/>
         <location line="+9"/>
         <source>Collection Import</source>
-        <translation>Увоз колекције</translation>
+        <translation>Uvoz kolekcije</translation>
     </message>
     <message>
         <location line="-129"/>
         <source>Schema version mismatch. Import cancelled. (%1)</source>
-        <translation>Неподударање верзије шеме. Увоз отказан. (%1)</translation>
+        <translation>Nepodudaranje verzije šeme. Uvoz otkazan. (%1)</translation>
     </message>
     <message>
         <location line="+58"/>
         <source>No source collection is open.</source>
-        <translation>Ниједна изворна колекција није отворена.</translation>
+        <translation>Nijedna izvorna kolekcija nije otvorena.</translation>
     </message>
     <message>
         <location line="+88"/>
         <location line="+10"/>
         <location line="+8"/>
         <source>Collection Update</source>
-        <translation>Ажурирање колекције</translation>
+        <translation>Ažuriranje kolekcije</translation>
     </message>
     <message>
         <location filename="../core/statusbarmessagebuilder.cpp" line="+264"/>
@@ -6193,32 +6193,32 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location filename="../qt_quick/MetadataDialog.qml" line="+24"/>
         <source>No extended metadata available</source>
-        <translation>Нема доступних проширених метаподатака</translation>
+        <translation>Nema dostupnih proširenih metapodataka</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Extended Metadata</source>
-        <translation>Проширени метаподаци</translation>
+        <translation>Prošireni metapodaci</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Copy JSON</source>
-        <translation>Копирај JSON</translation>
+        <translation>Kopiraj JSON</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Metadata JSON copied to clipboard</source>
-        <translation>JSON метаподатака копиран у оставу</translation>
+        <translation>JSON metapodataka kopiran u ostavu</translation>
     </message>
     <message>
         <location line="+40"/>
         <source>Field</source>
-        <translation>Поље</translation>
+        <translation>Polje</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Value</source>
-        <translation>Вредност</translation>
+        <translation>Vrednost</translation>
     </message>
 </context>
 <context>
@@ -6268,12 +6268,12 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location filename="../qt_quick/PageBackupForm.qml" line="+145"/>
         <source>Cancelled</source>
-        <translation>Отказано</translation>
+        <translation>Otkazano</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Completed</source>
-        <translation>Завршено</translation>
+        <translation>Završeno</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6380,17 +6380,17 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+22"/>
         <source>link(s)</source>
-        <translation>веза(е)</translation>
+        <translation>veza(e)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>source</source>
-        <translation>извор</translation>
+        <translation>izvor</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>covered</source>
-        <translation>покривено</translation>
+        <translation>pokriveno</translation>
     </message>
     <message>
         <location line="+19"/>
@@ -6413,7 +6413,7 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
         <location line="+46"/>
         <location line="+7"/>
         <source>files</source>
-        <translation>датотеке</translation>
+        <translation>datoteke</translation>
     </message>
     <message>
         <location line="-34"/>
@@ -6534,7 +6534,7 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+8"/>
         <source>Export to CSV</source>
-        <translation>Извези у CSV</translation>
+        <translation>Izvezi u CSV</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6694,12 +6694,12 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+20"/>
         <source>Export to CSV</source>
-        <translation>Извези у CSV</translation>
+        <translation>Izvezi u CSV</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Close</source>
-        <translation>Затвори</translation>
+        <translation>Zatvori</translation>
     </message>
     <message>
         <source>Updating catalogs…</source>
@@ -6828,34 +6828,34 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="-191"/>
         <source>Provide a name for this new catalog.</source>
-        <translation>Наведите назив за овај нови каталог.</translation>
+        <translation>Navedite naziv za ovaj novi katalog.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Provide a path for this new catalog.</source>
-        <translation>Наведите путању за овај нови каталог.</translation>
+        <translation>Navedite putanju za ovaj novi katalog.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Select a Storage for this new catalog.
 (Selection panel on the left and dropdown list)</source>
-        <translation>Изаберите складиште за овај нови каталог.
-(Табла за избор лево и падајућа листа)</translation>
+        <translation>Izaberite skladište za ovaj novi katalog.
+(Tabla za izbor levo i padajuća lista)</translation>
     </message>
     <message>
         <location line="+107"/>
         <source>Catalog definition</source>
-        <translation>Дефиниција каталога</translation>
+        <translation>Definicija kataloga</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Source path</source>
-        <translation>Изворна путања</translation>
+        <translation>Izvorna putanja</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Path to index</source>
-        <translation>Путања за индексирање</translation>
+        <translation>Putanja za indeksiranje</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6872,27 +6872,27 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+9"/>
         <source>Catalog name</source>
-        <translation>Назив каталога</translation>
+        <translation>Naziv kataloga</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>New catalog name</source>
-        <translation>Назив новог каталога</translation>
+        <translation>Naziv novog kataloga</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Generate name from path</source>
-        <translation>Генериши назив из путање</translation>
+        <translation>Generiši naziv iz putanje</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Content options</source>
-        <translation>Опције садржаја</translation>
+        <translation>Opcije sadržaja</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>File type</source>
-        <translation>Врста датотеке</translation>
+        <translation>Vrsta datoteke</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -6907,7 +6907,7 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+1"/>
         <source>Other</source>
-        <translation>Остало</translation>
+        <translation>Ostalo</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -6915,65 +6915,65 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
         <location line="+12"/>
         <location line="+16"/>
         <source>None</source>
-        <translation>Ниједан</translation>
+        <translation>Nijedan</translation>
     </message>
     <message>
         <location line="-39"/>
         <source>Include subdirectories</source>
-        <translation>Укључи подфолдере</translation>
+        <translation>Uključi podfoldere</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Include hidden files</source>
-        <translation>Укључи скривене датотеке</translation>
+        <translation>Uključi skrivene datoteke</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Include metadata</source>
-        <translation>Укључи метаподатке</translation>
+        <translation>Uključi metapodatke</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Media Basic</source>
-        <translation>Медија Основно</translation>
+        <translation>Medija Osnovno</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Media Extended</source>
-        <translation>Медија Проширено</translation>
+        <translation>Medija Prošireno</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Full Extended</source>
-        <translation>Потпуно Проширено</translation>
+        <translation>Potpuno Prošireno</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Include checksum</source>
-        <translation>Укључи контролни збир</translation>
+        <translation>Uključi kontrolni zbir</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Exclude folders or files</source>
-        <translation>Искључи фасцикле или датотеке</translation>
+        <translation>Isključi fascikle ili datoteke</translation>
     </message>
     <message>
         <location line="+4"/>
         <location line="+6"/>
         <source>Path or name to exclude</source>
-        <translation>Путања или име за искључивање</translation>
+        <translation>Putanja ili ime za isključivanje</translation>
     </message>
     <message>
         <source>Path or text to exclude</source>
-        <translation type="vanished">Путања или текст за искључивање</translation>
+        <translation type="vanished">Putanja ili tekst za isključivanje</translation>
     </message>
     <message>
         <source>Folder to exclude</source>
-        <translation type="vanished">Фасцикла за искључивање</translation>
+        <translation type="vanished">Fascikla za isključivanje</translation>
     </message>
     <message>
         <source>Path to exclude</source>
-        <translation type="vanished">Путања за искључивање</translation>
+        <translation type="vanished">Putanja za isključivanje</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7005,12 +7005,12 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+8"/>
         <source>Global exclude directory</source>
-        <translation>Глобални директоријум искључивања</translation>
+        <translation>Globalni direktorijum isključivanja</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Path to exclude globally</source>
-        <translation>Путања за глобално искључивање</translation>
+        <translation>Putanja za globalno isključivanje</translation>
     </message>
 </context>
 <context>
@@ -7028,7 +7028,7 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+7"/>
         <source>Excluded folders or files changed</source>
-        <translation>Искључене фасцикле или датотеке су промењене</translation>
+        <translation>Isključene fascikle ili datoteke su promenjene</translation>
     </message>
     <message>
         <location line="+99"/>
@@ -7069,7 +7069,7 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+4"/>
         <source>Source path</source>
-        <translation>Изворна путања</translation>
+        <translation>Izvorna putanja</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -7080,12 +7080,12 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="-120"/>
         <source>Content options</source>
-        <translation>Опције садржаја</translation>
+        <translation>Opcije sadržaja</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>File type</source>
-        <translation>Врста датотеке</translation>
+        <translation>Vrsta datoteke</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -7116,7 +7116,7 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+1"/>
         <source>Other</source>
-        <translation>Остало</translation>
+        <translation>Ostalo</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7124,57 +7124,57 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
         <location line="+13"/>
         <location line="+17"/>
         <source>None</source>
-        <translation>Ниједан</translation>
+        <translation>Nijedan</translation>
     </message>
     <message>
         <location line="-43"/>
         <source>Include subdirectories</source>
-        <translation>Укључи подфолдере</translation>
+        <translation>Uključi podfoldere</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Include hidden files</source>
-        <translation>Укључи скривене датотеке</translation>
+        <translation>Uključi skrivene datoteke</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Include metadata</source>
-        <translation>Укључи метаподатке</translation>
+        <translation>Uključi metapodatke</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Media Basic</source>
-        <translation>Медија Основно</translation>
+        <translation>Medija Osnovno</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Media Extended</source>
-        <translation>Медија Проширено</translation>
+        <translation>Medija Prošireno</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Full Extended</source>
-        <translation>Потпуно Проширено</translation>
+        <translation>Potpuno Prošireno</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Include checksum</source>
-        <translation>Укључи контролни збир</translation>
+        <translation>Uključi kontrolni zbir</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Exclude folders or files</source>
-        <translation>Искључи фасцикле или датотеке</translation>
+        <translation>Isključi fascikle ili datoteke</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+7"/>
         <source>Path or name to exclude</source>
-        <translation>Путања или име за искључивање</translation>
+        <translation>Putanja ili ime za isključivanje</translation>
     </message>
     <message>
         <source>Path or text to exclude</source>
-        <translation type="vanished">Путања или текст за искључивање</translation>
+        <translation type="vanished">Putanja ili tekst za isključivanje</translation>
     </message>
     <message>
         <source>Exclude folders (this catalog)</source>
@@ -7182,11 +7182,11 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     </message>
     <message>
         <source>Folder to exclude</source>
-        <translation type="vanished">Фасцикла за искључивање</translation>
+        <translation type="vanished">Fascikla za isključivanje</translation>
     </message>
     <message>
         <source>Path to exclude</source>
-        <translation type="vanished">Путања за искључивање</translation>
+        <translation type="vanished">Putanja za isključivanje</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7324,7 +7324,7 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+23"/>
         <source>Verify Checksums</source>
-        <translation>Провери контролне суме</translation>
+        <translation>Proveri kontrolne sume</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -7344,7 +7344,7 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+3"/>
         <source>Total: %1</source>
-        <translation>Укупно: %1</translation>
+        <translation>Ukupno: %1</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7444,27 +7444,27 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="-465"/>
         <source>MIME verification failed:&lt;br/&gt;%1</source>
-        <translation>MIME провера није успела:&lt;br/&gt;%1</translation>
+        <translation>MIME provera nije uspela:&lt;br/&gt;%1</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>MIME verification completed successfully.&lt;br/&gt;No mismatches found between file extensions and actual content.</source>
-        <translation>MIME провера успешно завршена.&lt;br/&gt;Нису пронађена неслагања између екстензија датотека и стварног садржаја.</translation>
+        <translation>MIME provera uspešno završena.&lt;br/&gt;Nisu pronađena neslaganja između ekstenzija datoteka i stvarnog sadržaja.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>MIME verification completed.&lt;br/&gt;%1 mismatch(es) found between file extensions and actual content.&lt;br/&gt;&lt;br/&gt;Report saved to:&lt;br/&gt;%2</source>
-        <translation>MIME провера завршена.&lt;br/&gt;Пронађено %1 неслагање(а) између екстензија датотека и стварног садржаја.&lt;br/&gt;&lt;br/&gt;Извештај сачуван у:&lt;br/&gt;%2</translation>
+        <translation>MIME provera završena.&lt;br/&gt;Pronađeno %1 neslaganje(a) između ekstenzija datoteka i stvarnog sadržaja.&lt;br/&gt;&lt;br/&gt;Izveštaj sačuvan u:&lt;br/&gt;%2</translation>
     </message>
     <message>
         <location line="+242"/>
         <source>MIME Verification Complete</source>
-        <translation>MIME Провера Завршена</translation>
+        <translation>MIME Provera Završena</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Open Report</source>
-        <translation>Отвори Извештај</translation>
+        <translation>Otvori Izveštaj</translation>
     </message>
     <message>
         <location line="+76"/>
@@ -7544,12 +7544,12 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="-16"/>
         <source>Verify Checksums</source>
-        <translation>Провери контролне суме</translation>
+        <translation>Proveri kontrolne sume</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Verify MIME types</source>
-        <translation>Провери MIME типове</translation>
+        <translation>Proveri MIME tipove</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7604,7 +7604,7 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+99"/>
         <source>files</source>
-        <translation>датотеке</translation>
+        <translation>datoteke</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -7689,7 +7689,7 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+21"/>
         <source>Show extended metadata (JSON)</source>
-        <translation>Прикажи проширене метаподатке (JSON)</translation>
+        <translation>Prikaži proširene metapodatke (JSON)</translation>
     </message>
     <message>
         <location line="+54"/>
@@ -7727,33 +7727,33 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+8"/>
         <source>Copy Checksum</source>
-        <translation>Копирај контролну суму</translation>
+        <translation>Kopiraj kontrolnu sumu</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation>Израчунај контролни збир (SHA-256)</translation>
+        <translation>Izračunaj kontrolni zbir (SHA-256)</translation>
     </message>
     <message>
         <location line="-583"/>
         <location line="+599"/>
         <source>File not found or could not be read</source>
-        <translation>Датотека није пронађена или се не може прочитати</translation>
+        <translation>Datoteka nije pronađena ili se ne može pročitati</translation>
     </message>
     <message>
         <location line="-588"/>
         <source>Folder not found.</source>
-        <translation>Фасцикла није пронађена.</translation>
+        <translation>Fascikla nije pronađena.</translation>
     </message>
     <message>
         <location line="+594"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation>Провери контролни збир (SHA-256)</translation>
+        <translation>Proveri kontrolni zbir (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation>Грешка: </translation>
+        <translation>Greška: </translation>
     </message>
     <message>
         <location line="+8"/>
@@ -7773,7 +7773,7 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+15"/>
         <source>Delete File</source>
-        <translation>Обриши датотеку</translation>
+        <translation>Obriši datoteku</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -7789,76 +7789,76 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="-74"/>
         <source>File deleted</source>
-        <translation>Датотека обрисана</translation>
+        <translation>Datoteka obrisana</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not delete file</source>
-        <translation>Датотеку није могуће обрисати</translation>
+        <translation>Datoteku nije moguće obrisati</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Permanently delete this file? This cannot be undone.
 
 %1</source>
-        <translation>Трајно обрисати ову датотеку? Ово се не може опозвати.
+        <translation>Trajno obrisati ovu datoteku? Ovo se ne može opozvati.
 
 %1</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Checksum (SHA-256)</source>
-        <translation>Контролни збир (SHA-256)</translation>
+        <translation>Kontrolni zbir (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Checksum saved to database.</source>
-        <translation>Контролна сума сачувана у бази података.</translation>
+        <translation>Kontrolna suma sačuvana u bazi podataka.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Checksums match.</source>
-        <translation>Контролне суме се поклапају.</translation>
+        <translation>Kontrolne sume se poklapaju.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Copy to Clipboard</source>
-        <translation>Копирај у оставу</translation>
+        <translation>Kopiraj u ostavu</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Checksum copied to clipboard</source>
-        <translation>Контролни збир копиран у оставу</translation>
+        <translation>Kontrolni zbir kopiran u ostavu</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Checksum Mismatch</source>
-        <translation>Неподударање контролног збира</translation>
+        <translation>Nepodudaranje kontrolnog zbira</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Update Checksum</source>
-        <translation>Ажурирај контролну суму</translation>
+        <translation>Ažuriraj kontrolnu sumu</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Checksum saved to database</source>
-        <translation>Контролни збир сачуван у бази података</translation>
+        <translation>Kontrolni zbir sačuvan u bazi podataka</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Checksums do not match.</source>
-        <translation>Контролне суме се не поклапају.</translation>
+        <translation>Kontrolne sume se ne poklapaju.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Expected:</source>
-        <translation>Очекивано:</translation>
+        <translation>Očekivano:</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Actual:</source>
-        <translation>Стварно:</translation>
+        <translation>Stvarno:</translation>
     </message>
 </context>
 <context>
@@ -7921,22 +7921,22 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+18"/>
         <source>1 day ago</source>
-        <translation>Пре 1 дана</translation>
+        <translation>Pre 1 dana</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 week ago</source>
-        <translation>Пре 1 недеље</translation>
+        <translation>Pre 1 nedelje</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 month ago</source>
-        <translation>Пре 1 месеца</translation>
+        <translation>Pre 1 meseca</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>1 year ago</source>
-        <translation>Пре 1 године</translation>
+        <translation>Pre 1 godine</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7946,12 +7946,12 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+15"/>
         <source>Delete search history</source>
-        <translation>Обриши историју претраге</translation>
+        <translation>Obriši istoriju pretrage</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>This will delete all search history entries. Continue?</source>
-        <translation>Ово ће обрисати све ставке историје претраге. Наставити?</translation>
+        <translation>Ovo će obrisati sve stavke istorije pretrage. Nastaviti?</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -7961,17 +7961,17 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+1"/>
         <source>This will delete all but the last 10 search history entries. Continue?</source>
-        <translation>Ово ће обрисати све ставке историје претраге осим последњих 10. Наставити?</translation>
+        <translation>Ovo će obrisati sve stavke istorije pretrage osim poslednjih 10. Nastaviti?</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Search History</source>
-        <translation>Историја претраге</translation>
+        <translation>Istorija pretrage</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Keep Last 10</source>
-        <translation>Задржи последњих 10</translation>
+        <translation>Zadrži poslednjih 10</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -7987,7 +7987,7 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+92"/>
         <source>(no text filter)</source>
-        <translation>(без текстуалног филтера)</translation>
+        <translation>(bez tekstualnog filtera)</translation>
     </message>
     <message>
         <location line="+26"/>
@@ -7997,12 +7997,12 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+8"/>
         <source>Connected drive</source>
-        <translation>Повезани уређај</translation>
+        <translation>Povezani uređaj</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Path to connected drive or folder</source>
-        <translation>Путања до повезаног уређаја или фасцикле</translation>
+        <translation>Putanja do povezanog uređaja ili fascikle</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -8017,7 +8017,7 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+22"/>
         <source>text</source>
-        <translation>текст</translation>
+        <translation>tekst</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -8096,7 +8096,7 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+37"/>
         <source>File attributes</source>
-        <translation>Атрибути датотеке</translation>
+        <translation>Atributi datoteke</translation>
     </message>
     <message>
         <location line="+26"/>
@@ -8133,12 +8133,12 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+1"/>
         <source>Other</source>
-        <translation>Остало</translation>
+        <translation>Ostalo</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>None</source>
-        <translation>Ниједан</translation>
+        <translation>Nijedan</translation>
     </message>
     <message>
         <location line="+35"/>
@@ -8158,22 +8158,22 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="-441"/>
         <source>File metadata</source>
-        <translation>Метаподаци датотеке</translation>
+        <translation>Metapodaci datoteke</translation>
     </message>
     <message>
         <location line="+89"/>
         <source>Width</source>
-        <translation>Ширина</translation>
+        <translation>Širina</translation>
     </message>
     <message>
         <location line="+32"/>
         <source>Height</source>
-        <translation>Висина</translation>
+        <translation>Visina</translation>
     </message>
     <message>
         <location line="+36"/>
         <source>Duration</source>
-        <translation>Трајање</translation>
+        <translation>Trajanje</translation>
     </message>
     <message>
         <location line="+47"/>
@@ -8193,19 +8193,19 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+22"/>
         <source>Duplicates</source>
-        <translation>Дупликати</translation>
+        <translation>Duplikati</translation>
     </message>
     <message>
         <location line="+5"/>
         <location line="+134"/>
         <source>Duplicates and Differences cannot be used at the same time</source>
-        <translation>Дупликати и разлике се не могу користити истовремено</translation>
+        <translation>Duplikati i razlike se ne mogu koristiti istovremeno</translation>
     </message>
     <message>
         <location line="-117"/>
         <location line="+134"/>
         <source>On</source>
-        <translation>На</translation>
+        <translation>Na</translation>
     </message>
     <message>
         <location line="-124"/>
@@ -8217,47 +8217,47 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
         <location line="-96"/>
         <location line="+134"/>
         <source>Checksum</source>
-        <translation>Контролна сума</translation>
+        <translation>Kontrolna suma</translation>
     </message>
     <message>
         <location line="-120"/>
         <source>Scope</source>
-        <translation>Опсег</translation>
+        <translation>Opseg</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Within selected device</source>
-        <translation>Унутар изабраног уређаја</translation>
+        <translation>Unutar izabranog uređaja</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Compare two devices</source>
-        <translation>Упореди два уређаја</translation>
+        <translation>Uporedi dva uređaja</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Device 1</source>
-        <translation>Уређај 1</translation>
+        <translation>Uređaj 1</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Device 2</source>
-        <translation>Уређај 2</translation>
+        <translation>Uređaj 2</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Differences</source>
-        <translation>Разлике</translation>
+        <translation>Razlike</translation>
     </message>
     <message>
         <location line="+88"/>
         <source>Between</source>
-        <translation>Између</translation>
+        <translation>Između</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>And</source>
-        <translation>И</translation>
+        <translation>I</translation>
     </message>
 </context>
 <context>
@@ -8265,49 +8265,49 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location filename="../qt_quick/PageSearchResultsForm.qml" line="+212"/>
         <source>%1 duplicate(s) found</source>
-        <translation>Пронађено %1 дупликата</translation>
+        <translation>Pronađeno %1 duplikata</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 difference(s) found</source>
-        <translation>Пронађено %1 разлика</translation>
+        <translation>Pronađeno %1 razlika</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 folder(s) found</source>
-        <translation>Пронађено %1 фасцикли</translation>
+        <translation>Pronađeno %1 fascikli</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>%1 file(s) found</source>
-        <translation>Пронађено %1 датотека</translation>
+        <translation>Pronađeno %1 datoteka</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Total: %1</source>
-        <translation>Укупно: %1</translation>
+        <translation>Ukupno: %1</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Min: %1   Max: %2</source>
-        <translation>Мин: %1   Макс: %2</translation>
+        <translation>Min: %1   Maks: %2</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>Export to CSV</source>
-        <translation>Извези у CSV</translation>
+        <translation>Izvezi u CSV</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Export to Catalog</source>
-        <translation>Извези у каталог</translation>
+        <translation>Izvezi u katalog</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+903"/>
         <location line="+53"/>
         <source>Verify Checksums</source>
-        <translation>Провери контролне суме</translation>
+        <translation>Proveri kontrolne sume</translation>
     </message>
     <message>
         <location line="-52"/>
@@ -8331,12 +8331,12 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+4"/>
         <source>Folder not found.</source>
-        <translation>Фасцикла није пронађена.</translation>
+        <translation>Fascikla nije pronađena.</translation>
     </message>
     <message>
         <location line="+112"/>
         <source>Extract Metadata</source>
-        <translation>Издвоји метаподатке</translation>
+        <translation>Izdvoji metapodatke</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -8352,27 +8352,27 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+8"/>
         <source>Exported to: %1</source>
-        <translation>Извезено у: %1</translation>
+        <translation>Izvezeno u: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or write error</source>
-        <translation>Извоз није успео — нема резултата или грешка при упису</translation>
+        <translation>Izvoz nije uspeo — nema rezultata ili greška pri upisu</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Results exported to catalog: %1</source>
-        <translation>Резултати извезени у каталог: %1</translation>
+        <translation>Rezultati izvezeni u katalog: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export failed — no results or database error</source>
-        <translation>Извоз није успео — нема резултата или грешка базе података</translation>
+        <translation>Izvoz nije uspeo — nema rezultata ili greška baze podataka</translation>
     </message>
     <message>
         <location line="+369"/>
         <source>(no selection)</source>
-        <translation>(нема избора)</translation>
+        <translation>(nema izbora)</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -8392,12 +8392,12 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+10"/>
         <source>Show extended metadata (JSON)</source>
-        <translation>Прикажи проширене метаподатке (JSON)</translation>
+        <translation>Prikaži proširene metapodatke (JSON)</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>No extended metadata available</source>
-        <translation>Нема доступних проширених метаподатака</translation>
+        <translation>Nema dostupnih proširenih metapodataka</translation>
     </message>
     <message>
         <location line="+34"/>
@@ -8407,7 +8407,7 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+4"/>
         <source>Folder path copied to clipboard</source>
-        <translation>Путања фасцикле копирана у оставу</translation>
+        <translation>Putanja fascikle kopirana u ostavu</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -8417,7 +8417,7 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+5"/>
         <source>Full path copied to clipboard</source>
-        <translation>Пуна путања копирана у оставу</translation>
+        <translation>Puna putanja kopirana u ostavu</translation>
     </message>
     <message>
         <location line="-22"/>
@@ -8428,7 +8428,7 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
         <location line="-4"/>
         <location line="+9"/>
         <source>File name copied to clipboard</source>
-        <translation>Назив датотеке копиран у оставу</translation>
+        <translation>Naziv datoteke kopiran u ostavu</translation>
     </message>
     <message>
         <location line="-16"/>
@@ -8438,44 +8438,44 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+38"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation>Израчунај контролни збир (SHA-256)</translation>
+        <translation>Izračunaj kontrolni zbir (SHA-256)</translation>
     </message>
     <message>
         <location line="-662"/>
         <location line="+678"/>
         <source>File not found or could not be read</source>
-        <translation>Датотека није пронађена или се не може прочитати</translation>
+        <translation>Datoteka nije pronađena ili se ne može pročitati</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Copy Checksum</source>
-        <translation>Копирај контролну суму</translation>
+        <translation>Kopiraj kontrolnu sumu</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+81"/>
         <source>Checksum copied to clipboard</source>
-        <translation>Контролни збир копиран у оставу</translation>
+        <translation>Kontrolni zbir kopiran u ostavu</translation>
     </message>
     <message>
         <location line="-77"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation>Провери контролни збир (SHA-256)</translation>
+        <translation>Proveri kontrolni zbir (SHA-256)</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Error: </source>
-        <translation>Грешка: </translation>
+        <translation>Greška: </translation>
     </message>
     <message>
         <location line="+11"/>
         <source>File moved to trash</source>
-        <translation>Датотека премештена у смеће</translation>
+        <translation>Datoteka premeštena u smeće</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not move file to trash</source>
-        <translation>Датотеку није могуће преместити у смеће</translation>
+        <translation>Datoteku nije moguće premestiti u smeće</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -8484,53 +8484,53 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     </message>
     <message>
         <source>Extended Metadata</source>
-        <translation type="vanished">Проширени метаподаци</translation>
+        <translation type="vanished">Prošireni metapodaci</translation>
     </message>
     <message>
         <source>Copy JSON</source>
-        <translation type="vanished">Копирај JSON</translation>
+        <translation type="vanished">Kopiraj JSON</translation>
     </message>
     <message>
         <source>Metadata JSON copied to clipboard</source>
-        <translation type="vanished">JSON метаподатака копиран у оставу</translation>
+        <translation type="vanished">JSON metapodataka kopiran u ostavu</translation>
     </message>
     <message>
         <source>Field</source>
-        <translation type="vanished">Поље</translation>
+        <translation type="vanished">Polje</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="vanished">Вредност</translation>
+        <translation type="vanished">Vrednost</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Checksum (SHA-256)</source>
-        <translation>Контролни збир (SHA-256)</translation>
+        <translation>Kontrolni zbir (SHA-256)</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Checksum saved to database.</source>
-        <translation>Контролна сума сачувана у бази података.</translation>
+        <translation>Kontrolna suma sačuvana u bazi podataka.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Checksums match.</source>
-        <translation>Контролне суме се поклапају.</translation>
+        <translation>Kontrolne sume se poklapaju.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Copy to Clipboard</source>
-        <translation>Копирај у оставу</translation>
+        <translation>Kopiraj u ostavu</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Checksum Mismatch</source>
-        <translation>Неподударање контролног збира</translation>
+        <translation>Nepodudaranje kontrolnog zbira</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Update Checksum</source>
-        <translation>Ажурирај контролну суму</translation>
+        <translation>Ažuriraj kontrolnu sumu</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -8541,44 +8541,44 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="-45"/>
         <source>Checksum saved to database</source>
-        <translation>Контролни збир сачуван у бази података</translation>
+        <translation>Kontrolni zbir sačuvan u bazi podataka</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Checksums do not match.</source>
-        <translation>Контролне суме се не поклапају.</translation>
+        <translation>Kontrolne sume se ne poklapaju.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Expected:</source>
-        <translation>Очекивано:</translation>
+        <translation>Očekivano:</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Actual:</source>
-        <translation>Стварно:</translation>
+        <translation>Stvarno:</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Delete File</source>
-        <translation>Обриши датотеку</translation>
+        <translation>Obriši datoteku</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>File deleted</source>
-        <translation>Датотека обрисана</translation>
+        <translation>Datoteka obrisana</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Could not delete file</source>
-        <translation>Датотеку није могуће обрисати</translation>
+        <translation>Datoteku nije moguće obrisati</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Permanently delete this file? This cannot be undone.
 
 %1</source>
-        <translation>Трајно обрисати ову датотеку? Ово се не може опозвати.
+        <translation>Trajno obrisati ovu datoteku? Ovo se ne može opozvati.
 
 %1</translation>
     </message>
@@ -8596,7 +8596,7 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
     <message>
         <location line="+5"/>
         <source>None</source>
-        <translation>Ниједан</translation>
+        <translation>Nijedan</translation>
     </message>
     <message>
         <location line="+69"/>
@@ -8604,54 +8604,54 @@ Proverite da li je izvorna fascikla (%1) ispravna ili da li je uređaj montiran 
 Mismatched: %2
 New checksums calculated: %3
 Errors: %4</source>
-        <translation>Подудара се: %1
-Не подудара се: %2
-Израчунато нових контролних збирова: %3
-Грешке: %4</translation>
+        <translation>Podudara se: %1
+Ne podudara se: %2
+Izračunato novih kontrolnih zbirova: %3
+Greške: %4</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Updated: %1
 Skipped: %2
 Errors: %3</source>
-        <translation>Ажурирано: %1
-Прескочено: %2
-Грешке: %3</translation>
+        <translation>Ažurirano: %1
+Preskočeno: %2
+Greške: %3</translation>
     </message>
     <message>
         <location line="-43"/>
         <source>Delete Files</source>
-        <translation>Обриши датотеке</translation>
+        <translation>Obriši datoteke</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Move all %1 result(s) to trash?</source>
-        <translation>Преместити свих %1 резултата у смеће?</translation>
+        <translation>Premestiti svih %1 rezultata u smeće?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Permanently delete all %1 result(s)? This cannot be undone.</source>
-        <translation>Трајно обрисати свих %1 резултата? Ово се не може опозвати.</translation>
+        <translation>Trajno obrisati svih %1 rezultata? Ovo se ne može opozvati.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Calculate and verify checksums for all %1 result(s)?</source>
-        <translation>Израчунати и проверити контролне збирове за свих %1 резултата?</translation>
+        <translation>Izračunati i proveriti kontrolne zbirove za svih %1 rezultata?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Include metadata for all %1 result(s)?</source>
-        <translation>Укључити метаподатке за свих %1 резултата?</translation>
+        <translation>Uključiti metapodatke za svih %1 rezultata?</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>%1 file(s) moved to trash</source>
-        <translation>%1 датотека премештено у смеће</translation>
+        <translation>%1 datoteka premešteno u smeće</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>%1 file(s) deleted</source>
-        <translation>%1 датотека обрисано</translation>
+        <translation>%1 datoteka obrisano</translation>
     </message>
 </context>
 <context>
@@ -8700,17 +8700,17 @@ Errors: %3</source>
     <message>
         <location line="+287"/>
         <source>Close</source>
-        <translation>Затвори</translation>
+        <translation>Zatvori</translation>
     </message>
     <message>
         <location line="+90"/>
         <source>Collection &amp; Database</source>
-        <translation>Збирка и база података</translation>
+        <translation>Zbirka i baza podataka</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Database Mode</source>
-        <translation>Режим базе података</translation>
+        <translation>Režim baze podataka</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -8734,14 +8734,14 @@ Errors: %3</source>
         <location line="+233"/>
         <location line="+51"/>
         <source>Collection</source>
-        <translation>Збирка</translation>
+        <translation>Zbirka</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+1"/>
         <location line="+600"/>
         <source>(none)</source>
-        <translation>(ниједна)</translation>
+        <translation>(nijedna)</translation>
     </message>
     <message>
         <location line="-590"/>
@@ -8753,12 +8753,12 @@ Errors: %3</source>
     <message>
         <location line="+9"/>
         <source>Database Version</source>
-        <translation>Верзија базе података</translation>
+        <translation>Verzija baze podataka</translation>
     </message>
     <message>
         <location line="+53"/>
         <source>Images folder</source>
-        <translation>Фасцикла слика</translation>
+        <translation>Fascikla slika</translation>
     </message>
     <message>
         <location line="-247"/>
@@ -8769,23 +8769,23 @@ Errors: %3</source>
     </message>
     <message>
         <source>Host name</source>
-        <translation type="vanished">Име домаћина</translation>
+        <translation type="vanished">Ime domaćina</translation>
     </message>
     <message>
         <source>Database name:</source>
-        <translation type="vanished">Име базе података:</translation>
+        <translation type="vanished">Ime baze podataka:</translation>
     </message>
     <message>
         <source>Port:</source>
-        <translation type="vanished">Порт:</translation>
+        <translation type="vanished">Port:</translation>
     </message>
     <message>
         <source>User name:</source>
-        <translation type="vanished">Корисничко име:</translation>
+        <translation type="vanished">Korisničko ime:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation type="vanished">Лозинка:</translation>
+        <translation type="vanished">Lozinka:</translation>
     </message>
     <message>
         <location line="-79"/>
@@ -8814,11 +8814,11 @@ Errors: %3</source>
     </message>
     <message>
         <source>Startup:</source>
-        <translation type="vanished">Покретање:</translation>
+        <translation type="vanished">Pokretanje:</translation>
     </message>
     <message>
         <source>Connect automatically on startup</source>
-        <translation type="vanished">Аутоматски се повежи при покретању</translation>
+        <translation type="vanished">Automatski se poveži pri pokretanju</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -8828,12 +8828,12 @@ Errors: %3</source>
     <message>
         <location line="+6"/>
         <source>Connect</source>
-        <translation>Повежи се</translation>
+        <translation>Poveži se</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Collection Import &amp; Synchronization</source>
-        <translation>Увоз и синхронизација збирке</translation>
+        <translation>Uvoz i sinhronizacija zbirke</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -8842,20 +8842,20 @@ Errors: %3</source>
     </message>
     <message>
         <source>Katalog File</source>
-        <translation type="vanished">Katalog датотека</translation>
+        <translation type="vanished">Katalog datoteka</translation>
     </message>
     <message>
         <source>Katalog Memory</source>
-        <translation type="vanished">Katalog меморија</translation>
+        <translation type="vanished">Katalog memorija</translation>
     </message>
     <message>
         <source>VVV Tab Separated Values</source>
-        <translation type="vanished">VVV вредности раздвојене табулаторима</translation>
+        <translation type="vanished">VVV vrednosti razdvojene tabulatorima</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Tab Separated Values</source>
-        <translation>Вредности раздвојене табулаторима</translation>
+        <translation>Vrednosti razdvojene tabulatorima</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -8865,7 +8865,7 @@ Errors: %3</source>
     <message>
         <location line="+5"/>
         <source>VVV export file (.tsv)</source>
-        <translation>VVV извозна датотека (.tsv)</translation>
+        <translation>VVV izvozna datoteka (.tsv)</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -8941,7 +8941,7 @@ Errors: %3</source>
         <location line="-326"/>
         <location line="+92"/>
         <source>Error: </source>
-        <translation>Грешка: </translation>
+        <translation>Greška: </translation>
     </message>
     <message>
         <location line="-90"/>
@@ -8958,12 +8958,12 @@ Errors: %3</source>
     <message>
         <location line="-29"/>
         <source>Copy to Clipboard</source>
-        <translation>Копирај у оставу</translation>
+        <translation>Kopiraj u ostavu</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Copied</source>
-        <translation>Копирано</translation>
+        <translation>Kopirano</translation>
     </message>
     <message>
         <location line="+98"/>
@@ -8993,17 +8993,17 @@ Errors: %3</source>
     <message>
         <location line="+42"/>
         <source>Invalid hostname.</source>
-        <translation>Неважеће име домаћина.</translation>
+        <translation>Nevažeće ime domaćina.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Only local or private network allowed.</source>
-        <translation>Дозвољена је само локална или приватна мрежа.</translation>
+        <translation>Dozvoljena je samo lokalna ili privatna mreža.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Valid:</source>
-        <translation>Важеће:</translation>
+        <translation>Važeće:</translation>
     </message>
     <message>
         <location line="+129"/>
@@ -9019,7 +9019,7 @@ Errors: %3</source>
     <message>
         <location line="-335"/>
         <source>Application</source>
-        <translation>Апликација</translation>
+        <translation>Aplikacija</translation>
     </message>
     <message>
         <location line="+615"/>
@@ -9039,7 +9039,7 @@ Errors: %3</source>
     <message>
         <location line="+6"/>
         <source>Check for a new version on startup</source>
-        <translation>Провери нову верзију при покретању</translation>
+        <translation>Proveri novu verziju pri pokretanju</translation>
     </message>
     <message>
         <location line="-64"/>
@@ -9134,7 +9134,7 @@ Errors: %3</source>
     <message>
         <location line="+266"/>
         <source>Settings file</source>
-        <translation>Датотека подешавања</translation>
+        <translation>Datoteka podešavanja</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -9252,22 +9252,22 @@ Errors: %3</source>
     <message>
         <location line="+17"/>
         <source>1 day ago</source>
-        <translation>Пре 1 дана</translation>
+        <translation>Pre 1 dana</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 week ago</source>
-        <translation>Пре 1 недеље</translation>
+        <translation>Pre 1 nedelje</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 month ago</source>
-        <translation>Пре 1 месеца</translation>
+        <translation>Pre 1 meseca</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>1 year ago</source>
-        <translation>Пре 1 године</translation>
+        <translation>Pre 1 godine</translation>
     </message>
     <message>
         <location line="+39"/>
@@ -9283,7 +9283,7 @@ Errors: %3</source>
     <message>
         <location line="-10"/>
         <source>Used Space</source>
-        <translation>Искоришћен простор</translation>
+        <translation>Iskorišćen prostor</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -9395,7 +9395,7 @@ Errors: %3</source>
     <message>
         <location line="+38"/>
         <source>Collection</source>
-        <translation>Збирка</translation>
+        <translation>Zbirka</translation>
     </message>
 </context>
 <context>
