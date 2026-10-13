@@ -90,6 +90,9 @@ public:
 
     /** Suggested width for a visible column, used by the QML columnWidthProvider. */
     Q_INVOKABLE int columnWidth(int column) const;
+    /** Visible position of the column with this key ("name", "path"), or -1:
+     *  Path moves with the view and Full Table (CDT-C9). */
+    int visibleColumnOfKey(const QString &key) const;
 
     /** The device tree's rows, as K2's QTreeView handles them (DVP-F13/F14). */
     Q_INVOKABLE void toggleExpanded(int row);

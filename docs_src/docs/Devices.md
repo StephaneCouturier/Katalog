@@ -66,6 +66,7 @@ The menu button on the right of a card, a right-click, or a press and hold opens
 
 ### Table
 * **Click a column title** to sort by that column; click again to reverse the order. Numbers, sizes and dates sort by their value.
+* **Drag** the line between two column titles to change a column width; **double-click** it to fit the column to its content. The widths of *Name* and *Path* are kept, separately for each view.
 * In *All devices*, the arrow before a name folds or unfolds the devices below it.
 * **Right-click** a row (or press and hold) to open the same [context menu](#context-menu) as on a card.
 * The keyboard works as in the [search results](SearchResults#keyboard). In *All devices*, `←` and `→` also fold and unfold the selected row.

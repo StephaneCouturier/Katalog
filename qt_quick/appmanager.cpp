@@ -737,6 +737,11 @@ int AppManager::deviceTableColumnWidth(int column) const
     return m_deviceTableModel ? m_deviceTableModel->columnWidth(column) : 100;
 }
 //----------------------------------------------------------------------
+int AppManager::deviceTableColumnOfKey(const QString &key) const
+{
+    return m_deviceTableModel ? m_deviceTableModel->visibleColumnOfKey(key) : -1;
+}
+//----------------------------------------------------------------------
 void AppManager::sortDeviceTable(int column, int order)
 {
     if (!m_deviceTableSortModel) return;

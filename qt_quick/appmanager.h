@@ -482,6 +482,7 @@ public slots:
     Q_INVOKABLE void populateDeviceTable(const QString &viewFilter, const QVariantList &rows);
     /** Width hint for a visible table column, for the QML columnWidthProvider. */
     Q_INVOKABLE int  deviceTableColumnWidth(int column) const;
+    Q_INVOKABLE int  deviceTableColumnOfKey(const QString &key) const;
 
     // Storage helpers
     Q_INVOKABLE QStringList  getStoragePictureList() const;

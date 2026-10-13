@@ -95,6 +95,29 @@ Item {
         appManager1.populateDeviceTable(viewFilter, devices)
         if (tableSortColumn >= 0)
             appManager1.sortDeviceTable(tableSortColumn, tableSortAscending ? 0 : 1)
+        reloadColumnWidths()
+    }
+
+    // Persisted column widths (CDT-F12/C9, DVP-F32): Name and Path, each view
+    // with its own pair. Keyed by the column itself, since Path's position
+    // differs per view and with Full Table.
+    property var savedColumnWidths: ({})
+    function persistedColumnKeys() {
+        let keys = {}
+        const suffix = viewFilter
+        const name = appManager1.deviceTableColumnOfKey("name")
+        const path = appManager1.deviceTableColumnOfKey("path")
+        if (name >= 0) keys[name] = "Devices/ColumnWidthName" + suffix
+        if (path >= 0) keys[path] = "Devices/ColumnWidthPath" + suffix
+        return keys
+    }
+    function reloadColumnWidths() {
+        // A width the user dragged in the previous column set belongs to
+        // whatever column was at that position then, not to this one.
+        for (let c = 0; c < deviceTable.columns; c++)
+            deviceTable.setColumnWidth(c, -1)
+        columnWidthSaveTimer.stop()
+        savedColumnWidths = applicationWindow().loadPersistedColumnWidths(deviceTable, persistedColumnKeys())
     }
 
     onDevicesChanged:    refreshTable()
@@ -566,7 +589,7 @@ Item {
                             appManager1.deviceDisplayFullTable = checked
                             // The column count changed; TableView caches column
                             // widths and has to be told to measure them again.
-                            deviceTable.forceLayout()
+                            root.reloadColumnWidths()
                             checked = Qt.binding(() => appManager1.deviceDisplayFullTable)
                         }
                     },
@@ -890,7 +913,31 @@ Item {
                 columnWidthProvider: function(column) {
                     let w = deviceTable.explicitColumnWidth(column)
                     if (w >= 0) return w
-                    return appManager1.deviceTableColumnWidth(column)
+                    return root.savedColumnWidths[column] ?? appManager1.deviceTableColumnWidth(column)
+                }
+                // TableView estimates its contentWidth from the columns loaded so
+                // far, scaled to the full column count, which cut the scroll range
+                // short in the "All" view: the last columns could not be reached.
+                // The real sum is set instead, after every layout pass, as on
+                // Search results and Explore.
+                function columnsTotalWidth() {
+                    let total = 0
+                    for (let c = 0; c < columns; c++)
+                        total += Math.max(0, deviceTable.columnWidthProvider(c))
+                    return total
+                }
+                onColumnsChanged: contentWidth = columnsTotalWidth()
+                // Saved once a resize settles, not on every step of a drag (CDT-F12).
+                onLayoutChanged: {
+                    contentWidth = columnsTotalWidth()
+                    columnWidthSaveTimer.restart()
+                }
+                Timer {
+                    id: columnWidthSaveTimer
+                    interval: 500
+                    onTriggered: root.savedColumnWidths =
+                        applicationWindow().savePersistedColumnWidths(deviceTable, root.persistedColumnKeys(),
+                                                                      root.savedColumnWidths)
                 }
 
                 delegate: Rectangle {

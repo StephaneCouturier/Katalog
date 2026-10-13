@@ -66,6 +66,7 @@ Le bouton de menu à droite d'une carte, un clic droit ou un appui long ouvre le
 
 ### Tableau
 * **Cliquez sur le titre d'une colonne** pour trier selon cette colonne ; cliquez à nouveau pour inverser l'ordre. Les nombres, tailles et dates sont triés selon leur valeur.
+* **Faites glisser** la ligne entre deux titres de colonnes pour changer la largeur d'une colonne ; **double-cliquez** dessus pour ajuster la colonne à son contenu. Les largeurs de *Nom* et *Chemin* sont conservées, séparément pour chaque vue.
 * Dans *Tous les périphériques*, la flèche devant un nom replie ou déplie les périphériques situés en dessous.
 * **Faites un clic droit** sur une ligne (ou un appui long) pour ouvrir le même [menu contextuel](#context-menu) que sur une carte.
 * Le clavier fonctionne comme dans les [résultats de recherche](SearchResults#keyboard). Dans *Tous les périphériques*, `←` et `→` replient et déplient aussi la ligne sélectionnée.

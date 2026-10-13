@@ -66,6 +66,7 @@ Tlačítko nabídky vpravo na kartě, kliknutí pravým tlačítkem nebo dlouhý
 
 ### Tabulka
 * **Kliknutím na nadpis sloupce** seřadíte podle tohoto sloupce; dalším kliknutím pořadí obrátíte. Čísla, velikosti a data se řadí podle hodnoty.
+* **Přetažením** čáry mezi dvěma nadpisy sloupců změníte šířku sloupce; **dvojitým kliknutím** na ni přizpůsobíte sloupec obsahu. Šířky sloupců *Název* a *Cesta* se zachovají, pro každé zobrazení zvlášť.
 * Ve zobrazení *Všechna zařízení* šipka před názvem sbalí nebo rozbalí zařízení pod ním.
 * **Kliknutím pravým tlačítkem** na řádek (nebo dlouhým stiskem) otevřete stejnou [místní nabídku](#context-menu) jako na kartě.
 * Klávesnice funguje jako ve [výsledcích vyhledávání](SearchResults#keyboard). Ve zobrazení *Všechna zařízení* `←` a `→` také sbalují a rozbalují vybraný řádek.

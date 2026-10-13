@@ -351,6 +351,15 @@ int DeviceTableModel::columnWidth(int column) const
     return columnsForView().at(m_visible.at(column)).width;
 }
 
+int DeviceTableModel::visibleColumnOfKey(const QString &key) const
+{
+    const QList<Column> &all = columnsForView();
+    for (int i = 0; i < m_visible.size(); ++i)
+        if (QLatin1String(all.at(m_visible.at(i)).key) == key)
+            return i;
+    return -1;
+}
+
 QVariant DeviceTableModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid() || index.row() < 0 || index.row() >= m_rows.size())
