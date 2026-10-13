@@ -107,7 +107,7 @@ When there is no link yet, the page says so and *Add* creates the first one.
 * a summary: files to copy or move, conflicts, files already in the target, and a warning when the source or the target is offline,
 * the [space check](#space) of the target,
 * the list of files, with their *Status* (*Copy*, *Move* or *Conflict*), *File Name*, *Path* and *Size*,
-* *Export to CSV* saves the list in the collection folder (the home folder in *Hosted* mode), and shows the file path.
+* *Export to CSV* saves the list in the collection folder (the home folder in *Hosted* mode), and shows the file path; clicking it opens the file.
 
 ![Backup preview: summary, space check and list of files](/img/backup_03_preview.png)
 
@@ -135,7 +135,7 @@ When there is no link yet, the page says so and *Add* creates the first one.
 | *Duplicate* | Creates a new link with the same settings, to adapt it. |
 | *Replicate directories* | Creates the folder structure of the source on the target, without the files. The result gives the folders created, already existing, and errors. |
 | *Invert (swap source and target)* | Swaps the source and the target, for example to restore. When the name contains an arrow, its two halves are swapped too. |
-| *Export to CSV* | Computes the preview of this link, then saves its list of files in a CSV file in the collection folder (the home folder in *Hosted* mode), and shows the file path. |
+| *Export to CSV* | Computes the preview of this link, then saves its list of files in a CSV file in the collection folder (the home folder in *Hosted* mode), and shows the file path; clicking it opens the file. |
 | *Delete* | Deletes the link, after confirmation. No file is touched, on the source or the target. |
 
 ### LuckyBackup profile {#luckybackup}

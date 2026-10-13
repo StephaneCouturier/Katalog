@@ -48,7 +48,7 @@ specification and the code disagree, the specification is what was agreed.
 | [SpecProgressReport](SpecProgressReport.md) | Progress Reporting | — | — | — |
 | [SpecQualityCheck](SpecQualityCheck.md) | QUALITY Check | Draft | planned (phase 1) | — |
 | [SpecSearchList](SpecSearchList.md) | SEARCH List as Input | Approved | — | — |
-| [SpecSearchResults](SpecSearchResults.md) | SEARCH RESULTS — COLUMN SET | Approved | planned | — |
+| [SpecSearchResults](SpecSearchResults.md) | SEARCH RESULTS | Approved | planned | — |
 | [SpecSearchResultsFilters](SpecSearchResultsFilters.md) | SEARCH RESULTS — QUICK FILTER AND CATALOGS FILTER | Approved | planned | — |
 | [SpecSelection](SpecSelection.md) | SELECTION — SELECTED DEVICE | Approved | planned | — |
 | [SpecSettingsPage](SpecSettingsPage.md) | SETTINGS PAGE — APPLICATION AND COLLECTION TABS | Approved | planned | — |

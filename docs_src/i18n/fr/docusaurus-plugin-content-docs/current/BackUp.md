@@ -107,7 +107,7 @@ Lorsqu'il n'y a encore aucun lien, la page l'indique et *Ajouter* crée le premi
 * un résumé : fichiers à copier ou à déplacer, conflits, fichiers déjà présents dans la cible, et un avertissement lorsque la source ou la cible est hors ligne,
 * la [vérification de l'espace](#space) de la cible,
 * la liste des fichiers, avec leur *Statut* (*Copier*, *Déplacer* ou *Conflit*), *Nom du fichier*, *Chemin* et *Taille*,
-* *Exporter en CSV* enregistre la liste dans le dossier de la collection (le dossier personnel en mode *Hébergé*), et affiche le chemin du fichier.
+* *Exporter en CSV* enregistre la liste dans le dossier de la collection (le dossier personnel en mode *Hébergé*), et affiche le chemin du fichier ; un clic dessus ouvre le fichier.
 
 ![Aperçu de la sauvegarde : résumé, vérification de l'espace et liste des fichiers](/img/backup_03_preview.png)
 
@@ -135,7 +135,7 @@ Lorsqu'il n'y a encore aucun lien, la page l'indique et *Ajouter* crée le premi
 | *Dupliquer* | Crée un nouveau lien avec les mêmes paramètres, pour l'adapter. |
 | *Répliquer les répertoires* | Crée la structure de dossiers de la source sur la cible, sans les fichiers. Le résultat donne les dossiers créés, ceux qui existaient déjà, et les erreurs. |
 | *Inverser (échanger source et cible)* | Échange la source et la cible, par exemple pour une restauration. Lorsque le nom contient une flèche, ses deux moitiés sont aussi échangées. |
-| *Exporter en CSV* | Calcule l'aperçu de ce lien, puis enregistre sa liste de fichiers dans un fichier CSV dans le dossier de la collection (le dossier personnel en mode *Hébergé*), et affiche le chemin du fichier. |
+| *Exporter en CSV* | Calcule l'aperçu de ce lien, puis enregistre sa liste de fichiers dans un fichier CSV dans le dossier de la collection (le dossier personnel en mode *Hébergé*), et affiche le chemin du fichier ; un clic dessus ouvre le fichier. |
 | *Supprimer* | Supprime le lien, après confirmation. Aucun fichier n'est touché, ni sur la source ni sur la cible. |
 
 ### Profil LuckyBackup {#luckybackup}

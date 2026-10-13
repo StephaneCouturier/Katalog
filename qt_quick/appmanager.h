@@ -637,6 +637,7 @@ signals:
     void backupReportChanged();
     void backupFinished(int copiedCount, int movedCount, int renamedCount, int conflictCount, int errorCount, qint64 totalBytesCopied, bool wasCancelled);
     void backupNotification(const QString &message, bool isError);
+    void backupCsvExported(const QString &filePath);
     void updateBeforeBackupChanged();
     void catalogUpdateForBackupRunningChanged();
     void catalogUpdateForBackupStatusChanged();

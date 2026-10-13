@@ -101,7 +101,7 @@ Seznam vedle *Exportovat* volí akci a tlačítko vedle něj (*Spusťte proces u
 
 | Akce | Popis |
 |------|-------|
-| *Exportovat do CSV* | Uloží výsledky do souboru CSV ve složce *Stažené soubory*; po dokončení se zobrazí jeho cesta. |
+| *Exportovat do CSV* | Uloží výsledky do souboru CSV ve složce kolekce (v režimu *Hostováno* do domovské složky); po dokončení se zobrazí jeho cesta a kliknutím na ni se soubor otevře. |
 | *Exportovat do katalogu* | Uloží výsledky jako nový katalog pod virtuální zařízení *Výsledky vyhledávání* (viz [Zařízení](Devices)). |
 | *Ověřit kontrolní součty* | Po potvrzení vypočítá kontrolní součty všech výsledků a porovná je s uloženými. Zpráva uvede počet souborů shodných, neshodných, nově vypočítaných a s chybou. |
 | *Extrahovat metadata* | Po potvrzení přečte metadata všech výsledků a uloží je. Zpráva uvede počet souborů aktualizovaných, přeskočených a s chybou. |

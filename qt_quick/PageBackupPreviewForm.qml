@@ -53,7 +53,12 @@ Kirigami.Page {
             enabled:     root.previewData && (root.previewData.filesToCopy.length + root.previewData.fileConflicts.length) > 0
             onTriggered: {
                 var path = appManager1.exportLastBackupPreviewToCsv()
-                exportMsg.text    = path
+                exportMsg.filePath = path
+                // A failure comes back as a message, not a path: no link then
+                exportMsg.text = path.startsWith("/") || /^[A-Za-z]:[\\/]/.test(path)
+                    ? qsTr("Exported to: %1").arg("<a href=\"file\">"
+                          + path.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + "</a>")
+                    : path
                 exportMsg.visible = true
             }
         },
@@ -89,13 +94,16 @@ Kirigami.Page {
         }
 
         // Export feedback
+        // Clicking the path opens the file, as K2's dialog link did (BKP-F26)
         Kirigami.InlineMessage {
             id: exportMsg
+            property string filePath: ""
             Layout.fillWidth: true
             Layout.margins: Kirigami.Units.smallSpacing
             type: Kirigami.MessageType.Positive
             visible: false
             showCloseButton: true
+            onLinkActivated: appManager1.openFile(filePath)
         }
 
         // Summary

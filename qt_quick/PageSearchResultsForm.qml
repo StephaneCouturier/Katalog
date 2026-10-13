@@ -150,6 +150,26 @@ ColumnLayout {
         appManager1.openFolder(path)
     }
 
+    // CSV export result: the path stays readable and opens the file when
+    // clicked, as K2's dialog link did (SRS-F9 / SRS-C4).
+    function showExportedFile(path) {
+        exportMessage.filePath = path
+        exportMessage.text = qsTr("Exported to: %1").arg(
+            "<a href=\"file\">" + path.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + "</a>")
+        exportMessage.visible = true
+    }
+
+    Kirigami.InlineMessage {
+        id: exportMessage
+        property string filePath: ""
+        Layout.fillWidth: true
+        Layout.margins: Kirigami.Units.smallSpacing
+        type: Kirigami.MessageType.Positive
+        showCloseButton: true
+        visible: false
+        onLinkActivated: appManager1.openFile(filePath)
+    }
+
     // ── Device path ──────────────────────────────────────────────────────
     Rectangle {
         Layout.fillWidth: true
@@ -316,7 +336,7 @@ ColumnLayout {
                     if (action === "csv") {
                         let path = appManager1.exportSearchResultsToCSV()
                         if (path)
-                            showPassiveNotification(qsTr("Exported to: %1").arg(path))
+                            pageSearchResults_column.showExportedFile(path)
                         else
                             showPassiveNotification(qsTr("Export failed — no results or write error"))
                     } else if (action === "catalog") {

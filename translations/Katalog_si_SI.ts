@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+160"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4692"/>
+        <location line="+4690"/>
         <source>Search</source>
         <translation>Iskanje</translation>
     </message>
     <message>
-        <location line="-4812"/>
+        <location line="-4810"/>
         <source>Stopped</source>
         <translation>Ustavljeno</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3260"/>
+        <location line="+3258"/>
         <source>Evaluated</source>
         <translation>Ovrednoteno</translation>
     </message>
     <message>
-        <location line="-3378"/>
+        <location line="-3376"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -45,7 +45,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2180"/>
+        <location line="+2178"/>
         <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
@@ -65,17 +65,17 @@
         <translation>V teku</translation>
     </message>
     <message>
-        <location line="-4693"/>
-        <location line="+4127"/>
+        <location line="-4691"/>
+        <location line="+4125"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
-        <location line="+720"/>
+        <location line="+723"/>
         <source>Completed</source>
         <translation>Končano</translation>
     </message>
     <message>
-        <location line="-4330"/>
+        <location line="-4331"/>
         <source>Empty database path provided</source>
         <translation>Podana prazna pot do zbirke podatkov</translation>
     </message>
@@ -115,7 +115,7 @@
         <translation>Lokalni disk</translation>
     </message>
     <message>
-        <location line="+462"/>
+        <location line="+460"/>
         <source>search_results</source>
         <translation>rezultati_iskanja</translation>
     </message>
@@ -499,12 +499,12 @@ Izberite drugo ime.</translation>
         <location line="+4"/>
         <location line="+30"/>
         <location line="+32"/>
-        <location line="+735"/>
+        <location line="+738"/>
         <source>Error</source>
         <translation>Napaka</translation>
     </message>
     <message>
-        <location line="-900"/>
+        <location line="-903"/>
         <location line="+17"/>
         <location line="+29"/>
         <location line="+10"/>
@@ -519,13 +519,13 @@ Izberite drugo ime.</translation>
         <location line="+26"/>
         <location line="+17"/>
         <location line="+50"/>
-        <location line="+681"/>
+        <location line="+684"/>
         <location line="+92"/>
         <source>Cancelled</source>
         <translation>Preklicano</translation>
     </message>
     <message>
-        <location line="-856"/>
+        <location line="-859"/>
         <location line="+10"/>
         <source>Loaded</source>
         <translation>Naloženo</translation>
@@ -589,7 +589,7 @@ Izberite drugo ime.</translation>
         <translation>Povezave ni bilo mogoče posodobiti.</translation>
     </message>
     <message>
-        <location line="+106"/>
+        <location line="+109"/>
         <location line="+2"/>
         <location line="+421"/>
         <source>Link not found.</source>
@@ -6271,7 +6271,7 @@ Preverite, ali je izvorna mapa (%1) pravilna ali ali je naprava priklopljena v i
         <translation type="vanished">sinhronizirano</translation>
     </message>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+145"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+146"/>
         <source>Cancelled</source>
         <translation>Preklicano</translation>
     </message>
@@ -6302,12 +6302,17 @@ Preverite, ali je izvorna mapa (%1) pravilna ali ali je naprava priklopljena v i
     </message>
     <message>
         <location line="+1"/>
-        <location line="+615"/>
+        <location line="+623"/>
         <source>Errors: %1</source>
         <translation>Napake: %1</translation>
     </message>
     <message>
-        <location line="-566"/>
+        <location line="-595"/>
+        <source>Exported to: %1</source>
+        <translation>Izvoženo v: %1</translation>
+    </message>
+    <message>
+        <location line="+28"/>
         <source>Type</source>
         <translation>Tip</translation>
     </message>
@@ -6319,35 +6324,35 @@ Preverite, ali je izvorna mapa (%1) pravilna ali ali je naprava priklopljena v i
     </message>
     <message>
         <location line="-18"/>
-        <location line="+260"/>
+        <location line="+261"/>
         <source>Backup</source>
         <translation>Varnostna kopija</translation>
     </message>
     <message>
-        <location line="-259"/>
-        <location line="+259"/>
+        <location line="-260"/>
+        <location line="+260"/>
         <source>Archive</source>
         <translation>Arhiv</translation>
     </message>
     <message>
-        <location line="-247"/>
+        <location line="-248"/>
         <source>Filter</source>
         <translation>Filter</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+262"/>
+        <location line="+263"/>
         <source>Source</source>
         <translation>Vir</translation>
     </message>
     <message>
-        <location line="-261"/>
-        <location line="+312"/>
+        <location line="-262"/>
+        <location line="+313"/>
         <source>Target</source>
         <translation>Cilj</translation>
     </message>
     <message>
-        <location line="-291"/>
+        <location line="-292"/>
         <location line="+19"/>
         <source>Run listed links</source>
         <translation>Zaženi navedene povezave</translation>
@@ -6398,7 +6403,7 @@ Preverite, ali je izvorna mapa (%1) pravilna ali ali je naprava priklopljena v i
         <translation>ආවරණය</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+20"/>
         <source>Report</source>
         <translation>Poročilo</translation>
     </message>
@@ -6481,8 +6486,8 @@ Preverite, ali je izvorna mapa (%1) pravilna ali ali je naprava priklopljena v i
         <translation>Nadaljuj</translation>
     </message>
     <message>
-        <location line="-432"/>
-        <location line="+438"/>
+        <location line="-433"/>
+        <location line="+439"/>
         <source>Cancel</source>
         <translation>Prekliči</translation>
     </message>
@@ -6702,7 +6707,7 @@ Preverite, ali je izvorna mapa (%1) pravilna ali ali je naprava priklopljena v i
         <translation>Izvozi v CSV</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+18"/>
         <source>Close</source>
         <translation>Zapri</translation>
     </message>
@@ -6716,7 +6721,7 @@ Preverite, ali je izvorna mapa (%1) pravilna ali ali je naprava priklopljena v i
         <translation>Računanje predogleda…</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+38"/>
         <location line="+182"/>
         <source>Move</source>
         <translation>Premakni</translation>
@@ -6763,7 +6768,7 @@ Preverite, ali je izvorna mapa (%1) pravilna ali ali je naprava priklopljena v i
         <translation>Malo ciljnega prostora - %1 ostane po operaciji</translation>
     </message>
     <message>
-        <location line="-119"/>
+        <location line="-127"/>
         <source>Status</source>
         <translation>Stanje</translation>
     </message>
@@ -6788,7 +6793,12 @@ Preverite, ali je izvorna mapa (%1) pravilna ali ali je naprava priklopljena v i
         <translation>Poročilo</translation>
     </message>
     <message>
-        <location line="+254"/>
+        <location line="+19"/>
+        <source>Exported to: %1</source>
+        <translation>Izvoženo v: %1</translation>
+    </message>
+    <message>
+        <location line="+243"/>
         <source>Conflict</source>
         <translation>Konflikt</translation>
     </message>
@@ -8268,7 +8278,7 @@ Preverite, ali je izvorna mapa (%1) pravilna ali ali je naprava priklopljena v i
 <context>
     <name>PageSearchResultsForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+212"/>
+        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+232"/>
         <source>%1 duplicate(s) found</source>
         <translation>Najdenih %1 dvojnikov</translation>
     </message>
@@ -8333,7 +8343,7 @@ Preverite, ali je izvorna mapa (%1) pravilna ali ali je naprava priklopljena v i
         <translation>Premakni v smeti</translation>
     </message>
     <message>
-        <location line="-1017"/>
+        <location line="-1037"/>
         <location line="+11"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Naprava ni aktivna. Morda je odklopljena ali pa se je spremenila njena pot.</translation>
@@ -8344,7 +8354,7 @@ Preverite, ali je izvorna mapa (%1) pravilna ali ali je naprava priklopljena v i
         <translation>Mape ni mogoče najti.</translation>
     </message>
     <message>
-        <location line="+112"/>
+        <location line="+132"/>
         <source>Extract Metadata</source>
         <translation>Izvleci metapodatke</translation>
     </message>
@@ -8360,12 +8370,12 @@ Preverite, ali je izvorna mapa (%1) pravilna ali ali je naprava priklopljena v i
         <translation>Zaženi proces na vseh rezultatih</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="-174"/>
         <source>Exported to: %1</source>
         <translation>Izvoženo v: %1</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+184"/>
         <source>Export failed — no results or write error</source>
         <translation>Izvoz ni uspel — ni rezultatov ali napaka pri pisanju</translation>
     </message>
@@ -8451,8 +8461,8 @@ Preverite, ali je izvorna mapa (%1) pravilna ali ali je naprava priklopljena v i
         <translation>Izračunaj nadzorno vsoto (SHA-256)</translation>
     </message>
     <message>
-        <location line="-662"/>
-        <location line="+678"/>
+        <location line="-682"/>
+        <location line="+698"/>
         <source>File not found or could not be read</source>
         <translation>Datoteke ni mogoče najti ali prebrati</translation>
     </message>

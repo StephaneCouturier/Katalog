@@ -1517,10 +1517,8 @@ QString AppManager::exportSearchResultsToCSV()
     if (!searchObject || searchObject->fileNames.isEmpty())
         return QString();
 
-    // Determine export path
-    QString dir = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
-    if (dir.isEmpty())
-        dir = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    // The per-mode folder every CSV export uses, as K2 and Backup do (SRS-F9)
+    const QString dir = getCollectionBrowsePath();
     QString timestamp = QDateTime::currentDateTime().toString("yyyyMMdd-HHmmss");
     QString filePath  = dir + "/katalog_search_" + timestamp + ".csv";
 
@@ -4996,7 +4994,10 @@ void AppManager::runPreviewCompare(int mappingId)
             // Export of this link's preview: report the file, no Preview page
             m_exportAfterPreview = false;
             const QString exported = exportLastBackupPreviewToCsv();
-            emit backupNotification(exported, !QFileInfo(exported).isAbsolute());
+            if (QFileInfo(exported).isAbsolute())
+                emit backupCsvExported(exported);   // shown as a clickable path (BKP-F26)
+            else
+                emit backupNotification(exported, true);
             return;
         }
         emit backupPreviewReady(mappingId, success, cancelled);

@@ -101,7 +101,7 @@ La liste à côté de *Exporter* permet de choisir une action, et le bouton vois
 
 | Action | Description |
 |--------|-------------|
-| *Exporter en CSV* | Enregistre les résultats dans un fichier CSV dans le dossier *Téléchargements* ; son chemin est affiché à la fin. |
+| *Exporter en CSV* | Enregistre les résultats dans un fichier CSV dans le dossier de la collection (le dossier personnel en mode *Hébergé*) ; son chemin est affiché à la fin, et un clic dessus ouvre le fichier. |
 | *Exporter vers le catalogue* | Enregistre les résultats comme nouveau catalogue, sous un périphérique virtuel *Résultats de recherche* (voir [Périphériques](Devices)). |
 | *Vérifier les sommes de contrôle* | Calcule les sommes de contrôle de tous les résultats et les compare à celles enregistrées, après confirmation. Un rapport donne le nombre de fichiers concordants, non concordants, nouvellement calculés et en erreur. |
 | *Extraire les métadonnées* | Lit les métadonnées de tous les résultats et les enregistre, après confirmation. Un rapport donne le nombre de fichiers mis à jour, ignorés et en erreur. |

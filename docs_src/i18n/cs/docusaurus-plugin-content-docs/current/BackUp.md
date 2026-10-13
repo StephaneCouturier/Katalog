@@ -107,7 +107,7 @@ Když ještě žádný odkaz neexistuje, stránka to oznámí a *Přidat* vytvo�
 * shrnutí: soubory ke kopírování nebo přesunutí, konflikty, soubory, které už v cíli jsou, a upozornění, když je zdroj nebo cíl offline,
 * [kontrola místa](#space) v cíli,
 * seznam souborů s jejich *Stav* (*Kopírovat*, *Přesunout* nebo *Konflikt*), *Název souboru*, *Cesta* a *Velikost*,
-* *Exportovat do CSV* uloží seznam do složky kolekce (v režimu *Hostováno* do domovské složky) a ukáže cestu k souboru.
+* *Exportovat do CSV* uloží seznam do složky kolekce (v režimu *Hostováno* do domovské složky) a ukáže cestu k souboru; kliknutím na ni se soubor otevře.
 
 ![Náhled zálohy: shrnutí, kontrola místa a seznam souborů](/img/backup_03_preview.png)
 
@@ -135,7 +135,7 @@ Když ještě žádný odkaz neexistuje, stránka to oznámí a *Přidat* vytvo�
 | *Duplikovat* | Vytvoří nový odkaz se stejným nastavením k úpravě. |
 | *Replikovat adresáře* | Vytvoří v cíli strukturu složek zdroje, bez souborů. Výsledek uvede vytvořené složky, již existující složky a chyby. |
 | *Invertovat (prohodit zdroj a cíl)* | Prohodí zdroj a cíl, například pro obnovu. Když název obsahuje šipku, prohodí se i jeho dvě poloviny. |
-| *Exportovat do CSV* | Vypočítá náhled tohoto odkazu, pak uloží jeho seznam souborů do souboru CSV ve složce kolekce (v režimu *Hostováno* do domovské složky) a ukáže cestu k souboru. |
+| *Exportovat do CSV* | Vypočítá náhled tohoto odkazu, pak uloží jeho seznam souborů do souboru CSV ve složce kolekce (v režimu *Hostováno* do domovské složky) a ukáže cestu k souboru; kliknutím na ni se soubor otevře. |
 | *Smazat* | Po potvrzení smaže odkaz. Žádného souboru ve zdroji ani v cíli se to nedotkne. |
 
 ### Profil LuckyBackup {#luckybackup}

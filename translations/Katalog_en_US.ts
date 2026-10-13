@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+160"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4692"/>
+        <location line="+4690"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-4812"/>
+        <location line="-4810"/>
         <source>Stopped</source>
         <translation type="unfinished"></translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3260"/>
+        <location line="+3258"/>
         <source>Evaluated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-3378"/>
+        <location line="-3376"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -45,7 +45,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2180"/>
+        <location line="+2178"/>
         <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
@@ -65,17 +65,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-4693"/>
-        <location line="+4127"/>
+        <location line="-4691"/>
+        <location line="+4125"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
-        <location line="+720"/>
+        <location line="+723"/>
         <source>Completed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-4330"/>
+        <location line="-4331"/>
         <source>Empty database path provided</source>
         <translation type="unfinished"></translation>
     </message>
@@ -115,7 +115,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+462"/>
+        <location line="+460"/>
         <source>search_results</source>
         <translation type="unfinished"></translation>
     </message>
@@ -486,12 +486,12 @@ Choose a different name.</source>
         <location line="+4"/>
         <location line="+30"/>
         <location line="+32"/>
-        <location line="+735"/>
+        <location line="+738"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-900"/>
+        <location line="-903"/>
         <location line="+17"/>
         <location line="+29"/>
         <location line="+10"/>
@@ -506,13 +506,13 @@ Choose a different name.</source>
         <location line="+26"/>
         <location line="+17"/>
         <location line="+50"/>
-        <location line="+681"/>
+        <location line="+684"/>
         <location line="+92"/>
         <source>Cancelled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-856"/>
+        <location line="-859"/>
         <location line="+10"/>
         <source>Loaded</source>
         <translation type="unfinished"></translation>
@@ -576,7 +576,7 @@ Choose a different name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+106"/>
+        <location line="+109"/>
         <location line="+2"/>
         <location line="+421"/>
         <source>Link not found.</source>
@@ -6008,7 +6008,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageBackupForm</name>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+145"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+146"/>
         <source>Cancelled</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6039,12 +6039,17 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+615"/>
+        <location line="+623"/>
         <source>Errors: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-566"/>
+        <location line="-595"/>
+        <source>Exported to: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+28"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6056,35 +6061,35 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="-18"/>
-        <location line="+260"/>
+        <location line="+261"/>
         <source>Backup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-259"/>
-        <location line="+259"/>
+        <location line="-260"/>
+        <location line="+260"/>
         <source>Archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-247"/>
+        <location line="-248"/>
         <source>Filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+262"/>
+        <location line="+263"/>
         <source>Source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-261"/>
-        <location line="+312"/>
+        <location line="-262"/>
+        <location line="+313"/>
         <source>Target</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-291"/>
+        <location line="-292"/>
         <location line="+19"/>
         <source>Run listed links</source>
         <translation type="unfinished"></translation>
@@ -6135,7 +6140,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+20"/>
         <source>Report</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6218,8 +6223,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-432"/>
-        <location line="+438"/>
+        <location line="-433"/>
+        <location line="+439"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6440,7 +6445,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+10"/>
+        <source>Exported to: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6450,7 +6460,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+38"/>
         <location line="+182"/>
         <source>Move</source>
         <translation type="unfinished"></translation>
@@ -6497,7 +6507,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-119"/>
+        <location line="-127"/>
         <source>Status</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6517,7 +6527,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+272"/>
+        <location line="+280"/>
         <source>Conflict</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7942,7 +7952,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageSearchResultsForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+212"/>
+        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+232"/>
         <source>%1 duplicate(s) found</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8007,13 +8017,13 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1017"/>
+        <location line="-1037"/>
         <location line="+11"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+116"/>
+        <location line="+136"/>
         <source>Extract Metadata</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8029,12 +8039,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="-174"/>
         <source>Exported to: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+184"/>
         <source>Export failed — no results or write error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8120,18 +8130,18 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-662"/>
-        <location line="+678"/>
+        <location line="-682"/>
+        <location line="+698"/>
         <source>File not found or could not be read</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-667"/>
+        <location line="-687"/>
         <source>Folder not found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+672"/>
+        <location line="+692"/>
         <source>Copy Checksum</source>
         <translation type="unfinished"></translation>
     </message>

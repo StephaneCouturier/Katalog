@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+160"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4692"/>
+        <location line="+4690"/>
         <source>Search</source>
         <translation>検索</translation>
     </message>
     <message>
-        <location line="-4812"/>
+        <location line="-4810"/>
         <source>Stopped</source>
         <translation>停止</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3260"/>
+        <location line="+3258"/>
         <source>Evaluated</source>
         <translation>評価済み</translation>
     </message>
     <message>
-        <location line="-3378"/>
+        <location line="-3376"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -45,7 +45,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2180"/>
+        <location line="+2178"/>
         <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
@@ -65,17 +65,17 @@
         <translation>進行中</translation>
     </message>
     <message>
-        <location line="-4693"/>
-        <location line="+4127"/>
+        <location line="-4691"/>
+        <location line="+4125"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
-        <location line="+720"/>
+        <location line="+723"/>
         <source>Completed</source>
         <translation>完了</translation>
     </message>
     <message>
-        <location line="-4330"/>
+        <location line="-4331"/>
         <source>Empty database path provided</source>
         <translation>空のデータベースパスが指定されました</translation>
     </message>
@@ -115,7 +115,7 @@
         <translation>ローカルディスク</translation>
     </message>
     <message>
-        <location line="+462"/>
+        <location line="+460"/>
         <source>search_results</source>
         <translation>検索結果</translation>
     </message>
@@ -499,12 +499,12 @@ Choose a different name.</source>
         <location line="+4"/>
         <location line="+30"/>
         <location line="+32"/>
-        <location line="+735"/>
+        <location line="+738"/>
         <source>Error</source>
         <translation>エラー</translation>
     </message>
     <message>
-        <location line="-900"/>
+        <location line="-903"/>
         <location line="+17"/>
         <location line="+29"/>
         <location line="+10"/>
@@ -519,13 +519,13 @@ Choose a different name.</source>
         <location line="+26"/>
         <location line="+17"/>
         <location line="+50"/>
-        <location line="+681"/>
+        <location line="+684"/>
         <location line="+92"/>
         <source>Cancelled</source>
         <translation>キャンセル済み</translation>
     </message>
     <message>
-        <location line="-856"/>
+        <location line="-859"/>
         <location line="+10"/>
         <source>Loaded</source>
         <translation>読み込み済み</translation>
@@ -589,7 +589,7 @@ Choose a different name.</source>
         <translation>リンクを更新できませんでした。</translation>
     </message>
     <message>
-        <location line="+106"/>
+        <location line="+109"/>
         <location line="+2"/>
         <location line="+421"/>
         <source>Link not found.</source>
@@ -6269,7 +6269,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="vanished">同期済み</translation>
     </message>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+145"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+146"/>
         <source>Cancelled</source>
         <translation>キャンセル済み</translation>
     </message>
@@ -6300,12 +6300,17 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+615"/>
+        <location line="+623"/>
         <source>Errors: %1</source>
         <translation>エラー: %1</translation>
     </message>
     <message>
-        <location line="-566"/>
+        <location line="-595"/>
+        <source>Exported to: %1</source>
+        <translation>エクスポート先: %1</translation>
+    </message>
+    <message>
+        <location line="+28"/>
         <source>Type</source>
         <translation>タイプ</translation>
     </message>
@@ -6317,35 +6322,35 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="-18"/>
-        <location line="+260"/>
+        <location line="+261"/>
         <source>Backup</source>
         <translation>バックアップ</translation>
     </message>
     <message>
-        <location line="-259"/>
-        <location line="+259"/>
+        <location line="-260"/>
+        <location line="+260"/>
         <source>Archive</source>
         <translation>アーカイブ</translation>
     </message>
     <message>
-        <location line="-247"/>
+        <location line="-248"/>
         <source>Filter</source>
         <translation>フィルター</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+262"/>
+        <location line="+263"/>
         <source>Source</source>
         <translation>ソース</translation>
     </message>
     <message>
-        <location line="-261"/>
-        <location line="+312"/>
+        <location line="-262"/>
+        <location line="+313"/>
         <source>Target</source>
         <translation>ターゲット</translation>
     </message>
     <message>
-        <location line="-291"/>
+        <location line="-292"/>
         <location line="+19"/>
         <source>Run listed links</source>
         <translation>リストのリンクを実行</translation>
@@ -6396,7 +6401,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>カバー済み</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+20"/>
         <source>Report</source>
         <translation>レポート</translation>
     </message>
@@ -6479,8 +6484,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>再開</translation>
     </message>
     <message>
-        <location line="-432"/>
-        <location line="+438"/>
+        <location line="-433"/>
+        <location line="+439"/>
         <source>Cancel</source>
         <translation>キャンセル</translation>
     </message>
@@ -6700,7 +6705,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>CSV にエクスポート</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+18"/>
         <source>Close</source>
         <translation>閉じる</translation>
     </message>
@@ -6714,7 +6719,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>プレビューを計算中…</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+38"/>
         <location line="+182"/>
         <source>Move</source>
         <translation>移動</translation>
@@ -6761,7 +6766,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>ターゲットの空き容量が少なくなっています - 操作後の残り: %1</translation>
     </message>
     <message>
-        <location line="-119"/>
+        <location line="-127"/>
         <source>Status</source>
         <translation>ステータス</translation>
     </message>
@@ -6786,7 +6791,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>レポート</translation>
     </message>
     <message>
-        <location line="+254"/>
+        <location line="+19"/>
+        <source>Exported to: %1</source>
+        <translation>エクスポート先: %1</translation>
+    </message>
+    <message>
+        <location line="+243"/>
         <source>Conflict</source>
         <translation>競合</translation>
     </message>
@@ -8266,7 +8276,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageSearchResultsForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+212"/>
+        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+232"/>
         <source>%1 duplicate(s) found</source>
         <translation>%1 件の重複が見つかりました</translation>
     </message>
@@ -8331,7 +8341,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>ゴミ箱に移動</translation>
     </message>
     <message>
-        <location line="-1017"/>
+        <location line="-1037"/>
         <location line="+11"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>デバイスがアクティブではありません。接続が解除されているか、パスが変更された可能性があります。</translation>
@@ -8342,7 +8352,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>フォルダが見つかりません。</translation>
     </message>
     <message>
-        <location line="+112"/>
+        <location line="+132"/>
         <source>Extract Metadata</source>
         <translation>メタデータを抽出</translation>
     </message>
@@ -8358,12 +8368,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>すべての結果でプロセスを実行</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="-174"/>
         <source>Exported to: %1</source>
         <translation>エクスポート先: %1</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+184"/>
         <source>Export failed — no results or write error</source>
         <translation>エクスポートに失敗しました — 結果がないか書き込みエラーです</translation>
     </message>
@@ -8449,8 +8459,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>チェックサムを計算 (SHA-256)</translation>
     </message>
     <message>
-        <location line="-662"/>
-        <location line="+678"/>
+        <location line="-682"/>
+        <location line="+698"/>
         <source>File not found or could not be read</source>
         <translation>ファイルが見つからないか読み取れませんでした</translation>
     </message>

@@ -101,7 +101,7 @@ The list next to *Export* chooses an action, and the button beside it (*Run proc
 
 | Action | Description |
 |--------|-------------|
-| *Export to CSV* | Saves the results to a CSV file in the *Downloads* folder; its path is shown when done. |
+| *Export to CSV* | Saves the results to a CSV file in the collection folder (the home folder in *Hosted* mode); its path is shown when done, and clicking it opens the file. |
 | *Export to Catalog* | Saves the results as a new catalog, under a virtual device *Search Results* (see [Devices](Devices)). |
 | *Verify Checksums* | Calculates the checksums of all results and compares them with the saved ones, after confirmation. A report gives the number of files matched, mismatched, newly calculated and in error. |
 | *Extract Metadata* | Reads the metadata of all results and saves it, after confirmation. A report gives the number of files updated, skipped and in error. |

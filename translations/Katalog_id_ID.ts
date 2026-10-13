@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+160"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4692"/>
+        <location line="+4690"/>
         <source>Search</source>
         <translation>Cari</translation>
     </message>
     <message>
-        <location line="-4812"/>
+        <location line="-4810"/>
         <source>Stopped</source>
         <translation>Dihentikan</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3260"/>
+        <location line="+3258"/>
         <source>Evaluated</source>
         <translation>Dievaluasi</translation>
     </message>
     <message>
-        <location line="-3378"/>
+        <location line="-3376"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -45,7 +45,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2180"/>
+        <location line="+2178"/>
         <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
@@ -65,17 +65,17 @@
         <translation>Sedang berlangsung</translation>
     </message>
     <message>
-        <location line="-4693"/>
-        <location line="+4127"/>
+        <location line="-4691"/>
+        <location line="+4125"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
-        <location line="+720"/>
+        <location line="+723"/>
         <source>Completed</source>
         <translation>Selesai</translation>
     </message>
     <message>
-        <location line="-4330"/>
+        <location line="-4331"/>
         <source>Empty database path provided</source>
         <translation>Jalur basis data kosong diberikan</translation>
     </message>
@@ -115,7 +115,7 @@
         <translation>Disk lokal</translation>
     </message>
     <message>
-        <location line="+462"/>
+        <location line="+460"/>
         <source>search_results</source>
         <translation>hasil_pencarian</translation>
     </message>
@@ -499,12 +499,12 @@ Pilih nama lain.</translation>
         <location line="+4"/>
         <location line="+30"/>
         <location line="+32"/>
-        <location line="+735"/>
+        <location line="+738"/>
         <source>Error</source>
         <translation>Kesalahan</translation>
     </message>
     <message>
-        <location line="-900"/>
+        <location line="-903"/>
         <location line="+17"/>
         <location line="+29"/>
         <location line="+10"/>
@@ -519,13 +519,13 @@ Pilih nama lain.</translation>
         <location line="+26"/>
         <location line="+17"/>
         <location line="+50"/>
-        <location line="+681"/>
+        <location line="+684"/>
         <location line="+92"/>
         <source>Cancelled</source>
         <translation>Dibatalkan</translation>
     </message>
     <message>
-        <location line="-856"/>
+        <location line="-859"/>
         <location line="+10"/>
         <source>Loaded</source>
         <translation>Dimuat</translation>
@@ -589,7 +589,7 @@ Pilih nama lain.</translation>
         <translation>Gagal memperbarui tautan.</translation>
     </message>
     <message>
-        <location line="+106"/>
+        <location line="+109"/>
         <location line="+2"/>
         <location line="+421"/>
         <source>Link not found.</source>
@@ -6270,7 +6270,7 @@ Periksa apakah folder sumber (%1) sudah benar, atau apakah perangkat dipasang ke
         <translation type="vanished">tersinkron</translation>
     </message>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+145"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+146"/>
         <source>Cancelled</source>
         <translation>Dibatalkan</translation>
     </message>
@@ -6301,12 +6301,17 @@ Periksa apakah folder sumber (%1) sudah benar, atau apakah perangkat dipasang ke
     </message>
     <message>
         <location line="+1"/>
-        <location line="+615"/>
+        <location line="+623"/>
         <source>Errors: %1</source>
         <translation>Kesalahan: %1</translation>
     </message>
     <message>
-        <location line="-566"/>
+        <location line="-595"/>
+        <source>Exported to: %1</source>
+        <translation>Diekspor ke: %1</translation>
+    </message>
+    <message>
+        <location line="+28"/>
         <source>Type</source>
         <translation>Tipe</translation>
     </message>
@@ -6318,35 +6323,35 @@ Periksa apakah folder sumber (%1) sudah benar, atau apakah perangkat dipasang ke
     </message>
     <message>
         <location line="-18"/>
-        <location line="+260"/>
+        <location line="+261"/>
         <source>Backup</source>
         <translation>Cadangan</translation>
     </message>
     <message>
-        <location line="-259"/>
-        <location line="+259"/>
+        <location line="-260"/>
+        <location line="+260"/>
         <source>Archive</source>
         <translation>Arsip</translation>
     </message>
     <message>
-        <location line="-247"/>
+        <location line="-248"/>
         <source>Filter</source>
         <translation>Filter</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+262"/>
+        <location line="+263"/>
         <source>Source</source>
         <translation>Sumber</translation>
     </message>
     <message>
-        <location line="-261"/>
-        <location line="+312"/>
+        <location line="-262"/>
+        <location line="+313"/>
         <source>Target</source>
         <translation>Target</translation>
     </message>
     <message>
-        <location line="-291"/>
+        <location line="-292"/>
         <location line="+19"/>
         <source>Run listed links</source>
         <translation>Jalankan tautan terdaftar</translation>
@@ -6397,7 +6402,7 @@ Periksa apakah folder sumber (%1) sudah benar, atau apakah perangkat dipasang ke
         <translation>tercakup</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+20"/>
         <source>Report</source>
         <translation>Laporan</translation>
     </message>
@@ -6480,8 +6485,8 @@ Periksa apakah folder sumber (%1) sudah benar, atau apakah perangkat dipasang ke
         <translation>Lanjutkan</translation>
     </message>
     <message>
-        <location line="-432"/>
-        <location line="+438"/>
+        <location line="-433"/>
+        <location line="+439"/>
         <source>Cancel</source>
         <translation>Batal</translation>
     </message>
@@ -6701,7 +6706,7 @@ Periksa apakah folder sumber (%1) sudah benar, atau apakah perangkat dipasang ke
         <translation>Ekspor ke CSV</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+18"/>
         <source>Close</source>
         <translation>Tutup</translation>
     </message>
@@ -6715,7 +6720,7 @@ Periksa apakah folder sumber (%1) sudah benar, atau apakah perangkat dipasang ke
         <translation>Menghitung pratinjau…</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+38"/>
         <location line="+182"/>
         <source>Move</source>
         <translation>Pindah</translation>
@@ -6762,7 +6767,7 @@ Periksa apakah folder sumber (%1) sudah benar, atau apakah perangkat dipasang ke
         <translation>Ruang tujuan rendah - %1 tersisa setelah operasi</translation>
     </message>
     <message>
-        <location line="-119"/>
+        <location line="-127"/>
         <source>Status</source>
         <translation>Status</translation>
     </message>
@@ -6787,7 +6792,12 @@ Periksa apakah folder sumber (%1) sudah benar, atau apakah perangkat dipasang ke
         <translation>Laporan</translation>
     </message>
     <message>
-        <location line="+254"/>
+        <location line="+19"/>
+        <source>Exported to: %1</source>
+        <translation>Diekspor ke: %1</translation>
+    </message>
+    <message>
+        <location line="+243"/>
         <source>Conflict</source>
         <translation>Konflik</translation>
     </message>
@@ -8267,7 +8277,7 @@ Periksa apakah folder sumber (%1) sudah benar, atau apakah perangkat dipasang ke
 <context>
     <name>PageSearchResultsForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+212"/>
+        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+232"/>
         <source>%1 duplicate(s) found</source>
         <translation>%1 duplikat ditemukan</translation>
     </message>
@@ -8332,7 +8342,7 @@ Periksa apakah folder sumber (%1) sudah benar, atau apakah perangkat dipasang ke
         <translation>Pindah ke Sampah</translation>
     </message>
     <message>
-        <location line="-1017"/>
+        <location line="-1037"/>
         <location line="+11"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Perangkat tidak aktif. Perangkat mungkin terputus, atau jalurnya mungkin telah berubah.</translation>
@@ -8343,7 +8353,7 @@ Periksa apakah folder sumber (%1) sudah benar, atau apakah perangkat dipasang ke
         <translation>Folder tidak ditemukan.</translation>
     </message>
     <message>
-        <location line="+112"/>
+        <location line="+132"/>
         <source>Extract Metadata</source>
         <translation>Ekstrak Metadata</translation>
     </message>
@@ -8359,12 +8369,12 @@ Periksa apakah folder sumber (%1) sudah benar, atau apakah perangkat dipasang ke
         <translation>Jalankan proses pada semua hasil</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="-174"/>
         <source>Exported to: %1</source>
         <translation>Diekspor ke: %1</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+184"/>
         <source>Export failed — no results or write error</source>
         <translation>Ekspor gagal — tidak ada hasil atau kesalahan penulisan</translation>
     </message>
@@ -8450,8 +8460,8 @@ Periksa apakah folder sumber (%1) sudah benar, atau apakah perangkat dipasang ke
         <translation>Hitung Checksum (SHA-256)</translation>
     </message>
     <message>
-        <location line="-662"/>
-        <location line="+678"/>
+        <location line="-682"/>
+        <location line="+698"/>
         <source>File not found or could not be read</source>
         <translation>Berkas tidak ditemukan atau tidak dapat dibaca</translation>
     </message>

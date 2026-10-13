@@ -23,6 +23,7 @@ ColumnLayout {
     property real   progressFraction:  0.0
     property string progressFile:      ""
     property string lastReportSummary: ""
+    property string lastExportFilePath: ""
     property bool   lastReportIsError: false
     property bool   runningIsArchive:  false   // type of the mapping currently running
     property string progressSpeedStr:  ""      // e.g. "12.3 MB/s"
@@ -172,6 +173,13 @@ ColumnLayout {
             root.progressEtaStr     = ""
             root.runStartMs         = Date.now()
             root.lastReportSummary  = ""
+        }
+        // A link card's Export to CSV: the path opens the file (BKP-F26)
+        function onBackupCsvExported(filePath) {
+            root.lastReportIsError  = false
+            root.lastExportFilePath = filePath
+            root.lastReportSummary  = qsTr("Exported to: %1").arg("<a href=\"file\">"
+                + filePath.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + "</a>")
         }
         function onBackupNotification(message, isError) {
             root.lastReportIsError = isError
@@ -358,6 +366,7 @@ ColumnLayout {
         showCloseButton:     true
         text:                root.lastReportSummary
         onVisibleChanged:    if (!visible) { root.lastReportSummary = ""; root.lastReportIsError = false }
+        onLinkActivated:     appManager1.openFile(root.lastExportFilePath)
         // Per-file report of the last run (BKP-F29)
         actions: [
             Kirigami.Action {

@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+160"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4692"/>
+        <location line="+4690"/>
         <source>Search</source>
         <translation>Chercher</translation>
     </message>
     <message>
-        <location line="-4812"/>
+        <location line="-4810"/>
         <source>Stopped</source>
         <translation>Arrêté</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3260"/>
+        <location line="+3258"/>
         <source>Evaluated</source>
         <translation>Évalué</translation>
     </message>
     <message>
-        <location line="-3378"/>
+        <location line="-3376"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -45,7 +45,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2180"/>
+        <location line="+2178"/>
         <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
@@ -65,17 +65,17 @@
         <translation>En cours</translation>
     </message>
     <message>
-        <location line="-4693"/>
-        <location line="+4127"/>
+        <location line="-4691"/>
+        <location line="+4125"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
-        <location line="+720"/>
+        <location line="+723"/>
         <source>Completed</source>
         <translation>Terminé</translation>
     </message>
     <message>
-        <location line="-4330"/>
+        <location line="-4331"/>
         <source>Empty database path provided</source>
         <translation>Chemin de base de données vide fourni</translation>
     </message>
@@ -115,7 +115,7 @@
         <translation>Disque local</translation>
     </message>
     <message>
-        <location line="+462"/>
+        <location line="+460"/>
         <source>search_results</source>
         <translation>Résultats_de_recherche</translation>
     </message>
@@ -499,12 +499,12 @@ Choisissez un autre nom.</translation>
         <location line="+4"/>
         <location line="+30"/>
         <location line="+32"/>
-        <location line="+735"/>
+        <location line="+738"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location line="-900"/>
+        <location line="-903"/>
         <location line="+17"/>
         <location line="+29"/>
         <location line="+10"/>
@@ -519,13 +519,13 @@ Choisissez un autre nom.</translation>
         <location line="+26"/>
         <location line="+17"/>
         <location line="+50"/>
-        <location line="+681"/>
+        <location line="+684"/>
         <location line="+92"/>
         <source>Cancelled</source>
         <translation>Annulé</translation>
     </message>
     <message>
-        <location line="-856"/>
+        <location line="-859"/>
         <location line="+10"/>
         <source>Loaded</source>
         <translation>Chargé</translation>
@@ -589,7 +589,7 @@ Choisissez un autre nom.</translation>
         <translation>Échec de la mise à jour du lien.</translation>
     </message>
     <message>
-        <location line="+106"/>
+        <location line="+109"/>
         <location line="+2"/>
         <location line="+421"/>
         <source>Link not found.</source>
@@ -6271,7 +6271,7 @@ Vérifiez que le dossier source (%1) est correct, ou que le périphérique est m
         <translation type="vanished">synchronisé</translation>
     </message>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+145"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+146"/>
         <source>Cancelled</source>
         <translation>Annulé</translation>
     </message>
@@ -6302,12 +6302,17 @@ Vérifiez que le dossier source (%1) est correct, ou que le périphérique est m
     </message>
     <message>
         <location line="+1"/>
-        <location line="+615"/>
+        <location line="+623"/>
         <source>Errors: %1</source>
         <translation>Erreurs : %1</translation>
     </message>
     <message>
-        <location line="-566"/>
+        <location line="-595"/>
+        <source>Exported to: %1</source>
+        <translation>Exporté vers : %1</translation>
+    </message>
+    <message>
+        <location line="+28"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
@@ -6319,35 +6324,35 @@ Vérifiez que le dossier source (%1) est correct, ou que le périphérique est m
     </message>
     <message>
         <location line="-18"/>
-        <location line="+260"/>
+        <location line="+261"/>
         <source>Backup</source>
         <translation>Sauvegarde</translation>
     </message>
     <message>
-        <location line="-259"/>
-        <location line="+259"/>
+        <location line="-260"/>
+        <location line="+260"/>
         <source>Archive</source>
         <translation>Archive</translation>
     </message>
     <message>
-        <location line="-247"/>
+        <location line="-248"/>
         <source>Filter</source>
         <translation>Filtre</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+262"/>
+        <location line="+263"/>
         <source>Source</source>
         <translation>Source</translation>
     </message>
     <message>
-        <location line="-261"/>
-        <location line="+312"/>
+        <location line="-262"/>
+        <location line="+313"/>
         <source>Target</source>
         <translation>Cible</translation>
     </message>
     <message>
-        <location line="-291"/>
+        <location line="-292"/>
         <location line="+19"/>
         <source>Run listed links</source>
         <translation>Lancer les liens listés</translation>
@@ -6398,7 +6403,7 @@ Vérifiez que le dossier source (%1) est correct, ou que le périphérique est m
         <translation>couvert</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+20"/>
         <source>Report</source>
         <translation>Rapport</translation>
     </message>
@@ -6481,8 +6486,8 @@ Vérifiez que le dossier source (%1) est correct, ou que le périphérique est m
         <translation>Reprendre</translation>
     </message>
     <message>
-        <location line="-432"/>
-        <location line="+438"/>
+        <location line="-433"/>
+        <location line="+439"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
@@ -6702,7 +6707,7 @@ Vérifiez que le dossier source (%1) est correct, ou que le périphérique est m
         <translation>Exporter en CSV</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+18"/>
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
@@ -6716,7 +6721,7 @@ Vérifiez que le dossier source (%1) est correct, ou que le périphérique est m
         <translation>Calcul de l&apos;aperçu…</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+38"/>
         <location line="+182"/>
         <source>Move</source>
         <translation>Déplacer</translation>
@@ -6763,7 +6768,7 @@ Vérifiez que le dossier source (%1) est correct, ou que le périphérique est m
         <translation>Espace cible faible - %1 restant après l&apos;opération</translation>
     </message>
     <message>
-        <location line="-119"/>
+        <location line="-127"/>
         <source>Status</source>
         <translation>Statut</translation>
     </message>
@@ -6788,7 +6793,12 @@ Vérifiez que le dossier source (%1) est correct, ou que le périphérique est m
         <translation>Rapport</translation>
     </message>
     <message>
-        <location line="+254"/>
+        <location line="+19"/>
+        <source>Exported to: %1</source>
+        <translation>Exporté vers : %1</translation>
+    </message>
+    <message>
+        <location line="+243"/>
         <source>Conflict</source>
         <translation>Conflit</translation>
     </message>
@@ -8268,7 +8278,7 @@ Vérifiez que le dossier source (%1) est correct, ou que le périphérique est m
 <context>
     <name>PageSearchResultsForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+212"/>
+        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+232"/>
         <source>%1 duplicate(s) found</source>
         <translation>%1 doublon(s) trouvé(s)</translation>
     </message>
@@ -8333,7 +8343,7 @@ Vérifiez que le dossier source (%1) est correct, ou que le périphérique est m
         <translation>Déplacer dans la corbeille</translation>
     </message>
     <message>
-        <location line="-1017"/>
+        <location line="-1037"/>
         <location line="+11"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Le périphérique n&apos;est pas actif. Il est peut-être déconnecté, ou son chemin a peut-être changé.</translation>
@@ -8344,7 +8354,7 @@ Vérifiez que le dossier source (%1) est correct, ou que le périphérique est m
         <translation>Dossier introuvable.</translation>
     </message>
     <message>
-        <location line="+112"/>
+        <location line="+132"/>
         <source>Extract Metadata</source>
         <translation>Extraire les métadonnées</translation>
     </message>
@@ -8360,12 +8370,12 @@ Vérifiez que le dossier source (%1) est correct, ou que le périphérique est m
         <translation>Exécuter le processus sur tous les résultats</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="-174"/>
         <source>Exported to: %1</source>
         <translation>Exporté vers : %1</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+184"/>
         <source>Export failed — no results or write error</source>
         <translation>Échec de l&apos;export — aucun résultat ou erreur d&apos;écriture</translation>
     </message>
@@ -8451,8 +8461,8 @@ Vérifiez que le dossier source (%1) est correct, ou que le périphérique est m
         <translation>Calculer la somme de contrôle (SHA-256)</translation>
     </message>
     <message>
-        <location line="-662"/>
-        <location line="+678"/>
+        <location line="-682"/>
+        <location line="+698"/>
         <source>File not found or could not be read</source>
         <translation>Fichier introuvable ou illisible</translation>
     </message>

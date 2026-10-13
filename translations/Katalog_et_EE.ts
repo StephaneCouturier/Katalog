@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+160"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4692"/>
+        <location line="+4690"/>
         <source>Search</source>
         <translation>Otsing</translation>
     </message>
     <message>
-        <location line="-4812"/>
+        <location line="-4810"/>
         <source>Stopped</source>
         <translation>Peatatud</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3260"/>
+        <location line="+3258"/>
         <source>Evaluated</source>
         <translation>Hinnatud</translation>
     </message>
     <message>
-        <location line="-3378"/>
+        <location line="-3376"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -45,7 +45,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2180"/>
+        <location line="+2178"/>
         <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
@@ -65,17 +65,17 @@
         <translation>Pooleli</translation>
     </message>
     <message>
-        <location line="-4693"/>
-        <location line="+4127"/>
+        <location line="-4691"/>
+        <location line="+4125"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
-        <location line="+720"/>
+        <location line="+723"/>
         <source>Completed</source>
         <translation>Lõpetatud</translation>
     </message>
     <message>
-        <location line="-4330"/>
+        <location line="-4331"/>
         <source>Empty database path provided</source>
         <translation>Sisestati tühi andmebaasi tee</translation>
     </message>
@@ -115,7 +115,7 @@
         <translation>Kohalik ketas</translation>
     </message>
     <message>
-        <location line="+462"/>
+        <location line="+460"/>
         <source>search_results</source>
         <translation>otsingu_tulemused</translation>
     </message>
@@ -499,12 +499,12 @@ Vali teine nimi.</translation>
         <location line="+4"/>
         <location line="+30"/>
         <location line="+32"/>
-        <location line="+735"/>
+        <location line="+738"/>
         <source>Error</source>
         <translation>Viga</translation>
     </message>
     <message>
-        <location line="-900"/>
+        <location line="-903"/>
         <location line="+17"/>
         <location line="+29"/>
         <location line="+10"/>
@@ -519,13 +519,13 @@ Vali teine nimi.</translation>
         <location line="+26"/>
         <location line="+17"/>
         <location line="+50"/>
-        <location line="+681"/>
+        <location line="+684"/>
         <location line="+92"/>
         <source>Cancelled</source>
         <translation>Tühistatud</translation>
     </message>
     <message>
-        <location line="-856"/>
+        <location line="-859"/>
         <location line="+10"/>
         <source>Loaded</source>
         <translation>Laaditud</translation>
@@ -589,7 +589,7 @@ Vali teine nimi.</translation>
         <translation>Lingi uuendamine ebaõnnestus.</translation>
     </message>
     <message>
-        <location line="+106"/>
+        <location line="+109"/>
         <location line="+2"/>
         <location line="+421"/>
         <source>Link not found.</source>
@@ -6270,7 +6270,7 @@ Kontrollige, et lähtekaust (%1) on õige või et seade on lähtekausta ühendat
         <translation type="vanished">sünkroonis</translation>
     </message>
     <message>
-        <location filename="../qt_quick/PageBackupForm.qml" line="+145"/>
+        <location filename="../qt_quick/PageBackupForm.qml" line="+146"/>
         <source>Cancelled</source>
         <translation>Tühistatud</translation>
     </message>
@@ -6301,12 +6301,17 @@ Kontrollige, et lähtekaust (%1) on õige või et seade on lähtekausta ühendat
     </message>
     <message>
         <location line="+1"/>
-        <location line="+615"/>
+        <location line="+623"/>
         <source>Errors: %1</source>
         <translation>Vead: %1</translation>
     </message>
     <message>
-        <location line="-566"/>
+        <location line="-595"/>
+        <source>Exported to: %1</source>
+        <translation>Eksporditud asukohta: %1</translation>
+    </message>
+    <message>
+        <location line="+28"/>
         <source>Type</source>
         <translation>Tüüp</translation>
     </message>
@@ -6318,35 +6323,35 @@ Kontrollige, et lähtekaust (%1) on õige või et seade on lähtekausta ühendat
     </message>
     <message>
         <location line="-18"/>
-        <location line="+260"/>
+        <location line="+261"/>
         <source>Backup</source>
         <translation>Varundus</translation>
     </message>
     <message>
-        <location line="-259"/>
-        <location line="+259"/>
+        <location line="-260"/>
+        <location line="+260"/>
         <source>Archive</source>
         <translation>Arhiiv</translation>
     </message>
     <message>
-        <location line="-247"/>
+        <location line="-248"/>
         <source>Filter</source>
         <translation>Filter</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+262"/>
+        <location line="+263"/>
         <source>Source</source>
         <translation>Allikas</translation>
     </message>
     <message>
-        <location line="-261"/>
-        <location line="+312"/>
+        <location line="-262"/>
+        <location line="+313"/>
         <source>Target</source>
         <translation>Sihtmärk</translation>
     </message>
     <message>
-        <location line="-291"/>
+        <location line="-292"/>
         <location line="+19"/>
         <source>Run listed links</source>
         <translation>Käivita loetletud lingid</translation>
@@ -6397,7 +6402,7 @@ Kontrollige, et lähtekaust (%1) on õige või et seade on lähtekausta ühendat
         <translation>kaetud</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+20"/>
         <source>Report</source>
         <translation>Aruanne</translation>
     </message>
@@ -6480,8 +6485,8 @@ Kontrollige, et lähtekaust (%1) on õige või et seade on lähtekausta ühendat
         <translation>Jätka</translation>
     </message>
     <message>
-        <location line="-432"/>
-        <location line="+438"/>
+        <location line="-433"/>
+        <location line="+439"/>
         <source>Cancel</source>
         <translation>Tühista</translation>
     </message>
@@ -6701,7 +6706,7 @@ Kontrollige, et lähtekaust (%1) on õige või et seade on lähtekausta ühendat
         <translation>Ekspordi CSV-vormingusse</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+18"/>
         <source>Close</source>
         <translation>Sulge</translation>
     </message>
@@ -6715,7 +6720,7 @@ Kontrollige, et lähtekaust (%1) on õige või et seade on lähtekausta ühendat
         <translation>Eelvaate arvutamine…</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+38"/>
         <location line="+182"/>
         <source>Move</source>
         <translation>Teisalda</translation>
@@ -6762,7 +6767,7 @@ Kontrollige, et lähtekaust (%1) on õige või et seade on lähtekausta ühendat
         <translation>Sihtkohas vähe ruumi - %1 jääb pärast toimingut alles</translation>
     </message>
     <message>
-        <location line="-119"/>
+        <location line="-127"/>
         <source>Status</source>
         <translation>Olek</translation>
     </message>
@@ -6787,7 +6792,12 @@ Kontrollige, et lähtekaust (%1) on õige või et seade on lähtekausta ühendat
         <translation>Aruanne</translation>
     </message>
     <message>
-        <location line="+254"/>
+        <location line="+19"/>
+        <source>Exported to: %1</source>
+        <translation>Eksporditud asukohta: %1</translation>
+    </message>
+    <message>
+        <location line="+243"/>
         <source>Conflict</source>
         <translation>Konflikt</translation>
     </message>
@@ -8267,7 +8277,7 @@ Kontrollige, et lähtekaust (%1) on õige või et seade on lähtekausta ühendat
 <context>
     <name>PageSearchResultsForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+212"/>
+        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+232"/>
         <source>%1 duplicate(s) found</source>
         <translation>Leiti %1 duplikaat(i)</translation>
     </message>
@@ -8332,7 +8342,7 @@ Kontrollige, et lähtekaust (%1) on õige või et seade on lähtekausta ühendat
         <translation>Liiguta prügikasti</translation>
     </message>
     <message>
-        <location line="-1017"/>
+        <location line="-1037"/>
         <location line="+11"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Seade ei ole aktiivne. See võib olla lahti ühendatud või on selle tee muutunud.</translation>
@@ -8343,7 +8353,7 @@ Kontrollige, et lähtekaust (%1) on õige või et seade on lähtekausta ühendat
         <translation>Kausta ei leitud.</translation>
     </message>
     <message>
-        <location line="+112"/>
+        <location line="+132"/>
         <source>Extract Metadata</source>
         <translation>Eralda metaandmed</translation>
     </message>
@@ -8359,12 +8369,12 @@ Kontrollige, et lähtekaust (%1) on õige või et seade on lähtekausta ühendat
         <translation>Käivita protsess kõigile tulemustele</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="-174"/>
         <source>Exported to: %1</source>
         <translation>Eksporditud asukohta: %1</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+184"/>
         <source>Export failed — no results or write error</source>
         <translation>Eksport ebaõnnestus — tulemusi pole või kirjutamise viga</translation>
     </message>
@@ -8450,8 +8460,8 @@ Kontrollige, et lähtekaust (%1) on õige või et seade on lähtekausta ühendat
         <translation>Arvuta kontrollsumma (SHA-256)</translation>
     </message>
     <message>
-        <location line="-662"/>
-        <location line="+678"/>
+        <location line="-682"/>
+        <location line="+698"/>
         <source>File not found or could not be read</source>
         <translation>Faili ei leitud või seda ei õnnestunud lugeda</translation>
     </message>
