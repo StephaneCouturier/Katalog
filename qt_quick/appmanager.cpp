@@ -4278,8 +4278,17 @@ QVariantList AppManager::getExploreFolders()
 
     QList<FolderNode*> nodes = FolderTreeLoader::loadExploreTree(conn, exploreDevice->externalID, pathRoot);
 
-    std::function<void(const QList<FolderNode*>&, int)> flatten;
-    flatten = [&](const QList<FolderNode*> &list, int level) {
+    // Siblings in K2's tree order, which is also the file list's: the query's
+    // binary ORDER BY put "_dir" after "Zeta" (EXP-F33, as K2 ExploreTreeView).
+    const bool caseSensitive = m_fileSortCaseSensitive;
+    auto nameLess = [caseSensitive](const FolderNode *a, const FolderNode *b) {
+        return caseSensitive ? a->name < b->name
+                             : QString::compare(a->name, b->name, Qt::CaseInsensitive) < 0;
+    };
+
+    std::function<void(QList<FolderNode*>, int)> flatten;
+    flatten = [&](QList<FolderNode*> list, int level) {
+        std::stable_sort(list.begin(), list.end(), nameLess);
         for (FolderNode *node : list) {
             QVariantMap item;
             item[QStringLiteral("name")]      = node->name;
