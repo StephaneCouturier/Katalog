@@ -2417,30 +2417,34 @@ Kirigami.ApplicationWindow {
             readonly property real treeMinimum:  Kirigami.Units.gridUnit * 10
             readonly property real filesMinimum: Kirigami.Units.gridUnit * 8
 
-            // Held until the page has a width: it is laid out after it shows.
-            property bool restorePending: false
+            // The saved share, held while Explore opens: the page is laid out in
+            // steps after it shows (630 then 1187 px measured on the AppImage),
+            // so the share is applied again at each width until the user drags.
+            // -1: nothing to restore, or the user has taken over.
+            property real restoreShare: -1
             function restoreDivision() {
                 let saved = appManager1.getExploreSplitterWidths()
-                console.warn("PROBE restore saved=" + saved + " width=" + width + " pageW=" + pageExplore.width)
-                if (saved.length !== 2)
+                restoreShare = saved.length === 2 ? saved[0] / (saved[0] + saved[1]) : -1
+                applyRestoreShare()
+            }
+            function applyRestoreShare() {
+                if (restoreShare < 0 || width <= 0)
                     return
-                if (width <= 0) {
-                    restorePending = true
-                    return
-                }
-                restorePending = false
-                let share = saved[0] / (saved[0] + saved[1])
-                let room  = width - filesMinimum
+                let room = width - filesMinimum
                 exploreFolders.Controls.SplitView.preferredWidth =
-                    Math.max(treeMinimum, Math.min(room, width * share))
+                    Math.max(treeMinimum, Math.min(room, width * restoreShare))
             }
             function saveDivision() {
-                console.warn("PROBE save tree=" + exploreFolders.width + " files=" + exploreFiles.width)
                 appManager1.setExploreSplitterSizes(exploreFolders.width, exploreFolders.height,
                                                     exploreFiles.width,   exploreFiles.height)
             }
-            onResizingChanged: if (!resizing) saveDivision()
-            onWidthChanged: { console.warn("PROBE width=" + width + " tree=" + exploreFolders.width); if (restorePending) restoreDivision() }
+            onResizingChanged: {
+                if (resizing)
+                    restoreShare = -1
+                else
+                    saveDivision()
+            }
+            onWidthChanged: applyRestoreShare()
             Connections {
                 target: pageExplore
                 function onVisibleChanged() {
@@ -2496,6 +2500,7 @@ Kirigami.ApplicationWindow {
             property real startSceneX: 0
             property real startWidth:  0
             onPressed: function(mouse) {
+                exploreSplit.restoreShare = -1
                 startSceneX = mapToItem(null, mouse.x, 0).x
                 startWidth  = exploreFolders.width
             }
