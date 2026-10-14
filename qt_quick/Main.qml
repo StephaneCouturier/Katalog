@@ -1952,20 +1952,6 @@ Kirigami.ApplicationWindow {
         title: qsTr("Selection")
         property string deviceType: "Storage"
 
-        Connections {
-            target: appManager1
-            function onSelectedDeviceChanged(deviceId) {
-                // Force refresh of the selection list view to update visual states
-                if (selectionListView1 && selectionListView1.model) {
-                    // Trigger a visual update of all delegates
-                    selectionListView1.model.dataChanged(
-                        selectionListView1.model.index(0, 0),
-                        selectionListView1.model.index(selectionListView1.model.rowCount() - 1, 0)
-                    )
-                }
-            }
-        }
-
         header: ColumnLayout {
             width: parent.width
             spacing: 0

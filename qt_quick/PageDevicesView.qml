@@ -130,6 +130,17 @@ Item {
         collapsedCardIds = ({})
     }
 
+    // A selection change while this page is hidden only marks the list stale:
+    // getDeviceList() re-probes every device's path, and running it on each
+    // Selection card tap delayed the card-highlight repaint (DVP-C2, DAS-O4).
+    // Refreshed once, on becoming visible.
+    property bool needsRefresh: false
+    function requestRefresh() {
+        if (root.visible) root.refreshDevices()
+        else root.needsRefresh = true
+    }
+    onVisibleChanged: if (visible && needsRefresh) { needsRefresh = false; refreshDevices() }
+
     // Create a child device and open it for editing, as K2 does
     // (mainwindow_tab_device_pr.cpp addDeviceVirtual/addDeviceStorage, both
     // ending in editDevice()). Lives on the page rather than in the card's
@@ -165,7 +176,7 @@ Item {
             root.displayAsTable = appManager1.deviceDisplayAsTable
         }
         function onSelectedDeviceChanged() {
-            if (root.filterFromSelection) root.refreshDevices()
+            if (root.filterFromSelection) root.requestRefresh()
         }
         // SpecMimeVerification MIV-F4
         function onMimeVerificationFinished(mismatchCount, reportPath, errorMessage) {
