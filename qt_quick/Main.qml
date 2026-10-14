@@ -2421,6 +2421,7 @@ Kirigami.ApplicationWindow {
             property bool restorePending: false
             function restoreDivision() {
                 let saved = appManager1.getExploreSplitterWidths()
+                console.warn("PROBE restore saved=" + saved + " width=" + width + " pageW=" + pageExplore.width)
                 if (saved.length !== 2)
                     return
                 if (width <= 0) {
@@ -2434,11 +2435,12 @@ Kirigami.ApplicationWindow {
                     Math.max(treeMinimum, Math.min(room, width * share))
             }
             function saveDivision() {
+                console.warn("PROBE save tree=" + exploreFolders.width + " files=" + exploreFiles.width)
                 appManager1.setExploreSplitterSizes(exploreFolders.width, exploreFolders.height,
                                                     exploreFiles.width,   exploreFiles.height)
             }
             onResizingChanged: if (!resizing) saveDivision()
-            onWidthChanged: if (restorePending) restoreDivision()
+            onWidthChanged: { console.warn("PROBE width=" + width + " tree=" + exploreFolders.width); if (restorePending) restoreDivision() }
             Connections {
                 target: pageExplore
                 function onVisibleChanged() {
