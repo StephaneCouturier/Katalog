@@ -2,11 +2,205 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://StephaneCouturier.github.io/Katalog/cs/blog</id>
     <title>Katalog Blog</title>
-    <updated>2026-05-31T00:00:00.000Z</updated>
+    <updated>2026-09-30T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://StephaneCouturier.github.io/Katalog/cs/blog"/>
     <subtitle>Katalog Blog</subtitle>
     <icon>https://StephaneCouturier.github.io/Katalog/cs/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Release 3.0]]></title>
+        <id>https://StephaneCouturier.github.io/Katalog/cs/blog/release-3-0</id>
+        <link href="https://StephaneCouturier.github.io/Katalog/cs/blog/release-3-0"/>
+        <updated>2026-09-30T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Hello all,]]></summary>
+        <content type="html"><![CDATA[<p>Hello all,</p>
+<p>It has now been 2 years since the very first tests of QML, Kirigami, on Linux &amp; Windows, confirming the feasibility and next big step for Katalog user experience.<br>
+<strong>Katalog 3.0 is now Released!</strong><br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="-katalog-3-introduction">✨ Katalog 3 introduction<a href="https://stephanecouturier.github.io/Katalog/cs/blog/release-3-0#-katalog-3-introduction" class="hash-link" aria-label="Direct link to ✨ Katalog 3 introduction" title="Direct link to ✨ Katalog 3 introduction" translate="no">​</a></h3>
+<ul>
+<li class="">
+<p><strong>Katalog 3</strong> marks the transition to a more modern User Interface. It relies on QtQuick (instead of QtWidgets) and <a href="https://develop.kde.org/frameworks/kirigami" target="_blank" rel="noopener noreferrer" class="">Kirigami</a> from KDE.</p>
+</li>
+<li class="">
+<p><b>All features available in Katalog 2.12</b> have been ported in Katalog 3 with many improvements.</p>
+</li>
+<li class="">
+<p><strong>Katalog 2</strong> has been maintained (bugs &amp; light feature changes) to version 2.13, keeping full db compatiblity with Katalog 3.0.</p>
+</li>
+<li class="">
+<p>Older versions of Katalog (2.12 and before) should not be used on collections opened with 2.13 or 3.0.</p>
+</li>
+</ul>
+<p>Katalog 3 on a Desktop using breezecolors  <img decoding="async" loading="lazy" alt="Search page" src="https://stephanecouturier.github.io/Katalog/cs/assets/images/katalog3_breezecolors-a253b0162d41ac7c08b4213ac61ee6bd.png" width="1580" height="1024" class="img_ev3q">
+Katalog 3 on a Desktop using openSUSE colors <img decoding="async" loading="lazy" alt="Search page" src="https://stephanecouturier.github.io/Katalog/cs/assets/images/katalog3_opensusecolors-064804c0ada47ab32d4136aa7afe1bbf.png" width="1580" height="1024" class="img_ev3q"></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="-main-improvements">✨ Main improvements<a href="https://stephanecouturier.github.io/Katalog/cs/blog/release-3-0#-main-improvements" class="hash-link" aria-label="Direct link to ✨ Main improvements" title="Direct link to ✨ Main improvements" translate="no">​</a></h3>
+<ul>
+<li class="">
+<p><strong>#630</strong> APP: Theme can switch to dark mode on non-Qt Desktop Environments</p>
+</li>
+<li class="">
+<p><strong>#815</strong> APP: Adjustable font size</p>
+</li>
+<li class="">
+<p><strong>#799</strong> APP: Open recent collections</p>
+</li>
+<li class="">
+<p><strong>#814</strong> APP: Esc key closes the last opened page</p>
+</li>
+<li class="">
+<p><strong>#759</strong> SELECTION: Card tree showing devices' file &amp; space info</p>
+</li>
+<li class="">
+<p><strong>#813</strong> SELECTION: Filter devices</p>
+</li>
+<li class="">
+<p><strong>#808</strong> SEARCH: Multiple search text input</p>
+</li>
+<li class="">
+<p><strong>#787</strong> SEARCH: multiple Search &amp; exclude texts</p>
+</li>
+<li class="">
+<p><strong>#808</strong> SEARCH: Quick filter on filename</p>
+</li>
+<li class="">
+<p><strong>#792</strong> SEARCH, CREATE, UPDATE: common progress panel</p>
+</li>
+<li class="">
+<p><strong>#793</strong> SEARCH, EXPLORE: Deleting files is disabled unless activated in the Settings</p>
+</li>
+<li class="">
+<p><strong>#766</strong> SEARCH: Regular expression support for file name search</p>
+</li>
+<li class="">
+<p><strong>#791</strong> DEVICES: Catalog Updates can be queued</p>
+</li>
+<li class="">
+<p><strong>#800</strong> DEVICES: Table or card display</p>
+</li>
+<li class="">
+<p><strong>#781</strong> DEVICES: Add comments to Virtual devices &amp; Catalogs</p>
+</li>
+<li class="">
+<p><strong>#782</strong> EXPLORE: Show folder sizes</p>
+</li>
+<li class="">
+<p><strong>#759</strong> CREATE: Include subdirectories option (off = exclude sub folders)</p>
+</li>
+<li class="">
+<p><strong>#797</strong> BACKUP: Duplicate backup link</p>
+</li>
+<li class="">
+<p><strong>#783</strong> BACKUP: Edit a backup link</p>
+</li>
+<li class="">
+<p><strong>#795</strong> BACKUP: Run multiple backup links</p>
+</li>
+<li class="">
+<p><strong>#809</strong> SETTINGS: Quality check of the database</p>
+</li>
+<li class="">
+<p><strong>#788</strong> SETTINGS: Refresh the status of devices upon window focus</p>
+</li>
+<li class="">
+<p><strong>#780</strong> SETTINGS: Report updates from imported collection</p>
+</li>
+<li class="">
+<p><strong>#816</strong> ABOUT: Button to copy system information for bug reports</p>
+</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="️-technical-changes">⚠️ Technical changes<a href="https://stephanecouturier.github.io/Katalog/cs/blog/release-3-0#%EF%B8%8F-technical-changes" class="hash-link" aria-label="Direct link to ⚠️ Technical changes" title="Direct link to ⚠️ Technical changes" translate="no">​</a></h3>
+<ul>
+<li class="">As for any new version, it is highly recommended to <strong>backup the collections</strong> 💾, and test the new version on other copies.</li>
+<li class=""><strong>Database updates</strong>: added fields to support collections import and image folder</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="-distribution-formats">📦 Distribution Formats<a href="https://stephanecouturier.github.io/Katalog/cs/blog/release-3-0#-distribution-formats" class="hash-link" aria-label="Direct link to 📦 Distribution Formats" title="Direct link to 📦 Distribution Formats" translate="no">​</a></h3>
+<ul>
+<li class="">As usual, <strong>Window 64</strong>, <strong>Linux</strong>, <strong>macOS</strong></li>
+<li class=""><strong>Linux</strong>: for easy Linux installation, use <a href="https://flathub.org/en/apps/io.github.stephanecouturier.Katalog" target="_blank" rel="noopener noreferrer" class=""><strong>Flathub/Flatpak</strong></a></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="-release-details">📋 Release details<a href="https://stephanecouturier.github.io/Katalog/cs/blog/release-3-0#-release-details" class="hash-link" aria-label="Direct link to 📋 Release details" title="Direct link to 📋 Release details" translate="no">​</a></h3>
+<ul>
+<li class="">Full list of updates: <a href="https://github.com/StephaneCouturier/Katalog/issues?q=milestone%3A3.0+sort%3Acreated-asc" target="_blank" rel="noopener noreferrer" class="">https://github.com/StephaneCouturier/Katalog/issues?q=milestone%3A3.0+sort%3Acreated-asc</a></li>
+<li class="">Full code changelog: <a href="https://github.com/StephaneCouturier/Katalog/compare/v2.12...v3.0" target="_blank" rel="noopener noreferrer" class="">https://github.com/StephaneCouturier/Katalog/compare/v2.12...v3.0</a></li>
+<li class="">📥 <strong>Download Katalog</strong>: <a href="https://sourceforge.net/projects/katalogg" target="_blank" rel="noopener noreferrer" class="">https://sourceforge.net/projects/katalogg</a></li>
+<li class="">📚 <strong>Documentation</strong>: <a href="https://stephanecouturier.github.io/Katalog" target="_blank" rel="noopener noreferrer" class="">https://stephanecouturier.github.io/Katalog</a></li>
+</ul>]]></content>
+        <author>
+            <name>Stephane Couturier</name>
+            <uri>https://github.com/StephaneCouturier</uri>
+        </author>
+        <category label="release" term="release"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Release 3.beta1]]></title>
+        <id>https://StephaneCouturier.github.io/Katalog/cs/blog/release-3-0-Beta1</id>
+        <link href="https://StephaneCouturier.github.io/Katalog/cs/blog/release-3-0-Beta1"/>
+        <updated>2026-08-31T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Hello all,]]></summary>
+        <content type="html"><![CDATA[<p>Hello all,</p>
+<p>It has now been 2 years since the very first tests of QML, Kirigami, on Linux &amp; Windows, confirming the feasibility and next big step for Katalog user experience.<br>
+<strong>Katalog 3.0 release is near!</strong><br></p>
+<p>This is a message to call to anyone who would like to <b>contribute and help to improve the quality before official Release</b>.
+Feel free to post feedback here, or directly as issues.<br></p>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="-what-is-katalog-3">✨ What is Katalog 3<a href="https://stephanecouturier.github.io/Katalog/cs/blog/release-3-0-Beta1#-what-is-katalog-3" class="hash-link" aria-label="Direct link to ✨ What is Katalog 3" title="Direct link to ✨ What is Katalog 3" translate="no">​</a></h3>
+<p><strong>Katalog 3</strong> is the new major version of Katalog, transitionning to a more modern User Interface. It relies on QtQuick (instead of QtWidgets) and <a href="https://develop.kde.org/frameworks/kirigami" target="_blank" rel="noopener noreferrer" class="">Kirigami</a> from KDE.</p>
+<p><strong>Katalog 2</strong> will be maintained for some time to address major bugs &amp; light feature changes. Katalog 2.13 will be released at the same time as Katalog 3.0 to maintain full db compatiblity.</p>
+<p>This is enabled by having done a full split of UI and backend. The common use of <code>/core</code> (backend) means that <strong>Collections will remain compatible between both <u>latest</u> versions</strong>.</p>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="-before-testing">✨ Before testing<a href="https://stephanecouturier.github.io/Katalog/cs/blog/release-3-0-Beta1#-before-testing" class="hash-link" aria-label="Direct link to ✨ Before testing" title="Direct link to ✨ Before testing" translate="no">​</a></h3>
+<ol>
+<li class="">
+<p>⚠️ BACKUP YOUR COLLECTION(S) FIRST 💾 !</p>
+</li>
+<li class="">
+<p>CREATE A TEST COLLECTION IN KATALOG 2 BEFORE</p>
+</li>
+<li class="">
+<p>Info: to make it even safer, when opening Katalog 3 <b>beta1</b> for the first time, it will <b>NOT</b> use the same settingsFile (.ini) and therefore it will <b>NOT</b> open your <b>last  Collection</b> nor personnal settings.<br>
+This is to protect even more your current collection and get your feedback on a fresh start as well.<br></p>
+</li>
+<li class="">
+<p>Important for <strong>macOS</strong> users: this version has NOT been tested on a macOS and may not start at all (previous feedback received on version 3.alpha2). Please report if it starts or not, this would be very useful.</p>
+</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="-what-to-test">✨ What to test<a href="https://stephanecouturier.github.io/Katalog/cs/blog/release-3-0-Beta1#-what-to-test" class="hash-link" aria-label="Direct link to ✨ What to test" title="Direct link to ✨ What to test" translate="no">​</a></h3>
+<ul>
+<li class="">
+<p>Note: <strong>documentation updates are not available yet</strong></p>
+</li>
+<li class="">
+<p><strong>New UI</strong> and global experience (starting from a blank Collection). Screenshots are very appreciated when describing an issue.</p>
+</li>
+<li class="">
+<p>Conversion of a copy of a collection (low risk but important to secure)
+Once in Katalog 3, open a <strong>COPY</strong> of your main collection.<br>
+⚠️ Do not open files with Katalog 2.12 after using them in Katalog 2.13 or 3.0, some issues would appear.</p>
+</li>
+<li class="">
+<p>Try out Katalog 2.13 beta1 on the same collection</p>
+</li>
+<li class="">
+<p>Katalog 3 new features: see: <a href="https://github.com/StephaneCouturier/Katalog/issues?q=is%3Aissue%20state%3Aopen%20milestone%3A3.0" target="_blank" rel="noopener noreferrer" class="">Katalog 3 changes</a> (it is not quite exhaustive but already a good list)</p>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="downloads">Downloads<a href="https://stephanecouturier.github.io/Katalog/cs/blog/release-3-0-Beta1#downloads" class="hash-link" aria-label="Direct link to Downloads" title="Direct link to Downloads" translate="no">​</a></h3>
+<p>📦 Distribution Formats:</p>
+<ul>
+<li class="">Beta versions limited to <strong>Linux AppImage</strong> &amp; <strong>Window 64 Portable</strong> &amp; <strong>macOS</strong></li>
+</ul>
+<p>📋 Release details:</p>
+<ul>
+<li class="">📥 <strong>Download Katalog</strong>: <a href="https://sourceforge.net/projects/katalogg/files/Katalog%203.0/beta1/" target="_blank" rel="noopener noreferrer" class="">https://sourceforge.net/projects/katalogg/files/Katalog%203.0/beta1/</a></li>
+<li class="">📚 <strong>Documentation</strong>: <a href="https://stephanecouturier.github.io/Katalog/docs/Development-Roadmap#katalog-3" target="_blank" rel="noopener noreferrer" class="">https://stephanecouturier.github.io/Katalog/docs/Development-Roadmap#katalog-3</a></li>
+</ul>]]></content>
+        <author>
+            <name>Stephane Couturier</name>
+            <uri>https://github.com/StephaneCouturier</uri>
+        </author>
+        <category label="release" term="release"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Release 2.12 & 3.alpha2]]></title>
         <id>https://StephaneCouturier.github.io/Katalog/cs/blog/release-2-12</id>
@@ -281,13 +475,13 @@ Updating a device will only process new or modified files, which is a critical n
     </entry>
     <entry>
         <title type="html"><![CDATA[A test of QML and Kirigami for Katalog]]></title>
-        <id>https://StephaneCouturier.github.io/Katalog/cs/blog/2024/09/05/Testing-QML-and-Kirigam</id>
-        <link href="https://StephaneCouturier.github.io/Katalog/cs/blog/2024/09/05/Testing-QML-and-Kirigam"/>
+        <id>https://StephaneCouturier.github.io/Katalog/cs/blog/2024/09/05/Testing-QML-and-Kirigami</id>
+        <link href="https://StephaneCouturier.github.io/Katalog/cs/blog/2024/09/05/Testing-QML-and-Kirigami"/>
         <updated>2024-09-05T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Looking at the future of Katalog, a few direction have been here since the start of the project:]]></summary>
-        <content type="html"><![CDATA[<p>Looking at the future of Katalog, a few direction have been here since the start of the project:</p>
+        <summary type="html"><![CDATA[Looking at the future of Katalog, a few directions were here from the start of the project:]]></summary>
+        <content type="html"><![CDATA[<p>Looking at the future of Katalog, a few directions were here from the start of the project:</p>
 <ul>
-<li class="">Multi-platform: why not even consider Mobile ? (ok, macOS should really be covered first)</li>
+<li class="">Multi-platform: why not even consider Mobile ? (ok, macOS should really be addressed before)</li>
 <li class="">Using KDE KF6 librairies: this could be the best way to grow capabilities such a archives indexing or media files meta data</li>
 <li class="">User Experience: nicer interface, more responsive.</li>
 </ul>
