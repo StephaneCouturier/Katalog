@@ -679,6 +679,23 @@ jobs:
         done
         echo "AppDir size after stripping: $(du -sh AppDir | cut -f1)"
 
+        # Bundle OpenSSL 3 for Qt's TLS backend (SpecK3Deployment.md DPL-F7).
+        # Qt loads the UNVERSIONED libssl.so first; on a host where it points to
+        # LibreSSL or OpenSSL 1.x, Qt refuses it and every HTTPS request fails
+        # (e.g. the version check). AppRun puts usr/lib first in LD_LIBRARY_PATH,
+        # so the bundled pair (versioned + unversioned names) wins.
+        echo "=== Bundling OpenSSL 3 ==="
+        for lib in libssl libcrypto; do
+          src="/usr/lib/x86_64-linux-gnu/${lib}.so.3"
+          if [ ! -e "$src" ]; then
+            echo "  FATAL: $src not found — HTTPS would fail in the AppImage"
+            exit 1
+          fi
+          cp -L "$src" "AppDir/usr/lib/${lib}.so.3"
+          ln -sf "${lib}.so.3" "AppDir/usr/lib/${lib}.so"
+          echo "  OK: ${lib}.so.3"
+        done
+
         # Verify critical Qt6 QML libs are present before packaging
         echo "=== Verifying bundled Qt6 QML libs ==="
         for lib in libQt6Qml.so.6 libQt6Quick.so.6 libQt6QuickControls2.so.6 libQt6QuickLayouts.so.6; do

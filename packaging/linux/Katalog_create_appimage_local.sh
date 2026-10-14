@@ -961,6 +961,30 @@ create_appimage() {
     done
     print_success "Multimedia plugins removed"
 
+    # Step 2d: Bundle OpenSSL 3 for Qt's TLS backend (SpecK3Deployment.md DPL-F7).
+    # Qt loads the UNVERSIONED libssl.so first; on a host where it points to
+    # LibreSSL (libressl-devel) or OpenSSL 1.x, Qt refuses it and every HTTPS
+    # request fails, e.g. the version check. AppRun puts usr/lib first in
+    # LD_LIBRARY_PATH, so the bundled pair (versioned + unversioned names) wins.
+    print_step "Bundling OpenSSL 3"
+    local ssl_lib ssl_src ssl_dir
+    for ssl_lib in libssl libcrypto; do
+        ssl_src=""
+        for ssl_dir in /usr/lib64 /usr/lib/x86_64-linux-gnu /lib/x86_64-linux-gnu /usr/lib; do
+            if [ -e "$ssl_dir/$ssl_lib.so.3" ]; then
+                ssl_src="$ssl_dir/$ssl_lib.so.3"
+                break
+            fi
+        done
+        if [ -z "$ssl_src" ]; then
+            print_error "$ssl_lib.so.3 not found on the build host: HTTPS would fail in the AppImage"
+            exit 1
+        fi
+        cp -L "$ssl_src" "$APPDIR/usr/lib/$ssl_lib.so.3"
+        ln -sf "$ssl_lib.so.3" "$APPDIR/usr/lib/$ssl_lib.so"
+    done
+    print_success "OpenSSL 3 bundled"
+
     # Step 3: For K3, manually deploy QML modules
     if [ "$VARIANT" = "K3" ]; then
         deploy_k3_qml_modules
