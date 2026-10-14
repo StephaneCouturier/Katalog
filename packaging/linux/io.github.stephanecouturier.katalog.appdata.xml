@@ -51,7 +51,7 @@
       <image>https://raw.githubusercontent.com/StephaneCouturier/Katalog/refs/heads/katalog_master/docs_src/static/img/search_01_overview.png</image>
     </screenshot>
     <screenshot>
-      <caption>Catalog creation screen</caption>
+      <caption>Explore screen browsing the folders and files of a catalog</caption>
       <image>https://raw.githubusercontent.com/StephaneCouturier/Katalog/refs/heads/katalog_master/docs_src/static/img/explore_01_overview.png</image>
     </screenshot>
     <screenshot>
@@ -65,6 +65,11 @@
     <name>Stéphane Couturier</name>
   </developer>
   <releases>
+    <release version="3.0" date="2026-10-15">
+      <description>
+        <p>Katalog 3: new interface built with Qt Quick and Kirigami, adapted to all screen sizes</p>
+      </description>
+    </release>
     <release version="2.12" date="2026-06-01">
       <description>
         <p>Search list, Search Regex, Catalog split</p>

@@ -146,7 +146,7 @@ The iteration calls `install` only: no image is converted at build time, which i
 what keeps `ICO-C5` satisfied and the Windows build free of an ImageMagick-class
 dependency.
 
-The desktop entry is installed by both, from `packaging/qt_widgets/Katalog.desktop`
+The desktop entry is installed by both, from `packaging/linux/Katalog.desktop`
 with `RENAME io.github.stephanecouturier.Katalog.desktop`. K3 reuses the K2 file
 rather than owning a copy, per `ICO-C6` and `ICO-C7`.
 
@@ -212,7 +212,7 @@ For each row: set up the stated condition, run the operation, confirm the result
 - **ICO-C6** — Install K2 into a clean prefix: `bin/Katalog`, one desktop entry, eight icons. Remove it, install K3 into the same clean prefix: the same `bin/Katalog`, the same single desktop entry, the same eight icons. Confirm only one desktop entry exists in `share/applications` in each case. *Verified after implementation:* a staged install of each UI into a throwaway prefix produced byte-identical layouts — `bin/Katalog`, one `io.github.stephanecouturier.Katalog.desktop`, and the eight hicolor icons.
 - **ICO-F3 / ICO-O2** — After installing either UI, open the application launcher and search for Katalog. One entry appears, with the correct name, description and icon. Launching it starts the installed UI.
 - **ICO-F4** — List `share/icons/hicolor/*/apps/` after install. All eight sizes are present, each named `io.github.stephanecouturier.Katalog.png`, and each opens as a valid PNG at its nominal size. *Verified after implementation:* every staged image's pixel dimensions were checked against its directory name; all eight match, and all are 8-bit RGBA so the alpha channel survived generation.
-- **ICO-C7** — Diff the installed desktop entry against `packaging/qt_widgets/Katalog.desktop`: byte-identical apart from the filename. Confirm every localised `Name`, `GenericName`, `Comment` and `Keywords` line is unchanged.
+- **ICO-C7** — Diff the installed desktop entry against `packaging/linux/Katalog.desktop`: byte-identical apart from the filename. Confirm every localised `Name`, `GenericName`, `Comment` and `Keywords` line is unchanged.
 - **ICO-C8** — Review the full diff for `tr(` and `qsTr(`: no addition, no change, no removal.
 - **ICO-C9** — Confirm no file under `core/` is modified.
 - **ICO-O3 / ICO-F5** — On macOS, mount the released DMG. The `Katalog.app` tile in the DMG window shows the Katalog icon, not the generic application placeholder. Copy it to `/Applications`: it shows the Katalog icon in Finder and in Launchpad, and on the Dock tile before it is started. Repeat for K2 and K3.

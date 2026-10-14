@@ -150,12 +150,22 @@ install(TARGETS Katalog3
 
 # Desktop entry. K2 and K3 both install as bin/Katalog and deliberately share
 # one desktop entry and one application id — they are mutually exclusive
-# installs, so the K2 file is reused as-is rather than duplicated. Its
+# installs, so one shared file in packaging/linux/ is installed by both. Its
 # translated Name/GenericName/Comment/Keywords values must not be edited.
 # See SpecApplicationIcon.md (ICO-F3, ICO-C6, ICO-C7).
-install(FILES ${CMAKE_SOURCE_DIR}/packaging/qt_widgets/Katalog.desktop
+install(FILES ${CMAKE_SOURCE_DIR}/packaging/linux/Katalog.desktop
     DESTINATION share/applications
     RENAME io.github.stephanecouturier.Katalog.desktop)
+
+# Licence and AppStream metainfo, shared with K2 like the desktop entry above:
+# Flathub requires both in the installed tree.
+install(FILES ${CMAKE_SOURCE_DIR}/LICENSE.md
+    DESTINATION share/licenses/io.github.stephanecouturier.Katalog
+    RENAME LICENSE)
+
+install(FILES ${CMAKE_SOURCE_DIR}/packaging/linux/io.github.stephanecouturier.katalog.appdata.xml
+    DESTINATION share/metainfo
+    RENAME io.github.stephanecouturier.Katalog.metainfo.xml)
 
 # Application icon, installed at every size a desktop asks for so launchers and
 # the window manager find an exact match instead of rescaling the 256 master.

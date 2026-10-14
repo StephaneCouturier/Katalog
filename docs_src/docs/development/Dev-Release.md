@@ -64,14 +64,14 @@ Language & documentation
 - [ ] Language updates: no unfinished translation left, `.qm` files copied to `translations/`
 - [ ] Comments, code style, and structure.
 - [ ] Documentation: English, French and Czech pages, version badges, `npm run build` without error, copy to /docs
-- [ ] Flatpak metainfo (`packaging/qt_widgets/io.github.stephanecouturier.katalog.appdata.xml`): new `<release>` entry with its notes, screenshot URLs still valid on `katalog_master`
+- [ ] Flatpak metainfo (`packaging/linux/io.github.stephanecouturier.katalog.appdata.xml`): new `<release>` entry with its notes, screenshot URLs still valid on `katalog_master`
 - [ ] Release notes: changes affecting existing users (settings file, compatibility of collections with older versions — see [SpecVersions](SpecVersions))
 
 Packaging
 - [ ] Linux AppImage locally
 - [ ] Windows Portable
 - [ ] Windows AdvancedInstaller
-- [ ] Merge and push katalog_development to katalog_master
+- [ ] Merge and push katalog_development to katalog_master (see [Merge to katalog_master](#merge-to-katalog_master))
 - [ ] Linux AppImages with GitHub Actions
 - [ ] macOS versions with GitHub Actions
 
@@ -80,10 +80,26 @@ Publishing
 - [ ] Define Default package for Linux, Windows, macOS
 - [ ] Release publish (sourceforge)
 - [ ] Release publish (github)
-- [ ] Flatpak: update `tag` and `commit` in `packaging/qt_widgets/io.github.stephanecouturier.Katalog.yml`, then submit the update to Flathub
+- [ ] Flatpak: update `tag` and `commit` in `packaging/linux/io.github.stephanecouturier.Katalog.yml`, then submit the update to Flathub
 - [ ] Release publish (Facebook)
 - [ ] Close GitHub issues and milestone
 - [ ] Inform users who submitted bugs or ideas
+
+### Merge to katalog_master {#merge-to-katalog_master}
+`katalog_master` only receives releases, so the merge is a fast-forward: master moves to the
+last commit of `katalog_development`, with no merge commit. Commit everything on
+`katalog_development` first.
+
+```
+git checkout katalog_master
+git pull origin katalog_master
+git merge --ff-only katalog_development
+git push origin katalog_master
+git checkout katalog_development
+```
+
+If `--ff-only` stops with "Not possible to fast-forward", master has a commit that development
+does not: look at it (`git log katalog_development..katalog_master`) before going further.
 
 ### Packages on SourceForge
 Despite some features in GitHub to provide downloads, SourceForge is still used as the place for user to download all versions.
@@ -119,8 +135,8 @@ File catalog manager
 
 | Target | Location |
 |---|---|
-| `Katalog.desktop` GenericName | `packaging/qt_widgets/Katalog.desktop` |
-| `appdata.xml` summary | `packaging/qt_widgets/io.github.stephanecouturier.katalog.appdata.xml` |
+| `Katalog.desktop` GenericName | `packaging/linux/Katalog.desktop` |
+| `appdata.xml` summary | `packaging/linux/io.github.stephanecouturier.katalog.appdata.xml` |
 
 ### Level 2 — One sentence
 ```
@@ -129,7 +145,7 @@ Catalog your devices to search, analyze, and backup your files.
 
 | Target | Location |
 |---|---|
-| `Katalog.desktop` Comment | `packaging/qt_widgets/Katalog.desktop` |
+| `Katalog.desktop` Comment | `packaging/linux/Katalog.desktop` |
 | `README.md` (root) | `README.md` |
 | `CLAUDE.md` | `CLAUDE.md` |
 | SourceForge / Short Summary | https://sourceforge.net/p/katalogg/admin/overview |
@@ -163,7 +179,7 @@ Catalog your devices to search, analyze, and backup your files:
 
 | Target | Location |
 |---|---|
-| Flathub description in `appdata.xml` | `packaging/qt_widgets/io.github.stephanecouturier.katalog.appdata.xml` |
+| Flathub description in `appdata.xml` | `packaging/linux/io.github.stephanecouturier.katalog.appdata.xml` |
 | SourceForge / Features | External |
 | `README.md` body | `README.md` |
 | Flathub Description | External |
