@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+160"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4837"/>
+        <location line="+4868"/>
         <source>Search</source>
         <translation>Αναζήτηση</translation>
     </message>
     <message>
-        <location line="-4957"/>
+        <location line="-4988"/>
         <source>Stopped</source>
         <translation>Σταμάτησε</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3279"/>
+        <location line="+3301"/>
         <source>Evaluated</source>
         <translation>Αξιολογημένο</translation>
     </message>
     <message>
-        <location line="-3397"/>
+        <location line="-3419"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -45,7 +45,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2199"/>
+        <location line="+2221"/>
         <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
@@ -53,7 +53,7 @@
         <location line="+33"/>
         <location line="+596"/>
         <location line="+37"/>
-        <location line="+306"/>
+        <location line="+315"/>
         <location line="+11"/>
         <location line="+87"/>
         <location line="+29"/>
@@ -67,9 +67,9 @@
         <translation>Σε εξέλιξη</translation>
     </message>
     <message>
-        <location line="-4838"/>
-        <location line="+3939"/>
-        <location line="+333"/>
+        <location line="-4869"/>
+        <location line="+3961"/>
+        <location line="+342"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
@@ -78,7 +78,7 @@
         <translation>Ολοκληρωμένο</translation>
     </message>
     <message>
-        <location line="-4473"/>
+        <location line="-4504"/>
         <source>Empty database path provided</source>
         <translation>Δόθηκε κενή διαδρομή βάσης δεδομένων</translation>
     </message>
@@ -164,12 +164,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2921"/>
+        <location line="+2952"/>
         <source>Size</source>
         <translation>Μέγεθος</translation>
     </message>
     <message>
-        <location line="-2920"/>
+        <location line="-2951"/>
         <source>Date</source>
         <translation>Ημερομηνία</translation>
     </message>
@@ -204,7 +204,7 @@
         <translation>Ετικέτα: %1</translation>
     </message>
     <message>
-        <location line="+240"/>
+        <location line="+262"/>
         <source>Memory collection opened: %1</source>
         <translation>Άνοιξε η συλλογή μνήμης: %1</translation>
     </message>
@@ -467,7 +467,7 @@ Choose a different name.</source>
         <translation>Η επιλεγμένη συσκευή δεν είναι κατάλογος</translation>
     </message>
     <message>
-        <location line="+321"/>
+        <location line="+330"/>
         <source>Error: could not open collection</source>
         <translation>Σφάλμα: δεν ήταν δυνατό το άνοιγμα της συλλογής</translation>
     </message>
@@ -519,8 +519,8 @@ Choose a different name.</source>
         <translation>Εξαγωγή</translation>
     </message>
     <message>
-        <location line="-483"/>
-        <location line="+402"/>
+        <location line="-492"/>
+        <location line="+411"/>
         <location line="+26"/>
         <location line="+17"/>
         <location line="+50"/>
@@ -530,14 +530,14 @@ Choose a different name.</source>
         <translation>Ακυρώθηκε</translation>
     </message>
     <message>
-        <location line="-1331"/>
+        <location line="-1340"/>
         <location line="+29"/>
         <source>Explore</source>
         <translation>Εξερεύνηση</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+441"/>
+        <location line="+450"/>
         <location line="+10"/>
         <source>Loaded</source>
         <translation>Φορτωμένο</translation>
@@ -1078,40 +1078,40 @@ Choose a different name.</source>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+1396"/>
+        <location filename="../qt_quick/Main.qml" line="+1419"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Θέλετε να &lt;b&gt;διαγράψετε&lt;/b&gt; αυτή τη συσκευή %1;&lt;br/&gt;&lt;br/&gt;Όνομα: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <location line="+60"/>
-        <location line="+39"/>
-        <location line="+138"/>
-        <location line="+56"/>
-        <location line="+155"/>
+        <location line="+7"/>
+        <location line="+64"/>
+        <location line="+41"/>
+        <location line="+144"/>
+        <location line="+59"/>
+        <location line="+160"/>
         <source>Yes</source>
         <translation>Ναι</translation>
     </message>
     <message>
-        <location line="-444"/>
-        <location line="+60"/>
-        <location line="+239"/>
-        <location line="+837"/>
+        <location line="-464"/>
+        <location line="+64"/>
+        <location line="+250"/>
+        <location line="+907"/>
         <location line="+125"/>
         <source>Cancel</source>
         <translation>Ακύρωση</translation>
     </message>
     <message>
-        <location line="-1364"/>
-        <location line="+68"/>
-        <location line="+69"/>
-        <location line="+172"/>
-        <location line="+206"/>
+        <location line="-1455"/>
+        <location line="+72"/>
+        <location line="+73"/>
+        <location line="+179"/>
+        <location line="+215"/>
         <source>OK</source>
         <translation>Εντάξει</translation>
     </message>
     <message>
-        <location line="-493"/>
+        <location line="-516"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these on the %3 page.</source>
         <translation>&lt;br/&gt;&lt;b&gt;Καλώς ορίσατε στο Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Φαίνεται ότι αυτή είναι η πρώτη εκτέλεση.&lt;br/&gt;&lt;br/&gt;Έχουν εφαρμοστεί οι ακόλουθες ρυθμίσεις:&lt;br/&gt; - Γλώσσα: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Θέμα: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Μπορείτε να τις αλλάξετε στη σελίδα %3.</translation>
     </message>
@@ -1120,13 +1120,13 @@ Choose a different name.</source>
         <translation type="vanished">Σύστημα</translation>
     </message>
     <message>
-        <location line="-248"/>
-        <location line="+254"/>
+        <location line="-244"/>
+        <location line="+250"/>
         <source>Settings</source>
         <translation>Ρυθμίσεις</translation>
     </message>
     <message>
-        <location line="-403"/>
+        <location line="-399"/>
         <source>Open...</source>
         <translation>Άνοιγμα...</translation>
     </message>
@@ -1158,42 +1158,42 @@ Choose a different name.</source>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+866"/>
+        <location line="+887"/>
         <source>Selection</source>
         <translation>Επιλογή</translation>
     </message>
     <message>
-        <location line="-856"/>
-        <location line="+1218"/>
+        <location line="-877"/>
+        <location line="+1229"/>
         <source>Devices</source>
         <translation>Συσκευές</translation>
     </message>
     <message>
-        <location line="-1213"/>
-        <location line="+1310"/>
+        <location line="-1224"/>
+        <location line="+1321"/>
         <source>Explore</source>
         <translation>Εξερεύνηση</translation>
     </message>
     <message>
-        <location line="-1300"/>
-        <location line="+1546"/>
+        <location line="-1311"/>
+        <location line="+1632"/>
         <source>Backup</source>
         <translation>Αντίγραφο ασφαλείας</translation>
     </message>
     <message>
-        <location line="-1541"/>
-        <location line="+1498"/>
+        <location line="-1627"/>
+        <location line="+1584"/>
         <source>Statistics</source>
         <translation>Στατιστικά</translation>
     </message>
     <message>
-        <location line="-1493"/>
-        <location line="+1515"/>
+        <location line="-1579"/>
+        <location line="+1601"/>
         <source>Tags</source>
         <translation>Ετικέτες</translation>
     </message>
     <message>
-        <location line="-1502"/>
+        <location line="-1588"/>
         <source>Documentation</source>
         <translation>Τεκμηρίωση</translation>
     </message>
@@ -1240,12 +1240,12 @@ Choose a different name.</source>
 </translation>
     </message>
     <message>
-        <location line="+156"/>
+        <location line="+151"/>
         <source>Do not show again</source>
         <translation>Να μην εμφανιστεί ξανά</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+30"/>
         <source>Katalog Colors</source>
         <translation>Χρώματα του Katalog</translation>
     </message>
@@ -1260,7 +1260,7 @@ Choose a different name.</source>
         <translation>Θέμα επιφάνειας εργασίας</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Open existing...</source>
         <translation>Άνοιγμα υπάρχοντος...</translation>
     </message>
@@ -1270,7 +1270,7 @@ Choose a different name.</source>
         <translation>Δημιουργία νέου...</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+24"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
         <translation>&lt;br/&gt;&lt;b&gt;Έτοιμοι για δημιουργία καταλόγου αρχείων:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
@@ -1280,20 +1280,20 @@ Choose a different name.</source>
         <translation>1- Επιλέξτε μια ολόκληρη μονάδα δίσκου ή κατάλογο, &lt;br/&gt;2- επιλέξτε επιλογές και &lt;br/&gt;3- κάντε κλικ στην επιλογή &apos;Δημιουργία&apos;&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+130"/>
+        <location line="+138"/>
         <source>Update the catalog content with the new criteria?</source>
         <translation>Ενημέρωση του περιεχομένου του καταλόγου με τα νέα κριτήρια;</translation>
     </message>
     <message>
-        <location line="+8"/>
-        <location line="+144"/>
-        <location line="+51"/>
-        <location line="+154"/>
+        <location line="+9"/>
+        <location line="+150"/>
+        <location line="+54"/>
+        <location line="+159"/>
         <source>No</source>
         <translation>Όχι</translation>
     </message>
     <message>
-        <location line="-319"/>
+        <location line="-333"/>
         <source>The catalog source path changed.</source>
         <translation>Η διαδρομή πηγής του καταλόγου άλλαξε.</translation>
     </message>
@@ -1333,7 +1333,7 @@ Choose a different name.</source>
         <translation>Παράλειψη</translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+48"/>
         <source>A snapshot of this collection was recorded:</source>
         <translation>Καταγράφηκε ένα στιγμιότυπο αυτής της συλλογής:</translation>
     </message>
@@ -1362,12 +1362,12 @@ Choose a different name.</source>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+179"/>
+        <location line="+188"/>
         <source>Storage</source>
         <translation>Αποθήκευση</translation>
     </message>
     <message>
-        <location line="-178"/>
+        <location line="-187"/>
         <source>Storage free space:</source>
         <translation>Ελεύθερος χώρος αποθήκευσης:</translation>
     </message>
@@ -1377,7 +1377,7 @@ Choose a different name.</source>
         <translation>Συνολικός χώρος αποθήκευσης:</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+29"/>
         <source>Private network connection</source>
         <translation>Σύνδεση ιδιωτικού δικτύου</translation>
     </message>
@@ -1392,12 +1392,12 @@ Choose a different name.</source>
         <translation>Συνέχεια;</translation>
     </message>
     <message>
-        <location line="+57"/>
+        <location line="+60"/>
         <source>Do you want the summary of updates for each catalog?</source>
         <translation>Θέλετε περίληψη των ενημερώσεων για κάθε κατάλογο;</translation>
     </message>
     <message>
-        <location line="+40"/>
+        <location line="+43"/>
         <source>Catalog updated: </source>
         <translation>Κατάλογος ενημερώθηκε: </translation>
     </message>
@@ -1502,7 +1502,7 @@ Choose a different name.</source>
         <translation>Οι επιλεγμένοι ενεργοί κατάλογοι ενημερώνονται.</translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+53"/>
         <source>The source folder does not contain any file.
 This could mean that the source is empty or the device is not mounted to this folder.
 Do you want to save it anyway (the catalog would be empty)?</source>
@@ -1511,19 +1511,24 @@ Do you want to save it anyway (the catalog would be empty)?</source>
 Θέλετε να το αποθηκεύσετε ούτως ή άλλως (ο κατάλογος θα είναι κενός);</translation>
     </message>
     <message>
-        <location line="-804"/>
-        <location line="+1054"/>
-        <location line="+48"/>
+        <location line="-824"/>
+        <location line="+1061"/>
+        <location line="+51"/>
         <source>Search</source>
         <translation>Αναζήτηση</translation>
     </message>
     <message>
-        <location line="-142"/>
+        <location line="-889"/>
+        <source>Welcome to Katalog 3. News, questions and feedback are shared on the project discussions:</source>
+        <translation>Καλώς ήρθατε στο Katalog 3. Νέα, ερωτήσεις και σχόλια μοιράζονται στις συζητήσεις του έργου:</translation>
+    </message>
+    <message>
+        <location line="+744"/>
         <source>Name</source>
         <translation>Όνομα</translation>
     </message>
     <message>
-        <location line="+152"/>
+        <location line="+155"/>
         <source>Resume</source>
         <translation>Συνέχεια</translation>
     </message>
@@ -1534,13 +1539,13 @@ Do you want to save it anyway (the catalog would be empty)?</source>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+115"/>
-        <location line="+184"/>
+        <location line="+116"/>
+        <location line="+259"/>
         <source>Stop</source>
         <translation>Διακοπή</translation>
     </message>
     <message>
-        <location line="-292"/>
+        <location line="-368"/>
         <source>Reset</source>
         <translation>Επαναφορά</translation>
     </message>
@@ -1550,12 +1555,12 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Ιστορικό</translation>
     </message>
     <message>
-        <location line="-291"/>
-        <location line="+299"/>
+        <location line="-280"/>
+        <location line="+288"/>
         <location line="+39"/>
-        <location line="+107"/>
+        <location line="+108"/>
         <location line="+39"/>
-        <location line="+99"/>
+        <location line="+174"/>
         <location line="+104"/>
         <location line="+20"/>
         <location line="+42"/>
@@ -1563,16 +1568,15 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Κλείσιμο</translation>
     </message>
     <message>
-        <location line="-1364"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
-        <translation>Αυτή είναι μια έκδοση beta του Katalog, που προορίζεται για την υποστήριξη της ανάπτυξης και τη συλλογή σχολίων.
+        <translation type="vanished">Αυτή είναι μια έκδοση beta του Katalog, που προορίζεται για την υποστήριξη της ανάπτυξης και τη συλλογή σχολίων.
 
 </translation>
     </message>
     <message>
-        <location line="+605"/>
+        <location line="-824"/>
         <source>Copy version and system information</source>
         <translation>Αντιγραφή πληροφοριών έκδοσης και συστήματος</translation>
     </message>
@@ -1582,7 +1586,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Οι πληροφορίες έκδοσης και συστήματος αντιγράφηκαν στο πρόχειρο</translation>
     </message>
     <message>
-        <location line="+96"/>
+        <location line="+82"/>
         <source>All</source>
         <translation>Όλα</translation>
     </message>
@@ -1607,7 +1611,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Ανάπτυξη ενός επιπέδου</translation>
     </message>
     <message>
-        <location line="+144"/>
+        <location line="+147"/>
         <source>Duplicates (%1)</source>
         <translation>Διπλότυπα (%1)</translation>
     </message>
@@ -1622,7 +1626,7 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation>Αποτελέσματα</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+54"/>
         <source>All active</source>
         <translation>Όλα ενεργά</translation>
     </message>
@@ -1650,13 +1654,13 @@ Do you want to save it anyway (the catalog would be empty)?</source>
         <translation type="vanished">Ο κατάλογος δημιουργήθηκε με επιτυχία.</translation>
     </message>
     <message>
-        <location line="+130"/>
+        <location line="+205"/>
         <source>Catalog creation failed: </source>
         <translation>Η δημιουργία καταλόγου απέτυχε: </translation>
     </message>
     <message>
-        <location line="-1380"/>
-        <location line="+1364"/>
+        <location line="-1466"/>
+        <location line="+1450"/>
         <location line="+32"/>
         <source>Create</source>
         <translation>Δημιουργία</translation>
@@ -7309,32 +7313,32 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageDevicesView</name>
     <message>
-        <location filename="../qt_quick/PageDevicesView.qml" line="+205"/>
-        <location line="+37"/>
+        <location filename="../qt_quick/PageDevicesView.qml" line="+216"/>
+        <location line="+40"/>
         <source>Split Catalog</source>
         <translation>Διαχωρισμός καταλόγου</translation>
     </message>
     <message>
-        <location line="-32"/>
+        <location line="-33"/>
         <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by sub-directory?&lt;br/&gt;&lt;br/&gt;This will create one sub-catalog per immediate sub-directory and remove the original catalog. This operation cannot be undone.</source>
         <translation>Διαχωρισμός του &lt;b&gt;%1&lt;/b&gt; σε υποκαταλόγους ανά υποκατάλογο;&lt;br/&gt;&lt;br/&gt;Αυτό θα δημιουργήσει έναν υποκατάλογο για κάθε άμεσο υποκατάλογο και θα αφαιρέσει τον αρχικό κατάλογο. Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Split</source>
         <translation>Διαχωρισμός</translation>
     </message>
     <message>
         <location line="+4"/>
         <location line="+62"/>
-        <location line="+25"/>
-        <location line="+62"/>
-        <location line="+36"/>
+        <location line="+28"/>
+        <location line="+68"/>
+        <location line="+39"/>
         <source>Cancel</source>
         <translation>Ακύρωση</translation>
     </message>
     <message>
-        <location line="-156"/>
+        <location line="-168"/>
         <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by file type:</source>
         <translation>Διαχωρισμός του &lt;b&gt;%1&lt;/b&gt; σε υποκαταλόγους ανά τύπο αρχείου:</translation>
     </message>
@@ -7354,12 +7358,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Επαλήθευση αθροισμάτων ελέγχου</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+7"/>
         <source>Verify checksums for &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Επαλήθευση αθροισμάτων ελέγχου για &lt;b&gt;%1&lt;/b&gt;;</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Verify</source>
         <translation>Επαλήθευση</translation>
     </message>
@@ -7394,24 +7398,24 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Επαλήθευση αθροίσματος ελέγχου</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <location line="+101"/>
-        <location line="+19"/>
+        <location line="+13"/>
+        <location line="+110"/>
+        <location line="+22"/>
         <source>OK</source>
         <translation>Εντάξει</translation>
     </message>
     <message>
-        <location line="-109"/>
+        <location line="-121"/>
         <source>Unassign Device</source>
         <translation>Κατάργηση ανάθεσης συσκευής</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+7"/>
         <source>Unassign &lt;b&gt;%1&lt;/b&gt; from its parent device?</source>
         <translation>Κατάργηση ανάθεσης του &lt;b&gt;%1&lt;/b&gt; από τη γονική του συσκευή;</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Unassign</source>
         <translation>Κατάργηση ανάθεσης</translation>
     </message>
@@ -7421,12 +7425,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Διαγραφή συσκευής</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+7"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Θέλετε να &lt;b&gt;διαγράψετε&lt;/b&gt; αυτή τη συσκευή %1;&lt;br/&gt;&lt;br/&gt;Όνομα: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Yes</source>
         <translation>Ναι</translation>
     </message>
@@ -7443,7 +7447,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="vanished">Λίστα καταλόγων</translation>
     </message>
     <message>
-        <location line="+200"/>
+        <location line="+206"/>
         <source>Filter from Selection</source>
         <translation>Φιλτράρισμα από την επιλογή</translation>
     </message>
@@ -7469,7 +7473,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Κατάλογοι</translation>
     </message>
     <message>
-        <location line="-465"/>
+        <location line="-486"/>
         <source>MIME verification failed:&lt;br/&gt;%1</source>
         <translation>Η επαλήθευση MIME απέτυχε:&lt;br/&gt;%1</translation>
     </message>
@@ -7484,17 +7488,17 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Η επαλήθευση MIME ολοκληρώθηκε.&lt;br/&gt;Βρέθηκαν %1 ασυμφωνία(ες) μεταξύ επεκτάσεων αρχείων και πραγματικού περιεχομένου.&lt;br/&gt;&lt;br/&gt;Η αναφορά αποθηκεύτηκε στο:&lt;br/&gt;%2</translation>
     </message>
     <message>
-        <location line="+242"/>
+        <location line="+257"/>
         <source>MIME Verification Complete</source>
         <translation>Επαλήθευση MIME ολοκληρώθηκε</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+14"/>
         <source>Open Report</source>
         <translation>Άνοιγμα αναφοράς</translation>
     </message>
     <message>
-        <location line="+76"/>
+        <location line="+79"/>
         <source>All devices</source>
         <translation>Όλες οι συσκευές</translation>
     </message>
@@ -7809,12 +7813,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+5"/>
-        <location line="+81"/>
+        <location line="+84"/>
         <source>Cancel</source>
         <translation>Ακύρωση</translation>
     </message>
     <message>
-        <location line="-74"/>
+        <location line="-77"/>
         <source>File deleted</source>
         <translation>Το αρχείο διαγράφηκε</translation>
     </message>
@@ -7824,7 +7828,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Δεν ήταν δυνατή η διαγραφή του αρχείου</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+10"/>
         <source>Permanently delete this file? This cannot be undone.
 
 %1</source>
@@ -7833,7 +7837,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 %1</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+14"/>
         <source>Checksum (SHA-256)</source>
         <translation>Άθροισμα ελέγχου (SHA-256)</translation>
     </message>
@@ -8290,7 +8294,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 <context>
     <name>PageSearchResultsForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+232"/>
+        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+252"/>
         <source>%1 duplicate(s) found</source>
         <translation>Βρέθηκαν %1 διπλότυπα</translation>
     </message>
@@ -8331,31 +8335,31 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+893"/>
-        <location line="+53"/>
+        <location line="+910"/>
+        <location line="+56"/>
         <source>Verify Checksums</source>
         <translation>Επαλήθευση αθροισμάτων ελέγχου</translation>
     </message>
     <message>
-        <location line="-127"/>
+        <location line="-130"/>
         <source>Catalogs with results</source>
         <translation>Κατάλογοι με αποτελέσματα</translation>
     </message>
     <message>
         <location line="+75"/>
-        <location line="+52"/>
+        <location line="+55"/>
         <source>Include Metadata</source>
         <translation>Συμπερίληψη μεταδεδομένων</translation>
     </message>
     <message>
-        <location line="-944"/>
-        <location line="+592"/>
-        <location line="+297"/>
+        <location line="-964"/>
+        <location line="+606"/>
+        <location line="+300"/>
         <source>Move to Trash</source>
         <translation>Μετακίνηση στα απορρίμματα</translation>
     </message>
     <message>
-        <location line="-1037"/>
+        <location line="-1054"/>
         <location line="+11"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Η συσκευή δεν είναι ενεργή. Ενδέχεται να έχει αποσυνδεθεί ή να έχει αλλάξει η διαδρομή της.</translation>
@@ -8372,12 +8376,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+2"/>
-        <location line="+723"/>
+        <location line="+737"/>
         <source>Delete</source>
         <translation>Διαγραφή</translation>
     </message>
     <message>
-        <location line="-673"/>
+        <location line="-687"/>
         <source>Run process on all results</source>
         <translation>Εκτέλεση διεργασίας σε όλα τα αποτελέσματα</translation>
     </message>
@@ -8417,12 +8421,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Άνοιγμα φακέλου</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+16"/>
         <source>Explore folder</source>
         <translation>Εξερεύνηση φακέλου</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+14"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Εμφάνιση εκτεταμένων μεταδεδομένων (JSON)</translation>
     </message>
@@ -8473,8 +8477,8 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Υπολογισμός αθροίσματος ελέγχου (SHA-256)</translation>
     </message>
     <message>
-        <location line="-682"/>
-        <location line="+698"/>
+        <location line="-696"/>
+        <location line="+712"/>
         <source>File not found or could not be read</source>
         <translation>Το αρχείο δεν βρέθηκε ή δεν ήταν δυνατή η ανάγνωσή του</translation>
     </message>
@@ -8606,7 +8610,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Δεν ήταν δυνατή η διαγραφή του αρχείου</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+9"/>
         <source>Permanently delete this file? This cannot be undone.
 
 %1</source>
@@ -8619,7 +8623,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="vanished">Κατάλογος με αποτελέσματα</translation>
     </message>
     <message>
-        <location line="+108"/>
+        <location line="+109"/>
         <source>All</source>
         <translation>Όλα</translation>
     </message>
@@ -8629,7 +8633,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Κανένα</translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+72"/>
         <source>Matched: %1
 Mismatched: %2
 New checksums calculated: %3
@@ -8649,12 +8653,12 @@ Errors: %3</source>
 Σφάλματα: %3</translation>
     </message>
     <message>
-        <location line="-43"/>
+        <location line="-46"/>
         <source>Delete Files</source>
         <translation>Διαγραφή αρχείων</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+15"/>
         <source>Move all %1 result(s) to trash?</source>
         <translation>Μετακίνηση και των %1 αποτελεσμάτων στον κάδο απορριμμάτων;</translation>
     </message>
@@ -8674,7 +8678,7 @@ Errors: %3</source>
         <translation>Συμπερίληψη μεταδεδομένων για όλα τα %1 αποτελέσματα;</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>%1 file(s) moved to trash</source>
         <translation>%1 αρχεία μετακινήθηκαν στον κάδο απορριμμάτων</translation>
     </message>

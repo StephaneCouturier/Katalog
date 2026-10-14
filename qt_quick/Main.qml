@@ -1270,7 +1270,7 @@ Kirigami.ApplicationWindow {
 
     Controls.Dialog {
         id: alphaWarningDialog
-        title: "Katalog 3 - Beta4 Version"
+        title: "Katalog 3.0"
         modal: true
         anchors.centerIn: parent
         width: Math.min(520, parent.width - Kirigami.Units.largeSpacing * 4)
@@ -1285,27 +1285,20 @@ Kirigami.ApplicationWindow {
             Controls.Label {
                 Layout.fillWidth: true
                 wrapMode: Text.WordWrap
-                // The trailing newlines the source string carries are dropped at
-                // display time: the gap is the layout's job now. The argument to
-                // qsTr() is untouched, so every existing translation still
-                // matches it exactly.
-                text: qsTr("This is a beta version of Katalog intended to support development and gather feedback.\n\n")
-                          .replace(/\n+$/, "")
+                text: qsTr("Welcome to Katalog 3. News, questions and feedback are shared on the project discussions:")
             }
 
-            // Where to find news and support for the beta. The visible text is a
+            // Where to find news and support. The visible text is a
             // shortened form of the address, so it is not prose and carries no
             // qsTr(): a URL is the same in every language. The link points at
-            // the announcements CATEGORY, not at one post - a category exists
-            // before anything is published there and survives posts being
-            // renamed or deleted, whereas this address is frozen into every
-            // released build and can never be corrected.
+            // the discussions root, not at one post or category: this address
+            // is frozen into every released build and can never be corrected.
             Controls.Label {
                 Layout.fillWidth: true
                 wrapMode: Text.WrapAnywhere
                 textFormat: Text.StyledText
                 linkColor: root.titleColor
-                text: "<a href=\"https://github.com/StephaneCouturier/Katalog/discussions/categories/announcements\">Github: Katalog/discussions/categories/announcements</a>"
+                text: "<a href=\"https://github.com/StephaneCouturier/Katalog/discussions\">Github: Katalog/discussions</a>"
                 onLinkActivated: (link) => Qt.openUrlExternally(link)
                 // And one blank line between the link and the buttons below.
                 Layout.bottomMargin: Kirigami.Units.gridUnit

@@ -110,7 +110,7 @@ Each backup link has a **Source Mode** that controls what is used as the source 
 ### LuckyBackup profile
 
 It is possbile to export the BackUp Links into a [LuckyBackup](https://luckybackup.sourceforge.net) profile.
-See dedicate page: [LuckyBackup profile](../BackUp_luckybackup_profile) 
+See dedicate page: [LuckyBackup profile](../development/SpecBackupLuckyBackupProfile) 
 
 
 ## BackUp Links management

@@ -4,8 +4,6 @@ version: "2.13"
 
 # Specifications
 
-![Status](https://img.shields.io/badge/Status-Index-lightgrey) ![Pages](https://img.shields.io/badge/Pages-36-blue)
-
 Every specification page lives in `docs_src/docs/development/`. This page is the
 index: **new specifications are added here, not to the sidebar.**
 
@@ -20,8 +18,11 @@ specification and the code disagree, the specification is what was agreed.
 | [SpecApplicationIconBacklogNotes](SpecApplicationIconBacklogNotes.md) | APPLICATION ICON — RESEARCH NOTES | Reference | — | — |
 | [SpecBacklogNotes](SpecBacklogNotes.md) | Backlog Notes | — | — | — |
 | [SpecBackup](SpecBackup.md) | BACKUP | Draft | complete | — |
+| [SpecBackupLuckyBackupProfile](SpecBackupLuckyBackupProfile.md) | BACKUP — GENERATE LUCKYBACKUP PROFILE | Available | complete | — |
 | [SpecCardsAndTables](SpecCardsAndTables.md) | CARDS, TABLES AND TREES — SHARED DISPLAY CONVENTIONS | Approved | planned | — |
+| [SpecCatalogChecksum](SpecCatalogChecksum.md) | CATALOG — FILE CHECKSUM | Available | — | — |
 | [SpecCatalogIncludeExclude](SpecCatalogIncludeExclude.md) | Spec: Catalog Include / Exclude Rules | — | — | — |
+| [SpecCatalogMetadata](SpecCatalogMetadata.md) | CATALOG — FILE METADATA | — | — | — |
 | [SpecCollection](SpecCollection.md) | SpecCollection — Import / Update across Collections (#750) | — | — | — |
 | [SpecCollectionExport](SpecCollectionExport.md) | COLLECTION EXPORT — CONVERT A COLLECTION TO ANOTHER MODE | Approved | planned | — |
 | [SpecCollectionIdentity](SpecCollectionIdentity.md) | COLLECTION IDENTITY — NAMING COLLECTIONS IN THE K3 DRAWER | Approved | planned | — |

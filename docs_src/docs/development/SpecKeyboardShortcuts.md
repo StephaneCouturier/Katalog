@@ -1,7 +1,7 @@
 ---
 id: SpecKeyboardShortcuts
 title: Keyboard Shortcuts
-description: Requirements for K3 keyboard shortcuts: Esc goes back one step; Ctrl+E explores the selected search result's folder
+description: "Requirements for K3 keyboard shortcuts: Esc goes back one step; Ctrl+E explores the selected search result's folder"
 ---
 
 # KEYBOARD SHORTCUTS

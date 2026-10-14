@@ -18,7 +18,6 @@ Pro Linux je nejlepší volbou [Flatpak z Flathub](https://flathub.org/en/apps/i
 <br/>Jinak [stáhněte nejnovější verzi](https://sourceforge.net/projects/katalogg/files/latest/download) ze SourceForge. Váš operační systém (Linux, Windows nebo macOS) by měl být detekován.
 
 ## Nainstalujte a spusťte
-- **Linux / přenosný**: rozbalte soubor *Katalog_linux_portable_x.xx.tar.gz* a poté spusťte soubor **Katalog.sh**
 - **Windows / instalace**: spusťte win64 **installer.exe**, který vytvoří položku nabídky
 - **Windows / přenosné**: pokud jste si stáhli verzi zip souboru win64, extrahujte zip a spusťte soubor *Katalog.exe*
 

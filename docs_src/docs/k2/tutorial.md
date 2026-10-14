@@ -20,7 +20,6 @@ For Linux, the best option is [Flatpak from Flathub](https://flathub.org/en/apps
 A portable version for Windows is also available in the [Katalog files](https://sourceforge.net/projects/katalogg/files).
 
 ## Install and run
-- **Linux / portable**: extract the file *Katalog_linux_portable_x.xx.tar.gz*, and run the file **Katalog.sh**
 - **Windows / installation**: run the win64 **installer.exe** which will create a menu entry
 - **Windows / portable**: if you downloaded the win64 zip file version, extract the zip and run *Katalog.exe*
 

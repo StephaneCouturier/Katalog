@@ -1,4 +1,12 @@
+---
+id: Dev-Release
+title: Release Process
+description: "Steps to prepare, package and publish a Katalog release"
+---
+
 # Release Process
+![Approved](https://img.shields.io/badge/Status-Approved-brightgreen) ![2.13](https://img.shields.io/badge/Version-2.13%20%2F%203.0-blue)
+
 This page describes the steps to Release Katalog.
 This includes:
 - Preparation
@@ -17,6 +25,9 @@ KDE-aligned versioning policy that works with current major.minor approach.
 
 ### Version Format
 - CMakeLists.txt: `VERSION 2.8`
+  - Katalog 3: `qt_quick/CMakeLists.txt` — `project(... VERSION 3.0)` and `KATALOG_VERSION_STRING`
+  - Katalog 2: `qt_widgets/CMakeLists.txt` — `project(... VERSION 2.13)`
+  - A pre-release version string contains `alpha` or `beta`; it makes Katalog 3 use its own pre-release settings file. The release string must contain neither.
 - Tags: `v2.8`, `v2.9`
 - Display: "Katalog 2.8"
 
@@ -28,12 +39,12 @@ see [SpecVersions](SpecVersions)
 
 ## Release Check list
 
-##  Folder
+### Local folder
 /Katalog/Release/x.xx
 
 
-## GitHub
-### Release issue template (Check list) 
+### GitHub
+#### Release issue template (Check list) 
 
 Name:
 Release x.xx
@@ -43,38 +54,38 @@ Description:
 This issue is a check list to help preparing and publishing the Release
 
 Functional updates
-- [ ] Version number, date
+- [ ] Version number, date (Katalog 3 and Katalog 2 CMakeLists.txt)
+- [ ] No pre-release marker left: search `beta` / `alpha` case-insensitively in version strings and every user-visible text (translated or not), e.g. dialog titles
+- [ ] Database schema version, if the schema changed (see [SpecVersions](SpecVersions))
 - [ ] Clean Application Output: no debug messages, errors, and warnings
-- [ ] CMakeList_qt5.txt update if changes to CMakeList.txt
 - [ ] macOS yml if using new KF6 libraries
 
 Language & documentation
-- [ ] Language updates
+- [ ] Language updates: no unfinished translation left, `.qm` files copied to `translations/`
 - [ ] Comments, code style, and structure.
-- [ ] Documentation (inc build and copy to /docs)
-- [ ] Update xml version note for Flatpak
+- [ ] Documentation: English, French and Czech pages, version badges, `npm run build` without error, copy to /docs
+- [ ] Flatpak metainfo (`packaging/qt_widgets/io.github.stephanecouturier.katalog.appdata.xml`): new `<release>` entry with its notes, screenshot URLs still valid on `katalog_master`
+- [ ] Release notes: changes affecting existing users (settings file, compatibility of collections with older versions — see [SpecVersions](SpecVersions))
 
 Packaging
-- [ ] Linux pre-build & AppImages locally
-- [ ] Linux Portable
+- [ ] Linux AppImage locally
 - [ ] Windows Portable
 - [ ] Windows AdvancedInstaller
 - [ ] Merge and push katalog_development to katalog_master
-- [ ] Linux Qt5 and Qt6 Builds with gitHub Actions
-- [ ] macOS versions with gitHub Actions
+- [ ] Linux AppImages with GitHub Actions
+- [ ] macOS versions with GitHub Actions
 
 Publishing
 - [ ] Load packages to SourceForge
 - [ ] Define Default package for Linux, Windows, macOS
 - [ ] Release publish (sourceforge)
 - [ ] Release publish (github)
-- [ ] Submit Flatpak update
+- [ ] Flatpak: update `tag` and `commit` in `packaging/qt_widgets/io.github.stephanecouturier.Katalog.yml`, then submit the update to Flathub
 - [ ] Release publish (Facebook)
 - [ ] Close GitHub issues and milestone
 - [ ] Inform users who submitted bugs or ideas
 
----
-## Packages on SourceForge
+### Packages on SourceForge
 Despite some features in GitHub to provide downloads, SourceForge is still used as the place for user to download all versions.
 
 https://sourceforge.net/projects/katalogg/files/
@@ -84,6 +95,15 @@ Benefits:
 * download tracking and reporting system
 * anonymous Help & Requests forum
 
+Default version per OS is set.
+
+### Release notes
+- on Github
+- on SourceForge
+- on Facebook
+
+### Close issues & close Milestone
+
 ---
 
 ## Description & Summaries
@@ -91,7 +111,6 @@ Benefits:
 This section is the **single source of truth** for all Katalog descriptions.
 
 Update here first, then propagate to each target location listed below.
-
 
 ### Level 1 — One-liner (generic name)
 ```
@@ -172,7 +191,3 @@ User documentation:
 For digital archivists, content creators, system administrators, and anyone who needs to organize
 and track large collections of files across multiple storage devices.
 ```
-
-## Keywords
-
-catalog;files;search;explore;folders;organization;storage;backup;archiving;statistics

@@ -139,7 +139,7 @@ When there is no link yet, the page says so and *Add* creates the first one.
 | *Delete* | Deletes the link, after confirmation. No file is touched, on the source or the target. |
 
 ### LuckyBackup profile {#luckybackup}
-*LuckyBackup* in the page toolbar creates a [LuckyBackup](https://luckybackup.sourceforge.net) profile from the **links listed** on the page: each link becomes a task. The profile is saved in `~/.luckyBackup/profiles/`. See [LuckyBackup profile](BackUp_luckybackup_profile).
+*LuckyBackup* in the page toolbar creates a [LuckyBackup](https://luckybackup.sourceforge.net) profile from the **links listed** on the page: each link becomes a task. The profile is saved in `~/.luckyBackup/profiles/`. See [LuckyBackup profile](development/SpecBackupLuckyBackupProfile).
 
 ## Development
 Some ideas of developments for this screen:

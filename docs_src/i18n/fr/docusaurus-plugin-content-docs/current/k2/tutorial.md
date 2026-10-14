@@ -18,7 +18,6 @@ Pour Linux, la meilleure option est [Flatpak depuis Flathub](https://flathub.org
 <br/>Sinon, [télécharger la dernière version](https://sourceforge.net/projects/katalogg/files/latest/download) depuis SourceForge. Votre système d'exploitation (Linux, Windows ou macOS) devrait être détecté.
 
 ## Installer et lancer
-- **Linux / portable** : extraire le fichier *Katalog_linux_portable_x.xx.tar.gz*, puis exécuter le fichier **Katalog.sh**
 - **Windows / installateur** : exécuter le **installer.exe** win64 qui créera une entrée de menu.
 - **Windows / portable** : si vous avez téléchargé la version win64 du fichier zip, extraire le zip et exécutez le fichier *Katalog.exe*.
 

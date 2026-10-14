@@ -1,12 +1,16 @@
+---
+id: Dev-Build-from-source
+title: Build from source
+description: "How to build Katalog 2 and Katalog 3 from source: libraries, cmake options, build folders, translations and documentation"
+---
+
 # Build from source
-![Draft](https://img.shields.io/badge/Status-Draft-orange) ![2.13](https://img.shields.io/badge/Version-2.13%20%2F%203.0-blue)
+![2.13](https://img.shields.io/badge/Version-2.13%20%2F%203.0-blue)
 
 ## **Summary**
 This page provides guidance to build Katalog from source.
 
 Katalog uses **Qt6** and **KF6** libraries, with **cmake** (and not qmake anymore).
-
-A CMakeLists file is also provided to build with Qt5 for older systems like Ubuntu 22.04 LTS.
 
 Main steps to build Katalog:
 * Available on any platform (Linux, Windows, Apple)
@@ -24,7 +28,7 @@ first as a static library (`core`), and each variant links against it.
 | Variant | cmake option | Default | Executable | Version |
 |---------|--------------|---------|------------|---------|
 | **Katalog 2** — QtWidgets / KXmlGui desktop | `BUILD_QT_WIDGETS` | `OFF` | `qt_widgets/Katalog` | 2.13 |
-| **Katalog 3** — QtQuick / QML / Kirigami desktop | `BUILD_QT_QUICK` | `ON` | `qt_quick/Katalog` | 3.0.beta2 |
+| **Katalog 3** — QtQuick / QML / Kirigami desktop | `BUILD_QT_QUICK` | `ON` | `qt_quick/Katalog` | 3.0 |
 
 ### Code Branches
 #### katalog_master
@@ -32,15 +36,15 @@ latest released [source code](https://github.com/StephaneCouturier/Katalog)
 
 #### katalog_development
 code under development [source code](https://github.com/StephaneCouturier/Katalog/tree/katalog_development) 
-<br/>May contains bugs & potentially broken features.
+<br/>May contain bugs & potentially broken features.
 
 
 ## **Preparation**
 
 ### Required libraries
-Katalog is built from Qt6 and KDE KF6 libraries and so glibc >2.8,
+Katalog is built from Qt6 and KDE KF6 libraries and so glibc 2.38 or later,
 but it is also possible to build it on older versions.
-Commands here below are provided for openSUSE, replace "zypper install" by the package manager commanc of your system.
+Commands here below are provided for openSUSE, replace "zypper install" by the package manager command of your system.
 
 ### cmake Qt6 KF6 glibc 2.38 and after
 
@@ -97,7 +101,7 @@ Compiling v2.7 with Qt5/KF5 on Kubuntu 22.04 was done successfully once:
 * installed required libs
 * disabled translations in cmakelist.txt to focus on debugging the rest
 * the code handles 6 code variations to remain compatible, no manual code change needed
-* a special CMakeLists.txt file must be used (remove the _qt5 end text, overwriting the default Qt6 one): https://github.com/StephaneCouturier/Katalog/blob/katalog_master/CMakeLists_qt5.txt
+* a special Qt5 CMakeLists.txt file was used at the time; it is no longer part of the source tree
 
 #### Base (might be incomplete)
 ```
@@ -253,7 +257,9 @@ collection left open in Katalog 2.
 
 Not part of building from source: compiling the catalogues is already done for you.
 `qt_widgets/CMakeLists.txt` declares `add_dependencies(Katalog Katalog_lrelease)`, so the
-`.qm` files are rebuilt whenever Katalog is built. The commands below are for **changing**
+`.qm` files are rebuilt whenever Katalog 2 is built. Katalog 3 does not compile them: it
+bundles the `.qm` files already in `translations/` (`qt_quick/translations.qrc`), so a
+Katalog 3 only build uses whatever was last copied there with `translations_copy` below. The commands below are for **changing**
 translatable strings, not for producing a working binary.
 
 They must be run from a **Katalog 2 build directory**. The targets come from
@@ -294,9 +300,11 @@ valgrind --tool=memcheck --leak-check=full --track-origins=yes ./build/Debug-QtQ
 
 
 
-## **Generate portable versions**
+## **Packages**
 
-To be documented.
+Linux packages are AppImage and Flatpak (Flathub); there is no Linux portable build any more.
+What a packaged Katalog 3 build must contain is specified in
+[K3 Deployment](SpecK3Deployment).
 
 
 
@@ -304,15 +312,11 @@ To be documented.
 Goal: build & run a local server to test changes to the Documentation pages.
 
 
-Go in the doc_src directory
+From the Katalog root, go in the docs_src directory
 ```
-cd ../docs_src
+cd docs_src
 ```
 
-Create the files
-```
-npm run build
-```
 Start the server (English)
 ```
 npm run start
@@ -320,4 +324,10 @@ npm run start
 or start the server (other language fr or cs)
 ```
 npm run start -- --locale fr
+```
+
+Check the production build (all languages) — this is the step that catches front matter
+and broken-link errors, which the development server does not always report:
+```
+npm run build
 ```

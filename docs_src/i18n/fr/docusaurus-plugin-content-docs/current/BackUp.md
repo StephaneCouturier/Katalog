@@ -139,7 +139,7 @@ Lorsqu'il n'y a encore aucun lien, la page l'indique et *Ajouter* crée le premi
 | *Supprimer* | Supprime le lien, après confirmation. Aucun fichier n'est touché, ni sur la source ni sur la cible. |
 
 ### Profil LuckyBackup {#luckybackup}
-*LuckyBackup* dans la barre d'outils de la page crée un profil [LuckyBackup](https://luckybackup.sourceforge.net) à partir des **liens listés** sur la page : chaque lien devient une tâche. Le profil est enregistré dans `~/.luckyBackup/profiles/`. Voir [Profil LuckyBackup](BackUp_luckybackup_profile).
+*LuckyBackup* dans la barre d'outils de la page crée un profil [LuckyBackup](https://luckybackup.sourceforge.net) à partir des **liens listés** sur la page : chaque lien devient une tâche. Le profil est enregistré dans `~/.luckyBackup/profiles/`. Voir [Profil LuckyBackup](development/SpecBackupLuckyBackupProfile).
 
 ## Développement
 Quelques idées de développement pour cet écran :

@@ -1,5 +1,10 @@
+---
+id: Dev-Documentation
+title: Documentation
+description: "How Katalog's documentation is organised, written, translated and built"
+---
+
 # Documentation
-![Draft](https://img.shields.io/badge/Status-Draft-orange) ![All](https://img.shields.io/badge/Version-All-green)
 
 ## Summary
 This page describes the management of Katalog's Documentation.
@@ -11,69 +16,25 @@ Katalog's user documentation is published as a static website built with [**Docu
 - **Translations:** French (`i18n/fr/`) and Czech (`i18n/cs/`)
 - **Sidebar:** manually defined in `sidebars.ts`
 
-Documentation is generated and published following this sequence
-- `npm run build` to generate the structure
-- `npm run start` to start a local server for visualizing & testing pages in English
-- `npm run start -- --locale=fr` to generate to start a local server with page in a different language
+Commands, run from `docs_src/`:
+- `npm run start` to start a local server for viewing and testing pages in English
+- `npm run start -- --locale fr` to start it in another language (`fr` or `cs`)
+- `npm run build` to check the production build of all languages; it reports front matter and broken-link errors the local server may not
 
 ---
 
-## Pages Inventory
-
-Sections:
-* Introduction (Overview and Tutorial)
-* Features: 
-    - Related to Katalog's user interface items: panel or tabs, in alphabetical order
-    - Translated
-* Development: 
-    - Information on the project and content management
-    - English only, not translated
-
-### Introduction & Features section
-
-| Page | EN | FR | CS | Notes |
-|------|:--:|:--:|:--:|-------|
-| Overview | 2.10 | 2.10 | 2.10 | |
-| tutorial | 2.10 | 2.10 | 2.10 | |
-| BackUp | 2.10 | 2.10 | 2.10 | |
-| Create | 2.10 | 2.10 | 2.10 | |
-| Devices | 2.10 | 2.10 | 2.10 | |
-| DevicesCatalogs | 2.10 | 2.10 | 2.10 | |
-| DevicesStorage | 2.10 | 2.10 | 2.10 | |
-| DevicesTree | 2.10 | 2.10 | 2.10 | |
-| Explore | 2.10 | 2.10 | 2.10 | |
-| Search | 2.10 | 2.10 | 2.10 | |
-| Selection | 2.10 | 2.10 | 2.10 | |
-| Settings | 2.10 | 2.10 | 2.10 | |
-| Statistics | 2.10 | 2.10 | 2.10 | |
-| Tags | 2.10 | 2.10 | 2.10 | |
-| CommandLines | 2.10 | 2.10 | 2.10 | |
-
-### Development section (English only)
-
-#### Development
-
-| Page | Notes |
-|------|-------|
-| Dev-Overview | |
-| Dev-Roadmap | |
-| Dev-Build-from-source | |
-| Dev-Release | |
-| Dev-Documentation | This page |
-| Dev-CodePractice | Coding conventions (diagnostic output, etc.) |
-
-#### Specification and test pages
+## Specification and test pages
 
 `Spec*.md` and `Test*.md` live in **`docs_src/docs/development/`**, not in the
 docs root, which is reserved for user-facing feature pages and the
-`Development-*` pages.
+`k2/` copies. The `Dev-*` pages are in `development/` too.
 
 **They are not listed in the sidebar.** The sidebar carries two index pages —
 `development/Specifications` and `development/Tests` — and each lists every page
 of its kind in a table. Adding a specification or a test plan means adding a row
 to the relevant index; `sidebars.ts` does not change.
 
-#### Test plan pages
+### Test plan pages
 
 A specification may have a test plan beside it. **The file name is the
 specification's name with `Spec` replaced by `Test`**: `SpecStorageIdentity.md`
@@ -123,6 +84,12 @@ version: "2.10"
 * Workflow rule: when updating a translated page to match an English change, update both the `version` frontmatter field and the `Version` badge to the current release version.
 
 * Badge labels (`Version-2.10`, etc.) are always in **English** across all languages.
+
+* Katalog 2 pages are kept as copies in `docs/k2/` (and the same folder under each translation), stamped `2.13`, with `displayed_sidebar: tutorialSidebar` in the front matter and an info box pointing to the current documentation.
+
+* **Development and Specification pages** use a different header: a front matter block with `id`, `title` and `description`, then the `#` title, then a **Status** badge and a **Version** badge. They are English only.
+
+* Front matter values containing a colon (`:`) must be in double quotes, e.g. `description: "Requirements for X: what it does"`. An unquoted colon stops the documentation build with a YAML error.
 
 * Features pages are written for end-users: **no code** allowed (no method names, variable names, source filenames, or internal identifiers).
 
@@ -190,7 +157,7 @@ Some ideas of developments for this screen:
 ---
 ## Docusaurus rendering
 
-This project uses **Docusaurus `^3.9.2`** (configured in `package.json`).
+This project uses **Docusaurus `^3.10.0`** (configured in `package.json`).
 
 Published site: [https://stephanecouturier.github.io/Katalog/](https://stephanecouturier.github.io/Katalog/)
 
@@ -200,16 +167,9 @@ Published site: [https://stephanecouturier.github.io/Katalog/](https://stephanec
 
 ## Known limitations & related Improvements
 
-### Outdated and Uneven translation coverage
+### Translation coverage
 
-FR and CZ pages are lagging behind the English pages, themselves lagging in Features added recently.
-
-Approach:
-- page by page
-- Verify coverage of English against code
-- Propose a list of additions (ex: function name)
-- Add selected
-- Update translated pages
+The French and Czech feature pages carry the same version as their English page.
 
 ### Language coverage
 - continue to design this documentation management to automate for more Language
@@ -222,6 +182,6 @@ For each release cycle:
 2. **Before translating: verify the English page fully complies with the Page Design guidelines** (frontmatter, status/version badges, no inline future features, alt text on screenshots, etc.) — fix any gaps first
 3. Identify which translated pages are affected (diff or manual review)
 4. Update FR/CS translations and bump `version`
-5. For new pages: create translated files at release time (not during development)
+5. For new pages: create the French and Czech files together with the English page
 
 ---

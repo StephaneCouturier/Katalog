@@ -139,7 +139,7 @@ Když ještě žádný odkaz neexistuje, stránka to oznámí a *Přidat* vytvo�
 | *Smazat* | Po potvrzení smaže odkaz. Žádného souboru ve zdroji ani v cíli se to nedotkne. |
 
 ### Profil LuckyBackup {#luckybackup}
-*LuckyBackup* na panelu nástrojů stránky vytvoří profil [LuckyBackup](https://luckybackup.sourceforge.net) z **odkazů uvedených** na stránce: každý odkaz se stane úlohou. Profil se uloží do `~/.luckyBackup/profiles/`. Viz [Profil LuckyBackup](BackUp_luckybackup_profile).
+*LuckyBackup* na panelu nástrojů stránky vytvoří profil [LuckyBackup](https://luckybackup.sourceforge.net) z **odkazů uvedených** na stránce: každý odkaz se stane úlohou. Profil se uloží do `~/.luckyBackup/profiles/`. Viz [Profil LuckyBackup](development/SpecBackupLuckyBackupProfile).
 
 ## Vývoj
 Několik nápadů na rozvoj této obrazovky:

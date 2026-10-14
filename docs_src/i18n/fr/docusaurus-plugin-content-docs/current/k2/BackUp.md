@@ -105,7 +105,7 @@ Chaque lien de sauvegarde possède un **Mode source** qui contrôle ce qui est u
 ### Profil LuckyBackup
 
 Il est possible d'exporter les liens BackUp vers un profil [LuckyBackup](https://luckybackup.sourceforge.net).
-Voir la page dédiée : [Profil LuckyBackup](../BackUp_luckybackup_profile)
+Voir la page dédiée : [Profil LuckyBackup](../development/SpecBackupLuckyBackupProfile)
 
 
 ## Gestion des liens BackUp

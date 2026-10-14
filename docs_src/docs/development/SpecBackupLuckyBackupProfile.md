@@ -1,3 +1,9 @@
+---
+id: SpecBackupLuckyBackupProfile
+title: "Generate LuckyBackup profile"
+description: "Specification for generating LuckyBackup profiles from Katalog backup links"
+---
+
 # Generate Luckybackup profile
 
 ![Available](https://img.shields.io/badge/Status-Available-green) ![2.9](https://img.shields.io/badge/Version-2.9-green) ![675](https://img.shields.io/badge/github-675-blue?logo=github)

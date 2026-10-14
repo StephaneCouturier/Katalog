@@ -315,7 +315,13 @@ Decided by the user before this section was written, recorded here on
   stamped 2.13, where some or all of its changes are already present (for
   example `SpecStorageIdentity.md` `STI-C16`, `STI-C17`, `STI-C19` and `STI-C20`, removing columns
   that a beta database may or may not still have). The migration is
-  `Database::runMigration_3_0`; until release it runs on every open.
+  `Database::runMigration_3_0`. During the beta cycle it ran on every open with
+  the stamp kept at 2.13.
+- **Switched to 3.0 on 2026-10-14** (release preparation): the migration now
+  runs only when the stored schema is older than 3.0, and stamps **3.0**. New
+  collections are created at 3.0. A database already stamped 3.0 no longer
+  runs it, so any step added to `runMigration_3_0` after this date does not
+  reach it; later schema changes need a new versioned migration.
 
 ### Facts (verified by code reading, 2026-09-27)
 

@@ -1,3 +1,9 @@
+---
+id: SpecCatalogChecksum
+title: "Catalog: File Checksum"
+description: "Specification of file checksum features in catalogs"
+---
+
 # Catalog: File Checksum
 
 ## **Introduction**

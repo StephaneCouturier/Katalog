@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+160"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4837"/>
+        <location line="+4868"/>
         <source>Search</source>
         <translation>Vyhledávání</translation>
     </message>
     <message>
-        <location line="-4957"/>
+        <location line="-4988"/>
         <source>Stopped</source>
         <translation>Zastaveno</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3279"/>
+        <location line="+3301"/>
         <source>Evaluated</source>
         <translation>Vyhodnoceno</translation>
     </message>
     <message>
-        <location line="-3397"/>
+        <location line="-3419"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -45,7 +45,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2199"/>
+        <location line="+2221"/>
         <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
@@ -53,7 +53,7 @@
         <location line="+33"/>
         <location line="+596"/>
         <location line="+37"/>
-        <location line="+306"/>
+        <location line="+315"/>
         <location line="+11"/>
         <location line="+87"/>
         <location line="+29"/>
@@ -67,9 +67,9 @@
         <translation>Probíhá</translation>
     </message>
     <message>
-        <location line="-4838"/>
-        <location line="+3939"/>
-        <location line="+333"/>
+        <location line="-4869"/>
+        <location line="+3961"/>
+        <location line="+342"/>
         <location line="+112"/>
         <location line="+53"/>
         <location line="+47"/>
@@ -78,7 +78,7 @@
         <translation>Dokončeno</translation>
     </message>
     <message>
-        <location line="-4473"/>
+        <location line="-4504"/>
         <source>Empty database path provided</source>
         <translation>Byla zadána prázdná cesta k databázi</translation>
     </message>
@@ -164,12 +164,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+2921"/>
+        <location line="+2952"/>
         <source>Size</source>
         <translation>Velikost</translation>
     </message>
     <message>
-        <location line="-2920"/>
+        <location line="-2951"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
@@ -204,7 +204,7 @@
         <translation>Štítek: %1</translation>
     </message>
     <message>
-        <location line="+240"/>
+        <location line="+262"/>
         <source>Memory collection opened: %1</source>
         <translation>Sbírka v paměti otevřena: %1</translation>
     </message>
@@ -467,7 +467,7 @@ Zvolte jiný název.</translation>
         <translation>Vybrané zařízení není katalog</translation>
     </message>
     <message>
-        <location line="+321"/>
+        <location line="+330"/>
         <source>Error: could not open collection</source>
         <translation>Chyba: kolekci se nepodařilo otevřít</translation>
     </message>
@@ -519,8 +519,8 @@ Zvolte jiný název.</translation>
         <translation>Exportovat</translation>
     </message>
     <message>
-        <location line="-483"/>
-        <location line="+402"/>
+        <location line="-492"/>
+        <location line="+411"/>
         <location line="+26"/>
         <location line="+17"/>
         <location line="+50"/>
@@ -530,14 +530,14 @@ Zvolte jiný název.</translation>
         <translation>Zrušeno</translation>
     </message>
     <message>
-        <location line="-1331"/>
+        <location line="-1340"/>
         <location line="+29"/>
         <source>Explore</source>
         <translation>Prozkoumat</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+441"/>
+        <location line="+450"/>
         <location line="+10"/>
         <source>Loaded</source>
         <translation>Načteno</translation>
@@ -1078,40 +1078,40 @@ Zvolte jiný název.</translation>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qt_quick/Main.qml" line="+1396"/>
+        <location filename="../qt_quick/Main.qml" line="+1419"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Chcete &lt;b&gt;odstranit&lt;/b&gt; toto zařízení %1?&lt;br/&gt;&lt;br/&gt;Název: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <location line="+60"/>
-        <location line="+39"/>
-        <location line="+138"/>
-        <location line="+56"/>
-        <location line="+155"/>
+        <location line="+7"/>
+        <location line="+64"/>
+        <location line="+41"/>
+        <location line="+144"/>
+        <location line="+59"/>
+        <location line="+160"/>
         <source>Yes</source>
         <translation>Ano</translation>
     </message>
     <message>
-        <location line="-444"/>
-        <location line="+60"/>
-        <location line="+239"/>
-        <location line="+837"/>
+        <location line="-464"/>
+        <location line="+64"/>
+        <location line="+250"/>
+        <location line="+907"/>
         <location line="+125"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
     <message>
-        <location line="-1364"/>
-        <location line="+68"/>
-        <location line="+69"/>
-        <location line="+172"/>
-        <location line="+206"/>
+        <location line="-1455"/>
+        <location line="+72"/>
+        <location line="+73"/>
+        <location line="+179"/>
+        <location line="+215"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location line="-493"/>
+        <location line="-516"/>
         <source>&lt;br/&gt;&lt;b&gt;Welcome to Katalog!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;It seems this is the first run.&lt;br/&gt;&lt;br/&gt;The following Settings have been applied:&lt;br/&gt; - Language: &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt; - Theme: &lt;b&gt;%2&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;You can change these on the %3 page.</source>
         <translation>&lt;br/&gt; &lt;b&gt; Vítejte v Katalogu! &lt;/b&gt; &lt;br/&gt; &lt;br/&gt; Zdá se, že toto je první spuštění. &lt;br/&gt; &lt;br/&gt; Byla použita následující nastavení: &lt;br/&gt; - Jazyk: &lt;b&gt;%1 &lt;/b&gt; &lt;br/&gt; - Téma: &lt;b&gt;%2 &lt;/b&gt; &lt;br/&gt; &lt;br/&gt; Tyto údaje můžete změnit na stránce %3.</translation>
     </message>
@@ -1120,13 +1120,13 @@ Zvolte jiný název.</translation>
         <translation type="vanished">Systém</translation>
     </message>
     <message>
-        <location line="-248"/>
-        <location line="+254"/>
+        <location line="-244"/>
+        <location line="+250"/>
         <source>Settings</source>
         <translation>Nastavení</translation>
     </message>
     <message>
-        <location line="-403"/>
+        <location line="-399"/>
         <source>Open...</source>
         <translation>Otevřít...</translation>
     </message>
@@ -1158,42 +1158,42 @@ Zvolte jiný název.</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+866"/>
+        <location line="+887"/>
         <source>Selection</source>
         <translation>Výběr</translation>
     </message>
     <message>
-        <location line="-856"/>
-        <location line="+1218"/>
+        <location line="-877"/>
+        <location line="+1229"/>
         <source>Devices</source>
         <translation>Zařízení</translation>
     </message>
     <message>
-        <location line="-1213"/>
-        <location line="+1310"/>
+        <location line="-1224"/>
+        <location line="+1321"/>
         <source>Explore</source>
         <translation>Prozkoumat</translation>
     </message>
     <message>
-        <location line="-1300"/>
-        <location line="+1546"/>
+        <location line="-1311"/>
+        <location line="+1632"/>
         <source>Backup</source>
         <translation>Záloha</translation>
     </message>
     <message>
-        <location line="-1541"/>
-        <location line="+1498"/>
+        <location line="-1627"/>
+        <location line="+1584"/>
         <source>Statistics</source>
         <translation>Statistika</translation>
     </message>
     <message>
-        <location line="-1493"/>
-        <location line="+1515"/>
+        <location line="-1579"/>
+        <location line="+1601"/>
         <source>Tags</source>
         <translation>Štítky</translation>
     </message>
     <message>
-        <location line="-1502"/>
+        <location line="-1588"/>
         <source>Documentation</source>
         <translation>Dokumentace</translation>
     </message>
@@ -1240,12 +1240,12 @@ Zvolte jiný název.</translation>
 </translation>
     </message>
     <message>
-        <location line="+156"/>
+        <location line="+151"/>
         <source>Do not show again</source>
         <translation>Příště nezobrazovat</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+30"/>
         <source>Katalog Colors</source>
         <translation>Barvy Katalogu</translation>
     </message>
@@ -1260,7 +1260,7 @@ Zvolte jiný název.</translation>
         <translation>Téma plochy</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Open existing...</source>
         <translation>Otevřít existující...</translation>
     </message>
@@ -1270,7 +1270,7 @@ Zvolte jiný název.</translation>
         <translation>Vytvořit nový...</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+24"/>
         <source>&lt;br/&gt;&lt;b&gt;Ready to create a file catalog:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</source>
         <translation>&lt;br/&gt;&lt;b&gt;Připraveno k vytvoření katalogu souborů:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
@@ -1280,20 +1280,20 @@ Zvolte jiný název.</translation>
         <translation>1- Vyberte celou jednotku nebo adresář, &lt;br/&gt;2- vyberte možnosti a &lt;br/&gt;3- klikněte na &apos;Vytvořit&apos;&lt;br/&gt;</translation>
     </message>
     <message>
-        <location line="+130"/>
+        <location line="+138"/>
         <source>Update the catalog content with the new criteria?</source>
         <translation>Aktualizovat obsah katalogu podle nových kritérií?</translation>
     </message>
     <message>
-        <location line="+8"/>
-        <location line="+144"/>
-        <location line="+51"/>
-        <location line="+154"/>
+        <location line="+9"/>
+        <location line="+150"/>
+        <location line="+54"/>
+        <location line="+159"/>
         <source>No</source>
         <translation>Ne</translation>
     </message>
     <message>
-        <location line="-319"/>
+        <location line="-333"/>
         <source>The catalog source path changed.</source>
         <translation>Zdrojová cesta katalogu se změnila.</translation>
     </message>
@@ -1333,7 +1333,7 @@ Zvolte jiný název.</translation>
         <translation>Přeskočit</translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+48"/>
         <source>A snapshot of this collection was recorded:</source>
         <translation>Byl zaznamenán snímek této sbírky:</translation>
     </message>
@@ -1362,12 +1362,12 @@ Zvolte jiný název.</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+179"/>
+        <location line="+188"/>
         <source>Storage</source>
         <translation>Úložiště</translation>
     </message>
     <message>
-        <location line="-178"/>
+        <location line="-187"/>
         <source>Storage free space:</source>
         <translation>Volné místo úložiště:</translation>
     </message>
@@ -1377,7 +1377,7 @@ Zvolte jiný název.</translation>
         <translation>Celkové místo úložiště:</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+29"/>
         <source>Private network connection</source>
         <translation>Připojení k soukromé síti</translation>
     </message>
@@ -1392,12 +1392,12 @@ Zvolte jiný název.</translation>
         <translation>Pokračovat?</translation>
     </message>
     <message>
-        <location line="+57"/>
+        <location line="+60"/>
         <source>Do you want the summary of updates for each catalog?</source>
         <translation>Chcete souhrn aktualizací pro každý katalog?</translation>
     </message>
     <message>
-        <location line="+40"/>
+        <location line="+43"/>
         <source>Catalog updated: </source>
         <translation>Katalog aktualizován: </translation>
     </message>
@@ -1502,7 +1502,7 @@ Zvolte jiný název.</translation>
         <translation>Vybrané aktivní katalogy jsou aktualizovány.</translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+53"/>
         <source>The source folder does not contain any file.
 This could mean that the source is empty or the device is not mounted to this folder.
 Do you want to save it anyway (the catalog would be empty)?</source>
@@ -1511,19 +1511,24 @@ To může znamenat, že je zdroj prázdný nebo že zařízení není připojeno
 Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     </message>
     <message>
-        <location line="-804"/>
-        <location line="+1054"/>
-        <location line="+48"/>
+        <location line="-824"/>
+        <location line="+1061"/>
+        <location line="+51"/>
         <source>Search</source>
         <translation>Vyhledávání</translation>
     </message>
     <message>
-        <location line="-142"/>
+        <location line="-889"/>
+        <source>Welcome to Katalog 3. News, questions and feedback are shared on the project discussions:</source>
+        <translation>Vítejte v Katalog 3. Novinky, dotazy a zpětná vazba se sdílejí v diskuzích projektu:</translation>
+    </message>
+    <message>
+        <location line="+744"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
     <message>
-        <location line="+152"/>
+        <location line="+155"/>
         <source>Resume</source>
         <translation>Obnovit</translation>
     </message>
@@ -1534,13 +1539,13 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+115"/>
-        <location line="+184"/>
+        <location line="+116"/>
+        <location line="+259"/>
         <source>Stop</source>
         <translation>Zastavit</translation>
     </message>
     <message>
-        <location line="-292"/>
+        <location line="-368"/>
         <source>Reset</source>
         <translation>Resetovat</translation>
     </message>
@@ -1550,12 +1555,12 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Historie</translation>
     </message>
     <message>
-        <location line="-291"/>
-        <location line="+299"/>
+        <location line="-280"/>
+        <location line="+288"/>
         <location line="+39"/>
-        <location line="+107"/>
+        <location line="+108"/>
         <location line="+39"/>
-        <location line="+99"/>
+        <location line="+174"/>
         <location line="+104"/>
         <location line="+20"/>
         <location line="+42"/>
@@ -1563,16 +1568,15 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Zavřít</translation>
     </message>
     <message>
-        <location line="-1364"/>
         <source>This is a beta version of Katalog intended to support development and gather feedback.
 
 </source>
-        <translation>Toto je beta verze aplikace Katalog určená k podpoře vývoje a získávání zpětné vazby.
+        <translation type="vanished">Toto je beta verze aplikace Katalog určená k podpoře vývoje a získávání zpětné vazby.
 
 </translation>
     </message>
     <message>
-        <location line="+605"/>
+        <location line="-824"/>
         <source>Copy version and system information</source>
         <translation>Kopírovat informace o verzi a systému</translation>
     </message>
@@ -1582,7 +1586,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Informace o verzi a systému zkopírovány do schránky</translation>
     </message>
     <message>
-        <location line="+96"/>
+        <location line="+82"/>
         <source>All</source>
         <translation>Všechno</translation>
     </message>
@@ -1607,7 +1611,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Rozbalit o jednu úroveň</translation>
     </message>
     <message>
-        <location line="+144"/>
+        <location line="+147"/>
         <source>Duplicates (%1)</source>
         <translation>Duplikáty (%1)</translation>
     </message>
@@ -1622,7 +1626,7 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation>Výsledky</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+54"/>
         <source>All active</source>
         <translation>Všechny aktivní</translation>
     </message>
@@ -1650,13 +1654,13 @@ Chcete jej přesto uložit (katalog by byl prázdný)?</translation>
         <translation type="vanished">Katalog byl úspěšně vytvořen.</translation>
     </message>
     <message>
-        <location line="+130"/>
+        <location line="+205"/>
         <source>Catalog creation failed: </source>
         <translation>Vytvoření katalogu se nezdařilo: </translation>
     </message>
     <message>
-        <location line="-1380"/>
-        <location line="+1364"/>
+        <location line="-1466"/>
+        <location line="+1450"/>
         <location line="+32"/>
         <source>Create</source>
         <translation>Vytvořit</translation>
@@ -7308,32 +7312,32 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
 <context>
     <name>PageDevicesView</name>
     <message>
-        <location filename="../qt_quick/PageDevicesView.qml" line="+205"/>
-        <location line="+37"/>
+        <location filename="../qt_quick/PageDevicesView.qml" line="+216"/>
+        <location line="+40"/>
         <source>Split Catalog</source>
         <translation>Rozdělit katalog</translation>
     </message>
     <message>
-        <location line="-32"/>
+        <location line="-33"/>
         <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by sub-directory?&lt;br/&gt;&lt;br/&gt;This will create one sub-catalog per immediate sub-directory and remove the original catalog. This operation cannot be undone.</source>
         <translation>Rozdělit &lt;b&gt;%1&lt;/b&gt; na podkatalogy podle podadresáře?&lt;br/&gt;&lt;br/&gt;Tím se vytvoří jeden podkatalog pro každý přímý podadresář a původní katalog bude odstraněn. Tuto operaci nelze vrátit zpět.</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Split</source>
         <translation>Rozdělit</translation>
     </message>
     <message>
         <location line="+4"/>
         <location line="+62"/>
-        <location line="+25"/>
-        <location line="+62"/>
-        <location line="+36"/>
+        <location line="+28"/>
+        <location line="+68"/>
+        <location line="+39"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
     <message>
-        <location line="-156"/>
+        <location line="-168"/>
         <source>Split &lt;b&gt;%1&lt;/b&gt; into sub-catalogs by file type:</source>
         <translation>Rozdělit &lt;b&gt;%1&lt;/b&gt; na podkatalogy podle typu souboru:</translation>
     </message>
@@ -7353,12 +7357,12 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
         <translation>Ověřit kontrolní součty</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+7"/>
         <source>Verify checksums for &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Ověřit kontrolní součty pro &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Verify</source>
         <translation>Ověřit</translation>
     </message>
@@ -7393,24 +7397,24 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
         <translation>Ověření kontrolního součtu</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <location line="+101"/>
-        <location line="+19"/>
+        <location line="+13"/>
+        <location line="+110"/>
+        <location line="+22"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location line="-109"/>
+        <location line="-121"/>
         <source>Unassign Device</source>
         <translation>Zrušit přiřazení zařízení</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+7"/>
         <source>Unassign &lt;b&gt;%1&lt;/b&gt; from its parent device?</source>
         <translation>Zrušit přiřazení &lt;b&gt;%1&lt;/b&gt; k jeho nadřazenému zařízení?</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Unassign</source>
         <translation>Zrušit přiřazení</translation>
     </message>
@@ -7420,12 +7424,12 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
         <translation>Odstranit zařízení</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+7"/>
         <source>Do you want to &lt;b&gt;delete&lt;/b&gt; this %1 device?&lt;br/&gt;&lt;br/&gt;Name: &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>Chcete &lt;b&gt;odstranit&lt;/b&gt; toto zařízení %1?&lt;br/&gt;&lt;br/&gt;Název: &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Yes</source>
         <translation>Ano</translation>
     </message>
@@ -7442,7 +7446,7 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
         <translation type="vanished">Seznam katalogů</translation>
     </message>
     <message>
-        <location line="+200"/>
+        <location line="+206"/>
         <source>Filter from Selection</source>
         <translation>Filtrovat z výběru</translation>
     </message>
@@ -7468,7 +7472,7 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
         <translation>Katalogy</translation>
     </message>
     <message>
-        <location line="-465"/>
+        <location line="-486"/>
         <source>MIME verification failed:&lt;br/&gt;%1</source>
         <translation>MIME ověření selhalo:&lt;br/&gt;%1</translation>
     </message>
@@ -7483,17 +7487,17 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
         <translation>MIME ověření dokončeno.&lt;br/&gt;Nalezeno %1 nesrovnalostí mezi příponami souborů a skutečným obsahem.&lt;br/&gt;&lt;br/&gt;Zpráva uložena do:&lt;br/&gt;%2</translation>
     </message>
     <message>
-        <location line="+242"/>
+        <location line="+257"/>
         <source>MIME Verification Complete</source>
         <translation>Ověření MIME dokončeno</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+14"/>
         <source>Open Report</source>
         <translation>Otevřít zprávu</translation>
     </message>
     <message>
-        <location line="+76"/>
+        <location line="+79"/>
         <source>All devices</source>
         <translation>Všechna zařízení</translation>
     </message>
@@ -7808,12 +7812,12 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
     </message>
     <message>
         <location line="+5"/>
-        <location line="+81"/>
+        <location line="+84"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
     <message>
-        <location line="-74"/>
+        <location line="-77"/>
         <source>File deleted</source>
         <translation>Soubor smazán</translation>
     </message>
@@ -7823,7 +7827,7 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
         <translation>Soubor nelze smazat</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+10"/>
         <source>Permanently delete this file? This cannot be undone.
 
 %1</source>
@@ -7832,7 +7836,7 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
 %1</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+14"/>
         <source>Checksum (SHA-256)</source>
         <translation>Kontrolní součet (SHA-256)</translation>
     </message>
@@ -8289,7 +8293,7 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
 <context>
     <name>PageSearchResultsForm</name>
     <message>
-        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+232"/>
+        <location filename="../qt_quick/PageSearchResultsForm.qml" line="+252"/>
         <source>%1 duplicate(s) found</source>
         <translation>Nalezeno %1 duplikátů</translation>
     </message>
@@ -8330,31 +8334,31 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
     </message>
     <message>
         <location line="+1"/>
-        <location line="+893"/>
-        <location line="+53"/>
+        <location line="+910"/>
+        <location line="+56"/>
         <source>Verify Checksums</source>
         <translation>Ověřit kontrolní součty</translation>
     </message>
     <message>
-        <location line="-127"/>
+        <location line="-130"/>
         <source>Catalogs with results</source>
         <translation>Katalogy s výsledky</translation>
     </message>
     <message>
         <location line="+75"/>
-        <location line="+52"/>
+        <location line="+55"/>
         <source>Include Metadata</source>
         <translation>Zahrnout metadata</translation>
     </message>
     <message>
-        <location line="-944"/>
-        <location line="+592"/>
-        <location line="+297"/>
+        <location line="-964"/>
+        <location line="+606"/>
+        <location line="+300"/>
         <source>Move to Trash</source>
         <translation>Přesunout do koše</translation>
     </message>
     <message>
-        <location line="-1037"/>
+        <location line="-1054"/>
         <location line="+11"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Zařízení není aktivní. Může být odpojeno nebo se změnila jeho cesta.</translation>
@@ -8371,12 +8375,12 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
     </message>
     <message>
         <location line="+2"/>
-        <location line="+723"/>
+        <location line="+737"/>
         <source>Delete</source>
         <translation>Smazat</translation>
     </message>
     <message>
-        <location line="-673"/>
+        <location line="-687"/>
         <source>Run process on all results</source>
         <translation>Spusťte proces u všech výsledků</translation>
     </message>
@@ -8416,12 +8420,12 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
         <translation>Otevřít složku</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+16"/>
         <source>Explore folder</source>
         <translation>Prozkoumat složku</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+14"/>
         <source>Show extended metadata (JSON)</source>
         <translation>Zobrazit rozšířená metadata (JSON)</translation>
     </message>
@@ -8472,8 +8476,8 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
         <translation>Vypočítat kontrolní součet (SHA-256)</translation>
     </message>
     <message>
-        <location line="-682"/>
-        <location line="+698"/>
+        <location line="-696"/>
+        <location line="+712"/>
         <source>File not found or could not be read</source>
         <translation>Soubor nebyl nalezen nebo jej nelze přečíst</translation>
     </message>
@@ -8605,7 +8609,7 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
         <translation>Soubor nelze smazat</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+9"/>
         <source>Permanently delete this file? This cannot be undone.
 
 %1</source>
@@ -8618,7 +8622,7 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
         <translation type="vanished">Katalog s výsledky</translation>
     </message>
     <message>
-        <location line="+108"/>
+        <location line="+109"/>
         <source>All</source>
         <translation>Všechno</translation>
     </message>
@@ -8628,7 +8632,7 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
         <translation>Žádné</translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+72"/>
         <source>Matched: %1
 Mismatched: %2
 New checksums calculated: %3
@@ -8648,12 +8652,12 @@ Přeskočeno: %2
 Chyby: %3</translation>
     </message>
     <message>
-        <location line="-43"/>
+        <location line="-46"/>
         <source>Delete Files</source>
         <translation>Smazat soubory</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+15"/>
         <source>Move all %1 result(s) to trash?</source>
         <translation>Přesunout všech %1 výsledků do koše?</translation>
     </message>
@@ -8673,7 +8677,7 @@ Chyby: %3</translation>
         <translation>Zahrnout metadata pro všech %1 výsledků?</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>%1 file(s) moved to trash</source>
         <translation>%1 souborů přesunuto do koše</translation>
     </message>

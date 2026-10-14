@@ -114,16 +114,11 @@ QSqlError DatabaseManager::runMigrations(const QString &connectionName, Collecti
         collection->setDatabaseSchemaVersion();
     }
 
-    // 2.12 -> 3.0 (SpecVersions.md "Schema number at release: 3.0"). Until
-    // Release 3.0 this block runs on EVERY open, so beta and RC collections get
-    // each step as soon as it is added; every step must therefore be harmless to
-    // repeat. The stamp stays "2.13" until then, so databases opened by a beta
-    // or an RC still run the released migration.
-    // AT RELEASE 3.0: wrap this block in
-    //     if (schemaVersion < QVersionNumber::fromString("3.0"))
-    // and stamp "3.0" here and in Collection::load().
-    {
-        collection->dbSchemaVersion = "2.13";
+    // 2.12 -> 3.0 (SpecVersions.md "Schema number at release: 3.0"). Databases
+    // stamped "2.13" by a 3.0 beta or RC run it too, so every step stays
+    // harmless to repeat on a database where some changes are already present.
+    if (schemaVersion < QVersionNumber::fromString("3.0")) {
+        collection->dbSchemaVersion = "3.0";
         QSqlError err = Database::runMigration_3_0(connectionName);
         if (err.type() != QSqlError::NoError) return err;
         collection->setDatabaseSchemaVersion();

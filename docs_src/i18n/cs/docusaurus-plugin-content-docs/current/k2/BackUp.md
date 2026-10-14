@@ -105,7 +105,7 @@ Každé zálohovací propojení má **Zdrojový režim**, který určuje, co se 
 ### Profil LuckyBackup
 
 Je možné exportovat zálohovací propojení do profilu [LuckyBackup](https://luckybackup.sourceforge.net).
-Viz samostatná stránka: [Profil LuckyBackup](../BackUp_luckybackup_profile)
+Viz samostatná stránka: [Profil LuckyBackup](../development/SpecBackupLuckyBackupProfile)
 
 
 ## Správa zálohovacích propojení

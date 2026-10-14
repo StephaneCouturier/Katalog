@@ -327,7 +327,7 @@ bool Collection::load()
     QDir dir(folder);
     dir.setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
     if(dir.entryList().isEmpty()){
-        dbSchemaVersion = "2.13";
+        dbSchemaVersion = "3.0";
         setDatabaseSchemaVersion();
     }
 

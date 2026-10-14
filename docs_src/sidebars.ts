@@ -76,11 +76,6 @@ export default {
       // sidebar never has to change.
       'development/Specifications',
       'development/Tests',
-      // Neither Spec* nor Test*, so they stayed in docs/ and would otherwise be
-      // orphaned from the sidebar.
-      'BackUp_luckybackup_profile',
-      'DevicesCatalogChecksum',
-      'DevicesCatalogMetadata',
        'development/Dev-Repository',
        'development/Dev-Build-from-source',
        'development/Dev-Release',

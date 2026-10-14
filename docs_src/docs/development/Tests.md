@@ -4,8 +4,6 @@ version: "2.13"
 
 # Test Plans
 
-![Status](https://img.shields.io/badge/Status-Index-lightgrey) ![Pages](https://img.shields.io/badge/Pages-1-blue)
-
 Test plans live beside the specifications in `docs_src/docs/development/`. This
 page is the index: **new test plans are added here, not to the sidebar.**
 
