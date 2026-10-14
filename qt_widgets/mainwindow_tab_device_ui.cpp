@@ -674,9 +674,6 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
 
     // Collect all active catalogs into local list
     QList<Device*> collectedCatalogs;
-    int totalCatalogs = 0;
-    int inactiveCatalogs = 0;
-    int skippedDevices = 0;
 
 
     for (int row = 0; row < ui->Devices_treeView_DeviceList->model()->rowCount(); ++row) {
@@ -690,20 +687,16 @@ void MainWindow::on_Catalogs_pushButton_UpdateAllActive_clicked()
 
 
         if (loopDevice->type == "Catalog") {
-            totalCatalogs++;  // Count all catalogs
-
             // Check if active (has "dialog-ok-apply" icon)
             if (activeIcon.name() == QIcon::fromTheme("dialog-ok-apply").name()) {
                 // Active catalog - add to processing list
                 collectedCatalogs.append(loopDevice);
             } else {
-                // Inactive catalog - count but don't process
-                inactiveCatalogs++;
+                // Inactive catalog - don't process
                 delete loopDevice;
             }
         } else {
             delete loopDevice;
-            skippedDevices++;
         }
     }
 

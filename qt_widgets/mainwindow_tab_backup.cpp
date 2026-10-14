@@ -1060,7 +1060,6 @@ void MainWindow::loadBackupPreview()
     model->setHorizontalHeaderItem(2, new QStandardItem(tr("Path")));
     model->setHorizontalHeaderItem(3, new QStandardItem(tr("Size")));
 
-    qint64 copySize = 0;
     for (const DifferenceFileEntry &entry : cmp.filesToCopy) {
         auto *sizeItem = new QStandardItem(QLocale().formattedDataSize(entry.fileSize));
         sizeItem->setData(entry.fileSize, Qt::UserRole);
@@ -1070,10 +1069,8 @@ void MainWindow::loadBackupPreview()
             << new QStandardItem(entry.folderPath)
             << sizeItem;
         model->appendRow(row);
-        copySize += entry.fileSize;
     }
 
-    qint64 conflictSize = 0;
     for (const DifferenceFileEntry &entry : cmp.fileConflicts) {
         auto *sizeItem = new QStandardItem(QLocale().formattedDataSize(entry.fileSize));
         sizeItem->setData(entry.fileSize, Qt::UserRole);
@@ -1083,7 +1080,6 @@ void MainWindow::loadBackupPreview()
             << new QStandardItem(entry.folderPath)
             << sizeItem;
         model->appendRow(row);
-        conflictSize += entry.fileSize;
     }
 
     ui->BackUp_tableView_PreviewFiles->setModel(model);
