@@ -206,10 +206,13 @@ Item {
         modal: true
         anchors.centerIn: parent
         width: Math.min(420, root.width - Kirigami.Units.largeSpacing * 4)
-        contentItem: Controls.Label {
-            text: qsTr("Split <b>%1</b> into sub-catalogs by sub-directory?<br/><br/>This will create one sub-catalog per immediate sub-directory and remove the original catalog. This operation cannot be undone.").arg(root.operationDeviceName)
-            textFormat: Text.RichText
-            wrapMode: Text.WordWrap
+        contentItem: ColumnLayout {
+            Controls.Label {
+                Layout.fillWidth: true
+                text: qsTr("Split <b>%1</b> into sub-catalogs by sub-directory?<br/><br/>This will create one sub-catalog per immediate sub-directory and remove the original catalog. This operation cannot be undone.").arg(root.operationDeviceName)
+                textFormat: Text.RichText
+                wrapMode: Text.WordWrap
+            }
         }
         footer: Controls.DialogButtonBox {
             Controls.Button {
@@ -293,10 +296,13 @@ Item {
         modal: true
         anchors.centerIn: parent
         width: Math.min(420, root.width - Kirigami.Units.largeSpacing * 4)
-        contentItem: Controls.Label {
-            text: qsTr("Verify checksums for <b>%1</b>?").arg(root.operationDeviceName)
-            textFormat: Text.RichText
-            wrapMode: Text.WordWrap
+        contentItem: ColumnLayout {
+            Controls.Label {
+                Layout.fillWidth: true
+                text: qsTr("Verify checksums for <b>%1</b>?").arg(root.operationDeviceName)
+                textFormat: Text.RichText
+                wrapMode: Text.WordWrap
+            }
         }
         footer: Controls.DialogButtonBox {
             Controls.Button {
@@ -334,9 +340,12 @@ Item {
         modal: true
         anchors.centerIn: parent
         width: Math.min(460, root.width - Kirigami.Units.largeSpacing * 4)
-        contentItem: Controls.Label {
-            id: verifyResultLabel
-            wrapMode: Text.WordWrap
+        contentItem: ColumnLayout {
+            Controls.Label {
+                Layout.fillWidth: true
+                id: verifyResultLabel
+                wrapMode: Text.WordWrap
+            }
         }
         footer: Controls.DialogButtonBox {
             Controls.Button {
@@ -355,10 +364,13 @@ Item {
         modal: true
         anchors.centerIn: parent
         width: Math.min(420, root.width - Kirigami.Units.largeSpacing * 4)
-        contentItem: Controls.Label {
-            text: qsTr("Unassign <b>%1</b> from its parent device?").arg(root.operationDeviceName)
-            textFormat: Text.RichText
-            wrapMode: Text.WordWrap
+        contentItem: ColumnLayout {
+            Controls.Label {
+                Layout.fillWidth: true
+                text: qsTr("Unassign <b>%1</b> from its parent device?").arg(root.operationDeviceName)
+                textFormat: Text.RichText
+                wrapMode: Text.WordWrap
+            }
         }
         footer: Controls.DialogButtonBox {
             Controls.Button {
@@ -389,12 +401,15 @@ Item {
         modal: true
         anchors.centerIn: parent
         width: Math.min(420, root.width - Kirigami.Units.largeSpacing * 4)
-        contentItem: Controls.Label {
-            text: qsTr("Do you want to <b>delete</b> this %1 device?<br/><br/>Name: <b>%2</b>")
-                  .arg(deleteConfirmDialog.deviceType)
-                  .arg(root.operationDeviceName)
-            textFormat: Text.RichText
-            wrapMode: Text.WordWrap
+        contentItem: ColumnLayout {
+            Controls.Label {
+                Layout.fillWidth: true
+                text: qsTr("Do you want to <b>delete</b> this %1 device?<br/><br/>Name: <b>%2</b>")
+                      .arg(deleteConfirmDialog.deviceType)
+                      .arg(root.operationDeviceName)
+                textFormat: Text.RichText
+                wrapMode: Text.WordWrap
+            }
         }
         footer: Controls.DialogButtonBox {
             Controls.Button {
@@ -425,10 +440,13 @@ Item {
         modal: true
         anchors.centerIn: parent
         width: Math.min(480, root.width - Kirigami.Units.largeSpacing * 4)
-        contentItem: Controls.Label {
-            id: mimeResultLabel
-            textFormat: Text.RichText
-            wrapMode: Text.WrapAnywhere
+        contentItem: ColumnLayout {
+            Controls.Label {
+                Layout.fillWidth: true
+                id: mimeResultLabel
+                textFormat: Text.RichText
+                wrapMode: Text.WrapAnywhere
+            }
         }
         footer: Controls.DialogButtonBox {
             Controls.Button {
@@ -454,9 +472,12 @@ Item {
         modal: true
         anchors.centerIn: parent
         width: Math.min(420, root.width - Kirigami.Units.largeSpacing * 4)
-        contentItem: Controls.Label {
-            id: operationResultLabel
-            wrapMode: Text.WordWrap
+        contentItem: ColumnLayout {
+            Controls.Label {
+                Layout.fillWidth: true
+                id: operationResultLabel
+                wrapMode: Text.WordWrap
+            }
         }
         footer: Controls.DialogButtonBox {
             Controls.Button {

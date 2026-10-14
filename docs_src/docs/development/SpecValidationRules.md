@@ -135,6 +135,33 @@ string is added, reworded, moved or deleted** by this change — in particular
 `Delete`, `Update Checksum`, `Copy JSON`, `Keep Last 10`, `Clear` and `Continue`
 are untouched.
 
+## Dialog content layout (how)
+
+The maintainer reported on 2026-10-14, from a Windows beta4 run, the warning
+`QML Dialog: Binding loop detected for property "implicitHeight"` (from
+`Fusion/Dialog.qml`) on the first-run welcome and first-run ready dialogs in
+`qt_quick/Main.qml`. Fusion is forced on Windows and macOS by
+`qt_quick/main.cpp` and is also the style of the AppImage; the KDE
+`org.kde.desktop` style does not show the warning, so it is invisible on the
+Linux/KDE development machine.
+
+Measured on 2026-10-14 with a standalone `qml6` offscreen repro: a wrapping
+`Controls.Label` used directly as a dialog's `contentItem` gives two
+binding-loop warnings under Fusion, Basic and Material, and none under
+`org.kde.desktop`. Removing the explicit `width`, the RichText format, the
+footer or `anchors.centerIn` does not remove the warnings; removing the wrap
+does. Wrapping the Label in a `ColumnLayout` with `Layout.fillWidth: true` gives
+no warning in any of the four styles and the same dialog height (236 px under
+Fusion, 295 px under `org.kde.desktop`, before and after).
+
+| # | Rule | Applies to | Status |
+|---|------|------------|--------|
+| D7 | A `Controls.Dialog` (or any `Popup`) whose content is word-wrapped text MUST NOT use a wrapping `Controls.Label` directly as its `contentItem`. The `contentItem` is a layout container (`ColumnLayout`) holding the Label, and the Label carries `Layout.fillWidth: true` with no explicit `width:` binding (e.g. to `availableWidth`). Reason: under the stock Qt Quick Controls styles (Fusion, Basic, Material) the direct construction causes a binding loop on the dialog's `implicitHeight`. Applying this rule changes no user-visible string and no rendered dialog size. *(Approved by the maintainer on 2026-10-14, relayed by the main agent.)* | K3 (`qt_quick/`) | [Planned] |
+
+The Kirigami warning `Failed to find a Kirigami platform plugin for style
+Fusion` is a separate matter, not covered by `D7`; it is a known limitation
+under `DPL-C4` (`SpecK3Deployment.md`).
+
 ## Field label alignment (how)
 
 An app-wide K3 layout convention for forms, recorded here because this page
@@ -265,6 +292,12 @@ For the dialog button rules (D*), in K3:
 - Run listed links / `BKP-F19` — re-run the `BKP-F19` charter rows in
   `SpecBackup.md` unchanged: the four conditional lines, the counts, and
   `Cancel` starting nothing. On KDE, `Continue` is still left of `Cancel`.
+- D7 — grep `qt_quick/` for `contentItem: Controls.Label`: no occurrence whose
+  Label sets `wrapMode`. Run K3 with `QT_QUICK_CONTROLS_STYLE=Fusion` (and on
+  Windows or macOS, where Fusion is forced) and open the first-run welcome and
+  first-run ready dialogs plus any other converted dialog: no
+  `Binding loop detected for property "implicitHeight"` warning appears, the
+  text still wraps, and each dialog keeps its previous size and text.
 
 For the field label alignment rule (L*), in K3:
 

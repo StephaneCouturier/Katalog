@@ -1054,10 +1054,13 @@ ColumnLayout {
             onRejected: deleteFileDialog.close()
         }
 
-        contentItem: Controls.Label {
-            text: qsTr("Permanently delete this file? This cannot be undone.\n\n%1")
-                  .arg(resultContextMenu.fullPath)
-            wrapMode: Text.WordWrap
+        contentItem: ColumnLayout {
+            Controls.Label {
+                Layout.fillWidth: true
+                text: qsTr("Permanently delete this file? This cannot be undone.\n\n%1")
+                      .arg(resultContextMenu.fullPath)
+                wrapMode: Text.WordWrap
+            }
         }
     }
 
@@ -1210,20 +1213,23 @@ ColumnLayout {
         padding: Kirigami.Units.largeSpacing
         preferredWidth: Kirigami.Units.gridUnit * 28
 
-        contentItem: Controls.Label {
-            text: {
-                let n = newSearch1.properties.filesFoundNumber ?? 0
-                if (batchConfirmDialog.batchAction === "trash")
-                    return qsTr("Move all %1 result(s) to trash?").arg(n)
-                if (batchConfirmDialog.batchAction === "delete")
-                    return qsTr("Permanently delete all %1 result(s)? This cannot be undone.").arg(n)
-                if (batchConfirmDialog.batchAction === "verify-checksums")
-                    return qsTr("Calculate and verify checksums for all %1 result(s)?").arg(n)
-                if (batchConfirmDialog.batchAction === "get-metadata")
-                    return qsTr("Include metadata for all %1 result(s)?").arg(n)
-                return ""
+        contentItem: ColumnLayout {
+            Controls.Label {
+                Layout.fillWidth: true
+                text: {
+                    let n = newSearch1.properties.filesFoundNumber ?? 0
+                    if (batchConfirmDialog.batchAction === "trash")
+                        return qsTr("Move all %1 result(s) to trash?").arg(n)
+                    if (batchConfirmDialog.batchAction === "delete")
+                        return qsTr("Permanently delete all %1 result(s)? This cannot be undone.").arg(n)
+                    if (batchConfirmDialog.batchAction === "verify-checksums")
+                        return qsTr("Calculate and verify checksums for all %1 result(s)?").arg(n)
+                    if (batchConfirmDialog.batchAction === "get-metadata")
+                        return qsTr("Include metadata for all %1 result(s)?").arg(n)
+                    return ""
+                }
+                wrapMode: Text.WordWrap
             }
-            wrapMode: Text.WordWrap
         }
 
         onAccepted: {
@@ -1259,9 +1265,12 @@ ColumnLayout {
         standardButtons: Kirigami.Dialog.Ok
         padding: Kirigami.Units.largeSpacing
         preferredWidth: Kirigami.Units.gridUnit * 24
-        contentItem: Controls.Label {
-            text: batchResultDialog.resultText
-            wrapMode: Text.WordWrap
+        contentItem: ColumnLayout {
+            Controls.Label {
+                Layout.fillWidth: true
+                text: batchResultDialog.resultText
+                wrapMode: Text.WordWrap
+            }
         }
     }
 

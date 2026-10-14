@@ -1341,17 +1341,19 @@ Kirigami.ApplicationWindow {
         modal: true
         anchors.centerIn: parent
         width: Math.min(520, parent.width - Kirigami.Units.largeSpacing * 4)
-        contentItem: Controls.Label {
-            width: firstRunWelcomeDialog.availableWidth
-            wrapMode: Text.WordWrap
-            textFormat: Text.RichText
-            text: qsTr("<br/><b>Welcome to Katalog!</b><br/><br/>It seems this is the first run.<br/><br/>The following Settings have been applied:<br/> - Language: <b>%1</b><br/> - Theme: <b>%2</b><br/><br/>You can change these on the %3 page.")
-                      .arg(Qt.locale().name)
-                      // The theme actually applied, by its Settings name
-                      .arg(appManager1.themeId === 1 ? qsTr("Katalog Colors")
-                           : appManager1.themeId === 2 ? qsTr("Desktop Theme (gray)")
-                           : qsTr("Desktop Theme"))
-                      .arg(qsTr("Settings"))
+        contentItem: ColumnLayout {
+            Controls.Label {
+                Layout.fillWidth: true
+                wrapMode: Text.WordWrap
+                textFormat: Text.RichText
+                text: qsTr("<br/><b>Welcome to Katalog!</b><br/><br/>It seems this is the first run.<br/><br/>The following Settings have been applied:<br/> - Language: <b>%1</b><br/> - Theme: <b>%2</b><br/><br/>You can change these on the %3 page.")
+                          .arg(Qt.locale().name)
+                          // The theme actually applied, by its Settings name
+                          .arg(appManager1.themeId === 1 ? qsTr("Katalog Colors")
+                               : appManager1.themeId === 2 ? qsTr("Desktop Theme (gray)")
+                               : qsTr("Desktop Theme"))
+                          .arg(qsTr("Settings"))
+            }
         }
         footer: Controls.DialogButtonBox {
             Controls.Button {
@@ -1382,12 +1384,14 @@ Kirigami.ApplicationWindow {
         modal: true
         anchors.centerIn: parent
         width: Math.min(520, parent.width - Kirigami.Units.largeSpacing * 4)
-        contentItem: Controls.Label {
-            width: firstRunReadyDialog.availableWidth
-            wrapMode: Text.WordWrap
-            textFormat: Text.RichText
-            text: qsTr("<br/><b>Ready to create a file catalog:</b><br/><br/>")
-                  + qsTr("1- Select an entire drive or directory, <br/>2- select options, and <br/>3- click 'Create'<br/>")
+        contentItem: ColumnLayout {
+            Controls.Label {
+                Layout.fillWidth: true
+                wrapMode: Text.WordWrap
+                textFormat: Text.RichText
+                text: qsTr("<br/><b>Ready to create a file catalog:</b><br/><br/>")
+                      + qsTr("1- Select an entire drive or directory, <br/>2- select options, and <br/>3- click 'Create'<br/>")
+            }
         }
         footer: Controls.DialogButtonBox {
             Controls.Button {
@@ -1412,13 +1416,15 @@ Kirigami.ApplicationWindow {
         modal: true
         anchors.centerIn: parent
         width: Math.min(460, root.width - Kirigami.Units.largeSpacing * 4)
-        contentItem: Controls.Label {
-            width: editDeleteDeviceDialog.availableWidth
-            wrapMode: Text.WordWrap
-            textFormat: Text.RichText
-            text: qsTr("Do you want to <b>delete</b> this %1 device?<br/><br/>Name: <b>%2</b>")
-                  .arg(editDeleteDeviceDialog.deviceType)
-                  .arg(editDeleteDeviceDialog.deviceName)
+        contentItem: ColumnLayout {
+            Controls.Label {
+                Layout.fillWidth: true
+                wrapMode: Text.WordWrap
+                textFormat: Text.RichText
+                text: qsTr("Do you want to <b>delete</b> this %1 device?<br/><br/>Name: <b>%2</b>")
+                      .arg(editDeleteDeviceDialog.deviceType)
+                      .arg(editDeleteDeviceDialog.deviceName)
+            }
         }
         footer: Controls.DialogButtonBox {
             Controls.Button {
@@ -1453,10 +1459,12 @@ Kirigami.ApplicationWindow {
         modal: true
         anchors.centerIn: parent
         width: Math.min(460, root.width - Kirigami.Units.largeSpacing * 4)
-        contentItem: Controls.Label {
-            id: editValidationLabel
-            width: editValidationDialog.availableWidth
-            wrapMode: Text.WordWrap
+        contentItem: ColumnLayout {
+            Controls.Label {
+                Layout.fillWidth: true
+                id: editValidationLabel
+                wrapMode: Text.WordWrap
+            }
         }
         footer: Controls.DialogButtonBox {
             Controls.Button {
@@ -1475,10 +1483,12 @@ Kirigami.ApplicationWindow {
         modal: true
         anchors.centerIn: parent
         width: Math.min(520, root.width - Kirigami.Units.largeSpacing * 4)
-        contentItem: Controls.Label {
-            id: editCatalogConfirmLabel
-            width: editCatalogConfirmDialog.availableWidth
-            wrapMode: Text.WordWrap
+        contentItem: ColumnLayout {
+            Controls.Label {
+                Layout.fillWidth: true
+                id: editCatalogConfirmLabel
+                wrapMode: Text.WordWrap
+            }
         }
         footer: Controls.DialogButtonBox {
             Controls.Button {
@@ -1514,10 +1524,12 @@ Kirigami.ApplicationWindow {
         modal: true
         anchors.centerIn: parent
         width: Math.min(460, root.width - Kirigami.Units.largeSpacing * 4)
-        contentItem: Controls.Label {
-            width: editCatalogUpdateDialog.availableWidth
-            wrapMode: Text.WordWrap
-            text: qsTr("Update the catalog content with the new criteria?")
+        contentItem: ColumnLayout {
+            Controls.Label {
+                Layout.fillWidth: true
+                wrapMode: Text.WordWrap
+                text: qsTr("Update the catalog content with the new criteria?")
+            }
         }
         footer: Controls.DialogButtonBox {
             Controls.Button {
@@ -1605,29 +1617,32 @@ Kirigami.ApplicationWindow {
         modal: true
         anchors.centerIn: parent
         width: Math.min(500, root.width - Kirigami.Units.largeSpacing * 4)
-        contentItem: Controls.Label {
-            textFormat: Text.RichText
-            wrapMode: Text.WordWrap
-            text: {
-                if (!devSnapshotDialog.data) return ""
-                var d = devSnapshotDialog.data
-                var fc    = (d.newCatalogFileCount   || 0)
-                var dfc   = (d.deltaCatalogFileCount || 0)
-                var fs    = appManager1.formatDataSize(d.newCatalogFileSize   || 0)
-                var dfs   = appManager1.formatDataSizeDelta(Math.abs(d.deltaCatalogFileSize  || 0))
-                var spc   = appManager1.formatDataSize(d.newStorageFreeSpace  || 0)
-                var dspc  = appManager1.formatDataSizeDelta(Math.abs(d.deltaStorageFree      || 0))
-                var stot  = appManager1.formatDataSize(d.newStorageTotalSpace || 0)
-                var dstot = appManager1.formatDataSizeDelta(Math.abs(d.deltaStorageTotal     || 0))
-                return "<br/>" + qsTr("A snapshot of this collection was recorded:") +
-                    "<table>" +
-                    "<tr><td><br/><b>" + qsTr("Catalogs") + "</b></td><td></td><td></td></tr>" +
-                    "<tr><td>" + qsTr("Number of files:") + " </td><td style='text-align:right;'><b> " + Number(fc).toLocaleString(Qt.locale(), "f", 0) + " </b></td><td>  (" + qsTr("added:") + " <b> " + ((dfc >= 0) ? "+" : "") + Number(dfc).toLocaleString(Qt.locale(), "f", 0) + " </b>)</td></tr>" +
-                    "<tr><td>" + qsTr("Total file size:") + " </td><td style='text-align:right;'><b> " + fs + " </b></td><td>  (" + qsTr("added:") + " <b> " + ((d.deltaCatalogFileSize >= 0) ? "+" : "") + dfs + " </b>)</td></tr>" +
-                    "<tr><td><br/><b>" + qsTr("Storage") + "</b></td><td></td><td></td></tr>" +
-                    "<tr><td>" + qsTr("Storage free space:") + " </td><td style='text-align:right;'><b> " + spc + " </b></td><td>  (" + qsTr("added:") + " <b> " + ((d.deltaStorageFree >= 0) ? "+" : "") + dspc + " </b>)</td></tr>" +
-                    "<tr><td>" + qsTr("Storage total space:") + " </td><td style='text-align:right;'><b> " + stot + " </b></td><td>  (" + qsTr("added:") + " <b> " + ((d.deltaStorageTotal >= 0) ? "+" : "") + dstot + " </b>)</td></tr>" +
-                    "</table>"
+        contentItem: ColumnLayout {
+            Controls.Label {
+                Layout.fillWidth: true
+                textFormat: Text.RichText
+                wrapMode: Text.WordWrap
+                text: {
+                    if (!devSnapshotDialog.data) return ""
+                    var d = devSnapshotDialog.data
+                    var fc    = (d.newCatalogFileCount   || 0)
+                    var dfc   = (d.deltaCatalogFileCount || 0)
+                    var fs    = appManager1.formatDataSize(d.newCatalogFileSize   || 0)
+                    var dfs   = appManager1.formatDataSizeDelta(Math.abs(d.deltaCatalogFileSize  || 0))
+                    var spc   = appManager1.formatDataSize(d.newStorageFreeSpace  || 0)
+                    var dspc  = appManager1.formatDataSizeDelta(Math.abs(d.deltaStorageFree      || 0))
+                    var stot  = appManager1.formatDataSize(d.newStorageTotalSpace || 0)
+                    var dstot = appManager1.formatDataSizeDelta(Math.abs(d.deltaStorageTotal     || 0))
+                    return "<br/>" + qsTr("A snapshot of this collection was recorded:") +
+                        "<table>" +
+                        "<tr><td><br/><b>" + qsTr("Catalogs") + "</b></td><td></td><td></td></tr>" +
+                        "<tr><td>" + qsTr("Number of files:") + " </td><td style='text-align:right;'><b> " + Number(fc).toLocaleString(Qt.locale(), "f", 0) + " </b></td><td>  (" + qsTr("added:") + " <b> " + ((dfc >= 0) ? "+" : "") + Number(dfc).toLocaleString(Qt.locale(), "f", 0) + " </b>)</td></tr>" +
+                        "<tr><td>" + qsTr("Total file size:") + " </td><td style='text-align:right;'><b> " + fs + " </b></td><td>  (" + qsTr("added:") + " <b> " + ((d.deltaCatalogFileSize >= 0) ? "+" : "") + dfs + " </b>)</td></tr>" +
+                        "<tr><td><br/><b>" + qsTr("Storage") + "</b></td><td></td><td></td></tr>" +
+                        "<tr><td>" + qsTr("Storage free space:") + " </td><td style='text-align:right;'><b> " + spc + " </b></td><td>  (" + qsTr("added:") + " <b> " + ((d.deltaStorageFree >= 0) ? "+" : "") + dspc + " </b>)</td></tr>" +
+                        "<tr><td>" + qsTr("Storage total space:") + " </td><td style='text-align:right;'><b> " + stot + " </b></td><td>  (" + qsTr("added:") + " <b> " + ((d.deltaStorageTotal >= 0) ? "+" : "") + dstot + " </b>)</td></tr>" +
+                        "</table>"
+                }
             }
         }
         footer: Controls.DialogButtonBox {
@@ -1649,13 +1664,16 @@ Kirigami.ApplicationWindow {
         anchors.centerIn: parent
         width: Math.min(440, root.width - Kirigami.Units.largeSpacing * 4)
         onOpened: privateHostNoButton.forceActiveFocus()
-        contentItem: Controls.Label {
-            wrapMode: Text.WordWrap
-            text: privateHostDialog.entry
-                  ? qsTr("Private network connection") + ": " + privateHostDialog.entry.hostName + "\n\n"
-                    + qsTr("Your data will be sent to this network database.") + "\n\n"
-                    + qsTr("Continue?")
-                  : ""
+        contentItem: ColumnLayout {
+            Controls.Label {
+                Layout.fillWidth: true
+                wrapMode: Text.WordWrap
+                text: privateHostDialog.entry
+                      ? qsTr("Private network connection") + ": " + privateHostDialog.entry.hostName + "\n\n"
+                        + qsTr("Your data will be sent to this network database.") + "\n\n"
+                        + qsTr("Continue?")
+                      : ""
+            }
         }
         footer: Controls.DialogButtonBox {
             Controls.Button {
@@ -1709,9 +1727,12 @@ Kirigami.ApplicationWindow {
         modal: true
         anchors.centerIn: parent
         width: Math.min(440, root.width - Kirigami.Units.largeSpacing * 4)
-        contentItem: Controls.Label {
-            wrapMode: Text.WordWrap
-            text: qsTr("Do you want the summary of updates for each catalog?")
+        contentItem: ColumnLayout {
+            Controls.Label {
+                Layout.fillWidth: true
+                wrapMode: Text.WordWrap
+                text: qsTr("Do you want the summary of updates for each catalog?")
+            }
         }
         footer: Controls.DialogButtonBox {
             Controls.Button {
@@ -1740,34 +1761,50 @@ Kirigami.ApplicationWindow {
         modal: true
         anchors.centerIn: parent
         width: Math.min(460, root.width - Kirigami.Units.largeSpacing * 4)
-        contentItem: Controls.Label {
-            wrapMode: Text.WordWrap
-            textFormat: Text.RichText
-            text: {
-                var r = devUpdateReportDialog.report
-                if (!r || !r.deviceType) return ""
-                var msg = ""
+        contentItem: ColumnLayout {
+            Controls.Label {
+                Layout.fillWidth: true
+                wrapMode: Text.WordWrap
+                textFormat: Text.RichText
+                text: {
+                    var r = devUpdateReportDialog.report
+                    if (!r || !r.deviceType) return ""
+                    var msg = ""
 
-                if (r.deviceType === "Catalog") {
-                    // A creation report (OPQ-F16) has no "(added:" columns for the catalog, as K2
-                    msg += "<table>"
-                    msg += "<tr><td>" + (r.created ? qsTr("Catalog created: ") : qsTr("Catalog updated: "))
-                         + "</td><td align='center'><b>" + r.deviceName + "</b></td></tr>"
-                    msg += "<tr><td>" + qsTr("Path: ")            + "</td><td><b>" + r.devicePath + "</b></td></tr>"
-                    msg += "</table><br/><table>"
-                    msg += "<tr><td>" + qsTr("Number of files: ") + "</td><td align='right'><b>" + Number(r.fileCount || 0).toLocaleString(Qt.locale(), "f", 0) + "</b></td>"
-                    if (!r.created)
-                        msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + Number(r.filesAdded || 0).toLocaleString(Qt.locale(), "f", 0) + "</b>)</td>"
-                    msg += "</tr>"
-                    msg += "<tr><td>" + qsTr("Total file size: ") + "</td><td align='right'><b>" + appManager1.formatDataSize(r.totalSize || 0) + "</b></td>"
-                    if (!r.created)
-                        msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.sizeAdded || 0) + "</b>)</td>"
-                    msg += "</tr>"
-                    msg += "</table>"
-                    if (r.storageUpdated) {
-                        msg += "<br/><table>"
-                        msg += "<tr><td>" + qsTr("Storage updated: ") + "</td><td align='center'><b>" + (r.storageName || "") + "</b></td></tr>"
-                        msg += "<tr><td>" + qsTr("Path: ")            + "</td><td><b>" + (r.storagePath || "") + "</b></td></tr>"
+                    if (r.deviceType === "Catalog") {
+                        // A creation report (OPQ-F16) has no "(added:" columns for the catalog, as K2
+                        msg += "<table>"
+                        msg += "<tr><td>" + (r.created ? qsTr("Catalog created: ") : qsTr("Catalog updated: "))
+                             + "</td><td align='center'><b>" + r.deviceName + "</b></td></tr>"
+                        msg += "<tr><td>" + qsTr("Path: ")            + "</td><td><b>" + r.devicePath + "</b></td></tr>"
+                        msg += "</table><br/><table>"
+                        msg += "<tr><td>" + qsTr("Number of files: ") + "</td><td align='right'><b>" + Number(r.fileCount || 0).toLocaleString(Qt.locale(), "f", 0) + "</b></td>"
+                        if (!r.created)
+                            msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + Number(r.filesAdded || 0).toLocaleString(Qt.locale(), "f", 0) + "</b>)</td>"
+                        msg += "</tr>"
+                        msg += "<tr><td>" + qsTr("Total file size: ") + "</td><td align='right'><b>" + appManager1.formatDataSize(r.totalSize || 0) + "</b></td>"
+                        if (!r.created)
+                            msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.sizeAdded || 0) + "</b>)</td>"
+                        msg += "</tr>"
+                        msg += "</table>"
+                        if (r.storageUpdated) {
+                            msg += "<br/><table>"
+                            msg += "<tr><td>" + qsTr("Storage updated: ") + "</td><td align='center'><b>" + (r.storageName || "") + "</b></td></tr>"
+                            msg += "<tr><td>" + qsTr("Path: ")            + "</td><td><b>" + (r.storagePath || "") + "</b></td></tr>"
+                            msg += "</table><br/><table>"
+                            msg += "<tr><td>" + qsTr("Used Space: ")  + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageUsed  || 0) + "</b></td>"
+                            msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageUsedAdded  || 0) + "</b>)</td></tr>"
+                            msg += "<tr><td>" + qsTr("Free Space: ")  + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageFree  || 0) + "</b></td>"
+                            msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageFreeAdded  || 0) + "</b>)</td></tr>"
+                            msg += "<tr><td>" + qsTr("Total Space: ") + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageTotal || 0) + "</b></td>"
+                            msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageTotalAdded || 0) + "</b>)</td></tr>"
+                            msg += "</table>"
+                        }
+
+                    } else if (r.deviceType === "Storage") {
+                        msg += "<table>"
+                        msg += "<tr><td>" + qsTr("Storage updated: ") + "</td><td align='center'><b>" + r.deviceName + "</b></td></tr>"
+                        msg += "<tr><td>" + qsTr("Path: ")            + "</td><td><b>" + r.devicePath + "</b></td></tr>"
                         msg += "</table><br/><table>"
                         msg += "<tr><td>" + qsTr("Used Space: ")  + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageUsed  || 0) + "</b></td>"
                         msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageUsedAdded  || 0) + "</b>)</td></tr>"
@@ -1776,64 +1813,51 @@ Kirigami.ApplicationWindow {
                         msg += "<tr><td>" + qsTr("Total Space: ") + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageTotal || 0) + "</b></td>"
                         msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageTotalAdded || 0) + "</b>)</td></tr>"
                         msg += "</table>"
-                    }
 
-                } else if (r.deviceType === "Storage") {
-                    msg += "<table>"
-                    msg += "<tr><td>" + qsTr("Storage updated: ") + "</td><td align='center'><b>" + r.deviceName + "</b></td></tr>"
-                    msg += "<tr><td>" + qsTr("Path: ")            + "</td><td><b>" + r.devicePath + "</b></td></tr>"
-                    msg += "</table><br/><table>"
-                    msg += "<tr><td>" + qsTr("Used Space: ")  + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageUsed  || 0) + "</b></td>"
-                    msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageUsedAdded  || 0) + "</b>)</td></tr>"
-                    msg += "<tr><td>" + qsTr("Free Space: ")  + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageFree  || 0) + "</b></td>"
-                    msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageFreeAdded  || 0) + "</b>)</td></tr>"
-                    msg += "<tr><td>" + qsTr("Total Space: ") + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageTotal || 0) + "</b></td>"
-                    msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageTotalAdded || 0) + "</b>)</td></tr>"
-                    msg += "</table>"
+                    } else if (r.deviceType === "Virtual") {
+                        msg += "<table>"
+                        msg += "<tr><td>" + qsTr("Virtual device updated: ") + "</td><td align='center'><b>" + r.deviceName + "</b></td></tr>"
+                        msg += "</table><br/><table>"
+                        msg += "<tr><td>" + qsTr("Number of files: ") + "</td><td align='right'><b>" + Number(r.fileCount || 0).toLocaleString(Qt.locale(), "f", 0) + "</b></td>"
+                        msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + Number(r.filesAdded || 0).toLocaleString(Qt.locale(), "f", 0) + "</b>)</td></tr>"
+                        msg += "<tr><td>" + qsTr("Total file size: ") + "</td><td align='right'><b>" + appManager1.formatDataSize(r.totalSize || 0) + "</b></td>"
+                        msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.sizeAdded || 0) + "</b>)</td></tr>"
+                        msg += "</table><br/>"
+                        msg += qsTr("Catalogs updated:") + " <b>" + (r.catalogsUpdated || 0) + "</b> (" + (r.catalogsSkipped || 0) + " " + qsTr("skipped") + ")<br/>"
+                        if (r.storageUpdated) {
+                            msg += "<br/><table>"
+                            msg += "<tr><td>" + qsTr("Storage") + "</td></tr>"
+                            msg += "<tr><td>" + qsTr("Used Space: ")  + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageUsed  || 0) + "</b></td>"
+                            msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageUsedAdded  || 0) + "</b>)</td></tr>"
+                            msg += "<tr><td>" + qsTr("Free Space: ")  + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageFree  || 0) + "</b></td>"
+                            msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageFreeAdded  || 0) + "</b>)</td></tr>"
+                            msg += "<tr><td>" + qsTr("Total Space: ") + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageTotal || 0) + "</b></td>"
+                            msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageTotalAdded || 0) + "</b>)</td></tr>"
+                            msg += "</table>"
+                        }
 
-                } else if (r.deviceType === "Virtual") {
-                    msg += "<table>"
-                    msg += "<tr><td>" + qsTr("Virtual device updated: ") + "</td><td align='center'><b>" + r.deviceName + "</b></td></tr>"
-                    msg += "</table><br/><table>"
-                    msg += "<tr><td>" + qsTr("Number of files: ") + "</td><td align='right'><b>" + Number(r.fileCount || 0).toLocaleString(Qt.locale(), "f", 0) + "</b></td>"
-                    msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + Number(r.filesAdded || 0).toLocaleString(Qt.locale(), "f", 0) + "</b>)</td></tr>"
-                    msg += "<tr><td>" + qsTr("Total file size: ") + "</td><td align='right'><b>" + appManager1.formatDataSize(r.totalSize || 0) + "</b></td>"
-                    msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.sizeAdded || 0) + "</b>)</td></tr>"
-                    msg += "</table><br/>"
-                    msg += qsTr("Catalogs updated:") + " <b>" + (r.catalogsUpdated || 0) + "</b> (" + (r.catalogsSkipped || 0) + " " + qsTr("skipped") + ")<br/>"
-                    if (r.storageUpdated) {
-                        msg += "<br/><table>"
-                        msg += "<tr><td>" + qsTr("Storage") + "</td></tr>"
-                        msg += "<tr><td>" + qsTr("Used Space: ")  + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageUsed  || 0) + "</b></td>"
-                        msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageUsedAdded  || 0) + "</b>)</td></tr>"
-                        msg += "<tr><td>" + qsTr("Free Space: ")  + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageFree  || 0) + "</b></td>"
-                        msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageFreeAdded  || 0) + "</b>)</td></tr>"
-                        msg += "<tr><td>" + qsTr("Total Space: ") + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageTotal || 0) + "</b></td>"
-                        msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageTotalAdded || 0) + "</b>)</td></tr>"
-                        msg += "</table>"
+                    } else if (r.deviceType === "list") {
+                        msg += "<table><br/>"
+                        msg += qsTr("Selected active catalogs are updated.") + "&nbsp;<br/>"
+                        msg += "<tr><td>" + qsTr("Number of files: ") + "</td><td align='right'><b>" + Number(r.fileCount || 0).toLocaleString(Qt.locale(), "f", 0) + "</b></td>"
+                        msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + Number(r.filesAdded || 0).toLocaleString(Qt.locale(), "f", 0) + "</b>)</td></tr>"
+                        msg += "<tr><td>" + qsTr("Total file size: ") + "</td><td align='right'><b>" + appManager1.formatDataSize(r.totalSize || 0) + "</b></td>"
+                        msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.sizeAdded || 0) + "</b>)</td></tr>"
+                        msg += "</table><br/>"
+                        msg += qsTr("Catalogs updated:") + " <b>" + (r.catalogsUpdated || 0) + "</b> (" + (r.catalogsSkipped || 0) + " " + qsTr("skipped") + ")<br/>"
+                        if (r.storageUpdated) {
+                            msg += "<br/><table>"
+                            msg += "<tr><td>" + qsTr("Used Space: ")  + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageUsed  || 0) + "</b></td>"
+                            msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageUsedAdded  || 0) + "</b>)</td></tr>"
+                            msg += "<tr><td>" + qsTr("Free Space: ")  + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageFree  || 0) + "</b></td>"
+                            msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageFreeAdded  || 0) + "</b>)</td></tr>"
+                            msg += "<tr><td>" + qsTr("Total Space: ") + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageTotal || 0) + "</b></td>"
+                            msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageTotalAdded || 0) + "</b>)</td></tr>"
+                            msg += "</table>"
+                        }
                     }
-
-                } else if (r.deviceType === "list") {
-                    msg += "<table><br/>"
-                    msg += qsTr("Selected active catalogs are updated.") + "&nbsp;<br/>"
-                    msg += "<tr><td>" + qsTr("Number of files: ") + "</td><td align='right'><b>" + Number(r.fileCount || 0).toLocaleString(Qt.locale(), "f", 0) + "</b></td>"
-                    msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + Number(r.filesAdded || 0).toLocaleString(Qt.locale(), "f", 0) + "</b>)</td></tr>"
-                    msg += "<tr><td>" + qsTr("Total file size: ") + "</td><td align='right'><b>" + appManager1.formatDataSize(r.totalSize || 0) + "</b></td>"
-                    msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.sizeAdded || 0) + "</b>)</td></tr>"
-                    msg += "</table><br/>"
-                    msg += qsTr("Catalogs updated:") + " <b>" + (r.catalogsUpdated || 0) + "</b> (" + (r.catalogsSkipped || 0) + " " + qsTr("skipped") + ")<br/>"
-                    if (r.storageUpdated) {
-                        msg += "<br/><table>"
-                        msg += "<tr><td>" + qsTr("Used Space: ")  + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageUsed  || 0) + "</b></td>"
-                        msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageUsedAdded  || 0) + "</b>)</td></tr>"
-                        msg += "<tr><td>" + qsTr("Free Space: ")  + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageFree  || 0) + "</b></td>"
-                        msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageFreeAdded  || 0) + "</b>)</td></tr>"
-                        msg += "<tr><td>" + qsTr("Total Space: ") + "</td><td align='right'><b>" + appManager1.formatDataSize(r.storageTotal || 0) + "</b></td>"
-                        msg += "<td>&nbsp;&nbsp;" + qsTr("(added: ") + "</td><td align='right'><b>" + appManager1.formatDataSizeDelta(r.storageTotalAdded || 0) + "</b>)</td></tr>"
-                        msg += "</table>"
-                    }
+                    return msg
                 }
-                return msg
             }
         }
         footer: Controls.DialogButtonBox {
@@ -1863,10 +1887,12 @@ Kirigami.ApplicationWindow {
         modal: true
         anchors.centerIn: parent
         width: Math.min(460, root.width - Kirigami.Units.largeSpacing * 4)
-        contentItem: Controls.Label {
-            width: createEmptyDirDialog.availableWidth
-            wrapMode: Text.WordWrap
-            text: qsTr("The source folder does not contain any file.\nThis could mean that the source is empty or the device is not mounted to this folder.\nDo you want to save it anyway (the catalog would be empty)?")
+        contentItem: ColumnLayout {
+            Controls.Label {
+                Layout.fillWidth: true
+                wrapMode: Text.WordWrap
+                text: qsTr("The source folder does not contain any file.\nThis could mean that the source is empty or the device is not mounted to this folder.\nDo you want to save it anyway (the catalog would be empty)?")
+            }
         }
         footer: Controls.DialogButtonBox {
             Controls.Button {

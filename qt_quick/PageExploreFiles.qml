@@ -793,10 +793,13 @@ Item {
             onRejected: exploreDeleteFileDialog.close()
         }
 
-        contentItem: Controls.Label {
-            text: qsTr("Permanently delete this file? This cannot be undone.\n\n%1")
-                      .arg(root._activeFilePath)
-            wrapMode: Text.WordWrap
+        contentItem: ColumnLayout {
+            Controls.Label {
+                Layout.fillWidth: true
+                text: qsTr("Permanently delete this file? This cannot be undone.\n\n%1")
+                          .arg(root._activeFilePath)
+                wrapMode: Text.WordWrap
+            }
         }
     }
 
