@@ -22,6 +22,8 @@ modules:
     buildsystem: cmake-ninja
     config-opts:
       - -DCMAKE_BUILD_TYPE=Release
+      - -DBUILD_QT_QUICK=ON
+      - -DBUILD_QT_WIDGETS=OFF
       - -DBUILD_TESTS=OFF
     sources:
       - type: git
