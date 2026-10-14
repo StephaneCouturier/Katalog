@@ -57,7 +57,7 @@ Makes all the text of Katalog smaller or larger, from 80% to 120%, with the slid
 
 #### Version
 * The version and release date of Katalog, and *Release Notes* to read what changed.
-* *Check for a new version on startup*: when enabled, Katalog checks at start if a newer version is available.
+* *Check for a new version on startup*: when enabled, Katalog checks at start if a newer version is available. The Flatpak version does not check: Flathub and your software centre announce its updates.
 
 #### Settings file
 The path of the file where Katalog keeps its settings and last choices. *Open* opens it in the associated application.

@@ -57,7 +57,7 @@ Rend tout le texte de Katalog plus petit ou plus grand, de 80 % à 120 %, avec l
 
 #### Version
 * La version et la date de publication de Katalog, et *Notes de Version* pour lire ce qui a changé.
-* *Vérifier les nouvelles versions au démarrage* : lorsque cette option est activée, Katalog vérifie au démarrage si une version plus récente est disponible.
+* *Vérifier les nouvelles versions au démarrage* : lorsque cette option est activée, Katalog vérifie au démarrage si une version plus récente est disponible. La version Flatpak ne vérifie pas : Flathub et votre logithèque annoncent ses mises à jour.
 
 #### Fichier de configuration
 Le chemin du fichier dans lequel Katalog conserve ses paramètres et ses derniers choix. *Ouvrir* l'ouvre dans l'application associée.

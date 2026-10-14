@@ -57,7 +57,7 @@ Zmenší nebo zvětší veškerý text Katalogu, od 80 % do 120 %, posuvníkem n
 
 #### Verze
 * Verze a datum vydání Katalogu a *Poznámky k vydání*, kde si lze přečíst, co se změnilo.
-* *Zkontrolovat novou verzi při spuštění*: je-li zapnuto, Katalog při spuštění zkontroluje, zda je k dispozici novější verze.
+* *Zkontrolovat novou verzi při spuštění*: je-li zapnuto, Katalog při spuštění zkontroluje, zda je k dispozici novější verze. Verze Flatpak nekontroluje: její aktualizace oznamuje Flathub a vaše centrum softwaru.
 
 #### Soubor s nastavením
 Cesta k souboru, ve kterém Katalog uchovává svá nastavení a poslední volby. *Otevřít* ho otevře v přidružené aplikaci.

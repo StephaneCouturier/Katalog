@@ -25,6 +25,7 @@
 #include <QCoreApplication>
 #include <QCryptographicHash>
 #include <QTimer>
+#include <QVersionNumber>
 #include <QSysInfo>
 #include <QLocale>
 #include <kcoreaddons_version.h>
@@ -408,7 +409,49 @@ QString AppManager::getCurrentDatabaseInfo() const
 //----------------------------------------------------------------------
 void AppManager::checkVersion()
 {
+    // Port of K2's MainWindow::checkVersion() (SpecVersionCheck.md). Skipped on
+    // first run (VCK-F6) and inside Flatpak, whose updates come from Flathub (VCK-F5).
+    if (m_firstRun)
+        return;
+    if (qEnvironmentVariableIsSet("FLATPAK_ID") || QFile::exists(QStringLiteral("/.flatpak-info")))
+        return;
 
+    // GitHub redirects this address to .../releases/tag/v<latest version>.
+    // Asynchronous: startup and first paint never wait for the reply (VCK-C1).
+    QNetworkRequest request(QUrl(QStringLiteral("https://github.com/StephaneCouturier/Katalog/releases/latest")));
+    request.setAttribute(QNetworkRequest::RedirectPolicyAttribute,
+                         QNetworkRequest::NoLessSafeRedirectPolicy);
+    auto *manager = new QNetworkAccessManager(this);
+    QNetworkReply *reply = manager->get(request);
+
+    connect(reply, &QNetworkReply::finished, this, [this, manager, reply]() {
+        reply->deleteLater();
+        manager->deleteLater();
+        if (reply->error() != QNetworkReply::NoError)
+            return;   // silent, as in K2 (VCK-F4)
+
+        // Read the version from the address the redirect ended on.
+        const QString tagMarker = QStringLiteral("/releases/tag/v");
+        const QString finalUrl = reply->url().toString();
+        const int pos = finalUrl.indexOf(tagMarker);
+        if (pos < 0)
+            return;
+        const QString latestVersion = finalUrl.mid(pos + tagMarker.size());
+        const QVersionNumber latest = QVersionNumber::fromString(latestVersion);
+        const QVersionNumber current = QVersionNumber::fromString(currentVersion);
+        if (latest.isNull())
+            return;
+
+        // A pre-release is older than the final release with the same number (VCK-F3).
+        const bool currentIsPreRelease = currentVersion.contains(QLatin1String("beta"), Qt::CaseInsensitive)
+                                      || currentVersion.contains(QLatin1String("alpha"), Qt::CaseInsensitive);
+        const bool newer = latest > current || (latest == current && currentIsPreRelease);
+        if (!newer)
+            return;
+
+        emit newVersionAvailable(currentVersion, latestVersion,
+                                 QStringLiteral("https://github.com/StephaneCouturier/Katalog/releases/tag/v") + latestVersion);
+    });
 }
 //----------------------------------------------------------------------
 //Database management --------------------------------------------------

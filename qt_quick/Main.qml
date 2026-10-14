@@ -1327,6 +1327,48 @@ Kirigami.ApplicationWindow {
         }
     }
 
+    // A newer release is published (SpecVersionCheck.md VCK-F2). K2's message, verbatim.
+    Controls.Dialog {
+        id: newVersionDialog
+        title: "Katalog"
+        modal: true
+        anchors.centerIn: parent
+        width: Math.min(520, parent.width - Kirigami.Units.largeSpacing * 4)
+        standardButtons: Controls.Dialog.Yes | Controls.Dialog.Cancel
+
+        property string currentVersion: ""
+        property string latestVersion: ""
+        property string releaseNotesUrl: ""
+
+        Controls.Label {
+            width: parent.width
+            wrapMode: Text.WordWrap
+            textFormat: Text.RichText
+            linkColor: root.titleColor
+            text: qsTr("This is version: v%1 <br/><br/>A new version is available: <b>v%2</b> <br/> Find the list of new features in the <a href='%3'>Release Notes</a><br/><br/>Do you want to download it?")
+                      .arg(newVersionDialog.currentVersion)
+                      .arg(newVersionDialog.latestVersion)
+                      .arg(newVersionDialog.releaseNotesUrl)
+            onLinkActivated: (link) => Qt.openUrlExternally(link)
+
+            HoverHandler {
+                cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+            }
+        }
+
+        onAccepted: Qt.openUrlExternally("https://sourceforge.net/projects/katalogg/files/latest/download")
+
+        Connections {
+            target: appManager1
+            function onNewVersionAvailable(currentVersion, latestVersion, releaseNotesUrl) {
+                newVersionDialog.currentVersion  = currentVersion
+                newVersionDialog.latestVersion   = latestVersion
+                newVersionDialog.releaseNotesUrl = releaseNotesUrl
+                newVersionDialog.open()
+            }
+        }
+    }
+
     // First-run welcome dialog
     Controls.Dialog {
         id: firstRunWelcomeDialog

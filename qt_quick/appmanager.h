@@ -640,6 +640,9 @@ signals:
     void deviceDisplayFullTableChanged();
     void deviceDisplayContentsChanged();
     void checkVersionChoiceChanged();
+    // A newer release is published (SpecVersionCheck.md VCK-F2)
+    void newVersionAvailable(const QString &currentVersion, const QString &latestVersion,
+                             const QString &releaseNotesUrl);
     void fileSortCaseSensitiveChanged();
     void databasePathChanged(const QString &newPath);
     void databaseConnectionChanged(bool success, const QString &message);

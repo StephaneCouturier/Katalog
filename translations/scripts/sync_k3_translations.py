@@ -169,7 +169,9 @@ def refresh_existing_contexts(content, k3_context_names, known_tr):
             src_plain = (src_m.group(1)
                          .replace("&amp;", "&")
                          .replace("&lt;", "<")
-                         .replace("&gt;", ">"))
+                         .replace("&gt;", ">")
+                         .replace("&apos;", "'")
+                         .replace("&quot;", '"'))
             tr = known_tr.get(src_plain)
             if not tr:
                 return msg

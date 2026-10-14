@@ -57,6 +57,7 @@ specification and the code disagree, the specification is what was agreed.
 | [SpecTheme](SpecTheme.md) | Theme, colour derivation and icon size | Draft | partial | — |
 | [SpecTypography](SpecTypography.md) | TYPOGRAPHY — TEXT SIZE DERIVED FROM THE SYSTEM FONT | Approved | partial | — |
 | [SpecValidationRules](SpecValidationRules.md) | Form Validation Rules | Approved | partial | — |
+| [SpecVersionCheck](SpecVersionCheck.md) | VERSION CHECK — NEW VERSION AVAILABLE | Approved | complete | — |
 | [SpecVersions](SpecVersions.md) | Version Numbers | — | — | — |
 | [SpecWindowGeometry](SpecWindowGeometry.md) | WINDOW GEOMETRY — SIZE AND POSITION OF THE K3 WINDOW | Approved | partial | — |
 
