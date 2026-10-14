@@ -1010,7 +1010,10 @@ create_appimage() {
     fi
     print_info "Using appimagetool: $ld_appimagetool"
     print_info "Packaging with type2-runtime (local, no download)..."
+    # --no-appstream: the metainfo's screenshot URLs point to katalog_master, so
+    # validating them would fail every build made before the release merge.
     ARCH=x86_64 "$ld_appimagetool" \
+        --no-appstream \
         --runtime-file "$runtime_bin" \
         "$APPDIR" \
         "$appimage_name"

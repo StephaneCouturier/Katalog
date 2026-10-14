@@ -734,7 +734,11 @@ jobs:
         fi
 
         # Phase 3: create the AppImage with the type2 runtime (fuse2 + fuse3 + fuse-free).
+        # --no-appstream: the metainfo's screenshot URLs point to katalog_master, so
+        # validating them would fail every build made before the release merge.
+        # The metainfo is validated for Flathub, its real consumer.
         ARCH=x86_64 "$HOME/linuxdeploy/appimagetool" \
+          --no-appstream \
           --runtime-file "$HOME/linuxdeploy/runtime-x86_64" \
           AppDir \
           ${{ env.ARTIFACT_BASE }}.AppImage
