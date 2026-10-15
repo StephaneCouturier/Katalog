@@ -117,8 +117,10 @@ screenshots are read from `katalog_master`.
    ```
    If the repository is already cloned, update it first: `git checkout master && git pull`.
 2. Copy the updated `packaging/linux/io.github.stephanecouturier.Katalog.yml` over the one in
-   the Flathub repository, and check the difference with `git diff`. Only `tag` and `commit`
-   should change, unless the release also changes the build options, runtime or permissions.
+   the Flathub repository, and check the difference with `git diff`. Besides `tag` and
+   `commit`, check `runtime-version`: the KDE runtime version is its Qt version, so it must
+   match the Qt minor version of the release builds (the Qt version installed in
+   `.github/workflows/Katalog_3_Build_linux_qt6_appimage.yml`).
 3. Commit, push and open the pull request:
    ```
    git add io.github.stephanecouturier.Katalog.yml
