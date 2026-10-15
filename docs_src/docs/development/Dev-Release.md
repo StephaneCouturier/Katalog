@@ -80,7 +80,7 @@ Publishing
 - [ ] Define Default package for Linux, Windows, macOS
 - [ ] Release publish (sourceforge)
 - [ ] Release publish (github)
-- [ ] Flatpak: update `tag` and `commit` in `packaging/linux/io.github.stephanecouturier.Katalog.yml`, then submit the update to Flathub
+- [ ] Flatpak: update `tag` and `commit` in `packaging/linux/io.github.stephanecouturier.Katalog.yml`, then submit the update to Flathub (see [Flatpak on Flathub](#flatpak-on-flathub))
 - [ ] Release publish (Facebook)
 - [ ] Close GitHub issues and milestone
 - [ ] Inform users who submitted bugs or ideas
@@ -100,6 +100,49 @@ git checkout katalog_development
 
 If `--ff-only` stops with "Not possible to fast-forward", master has a commit that development
 does not: look at it (`git log katalog_development..katalog_master`) before going further.
+
+### Flatpak on Flathub {#flatpak-on-flathub}
+Flathub builds Katalog from its own repository,
+[flathub/io.github.stephanecouturier.Katalog](https://github.com/flathub/io.github.stephanecouturier.Katalog),
+which holds a copy of the manifest. The copy in `packaging/linux/` is the reference: update it
+first, then copy it to the Flathub repository. Do this after the `vx.xx` tag is pushed and
+`katalog_master` is merged, because the manifest builds from that tag and the metainfo
+screenshots are read from `katalog_master`.
+
+1. Clone the Flathub repository and create a branch for the release:
+   ```
+   git clone https://github.com/flathub/io.github.stephanecouturier.Katalog.git
+   cd io.github.stephanecouturier.Katalog
+   git checkout -b update-x.xx
+   ```
+   If the repository is already cloned, update it first: `git checkout master && git pull`.
+2. Copy the updated `packaging/linux/io.github.stephanecouturier.Katalog.yml` over the one in
+   the Flathub repository, and check the difference with `git diff`. Only `tag` and `commit`
+   should change, unless the release also changes the build options, runtime or permissions.
+3. Commit, push and open the pull request:
+   ```
+   git add io.github.stephanecouturier.Katalog.yml
+   git commit -m "Update to x.xx"
+   git push -u origin update-x.xx
+   ```
+   - The `git push` output shows a link to create the pull request; open it, or go to the
+     repository on GitHub and use **Compare & pull request**.
+   - The pull request targets the default branch (`master`). Title: `Update to x.xx`.
+   - Once it is open, the Flathub bot starts a test build and posts its result as a comment.
+     If the build fails, fix the manifest in the same branch and push again; to start a new
+     build without changes, comment `bot, build`.
+   - When the test build succeeds, the bot's comment gives a command to install the test
+     version: install it and check that Katalog starts and shows the new version.
+4. Merge the pull request. Flathub then builds and publishes the official version, usually
+   within a few hours. Check the page: https://flathub.org/en/apps/io.github.stephanecouturier.Katalog
+
+To follow the build and publication:
+- Flathub builds: https://flathub.org/en/builds (search for `io.github.stephanecouturier.Katalog`)
+- On GitHub, the status icon next to the last commit of the Flathub repository's `master` lists
+  each stage with its own link: the build (`builds/x86_64`, a run in
+  [flathub-infra/vorarbeiter](https://github.com/flathub-infra/vorarbeiter/actions/workflows/build.yml)),
+  then `flat-manager/commit`, `flat-manager/publish` and `flat-manager/update-repo`
+  (pages on `hub.flathub.org/status/`). The release is live once `update-repo` succeeds.
 
 ### Packages on SourceForge
 Despite some features in GitHub to provide downloads, SourceForge is still used as the place for user to download all versions.
