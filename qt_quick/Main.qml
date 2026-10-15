@@ -1663,11 +1663,11 @@ Kirigami.ApplicationWindow {
                     var fc    = (d.newCatalogFileCount   || 0)
                     var dfc   = (d.deltaCatalogFileCount || 0)
                     var fs    = appManager1.formatDataSize(d.newCatalogFileSize   || 0)
-                    var dfs   = appManager1.formatDataSizeDelta(Math.abs(d.deltaCatalogFileSize  || 0))
+                    var dfs   = appManager1.formatDataSizeDelta(d.deltaCatalogFileSize  || 0)
                     var spc   = appManager1.formatDataSize(d.newStorageFreeSpace  || 0)
-                    var dspc  = appManager1.formatDataSizeDelta(Math.abs(d.deltaStorageFree      || 0))
+                    var dspc  = appManager1.formatDataSizeDelta(d.deltaStorageFree      || 0)
                     var stot  = appManager1.formatDataSize(d.newStorageTotalSpace || 0)
-                    var dstot = appManager1.formatDataSizeDelta(Math.abs(d.deltaStorageTotal     || 0))
+                    var dstot = appManager1.formatDataSizeDelta(d.deltaStorageTotal     || 0)
                     return "<br/>" + qsTr("A snapshot of this collection was recorded:") +
                         "<table>" +
                         "<tr><td><br/><b>" + qsTr("Catalogs") + "</b></td><td></td><td></td></tr>" +
