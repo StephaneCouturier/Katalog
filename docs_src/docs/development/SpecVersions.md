@@ -323,6 +323,30 @@ Decided by the user before this section was written, recorded here on
   runs it, so any step added to `runMigration_3_0` after this date does not
   reach it; later schema changes need a new versioned migration.
 
+### Schema changes 2.12 → 3.0
+
+The steps of `Database::runMigration_3_0` (`core/database.cpp`), checked against
+the table definitions of tag `v2.12.1` on 2026-10-15. Every step is skipped when
+its change is already present.
+
+| Change | Table / column | Note |
+|---|---|---|
+| Added | `device.device_comment` (TEXT) | Free comment per device (`SpecDeviceComment.md`) |
+| Added | `storage.storage_user_id` (NUMERIC, default 0) | Storage ID written on the physical disk, separate from the internal key `storage_id`; back-filled from `storage_id` (`SpecStorageIdentity.md` `STI-C4`, `STI-F9`) |
+| Added | `device_mapping.mapping_include_empty_dirs` (INTEGER, default 1) | Backup option; default 1 keeps the previous behaviour (`SpecBackup.md` `BKP-F17`, `BKP-C9`) |
+| Reset | `device.device_order` set to 0 | Never populated before; the device tree then sorts by name within each group |
+| Removed | `catalog.catalog_name`, `catalog.catalog_storage`, `storage.storage_name` | Copies of the device name (`STI-C13`, `STI-C16`, `STI-C17`). SQLite: `catalog` is rebuilt, because `catalog_name` carries a UNIQUE constraint |
+| Removed | `catalog.catalog_source_path`, `catalog.catalog_source_path_is_active`, `storage.storage_path` | `device.device_path` and `device_active` are the only path and flag (`STI-C19`) |
+| Removed | `catalog.catalog_file_count`, `catalog.catalog_total_file_size`, `storage.storage_total_space`, `storage.storage_free_space`, `storage.storage_location` | The device holds totals and space; `storage_location` was never read (`STI-C20`) |
+| Removed | `search.search_location`, `search.search_storage`, `search.search_catalog` | Never given a value / pre-2.6 scope, replaced by `selected_device_ID_list` |
+| Dropped | Tables `statistics_catalog`, `statistics_storage`, `virtual_storage`, `virtual_storage_catalog`, `device_catalog` | v1.22 tables, unused since 2.0 |
+
+- `device_mapping.mapping_source_collection` is also ensured by the migration,
+  but it already exists in the 2.12 schema: not a change.
+- **Memory mode:** file formats are unchanged; the storage "Name" column of
+  `storage.csv` and the `<catalogStorage>` line of each `.idx` are written empty.
+- Collections older than 2.6 are expected to be opened with 2.12 first.
+
 ### Facts (verified by code reading, 2026-09-27)
 
 - **2.12 has no newer-schema check.** The released 2.12 (tag `v2.12.1`,

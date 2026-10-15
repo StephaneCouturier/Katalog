@@ -4,7 +4,7 @@
         <title>Katalog Blog</title>
         <link>https://StephaneCouturier.github.io/Katalog/blog</link>
         <description>Katalog Blog</description>
-        <lastBuildDate>Wed, 30 Sep 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 15 Oct 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -12,7 +12,7 @@
             <title><![CDATA[Release 3.0]]></title>
             <link>https://StephaneCouturier.github.io/Katalog/blog/release-3-0</link>
             <guid>https://StephaneCouturier.github.io/Katalog/blog/release-3-0</guid>
-            <pubDate>Wed, 30 Sep 2026 00:00:00 GMT</pubDate>
+            <pubDate>Thu, 15 Oct 2026 00:00:00 GMT</pubDate>
             <description><![CDATA[Hello all,]]></description>
             <content:encoded><![CDATA[<p>Hello all,</p>
 <p>It has now been 2 years since the very first tests of QML, Kirigami, on Linux &amp; Windows, confirming the feasibility and next big step for Katalog user experience.<br>
@@ -112,7 +112,7 @@ Katalog 3 on a Desktop using openSUSE colors <img decoding="async" loading="lazy
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="️-technical-changes">⚠️ Technical changes<a href="https://stephanecouturier.github.io/Katalog/blog/release-3-0#%EF%B8%8F-technical-changes" class="hash-link" aria-label="Direct link to ⚠️ Technical changes" title="Direct link to ⚠️ Technical changes" translate="no">​</a></h3>
 <ul>
 <li class="">As for any new version, it is highly recommended to <strong>backup the collections</strong> 💾, and test the new version on other copies.</li>
-<li class=""><strong>Database updates</strong>: added fields to support collections import and image folder</li>
+<li class=""><strong>Database updates</strong>: device comments, a separate Storage ID, and a backup option for empty folders</li>
 </ul>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="-distribution-formats">📦 Distribution Formats<a href="https://stephanecouturier.github.io/Katalog/blog/release-3-0#-distribution-formats" class="hash-link" aria-label="Direct link to 📦 Distribution Formats" title="Direct link to 📦 Distribution Formats" translate="no">​</a></h3>
 <ul>
