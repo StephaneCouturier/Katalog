@@ -1270,7 +1270,7 @@ Kirigami.ApplicationWindow {
 
     Controls.Dialog {
         id: alphaWarningDialog
-        title: "Katalog 3.0"
+        title: "Katalog 3.1"
         modal: true
         anchors.centerIn: parent
         width: Math.min(520, parent.width - Kirigami.Units.largeSpacing * 4)
