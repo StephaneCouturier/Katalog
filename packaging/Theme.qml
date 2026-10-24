@@ -74,9 +74,13 @@ Kirigami.BasicThemeDefinition {
     tooltipHoverColor: "#3daee9"
     tooltipFocusColor: "#3daee9"
 
-    complementaryTextColor: "#fcfcfc"
-    complementaryBackgroundColor: dark ? "#202326" : "#2a2e32"
-    complementaryAlternateBackgroundColor: dark ? "#1e5774" : "#1b1e20"
+    // Not Breeze Light's inverted set: under Fusion, Controls text inside a
+    // Complementary surface (e.g. the passive notification label) takes the
+    // window palette's windowText, not Kirigami.Theme, so a dark Complementary
+    // surface in light mode put dark text on dark. See DPL-C6 (2026-10-24).
+    complementaryTextColor: dark ? "#fcfcfc" : "#232629"
+    complementaryBackgroundColor: dark ? "#202326" : "#fcfcfc"
+    complementaryAlternateBackgroundColor: dark ? "#1e5774" : "#eff0f1"
     complementaryHoverColor: "#3daee9"
     complementaryFocusColor: "#3daee9"
 

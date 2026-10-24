@@ -1176,7 +1176,7 @@ Kirigami.ApplicationWindow {
             target: appManager1
             function onDatabaseConnectionChanged(success, message) {
                 if (success) {
-                    showPassiveNotification("✓ " + message, "positive")
+                    showPassiveNotification("✓ " + message, 5000)
                     root.showPage(pageSelection)  // clear col 2, go to Selection
                     pageSearchForm.restoreLastSearch()
                     if (appManager1.isFirstRun) {
@@ -1185,7 +1185,7 @@ Kirigami.ApplicationWindow {
                             firstRunReadyDialog.open()
                     }
                 } else {
-                    showPassiveNotification("✗ " + message, "warning")
+                    showPassiveNotification("✗ " + message, 5000)
                 }
             }
             // Collapse/restore Selection when the user toggles it, keeping the

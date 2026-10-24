@@ -100,6 +100,7 @@ Observable behaviour that can be triggered and watched.
 | OPN-F8 | When a collection has no Storage device, opening it creates a default "Local disk" Storage device. Its parent is device 2 ("Virtual device") when device 2 exists in the physical group, otherwise device 1 (Physical Group). A new collection is unchanged: devices 1 and 2 are created first, so "Local disk" stays under "Virtual device". (`Collection::insertPhysicalStorageGroup`, `Device::verifyParentDeviceExistsInPhysicalGroup`; found 2026-10-04: the check queried a non-existent `group_id` column, so with device 2 absent "Local disk" became its own parent and opening hung — see `OPN-C7`.) | [Implemented] |
 | OPN-F9 | The K3 drawer's **Open** menu offers its open actions in this order: *SQLite Database...*, *Collection Folder...*, *Hosted Database...*. | [Planned] |
 | OPN-F10 | When the recent-collections list of `OPN-F7` is non-empty, it is headed by a non-clickable title *Recent collections*. Title and separator are hidden together when the list is empty. The open actions carry no title. | [Planned] |
+| OPN-F11 | In K3, the passive notification that reports the result of a database connection (opening or switching a collection) is shown for **5000 ms**, not Kirigami's 7000 ms default: on success `✓ ` followed by the connection message, on failure `✗ ` followed by the connection message. Scope: these two notifications only; every other passive notification keeps its own timeout. No user-visible string is added, changed or removed. Approved by the maintainer on 2026-10-24. | [Implemented] |
 
 ## Constructional requirements — *how it is built / limits / MUST-NOTs*
 
@@ -166,6 +167,10 @@ version, (K3) to the Qt Quick version.
 - **OPN-F10** (K3) — With an empty recent list, the **Open** menu shows no title
   and no separator. With 1 or more entries, the title *Recent collections* shows
   above them, and clicking it does nothing.
+- **OPN-F11** (K3) — Open a collection: the `✓` notification disappears after
+  about 5 seconds. Make a connection fail (e.g. a Hosted collection with a wrong
+  password): the `✗` notification also disappears after about 5 seconds. Other
+  passive notifications are unchanged.
 - **OPN-O4 / OPN-F8 / OPN-C7** (K2, K3) — Open a File-mode collection whose
   device table holds only device 1 (Physical Group). It opens, and "Local disk" is
   listed under the Physical Group (parent 1). Then create a new collection:
