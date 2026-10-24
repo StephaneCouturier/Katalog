@@ -1875,8 +1875,25 @@ QVariantList AppManager::getSearchHistory() const
                 // with ", " — a newline must never reach it. A single-term
                 // phrase renders exactly as it always has.
                 QString item = quoteSearchTerms(phrase);
+                // "with" and "in" hold internal constants; rows saved before
+                // those constants hold the label itself, shown as stored. The
+                // labels are the search form's, translated in its context.
+                QStringList options;
+                if      (criteria == Search::TEXT_CRITERIA_EXACT_PHRASE) criteria = QCoreApplication::translate("PageSearchForm", "Exact Phrase");
+                else if (criteria == Search::TEXT_CRITERIA_BEGINS_WITH)  criteria = QCoreApplication::translate("PageSearchForm", "Begins With");
+                else if (criteria == Search::TEXT_CRITERIA_ANY_WORD)     criteria = QCoreApplication::translate("PageSearchForm", "Any Word");
+                else if (criteria == Search::TEXT_CRITERIA_REGEX)        criteria = QCoreApplication::translate("PageSearchForm", "Regex");
+                else if (criteria == Search::TEXT_CRITERIA_ALL_WORDS)    criteria.clear();
                 if (!criteria.isEmpty() && criteria != QLatin1String("All Words"))
-                    item += QLatin1String(" (") + criteria + QLatin1Char(')');
+                    options << criteria;
+                QString searchIn = row.value(QStringLiteral("text_search_in")).toString();
+                if      (searchIn == Search::SEARCH_IN_FILE_NAMES)        searchIn = QCoreApplication::translate("PageSearchForm", "File names only");
+                else if (searchIn == Search::SEARCH_IN_FILES_AND_FOLDERS) searchIn = QCoreApplication::translate("PageSearchForm", "File names or Folder paths");
+                else if (searchIn == Search::SEARCH_IN_FOLDER_PATH)       searchIn = QCoreApplication::translate("PageSearchForm", "Folder path only");
+                if (!searchIn.isEmpty())
+                    options << searchIn;
+                if (!options.isEmpty())
+                    item += QLatin1String(" (") + options.join(QLatin1String(", ")) + QLatin1Char(')');
                 parts << item;
             }
             if (row.value(QStringLiteral("case_sensitive")).toBool())

@@ -718,10 +718,10 @@ ColumnLayout {
                 textRole: "text"
                 valueRole: "value"
                 model: [
-                    {text: qsTr("All Words"),     value: "All Words"},
-                    {text: qsTr("Exact Phrase"),  value: "Exact Phrase"},
-                    {text: qsTr("Begins With"),   value: "Begins With"},
-                    {text: qsTr("Any Word"),      value: "Any Word"},
+                    {text: qsTr("All Words"),     value: "AllWords"},
+                    {text: qsTr("Exact Phrase"),  value: "ExactPhrase"},
+                    {text: qsTr("Begins With"),   value: "BeginsWith"},
+                    {text: qsTr("Any Word"),      value: "AnyWord"},
                     {text: qsTr("Regex"),         value: "Regex"}
                 ]
             }
@@ -738,10 +738,10 @@ ColumnLayout {
                 // so a language switch left this list untranslated. "Begins With"
                 // matches file names only.
                 model: search_ComboBox_TextCriteriaWith.currentIndex === 2
-                       ? [ {text: qsTr("File names only"),            value: "File names only"} ]
-                       : [ {text: qsTr("File names only"),            value: "File names only"},
-                           {text: qsTr("File names or Folder paths"), value: "File names or Folder paths"},
-                           {text: qsTr("Folder path only"),           value: "Folder path only"} ]
+                       ? [ {text: qsTr("File names only"),            value: "FileNamesOnly"} ]
+                       : [ {text: qsTr("File names only"),            value: "FileNamesOnly"},
+                           {text: qsTr("File names or Folder paths"), value: "FilesAndFolders"},
+                           {text: qsTr("Folder path only"),           value: "FolderPathOnly"} ]
             }
         }
         RowLayout {
