@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+161"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4910"/>
+        <location line="+4935"/>
         <source>Search</source>
         <translation>Pretraži</translation>
     </message>
     <message>
-        <location line="-5030"/>
+        <location line="-5055"/>
         <source>Stopped</source>
         <translation>Zaustavljeno</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3343"/>
+        <location line="+3368"/>
         <source>Evaluated</source>
         <translation>Ocijenjeno</translation>
     </message>
     <message>
-        <location line="-3461"/>
+        <location line="-3486"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -45,7 +45,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2263"/>
+        <location line="+2288"/>
         <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
@@ -67,8 +67,8 @@
         <translation>U tijeku</translation>
     </message>
     <message>
-        <location line="-4911"/>
-        <location line="+4003"/>
+        <location line="-4936"/>
+        <location line="+4028"/>
         <location line="+342"/>
         <location line="+112"/>
         <location line="+53"/>
@@ -78,7 +78,7 @@
         <translation>Završeno</translation>
     </message>
     <message>
-        <location line="-4504"/>
+        <location line="-4529"/>
         <source>Empty database path provided</source>
         <translation>Navedena prazna putanja baze podataka</translation>
     </message>
@@ -128,7 +128,7 @@
         <translation>Rezultati pretrage</translation>
     </message>
     <message>
-        <location line="+258"/>
+        <location line="+283"/>
         <source>Case sensitive</source>
         <translation>Razlikuj velika i mala slova</translation>
     </message>
@@ -7732,7 +7732,23 @@ Provjerite je li izvorna mapa (%1) ispravna ili je li uređaj montiran u izvornu
         <translation>Kopiraj putanju mape</translation>
     </message>
     <message>
-        <location line="-8"/>
+        <location line="+27"/>
+        <location line="+45"/>
+        <source>Calculate Checksum</source>
+        <translation>Izračunaj kontrolni zbroj</translation>
+    </message>
+    <message>
+        <location line="-23"/>
+        <source>Verify Checksum</source>
+        <translation>Provjeri kontrolni zbroj</translation>
+    </message>
+    <message>
+        <location line="+130"/>
+        <source>Checksum</source>
+        <translation>Kontrolna suma</translation>
+    </message>
+    <message>
+        <location line="-187"/>
         <source>Copy folder name</source>
         <translation>Kopiraj naziv mape</translation>
     </message>
@@ -7765,33 +7781,32 @@ Provjerite je li izvorna mapa (%1) ispravna ili je li uređaj montiran u izvornu
         <translation>Kopiraj kontrolni zbroj</translation>
     </message>
     <message>
-        <location line="+13"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation>Izračunaj kontrolni zbroj (SHA-256)</translation>
+        <translation type="vanished">Izračunaj kontrolni zbroj (SHA-256)</translation>
     </message>
     <message>
-        <location line="-583"/>
+        <location line="-570"/>
         <location line="+599"/>
+        <location line="+40"/>
         <source>File not found or could not be read</source>
         <translation>Datoteka nije pronađena ili se ne može pročitati</translation>
     </message>
     <message>
-        <location line="-588"/>
+        <location line="-628"/>
         <source>Folder not found.</source>
         <translation>Mapa nije pronađena.</translation>
     </message>
     <message>
-        <location line="+594"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation>Provjeri kontrolni zbroj (SHA-256)</translation>
+        <translation type="vanished">Provjeri kontrolni zbroj (SHA-256)</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+611"/>
         <source>Error: </source>
         <translation>Pogreška: </translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+25"/>
         <source>Move file to Trash</source>
         <translation>Premjesti datoteku u smeće</translation>
     </message>
@@ -7817,12 +7832,12 @@ Provjerite je li izvorna mapa (%1) ispravna ili je li uređaj montiran u izvornu
     </message>
     <message>
         <location line="+5"/>
-        <location line="+84"/>
+        <location line="+88"/>
         <source>Cancel</source>
         <translation>Odustani</translation>
     </message>
     <message>
-        <location line="-77"/>
+        <location line="-81"/>
         <source>File deleted</source>
         <translation>Datoteka izbrisana</translation>
     </message>
@@ -7841,12 +7856,11 @@ Provjerite je li izvorna mapa (%1) ispravna ili je li uređaj montiran u izvornu
 %1</translation>
     </message>
     <message>
-        <location line="+14"/>
         <source>Checksum (SHA-256)</source>
-        <translation>Kontrolni zbroj (SHA-256)</translation>
+        <translation type="vanished">Kontrolni zbroj (SHA-256)</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+32"/>
         <source>Checksum saved to database.</source>
         <translation>Kontrolni zbroj spremljen u bazu podataka.</translation>
     </message>
@@ -7856,7 +7870,7 @@ Provjerite je li izvorna mapa (%1) ispravna ili je li uređaj montiran u izvornu
         <translation>Kontrolni zbroji se podudaraju.</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Copy to Clipboard</source>
         <translation>Kopiraj u međuspremnik</translation>
     </message>
@@ -8079,37 +8093,44 @@ Provjerite je li izvorna mapa (%1) ispravna ili je li uređaj montiran u izvornu
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="-3898"/>
         <source>Exact Phrase</source>
         <translation>Točna fraza</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>Begins With</source>
         <translation>Počinje s</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>Any Word</source>
         <translation>Bilo koja riječ</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>Regex</source>
         <translation>Regex</translation>
     </message>
     <message>
         <location line="+16"/>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+5"/>
         <source>File names only</source>
         <translation>Samo nazivi datoteka</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>File names or Folder paths</source>
         <translation>Nazivi datoteka ili putanje mapa</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>Folder path only</source>
         <translation>Samo putanja mape</translation>
     </message>
@@ -8339,13 +8360,29 @@ Provjerite je li izvorna mapa (%1) ispravna ili je li uređaj montiran u izvornu
     </message>
     <message>
         <location line="+1"/>
-        <location line="+910"/>
+        <location line="+929"/>
         <location line="+56"/>
         <source>Verify Checksums</source>
         <translation>Provjeri kontrolne zbroje</translation>
     </message>
     <message>
-        <location line="-130"/>
+        <location line="-431"/>
+        <location line="+53"/>
+        <source>Calculate Checksum</source>
+        <translation>Izračunaj kontrolni zbroj</translation>
+    </message>
+    <message>
+        <location line="-22"/>
+        <source>Verify Checksum</source>
+        <translation>Provjeri kontrolni zbroj</translation>
+    </message>
+    <message>
+        <location line="+70"/>
+        <source>Checksum</source>
+        <translation>Kontrolna suma</translation>
+    </message>
+    <message>
+        <location line="+200"/>
         <source>Catalogs with results</source>
         <translation>Katalozi s rezultatima</translation>
     </message>
@@ -8356,14 +8393,14 @@ Provjerite je li izvorna mapa (%1) ispravna ili je li uređaj montiran u izvornu
         <translation>Uključi metapodatke</translation>
     </message>
     <message>
-        <location line="-964"/>
-        <location line="+606"/>
-        <location line="+300"/>
+        <location line="-983"/>
+        <location line="+621"/>
+        <location line="+304"/>
         <source>Move to Trash</source>
         <translation>Premjesti u smeće</translation>
     </message>
     <message>
-        <location line="-1054"/>
+        <location line="-1073"/>
         <location line="+11"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Uređaj nije aktivan. Možda je odspojen ili je njegova putanja promijenjena.</translation>
@@ -8380,12 +8417,12 @@ Provjerite je li izvorna mapa (%1) ispravna ili je li uređaj montiran u izvornu
     </message>
     <message>
         <location line="+2"/>
-        <location line="+737"/>
+        <location line="+756"/>
         <source>Delete</source>
         <translation>Obriši</translation>
     </message>
     <message>
-        <location line="-687"/>
+        <location line="-706"/>
         <source>Run process on all results</source>
         <translation>Pokreni proces na svim rezultatima</translation>
     </message>
@@ -8476,39 +8513,38 @@ Provjerite je li izvorna mapa (%1) ispravna ili je li uređaj montiran u izvornu
         <translation>Kopiraj naziv datoteke bez ekstenzije</translation>
     </message>
     <message>
-        <location line="+38"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation>Izračunaj kontrolni zbroj (SHA-256)</translation>
+        <translation type="vanished">Izračunaj kontrolni zbroj (SHA-256)</translation>
     </message>
     <message>
-        <location line="-696"/>
+        <location line="-658"/>
         <location line="+712"/>
+        <location line="+47"/>
         <source>File not found or could not be read</source>
         <translation>Datoteka nije pronađena ili se ne može pročitati</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-42"/>
         <source>Copy Checksum</source>
         <translation>Kopiraj kontrolni zbroj</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+81"/>
+        <location line="+100"/>
         <source>Checksum copied to clipboard</source>
         <translation>Kontrolni zbroj kopiran u međuspremnik</translation>
     </message>
     <message>
-        <location line="-77"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation>Provjeri kontrolni zbroj (SHA-256)</translation>
+        <translation type="vanished">Provjeri kontrolni zbroj (SHA-256)</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="-79"/>
         <source>Error: </source>
         <translation>Pogreška: </translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+26"/>
         <source>File moved to trash</source>
         <translation>Datoteka premještena u smeće</translation>
     </message>
@@ -8543,12 +8579,11 @@ Provjerite je li izvorna mapa (%1) ispravna ili je li uređaj montiran u izvornu
         <translation type="vanished">Vrijednost</translation>
     </message>
     <message>
-        <location line="+19"/>
         <source>Checksum (SHA-256)</source>
-        <translation>Kontrolni zbroj (SHA-256)</translation>
+        <translation type="vanished">Kontrolni zbroj (SHA-256)</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+37"/>
         <source>Checksum saved to database.</source>
         <translation>Kontrolni zbroj spremljen u bazu podataka.</translation>
     </message>
@@ -8558,7 +8593,7 @@ Provjerite je li izvorna mapa (%1) ispravna ili je li uređaj montiran u izvornu
         <translation>Kontrolni zbroji se podudaraju.</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Copy to Clipboard</source>
         <translation>Kopiraj u međuspremnik</translation>
     </message>

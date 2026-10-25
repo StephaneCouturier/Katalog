@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+161"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4910"/>
+        <location line="+4935"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-5030"/>
+        <location line="-5055"/>
         <source>Stopped</source>
         <translation type="unfinished"></translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3343"/>
+        <location line="+3368"/>
         <source>Evaluated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-3461"/>
+        <location line="-3486"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -45,7 +45,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2263"/>
+        <location line="+2288"/>
         <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
@@ -67,8 +67,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-4911"/>
-        <location line="+4003"/>
+        <location line="-4936"/>
+        <location line="+4028"/>
         <location line="+342"/>
         <location line="+112"/>
         <location line="+53"/>
@@ -78,7 +78,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-4504"/>
+        <location line="-4529"/>
         <source>Empty database path provided</source>
         <translation type="unfinished"></translation>
     </message>
@@ -128,7 +128,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+258"/>
+        <location line="+283"/>
         <source>Case sensitive</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7411,7 +7411,23 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-8"/>
+        <location line="+27"/>
+        <location line="+45"/>
+        <source>Calculate Checksum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-23"/>
+        <source>Verify Checksum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+130"/>
+        <source>Checksum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-187"/>
         <source>Copy folder name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7436,33 +7452,24 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
-        <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-583"/>
+        <location line="-570"/>
         <location line="+599"/>
+        <location line="+40"/>
         <source>File not found or could not be read</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-588"/>
+        <location line="-628"/>
         <source>Folder not found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+594"/>
-        <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+17"/>
+        <location line="+611"/>
         <source>Error: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+25"/>
         <source>Move file to Trash</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7488,12 +7495,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+5"/>
-        <location line="+84"/>
+        <location line="+88"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-77"/>
+        <location line="-81"/>
         <source>File deleted</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7510,12 +7517,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+15"/>
+        <location line="+32"/>
         <source>Checksum saved to database.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7525,7 +7527,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Copy to Clipboard</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7748,37 +7750,44 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="-3898"/>
         <source>Exact Phrase</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>Begins With</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>Any Word</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>Regex</source>
         <translation>Regex</translation>
     </message>
     <message>
         <location line="+16"/>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+5"/>
         <source>File names only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>File names or Folder paths</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>Folder path only</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8008,13 +8017,29 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+910"/>
+        <location line="+929"/>
         <location line="+56"/>
         <source>Verify Checksums</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-130"/>
+        <location line="-431"/>
+        <location line="+53"/>
+        <source>Calculate Checksum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-22"/>
+        <source>Verify Checksum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+70"/>
+        <source>Checksum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+200"/>
         <source>Catalogs with results</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8025,14 +8050,14 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-964"/>
-        <location line="+606"/>
-        <location line="+300"/>
+        <location line="-983"/>
+        <location line="+621"/>
+        <location line="+304"/>
         <source>Move to Trash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1054"/>
+        <location line="-1073"/>
         <location line="+11"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation type="unfinished"></translation>
@@ -8044,12 +8069,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+2"/>
-        <location line="+737"/>
+        <location line="+756"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-687"/>
+        <location line="-706"/>
         <source>Run process on all results</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8140,18 +8165,14 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+38"/>
-        <source>Calculate Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-696"/>
+        <location line="-658"/>
         <location line="+712"/>
+        <location line="+47"/>
         <source>File not found or could not be read</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-701"/>
+        <location line="-748"/>
         <source>Folder not found.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8162,22 +8183,17 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+6"/>
-        <location line="+81"/>
+        <location line="+100"/>
         <source>Checksum copied to clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-77"/>
-        <source>Verify Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+17"/>
+        <location line="-79"/>
         <source>Error: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+26"/>
         <source>File moved to trash</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8192,12 +8208,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
-        <source>Checksum (SHA-256)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+15"/>
+        <location line="+37"/>
         <source>Checksum saved to database.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8207,7 +8218,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Copy to Clipboard</source>
         <translation type="unfinished"></translation>
     </message>

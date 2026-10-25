@@ -677,7 +677,7 @@ Item {
         }
 
         Controls.MenuItem {
-            text: qsTr("Calculate Checksum (SHA-256)")
+            text: qsTr("Calculate Checksum") + " (SHA-256)"
             icon.name: "document-properties"
             visible: root._activeEntryType === "file" && root._activeChecksum === ""
             height: visible ? implicitHeight : 0
@@ -699,7 +699,7 @@ Item {
         }
 
         Controls.MenuItem {
-            text: qsTr("Verify Checksum (SHA-256)")
+            text: qsTr("Verify Checksum") + " (SHA-256)"
             icon.name: "document-properties"
             visible: root._activeEntryType === "file" && root._activeChecksum !== ""
             height: visible ? implicitHeight : 0
@@ -717,6 +717,23 @@ Item {
                     exploreChecksumMismatchDialog.open()
                 } else {
                     showPassiveNotification(qsTr("Error: ") + result.substring(6))
+                }
+            }
+        }
+
+        Controls.MenuItem {
+            text: qsTr("Calculate Checksum") + " (MD5)"
+            icon.name: "document-properties"
+            visible: root._activeEntryType === "file"
+            height: visible ? implicitHeight : 0
+            onTriggered: {
+                var cksum = appManager1.calculateChecksumMd5(root._activeFilePath)
+                if (cksum.length > 0) {
+                    exploreChecksumResultDialog.algorithm    = "MD5"
+                    exploreChecksumResultDialog.checksumText = cksum
+                    exploreChecksumResultDialog.open()
+                } else {
+                    showPassiveNotification(qsTr("File not found or could not be read"))
                 }
             }
         }
@@ -810,7 +827,10 @@ Item {
         id: exploreChecksumResultDialog
         property string checksumText: ""
         property bool   wasSaved: false
-        title: qsTr("Checksum (SHA-256)")
+        // "MD5" for an on-demand MD5, which is never stored (SpecCatalogChecksum CKS-F2)
+        property string algorithm: "SHA-256"
+        title: qsTr("Checksum") + " (" + algorithm + ")"
+        onClosed: algorithm = "SHA-256"
         standardButtons: Kirigami.Dialog.Close
         preferredWidth: Kirigami.Units.gridUnit * 36
         padding: Kirigami.Units.largeSpacing
@@ -818,7 +838,7 @@ Item {
         contentItem: ColumnLayout {
             spacing: Kirigami.Units.smallSpacing
             Controls.Label {
-                text: "SHA-256: " + exploreChecksumResultDialog.checksumText
+                text: exploreChecksumResultDialog.algorithm + ": " + exploreChecksumResultDialog.checksumText
                 wrapMode: Text.WrapAnywhere
                 Layout.fillWidth: true
                 font.family: "monospace"
@@ -828,6 +848,7 @@ Item {
                       ? qsTr("Checksum saved to database.")
                       : qsTr("Checksums match.")
                 opacity: 0.7
+                visible: exploreChecksumResultDialog.algorithm !== "MD5"
             }
             Controls.Button {
                 text: qsTr("Copy to Clipboard")

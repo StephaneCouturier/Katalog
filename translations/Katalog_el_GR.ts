@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+161"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4910"/>
+        <location line="+4935"/>
         <source>Search</source>
         <translation>Αναζήτηση</translation>
     </message>
     <message>
-        <location line="-5030"/>
+        <location line="-5055"/>
         <source>Stopped</source>
         <translation>Σταμάτησε</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3343"/>
+        <location line="+3368"/>
         <source>Evaluated</source>
         <translation>Αξιολογημένο</translation>
     </message>
     <message>
-        <location line="-3461"/>
+        <location line="-3486"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -45,7 +45,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2263"/>
+        <location line="+2288"/>
         <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
@@ -67,8 +67,8 @@
         <translation>Σε εξέλιξη</translation>
     </message>
     <message>
-        <location line="-4911"/>
-        <location line="+4003"/>
+        <location line="-4936"/>
+        <location line="+4028"/>
         <location line="+342"/>
         <location line="+112"/>
         <location line="+53"/>
@@ -78,7 +78,7 @@
         <translation>Ολοκληρωμένο</translation>
     </message>
     <message>
-        <location line="-4504"/>
+        <location line="-4529"/>
         <source>Empty database path provided</source>
         <translation>Δόθηκε κενή διαδρομή βάσης δεδομένων</translation>
     </message>
@@ -128,7 +128,7 @@
         <translation>Αποτελέσματα αναζήτησης</translation>
     </message>
     <message>
-        <location line="+258"/>
+        <location line="+283"/>
         <source>Case sensitive</source>
         <translation>Με διάκριση πεζών-κεφαλαίων</translation>
     </message>
@@ -7733,7 +7733,23 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Αντιγραφή διαδρομής φακέλου</translation>
     </message>
     <message>
-        <location line="-8"/>
+        <location line="+27"/>
+        <location line="+45"/>
+        <source>Calculate Checksum</source>
+        <translation>Υπολογισμός αθροίσματος ελέγχου</translation>
+    </message>
+    <message>
+        <location line="-23"/>
+        <source>Verify Checksum</source>
+        <translation>Επαλήθευση αθροίσματος ελέγχου</translation>
+    </message>
+    <message>
+        <location line="+130"/>
+        <source>Checksum</source>
+        <translation>Άθροισμα ελέγχου</translation>
+    </message>
+    <message>
+        <location line="-187"/>
         <source>Copy folder name</source>
         <translation>Αντιγραφή ονόματος φακέλου</translation>
     </message>
@@ -7766,33 +7782,32 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Αντιγραφή αθροίσματος ελέγχου</translation>
     </message>
     <message>
-        <location line="+13"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation>Υπολογισμός αθροίσματος ελέγχου (SHA-256)</translation>
+        <translation type="vanished">Υπολογισμός αθροίσματος ελέγχου (SHA-256)</translation>
     </message>
     <message>
-        <location line="-583"/>
+        <location line="-570"/>
         <location line="+599"/>
+        <location line="+40"/>
         <source>File not found or could not be read</source>
         <translation>Το αρχείο δεν βρέθηκε ή δεν ήταν δυνατή η ανάγνωσή του</translation>
     </message>
     <message>
-        <location line="-588"/>
+        <location line="-628"/>
         <source>Folder not found.</source>
         <translation>Ο φάκελος δεν βρέθηκε.</translation>
     </message>
     <message>
-        <location line="+594"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation>Επαλήθευση αθροίσματος ελέγχου (SHA-256)</translation>
+        <translation type="vanished">Επαλήθευση αθροίσματος ελέγχου (SHA-256)</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+611"/>
         <source>Error: </source>
         <translation>Σφάλμα: </translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+25"/>
         <source>Move file to Trash</source>
         <translation>Μετακίνηση αρχείου στα απορρίμματα</translation>
     </message>
@@ -7818,12 +7833,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+5"/>
-        <location line="+84"/>
+        <location line="+88"/>
         <source>Cancel</source>
         <translation>Ακύρωση</translation>
     </message>
     <message>
-        <location line="-77"/>
+        <location line="-81"/>
         <source>File deleted</source>
         <translation>Το αρχείο διαγράφηκε</translation>
     </message>
@@ -7842,12 +7857,11 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 %1</translation>
     </message>
     <message>
-        <location line="+14"/>
         <source>Checksum (SHA-256)</source>
-        <translation>Άθροισμα ελέγχου (SHA-256)</translation>
+        <translation type="vanished">Άθροισμα ελέγχου (SHA-256)</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+32"/>
         <source>Checksum saved to database.</source>
         <translation>Το άθροισμα ελέγχου αποθηκεύτηκε στη βάση δεδομένων.</translation>
     </message>
@@ -7857,7 +7871,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Τα αθροίσματα ελέγχου ταιριάζουν.</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Copy to Clipboard</source>
         <translation>Αντιγραφή στο πρόχειρο</translation>
     </message>
@@ -8080,37 +8094,44 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="-3898"/>
         <source>Exact Phrase</source>
         <translation>Ακριβής φράση</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>Begins With</source>
         <translation>Αρχίζει με</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>Any Word</source>
         <translation>Οποιαδήποτε λέξη</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>Regex</source>
         <translation>Regex</translation>
     </message>
     <message>
         <location line="+16"/>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+5"/>
         <source>File names only</source>
         <translation>Μόνο ονόματα αρχείων</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>File names or Folder paths</source>
         <translation>Ονόματα αρχείων ή διαδρομές φακέλων</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>Folder path only</source>
         <translation>Μόνο διαδρομή φακέλου</translation>
     </message>
@@ -8340,13 +8361,29 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+910"/>
+        <location line="+929"/>
         <location line="+56"/>
         <source>Verify Checksums</source>
         <translation>Επαλήθευση αθροισμάτων ελέγχου</translation>
     </message>
     <message>
-        <location line="-130"/>
+        <location line="-431"/>
+        <location line="+53"/>
+        <source>Calculate Checksum</source>
+        <translation>Υπολογισμός αθροίσματος ελέγχου</translation>
+    </message>
+    <message>
+        <location line="-22"/>
+        <source>Verify Checksum</source>
+        <translation>Επαλήθευση αθροίσματος ελέγχου</translation>
+    </message>
+    <message>
+        <location line="+70"/>
+        <source>Checksum</source>
+        <translation>Άθροισμα ελέγχου</translation>
+    </message>
+    <message>
+        <location line="+200"/>
         <source>Catalogs with results</source>
         <translation>Κατάλογοι με αποτελέσματα</translation>
     </message>
@@ -8357,14 +8394,14 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Συμπερίληψη μεταδεδομένων</translation>
     </message>
     <message>
-        <location line="-964"/>
-        <location line="+606"/>
-        <location line="+300"/>
+        <location line="-983"/>
+        <location line="+621"/>
+        <location line="+304"/>
         <source>Move to Trash</source>
         <translation>Μετακίνηση στα απορρίμματα</translation>
     </message>
     <message>
-        <location line="-1054"/>
+        <location line="-1073"/>
         <location line="+11"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Η συσκευή δεν είναι ενεργή. Ενδέχεται να έχει αποσυνδεθεί ή να έχει αλλάξει η διαδρομή της.</translation>
@@ -8381,12 +8418,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+2"/>
-        <location line="+737"/>
+        <location line="+756"/>
         <source>Delete</source>
         <translation>Διαγραφή</translation>
     </message>
     <message>
-        <location line="-687"/>
+        <location line="-706"/>
         <source>Run process on all results</source>
         <translation>Εκτέλεση διεργασίας σε όλα τα αποτελέσματα</translation>
     </message>
@@ -8477,39 +8514,38 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Αντιγραφή ονόματος αρχείου χωρίς επέκταση</translation>
     </message>
     <message>
-        <location line="+38"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation>Υπολογισμός αθροίσματος ελέγχου (SHA-256)</translation>
+        <translation type="vanished">Υπολογισμός αθροίσματος ελέγχου (SHA-256)</translation>
     </message>
     <message>
-        <location line="-696"/>
+        <location line="-658"/>
         <location line="+712"/>
+        <location line="+47"/>
         <source>File not found or could not be read</source>
         <translation>Το αρχείο δεν βρέθηκε ή δεν ήταν δυνατή η ανάγνωσή του</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-42"/>
         <source>Copy Checksum</source>
         <translation>Αντιγραφή αθροίσματος ελέγχου</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+81"/>
+        <location line="+100"/>
         <source>Checksum copied to clipboard</source>
         <translation>Το άθροισμα ελέγχου αντιγράφηκε στο πρόχειρο</translation>
     </message>
     <message>
-        <location line="-77"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation>Επαλήθευση αθροίσματος ελέγχου (SHA-256)</translation>
+        <translation type="vanished">Επαλήθευση αθροίσματος ελέγχου (SHA-256)</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="-79"/>
         <source>Error: </source>
         <translation>Σφάλμα: </translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+26"/>
         <source>File moved to trash</source>
         <translation>Το αρχείο μετακινήθηκε στον κάδο απορριμμάτων</translation>
     </message>
@@ -8544,12 +8580,11 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="vanished">Τιμή</translation>
     </message>
     <message>
-        <location line="+19"/>
         <source>Checksum (SHA-256)</source>
-        <translation>Άθροισμα ελέγχου (SHA-256)</translation>
+        <translation type="vanished">Άθροισμα ελέγχου (SHA-256)</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+37"/>
         <source>Checksum saved to database.</source>
         <translation>Το άθροισμα ελέγχου αποθηκεύτηκε στη βάση δεδομένων.</translation>
     </message>
@@ -8559,7 +8594,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Τα αθροίσματα ελέγχου ταιριάζουν.</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Copy to Clipboard</source>
         <translation>Αντιγραφή στο πρόχειρο</translation>
     </message>

@@ -92,6 +92,7 @@ Right-clicking a row opens a menu that starts with the file name:
 | *Calculate Checksum (SHA-256)* | Calculates the checksum of the file and saves it. Shown when the file has no checksum yet. |
 | *Copy Checksum* | Copies the saved checksum. Shown when the file has one. |
 | *Verify Checksum (SHA-256)* | Calculates the checksum again and compares it with the saved one. If they differ, the two values are shown, with *Update Checksum* to save the new one. |
+| *Calculate Checksum (MD5)* | Calculates the MD5 checksum of the file and shows it, with *Copy to Clipboard*. The MD5 checksum is not saved. Shown for every file. |
 | *Move to Trash* | Moves the file to the trash of the system. |
 | *Delete file* | Deletes the file **permanently**, after confirmation. Available only when *Authorize actions that delete files (no recovery)* is enabled in the [Settings](Settings#behavior). |
 

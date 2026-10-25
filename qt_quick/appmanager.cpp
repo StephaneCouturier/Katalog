@@ -1855,6 +1855,14 @@ QString AppManager::verifyFileChecksum(const QString &filePath, const QString &e
     return result.match ? "match" : "mismatch:" + result.actualChecksum;
 }
 //----------------------------------------------------------------------
+QString AppManager::calculateChecksumMd5(const QString &filePath)
+{
+    // Calculated on demand only, never stored (SpecCatalogChecksum CKS-C1)
+    if (!QFileInfo::exists(filePath))
+        return QString();
+    return FileChecksum::calculateChecksum(filePath, QCryptographicHash::Md5);
+}
+//----------------------------------------------------------------------
 QVariantList AppManager::getSearchHistory() const
 {
     QVariantList result;

@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+161"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4910"/>
+        <location line="+4935"/>
         <source>Search</source>
         <translation>Търсене</translation>
     </message>
     <message>
-        <location line="-5030"/>
+        <location line="-5055"/>
         <source>Stopped</source>
         <translation>Спрян</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3343"/>
+        <location line="+3368"/>
         <source>Evaluated</source>
         <translation>Оценен</translation>
     </message>
     <message>
-        <location line="-3461"/>
+        <location line="-3486"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -45,7 +45,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2263"/>
+        <location line="+2288"/>
         <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
@@ -67,8 +67,8 @@
         <translation>В процес</translation>
     </message>
     <message>
-        <location line="-4911"/>
-        <location line="+4003"/>
+        <location line="-4936"/>
+        <location line="+4028"/>
         <location line="+342"/>
         <location line="+112"/>
         <location line="+53"/>
@@ -78,7 +78,7 @@
         <translation>Завършен</translation>
     </message>
     <message>
-        <location line="-4504"/>
+        <location line="-4529"/>
         <source>Empty database path provided</source>
         <translation>Предоставен е празен път до базата данни</translation>
     </message>
@@ -128,7 +128,7 @@
         <translation>Резултати от търсенето</translation>
     </message>
     <message>
-        <location line="+258"/>
+        <location line="+283"/>
         <source>Case sensitive</source>
         <translation>Чувствителен към регистъра</translation>
     </message>
@@ -7732,7 +7732,23 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Копирай път на папката</translation>
     </message>
     <message>
-        <location line="-8"/>
+        <location line="+27"/>
+        <location line="+45"/>
+        <source>Calculate Checksum</source>
+        <translation>Изчисляване на контролна сума</translation>
+    </message>
+    <message>
+        <location line="-23"/>
+        <source>Verify Checksum</source>
+        <translation>Проверка на контролна сума</translation>
+    </message>
+    <message>
+        <location line="+130"/>
+        <source>Checksum</source>
+        <translation>Контролна сума</translation>
+    </message>
+    <message>
+        <location line="-187"/>
         <source>Copy folder name</source>
         <translation>Копирай името на папката</translation>
     </message>
@@ -7765,33 +7781,32 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Копиране на контролна сума</translation>
     </message>
     <message>
-        <location line="+13"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation>Изчисляване на контролна сума (SHA-256)</translation>
+        <translation type="vanished">Изчисляване на контролна сума (SHA-256)</translation>
     </message>
     <message>
-        <location line="-583"/>
+        <location line="-570"/>
         <location line="+599"/>
+        <location line="+40"/>
         <source>File not found or could not be read</source>
         <translation>Файлът не е намерен или не може да бъде прочетен</translation>
     </message>
     <message>
-        <location line="-588"/>
+        <location line="-628"/>
         <source>Folder not found.</source>
         <translation>Папката не е намерена.</translation>
     </message>
     <message>
-        <location line="+594"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation>Проверка на контролна сума (SHA-256)</translation>
+        <translation type="vanished">Проверка на контролна сума (SHA-256)</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+611"/>
         <source>Error: </source>
         <translation>Грешка: </translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+25"/>
         <source>Move file to Trash</source>
         <translation>Премести файла в кошчето</translation>
     </message>
@@ -7817,12 +7832,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+5"/>
-        <location line="+84"/>
+        <location line="+88"/>
         <source>Cancel</source>
         <translation>Отказ</translation>
     </message>
     <message>
-        <location line="-77"/>
+        <location line="-81"/>
         <source>File deleted</source>
         <translation>Файлът е изтрит</translation>
     </message>
@@ -7841,12 +7856,11 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
 %1</translation>
     </message>
     <message>
-        <location line="+14"/>
         <source>Checksum (SHA-256)</source>
-        <translation>Контролна сума (SHA-256)</translation>
+        <translation type="vanished">Контролна сума (SHA-256)</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+32"/>
         <source>Checksum saved to database.</source>
         <translation>Контролна сума запазена в базата данни.</translation>
     </message>
@@ -7856,7 +7870,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Контролните суми съвпадат.</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Copy to Clipboard</source>
         <translation>Копиране в клипборда</translation>
     </message>
@@ -8079,37 +8093,44 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="-3898"/>
         <source>Exact Phrase</source>
         <translation>Точна фраза</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>Begins With</source>
         <translation>Започва с</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>Any Word</source>
         <translation>Всяка дума</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>Regex</source>
         <translation>Regex</translation>
     </message>
     <message>
         <location line="+16"/>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+5"/>
         <source>File names only</source>
         <translation>Само имена на файлове</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>File names or Folder paths</source>
         <translation>Имена на файлове или пътища на папки</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>Folder path only</source>
         <translation>Само път на папка</translation>
     </message>
@@ -8339,13 +8360,29 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+1"/>
-        <location line="+910"/>
+        <location line="+929"/>
         <location line="+56"/>
         <source>Verify Checksums</source>
         <translation>Проверка на контролни суми</translation>
     </message>
     <message>
-        <location line="-130"/>
+        <location line="-431"/>
+        <location line="+53"/>
+        <source>Calculate Checksum</source>
+        <translation>Изчисляване на контролна сума</translation>
+    </message>
+    <message>
+        <location line="-22"/>
+        <source>Verify Checksum</source>
+        <translation>Проверка на контролна сума</translation>
+    </message>
+    <message>
+        <location line="+70"/>
+        <source>Checksum</source>
+        <translation>Контролна сума</translation>
+    </message>
+    <message>
+        <location line="+200"/>
         <source>Catalogs with results</source>
         <translation>Каталози с резултати</translation>
     </message>
@@ -8356,14 +8393,14 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Включи метаданни</translation>
     </message>
     <message>
-        <location line="-964"/>
-        <location line="+606"/>
-        <location line="+300"/>
+        <location line="-983"/>
+        <location line="+621"/>
+        <location line="+304"/>
         <source>Move to Trash</source>
         <translation>Премести в кошчето</translation>
     </message>
     <message>
-        <location line="-1054"/>
+        <location line="-1073"/>
         <location line="+11"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Устройството не е активно. Възможно е да е изключено или пътят му да е променен.</translation>
@@ -8380,12 +8417,12 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
     </message>
     <message>
         <location line="+2"/>
-        <location line="+737"/>
+        <location line="+756"/>
         <source>Delete</source>
         <translation>Изтриване</translation>
     </message>
     <message>
-        <location line="-687"/>
+        <location line="-706"/>
         <source>Run process on all results</source>
         <translation>Изпълни процес върху всички резултати</translation>
     </message>
@@ -8476,39 +8513,38 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Копирай името на файла без разширението</translation>
     </message>
     <message>
-        <location line="+38"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation>Изчисляване на контролна сума (SHA-256)</translation>
+        <translation type="vanished">Изчисляване на контролна сума (SHA-256)</translation>
     </message>
     <message>
-        <location line="-696"/>
+        <location line="-658"/>
         <location line="+712"/>
+        <location line="+47"/>
         <source>File not found or could not be read</source>
         <translation>Файлът не е намерен или не може да бъде прочетен</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-42"/>
         <source>Copy Checksum</source>
         <translation>Копиране на контролна сума</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+81"/>
+        <location line="+100"/>
         <source>Checksum copied to clipboard</source>
         <translation>Контролната сума е копирана в клипборда</translation>
     </message>
     <message>
-        <location line="-77"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation>Проверка на контролна сума (SHA-256)</translation>
+        <translation type="vanished">Проверка на контролна сума (SHA-256)</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="-79"/>
         <source>Error: </source>
         <translation>Грешка: </translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+26"/>
         <source>File moved to trash</source>
         <translation>Файлът е преместен в кошчето</translation>
     </message>
@@ -8543,12 +8579,11 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation type="vanished">Стойност</translation>
     </message>
     <message>
-        <location line="+19"/>
         <source>Checksum (SHA-256)</source>
-        <translation>Контролна сума (SHA-256)</translation>
+        <translation type="vanished">Контролна сума (SHA-256)</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+37"/>
         <source>Checksum saved to database.</source>
         <translation>Контролна сума запазена в базата данни.</translation>
     </message>
@@ -8558,7 +8593,7 @@ Check that the source folder (%1) is correct, or that the device is mounted to t
         <translation>Контролните суми съвпадат.</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Copy to Clipboard</source>
         <translation>Копиране в клипборда</translation>
     </message>

@@ -113,6 +113,7 @@ Un clic droit sur une ligne ouvre un menu adapté au type de la ligne.
 | *Copier la somme de contrôle* | Copie la somme de contrôle enregistrée. Affiché lorsque le fichier en a une. |
 | *Calculer la somme de contrôle (SHA-256)* | Calcule la somme de contrôle du fichier et l'enregistre. Affiché lorsque le fichier n'a pas encore de somme de contrôle. |
 | *Vérifier la somme de contrôle (SHA-256)* | Calcule à nouveau la somme de contrôle et la compare à celle enregistrée. Si elles diffèrent, les deux valeurs sont affichées, avec *Mettre à jour la somme de contrôle* pour enregistrer la nouvelle. |
+| *Calculer la somme de contrôle (MD5)* | Calcule la somme de contrôle MD5 du fichier et l'affiche, avec *Copier dans le presse-papiers*. La somme de contrôle MD5 n'est pas enregistrée. Affiché pour chaque fichier. |
 | *Déplacer le fichier vers la corbeille* | Déplace le fichier dans la corbeille du système. |
 | *Supprimer le fichier* | Supprime le fichier **définitivement**, après confirmation. Disponible uniquement lorsque *Autoriser les actions qui suppriment des fichiers (sans récupération)* est activé dans les [Paramètres](Settings#behavior). |
 

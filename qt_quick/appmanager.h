@@ -570,6 +570,7 @@ public slots:
     Q_INVOKABLE QVariantList getFileMetadataParsedFields(int catalogId, const QString &fileName, const QString &folderPath);
     Q_INVOKABLE QString calculateAndSaveChecksum(const QString &filePath, const QString &fileName, const QString &folderPath, int catalogId);
     Q_INVOKABLE QString verifyFileChecksum(const QString &filePath, const QString &expectedChecksum);
+    Q_INVOKABLE QString calculateChecksumMd5(const QString &filePath);
 
     Q_INVOKABLE bool    shouldShowAlphaWarning() const;
     Q_INVOKABLE void    setAlphaWarningShown();

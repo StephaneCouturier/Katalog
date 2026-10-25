@@ -92,6 +92,7 @@ Kliknutí pravým tlačítkem na řádek otevře nabídku, která začíná náz
 | *Vypočítat kontrolní součet (SHA-256)* | Vypočítá kontrolní součet souboru a uloží ho. Zobrazeno, když soubor ještě nemá kontrolní součet. |
 | *Kopírovat kontrolní součet* | Zkopíruje uložený kontrolní součet. Zobrazeno, když ho soubor má. |
 | *Ověřit kontrolní součet (SHA-256)* | Znovu vypočítá kontrolní součet a porovná ho s uloženým. Pokud se liší, zobrazí se obě hodnoty s tlačítkem *Aktualizovat kontrolní součet* pro uložení nové hodnoty. |
+| *Vypočítat kontrolní součet (MD5)* | Vypočítá kontrolní součet MD5 souboru a zobrazí ho s tlačítkem *Kopírovat do schránky*. Kontrolní součet MD5 se neukládá. Zobrazeno u každého souboru. |
 | *Přesunout do koše* | Přesune soubor do systémového koše. |
 | *Smazat soubor* | Po potvrzení soubor **trvale** smaže. Dostupné pouze tehdy, když je v [Nastavení](Settings#behavior) zapnuto *Povolit akce, které mažou soubory (bez možnosti obnovení)*. |
 

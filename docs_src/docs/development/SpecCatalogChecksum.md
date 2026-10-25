@@ -23,6 +23,18 @@ This document specifies the implementation of features using **File checksums**.
 Katalog has currently 1 single algorithms **SHA-256** selected for balance (secure, fast, widely supported, 256-bit/32 bytes).
 
 
+### Roadmap
+
+![Planned](https://img.shields.io/badge/Status-Planned-orange) ![3.1](https://img.shields.io/badge/Version-3.1-blue) ![824](https://img.shields.io/badge/github-824-blue?logo=github)
+**#824 (minor) SEARCH/EXPLORE: individual MD5 calculation** — K3 only. Calculate and show the MD5 of a single file from the file context menu; not stored. Specified below in [#824 - Individual MD5 calculation](#824---individual-md5-calculation).
+
+![Backlog](https://img.shields.io/badge/Status-Backlog-lightgrey) ![825](https://img.shields.io/badge/github-825-blue?logo=github)
+**#825 (major) Collection MD5 calculation** — calculate and store MD5 for catalog files, like SHA-256 today. Storage: Strategy A (dedicated columns), see [Increment 2 - Decision](#decision-strategy-a-retained-2026-10-25).
+
+![Backlog](https://img.shields.io/badge/Status-Backlog-lightgrey) ![826](https://img.shields.io/badge/github-826-blue?logo=github)
+**#826 (major) Compare checksums to an external source** — compare stored checksums to an external MD5 or SHA-256 source. Relies on the Strategy A column names to know the algorithm.
+
+
 ## **Architecture & Feature steps**
 
 **Increment 1: add catalog option, single algo, option in Search Duplicates/Differences**
@@ -55,6 +67,53 @@ To consider Indexing and Checksum work, within incremental update design<br/>
 * Like for Metadata, when editing this option, the user will be asked to trigger the update or not
 
     
+---
+## **#824 - Individual MD5 calculation**
+
+![Planned](https://img.shields.io/badge/Status-Planned-orange) ![3.1](https://img.shields.io/badge/Version-3.1-blue) ![824](https://img.shields.io/badge/github-824-blue?logo=github)
+
+Approved 2026-10-25. K3 only (no K2 change).
+
+> **Reading the requirement IDs.** Each requirement has a permanent ID.
+> IDs are never renumbered or reused; a retired requirement is marked
+> `[Removed]`, not deleted. Status is one of
+> `[Implemented] / [Planned] / [Backlog] / [Removed]`.
+
+**In scope:** calculating and showing the MD5 of one file, on demand, from the K3 file context menu (Search Results and Explore), with a copy action.<br/>
+**Out of scope:** storing the MD5 anywhere; MD5 for a whole catalog or collection (#825); comparing against an external source (#826); any K2 change.
+
+#### Operational requirements — *why / for whom*
+
+| ID | Requirement | Status |
+|----|-------------|--------|
+| CKS-O1 | A user obtains the MD5 of a single cataloged file on demand (for example to compare it with an MD5 published elsewhere), without changing anything the collection stores. | [Planned] |
+
+#### Functional requirements — *what the system does*
+
+| ID | Requirement | Status |
+|----|-------------|--------|
+| CKS-F1 | In K3, the file context menu of the **Search Results** page and of the **Explore** page carries an item that calculates the MD5 of that single file. The item is offered for every file row, whether or not the file already has a SHA-256 checksum. | [Planned] |
+| CKS-F2 | The calculated MD5 is shown to the user in a result dialog with a way to copy it to the clipboard, following the same dialog pattern as the existing single-file SHA-256 calculation. | [Planned] |
+
+#### Constructional requirements — *how it is built / limits / MUST-NOTs*
+
+| ID | Requirement | Status |
+|----|-------------|--------|
+| CKS-C1 | The MD5 calculated by `CKS-F1` MUST NOT be stored: no database write, no `.idx` write, no settings change. No schema change; zero impact on existing collections. | [Planned] |
+| CKS-C2 | The calculation uses the existing core `FileChecksum::calculateChecksum(path, QCryptographicHash::Md5)`. No `core/` method is added or modified for #824. | [Planned] |
+| CKS-C3 | #824 is K3 only: no change to K2 (`qt_widgets/`). | [Planned] |
+| CKS-C4 | Stored checksums follow **Strategy A** (one dedicated column per algorithm, see [Decision](#decision-strategy-a-retained-2026-10-25)). `checksum_sha256` MUST NOT be renamed or replaced by generic slots. Any new checksum column is added by a new versioned migration, never in `runMigration_3_0` (schema 3.0 is frozen). | [Planned] |
+
+#### Known limitation (backlog, not part of #824)
+
+Like the existing single-file SHA-256 calculation in K3, the MD5 calculation runs synchronously on the GUI thread, without progress or cancel. Large files freeze the window until done.
+
+#### Manual test charter
+
+- **CKS-F1** — On the Search Results page and on the Explore page, open the context menu of a file **with** a SHA-256 checksum and of a file **without** one. The MD5 item is present in all four cases.
+- **CKS-F2** — Run the MD5 item on a file. The dialog shows the MD5; the copy action puts it in the clipboard. Compare with `md5sum <file>`: identical.
+- **CKS-C1** — Note the collection files (database / `.idx`) and the settings file modification dates, run the MD5 item, close Katalog. Nothing changed; the file's stored SHA-256 (if any) is unchanged.
+
 ---
 ## **Increment 1 - Implemented Features**
 
@@ -444,6 +503,8 @@ checksum_extraction_date  TEXT
 
 ### Strategy E: 2 Generic Slots + Per-Catalog Algorithm
 
+> **Not retained** (2026-10-25): see [Decision: Strategy A retained](#decision-strategy-a-retained-2026-10-25).
+
 Two generic checksum columns, each catalog chooses which algorithm(s) to use.
 
 ```sql
@@ -531,13 +592,39 @@ WHERE catalog_include_checksum = 'SHA256';
 
 | Strategy | Columns | Algos/File | Schema Changes | Query Complexity | Migration |
 |----------|---------|------------|----------------|------------------|-----------|
-| A: Multiple Dedicated | 4-5 | Unlimited | Per new algo | Low | Easy |
+| **A: Multiple Dedicated (retained)** | **4-5** | **Unlimited** | **Per new algo** | **Low** | **Easy** |
 | B: Single + Algo Field | 2 | 1 | None | Medium | Hard |
 | C: Hybrid | 3 | 2 | Minimal | Medium | Easy |
 | D: JSON | 1 | Unlimited | None | High | Hard |
-| **E: 2 Generic Slots** | **4** | **2** | **None** | **Medium** | **Medium** |
+| E: 2 Generic Slots (not retained) | 4 | 2 | None | Medium | Medium |
 
-### Recommendation: Strategy E
+### Decision: Strategy A retained (2026-10-25)
+
+**Strategy A (multiple dedicated columns) is retained** for #825 (collection MD5 calculation) and #826 (compare checksums to an external MD5 or SHA-256 source). It replaces the former recommendation of Strategy E (kept below for history, **not retained**). Bound by `CKS-C4`.
+
+**Future columns** (`file` and `filetemp`), added only when #825 is implemented:
+```sql
+checksum_md5                     TEXT,     -- 32 hex chars
+checksum_md5_extraction_date     TEXT,     -- yyyy/MM/dd hh:mm:ss
+```
+* Added by a **new versioned migration**. Schema 3.0 is frozen: no change in `runMigration_3_0`.
+* `checksum_sha256` (and `checksum_extraction_date`) stay **unchanged**: no rename to generic slots.
+
+**Rationale:**
+1. No rename of `checksum_sha256`: avoids touching ~40 query sites, the `.idx` format and the importer.
+2. Cross-catalog duplicates/differences stay a single-column equality (no algorithm-matching logic).
+3. #826 knows the algorithm from the column name.
+4. Independent resume per algorithm, through a separate extraction date per algorithm.
+
+**Open points for #825** (noted, not decided):
+* `catalog_include_checksum` is single-valued (`"None"` / `"SHA256"`); it must be able to express SHA-256 and MD5 together.
+* Memory mode: the `.idx` would gain fields 30/31. Forward-compatible for readers (`fieldListCount` guards), but a 3.0 install rewriting the `.idx` would drop them — release-note item.
+
+---
+
+### Former recommendation: Strategy E (not retained)
+
+> Historical / alternative only. Superseded on 2026-10-25 by the [Strategy A decision](#decision-strategy-a-retained-2026-10-25).
 
 **Reasons:**
 1. **Bounded complexity**: Max 2 checksums per file covers all realistic use cases
@@ -681,7 +768,7 @@ To be considered:
 A. Should "Verify Catalog" update checksums for modified files automatically, or just report?
 B. Should verification results be saved to database, or just temporary report?
 C. Should there be a "partial verification" option (verify only X random files, faster)?
-D. Back to architecture: Do you want **multiple columns** (checksum_md5, checksum_sha256) or **single column** (file_checksum + file_checksum_algorithm)?
+D. Back to architecture: Do you want **multiple columns** (checksum_md5, checksum_sha256) or **single column** (file_checksum + file_checksum_algorithm)? — *Answered 2026-10-25: multiple columns ([Strategy A](#decision-strategy-a-retained-2026-10-25)).*
 
 
 

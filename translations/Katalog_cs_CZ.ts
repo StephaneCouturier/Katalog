@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+161"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4910"/>
+        <location line="+4935"/>
         <source>Search</source>
         <translation>Vyhledávání</translation>
     </message>
     <message>
-        <location line="-5030"/>
+        <location line="-5055"/>
         <source>Stopped</source>
         <translation>Zastaveno</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3343"/>
+        <location line="+3368"/>
         <source>Evaluated</source>
         <translation>Vyhodnoceno</translation>
     </message>
     <message>
-        <location line="-3461"/>
+        <location line="-3486"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -45,7 +45,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2263"/>
+        <location line="+2288"/>
         <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
@@ -67,8 +67,8 @@
         <translation>Probíhá</translation>
     </message>
     <message>
-        <location line="-4911"/>
-        <location line="+4003"/>
+        <location line="-4936"/>
+        <location line="+4028"/>
         <location line="+342"/>
         <location line="+112"/>
         <location line="+53"/>
@@ -78,7 +78,7 @@
         <translation>Dokončeno</translation>
     </message>
     <message>
-        <location line="-4504"/>
+        <location line="-4529"/>
         <source>Empty database path provided</source>
         <translation>Byla zadána prázdná cesta k databázi</translation>
     </message>
@@ -128,7 +128,7 @@
         <translation>Výsledky vyhledávání</translation>
     </message>
     <message>
-        <location line="+258"/>
+        <location line="+283"/>
         <source>Case sensitive</source>
         <translation>Rozlišovat velikost písmen</translation>
     </message>
@@ -7732,7 +7732,23 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
         <translation>Kopírovat cestu ke složce</translation>
     </message>
     <message>
-        <location line="-8"/>
+        <location line="+27"/>
+        <location line="+45"/>
+        <source>Calculate Checksum</source>
+        <translation>Vypočítat kontrolní součet</translation>
+    </message>
+    <message>
+        <location line="-23"/>
+        <source>Verify Checksum</source>
+        <translation>Ověřit kontrolní součet</translation>
+    </message>
+    <message>
+        <location line="+130"/>
+        <source>Checksum</source>
+        <translation>Kontrolní součet</translation>
+    </message>
+    <message>
+        <location line="-187"/>
         <source>Copy folder name</source>
         <translation>Kopírovat název složky</translation>
     </message>
@@ -7765,33 +7781,32 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
         <translation>Kopírovat kontrolní součet</translation>
     </message>
     <message>
-        <location line="+13"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation>Vypočítat kontrolní součet (SHA-256)</translation>
+        <translation type="vanished">Vypočítat kontrolní součet (SHA-256)</translation>
     </message>
     <message>
-        <location line="-583"/>
+        <location line="-570"/>
         <location line="+599"/>
+        <location line="+40"/>
         <source>File not found or could not be read</source>
         <translation>Soubor nebyl nalezen nebo jej nelze přečíst</translation>
     </message>
     <message>
-        <location line="-588"/>
+        <location line="-628"/>
         <source>Folder not found.</source>
         <translation>Složka nebyla nalezena.</translation>
     </message>
     <message>
-        <location line="+594"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation>Ověřit kontrolní součet (SHA-256)</translation>
+        <translation type="vanished">Ověřit kontrolní součet (SHA-256)</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+611"/>
         <source>Error: </source>
         <translation>Chyba: </translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+25"/>
         <source>Move file to Trash</source>
         <translation>Přesunout soubor do koše</translation>
     </message>
@@ -7817,12 +7832,12 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
     </message>
     <message>
         <location line="+5"/>
-        <location line="+84"/>
+        <location line="+88"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
     <message>
-        <location line="-77"/>
+        <location line="-81"/>
         <source>File deleted</source>
         <translation>Soubor smazán</translation>
     </message>
@@ -7841,12 +7856,11 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
 %1</translation>
     </message>
     <message>
-        <location line="+14"/>
         <source>Checksum (SHA-256)</source>
-        <translation>Kontrolní součet (SHA-256)</translation>
+        <translation type="vanished">Kontrolní součet (SHA-256)</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+32"/>
         <source>Checksum saved to database.</source>
         <translation>Kontrolní součet uložen do databáze.</translation>
     </message>
@@ -7856,7 +7870,7 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
         <translation>Kontrolní součty souhlasí.</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Copy to Clipboard</source>
         <translation>Kopírovat do schránky</translation>
     </message>
@@ -8079,37 +8093,44 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="-3898"/>
         <source>Exact Phrase</source>
         <translation>Přesná fráze</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>Begins With</source>
         <translation>Začíná s</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>Any Word</source>
         <translation>Jakékoli slovo</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>Regex</source>
         <translation>Regex</translation>
     </message>
     <message>
         <location line="+16"/>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+5"/>
         <source>File names only</source>
         <translation>Pouze názvy souborů</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>File names or Folder paths</source>
         <translation>Názvy souborů nebo cesty ke složkám</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>Folder path only</source>
         <translation>Pouze cesta ke složce</translation>
     </message>
@@ -8339,13 +8360,29 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
     </message>
     <message>
         <location line="+1"/>
-        <location line="+910"/>
+        <location line="+929"/>
         <location line="+56"/>
         <source>Verify Checksums</source>
         <translation>Ověřit kontrolní součty</translation>
     </message>
     <message>
-        <location line="-130"/>
+        <location line="-431"/>
+        <location line="+53"/>
+        <source>Calculate Checksum</source>
+        <translation>Vypočítat kontrolní součet</translation>
+    </message>
+    <message>
+        <location line="-22"/>
+        <source>Verify Checksum</source>
+        <translation>Ověřit kontrolní součet</translation>
+    </message>
+    <message>
+        <location line="+70"/>
+        <source>Checksum</source>
+        <translation>Kontrolní součet</translation>
+    </message>
+    <message>
+        <location line="+200"/>
         <source>Catalogs with results</source>
         <translation>Katalogy s výsledky</translation>
     </message>
@@ -8356,14 +8393,14 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
         <translation>Zahrnout metadata</translation>
     </message>
     <message>
-        <location line="-964"/>
-        <location line="+606"/>
-        <location line="+300"/>
+        <location line="-983"/>
+        <location line="+621"/>
+        <location line="+304"/>
         <source>Move to Trash</source>
         <translation>Přesunout do koše</translation>
     </message>
     <message>
-        <location line="-1054"/>
+        <location line="-1073"/>
         <location line="+11"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Zařízení není aktivní. Může být odpojeno nebo se změnila jeho cesta.</translation>
@@ -8380,12 +8417,12 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
     </message>
     <message>
         <location line="+2"/>
-        <location line="+737"/>
+        <location line="+756"/>
         <source>Delete</source>
         <translation>Smazat</translation>
     </message>
     <message>
-        <location line="-687"/>
+        <location line="-706"/>
         <source>Run process on all results</source>
         <translation>Spusťte proces u všech výsledků</translation>
     </message>
@@ -8476,39 +8513,38 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
         <translation>Kopírovat název souboru bez přípony</translation>
     </message>
     <message>
-        <location line="+38"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation>Vypočítat kontrolní součet (SHA-256)</translation>
+        <translation type="vanished">Vypočítat kontrolní součet (SHA-256)</translation>
     </message>
     <message>
-        <location line="-696"/>
+        <location line="-658"/>
         <location line="+712"/>
+        <location line="+47"/>
         <source>File not found or could not be read</source>
         <translation>Soubor nebyl nalezen nebo jej nelze přečíst</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-42"/>
         <source>Copy Checksum</source>
         <translation>Kopírovat kontrolní součet</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+81"/>
+        <location line="+100"/>
         <source>Checksum copied to clipboard</source>
         <translation>Kontrolní součet zkopírován do schránky</translation>
     </message>
     <message>
-        <location line="-77"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation>Ověřit kontrolní součet (SHA-256)</translation>
+        <translation type="vanished">Ověřit kontrolní součet (SHA-256)</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="-79"/>
         <source>Error: </source>
         <translation>Chyba: </translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+26"/>
         <source>File moved to trash</source>
         <translation>Soubor přesunut do koše</translation>
     </message>
@@ -8543,12 +8579,11 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
         <translation type="vanished">Hodnota</translation>
     </message>
     <message>
-        <location line="+19"/>
         <source>Checksum (SHA-256)</source>
-        <translation>Kontrolní součet (SHA-256)</translation>
+        <translation type="vanished">Kontrolní součet (SHA-256)</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+37"/>
         <source>Checksum saved to database.</source>
         <translation>Kontrolní součet uložen do databáze.</translation>
     </message>
@@ -8558,7 +8593,7 @@ Zkontrolujte, zda je zdrojová složka (%1) správná, nebo zda je zařízení p
         <translation>Kontrolní součty souhlasí.</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Copy to Clipboard</source>
         <translation>Kopírovat do schránky</translation>
     </message>

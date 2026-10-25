@@ -7,12 +7,12 @@
         <location filename="../qt_quick/appmanager.cpp" line="+161"/>
         <location line="+110"/>
         <location line="+14"/>
-        <location line="+4910"/>
+        <location line="+4935"/>
         <source>Search</source>
         <translation>Keresés</translation>
     </message>
     <message>
-        <location line="-5030"/>
+        <location line="-5055"/>
         <source>Stopped</source>
         <translation>Leállítva</translation>
     </message>
@@ -20,12 +20,12 @@
         <location line="+4"/>
         <location line="+24"/>
         <location line="+96"/>
-        <location line="+3343"/>
+        <location line="+3368"/>
         <source>Evaluated</source>
         <translation>Kiértékelve</translation>
     </message>
     <message>
-        <location line="-3461"/>
+        <location line="-3486"/>
         <location line="+16"/>
         <location line="+8"/>
         <location line="+95"/>
@@ -45,7 +45,7 @@
         <location line="+9"/>
         <location line="+7"/>
         <location line="+81"/>
-        <location line="+2263"/>
+        <location line="+2288"/>
         <location line="+637"/>
         <location line="+26"/>
         <location line="+20"/>
@@ -67,8 +67,8 @@
         <translation>Folyamatban</translation>
     </message>
     <message>
-        <location line="-4911"/>
-        <location line="+4003"/>
+        <location line="-4936"/>
+        <location line="+4028"/>
         <location line="+342"/>
         <location line="+112"/>
         <location line="+53"/>
@@ -78,7 +78,7 @@
         <translation>Befejezve</translation>
     </message>
     <message>
-        <location line="-4504"/>
+        <location line="-4529"/>
         <source>Empty database path provided</source>
         <translation>Üres adatbázis-elérési út lett megadva</translation>
     </message>
@@ -128,7 +128,7 @@
         <translation>Keresési eredmények</translation>
     </message>
     <message>
-        <location line="+258"/>
+        <location line="+283"/>
         <source>Case sensitive</source>
         <translation>Kis- és nagybetű érzékeny</translation>
     </message>
@@ -7731,7 +7731,23 @@ Ellenőrizze, hogy a forrásmappa (%1) helyes-e, vagy hogy az eszköz a forrásm
         <translation>Mappa elérési útvonalának másolása</translation>
     </message>
     <message>
-        <location line="-8"/>
+        <location line="+27"/>
+        <location line="+45"/>
+        <source>Calculate Checksum</source>
+        <translation>Ellenőrző összeg számítása</translation>
+    </message>
+    <message>
+        <location line="-23"/>
+        <source>Verify Checksum</source>
+        <translation>Ellenőrző összeg ellenőrzése</translation>
+    </message>
+    <message>
+        <location line="+130"/>
+        <source>Checksum</source>
+        <translation>Ellenőrző összeg</translation>
+    </message>
+    <message>
+        <location line="-187"/>
         <source>Copy folder name</source>
         <translation>Mappaév másolása</translation>
     </message>
@@ -7764,33 +7780,32 @@ Ellenőrizze, hogy a forrásmappa (%1) helyes-e, vagy hogy az eszköz a forrásm
         <translation>Ellenőrző összeg másolása</translation>
     </message>
     <message>
-        <location line="+13"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation>Ellenőrző összeg számítása (SHA-256)</translation>
+        <translation type="vanished">Ellenőrző összeg számítása (SHA-256)</translation>
     </message>
     <message>
-        <location line="-583"/>
+        <location line="-570"/>
         <location line="+599"/>
+        <location line="+40"/>
         <source>File not found or could not be read</source>
         <translation>A fájl nem található vagy nem olvasható</translation>
     </message>
     <message>
-        <location line="-588"/>
+        <location line="-628"/>
         <source>Folder not found.</source>
         <translation>A mappa nem található.</translation>
     </message>
     <message>
-        <location line="+594"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation>Ellenőrző összeg ellenőrzése (SHA-256)</translation>
+        <translation type="vanished">Ellenőrző összeg ellenőrzése (SHA-256)</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+611"/>
         <source>Error: </source>
         <translation>Hiba: </translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+25"/>
         <source>Move file to Trash</source>
         <translation>Fájl lomtárba helyezése</translation>
     </message>
@@ -7816,12 +7831,12 @@ Ellenőrizze, hogy a forrásmappa (%1) helyes-e, vagy hogy az eszköz a forrásm
     </message>
     <message>
         <location line="+5"/>
-        <location line="+84"/>
+        <location line="+88"/>
         <source>Cancel</source>
         <translation>Mégse</translation>
     </message>
     <message>
-        <location line="-77"/>
+        <location line="-81"/>
         <source>File deleted</source>
         <translation>Fájl törölve</translation>
     </message>
@@ -7840,12 +7855,11 @@ Ellenőrizze, hogy a forrásmappa (%1) helyes-e, vagy hogy az eszköz a forrásm
 %1</translation>
     </message>
     <message>
-        <location line="+14"/>
         <source>Checksum (SHA-256)</source>
-        <translation>Ellenőrző összeg (SHA-256)</translation>
+        <translation type="vanished">Ellenőrző összeg (SHA-256)</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+32"/>
         <source>Checksum saved to database.</source>
         <translation>Ellenőrző összeg mentve az adatbázisba.</translation>
     </message>
@@ -7855,7 +7869,7 @@ Ellenőrizze, hogy a forrásmappa (%1) helyes-e, vagy hogy az eszköz a forrásm
         <translation>Az ellenőrző összegek megegyeznek.</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Copy to Clipboard</source>
         <translation>Másolás a vágólapra</translation>
     </message>
@@ -8078,37 +8092,44 @@ Ellenőrizze, hogy a forrásmappa (%1) helyes-e, vagy hogy az eszköz a forrásm
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="-3898"/>
         <source>Exact Phrase</source>
         <translation>Pontos kifejezés</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>Begins With</source>
         <translation>Ezzel kezdődik</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>Any Word</source>
         <translation>Bármelyik szó</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>Regex</source>
         <translation>Regex</translation>
     </message>
     <message>
         <location line="+16"/>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+5"/>
         <source>File names only</source>
         <translation>Csak fájlnevek</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>File names or Folder paths</source>
         <translation>Fájlnevek vagy mappa elérési utak</translation>
     </message>
     <message>
         <location line="+1"/>
+        <location filename="../qt_quick/appmanager.cpp" line="+1"/>
         <source>Folder path only</source>
         <translation>Csak mappa elérési út</translation>
     </message>
@@ -8338,13 +8359,29 @@ Ellenőrizze, hogy a forrásmappa (%1) helyes-e, vagy hogy az eszköz a forrásm
     </message>
     <message>
         <location line="+1"/>
-        <location line="+910"/>
+        <location line="+929"/>
         <location line="+56"/>
         <source>Verify Checksums</source>
         <translation>Ellenőrző összegek ellenőrzése</translation>
     </message>
     <message>
-        <location line="-130"/>
+        <location line="-431"/>
+        <location line="+53"/>
+        <source>Calculate Checksum</source>
+        <translation>Ellenőrző összeg számítása</translation>
+    </message>
+    <message>
+        <location line="-22"/>
+        <source>Verify Checksum</source>
+        <translation>Ellenőrző összeg ellenőrzése</translation>
+    </message>
+    <message>
+        <location line="+70"/>
+        <source>Checksum</source>
+        <translation>Ellenőrző összeg</translation>
+    </message>
+    <message>
+        <location line="+200"/>
         <source>Catalogs with results</source>
         <translation>Katalógusok eredményekkel</translation>
     </message>
@@ -8355,14 +8392,14 @@ Ellenőrizze, hogy a forrásmappa (%1) helyes-e, vagy hogy az eszköz a forrásm
         <translation>Metaadatok befoglalása</translation>
     </message>
     <message>
-        <location line="-964"/>
-        <location line="+606"/>
-        <location line="+300"/>
+        <location line="-983"/>
+        <location line="+621"/>
+        <location line="+304"/>
         <source>Move to Trash</source>
         <translation>Lomtárba helyezés</translation>
     </message>
     <message>
-        <location line="-1054"/>
+        <location line="-1073"/>
         <location line="+11"/>
         <source>The device is not active. It may be disconnected, or its path may have changed.</source>
         <translation>Az eszköz nem aktív. Lehet, hogy le van választva, vagy megváltozott az elérési útja.</translation>
@@ -8379,12 +8416,12 @@ Ellenőrizze, hogy a forrásmappa (%1) helyes-e, vagy hogy az eszköz a forrásm
     </message>
     <message>
         <location line="+2"/>
-        <location line="+737"/>
+        <location line="+756"/>
         <source>Delete</source>
         <translation>Törlés</translation>
     </message>
     <message>
-        <location line="-687"/>
+        <location line="-706"/>
         <source>Run process on all results</source>
         <translation>Művelet futtatása az összes eredményen</translation>
     </message>
@@ -8475,39 +8512,38 @@ Ellenőrizze, hogy a forrásmappa (%1) helyes-e, vagy hogy az eszköz a forrásm
         <translation>Fájlnév másolása kiterjesztés nélkül</translation>
     </message>
     <message>
-        <location line="+38"/>
         <source>Calculate Checksum (SHA-256)</source>
-        <translation>Ellenőrző összeg számítása (SHA-256)</translation>
+        <translation type="vanished">Ellenőrző összeg számítása (SHA-256)</translation>
     </message>
     <message>
-        <location line="-696"/>
+        <location line="-658"/>
         <location line="+712"/>
+        <location line="+47"/>
         <source>File not found or could not be read</source>
         <translation>A fájl nem található vagy nem olvasható</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-42"/>
         <source>Copy Checksum</source>
         <translation>Ellenőrző összeg másolása</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+81"/>
+        <location line="+100"/>
         <source>Checksum copied to clipboard</source>
         <translation>Az ellenőrző összeg a vágólapra másolva</translation>
     </message>
     <message>
-        <location line="-77"/>
         <source>Verify Checksum (SHA-256)</source>
-        <translation>Ellenőrző összeg ellenőrzése (SHA-256)</translation>
+        <translation type="vanished">Ellenőrző összeg ellenőrzése (SHA-256)</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="-79"/>
         <source>Error: </source>
         <translation>Hiba: </translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+26"/>
         <source>File moved to trash</source>
         <translation>A fájl a kukába helyezve</translation>
     </message>
@@ -8542,12 +8578,11 @@ Ellenőrizze, hogy a forrásmappa (%1) helyes-e, vagy hogy az eszköz a forrásm
         <translation type="vanished">Érték</translation>
     </message>
     <message>
-        <location line="+19"/>
         <source>Checksum (SHA-256)</source>
-        <translation>Ellenőrző összeg (SHA-256)</translation>
+        <translation type="vanished">Ellenőrző összeg (SHA-256)</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+37"/>
         <source>Checksum saved to database.</source>
         <translation>Ellenőrző összeg mentve az adatbázisba.</translation>
     </message>
@@ -8557,7 +8592,7 @@ Ellenőrizze, hogy a forrásmappa (%1) helyes-e, vagy hogy az eszköz a forrásm
         <translation>Az ellenőrző összegek megegyeznek.</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Copy to Clipboard</source>
         <translation>Másolás a vágólapra</translation>
     </message>
